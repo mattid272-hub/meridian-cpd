@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <!-- Background: transparent -->
+
+  <!-- Icon: Meridian line through a circle (compass/precision theme) -->
+  <g transform="translate(20, 10)">
+    <!-- Outer circle -->
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#0f2547" stroke-width="4"/>
+    <!-- Meridian vertical line -->
+    <line x1="50" y1="4" x2="50" y2="96" stroke="#0f2547" stroke-width="3"/>
+    <!-- Horizontal axis (lighter) -->
+    <line x1="4" y1="50" x2="96" y2="50" stroke="#0f2547" stroke-width="1.5" opacity="0.3"/>
+    <!-- Arc curve (the meridian arc) -->
+    <path d="M 50 4 Q 80 50 50 96" fill="none" stroke="#0891b2" stroke-width="3"/>
+    <!-- North/South marks -->
+    <circle cx="50" cy="4" r="4" fill="#0f2547"/>
+    <circle cx="50" cy="96" r="4" fill="#0f2547"/>
+    <!-- Centre dot -->
+    <circle cx="50" cy="50" r="5" fill="#0891b2"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text
+    x="140"
+    y="52"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="36"
+    font-weight="700"
+    letter-spacing="3"
+    fill="#0f2547">MERIDIAN</text>
+
+  <!-- CPD badge -->
+  <rect x="140" y="66" width="62" height="26" rx="4" fill="#0891b2"/>
+  <text
+    x="171"
+    y="84"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="15"
+    font-weight="700"
+    letter-spacing="2"
+    fill="white"
+    text-anchor="middle">CPD</text>
+
+  <!-- Tagline -->
+  <text
+    x="214"
+    y="84"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="13"
+    fill="#0f2547"
+    opacity="0.6"
+    letter-spacing="1">Stay Sharp. Stay Certified.</text>
+</svg>

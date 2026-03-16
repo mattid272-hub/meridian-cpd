@@ -1,0 +1,49 @@
+{
+  "sources": [
+    {
+      "url": "https://www.gov.uk/search/policy-papers-and-consultations?keywords=energy+efficiency",
+      "name": "GOV.UK Energy Efficiency Policy",
+      "type": "policy"
+    },
+    {
+      "url": "https://www.trustmark.org.uk/news",
+      "name": "TrustMark News",
+      "type": "industry"
+    },
+    {
+      "url": "https://www.elmhurstenergy.co.uk/news",
+      "name": "Elmhurst Energy News",
+      "type": "accreditation"
+    },
+    {
+      "url": "https://www.quidos.co.uk/news",
+      "name": "Quidos News",
+      "type": "accreditation"
+    },
+    {
+      "url": "https://www.ecmk.co.uk/news",
+      "name": "ECMK News",
+      "type": "accreditation"
+    },
+    {
+      "url": "https://www.bre.co.uk/news",
+      "name": "BRE Group News",
+      "type": "technical"
+    },
+    {
+      "url": "https://www.cibse.org/news",
+      "name": "CIBSE News",
+      "type": "technical"
+    },
+    {
+      "url": "https://www.ofgem.gov.uk/information-for-household-consumers/energy-efficiency",
+      "name": "Ofgem Energy Efficiency",
+      "type": "policy"
+    },
+    {
+      "url": "https://retrofitacademy.org/news/",
+      "name": "Retrofit Academy News",
+      "type": "industry"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+name: Meridian CPD — Content Engine
+
+on:
+  schedule:
+    # 1st of month at 07:00 UTC
+    - cron: '0 7 1 * *'
+    # 15th of month at 07:00 UTC
+    - cron: '0 7 15 * *'
+  # Allow manual trigger from GitHub Actions UI
+  workflow_dispatch:
+
+jobs:
+  generate-course:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r content-engine/requirements.txt
+          pip install -r webhook/requirements.txt
+
+      - name: Run content engine
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          BASE_URL: https://meridiancpd.co.uk
+        run: |
+          cd content-engine
+          python3 content_engine.py
+
+      - name: Commit new course to repo
+        run: |
+          git config user.name "Meridian CPD Bot"
+          git config user.email "hello@meridiancpd.co.uk"
+          git add courses/
+          git diff --staged --quiet || git commit -m "chore: add auto-generated course [skip ci]"
+          git push

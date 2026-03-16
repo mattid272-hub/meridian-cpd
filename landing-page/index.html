@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meridian CPD — Stay Sharp. Stay Certified.</title>
+  <meta name="description" content="CPD courses for UK Domestic Energy Assessors and Retrofit Assessors. RdSAP 10, PAS 2035, and more. From £19.99. Annual subscription £79/year.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0f2547;
+      --cyan: #0891b2;
+      --cyan-light: #e0f2fe;
+      --white: #ffffff;
+      --grey-bg: #f8fafc;
+      --grey-text: #64748b;
+      --border: #e2e8f0;
+    }
+
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+           color: var(--navy); background: var(--white); line-height: 1.6; }
+
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Nav ─────────────────────────────────────────────────────────────── */
+    nav {
+      background: var(--navy);
+      padding: 0 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 72px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .nav-logo img { height: 44px; width: auto; display: block; }
+    .nav-logo { color: white; font-size: 20px; font-weight: 700; letter-spacing: 2px; }
+    .nav-logo span { color: var(--cyan); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { color: rgba(255,255,255,0.8); font-size: 14px; }
+    .nav-links a:hover { color: white; text-decoration: none; }
+    .nav-cta {
+      background: var(--cyan);
+      color: white !important;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .nav-cta:hover { background: #0780a0; text-decoration: none !important; }
+
+    /* ── Hero ────────────────────────────────────────────────────────────── */
+    .hero {
+      background: var(--navy);
+      color: white;
+      padding: 100px 24px 90px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: auto;
+      opacity: 0.04;
+      pointer-events: none;
+      filter: invert(1);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--cyan);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 span { color: var(--cyan); }
+    .hero p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.75);
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--cyan);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #0780a0; text-decoration: none; }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.3);
+      display: inline-block;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.2); text-decoration: none; }
+
+    /* ── Urgency bar ─────────────────────────────────────────────────────── */
+    .urgency-bar {
+      background: var(--cyan);
+      color: white;
+      text-align: center;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .urgency-bar span { opacity: 0.85; font-weight: 400; }
+
+    /* ── Section base ────────────────────────────────────────────────────── */
+    section { padding: 72px 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .section-sub {
+      color: var(--grey-text);
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 48px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Why Meridian ────────────────────────────────────────────────────── */
+    .why { background: var(--grey-bg); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+    }
+    .why-card {
+      background: white;
+      border-radius: 12px;
+      padding: 32px 24px;
+      border: 1px solid var(--border);
+    }
+    .why-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--cyan-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 24px;
+    }
+    .why-card h3 { font-size: 18px; margin-bottom: 8px; }
+    .why-card p { color: var(--grey-text); font-size: 15px; }
+
+    /* ── Courses ─────────────────────────────────────────────────────────── */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .course-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: box-shadow 0.2s;
+    }
+    .course-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .course-tag {
+      display: inline-block;
+      background: var(--cyan-light);
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .course-tag.launch { background: #fef3c7; color: #b45309; }
+    .course-card h3 { font-size: 16px; margin-bottom: 8px; line-height: 1.4; }
+    .course-card p { color: var(--grey-text); font-size: 14px; margin-bottom: 16px; }
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+    .course-hours { color: var(--grey-text); }
+    .course-price { font-weight: 700; color: var(--navy); }
+
+    /* ── Pricing ─────────────────────────────────────────────────────────── */
+    .pricing { background: var(--grey-bg); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .price-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      text-align: center;
+    }
+    .price-card.featured {
+      border-color: var(--cyan);
+      position: relative;
+    }
+    .featured-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--cyan);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .price-name { font-size: 14px; font-weight: 600; color: var(--grey-text);
+                  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .price-amount { font-size: 48px; font-weight: 700; color: var(--navy); line-height: 1; }
+    .price-period { font-size: 15px; color: var(--grey-text); margin-bottom: 24px; }
+    .price-features { list-style: none; text-align: left; margin-bottom: 32px; }
+    .price-features li {
+      padding: 8px 0;
+      font-size: 15px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+    }
+    .price-features li::before { content: "✓"; color: var(--cyan); font-weight: 700; }
+    .btn-buy {
+      display: block;
+      background: var(--navy);
+      color: white;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      text-align: center;
+    }
+    .btn-buy:hover { background: #1a3a6e; text-decoration: none; }
+    .price-card.featured .btn-buy { background: var(--cyan); }
+    .price-card.featured .btn-buy:hover { background: #0780a0; }
+
+    /* ── Certificate section ─────────────────────────────────────────────── */
+    .cert-section {
+      background: var(--navy);
+      color: white;
+    }
+    .cert-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .cert-section h2 { color: white; text-align: left; margin-bottom: 16px; }
+    .cert-section p { color: rgba(255,255,255,0.75); margin-bottom: 16px; font-size: 16px; }
+    .cert-features { list-style: none; }
+    .cert-features li {
+      color: rgba(255,255,255,0.85);
+      padding: 8px 0;
+      font-size: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      gap: 10px;
+    }
+    .cert-features li::before { content: "✓"; color: var(--cyan); font-weight: 700; }
+    .cert-preview {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      color: var(--navy);
+    }
+    .cert-preview-inner {
+      border: 2px solid var(--navy);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .cert-logo { font-size: 18px; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; }
+    .cert-logo span { color: var(--cyan); }
+    .cert-title { font-size: 13px; font-weight: 700; letter-spacing: 2px;
+                  color: var(--navy); margin-bottom: 16px; }
+    .cert-name-preview {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      border-bottom: 2px solid var(--cyan);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+    .cert-course-preview {
+      font-size: 14px;
+      color: var(--grey-text);
+      margin-bottom: 8px;
+    }
+    .cert-hours-badge {
+      display: inline-block;
+      background: var(--cyan);
+      color: white;
+      padding: 6px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .cert-number-preview {
+      font-size: 12px;
+      color: var(--grey-text);
+      font-family: monospace;
+    }
+
+    /* ── FAQ ─────────────────────────────────────────────────────────────── */
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 24px 0; }
+    .faq-item h3 { font-size: 17px; margin-bottom: 10px; }
+    .faq-item p { color: var(--grey-text); font-size: 15px; }
+
+    /* ── Footer ──────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.6);
+      padding: 40px 24px;
+      text-align: center;
+      font-size: 14px;
+    }
+    footer .footer-logo { color: white; font-size: 18px; font-weight: 700;
+                           letter-spacing: 2px; margin-bottom: 12px; }
+    footer .footer-logo span { color: var(--cyan); }
+    footer a { color: rgba(255,255,255,0.6); }
+    footer a:hover { color: white; }
+
+    @media (max-width: 700px) {
+      .cert-inner { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">
+    <img src="../logo/meridian-cpd-logo.svg" alt="Meridian CPD" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span style="display:none;color:white;font-size:20px;font-weight:700;letter-spacing:2px">MERIDIAN <span style="color:#0891b2">CPD</span></span>
+  </div>
+  <div class="nav-links">
+    <a href="#courses">Courses</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#certificates">Certificates</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="nav-cta">Subscribe — £79/yr</a>
+  </div>
+</nav>
+
+<!-- Urgency bar -->
+<div class="urgency-bar">
+  ⚡ RdSAP 10 is live — every active DEA needs CPD hours on it.
+  <span>Use code <strong>MERIDIAN10</strong> for a free 2-hour RdSAP 10 overview course.</span>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <img class="hero-watermark" src="../logo/meridian-cpd-logo.svg" alt="">
+  <div style="position:relative;z-index:1">
+  <div class="hero-badge">CPD for Energy Assessors</div>
+  <h1>Stay Sharp.<br><span>Stay Certified.</span></h1>
+  <p>Downloadable CPD courses for UK Domestic Energy Assessors and Retrofit Assessors.
+     Written by practising professionals. Certificates issued on completion.</p>
+  <div class="hero-buttons">
+    <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-primary">
+      Annual Subscription — £79/year
+    </a>
+    <a href="#courses" class="btn-secondary">Browse courses</a>
+  </div>
+  </div><!-- end z-index wrapper -->
+</section>
+
+<!-- Why Meridian -->
+<section class="why">
+  <div class="container">
+    <h2 class="section-title">Why Meridian CPD?</h2>
+    <p class="section-sub">Built for assessors, by assessors. Not a generic training college.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">📋</div>
+        <h3>Practitioner-written</h3>
+        <p>Every course is written by qualified PAS 2035 professionals with real-world
+           energy assessment experience. Not generic training content.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📥</div>
+        <h3>Downloadable PDFs</h3>
+        <p>Download and keep your courses. Read them on any device, at any time —
+           no logins, no streaming, no expiry.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🏆</div>
+        <h3>Instant certificates</h3>
+        <p>Confirm completion and receive your CPD certificate immediately.
+           QR-verified and accepted as evidence for your accreditation renewal.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔄</div>
+        <h3>Always current</h3>
+        <p>New courses added every month as the sector evolves. RdSAP 10,
+           PAS 2035 updates, MEES changes — we cover it as it happens.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Courses -->
+<section id="courses">
+  <div class="container">
+    <h2 class="section-title">Course Library</h2>
+    <p class="section-sub">All courses count toward your mandatory annual CPD hours.
+       New courses added every month.</p>
+    <div class="courses-grid">
+
+      <div class="course-card">
+        <span class="course-tag launch">⚡ Launch Course</span>
+        <h3>RdSAP 10: What's Changed and Why</h3>
+        <p>The complete guide to every change in RdSAP 10 — windows, ventilation,
+           room in roof, solar PV, battery storage, airtightness and more.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 2 CPD hours · Course MER-DEA-001</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag launch">⚡ Launch Course</span>
+        <h3>Measuring Windows in RdSAP 10</h3>
+        <p>New requirements for measuring and recording window areas by orientation.
+           Covers bay windows, roof windows, secondary glazing and conventions.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 1 CPD hour · Course MER-DEA-002</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag launch">⚡ Launch Course</span>
+        <h3>Ventilation in RdSAP 10: PIV, MVHR and Natural Systems</h3>
+        <p>Expanded ventilation types, new data requirements, PIV recording
+           conventions and how ventilation choice affects the EPC rating.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 1 CPD hour · Course MER-DEA-003</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag launch">⚡ Launch Course</span>
+        <h3>Room in Roof: Type 1 and Type 2 in RdSAP 10</h3>
+        <p>Understanding the new Room in Roof distinction, evidence requirements,
+           and how each type affects energy calculations.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 1 CPD hour · Course MER-DEA-004</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag launch">⚡ Launch Course</span>
+        <h3>Solar PV, Battery Storage and PV Diverters in RdSAP 10</h3>
+        <p>New fields for battery storage and diverters, multiple array recording,
+           and how these features affect EPC ratings.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 1 CPD hour · Course MER-DEA-011</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag launch">⚡ Launch Course</span>
+        <h3>Lighting and Renewables in RdSAP 10</h3>
+        <p>New treatment of low-energy lighting, renewable heat sources and heat pumps — what assessors must record differently from RdSAP 9.94.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 1 CPD hour · Course MER-DEA-010</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag launch">⚡ Launch Course</span>
+        <h3>Airtightness Testing in RdSAP 10</h3>
+        <p>How airtightness test results feed into RdSAP 10, default values, when testing is mandatory, and how air permeability affects the SAP calculation.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 1 CPD hour · Course MER-DEA-021</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag">PAS 2035</span>
+        <h3>PAS 2035:2023 Overview — The Retrofit Standard Explained</h3>
+        <p>Complete overview of the PAS 2035:2023 standard, roles and responsibilities, and what changed from the 2019 version.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 2 CPD hours · Course MER-RA-001</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag">PAS 2035</span>
+        <h3>EPR Variation: Managing the RdSAP 10 Transition in PAS 2035 Projects</h3>
+        <p>How to handle EPR variations when RdSAP 10 replaces the lodged SAP version mid-project. Practical guidance on variation requests and documentation.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 1 CPD hour · Course MER-RA-006</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag">PAS 2035</span>
+        <h3>External Wall Insulation: Planning Permission and Fire Risk</h3>
+        <p>When EWI requires planning permission, PD rights and exemptions, fire risk considerations, and what assessors must identify and flag.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 1 CPD hour · Course MER-RA-009</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag">Policy</span>
+        <h3>UK Energy Policy 2026: What Assessors Need to Know</h3>
+        <p>Warm Homes Plan, MEES trajectory, ECO5 outlook, and the policy landscape every practising assessor needs to understand.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 1 CPD hour · Course MER-ALL-001</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <span class="course-tag">Safety</span>
+        <h3>Fire Safety in Retrofit: What Every Assessor Must Know</h3>
+        <p>Fire spread risks from common retrofit measures, assessor responsibilities under PAS 2035, and how to identify and flag fire safety concerns.</p>
+        <div class="course-meta">
+          <span class="course-hours">⏱ 1 CPD hour · Course MER-ALL-004</span>
+          <span class="course-price">£19.99</span>
+        </div>
+      </div>
+
+      <div class="course-card" style="border: 2px dashed var(--border); background: var(--grey-bg);">
+        <span class="course-tag">Always Growing</span>
+        <h3>New courses every fortnight</h3>
+        <p>Subscribe for unlimited access to all current and future courses. New material published on the 1st and 15th of every month, forever.</p>
+        <div class="course-meta">
+          <span class="course-hours">Subscribe for all courses</span>
+          <span class="course-price">£79/yr</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <h2 class="section-title">Simple Pricing</h2>
+    <p class="section-sub">10 CPD hours required per year. Our annual subscription costs less
+       than a single hour of a consultant's time.</p>
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <div class="price-name">Pay Per Course</div>
+        <div class="price-amount">£19.99</div>
+        <div class="price-period">per course</div>
+        <ul class="price-features">
+          <li>Downloadable PDF</li>
+          <li>Instant certificate on completion</li>
+          <li>QR-verified certificate</li>
+          <li>Keep forever</li>
+        </ul>
+        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="btn-buy">Buy a Course</a>
+        <p style="font-size:13px;color:var(--grey-text);margin-top:12px;text-align:center">
+          Use code <strong>MERIDIAN10</strong> for your first course free
+        </p>
+      </div>
+
+      <div class="price-card featured">
+        <div class="featured-badge">Best Value</div>
+        <div class="price-name">Annual Subscription</div>
+        <div class="price-amount">£79</div>
+        <div class="price-period">per year — unlimited access</div>
+        <ul class="price-features">
+          <li>Full course library — all strands</li>
+          <li>New courses every month</li>
+          <li>Instant certificates on completion</li>
+          <li>CPD log for accreditation renewal</li>
+          <li>RdSAP 10 technical reference library</li>
+        </ul>
+        <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-buy">Subscribe Now</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Certificate section -->
+<section class="cert-section" id="certificates">
+  <div class="container">
+    <div class="cert-inner">
+      <div>
+        <h2 class="section-title" style="text-align:left">CPD Certificates You Can Actually Use</h2>
+        <p>Every certificate is uniquely numbered and independently verifiable.
+           Your accreditation body can scan the QR code to confirm authenticity.</p>
+        <ul class="cert-features">
+          <li>Unique certificate number (e.g. MER-2026-0001)</li>
+          <li>QR code links to live verification page</li>
+          <li>Issued immediately on course completion</li>
+          <li>Delivered as a tamper-resistant PDF</li>
+          <li>Upload directly to your accreditation body</li>
+          <li>CPD log available for annual renewal</li>
+        </ul>
+        <p style="margin-top:20px;font-size:14px;opacity:0.6">
+          Verify any certificate at meridiancpd.co.uk/verify/[certificate-number]
+        </p>
+      </div>
+      <div class="cert-preview">
+        <div class="cert-preview-inner">
+          <div class="cert-logo">MERIDIAN <span>CPD</span></div>
+          <div class="cert-title">CERTIFICATE OF CPD COMPLETION</div>
+          <div style="font-size:12px;color:#64748b;margin-bottom:8px">This is to certify that</div>
+          <div class="cert-name-preview">John Smith DEA</div>
+          <div style="font-size:12px;color:#64748b;margin-bottom:8px">has successfully completed</div>
+          <div class="cert-course-preview">RdSAP 10: What's Changed and Why</div>
+          <div class="cert-hours-badge">2 CPD Hours</div>
+          <div class="cert-number-preview">MER-2026-0001 · 14 March 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <h2 class="section-title">Questions</h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <h3>Will my accreditation body accept these certificates?</h3>
+        <p>Meridian CPD certificates are from an independent provider. Most accreditation
+           schemes (ECMK, Elmhurst, Quidos, Stroma) accept CPD from independent providers
+           provided it is relevant to your practice. We recommend checking your specific
+           scheme's CPD policy. Every certificate is independently verifiable via QR code.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>How do I receive my certificate?</h3>
+        <p>After purchasing a course and reading it, click the "I have completed this course"
+           link included in your course delivery email. Your certificate is generated
+           immediately and emailed to you as a PDF.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Can I use the free course code MERIDIAN10?</h3>
+        <p>Yes — apply code MERIDIAN10 at checkout for the RdSAP 10 overview course
+           (MER-DEA-001, normally £19.99) completely free. One use per person.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>What format are the courses?</h3>
+        <p>All courses are downloadable PDF files. Save them to your phone, tablet,
+           or computer and read at your own pace. No streaming, no login required after purchase.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>How many CPD hours do I need per year?</h3>
+        <p>Most DEA accreditation schemes require 10 CPD hours per year to maintain your
+           licence. Retrofit Assessors typically need 10 hours; Retrofit Coordinators
+           need 25. Our annual subscription at £79 gives you unlimited access to
+           generate as many hours as you need.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>When are new courses released?</h3>
+        <p>We publish new courses twice a month, covering emerging changes in RdSAP,
+           PAS 2035, government policy, and sector-specific topics. Subscribers receive
+           an email notification with each new release.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">MERIDIAN <span>CPD</span></div>
+  <p style="margin-bottom:16px">Stay Sharp. Stay Certified.</p>
+  <p>
+    <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a> &nbsp;·&nbsp;
+    <a href="/verify">Verify a Certificate</a> &nbsp;·&nbsp;
+    <a href="/privacy">Privacy Policy</a>
+  </p>
+  <p style="margin-top:16px">
+    © 2026 Meridian CPD. All rights reserved.<br>
+    Meridian CPD is an independent CPD provider. Not affiliated with ECMK, Elmhurst,
+    Quidos, Sterling, Stroma, TrustMark, or any government body.
+  </p>
+</footer>
+
+</body>
+</html>
