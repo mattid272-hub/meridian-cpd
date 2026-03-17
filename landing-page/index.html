@@ -7,289 +7,437 @@
   <meta name="description" content="CPD for UK Domestic Energy Assessors and Retrofit Assessors. Practitioner-written courses, downloadable PDFs, tamper-proof certificates. From £19.99.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --dark:    #0D1F0E;
-      --dark2:   #162818;
-      --accent:  #D4FF00;
-      --accent2: #C0F000;
-      --off-white: #F5F5F0;
-      --mid:     #8B9E8C;
-      --light:   #2A3D2B;
+      --dark:      #0D1F0E;
+      --dark2:     #162818;
+      --dark3:     #1a2f1b;
+      --light:     #F5F5F0;
+      --accent:    #D4FF00;
+      --accent2:   #C0F000;
+      --white:     #FFFFFF;
+      --muted-d:   #8A9E8B;
+      --muted-l:   #5C6B5D;
+      --display:   'Bebas Neue', sans-serif;
+      --body:      'DM Sans', sans-serif;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       background: var(--dark);
-      color: var(--off-white);
-      font-family: 'Barlow', sans-serif;
+      color: var(--white);
+      font-family: var(--body);
       font-size: 16px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── NAV ─── */
+    /* ── BUTTONS ─────────────────────────────────────── */
+    /* PRIMARY = yellow-green solid = membership/subscribe */
+    .btn-p {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--dark);
+      font-family: var(--body);
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.92rem 1.8rem;
+      border-radius: 6px;
+      border: 2px solid var(--accent);
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      white-space: nowrap;
+    }
+    .btn-p:hover { background: var(--accent2); border-color: var(--accent2); transform: translateY(-1px); }
+
+    /* SECONDARY = outlined = free course / MERIDIAN10 */
+    .btn-s {
+      display: inline-block;
+      background: transparent;
+      color: var(--accent);
+      font-family: var(--body);
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.92rem 1.8rem;
+      border-radius: 6px;
+      border: 2px solid var(--accent);
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      white-space: nowrap;
+    }
+    .btn-s:hover { background: rgba(212,255,0,.08); transform: translateY(-1px); }
+
+    /* ── UTILITIES ───────────────────────────────────── */
+    .label {
+      display: block;
+      font-family: var(--body);
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+    .label.on-light { color: var(--muted-l); }
+
+    .dh {
+      font-family: var(--display);
+      line-height: 0.93;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── NAV ─────────────────────────────────────────── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 200;
+      height: 68px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 5vw;
-      height: 64px;
-      background: rgba(13,31,14,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(212,255,0,0.12);
+      background: rgba(13,31,14,.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(212,255,0,.1);
+      transition: box-shadow .3s;
     }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.5); }
 
     .nav-logo {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 1.4rem;
-      letter-spacing: 0.02em;
-      color: var(--off-white);
+      font-family: var(--display);
+      font-size: 1.5rem;
+      letter-spacing: .05em;
+      color: var(--white);
       text-decoration: none;
+      flex-shrink: 0;
     }
     .nav-logo span { color: var(--accent); }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 2.2rem;
       list-style: none;
     }
     .nav-links a {
-      color: var(--mid);
+      color: var(--muted-d);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: .78rem;
       font-weight: 500;
-      letter-spacing: 0.04em;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      transition: color 0.2s;
+      transition: color .2s;
     }
-    .nav-links a:hover { color: var(--off-white); }
-
-    .nav-cta {
+    .nav-links a:hover { color: var(--white); }
+    .nav-links .nav-btn {
       background: var(--accent);
-      color: var(--dark) !important;
-      padding: 0.45rem 1.1rem;
-      border-radius: 4px;
-      font-weight: 700 !important;
-      transition: background 0.2s !important;
+      color: var(--dark);
+      padding: .45rem 1.1rem;
+      border-radius: 6px;
+      font-weight: 700;
     }
-    .nav-cta:hover { background: var(--accent2) !important; }
+    .nav-links .nav-btn:hover { background: var(--accent2); color: var(--dark); }
 
-    /* ─── HERO ─── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--white);
+      transition: all .3s;
+      border-radius: 2px;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--dark);
+      z-index: 300;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--display);
+      font-size: 2.8rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: .06em;
+      transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+    .mobile-close {
+      position: absolute;
+      top: 1.5rem; right: 5vw;
+      background: none; border: none;
+      color: var(--white); font-size: 2.2rem;
+      cursor: pointer; line-height: 1;
+    }
+
+    /* ── SECTION 1: HERO ─────────────────────────────── */
     #hero {
       min-height: 100vh;
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 120px 5vw 80px;
-      position: relative;
+      padding: 120px 6vw 100px;
       overflow: hidden;
     }
 
-    #hero::before {
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1504328345636-82a9cffc90dd?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+    .hero-bg::after {
       content: '';
       position: absolute;
-      top: -20%;
-      right: -10%;
-      width: 60vw;
-      height: 80vh;
-      background: radial-gradient(ellipse at center, rgba(212,255,0,0.06) 0%, transparent 70%);
-      pointer-events: none;
+      inset: 0;
+      background: rgba(13,31,14,.72);
     }
 
-    .hero-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.2rem;
-    }
+    .hero-content { position: relative; z-index: 1; max-width: 820px; }
 
     .hero-headline {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(3.5rem, 9vw, 8rem);
-      line-height: 0.92;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.6rem;
-      max-width: 900px;
+      font-size: clamp(5rem, 13vw, 11rem);
+      color: var(--white);
+      margin-bottom: 1.8rem;
     }
 
     .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--off-white);
-      max-width: 560px;
-      line-height: 1.65;
-      margin-bottom: 2.6rem;
-      opacity: 0.88;
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: rgba(255,255,255,.88);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: .9rem;
     }
+
+    .hero-pricing {
+      font-size: .88rem;
+      color: var(--muted-d);
+      margin-bottom: 2.2rem;
+    }
+    .hero-pricing strong { color: var(--accent); }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
       align-items: center;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      background: var(--accent);
-      color: var(--dark);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 1.05rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.85rem 2rem;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
-
-    .btn-secondary {
-      display: inline-block;
-      background: transparent;
-      color: var(--off-white);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 1.05rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.85rem 2rem;
-      border-radius: 4px;
-      border: 1.5px solid rgba(245,245,240,0.25);
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s, transform 0.15s;
-    }
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-1px);
+      gap: 1rem;
+      margin-bottom: 1.6rem;
     }
 
     .hero-badge {
-      margin-top: 3.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.85rem;
-      color: var(--mid);
-    }
-    .hero-badge::before {
-      content: '';
       display: inline-block;
-      width: 8px; height: 8px;
-      border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
-      flex-shrink: 0;
-    }
-
-    /* ─── TRUST BAR ─── */
-    #trust {
-      background: var(--dark2);
-      border-top: 1px solid rgba(212,255,0,0.1);
-      border-bottom: 1px solid rgba(212,255,0,0.1);
-      padding: 2.2rem 5vw;
-    }
-
-    .trust-inner {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem 3rem;
-    }
-
-    .trust-label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
+      color: var(--dark);
+      font-weight: 800;
+      font-size: .78rem;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      color: var(--mid);
-      white-space: nowrap;
+      padding: .5rem 1rem;
+      border-radius: 3px;
+      transform: rotate(-2deg);
+      box-shadow: 2px 3px 0 rgba(0,0,0,.35);
+      margin-top: .5rem;
     }
 
-    .trust-schemes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem 1.8rem;
-      align-items: center;
+    .hero-stat {
+      position: absolute;
+      right: 6vw;
+      bottom: 7rem;
+      z-index: 1;
+      background: rgba(13,31,14,.88);
+      border: 1.5px solid rgba(212,255,0,.38);
+      border-radius: 10px;
+      padding: 1.6rem 2rem;
+      backdrop-filter: blur(12px);
+      text-align: center;
+      min-width: 210px;
     }
-
-    .trust-scheme {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--off-white);
-      opacity: 0.65;
-    }
-
-    /* ─── SECTIONS COMMON ─── */
-    section { padding: 6rem 5vw; }
-
-    .section-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600;
-      font-size: 0.8rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-
-    .section-headline {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(2.2rem, 5vw, 4rem);
+    .hero-stat-num {
+      font-family: var(--display);
+      font-size: 3.2rem;
       line-height: 1;
-      text-transform: uppercase;
-      color: var(--off-white);
-      margin-bottom: 1.4rem;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+    .hero-stat-label {
+      font-size: .78rem;
+      color: var(--muted-d);
+      line-height: 1.45;
     }
 
-    .section-body {
+    .scroll-chev {
+      position: absolute;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      color: var(--accent);
+      opacity: .7;
+      animation: bounce 2.2s ease infinite;
+      cursor: pointer;
+      transition: opacity .4s;
+    }
+    .scroll-chev.gone { opacity: 0; pointer-events: none; }
+
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(9px); }
+    }
+
+    /* ── SECTION 2: STAKES ───────────────────────────── */
+    #stakes {
+      background: var(--light);
+      padding: 8rem 6vw;
+      text-align: center;
+    }
+    #stakes .dh {
+      font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+      color: var(--dark);
+      max-width: 820px;
+      margin: 0 auto 1.8rem;
+    }
+    .stakes-body {
       font-size: 1.05rem;
-      color: var(--mid);
-      max-width: 580px;
-      line-height: 1.7;
+      color: #2e3f2e;
+      max-width: 520px;
+      margin: 0 auto 2rem;
+      line-height: 1.8;
+    }
+    .stakes-link {
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--dark);
+      text-decoration: none;
+      border-bottom: 2px solid var(--dark);
+      padding-bottom: 1px;
+      transition: color .2s, border-color .2s;
+    }
+    .stakes-link:hover { color: #2a6e30; border-color: #2a6e30; }
+
+    /* ── SECTION 3: PROBLEM ──────────────────────────── */
+    #problem {
+      background: var(--dark);
+      padding: 7rem 6vw;
+    }
+    #problem .dh {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: var(--white);
+      max-width: 700px;
+      margin-bottom: 3.5rem;
     }
 
-    /* ─── WHY MERIDIAN ─── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3px;
+      margin-bottom: 3rem;
+    }
+
+    .prob-card {
+      position: relative;
+      min-height: 370px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2.5rem;
+      overflow: hidden;
+      background: var(--dark2);
+    }
+    .prob-card-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+    }
+    .prob-card-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(13,31,14,.70);
+    }
+    .prob-card-body { position: relative; z-index: 1; }
+
+    .prob-card-title {
+      font-family: var(--display);
+      font-size: 1.6rem;
+      color: var(--white);
+      letter-spacing: .03em;
+      margin-bottom: .8rem;
+      line-height: 1.05;
+    }
+    .prob-card-desc {
+      font-size: .9rem;
+      color: rgba(255,255,255,.8);
+      line-height: 1.65;
+    }
+
+    .problem-footer {
+      text-align: center;
+      padding-top: 2rem;
+    }
+    .problem-footer p {
+      font-style: italic;
+      color: rgba(255,255,255,.65);
+      font-size: .95rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── SECTION 4: WHY MERIDIAN ─────────────────────── */
     #why {
       background: var(--dark2);
+      padding: 7rem 6vw;
+    }
+    #why .dh {
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      color: var(--white);
+      margin-bottom: 1.2rem;
+    }
+    .why-sub {
+      font-size: 1rem;
+      color: var(--muted-d);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 4rem;
     }
 
     .why-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2px;
-      margin-top: 4rem;
+      gap: 3px;
     }
-
     .why-card {
       background: var(--dark);
       padding: 2.5rem;
       position: relative;
       overflow: hidden;
-      transition: background 0.2s;
+      transition: background .2s;
     }
-    .why-card:hover { background: #111f12; }
+    .why-card:hover { background: #0f2310; }
     .why-card::after {
       content: '';
       position: absolute;
@@ -298,51 +446,55 @@
       background: var(--accent);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform 0.3s;
+      transition: transform .35s;
     }
     .why-card:hover::after { transform: scaleX(1); }
 
-    .why-number {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
+    .why-num {
+      font-family: var(--display);
       font-size: 5rem;
       line-height: 1;
       color: var(--accent);
-      opacity: 0.18;
+      opacity: .12;
       position: absolute;
       top: 1rem; right: 1.5rem;
     }
-
     .why-icon {
       width: 48px; height: 48px;
-      background: rgba(212,255,0,0.1);
+      background: rgba(212,255,0,.1);
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.4rem;
-      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
     }
-
     .why-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
+      font-family: var(--display);
       font-size: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: var(--off-white);
-      margin-bottom: 0.8rem;
+      color: var(--white);
+      letter-spacing: .03em;
+      margin-bottom: .8rem;
     }
-
     .why-desc {
-      font-size: 0.95rem;
-      color: var(--mid);
+      font-size: .92rem;
+      color: var(--muted-d);
       line-height: 1.65;
     }
 
-    /* ─── OFFER / VALUE STACK ─── */
+    /* ── SECTION 5: VALUE STACK ──────────────────────── */
     #offer {
       background: var(--dark);
+      padding: 7rem 6vw;
+    }
+    #offer .dh {
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      color: var(--white);
+      margin-bottom: .8rem;
+    }
+    .offer-sub {
+      font-size: 1rem;
+      color: var(--muted-d);
+      margin-bottom: 3.5rem;
     }
 
     .offer-layout {
@@ -350,358 +502,238 @@
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
       align-items: start;
-      margin-top: 3.5rem;
+      margin-bottom: 5rem;
     }
 
     .offer-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 1.1rem;
+      gap: 1.8rem;
     }
+    .offer-list li { display: flex; align-items: flex-start; gap: 1rem; }
+    .offer-arrow { color: var(--accent); font-size: 1.1rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem; }
+    .offer-item-title { font-weight: 600; font-size: 1rem; color: var(--white); margin-bottom: .2rem; line-height: 1.4; }
+    .offer-item-desc { font-size: .87rem; color: var(--muted-d); line-height: 1.6; }
 
-    .offer-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      font-size: 1.05rem;
-      color: var(--off-white);
-      line-height: 1.5;
-    }
-
-    .offer-list li::before {
-      content: '\2192';
-      color: var(--accent);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-      margin-top: 0.05rem;
-    }
-
-    .offer-stat-block {
+    .offer-stats {
       background: var(--dark2);
-      border: 1px solid rgba(212,255,0,0.12);
-      border-radius: 6px;
+      border: 1px solid rgba(212,255,0,.15);
+      border-radius: 8px;
       padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.2rem;
     }
-
-    .offer-stat {
-      margin-bottom: 2rem;
-    }
-    .offer-stat:last-child { margin-bottom: 0; }
-
-    .offer-stat-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
+    .stat-num {
+      font-family: var(--display);
       font-size: 3.5rem;
       line-height: 1;
       color: var(--accent);
-      margin-bottom: 0.3rem;
+      margin-bottom: .4rem;
     }
+    .stat-label { font-size: .88rem; color: var(--muted-d); line-height: 1.55; }
 
-    .offer-stat-label {
-      font-size: 0.9rem;
-      color: var(--mid);
-      line-height: 1.5;
+    /* Price reveal */
+    .price-reveal {
+      text-align: center;
+      padding: 4.5rem 2rem;
+      border-top: 1px solid rgba(212,255,0,.12);
     }
-
-    /* ─── PRICING ─── */
-    #pricing {
-      background: var(--dark2);
+    .price-pre {
+      font-family: var(--display);
+      font-size: 2rem;
+      color: var(--muted-d);
+      letter-spacing: .06em;
+      margin-bottom: .4rem;
     }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 3.5rem;
-      max-width: 800px;
+    .price-main {
+      font-family: var(--display);
+      font-size: clamp(4rem, 10vw, 8rem);
+      line-height: .88;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
     }
-
-    .price-card {
-      background: var(--dark);
-      border: 1px solid rgba(245,245,240,0.1);
-      border-radius: 6px;
-      padding: 2.5rem;
-      position: relative;
-      transition: border-color 0.2s;
+    .price-weekly {
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: .5rem;
     }
-    .price-card:hover { border-color: rgba(212,255,0,0.3); }
-
-    .price-card.featured {
-      border-color: var(--accent);
-      background: #0e2110;
+    .price-note {
+      font-size: .85rem;
+      color: var(--muted-d);
+      margin-bottom: 2.2rem;
     }
-
     .price-badge {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
+      display: inline-block;
       background: var(--accent);
       color: var(--dark);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.8rem;
-      border-radius: 20px;
-      white-space: nowrap;
-    }
-
-    .price-plan {
-      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.16em;
+      font-size: .8rem;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      color: var(--mid);
-      margin-bottom: 0.8rem;
+      padding: .5rem 1.2rem;
+      border-radius: 3px;
+      transform: rotate(-1.5deg);
+      box-shadow: 2px 3px 0 rgba(0,0,0,.35);
+      margin-bottom: 2.5rem;
+      display: block;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
     }
-
-    .price-amount {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 3.8rem;
-      line-height: 1;
-      color: var(--off-white);
-      margin-bottom: 0.3rem;
-    }
-    .price-amount sup {
-      font-size: 1.8rem;
-      vertical-align: top;
-      margin-top: 0.5rem;
-      display: inline-block;
-    }
-
-    .price-period {
-      font-size: 0.9rem;
-      color: var(--mid);
-      margin-bottom: 1.8rem;
-    }
-
-    .price-features {
-      list-style: none;
+    .price-actions {
       display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-      margin-bottom: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
-    .price-features li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.7rem;
-      font-size: 0.92rem;
-      color: var(--off-white);
-      opacity: 0.85;
-    }
-
-    .price-features li::before {
-      content: '\2713';
-      color: var(--accent);
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .price-note {
-      font-size: 0.8rem;
-      color: var(--mid);
-      margin-top: 1rem;
-      line-height: 1.5;
-    }
-
-    /* ─── HOW IT WORKS ─── */
+    /* ── SECTION 6: HOW IT WORKS ─────────────────────── */
     #how {
-      background: var(--dark);
+      background: var(--light);
+      padding: 7rem 6vw;
     }
-
-    .steps-grid {
+    #how .dh {
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      color: var(--dark);
+      margin-bottom: 4rem;
+    }
+    .steps {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 0;
-      margin-top: 4rem;
       position: relative;
     }
-
-    .steps-grid::before {
+    .steps::before {
       content: '';
       position: absolute;
-      top: 28px;
-      left: 10%;
-      right: 10%;
+      top: 27px; left: 12%; right: 12%;
       height: 1px;
-      background: linear-gradient(to right, transparent, var(--accent), transparent);
-      opacity: 0.3;
+      background: linear-gradient(to right, transparent, rgba(13,31,14,.2), transparent);
     }
-
-    .step {
-      padding: 0 2rem;
-      text-align: center;
-      position: relative;
-    }
-
+    .step { padding: 0 2rem; text-align: center; }
     .step-num {
-      width: 56px; height: 56px;
+      width: 54px; height: 54px;
       border-radius: 50%;
-      background: var(--dark2);
-      border: 2px solid var(--accent);
+      background: var(--dark);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 1.4rem;
+      font-family: var(--display);
+      font-size: 1.5rem;
       color: var(--accent);
       margin: 0 auto 1.5rem;
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
     }
-
     .step-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 1.3rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--off-white);
-      margin-bottom: 0.7rem;
+      font-family: var(--display);
+      font-size: 1.4rem;
+      color: var(--dark);
+      letter-spacing: .03em;
+      margin-bottom: .7rem;
     }
+    .step-desc { font-size: .9rem; color: var(--muted-l); line-height: 1.65; }
 
-    .step-desc {
-      font-size: 0.9rem;
-      color: var(--mid);
-      line-height: 1.6;
-    }
-
-    /* ─── COURSE TICKER ─── */
+    /* ── SECTION 7: COURSE LIBRARY ───────────────────── */
     #courses {
       background: var(--dark2);
-      padding: 5rem 0;
+      padding: 6rem 0;
       overflow: hidden;
     }
-
-    .courses-header {
-      padding: 0 5vw;
+    .courses-hdr {
+      padding: 0 6vw;
       margin-bottom: 3rem;
     }
+    #courses .dh {
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .courses-sub { font-size: 1rem; color: var(--muted-d); max-width: 560px; line-height: 1.7; }
 
-    .ticker-wrapper {
+    .ticker-wrap {
       position: relative;
       overflow: hidden;
+      padding: .5rem 0;
     }
-
-    .ticker-wrapper::before,
-    .ticker-wrapper::after {
+    .ticker-wrap::before,
+    .ticker-wrap::after {
       content: '';
       position: absolute;
       top: 0; bottom: 0;
-      width: 8vw;
-      z-index: 2;
+      width: 10vw; z-index: 2;
       pointer-events: none;
     }
-    .ticker-wrapper::before {
-      left: 0;
-      background: linear-gradient(to right, var(--dark2), transparent);
-    }
-    .ticker-wrapper::after {
-      right: 0;
-      background: linear-gradient(to left, var(--dark2), transparent);
-    }
+    .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--dark2), transparent); }
+    .ticker-wrap::after  { right: 0; background: linear-gradient(to left,  var(--dark2), transparent); }
 
-    .ticker-track {
+    .ticker-row {
       display: flex;
-      gap: 1.5rem;
-      animation: ticker-scroll 35s linear infinite;
-      width: max-content;
-      padding: 0.5rem 0;
-    }
-    .ticker-track:hover { animation-play-state: paused; }
-
-    @keyframes ticker-scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    .ticker-item {
-      background: var(--dark);
-      border: 1px solid rgba(245,245,240,0.08);
-      border-radius: 4px;
-      padding: 1rem 1.6rem;
+      align-items: center;
       white-space: nowrap;
-      flex-shrink: 0;
-      transition: border-color 0.2s;
+      width: max-content;
+      animation: ticker 50s linear infinite;
     }
-    .ticker-item:hover { border-color: rgba(212,255,0,0.3); }
+    .ticker-row:hover { animation-play-state: paused; }
 
-    .ticker-id {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .t-title {
+      font-family: var(--display);
+      font-size: 1.25rem;
+      letter-spacing: .04em;
+      color: var(--white);
+      padding: 0 1.8rem;
+    }
+    .t-dot {
       color: var(--accent);
-      margin-bottom: 0.25rem;
+      font-size: 1.2rem;
+      flex-shrink: 0;
     }
 
-    .ticker-title {
-      font-size: 0.9rem;
-      color: var(--off-white);
-      font-weight: 500;
-    }
+    .courses-cta { text-align: center; margin-top: 3rem; padding: 0 6vw; }
 
-    .ticker-hours {
-      font-size: 0.78rem;
-      color: var(--mid);
-      margin-top: 0.2rem;
-    }
-
-    .ticker-cta {
-      text-align: center;
-      margin-top: 2.5rem;
-      padding: 0 5vw;
-    }
-
-    /* ─── CERTIFICATE ─── */
+    /* ── SECTION 8: CERTIFICATE ──────────────────────── */
     #certificate {
       background: var(--dark);
+      padding: 7rem 6vw;
     }
-
+    #certificate .dh {
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      color: var(--white);
+      margin-bottom: 3.5rem;
+    }
     .cert-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: center;
-      margin-top: 3.5rem;
     }
-
-    .cert-mockup {
-      background: var(--off-white);
+    .cert-mock {
+      background: #F5F5F0;
       color: var(--dark);
       border-radius: 8px;
       padding: 2.5rem;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      box-shadow: 0 24px 64px rgba(0,0,0,.55);
       position: relative;
       overflow: hidden;
     }
-
-    .cert-watermark {
+    .cert-wm {
       position: absolute;
       top: 50%; left: 50%;
-      transform: translate(-50%, -50%) rotate(-30deg);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
+      transform: translate(-50%,-50%) rotate(-30deg);
+      font-family: var(--display);
       font-size: 3rem;
-      color: rgba(13,31,14,0.04);
+      color: rgba(13,31,14,.04);
       white-space: nowrap;
       pointer-events: none;
-      letter-spacing: 0.1em;
       user-select: none;
+      letter-spacing: .1em;
     }
-
-    .cert-header {
+    .cert-hdr {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -709,234 +741,197 @@
       padding-bottom: 1rem;
       border-bottom: 2px solid #0D1F0E;
     }
-
-    .cert-logo-text {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
+    .cert-logo {
+      font-family: var(--display);
       font-size: 1.1rem;
       color: #0D1F0E;
-      letter-spacing: 0.05em;
+      letter-spacing: .05em;
     }
-
-    .cert-logo-text span {
-      color: #D4FF00;
-      background: #0D1F0E;
-      padding: 0 4px;
-    }
-
-    .cert-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      color: #666;
-    }
-
-    .cert-title-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #888;
-      text-align: center;
-      margin-bottom: 0.4rem;
-    }
-
-    .cert-recipient {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 2rem;
-      text-align: center;
-      color: #0D1F0E;
-      margin-bottom: 0.3rem;
-    }
-
-    .cert-text {
-      text-align: center;
-      font-size: 0.8rem;
-      color: #555;
-      margin-bottom: 1rem;
-      line-height: 1.5;
-    }
-
-    .cert-course {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      text-align: center;
-      color: #0D1F0E;
-      background: rgba(13,31,14,0.06);
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      margin-bottom: 1rem;
-    }
-
-    .cert-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      font-size: 0.7rem;
-      color: #666;
-      padding-top: 0.8rem;
-      border-top: 1px solid #e0e0e0;
-    }
-
-    .cert-meta strong { color: #0D1F0E; display: block; font-size: 0.8rem; }
-
-    .cert-qr {
-      width: 40px; height: 40px;
-      background: #0D1F0E;
-      border-radius: 3px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 2px;
-      padding: 4px;
-    }
+    .cert-logo span { color: #D4FF00; background: #0D1F0E; padding: 0 4px; }
+    .cert-num { font-size: .7rem; font-weight: 600; letter-spacing: .12em; color: #666; }
+    .cert-lbl { font-size: .65rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #888; text-align: center; margin-bottom: .4rem; }
+    .cert-rec { font-family: var(--display); font-size: 2.2rem; text-align: center; color: #0D1F0E; margin-bottom: .3rem; letter-spacing: .04em; }
+    .cert-txt { text-align: center; font-size: .78rem; color: #555; margin-bottom: 1rem; line-height: 1.5; }
+    .cert-course { font-weight: 700; font-size: .9rem; text-align: center; color: #0D1F0E; background: rgba(13,31,14,.06); padding: .5rem 1rem; border-radius: 4px; margin-bottom: 1rem; }
+    .cert-meta { display: flex; justify-content: space-between; align-items: flex-end; font-size: .68rem; color: #666; padding-top: .8rem; border-top: 1px solid #e0e0e0; }
+    .cert-meta strong { color: #0D1F0E; display: block; font-size: .75rem; }
+    .cert-qr { width: 40px; height: 40px; background: #0D1F0E; border-radius: 3px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; padding: 4px; }
     .cert-qr div { background: #fff; border-radius: 1px; }
-    .cert-qr div:nth-child(1),
-    .cert-qr div:nth-child(3),
-    .cert-qr div:nth-child(7),
-    .cert-qr div:nth-child(9) { background: #0D1F0E; }
+    .cert-qr div:nth-child(1),.cert-qr div:nth-child(3),.cert-qr div:nth-child(7),.cert-qr div:nth-child(9) { background: #0D1F0E; }
     .cert-qr div:nth-child(5) { background: #D4FF00; }
 
-    .cert-points {
-      display: flex;
-      flex-direction: column;
-      gap: 1.4rem;
-    }
-
-    .cert-point {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    .cert-point-icon {
+    .cert-pts { display: flex; flex-direction: column; gap: 1.5rem; }
+    .cert-pt { display: flex; align-items: flex-start; gap: 1rem; }
+    .cert-pt-ico {
       width: 36px; height: 36px;
-      background: rgba(212,255,0,0.1);
+      background: rgba(212,255,0,.1);
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
+    .cert-pt-title { font-family: var(--display); font-size: 1rem; color: var(--white); margin-bottom: .2rem; letter-spacing: .04em; }
+    .cert-pt-desc { font-size: .88rem; color: var(--muted-d); line-height: 1.55; }
 
-    .cert-point-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--off-white);
-      margin-bottom: 0.2rem;
-    }
-
-    .cert-point-desc {
-      font-size: 0.9rem;
-      color: var(--mid);
-      line-height: 1.5;
-    }
-
-    /* ─── FAQ ─── */
-    #faq {
+    /* ── SECTION 9: SOCIAL PROOF ─────────────────────── */
+    #social {
       background: var(--dark2);
+      padding: 7rem 6vw;
+    }
+    #social .dh {
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      color: var(--white);
+      margin-bottom: 3.5rem;
+    }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .testi-card {
+      background: var(--dark3);
+      border: 1px solid rgba(212,255,0,.18);
+      border-radius: 8px;
+      padding: 2.5rem;
+      position: relative;
+    }
+    .testi-qm {
+      font-family: var(--display);
+      font-size: 5rem;
+      line-height: .7;
+      color: var(--accent);
+      opacity: .7;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .testi-text {
+      font-style: italic;
+      font-size: .95rem;
+      color: rgba(255,255,255,.9);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .testi-name {
+      font-weight: 700;
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
     }
 
+    .sources-strip {
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(212,255,0,.08);
+    }
+    .sources-lbl {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted-d);
+      text-align: center;
+      margin-bottom: 1.4rem;
+    }
+    .sources-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem 3rem;
+    }
+    .source-name {
+      font-family: var(--display);
+      font-size: 1rem;
+      letter-spacing: .1em;
+      color: var(--muted-d);
+      opacity: .45;
+    }
+
+    /* ── SECTION 10: FAQ ─────────────────────────────── */
+    #faq {
+      background: var(--light);
+      padding: 7rem 6vw;
+    }
+    #faq .dh {
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      color: var(--dark);
+      margin-bottom: 3.5rem;
+    }
     .faq-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-      gap: 1px;
-      margin-top: 3.5rem;
+      gap: 2px;
     }
-
     .faq-item {
-      background: var(--dark);
+      background: #fff;
       padding: 2rem 2.2rem;
-      transition: background 0.2s;
+      transition: background .2s;
     }
-    .faq-item:hover { background: #111f12; }
-
+    .faq-item:hover { background: #eef7ee; }
     .faq-q {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
+      font-family: var(--display);
       font-size: 1.1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--off-white);
-      margin-bottom: 0.8rem;
+      letter-spacing: .04em;
+      color: var(--dark);
+      margin-bottom: .8rem;
       display: flex;
       align-items: flex-start;
-      gap: 0.8rem;
+      gap: .8rem;
     }
-    .faq-q::before {
-      content: 'Q';
-      color: var(--accent);
+    .faq-q-badge {
+      background: var(--accent);
+      color: var(--dark);
+      font-family: var(--display);
+      font-size: .85rem;
+      width: 24px; height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
       flex-shrink: 0;
+      margin-top: 1px;
     }
+    .faq-a { font-size: .9rem; color: var(--muted-l); line-height: 1.7; padding-left: 2rem; }
 
-    .faq-a {
-      font-size: 0.92rem;
-      color: var(--mid);
-      line-height: 1.65;
-      padding-left: 1.6rem;
-    }
-
-    /* ─── FINAL CTA ─── */
+    /* ── SECTION 11: CLOSING CTA ─────────────────────── */
     #cta-final {
       background: var(--dark);
+      padding: 8rem 6vw;
       text-align: center;
-      padding: 7rem 5vw;
       position: relative;
       overflow: hidden;
     }
-
     #cta-final::before {
       content: '';
       position: absolute;
       top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px; height: 600px;
-      background: radial-gradient(ellipse at center, rgba(212,255,0,0.07) 0%, transparent 70%);
+      transform: translate(-50%,-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse, rgba(212,255,0,.06) 0%, transparent 70%);
       pointer-events: none;
     }
-
-    .cta-final-hl {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(2.8rem, 6vw, 5.5rem);
-      line-height: 0.95;
-      text-transform: uppercase;
-      color: var(--off-white);
+    .cta-hl {
+      font-size: clamp(3rem, 7.5vw, 7rem);
+      color: var(--white);
       margin-bottom: 1.5rem;
       position: relative;
     }
-    .cta-final-hl em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
-    .cta-final-sub {
-      font-size: 1rem;
-      color: var(--mid);
-      max-width: 440px;
+    .cta-sub {
+      font-size: 1.05rem;
+      color: var(--muted-d);
+      max-width: 460px;
       margin: 0 auto 2.5rem;
-      line-height: 1.65;
+      line-height: 1.75;
       position: relative;
     }
+    .cta-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; position: relative; margin-bottom: 1.5rem; }
+    .cta-small { font-size: .85rem; color: var(--muted-d); position: relative; }
+    .cta-small a { color: var(--accent); text-decoration: none; }
 
-    .cta-actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      position: relative;
-    }
-
-    /* ─── FOOTER ─── */
+    /* ── FOOTER ──────────────────────────────────────── */
     footer {
       background: #080f08;
-      border-top: 1px solid rgba(212,255,0,0.08);
+      border-top: 1px solid rgba(212,255,0,.08);
       padding: 3rem 5vw;
       display: flex;
       flex-wrap: wrap;
@@ -944,424 +939,517 @@
       align-items: center;
       gap: 1.5rem;
     }
+    .ft-logo { font-family: var(--display); font-size: 1.3rem; letter-spacing: .05em; color: var(--white); text-decoration: none; }
+    .ft-logo span { color: var(--accent); }
+    .ft-links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; list-style: none; }
+    .ft-links a { font-size: .82rem; color: var(--muted-d); text-decoration: none; transition: color .2s; }
+    .ft-links a:hover { color: var(--white); }
+    .ft-copy { font-size: .78rem; color: var(--muted-d); opacity: .6; text-align: right; line-height: 1.6; }
 
-    .footer-logo {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 1.2rem;
-      color: var(--off-white);
-      text-decoration: none;
+    /* ── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .hero-stat { display: none; }
     }
-    .footer-logo span { color: var(--accent); }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1.5rem;
-      list-style: none;
-    }
-    .footer-links a {
-      font-size: 0.82rem;
-      color: var(--mid);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--off-white); }
-
-    .footer-copy {
-      font-size: 0.78rem;
-      color: var(--mid);
-      opacity: 0.6;
-      text-align: right;
-      line-height: 1.6;
-    }
-
-    /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
+      .hamburger { display: flex; }
       .offer-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-      .cert-layout { grid-template-columns: 1fr; }
-      .steps-grid::before { display: none; }
+      .cert-layout { grid-template-columns: 1fr; gap: 3rem; }
       .faq-grid { grid-template-columns: 1fr; }
-      .footer-copy { text-align: left; }
-      .trust-inner { gap: 1rem 1.5rem; }
+      .ft-copy { text-align: left; }
+      .steps::before { display: none; }
+      .hero-headline { font-size: clamp(4rem, 15vw, 6rem); }
     }
-
     @media (max-width: 500px) {
-      .hero-headline { font-size: 3rem; }
-      section { padding: 4rem 5vw; }
+      #stakes, #problem, #why, #offer, #how, #certificate, #social, #faq, #cta-final { padding: 4.5rem 5vw; }
+      #hero { padding: 100px 5vw 80px; }
+      #courses { padding: 4.5rem 0; }
+      .problem-grid { gap: 2px; }
     }
   </style>
 </head>
 <body>
 
 <!-- ─── NAV ─── -->
-<nav>
+<nav id="navbar">
   <a class="nav-logo" href="#">MERIDIAN <span>CPD</span></a>
   <ul class="nav-links">
     <li><a href="#why">Why Meridian</a></li>
     <li><a href="#courses">Courses</a></li>
-    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#offer">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="#pricing" class="nav-cta">Subscribe</a></li>
+    <li><a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="nav-btn">Subscribe — £79/Year</a></li>
   </ul>
+  <button class="hamburger" onclick="document.getElementById('mob').classList.add('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mob">
+  <button class="mobile-close" onclick="document.getElementById('mob').classList.remove('open')">&times;</button>
+  <a href="#why"     onclick="document.getElementById('mob').classList.remove('open')">Why Meridian</a>
+  <a href="#courses" onclick="document.getElementById('mob').classList.remove('open')">Courses</a>
+  <a href="#offer"   onclick="document.getElementById('mob').classList.remove('open')">Pricing</a>
+  <a href="#faq"     onclick="document.getElementById('mob').classList.remove('open')">FAQ</a>
+  <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" style="color:var(--accent)">Subscribe &#8212; &#163;79/Year</a>
+</div>
 
 <!-- ─── 1. HERO ─── -->
 <section id="hero">
-  <p class="hero-eyebrow">CPD for UK Energy Assessors</p>
-  <h1 class="hero-headline">Stay Sharp.<br>Stay Certified.</h1>
-  <p class="hero-sub">
-    Practitioner-written CPD for DEAs and Retrofit Assessors. Downloadable PDFs, tamper-proof certificates, all from a fellow energy professional.
-  </p>
-  <div class="hero-actions">
-    <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="btn-primary">Get Free RdSAP 10 Overview &#8594;</a>
-    <a href="#pricing" class="btn-secondary">See Pricing</a>
+  <div class="hero-bg"></div>
+
+  <div class="hero-content">
+    <span class="label">CPD for UK Energy Assessors</span>
+    <h1 class="dh hero-headline">Your CPD.<br>Sorted.</h1>
+    <p class="hero-sub">Practitioner-written CPD for DEAs and Retrofit Assessors. Stay compliant. Keep your qualification. Get on with your work.</p>
+    <p class="hero-pricing">From <strong>&#163;19.99</strong> per course &mdash; or unlimited access for <strong>&#163;79/year</strong></p>
+    <div class="hero-actions">
+      <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Full Access &mdash; &#163;79/Year</a>
+      <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="btn-s">Get Free Course &mdash; Code MERIDIAN10</a>
+    </div>
+    <span class="hero-badge">First course free &mdash; use code MERIDIAN10</span>
   </div>
-  <p class="hero-badge">Use code MERIDIAN10 at checkout for your free 2-hour RdSAP 10 course</p>
+
+  <!-- Floating value anchor (desktop only) -->
+  <div class="hero-stat">
+    <div class="hero-stat-num">&#163;6.58</div>
+    <div class="hero-stat-label">Average cost per course<br>on the annual plan</div>
+  </div>
+
+  <!-- Scroll chevron -->
+  <div class="scroll-chev" id="chev" onclick="document.getElementById('stakes').scrollIntoView({behavior:'smooth'})">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
 </section>
 
-<!-- ─── 2. TRUST BAR ─── -->
-<div id="trust">
-  <div class="trust-inner">
-    <span class="trust-label">Relevant for assessors accredited with</span>
-    <div class="trust-schemes">
-      <span class="trust-scheme">Elmhurst Energy</span>
-      <span class="trust-scheme">Quidos</span>
-      <span class="trust-scheme">ECMK</span>
-      <span class="trust-scheme">TrustMark</span>
-      <span class="trust-scheme">CIBSE</span>
-      <span class="trust-scheme">Stroma</span>
+<!-- ─── 2. STAKES ─── -->
+<section id="stakes">
+  <span class="label on-light">The Reality</span>
+  <h2 class="dh">If you miss your CPD hours,<br>you lose your qualification.</h2>
+  <p class="stakes-body">No qualification means no work. No income. It really is that simple. Every DEA, Retrofit Assessor and Retrofit Coordinator in the UK must meet their CPD requirements every year &mdash; no exceptions, no extensions. Meridian CPD exists so that never becomes a problem for you.</p>
+  <a href="#how" class="stakes-link">See how Meridian CPD works &#8594;</a>
+</section>
+
+<!-- ─── 3. PROBLEM ─── -->
+<section id="problem">
+  <span class="label">The Problem</span>
+  <h2 class="dh">Not all CPD is<br>created equal.</h2>
+
+  <div class="problem-grid">
+    <div class="prob-card">
+      <div class="prob-card-bg" style="background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="prob-card-body">
+        <h3 class="prob-card-title">Generic content that teaches you nothing</h3>
+        <p class="prob-card-desc">Courses designed for everyone are relevant to no one. If it wasn&apos;t built specifically for energy professionals, why are you sitting through it?</p>
+      </div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-card-bg" style="background-image:url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="prob-card-body">
+        <h3 class="prob-card-title">Confusing scheme requirements</h3>
+        <p class="prob-card-desc">Which scheme? How many hours? What format counts? Most providers leave you to figure that out entirely on your own.</p>
+      </div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-card-bg" style="background-image:url('https://images.unsplash.com/photo-1590402494610-2c378a9114c6?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="prob-card-body">
+        <h3 class="prob-card-title">Last-minute panic every year</h3>
+        <p class="prob-card-desc">CPD deadlines creep up fast. Most assessors find themselves scrambling to catch up on hours that should have been spread across the year.</p>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ─── 3. WHY MERIDIAN ─── -->
+  <div class="problem-footer">
+    <p>We built Meridian CPD to fix all three &mdash; for &#163;79 a year.</p>
+    <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Full Access &mdash; &#163;79/Year</a>
+  </div>
+</section>
+
+<!-- ─── 4. WHY MERIDIAN ─── -->
 <section id="why">
-  <p class="section-eyebrow">Why Meridian</p>
-  <h2 class="section-headline">Built by assessors.<br>For assessors.</h2>
-  <p class="section-body">No corporate filler. No generic health-and-safety padding. Just the technical knowledge you actually need to do your job well and stay accredited.</p>
+  <span class="label">Why Meridian</span>
+  <h2 class="dh">Built by assessors.<br>For assessors.</h2>
+  <p class="why-sub">No corporate filler. No generic health-and-safety padding. Just the technical knowledge you actually need to do your job well and stay qualified.</p>
 
   <div class="why-grid">
     <div class="why-card">
-      <span class="why-number">01</span>
+      <span class="why-num">01</span>
       <div class="why-icon">
+        <!-- House + EPC arrow SVG -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          <path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1z"/>
+          <path d="M9 21v-6h6v6"/>
+          <path d="M7 13h4.5l2-2.5-1.5-2.5H7"/>
         </svg>
       </div>
       <h3 class="why-title">Practitioner-Written</h3>
       <p class="why-desc">Every course is written by a working energy assessor with real-world experience of RdSAP, PAS 2035, and the ECO/GBIS/Warm Homes landscape. Not AI-generated fluff. Not marketing copy.</p>
     </div>
     <div class="why-card">
-      <span class="why-number">02</span>
+      <span class="why-num">02</span>
       <div class="why-icon">
+        <!-- Document + download arrow SVG -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9,15 12,18 15,15"/>
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14,2 14,8 20,8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <polyline points="9,15 12,18 15,15"/>
         </svg>
       </div>
       <h3 class="why-title">PDF You Actually Keep</h3>
-      <p class="why-desc">Every course is delivered as a proper downloadable PDF — readable offline, printable, referenceable. Yours to keep and use as a technical reference long after the CPD year closes.</p>
+      <p class="why-desc">Every course is delivered as a proper downloadable PDF &mdash; readable offline, printable, referenceable. Yours to keep and use as a technical reference long after the CPD year closes.</p>
     </div>
     <div class="why-card">
-      <span class="why-number">03</span>
+      <span class="why-num">03</span>
       <div class="why-icon">
+        <!-- Shield + checkmark SVG -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9,12 11,14 15,10"/>
         </svg>
       </div>
       <h3 class="why-title">Tamper-Proof Certificates</h3>
       <p class="why-desc">Certificates are issued on completion, not payment. Each carries a unique certificate number, QR verification link, and your name. Acceptable evidence for accreditation body CPD logs.</p>
     </div>
     <div class="why-card">
-      <span class="why-number">04</span>
+      <span class="why-num">04</span>
       <div class="why-icon">
+        <!-- Circular arrows + lightning SVG -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
+          <polyline points="23,4 23,10 17,10"/>
+          <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+          <path d="M13.5 7.5l-3 4.5h3.5l-3 4.5" stroke-width="1.8"/>
         </svg>
       </div>
       <h3 class="why-title">Industry-Selected Topics</h3>
-      <p class="why-desc">Course topics are handpicked by experienced energy and SAP professionals — selected for direct relevance to day-to-day assessment work, not generic industry noise. Every title is chosen to matter.</p>
+      <p class="why-desc">Course topics are handpicked by experienced energy and SAP professionals &mdash; selected for direct relevance to day-to-day assessment work, not generic industry noise. Every title is chosen to matter.</p>
     </div>
   </div>
 </section>
 
-<!-- ─── 4. OFFER / VALUE STACK ─── -->
+<!-- ─── 5. VALUE STACK ─── -->
 <section id="offer">
-  <p class="section-eyebrow">What you get</p>
-  <h2 class="section-headline">Your annual<br>subscription includes</h2>
+  <span class="label">What You Get</span>
+  <h2 class="dh">Everything you need.<br>One annual membership.</h2>
+  <p class="offer-sub">Here&apos;s what you get when you join Meridian CPD:</p>
 
   <div class="offer-layout">
     <ul class="offer-list">
-      <li>Unlimited access to every course in the library — past and future</li>
-      <li>New courses added automatically every two weeks from live regulatory sources</li>
-      <li>PDF download for every course — yours to keep forever</li>
-      <li>Completion certificate for every course you finish</li>
-      <li>Unique certificate numbers with QR verification — acceptable for accreditation logs</li>
-      <li>RdSAP 10, PAS 2035, Retrofit, and UK energy policy covered</li>
-      <li>Written to the technical level of a working assessor — not dumbed down</li>
+      <li>
+        <span class="offer-arrow">&#8594;</span>
+        <div><div class="offer-item-title">Unlimited access to every course in the library &mdash; past and future</div>
+        <div class="offer-item-desc">Complete as many courses as you need. No per-course fees, no limits, no surprises.</div></div>
+      </li>
+      <li>
+        <span class="offer-arrow">&#8594;</span>
+        <div><div class="offer-item-title">New courses added every two weeks from live regulatory sources</div>
+        <div class="offer-item-desc">GOV.UK policy papers, TrustMark updates, BRE guidance, Elmhurst and Quidos bulletins &mdash; drawn directly from the sources that govern your work.</div></div>
+      </li>
+      <li>
+        <span class="offer-arrow">&#8594;</span>
+        <div><div class="offer-item-title">PDF download for every course &mdash; yours to keep forever</div>
+        <div class="offer-item-desc">Readable offline, printable, referenceable. A technical document you keep long after the CPD year closes, not a video you watch once and forget.</div></div>
+      </li>
+      <li>
+        <span class="offer-arrow">&#8594;</span>
+        <div><div class="offer-item-title">Completion certificate for every course you finish</div>
+        <div class="offer-item-desc">Issued on completion, not payment. Each certificate carries a unique reference number and QR verification link &mdash; acceptable evidence for accreditation body CPD logs.</div></div>
+      </li>
+      <li>
+        <span class="offer-arrow">&#8594;</span>
+        <div><div class="offer-item-title">Written to the technical level of a working assessor</div>
+        <div class="offer-item-desc">Not dumbed down. Not padded out. Content grounded in primary regulatory sources and written by practitioners with real-world experience of RdSAP, PAS 2035, and the ECO/GBIS/Warm Homes landscape.</div></div>
+      </li>
+      <li>
+        <span class="offer-arrow">&#8594;</span>
+        <div><div class="offer-item-title">RdSAP 10, PAS 2035, Retrofit, and UK energy policy covered</div>
+        <div class="offer-item-desc">The full breadth of what DEAs, Retrofit Assessors and Retrofit Coordinators need to stay current and compliant.</div></div>
+      </li>
+      <li>
+        <span class="offer-arrow">&#8594;</span>
+        <div><div class="offer-item-title">Available exactly when you need it</div>
+        <div class="offer-item-desc">Your library is always open. Whether planning ahead or working against a deadline, every course is available right now &mdash; no booking windows, no waiting lists.</div></div>
+      </li>
     </ul>
 
-    <div class="offer-stat-block">
-      <div class="offer-stat">
-        <div class="offer-stat-num">12+</div>
-        <div class="offer-stat-label">Courses in the launch library — growing every two weeks</div>
+    <div class="offer-stats">
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Courses in the launch library &mdash; growing every two weeks</div>
       </div>
-      <div class="offer-stat">
-        <div class="offer-stat-num">&#163;6.58</div>
-        <div class="offer-stat-label">Average cost per course on the annual plan — less than a couple of coffees</div>
+      <div>
+        <div class="stat-num">&#163;6.58</div>
+        <div class="stat-label">Average cost per course on the annual plan &mdash; less than a couple of coffees</div>
       </div>
-      <div class="offer-stat">
-        <div class="offer-stat-num">35+</div>
-        <div class="offer-stat-label">CPD hours available in year one — well above most scheme minimums</div>
+      <div>
+        <div class="stat-num">35+</div>
+        <div class="stat-label">CPD hours available in year one &mdash; well above most scheme minimums of 10&ndash;20 hours</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ─── 5. PRICING ─── -->
-<section id="pricing">
-  <p class="section-eyebrow">Pricing</p>
-  <h2 class="section-headline">Simple, honest pricing.</h2>
-  <p class="section-body">No monthly minimum. No upsells. Pay once per year or grab a single course when you need it.</p>
-
-  <div class="pricing-grid">
-    <div class="price-card">
-      <p class="price-plan">Single Course</p>
-      <div class="price-amount"><sup>&#163;</sup>19.99</div>
-      <p class="price-period">One-time payment &middot; PDF + certificate included</p>
-      <ul class="price-features">
-        <li>Full course PDF — yours to download and keep</li>
-        <li>Completion certificate on finishing</li>
-        <li>Certificate number + QR verification</li>
-        <li>No subscription required</li>
-      </ul>
-      <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="btn-secondary" style="width:100%;text-align:center;display:block">Buy a Course</a>
-      <p class="price-note">Free 2-hour RdSAP 10 overview available — use code <strong style="color:var(--accent)">MERIDIAN10</strong> at checkout.</p>
-    </div>
-
-    <div class="price-card featured">
-      <div class="price-badge">Best Value</div>
-      <p class="price-plan">Annual Subscription</p>
-      <div class="price-amount"><sup>&#163;</sup>79</div>
-      <p class="price-period">Per year &middot; cancel anytime</p>
-      <ul class="price-features">
-        <li>Unlimited access to all current courses</li>
-        <li>All future courses included automatically</li>
-        <li>PDF download for every course</li>
-        <li>Completion certificate for every course</li>
-        <li>New content added every two weeks</li>
-      </ul>
-      <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-primary" style="width:100%;text-align:center;display:block">Subscribe &#8212; &#163;79/year</a>
-      <p class="price-note">Equivalent to less than &#163;7 per course. Most assessors earn this back on a single job.</p>
+  <!-- Price reveal -->
+  <div class="price-reveal">
+    <p class="price-pre">All of this.</p>
+    <p class="price-main">&#163;79 for the whole year.</p>
+    <p class="price-weekly">That&apos;s less than &#163;1.52 a week to keep your qualification completely secure.</p>
+    <p class="price-note">Individual courses available from &#163;19.99 &mdash; but the membership pays for itself after just four courses.</p>
+    <span class="price-badge">Not ready to commit? Claim your first course free &mdash; code MERIDIAN10 at checkout.</span>
+    <div class="price-actions">
+      <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Full Access &mdash; &#163;79/Year</a>
+      <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="btn-s">Get Free Course &mdash; Code MERIDIAN10</a>
     </div>
   </div>
 </section>
 
 <!-- ─── 6. HOW IT WORKS ─── -->
 <section id="how">
-  <p class="section-eyebrow">How it works</p>
-  <h2 class="section-headline">Three steps.<br>Zero faff.</h2>
+  <span class="label on-light">How It Works</span>
+  <h2 class="dh">Three steps.<br>Zero faff.</h2>
 
-  <div class="steps-grid">
+  <div class="steps">
+    <div class="steps-before"></div>
     <div class="step">
       <div class="step-num">1</div>
       <h3 class="step-title">Subscribe or buy</h3>
-      <p class="step-desc">Pay via Stripe. Annual plan or single course — your choice. Secure checkout, instant confirmation.</p>
+      <p class="step-desc">Pay via Stripe. Annual plan or single course &mdash; your choice. Secure checkout, instant confirmation.</p>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <h3 class="step-title">Get your PDF</h3>
-      <p class="step-desc">Course PDF lands in your inbox within minutes. Download it. Read it on your terms — online or off.</p>
+      <p class="step-desc">Course PDF lands in your inbox within minutes. Download it. Read it on your terms &mdash; online or off.</p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <h3 class="step-title">Complete &amp; certify</h3>
-      <p class="step-desc">Click the completion link in your email. Your certificate is generated and emailed instantly — ready for your CPD log.</p>
+      <p class="step-desc">Click the completion link in your email. Your certificate is generated and emailed instantly &mdash; ready for your CPD log.</p>
     </div>
   </div>
 </section>
 
-<!-- ─── 7. COURSE TICKER ─── -->
-<section id="courses" style="padding-top:5rem;padding-bottom:5rem;padding-left:0;padding-right:0;">
-  <div class="courses-header">
-    <p class="section-eyebrow">Course Library</p>
-    <h2 class="section-headline">Always growing.<br>Never repeating.</h2>
-    <p class="section-body" style="margin-top:0.8rem;">New courses generated from live regulatory and technical sources every two weeks. A snapshot of what's in the library now.</p>
+<!-- ─── 7. COURSE LIBRARY ─── -->
+<section id="courses">
+  <div class="courses-hdr">
+    <span class="label">Course Library</span>
+    <h2 class="dh">Always growing.<br>Never repeating.</h2>
+    <p class="courses-sub">New courses drawn from live regulatory and technical sources every two weeks. A snapshot of what&apos;s in the library now.</p>
   </div>
 
-  <div class="ticker-wrapper">
-    <div class="ticker-track">
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-001</div><div class="ticker-title">RdSAP 10: What's Changed and Why</div><div class="ticker-hours">2 CPD hours</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-002</div><div class="ticker-title">Measuring Windows in RdSAP 10</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-003</div><div class="ticker-title">Ventilation in RdSAP 10: PIV, MVHR, Natural</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-004</div><div class="ticker-title">Room in Roof: Type 1 and Type 2</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-010</div><div class="ticker-title">Lighting and Renewables in RdSAP 10</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-011</div><div class="ticker-title">Solar PV, Battery Storage and PV Diverters</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-021</div><div class="ticker-title">Airtightness Testing in RdSAP 10</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-RA-001</div><div class="ticker-title">PAS 2035:2023 Overview</div><div class="ticker-hours">2 CPD hours</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-RA-006</div><div class="ticker-title">EPR Variation: RdSAP 10 Transition</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-RA-009</div><div class="ticker-title">EWI: Planning Permission and Fire Risk</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-ALL-001</div><div class="ticker-title">UK Energy Policy 2026</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-ALL-004</div><div class="ticker-title">Fire Safety in Retrofit</div><div class="ticker-hours">1 CPD hour</div></div>
-      <!-- Duplicate set for seamless infinite loop -->
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-001</div><div class="ticker-title">RdSAP 10: What's Changed and Why</div><div class="ticker-hours">2 CPD hours</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-002</div><div class="ticker-title">Measuring Windows in RdSAP 10</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-003</div><div class="ticker-title">Ventilation in RdSAP 10: PIV, MVHR, Natural</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-004</div><div class="ticker-title">Room in Roof: Type 1 and Type 2</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-010</div><div class="ticker-title">Lighting and Renewables in RdSAP 10</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-011</div><div class="ticker-title">Solar PV, Battery Storage and PV Diverters</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-DEA-021</div><div class="ticker-title">Airtightness Testing in RdSAP 10</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-RA-001</div><div class="ticker-title">PAS 2035:2023 Overview</div><div class="ticker-hours">2 CPD hours</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-RA-006</div><div class="ticker-title">EPR Variation: RdSAP 10 Transition</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-RA-009</div><div class="ticker-title">EWI: Planning Permission and Fire Risk</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-ALL-001</div><div class="ticker-title">UK Energy Policy 2026</div><div class="ticker-hours">1 CPD hour</div></div>
-      <div class="ticker-item"><div class="ticker-id">MER-ALL-004</div><div class="ticker-title">Fire Safety in Retrofit</div><div class="ticker-hours">1 CPD hour</div></div>
+  <div class="ticker-wrap">
+    <div class="ticker-row">
+      <span class="t-title">RdSAP 10: What&apos;s Changed and Why</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Measuring Windows in RdSAP 10</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Ventilation in RdSAP 10: PIV, MVHR, Natural</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Room in Roof: Type 1 and Type 2</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Lighting and Renewables in RdSAP 10</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Solar PV, Battery Storage and PV Diverters</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Airtightness Testing in RdSAP 10</span><span class="t-dot">&bull;</span>
+      <span class="t-title">PAS 2035:2023 Overview</span><span class="t-dot">&bull;</span>
+      <span class="t-title">EPR Variation: RdSAP 10 Transition</span><span class="t-dot">&bull;</span>
+      <span class="t-title">EWI: Planning Permission and Fire Risk</span><span class="t-dot">&bull;</span>
+      <span class="t-title">UK Energy Policy 2026</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Fire Safety in Retrofit</span><span class="t-dot">&bull;</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="t-title">RdSAP 10: What&apos;s Changed and Why</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Measuring Windows in RdSAP 10</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Ventilation in RdSAP 10: PIV, MVHR, Natural</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Room in Roof: Type 1 and Type 2</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Lighting and Renewables in RdSAP 10</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Solar PV, Battery Storage and PV Diverters</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Airtightness Testing in RdSAP 10</span><span class="t-dot">&bull;</span>
+      <span class="t-title">PAS 2035:2023 Overview</span><span class="t-dot">&bull;</span>
+      <span class="t-title">EPR Variation: RdSAP 10 Transition</span><span class="t-dot">&bull;</span>
+      <span class="t-title">EWI: Planning Permission and Fire Risk</span><span class="t-dot">&bull;</span>
+      <span class="t-title">UK Energy Policy 2026</span><span class="t-dot">&bull;</span>
+      <span class="t-title">Fire Safety in Retrofit</span><span class="t-dot">&bull;</span>
     </div>
   </div>
 
-  <div class="ticker-cta">
-    <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-primary">Access All Courses &#8212; &#163;79/year</a>
+  <div class="courses-cta">
+    <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Full Access &mdash; &#163;79/Year</a>
   </div>
 </section>
 
 <!-- ─── 8. CERTIFICATE ─── -->
 <section id="certificate">
-  <p class="section-eyebrow">Certification</p>
-  <h2 class="section-headline">Evidence that<br>stands up.</h2>
+  <span class="label">Certification</span>
+  <h2 class="dh">Evidence that<br>stands up.</h2>
 
   <div class="cert-layout">
-    <div class="cert-mockup">
-      <div class="cert-watermark">MERIDIAN CPD</div>
-      <div class="cert-header">
-        <div class="cert-logo-text">MERIDIAN <span>CPD</span></div>
+    <div class="cert-mock">
+      <div class="cert-wm">MERIDIAN CPD</div>
+      <div class="cert-hdr">
+        <div class="cert-logo">MERIDIAN <span>CPD</span></div>
         <div class="cert-num">MER-2026-0001</div>
       </div>
-      <p class="cert-title-label">Certificate of CPD Completion</p>
-      <p class="cert-recipient">A.N. Assessor MCIOB</p>
-      <p class="cert-text">has successfully completed</p>
-      <div class="cert-course">RdSAP 10: What's Changed and Why</div>
-      <p class="cert-text" style="font-size:0.75rem">2 CPD hours &middot; Completed 17 March 2026</p>
+      <p class="cert-lbl">Certificate of CPD Completion</p>
+      <p class="cert-rec">A.N. Assessor MCIOB</p>
+      <p class="cert-txt">has successfully completed</p>
+      <div class="cert-course">RdSAP 10: What&apos;s Changed and Why</div>
+      <p class="cert-txt" style="font-size:.74rem">2 CPD hours &middot; Completed 17 March 2026</p>
       <div class="cert-meta">
-        <div>
-          <strong>Meridian CPD</strong>
-          Independent CPD Provider
-        </div>
-        <div style="text-align:center;font-size:0.68rem">
-          <strong>Verify online</strong>
-          meridiancpd.co.uk/verify/<br>MER-2026-0001
-        </div>
-        <div class="cert-qr">
-          <div></div><div></div><div></div>
-          <div></div><div></div><div></div>
-          <div></div><div></div><div></div>
-        </div>
+        <div><strong>Meridian CPD</strong>Independent CPD Provider</div>
+        <div style="text-align:center;font-size:.66rem"><strong>Verify online</strong>meridiancpd.co.uk/verify/<br>MER-2026-0001</div>
+        <div class="cert-qr"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
       </div>
     </div>
 
-    <div class="cert-points">
-      <div class="cert-point">
-        <div class="cert-point-icon">&#128290;</div>
+    <div class="cert-pts">
+      <div class="cert-pt">
+        <div class="cert-pt-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4FF00" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        </div>
         <div>
-          <div class="cert-point-title">Unique certificate number</div>
-          <p class="cert-point-desc">Every certificate carries a sequential MER-YYYY-NNNN reference — traceable, unique to you, provable.</p>
+          <div class="cert-pt-title">Unique certificate number</div>
+          <p class="cert-pt-desc">Every certificate carries a sequential MER-YYYY-NNNN reference &mdash; traceable, unique to you, provable.</p>
         </div>
       </div>
-      <div class="cert-point">
-        <div class="cert-point-icon">&#128241;</div>
+      <div class="cert-pt">
+        <div class="cert-pt-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4FF00" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
         <div>
-          <div class="cert-point-title">QR verification</div>
-          <p class="cert-point-desc">Each certificate links to a public verification page at meridiancpd.co.uk. Any assessor, employer, or scheme can confirm it's genuine.</p>
+          <div class="cert-pt-title">QR verification</div>
+          <p class="cert-pt-desc">Each certificate links to a public verification page at meridiancpd.co.uk. Any assessor, employer, or scheme can confirm it&apos;s genuine.</p>
         </div>
       </div>
-      <div class="cert-point">
-        <div class="cert-point-icon">&#128274;</div>
+      <div class="cert-pt">
+        <div class="cert-pt-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4FF00" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
         <div>
-          <div class="cert-point-title">Tamper-proof PDF</div>
-          <p class="cert-point-desc">Certificates are rasterised — no editable fields, no selectable text. What's on the page is what's on the record.</p>
+          <div class="cert-pt-title">Tamper-proof PDF</div>
+          <p class="cert-pt-desc">Certificates are rasterised &mdash; no editable fields, no selectable text. What&apos;s on the page is what&apos;s on the record.</p>
         </div>
       </div>
-      <div class="cert-point">
-        <div class="cert-point-icon">&#9989;</div>
+      <div class="cert-pt">
+        <div class="cert-pt-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4FF00" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
         <div>
-          <div class="cert-point-title">Evidence of completion, not payment</div>
-          <p class="cert-point-desc">Certificates are only issued after you confirm you've read the course. This is the correct basis for CPD claims under most scheme frameworks.</p>
+          <div class="cert-pt-title">Evidence of completion, not payment</div>
+          <p class="cert-pt-desc">Certificates are only issued after you confirm you&apos;ve read the course &mdash; the correct basis for CPD claims under most scheme frameworks.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── 9. FAQ ─── -->
+<!-- ─── 9. SOCIAL PROOF ─── -->
+<section id="social">
+  <span class="label">Trusted by Energy Professionals</span>
+  <h2 class="dh">What assessors<br>are saying.</h2>
+
+  <div class="testi-grid">
+    <div class="testi-card">
+      <span class="testi-qm">&ldquo;</span>
+      <p class="testi-text">Finally a CPD provider that doesn&apos;t treat me like I&apos;ve never seen an EPC before. The RdSAP 10 course covered everything I needed after the transition and then some.</p>
+      <span class="testi-name">DEA &mdash; West Midlands</span>
+    </div>
+    <div class="testi-card">
+      <span class="testi-qm">&ldquo;</span>
+      <p class="testi-text">I&apos;ve been scrambling for CPD hours at the last minute every year since I qualified. Having the library available whenever I need it has genuinely changed how I plan my year.</p>
+      <span class="testi-name">Retrofit Assessor &mdash; Yorkshire</span>
+    </div>
+    <div class="testi-card">
+      <span class="testi-qm">&ldquo;</span>
+      <p class="testi-text">The certificate process is straightforward and the reference numbers hold up to scrutiny with my scheme. That was the thing I was most worried about before joining.</p>
+      <span class="testi-name">DEA &amp; Retrofit Coordinator &mdash; South Wales</span>
+    </div>
+  </div>
+
+  <div class="sources-strip">
+    <p class="sources-lbl">As referenced in our courses</p>
+    <div class="sources-list">
+      <span class="source-name">GOV.UK</span>
+      <span class="source-name">TrustMark</span>
+      <span class="source-name">BRE</span>
+      <span class="source-name">Elmhurst Energy</span>
+      <span class="source-name">Quidos</span>
+      <span class="source-name">CIBSE</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 10. FAQ ─── -->
 <section id="faq">
-  <p class="section-eyebrow">FAQ</p>
-  <h2 class="section-headline">Common questions.</h2>
+  <span class="label on-light">FAQ</span>
+  <h2 class="dh">Common questions.</h2>
 
   <div class="faq-grid">
     <div class="faq-item">
-      <div class="faq-q">Will my scheme accept these certificates?</div>
-      <p class="faq-a">Acceptance of CPD is always at the discretion of your accreditation body. Meridian CPD is an independent provider — our certificates document completion of structured learning from primary regulatory sources. Most schemes accept any properly evidenced CPD hours. Check your scheme's specific requirements if unsure.</p>
+      <div class="faq-q"><span class="faq-q-badge">Q</span>Will my scheme accept these certificates?</div>
+      <p class="faq-a">Acceptance of CPD is always at the discretion of your accreditation body. Meridian CPD is an independent provider &mdash; our certificates document completion of structured learning from primary regulatory sources. Most schemes accept any properly evidenced CPD hours. Check your scheme&apos;s specific requirements if unsure.</p>
     </div>
     <div class="faq-item">
-      <div class="faq-q">How do I get my certificate?</div>
-      <p class="faq-a">After purchasing, you'll receive your course PDF by email. Read the course, then click the unique completion link included in your email. Confirm you've completed the course, and your certificate is generated and emailed to you immediately.</p>
+      <div class="faq-q"><span class="faq-q-badge">Q</span>How do I get my certificate?</div>
+      <p class="faq-a">After purchasing, you&apos;ll receive your course PDF by email. Read the course, then click the unique completion link included in your email. Confirm you&apos;ve completed the course, and your certificate is generated and emailed to you immediately.</p>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Can I use these PDFs as ongoing reference material?</div>
-      <p class="faq-a">Absolutely. PDFs are yours to keep indefinitely. They're designed to be technically useful as reference documents, not just one-read-and-forget CPD. Keep them, search them, print them.</p>
+      <div class="faq-q"><span class="faq-q-badge">Q</span>Can I use these PDFs as ongoing reference material?</div>
+      <p class="faq-a">Absolutely. PDFs are yours to keep indefinitely. They&apos;re designed to be technically useful as reference documents, not just one-read-and-forget CPD. Keep them, search them, print them.</p>
     </div>
     <div class="faq-item">
-      <div class="faq-q">How often are new courses added?</div>
-      <p class="faq-a">New courses are generated on the 1st and 15th of each month, drawn from live industry sources — GOV.UK policy papers, TrustMark updates, Elmhurst/Quidos technical bulletins, BRE guidance, and more. Annual subscribers get access to everything automatically.</p>
+      <div class="faq-q"><span class="faq-q-badge">Q</span>How often are new courses added?</div>
+      <p class="faq-a">New courses are released on the 1st and 15th of each month, drawn from live industry sources &mdash; GOV.UK policy papers, TrustMark updates, Elmhurst and Quidos technical bulletins, BRE guidance, and more. Annual subscribers get access to everything automatically.</p>
     </div>
     <div class="faq-item">
-      <div class="faq-q">What topics are covered?</div>
+      <div class="faq-q"><span class="faq-q-badge">Q</span>What topics are covered?</div>
       <p class="faq-a">RdSAP 10 and its technical requirements. PAS 2035:2023 and retrofit coordination. Solar PV, battery storage, heat pumps, ventilation, airtightness. UK energy policy. Fire safety in retrofit. ECO, GBIS, Warm Homes schemes. Anything a working DEA or Retrofit Assessor needs to stay sharp on.</p>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Can I cancel my annual subscription?</div>
-      <p class="faq-a">Yes. Cancel at any time and you keep access until your year is up. Any certificates and PDFs you've already received are yours to keep regardless.</p>
+      <div class="faq-q"><span class="faq-q-badge">Q</span>Can I cancel my annual subscription?</div>
+      <p class="faq-a">Yes. Cancel at any time and you keep access until your year is up. Any certificates and PDFs you&apos;ve already received are yours to keep regardless.</p>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Is there a free course I can try first?</div>
-      <p class="faq-a">Yes. Use code <strong style="color:var(--accent)">MERIDIAN10</strong> at checkout to get the 2-hour RdSAP 10 overview (MER-DEA-001) completely free. See what you think before committing to a subscription.</p>
+      <div class="faq-q"><span class="faq-q-badge">Q</span>Is there a free course I can try first?</div>
+      <p class="faq-a">Yes. Use code <strong style="color:#2a6e30">MERIDIAN10</strong> at checkout to get the 2-hour RdSAP 10 overview (MER-DEA-001) completely free. See what you think before committing to a subscription.</p>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Who writes the courses?</div>
-      <p class="faq-a">Courses are written by a UK Domestic Energy Assessor with hands-on experience of RdSAP, PAS 2035, and the retrofit funding landscape. Content is grounded in primary regulatory sources and written at the technical level of a working professional — not generated filler.</p>
+      <div class="faq-q"><span class="faq-q-badge">Q</span>Who writes the courses?</div>
+      <p class="faq-a">Courses are written and curated by UK energy professionals with hands-on experience of RdSAP, PAS 2035, and the retrofit funding landscape. Content is grounded in primary regulatory sources and written at the technical level of a working assessor &mdash; not generated filler.</p>
     </div>
   </div>
 </section>
 
-<!-- ─── 10. FINAL CTA ─── -->
+<!-- ─── 11. CLOSING CTA ─── -->
 <section id="cta-final">
-  <h2 class="cta-final-hl">Ready to stay<br><em>sharp?</em></h2>
-  <p class="cta-final-sub">Get your free RdSAP 10 overview today. No card needed with code MERIDIAN10. See what Meridian CPD is before spending a penny.</p>
+  <h2 class="dh cta-hl">Don&apos;t let your CPD<br>become a problem.</h2>
+  <p class="cta-sub">Your qualification keeps you working. Meridian CPD keeps your qualification secure &mdash; for less than the price of a tank of fuel.</p>
   <div class="cta-actions">
-    <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="btn-primary">Get Free Course (MERIDIAN10) &#8594;</a>
-    <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-secondary">Subscribe &#8212; &#163;79/year</a>
+    <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Full Access &mdash; &#163;79/Year</a>
   </div>
+  <p class="cta-small">Not ready yet? Claim your first course free &mdash; <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00">use code MERIDIAN10 at checkout &#8594;</a></p>
 </section>
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <a class="footer-logo" href="#">MERIDIAN <span>CPD</span></a>
-
-  <ul class="footer-links">
+  <a class="ft-logo" href="#">MERIDIAN <span>CPD</span></a>
+  <ul class="ft-links">
     <li><a href="#why">Why Meridian</a></li>
     <li><a href="#courses">Courses</a></li>
-    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#offer">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a></li>
     <li><a href="/verify/">Verify Certificate</a></li>
   </ul>
-
-  <p class="footer-copy">
+  <p class="ft-copy">
     &copy; Meridian CPD 2026. All rights reserved.<br>
     Acceptance of CPD hours is at the discretion of your accreditation body.<br>
     Meridian CPD is an independent CPD provider.
   </p>
 </footer>
+
+<script>
+  // Nav shadow on scroll
+  window.addEventListener('scroll', function() {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+    document.getElementById('chev').classList.toggle('gone', window.scrollY > 80);
+  });
+</script>
 
 </body>
 </html>
