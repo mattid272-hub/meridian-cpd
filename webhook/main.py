@@ -34,6 +34,13 @@ supabase = create_client(
 )
 
 BASE_URL = os.environ.get("BASE_URL", "https://meridiancpd.co.uk")
+LOGO_URL = os.environ.get("LOGO_URL", "")  # Set this env var when new logo is ready
+
+def _logo() -> str:
+    """Returns logo HTML — image if LOGO_URL is set, otherwise styled text fallback."""
+    if LOGO_URL:
+        return f'<img src="{LOGO_URL}" height="50" alt="Meridian CPD" style="margin-bottom:16px;display:block">'
+    return '<div style="font-size:22px;font-weight:900;color:#0f2547;letter-spacing:-0.5px;margin-bottom:16px">MERIDIAN <span style="color:#0891b2">CPD</span></div>'
 
 # ── Course catalogue ───────────────────────────────────────────────────────────
 # Each entry: course_id, title, cpd_hours, pdf_url (Supabase Storage public URL)
@@ -297,7 +304,7 @@ async def completion_page(token: str):
       </style>
     </head>
     <body>
-      <img src="https://meridiancpd.co.uk/logo.png" height="50" alt="Meridian CPD">
+      {_logo()}
       <h1>Complete Your CPD</h1>
       <p>Hi {name},</p>
       <p>Please confirm you have read and understood <strong>Course {course_id}</strong>.</p>
@@ -390,14 +397,14 @@ async def confirm_completion(token: str, request: Request):
       </style>
     </head>
     <body>
-      <img src="https://meridiancpd.co.uk/logo.png" height="50" alt="Meridian CPD">
+      {_logo()}
       <h1>CPD Completed</h1>
       <p>Well done, {member_name}. Your certificate has been emailed to <strong>{member_email}</strong>.</p>
       <div class="cert-num">{cert_number}</div>
       <p>Keep this certificate number — your accreditation body can verify it at
          <a href="https://meridiancpd.co.uk/verify/{cert_number}">meridiancpd.co.uk/verify/{cert_number}</a>
       </p>
-      <p><a href="https://meridiancpd.co.uk">Browse more courses →</a></p>
+      <p><a href="https://meridiancpd.co.uk/library">Browse more courses →</a></p>
     </body>
     </html>
     """)
@@ -496,7 +503,7 @@ async def verify_certificate(cert_number: str):
       </style>
     </head>
     <body>
-      <img src="https://meridiancpd.co.uk/logo.png" height="50" alt="Meridian CPD">
+      {_logo()}
       <h1>Certificate Verification</h1>
       <div class="verified">
         <span class="badge">✓ Verified</span>
