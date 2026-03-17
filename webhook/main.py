@@ -527,6 +527,103 @@ def health():
     return {"status": "ok"}
 
 
+# ── Test purchase endpoint (admin only) ────────────────────────────────────────
+
+@app.post("/test-purchase", response_class=HTMLResponse)
+async def test_purchase(
+    request: Request,
+    credentials=Depends(_check_admin),
+):
+    """
+    Admin-only endpoint to test the full purchase flow without a real Stripe payment.
+    POST with form fields: email, name, course_id
+    Exercises: Supabase member creation, email delivery, completion token generation.
+    """
+    form = await request.form()
+    email = str(form.get("email", "")).strip()
+    name = str(form.get("name", "")).strip() or email.split("@")[0].title()
+    course_id = str(form.get("course_id", "MER-DEA-001")).strip()
+
+    if not email:
+        return HTMLResponse("<p>email is required</p>", status_code=400)
+
+    course = COURSES.get(course_id)
+    if not course:
+        return HTMLResponse(f"<p>Unknown course_id: {course_id}</p>", status_code=400)
+
+    import secrets as _secrets
+    fake_session_id = f"cs_test_{_secrets.token_hex(8)}"
+
+    member = get_or_create_member(email, name, "cus_test", "single")
+    member_id = member["id"]
+    log_purchase(member_id, course_id, fake_session_id, int(course.get("cpd_hours", 1) * 100))
+
+    token = create_completion_token(member_id, course_id)
+    completion_link = f"{BASE_URL}/complete/{token}"
+
+    await send_course_email(
+        to_email=email,
+        to_name=name,
+        course_title=course["title"],
+        course_id=course_id,
+        pdf_url=course["pdf_url"],
+        completion_link=completion_link,
+        is_subscription=False,
+    )
+
+    return HTMLResponse(f"""
+    <html><head><title>Test Purchase — Meridian CPD Admin</title>
+    <style>body{{font-family:Arial;max-width:600px;margin:60px auto;padding:0 20px}}
+    .ok{{background:#f0fdf4;border:2px solid #22c55e;border-radius:8px;padding:20px;margin:20px 0}}
+    code{{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:13px}}
+    a{{color:#0891b2}}</style></head>
+    <body>
+    <h2 style="color:#0f2547">Test Purchase Fired</h2>
+    <div class="ok">
+      <p><strong>Email sent to:</strong> {email}</p>
+      <p><strong>Course:</strong> {course['title']} ({course_id})</p>
+      <p><strong>Fake session:</strong> <code>{fake_session_id}</code></p>
+      <p><strong>Completion link:</strong> <a href="{completion_link}">{completion_link}</a></p>
+    </div>
+    <p>Check {email} — course PDF should have arrived. Click the completion link to test certificate generation.</p>
+    <p><a href="/admin">← Back to admin</a></p>
+    </body></html>
+    """)
+
+
+@app.get("/test-purchase", response_class=HTMLResponse)
+async def test_purchase_form(credentials=Depends(_check_admin)):
+    """Form UI for triggering a test purchase."""
+    course_options = "".join(
+        f'<option value="{cid}">{cid} — {c["title"]}</option>'
+        for cid, c in COURSES.items() if cid != "SUBSCRIPTION"
+    )
+    return HTMLResponse(f"""
+    <html><head><title>Test Purchase — Meridian CPD Admin</title>
+    <style>body{{font-family:Arial;max-width:500px;margin:60px auto;padding:0 20px}}
+    h2{{color:#0f2547}}label{{display:block;margin-top:16px;font-weight:bold;font-size:13px}}
+    input,select{{width:100%;box-sizing:border-box;padding:10px;margin-top:6px;border:1px solid #d1d5db;border-radius:6px;font-size:14px}}
+    button{{margin-top:24px;width:100%;padding:12px;background:#0f2547;color:white;font-size:15px;font-weight:bold;border:none;border-radius:6px;cursor:pointer}}
+    button:hover{{background:#0891b2}}
+    .warn{{background:#fef9c3;border:1px solid #d97706;padding:12px;border-radius:6px;font-size:13px;margin-bottom:20px}}</style>
+    </head><body>
+    <h2>Test Purchase</h2>
+    <div class="warn">This fires a real email to the address you enter and logs a test record to Supabase.
+    Use your own email. Supabase records can be deleted manually if needed.</div>
+    <form method="POST" action="/test-purchase">
+      <label>Email address (receives the course email)</label>
+      <input type="email" name="email" required placeholder="hello@meridiancpd.co.uk">
+      <label>Name</label>
+      <input type="text" name="name" placeholder="Matt Test">
+      <label>Course</label>
+      <select name="course_id">{course_options}</select>
+      <button type="submit">Fire Test Purchase</button>
+    </form>
+    <p style="margin-top:20px"><a style="color:#0891b2" href="/admin">← Back to admin</a></p>
+    </body></html>
+    """)
+
+
 # ── Admin panel ────────────────────────────────────────────────────────────────
 
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "meridian-admin")
