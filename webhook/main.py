@@ -405,6 +405,60 @@ async def confirm_completion(token: str, request: Request):
 
 # ── Certificate verification ───────────────────────────────────────────────────
 
+@app.get("/verify", response_class=HTMLResponse)
+async def verify_landing():
+    return HTMLResponse("""
+    <html>
+    <head>
+      <title>Verify a Certificate — Meridian CPD</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+        body { font-family: Arial, sans-serif; background: #f8fafc; margin: 0; padding: 0; }
+        .wrap { max-width: 520px; margin: 80px auto; padding: 0 24px; }
+        .logo { color: #0f2547; font-size: 22px; font-weight: 900; letter-spacing: -0.5px;
+                margin-bottom: 40px; display: block; text-decoration: none; }
+        .logo span { color: #0891b2; }
+        h1 { color: #0f2547; font-size: 26px; margin: 0 0 8px; }
+        p { color: #6b7280; font-size: 15px; margin: 0 0 28px; line-height: 1.5; }
+        label { display: block; font-size: 13px; font-weight: bold; color: #374151; margin-bottom: 6px; }
+        input { width: 100%; box-sizing: border-box; padding: 12px 14px; font-size: 15px;
+                border: 1.5px solid #d1d5db; border-radius: 8px; outline: none;
+                font-family: monospace; letter-spacing: 1px; }
+        input:focus { border-color: #0891b2; box-shadow: 0 0 0 3px rgba(8,145,178,0.15); }
+        button { margin-top: 14px; width: 100%; padding: 13px; background: #0f2547;
+                 color: white; font-size: 15px; font-weight: bold; border: none;
+                 border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+        button:hover { background: #0891b2; }
+        .hint { margin-top: 14px; font-size: 13px; color: #9ca3af; text-align: center; }
+        .hint strong { color: #6b7280; }
+      </style>
+    </head>
+    <body>
+      <div class="wrap">
+        <a class="logo" href="https://meridiancpd.co.uk">MERIDIAN <span>CPD</span></a>
+        <h1>Verify a Certificate</h1>
+        <p>Enter a Meridian CPD certificate number below to confirm it is genuine and view the details.</p>
+        <form method="get" action="" onsubmit="redirect(event)">
+          <label for="cert">Certificate Number</label>
+          <input id="cert" name="cert" type="text" placeholder="e.g. MER-2026-0001"
+                 autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" />
+          <button type="submit">Verify Certificate</button>
+        </form>
+        <p class="hint">Format: <strong>MER-YYYY-NNNN</strong> — found on the certificate PDF</p>
+      </div>
+      <script>
+        function redirect(e) {
+          e.preventDefault();
+          var val = document.getElementById('cert').value.trim().toUpperCase();
+          if (!val) return;
+          window.location.href = '/verify/' + encodeURIComponent(val);
+        }
+      </script>
+    </body>
+    </html>
+    """)
+
+
 @app.get("/verify/{cert_number}", response_class=HTMLResponse)
 async def verify_certificate(cert_number: str):
     result = supabase.table("certificates").select(
