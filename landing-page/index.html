@@ -360,11 +360,11 @@
 
     .prob-card {
       position: relative;
-      min-height: 370px;
+      min-height: 220px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 2.5rem;
+      padding: 2rem 2.2rem;
       overflow: hidden;
       background: var(--dark2);
     }
@@ -378,33 +378,58 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(13,31,14,.70);
+      background: rgba(13,31,14,.92);
     }
     .prob-card-body { position: relative; z-index: 1; }
 
+    .prob-card-num {
+      font-family: var(--display);
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--accent);
+      opacity: .2;
+      position: absolute;
+      top: 1.2rem; right: 1.5rem;
+      z-index: 1;
+    }
     .prob-card-title {
       font-family: var(--display);
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       color: var(--white);
       letter-spacing: .03em;
-      margin-bottom: .8rem;
+      margin-bottom: .6rem;
       line-height: 1.05;
     }
     .prob-card-desc {
-      font-size: .9rem;
-      color: rgba(255,255,255,.8);
+      font-size: .88rem;
+      color: var(--muted-d);
       line-height: 1.65;
     }
 
-    .problem-footer {
+    .problem-punch {
       text-align: center;
-      padding-top: 2rem;
+      padding: 4.5rem 2rem 1rem;
+      border-top: 1px solid rgba(212,255,0,.1);
+      margin-top: 3px;
     }
-    .problem-footer p {
-      font-style: italic;
-      color: rgba(255,255,255,.65);
-      font-size: .95rem;
+    .punch-pre {
+      font-family: var(--display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: var(--white);
+      letter-spacing: .04em;
+      margin-bottom: .3rem;
+    }
+    .punch-main {
+      font-family: var(--display);
+      font-size: clamp(4rem, 11vw, 9rem);
+      line-height: .88;
+      color: var(--accent);
       margin-bottom: 2rem;
+    }
+    .punch-sub {
+      font-size: .9rem;
+      color: var(--muted-d);
+      margin-bottom: 2.5rem;
     }
 
     /* ── SECTION 4: WHY MERIDIAN ─────────────────────── */
@@ -1040,21 +1065,24 @@
 
   <div class="problem-grid">
     <div class="prob-card">
-      <div class="prob-card-bg" style="background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="prob-card-bg" style="background-image:url('https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&w=900&q=80')"></div>
+      <span class="prob-card-num">01</span>
       <div class="prob-card-body">
         <h3 class="prob-card-title">Generic content that teaches you nothing</h3>
         <p class="prob-card-desc">Courses designed for everyone are relevant to no one. If it wasn&apos;t built specifically for energy professionals, why are you sitting through it?</p>
       </div>
     </div>
     <div class="prob-card">
-      <div class="prob-card-bg" style="background-image:url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="prob-card-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=900&q=80')"></div>
+      <span class="prob-card-num">02</span>
       <div class="prob-card-body">
         <h3 class="prob-card-title">Confusing scheme requirements</h3>
         <p class="prob-card-desc">Which scheme? How many hours? What format counts? Most providers leave you to figure that out entirely on your own.</p>
       </div>
     </div>
     <div class="prob-card">
-      <div class="prob-card-bg" style="background-image:url('https://images.unsplash.com/photo-1590402494610-2c378a9114c6?auto=format&fit=crop&w=900&q=80')"></div>
+      <div class="prob-card-bg" style="background-image:url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=900&q=80')"></div>
+      <span class="prob-card-num">03</span>
       <div class="prob-card-body">
         <h3 class="prob-card-title">Last-minute panic every year</h3>
         <p class="prob-card-desc">CPD deadlines creep up fast. Most assessors find themselves scrambling to catch up on hours that should have been spread across the year.</p>
@@ -1062,8 +1090,10 @@
     </div>
   </div>
 
-  <div class="problem-footer">
-    <p>We built Meridian CPD to fix all three &mdash; for &#163;79 a year.</p>
+  <div class="problem-punch">
+    <p class="punch-pre">We built Meridian CPD to fix all three.</p>
+    <p class="punch-main">&#163;79 a year.</p>
+    <p class="punch-sub">Less than &#163;1.52 a week. Less than the cost of letting your qualification lapse.</p>
     <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Full Access &mdash; &#163;79/Year</a>
   </div>
 </section>
