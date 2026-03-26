@@ -169,13 +169,13 @@ D) Use the dedicated PV-T input pathway, recording electrical kWp and thermal ap
 
 ## Further Reading
 
-- **BRE. *SAP 10.2: The Government's Standard Assessment Procedure for Energy Rating of Dwellings (2022 edition).*** Available from: [https://www.bregroup.com/sap/standard-assessment-procedure-sap-2012/](https://www.bregroup.com/sap/standard-assessment-procedure-sap-2012/) — primary source for the full SAP methodology underpinning RdSAP 10.
+- **BRE.** *SAP 10.2: The Government's Standard Assessment Procedure for Energy Rating of Dwellings (2022 edition).* Available from: https://www.bregroup.com/sap/standard-assessment-procedure-sap-2012/ — primary source for the full SAP methodology underpinning RdSAP 10.
 
-- **BRE. *RdSAP 10: Reduced Data Standard Assessment Procedure — Conventions and Specifications.*** Available from the BRE SAP website — the definitive reference for all input conventions, default assumptions, and evidence requirements discussed in this course.
+- **BRE.** *RdSAP 10: Reduced Data Standard Assessment Procedure — Conventions and Specifications.* Available from the BRE SAP website — the definitive reference for all input conventions, default assumptions, and evidence requirements discussed in this course.
 
-- **BSI. *PAS 2035:2023 — Retrofitting dwellings for improved energy efficiency. Specification and guidance.*** Available from: [https://knowledge.bsigroup.com/](https://knowledge.bsigroup.com/) — essential reading for assessors whose EPCs inform retrofit programmes.
+- **BSI.** *PAS 2035:2023 — Retrofitting dwellings for improved energy efficiency. Specification and guidance.* Available from: https://knowledge.bsigroup.com/ — essential reading for assessors whose EPCs inform retrofit programmes.
 
-- **MHCLG. *Domestic Energy Performance Certificate: Reform and Methodology Update — Consultation Response and Policy Summary.*** Available from: [https://www.gov.uk/government/consultations](https://www.gov.uk/government/consultations) — sets out the policy rationale for the transition to SAP 10.2 / RdSAP 10 and the revised EPC framework.
+- **MHCLG.** *Domestic Energy Performance Certificate: Reform and Methodology Update — Consultation Response and Policy Summary.* Available from: https://www.gov.uk/government/consultations — sets out the policy rationale for the transition to SAP 10.2 / RdSAP 10 and the revised EPC framework.
 
 ---
 

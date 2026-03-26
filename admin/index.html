@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian CPD — Course Admin</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+  :root {
+    --dark: #0D1F0E;
+    --accent: #D4FF00;
+    --green: #22c55e;
+    --green-dark: #16a34a;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --light: #F5F5F0;
+    --border: #e0e0da;
+    --card-bg: #ffffff;
+    --text: #1a1a1a;
+    --text-muted: #6b7280;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--light);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 220px;
+    background: var(--dark);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    z-index: 100;
+  }
+  .sidebar-brand {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .sidebar-brand .wordmark {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+  .sidebar-brand .sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .sidebar-nav {
+    padding: 12px 0;
+    flex: 1;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 18px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+  .nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); }
+  .nav-item.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: rgba(212,255,0,0.06);
+  }
+  .nav-icon { font-size: 15px; width: 18px; text-align: center; }
+
+  /* ── Main ── */
+  .main {
+    margin-left: 220px;
+    min-height: 100vh;
+  }
+
+  /* ── Topbar ── */
+  .topbar {
+    background: var(--dark);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .topbar h1 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .topbar-meta {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── Content ── */
+  .content {
+    padding: 24px 28px;
+  }
+
+  /* ── Stats row ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .stat-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1;
+  }
+  .stat-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── Progress bars ── */
+  .progress-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+  }
+  .progress-section h2 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .progress-row:last-child { margin-bottom: 0; }
+  .progress-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dark);
+    width: 160px;
+    flex-shrink: 0;
+  }
+  .progress-bar-wrap {
+    flex: 1;
+    background: #e5e5e0;
+    border-radius: 100px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+  .progress-bar-fill.green { background: var(--green); }
+  .progress-bar-fill.amber { background: var(--amber); }
+  .progress-bar-fill.red { background: var(--red); }
+  .progress-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--dark);
+    width: 80px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .progress-target {
+    font-size: 11px;
+    color: var(--text-muted);
+    width: 60px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ── Filters ── */
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--dark); color: var(--dark); }
+  .filter-btn.active {
+    background: var(--dark);
+    border-color: var(--dark);
+    color: #fff;
+  }
+  .filter-sep { flex: 1; }
+  .search-input {
+    padding: 6px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: inherit;
+    background: var(--card-bg);
+    color: var(--text);
+    width: 220px;
+    outline: none;
+  }
+  .search-input:focus { border-color: var(--dark); }
+
+  /* ── Course table ── */
+  .courses-table {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: var(--dark);
+    color: rgba(255,255,255,0.7);
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #fafaf7; }
+  tbody td {
+    padding: 11px 14px;
+    vertical-align: top;
+  }
+
+  .course-id {
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .course-title {
+    font-weight: 600;
+    color: var(--dark);
+    line-height: 1.3;
+  }
+  .course-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .course-title a:hover { color: var(--green-dark); text-decoration: underline; }
+
+  .strand-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .strand-DEA { background: #dbeafe; color: #1d4ed8; }
+  .strand-RA { background: #f3e8ff; color: #7c3aed; }
+  .strand-ALL { background: #dcfce7; color: #15803d; }
+
+  .hours-val {
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 100px;
+    font-size: 10.5px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .status-ready { background: #dcfce7; color: #15803d; }
+  .status-generating { background: #fef9c3; color: #a16207; }
+  .status-review { background: #fff7ed; color: #c2410c; }
+  .status-issue { background: #fee2e2; color: #b91c1c; }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .status-ready .status-dot { background: #16a34a; }
+  .status-generating .status-dot { background: #ca8a04; animation: pulse 1.5s infinite; }
+  .status-review .status-dot { background: #ea580c; }
+  .status-issue .status-dot { background: #dc2626; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .notes-field {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: italic;
+    max-width: 200px;
+  }
+  .notes-field.empty { color: #ccc; }
+
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1.5px solid;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn-view {
+    border-color: var(--dark);
+    color: var(--dark);
+    background: transparent;
+  }
+  .btn-view:hover { background: var(--dark); color: #fff; }
+  .btn-disabled {
+    border-color: #d1d5db;
+    color: #9ca3af;
+    background: transparent;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ── Status change menu ── */
+  .status-select {
+    font-size: 11px;
+    font-family: inherit;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 6px;
+    background: var(--card-bg);
+    color: var(--text);
+    cursor: pointer;
+    outline: none;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ── Notes editor ── */
+  .notes-input {
+    font-size: 11px;
+    font-family: inherit;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 7px;
+    width: 100%;
+    min-width: 160px;
+    resize: none;
+    background: var(--card-bg);
+    color: var(--text);
+    outline: none;
+    margin-top: 4px;
+  }
+  .notes-input:focus { border-color: var(--dark); }
+
+  /* ── Save bar ── */
+  .save-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 12px;
+    display: none;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 200;
+  }
+  .save-bar.visible { display: flex; }
+  .save-bar button {
+    background: var(--accent);
+    color: var(--dark);
+    border: none;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* ── Hours target panel ── */
+  .target-ok { color: var(--green-dark); font-weight: 700; }
+  .target-warn { color: var(--amber); font-weight: 700; }
+  .target-short { color: var(--red); font-weight: 700; }
+
+  /* ── Empty state ── */
+  .empty-state {
+    padding: 40px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  /* ── Instructions banner ── */
+  .banner {
+    background: #fffbf0;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 12px;
+    color: #92400e;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .banner strong { color: #78350f; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="wordmark">MERIDIAN CPD</div>
+    <div class="sub">Course Admin Portal</div>
+  </div>
+  <nav class="sidebar-nav">
+    <a class="nav-item active" href="#">
+      <span class="nav-icon">📚</span> Course Library
+    </a>
+    <a class="nav-item" href="../landing-page/index.html" target="_blank">
+      <span class="nav-icon">🌐</span> Landing Page ↗
+    </a>
+  </nav>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <h1>Course Library</h1>
+    <div class="topbar-meta" id="last-updated">Loading...</div>
+  </div>
+
+  <div class="content">
+
+    <!-- Instructions banner -->
+    <div class="banner">
+      <strong>How to use this portal:</strong>
+      Open PDFs to review course content → change status to "Needs Review" or "Has Issues" if problems found → add notes → your changes auto-save in your browser.
+      To share with Ceri: run <strong>start-server.command</strong> then share your screen, or deploy to GitHub Pages (ask Claude).
+    </div>
+
+    <!-- Stats row -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Total Courses</div>
+        <div class="stat-value" id="stat-total">—</div>
+        <div class="stat-sub">across all strands</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Ready to Publish</div>
+        <div class="stat-value" id="stat-ready" style="color:var(--green-dark)">—</div>
+        <div class="stat-sub">fully reviewed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Generating</div>
+        <div class="stat-value" id="stat-generating" style="color:var(--amber)">—</div>
+        <div class="stat-sub">in progress</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Needs Attention</div>
+        <div class="stat-value" id="stat-issues" style="color:var(--red)">—</div>
+        <div class="stat-sub">review or issues</div>
+      </div>
+    </div>
+
+    <!-- Progress towards 15hrs -->
+    <div class="progress-section">
+      <h2>Hours Progress — Target: 15 hrs per strand before going live</h2>
+      <div class="progress-row">
+        <div class="progress-label">DEA (Domestic Energy Assessor)</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="dea-bar" style="width:0%"></div>
+        </div>
+        <div class="progress-count" id="dea-hours">—</div>
+        <div class="progress-target">/ 15 hrs</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-label">Retrofit Assessor</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="ra-bar" style="width:0%"></div>
+        </div>
+        <div class="progress-count" id="ra-hours">—</div>
+        <div class="progress-target">/ 15 hrs</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-row">
+      <button class="filter-btn active" data-filter="all" onclick="setFilter(this,'all')">All</button>
+      <button class="filter-btn" data-filter="DEA" onclick="setFilter(this,'DEA')">DEA</button>
+      <button class="filter-btn" data-filter="RA" onclick="setFilter(this,'RA')">Retrofit Assessor</button>
+      <button class="filter-btn" data-filter="ALL" onclick="setFilter(this,'ALL')">All Strands</button>
+      <button class="filter-btn" data-filter="ready" onclick="setFilter(this,'ready')">Ready</button>
+      <button class="filter-btn" data-filter="generating" onclick="setFilter(this,'generating')">Generating</button>
+      <button class="filter-btn" data-filter="issues" onclick="setFilter(this,'issues')">Needs Attention</button>
+      <span class="filter-sep"></span>
+      <input class="search-input" id="search" placeholder="Search courses..." oninput="renderTable()">
+    </div>
+
+    <!-- Course table -->
+    <div class="courses-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Course ID</th>
+            <th>Title</th>
+            <th>Strand</th>
+            <th>Hours</th>
+            <th>Status</th>
+            <th>Review Notes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="courses-tbody"></tbody>
+      </table>
+      <div class="empty-state" id="empty-state" style="display:none">No courses match the current filter.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Save bar -->
+<div class="save-bar" id="save-bar">
+  <span>Unsaved changes</span>
+  <button onclick="saveAll()">Save Changes</button>
+  <button onclick="discardChanges()" style="background:rgba(255,255,255,0.15);color:#fff;">Discard</button>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────
+let courses = [];
+let overrides = {}; // local overrides: { [id]: { status, notes } }
+let activeFilter = 'all';
+let hasUnsaved = false;
+
+// ── Load ──────────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch('courses.json?t=' + Date.now());
+    const data = await res.json();
+    courses = data.courses;
+  } catch(e) {
+    // fallback: try to load inline (when opened as file://)
+    console.warn('Could not fetch courses.json — running without data', e);
+    courses = [];
+  }
+
+  // Load local overrides from localStorage
+  try {
+    const stored = localStorage.getItem('meridian_admin_overrides');
+    if (stored) overrides = JSON.parse(stored);
+  } catch(e) {}
+
+  document.getElementById('last-updated').textContent = 'Last loaded: ' + new Date().toLocaleTimeString('en-GB');
+  updateStats();
+  renderTable();
+}
+
+// ── Apply overrides to a course object ────────────────────
+function getEffective(course) {
+  const ov = overrides[course.id] || {};
+  return {
+    ...course,
+    status: ov.status || course.status,
+    notes: ov.notes !== undefined ? ov.notes : course.notes
+  };
+}
+
+// ── Stats ─────────────────────────────────────────────────
+function updateStats() {
+  const effective = courses.map(getEffective);
+  document.getElementById('stat-total').textContent = courses.length;
+  document.getElementById('stat-ready').textContent = effective.filter(c => c.status === 'ready').length;
+  document.getElementById('stat-generating').textContent = effective.filter(c => c.status === 'generating').length;
+  document.getElementById('stat-issues').textContent = effective.filter(c => c.status === 'review' || c.status === 'issue').length;
+
+  // DEA hours = DEA courses + ALL courses (ready or review only, not generating)
+  const readyStatuses = ['ready', 'review'];
+  const deaHrs = effective
+    .filter(c => (c.strand === 'DEA' || c.strand === 'ALL') && readyStatuses.includes(c.status))
+    .reduce((s, c) => s + c.hours, 0);
+  const raHrs = effective
+    .filter(c => (c.strand === 'RA' || c.strand === 'ALL') && readyStatuses.includes(c.status))
+    .reduce((s, c) => s + c.hours, 0);
+
+  // Include generating in total projection
+  const deaTotal = effective
+    .filter(c => c.strand === 'DEA' || c.strand === 'ALL')
+    .reduce((s, c) => s + c.hours, 0);
+  const raTotal = effective
+    .filter(c => c.strand === 'RA' || c.strand === 'ALL')
+    .reduce((s, c) => s + c.hours, 0);
+
+  const target = 15;
+  const deaPct = Math.min((deaTotal / target) * 100, 100);
+  const raPct = Math.min((raTotal / target) * 100, 100);
+
+  document.getElementById('dea-bar').style.width = deaPct + '%';
+  document.getElementById('dea-bar').className = 'progress-bar-fill ' + (deaTotal >= target ? 'green' : deaTotal >= 10 ? 'amber' : 'red');
+  document.getElementById('dea-hours').textContent = deaTotal + ' hrs';
+  document.getElementById('dea-hours').className = 'progress-count ' + (deaTotal >= target ? 'target-ok' : deaTotal >= 10 ? 'target-warn' : 'target-short');
+
+  document.getElementById('ra-bar').style.width = raPct + '%';
+  document.getElementById('ra-bar').className = 'progress-bar-fill ' + (raTotal >= target ? 'green' : raTotal >= 10 ? 'amber' : 'red');
+  document.getElementById('ra-hours').textContent = raTotal + ' hrs';
+  document.getElementById('ra-hours').className = 'progress-count ' + (raTotal >= target ? 'target-ok' : raTotal >= 10 ? 'target-warn' : 'target-short');
+}
+
+// ── Filter ────────────────────────────────────────────────
+function setFilter(btn, filter) {
+  activeFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+function matchesFilter(c) {
+  const eff = getEffective(c);
+  const search = document.getElementById('search').value.toLowerCase().trim();
+  if (search && !c.title.toLowerCase().includes(search) && !c.id.toLowerCase().includes(search)) return false;
+  if (activeFilter === 'all') return true;
+  if (activeFilter === 'DEA') return c.strand === 'DEA';
+  if (activeFilter === 'RA') return c.strand === 'RA';
+  if (activeFilter === 'ALL') return c.strand === 'ALL';
+  if (activeFilter === 'ready') return eff.status === 'ready';
+  if (activeFilter === 'generating') return eff.status === 'generating';
+  if (activeFilter === 'issues') return eff.status === 'review' || eff.status === 'issue';
+  return true;
+}
+
+// ── Render table ──────────────────────────────────────────
+function renderTable() {
+  const tbody = document.getElementById('courses-tbody');
+  const visible = courses.filter(matchesFilter);
+  tbody.innerHTML = '';
+  document.getElementById('empty-state').style.display = visible.length === 0 ? 'block' : 'none';
+
+  visible.forEach(course => {
+    const eff = getEffective(course);
+    const hasPdf = eff.status !== 'generating';
+    const strandLabel = eff.strand === 'ALL' ? 'All Strands' : eff.strand === 'RA' ? 'Retrofit Assessor' : 'DEA';
+
+    const statusMap = {
+      ready: ['status-ready', '✓ Ready'],
+      generating: ['status-generating', '⟳ Generating'],
+      review: ['status-review', '⚠ Needs Review'],
+      issue: ['status-issue', '✕ Has Issues']
+    };
+    const [statusClass, statusLabel] = statusMap[eff.status] || statusMap.ready;
+
+    const tr = document.createElement('tr');
+    tr.dataset.id = course.id;
+    tr.innerHTML = `
+      <td><div class="course-id">${course.id}</div></td>
+      <td>
+        <div class="course-title">
+          ${hasPdf
+            ? `<a href="${eff.pdf}" target="_blank" title="Open PDF">${course.title}</a>`
+            : course.title
+          }
+        </div>
+      </td>
+      <td><span class="strand-badge strand-${course.strand}">${strandLabel}</span></td>
+      <td><span class="hours-val">${course.hours}</span></td>
+      <td>
+        <span class="status-badge ${statusClass}">
+          <span class="status-dot"></span>${statusLabel}
+        </span>
+        <select class="status-select" data-id="${course.id}" onchange="onStatusChange(this)">
+          <option value="ready" ${eff.status==='ready'?'selected':''}>✓ Ready</option>
+          <option value="generating" ${eff.status==='generating'?'selected':''}>⟳ Generating</option>
+          <option value="review" ${eff.status==='review'?'selected':''}>⚠ Needs Review</option>
+          <option value="issue" ${eff.status==='issue'?'selected':''}>✕ Has Issues</option>
+        </select>
+      </td>
+      <td>
+        <textarea class="notes-input" rows="2" data-id="${course.id}" placeholder="Add review notes..."
+          onchange="onNotesChange(this)">${eff.notes || ''}</textarea>
+      </td>
+      <td>
+        ${hasPdf
+          ? `<a class="action-btn btn-view" href="${eff.pdf}" target="_blank">📄 Open PDF</a>`
+          : `<span class="action-btn btn-disabled">📄 Pending</span>`
+        }
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── Change handlers ───────────────────────────────────────
+function onStatusChange(sel) {
+  const id = sel.dataset.id;
+  if (!overrides[id]) overrides[id] = {};
+  overrides[id].status = sel.value;
+  markUnsaved();
+  updateStats();
+  renderTable(); // re-render badge
+}
+
+function onNotesChange(ta) {
+  const id = ta.dataset.id;
+  if (!overrides[id]) overrides[id] = {};
+  overrides[id].notes = ta.value;
+  markUnsaved();
+}
+
+function markUnsaved() {
+  hasUnsaved = true;
+  document.getElementById('save-bar').classList.add('visible');
+}
+
+// ── Save / discard ────────────────────────────────────────
+function saveAll() {
+  localStorage.setItem('meridian_admin_overrides', JSON.stringify(overrides));
+  hasUnsaved = false;
+  document.getElementById('save-bar').classList.remove('visible');
+  document.getElementById('last-updated').textContent = 'Saved at ' + new Date().toLocaleTimeString('en-GB');
+}
+
+function discardChanges() {
+  const stored = localStorage.getItem('meridian_admin_overrides');
+  overrides = stored ? JSON.parse(stored) : {};
+  hasUnsaved = false;
+  document.getElementById('save-bar').classList.remove('visible');
+  updateStats();
+  renderTable();
+}
+
+// ── Boot ──────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

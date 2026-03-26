@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Meridian CPD — Accreditation Action Pack</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.65;
+    color: #1a1a1a;
+    background: #fff;
+    padding: 40px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .doc-header {
+    border-bottom: 3px solid #0D1F0E;
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .doc-header-left h1 {
+    font-size: 20pt;
+    font-weight: 700;
+    color: #0D1F0E;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+  .doc-header-left p {
+    font-size: 9.5pt;
+    color: #555;
+    margin-top: 4px;
+  }
+  .doc-header-right {
+    text-align: right;
+    font-size: 9pt;
+    color: #555;
+    line-height: 1.8;
+  }
+  .tag {
+    display: inline-block;
+    background: #D4FF00;
+    color: #0D1F0E;
+    font-size: 8pt;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* Overview table */
+  .overview-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 28px;
+    font-size: 10pt;
+  }
+  .overview-table th {
+    background: #0D1F0E;
+    color: #fff;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 9pt;
+  }
+  .overview-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e5e5e5;
+    vertical-align: top;
+  }
+  .overview-table tr:nth-child(even) td { background: #f9f9f9; }
+  .cost-total {
+    background: #f0faf2;
+    border: 1px solid #c6e8cc;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 10pt;
+    margin-bottom: 28px;
+    color: #1a1a1a;
+  }
+  .cost-total strong { color: #0D1F0E; }
+
+  /* Step blocks */
+  .step {
+    margin-bottom: 32px;
+    break-inside: avoid;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .step-num {
+    background: #D4FF00;
+    color: #0D1F0E;
+    font-size: 13pt;
+    font-weight: 700;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-size: 14pt;
+    font-weight: 700;
+    color: #0D1F0E;
+  }
+  .step-subtitle {
+    font-size: 9.5pt;
+    color: #666;
+    font-weight: 400;
+  }
+  .step-body {
+    padding-left: 48px;
+  }
+
+  h3 {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #0D1F0E;
+    margin: 14px 0 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  ul {
+    padding-left: 18px;
+    margin-bottom: 10px;
+  }
+  ul li {
+    margin-bottom: 4px;
+    font-size: 10.5pt;
+  }
+  ol {
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+  ol li {
+    margin-bottom: 5px;
+    font-size: 10.5pt;
+  }
+
+  .highlight-box {
+    background: #f0faf2;
+    border-left: 4px solid #22c55e;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 10pt;
+  }
+  .warn-box {
+    background: #fffbf0;
+    border-left: 4px solid #f59e0b;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 10pt;
+  }
+  .info-box {
+    background: #f0f4ff;
+    border-left: 4px solid #6366f1;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 10pt;
+  }
+
+  /* Timeline table */
+  .timeline-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 10pt;
+  }
+  .timeline-table th {
+    background: #0D1F0E;
+    color: #fff;
+    padding: 7px 12px;
+    text-align: left;
+    font-size: 9pt;
+  }
+  .timeline-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .timeline-table tr:nth-child(even) td { background: #f9f9f9; }
+
+  /* Links table */
+  .links-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 10pt;
+  }
+  .links-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .links-table td:first-child { font-weight: 600; color: #0D1F0E; width: 35%; }
+  .links-table a { color: #16a34a; text-decoration: none; }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid #e5e5e5; margin: 28px 0; }
+
+  /* Script block */
+  .script-block {
+    background: #0D1F0E;
+    color: #D4FF00;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: monospace;
+    font-size: 9.5pt;
+    line-height: 1.7;
+    margin: 10px 0;
+  }
+
+  /* Footer */
+  .doc-footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e5e5;
+    font-size: 8.5pt;
+    color: #999;
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 20px; }
+    .step { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-header-left">
+    <h1>Meridian CPD<br>Accreditation Action Pack</h1>
+    <p>Steps to achieve formal CPD accreditation and UK provider registration</p>
+  </div>
+  <div class="doc-header-right">
+    <span class="tag">Confidential</span><br><br>
+    <strong>Prepared for:</strong> Ceri Pearce<br>
+    <strong>Prepared by:</strong> Matt Davies<br>
+    Seren Surveying Limited<br>
+    <strong>Date:</strong> March 2026
+  </div>
+</div>
+
+<!-- Overview -->
+<h3>Overview — Four Steps to Accreditation</h3>
+<table class="overview-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Action</th>
+      <th>Cost</th>
+      <th>Time to Complete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1</strong></td>
+      <td>ICO Registration (prerequisite)</td>
+      <td>£40/year</td>
+      <td>15 mins — cert in 1–3 days</td>
+    </tr>
+    <tr>
+      <td><strong>2</strong></td>
+      <td>UKRLP Registration</td>
+      <td>Free</td>
+      <td>5 mins — UKPRN issued within days</td>
+    </tr>
+    <tr>
+      <td><strong>3</strong></td>
+      <td>CPD Certification Service</td>
+      <td>~£300–700/year</td>
+      <td>2 weeks per course after submission</td>
+    </tr>
+    <tr>
+      <td><strong>4</strong></td>
+      <td>CPD Standards Office</td>
+      <td>~£500–1,500/year</td>
+      <td>~30 days per course after submission</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="cost-total">
+  <strong>Estimated first-year total: £840–£2,240</strong> — depending on number of courses submitted and quotes received from Steps 3 and 4. Steps 1 and 2 are fixed.
+</div>
+
+<hr>
+
+<!-- Step 1 -->
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">1</div>
+    <div>
+      <div class="step-title">ICO Registration</div>
+      <div class="step-subtitle">Information Commissioner's Office — legal prerequisite · £40/year · 15 minutes</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>Any UK organisation that processes personal data (learner names, emails, payment records) must register with the ICO. This is a legal requirement under UK GDPR — not optional. It is also a mandatory prerequisite for UKRLP registration.</p>
+
+    <h3>How to Register</h3>
+    <ol>
+      <li>Go to: <strong>https://ico.org.uk/registration</strong></li>
+      <li>Click <strong>"Register now"</strong></li>
+      <li>Work through the self-assessment — select <strong>Tier 1</strong> when prompted (small organisation)</li>
+      <li>Pay <strong>£40</strong> by debit or credit card</li>
+      <li>ICO Registration Number issued by email within <strong>1–3 working days</strong></li>
+    </ol>
+
+    <h3>What You Need</h3>
+    <ul>
+      <li>Organisation name: <strong>Seren Surveying Limited</strong> (trading as Meridian CPD)</li>
+      <li>Registered address (Companies House address)</li>
+      <li>Contact email for the business</li>
+      <li>Debit/credit card</li>
+    </ul>
+
+    <div class="highlight-box">
+      <strong>What you get:</strong> An ICO Registration Number (format: ZA123456). Keep this — it is required for UKRLP registration and demonstrates legal compliance to accreditation bodies.
+    </div>
+  </div>
+</div>
+
+<!-- Step 2 -->
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">2</div>
+    <div>
+      <div class="step-title">UKRLP Registration</div>
+      <div class="step-subtitle">UK Register of Learning Providers · Free · 5 minutes</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>The UK government's official register of learning providers, managed by the Education and Skills Funding Agency (ESFA). Registration assigns a <strong>UKPRN</strong> (UK Provider Reference Number) — a unique identifier for Meridian CPD in the government's education data infrastructure. Competitors in the energy assessor sector display this as "Provider No. XXXXXXXX."</p>
+
+    <h3>How to Register</h3>
+    <ol>
+      <li>Go to: <strong>https://www.ukrlp.co.uk</strong></li>
+      <li>Click <strong>"Register"</strong> or <strong>"New Provider Registration"</strong></li>
+      <li>Complete the 4-step online form — approximately 5 minutes</li>
+    </ol>
+
+    <h3>What You Need</h3>
+    <ul>
+      <li>Organisation name: <strong>Meridian CPD</strong> (trading name of Seren Surveying Limited)</li>
+      <li>Registered business address</li>
+      <li>ICO Registration Number (from Step 1)</li>
+      <li>Contact name, phone, and email</li>
+      <li>Brief description of provision — use this text:</li>
+    </ul>
+
+    <div class="script-block">"Online CPD courses for UK Domestic Energy Assessors and Retrofit Assessors, covering RdSAP 10, PAS 2035, EPC methodology, and energy efficiency standards. Courses are delivered as structured online modules with assessed completion and certificate issue."</div>
+
+    <div class="highlight-box">
+      <strong>What you get:</strong> A UKPRN number displayed on the Meridian CPD website and on learner certificates as "UK Provider Reference Number: XXXXXXXX." Gives Meridian CPD a verified presence in the government's register of learning organisations.
+    </div>
+  </div>
+</div>
+
+<!-- Step 3 -->
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">3</div>
+    <div>
+      <div class="step-title">CPD Certification Service</div>
+      <div class="step-subtitle">cpduk.co.uk · ~£300–700/year · 2 weeks per course · most recognised UK mark</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>The UK's largest and most widely recognised CPD accreditation body, established 1996. The <strong>"CPD Certified"</strong> logo is the standard quality mark seen on professional training materials across all sectors in the UK. This is the accreditation that will most influence a DEA's decision to subscribe to Meridian CPD.</p>
+
+    <div class="info-box">
+      <strong>No minimum trading history required.</strong> Suitable for new providers from day one. No hard pass/fail — they work collaboratively with providers.
+    </div>
+
+    <h3>How to Apply</h3>
+    <ol>
+      <li>Go to: <strong>https://www.cpduk.co.uk/become-accredited</strong></li>
+      <li>Click <strong>"Get a Quote"</strong> or <strong>"Start the Process"</strong></li>
+      <li>Book a free initial consultation call (30 mins)</li>
+      <li>They will scope the number of courses, format, and subject matter, then provide a tailored quote</li>
+      <li>Once agreed and paid, submit course materials for assessment</li>
+      <li>Assessment: <strong>10–14 working days</strong> per course</li>
+    </ol>
+
+    <h3>What to Tell Them on the Call</h3>
+    <div class="script-block">"Meridian CPD is an online subscription platform providing structured CPD for UK Domestic Energy Assessors and Retrofit Assessors. Courses cover RdSAP 10 updates, EPC methodology, PAS 2035 retrofit coordination, and compliance changes. Each course is approximately 1 hour in duration, delivered via written content with self-assessment questions. Courses are created by qualified practitioners holding MCIOB, RPSA, and PAS 2035 qualifications. We would like to start by accrediting 3 courses."</div>
+
+    <h3>What to Prepare Before Submission</h3>
+    <ul>
+      <li>Course title and unique course code</li>
+      <li>Clear learning objectives (3–5 bullet points per course)</li>
+      <li>Structured course content (PDF format)</li>
+      <li>Course duration and delivery format</li>
+      <li>Self-assessment questions (5 per course)</li>
+    </ul>
+
+    <div class="highlight-box">
+      <strong>What you get:</strong> Licence to display "CPD Certified" logo on all course materials, website, and marketing. Meridian CPD listed in CPD Member Directory. "CPD Certified" symbol on learner certificates. CPD Certified certificate per accredited course.
+    </div>
+  </div>
+</div>
+
+<!-- Step 4 -->
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">4</div>
+    <div>
+      <div class="step-title">CPD Standards Office</div>
+      <div class="step-subtitle">cpdstandards.com · ~£500–1,500/year · ~30 days per course · rigorous dual-accreditation</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>A respected independent CPD accreditation body founded in 2012, operating in 72 countries. Their trustmark is well-regarded as a more rigorous complement to the CPD Certification Service. Having both marks gives Meridian CPD dual-accreditation that most competitors will not have.</p>
+
+    <div class="warn-box">
+      <strong>Important:</strong> The first membership term requires a <strong>minimum 2-year commitment</strong> — factor this into budget planning. Payment plans are available. After year two, membership rolls annually.
+    </div>
+
+    <h3>How to Apply</h3>
+    <ol>
+      <li>Go to: <strong>https://www.cpdstandards.com/become-accredited</strong></li>
+      <li>Click <strong>"Book a Free Consultation"</strong></li>
+      <li>Complete a 30-minute call to discuss courses and learning outcomes</li>
+      <li>Receive a registration form and their "Get CPD Ready" assessment criteria pack</li>
+      <li>Submit course materials via structured forms they provide</li>
+      <li>Independent assessor reviews materials over <strong>approximately 30 days</strong> — collaborative, not pass/fail</li>
+    </ol>
+
+    <h3>What to Tell Them on the Call</h3>
+    <p>Use the same description as Step 3. If Step 3 is already in progress, course materials will already be structured to the right standard — making this step much easier.</p>
+
+    <div class="highlight-box">
+      <strong>What you get:</strong> Unique authenticating trustmark (badge with membership number) for website, social media, and documents. CPD Accreditation Certificate per course. Listing in CPD Standards Office Member Directory.
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- Timeline -->
+<h3>Suggested Timeline</h3>
+<table class="timeline-table">
+  <thead>
+    <tr><th>Week</th><th>Action</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Week 1</strong></td><td>Complete ICO registration (£40, 15 mins)</td></tr>
+    <tr><td><strong>Week 1</strong></td><td>Complete UKRLP registration (free, 5 mins) — needs ICO number first</td></tr>
+    <tr><td><strong>Week 1–2</strong></td><td>Contact CPD Certification Service — book consultation call, receive quote</td></tr>
+    <tr><td><strong>Week 2–3</strong></td><td>Agree CPD Certification Service membership, submit first 3 courses for assessment</td></tr>
+    <tr><td><strong>Week 4–6</strong></td><td>CPD Certification Service assessment completes — "CPD Certified" logo live on site and certificates</td></tr>
+    <tr><td><strong>Week 4</strong></td><td>Contact CPD Standards Office — book consultation call, receive quote</td></tr>
+    <tr><td><strong>Week 5–6</strong></td><td>Agree CPD Standards Office membership (factor in 2-year commitment)</td></tr>
+    <tr><td><strong>Week 6–10</strong></td><td>CPD Standards Office assessment completes — dual accreditation achieved</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- Key Links -->
+<h3>Key Links</h3>
+<table class="links-table">
+  <tr><td>ICO Registration</td><td><a href="https://ico.org.uk/registration">ico.org.uk/registration</a></td></tr>
+  <tr><td>UKRLP Registration</td><td><a href="https://www.ukrlp.co.uk">ukrlp.co.uk</a></td></tr>
+  <tr><td>CPD Certification Service</td><td><a href="https://www.cpduk.co.uk/become-accredited">cpduk.co.uk/become-accredited</a></td></tr>
+  <tr><td>CPD Standards Office</td><td><a href="https://www.cpdstandards.com/become-accredited">cpdstandards.com/become-accredited</a></td></tr>
+</table>
+
+<hr>
+
+<!-- Questions back to Matt -->
+<h3>Questions to Direct to Matt Davies</h3>
+<ul>
+  <li>How many courses to submit for initial accreditation (3 recommended to start)</li>
+  <li>Confirmation of trading name: <strong>Meridian CPD</strong> (trading as Seren Surveying Limited)</li>
+  <li>Registered address for all applications</li>
+  <li>Whether to use a dedicated Meridian CPD email address for accreditation correspondence</li>
+  <li>Budget sign-off for Step 4 (2-year minimum commitment)</li>
+</ul>
+
+<div class="doc-footer">
+  © Seren Surveying Limited, 2026 · Meridian CPD · Confidential — not for public distribution
+</div>
+
+</body>
+</html>

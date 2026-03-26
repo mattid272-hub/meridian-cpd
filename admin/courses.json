@@ -1,0 +1,264 @@
+{
+  "courses": [
+    {
+      "id": "MER-DEA-001",
+      "title": "Introduction to RdSAP 10: What's Changed and Why",
+      "strand": "DEA",
+      "hours": 2.0,
+      "status": "ready",
+      "format": "pptx",
+      "pdf": null,
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-002",
+      "title": "Measuring Windows in RdSAP 10",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-002/MER-DEA-002.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-003",
+      "title": "Ventilation in RdSAP 10: PIV, MVHR and Natural Ventilation",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-003/MER-DEA-003.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-004",
+      "title": "Room in Roof: Type 1 and Type 2 in RdSAP 10",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-004/MER-DEA-004.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-005",
+      "title": "Heating Systems Primary: Boilers, Controls and Data Entry in RdSAP 10",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-005/MER-DEA-005.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-006",
+      "title": "Heating Systems Secondary: Storage Heaters, Direct Electric and Room Heaters",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-006/MER-DEA-006.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-007",
+      "title": "Hot Water Systems in RdSAP 10: Cylinders, Combis and Immersions",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-007/MER-DEA-007.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-008",
+      "title": "Insulation in RdSAP 10: Walls, Roofs, Floors and Common Errors",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-008/MER-DEA-008.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-010",
+      "title": "Lighting and Renewables in RdSAP 10",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-010/MER-DEA-010.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-011",
+      "title": "Solar PV, Battery Storage and PV Diverters in RdSAP 10",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-011/MER-DEA-011.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-014",
+      "title": "EPC Audit Preparation: How to Pass Your Annual Audit",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-014/MER-DEA-014.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-DEA-021",
+      "title": "Airtightness Testing in RdSAP 10",
+      "strand": "DEA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-DEA-021/MER-DEA-021.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-001",
+      "title": "PAS 2035:2023 Overview for Retrofit Assessors",
+      "strand": "RA",
+      "hours": 2.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-001/MER-RA-001.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-002",
+      "title": "Moisture Risk Assessment in PAS 2035:2023: The Updated Framework",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-002/MER-RA-002.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-003",
+      "title": "Dwelling Data Collection: PAS 2035:2023 Annex A Requirements",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-003/MER-RA-003.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-004",
+      "title": "Cavity Wall Insulation: Risk Factors and the Retrofit Assessor's Role",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-004/MER-RA-004.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-005",
+      "title": "Solid Wall Insulation: IWI vs EWI \u2014 Risks, Evidence and Assessment",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-005/MER-RA-005.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-006",
+      "title": "EPR Variation: Managing the RdSAP 10 Transition in PAS 2035 Projects",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-006/MER-RA-006.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-007",
+      "title": "Heating System Assessment for Retrofit: What the Retrofit Assessor Must Record",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-007/MER-RA-007.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-008",
+      "title": "Ventilation Assessment in Retrofit: Background Ventilation to MVHR",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-008/MER-RA-008.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-009",
+      "title": "External Wall Insulation: Planning Permission and Fire Risk",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-009/MER-RA-009.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-010",
+      "title": "Thermal Bridging in Retrofit Assessment: What Assessors Must Record",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-010/MER-RA-010.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-011",
+      "title": "Occupancy Assessment: Health Conditions, Vulnerability and Overheating Risk",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-011/MER-RA-011.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-RA-012",
+      "title": "TrustMark Data Requirements: What Retrofit Assessors Must Submit",
+      "strand": "RA",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-RA-012/MER-RA-012.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-ALL-001",
+      "title": "UK Energy Policy 2026: What Assessors Need to Know",
+      "strand": "ALL",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-ALL-001/MER-ALL-001.pdf",
+      "notes": ""
+    },
+    {
+      "id": "MER-ALL-004",
+      "title": "Fire Safety in Retrofit: What Every Assessor Must Know",
+      "strand": "ALL",
+      "hours": 1.0,
+      "status": "ready",
+      "format": "pdf",
+      "pdf": "../courses/MER-ALL-004/MER-ALL-004.pdf",
+      "notes": ""
+    }
+  ]
+}
