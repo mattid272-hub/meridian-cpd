@@ -474,9 +474,134 @@
     .main { margin-left: 0; }
     .stats-row { grid-template-columns: 1fr 1fr; }
   }
+
+  /* ── Login overlay ── */
+  #login-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--dark);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  #login-overlay.hidden { display: none; }
+
+  .login-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 2.5rem 2.8rem;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  }
+  .login-brand {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--dark);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .login-brand span { color: var(--green-dark); }
+  .login-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.8rem;
+  }
+  .login-field {
+    margin-bottom: 1rem;
+  }
+  .login-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+  .login-input {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--text);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .login-input:focus { border-color: var(--dark); }
+  .login-btn {
+    width: 100%;
+    background: var(--dark);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 11px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: opacity .2s;
+  }
+  .login-btn:hover { opacity: 0.88; }
+  .login-error {
+    color: var(--red);
+    font-size: 12px;
+    margin-top: 0.6rem;
+    display: none;
+  }
+  .login-error.show { display: block; }
+
+  /* ── User pill in topbar ── */
+  .user-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .user-name {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+  }
+  .user-name strong { color: rgba(255,255,255,0.9); }
+  .logout-btn {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 5px;
+    padding: 3px 9px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all .15s;
+  }
+  .logout-btn:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
 </style>
 </head>
 <body>
+
+<!-- Login overlay -->
+<div id="login-overlay">
+  <div class="login-card">
+    <div class="login-brand">MERIDIAN <span>CPD</span></div>
+    <div class="login-sub">Course Admin Portal</div>
+    <div class="login-field">
+      <label class="login-label" for="login-user">Username</label>
+      <input class="login-input" id="login-user" type="text" placeholder="matt or ceri" autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label class="login-label" for="login-pass">Password</label>
+      <input class="login-input" id="login-pass" type="password" placeholder="••••••••••" autocomplete="current-password">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <p class="login-error" id="login-error">Incorrect username or password.</p>
+  </div>
+</div>
 
 <!-- Sidebar -->
 <div class="sidebar">
@@ -498,7 +623,13 @@
 <div class="main">
   <div class="topbar">
     <h1>Course Library</h1>
-    <div class="topbar-meta" id="last-updated">Loading...</div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="topbar-meta" id="last-updated">Loading...</div>
+      <div class="user-pill">
+        <span class="user-name">Signed in as <strong id="user-display">—</strong></span>
+        <button class="logout-btn" onclick="doLogout()">Sign out</button>
+      </div>
+    </div>
   </div>
 
   <div class="content">
@@ -506,8 +637,7 @@
     <!-- Instructions banner -->
     <div class="banner">
       <strong>How to use this portal:</strong>
-      Open PDFs to review course content → change status to "Needs Review" or "Has Issues" if problems found → add notes → your changes auto-save in your browser.
-      To share with Ceri: run <strong>start-server.command</strong> then share your screen, or deploy to GitHub Pages (ask Claude).
+      Click a course title or "Open PDF" to review content. Change status to "Needs Review" or "Has Issues" if problems found. Add notes. Click <strong>Save Changes</strong> to save. Your notes are stored per user in your browser.
     </div>
 
     <!-- Stats row -->
@@ -598,36 +728,110 @@
 </div>
 
 <script>
+// ── Auth ──────────────────────────────────────────────────
+// Passwords are SHA-256 hashed. To change:
+//   python3 -c "import hashlib; print(hashlib.sha256('newpassword'.encode()).hexdigest())"
+const USERS = {
+  matt: { hash: 'f45d4f40a98ab3603e9c0829e7b9be954a9958934220caf9ee35a45af09eef54', displayName: 'Matt Davies', role: 'admin' },
+  ceri: { hash: '9b1fd454acfc5a19c6e25bb3bcc6512c6a926cf0b1f0af86bd9b105e73316fbd', displayName: 'Ceri Pearce', role: 'reviewer' }
+};
+
+// Supabase Storage base URL — PDFs must be uploaded here (run upload_pdfs_to_supabase.py)
+const SUPABASE_PDF_BASE = 'https://cpkyloywjmpesmjgqaxm.supabase.co/storage/v1/object/public/courses';
+
+let currentUser = null;
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function doLogin() {
+  const user = document.getElementById('login-user').value.trim().toLowerCase();
+  const pass = document.getElementById('login-pass').value;
+  const err  = document.getElementById('login-error');
+  err.classList.remove('show');
+  if (!USERS[user]) { err.classList.add('show'); return; }
+  const hash = await sha256(pass);
+  if (hash !== USERS[user].hash) { err.classList.add('show'); return; }
+  currentUser = { username: user, ...USERS[user] };
+  sessionStorage.setItem('meridian_admin_user', JSON.stringify(currentUser));
+  document.getElementById('login-overlay').classList.add('hidden');
+  document.getElementById('user-display').textContent = currentUser.displayName;
+  init();
+}
+
+function doLogout() {
+  sessionStorage.removeItem('meridian_admin_user');
+  currentUser = null;
+  document.getElementById('login-overlay').classList.remove('hidden');
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+// Allow Enter key in password field
+document.getElementById('login-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('login-user').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('login-pass').focus();
+});
+
+// Restore session
+(function restoreSession() {
+  try {
+    const stored = sessionStorage.getItem('meridian_admin_user');
+    if (stored) {
+      currentUser = JSON.parse(stored);
+      document.getElementById('login-overlay').classList.add('hidden');
+      document.getElementById('user-display').textContent = currentUser.displayName;
+    }
+  } catch(e) {}
+})();
+
+// ── PDF URL helper ─────────────────────────────────────────
+// Returns Supabase Storage URL for a course ID.
+// Falls back to local relative path when running from file:// (Matt's Mac).
+function pdfUrl(courseId) {
+  const isLocal = location.protocol === 'file:' || location.hostname === 'localhost';
+  if (isLocal) return `../courses/${courseId}/${courseId}.pdf`;
+  return `${SUPABASE_PDF_BASE}/${courseId}.pdf`;
+}
+
 // ── Data ──────────────────────────────────────────────────
 let courses = [];
-let overrides = {}; // local overrides: { [id]: { status, notes } }
+let overrides = {};
 let activeFilter = 'all';
 let hasUnsaved = false;
 
+function overrideKey() {
+  return 'meridian_admin_overrides_' + (currentUser ? currentUser.username : 'anon');
+}
+
 // ── Load ──────────────────────────────────────────────────
 async function init() {
+  if (!currentUser) return;
   try {
     const res = await fetch('courses.json?t=' + Date.now());
     const data = await res.json();
     courses = data.courses;
   } catch(e) {
-    // fallback: try to load inline (when opened as file://)
-    console.warn('Could not fetch courses.json — running without data', e);
+    console.warn('Could not fetch courses.json', e);
     courses = [];
   }
 
-  // Load local overrides from localStorage
   try {
-    const stored = localStorage.getItem('meridian_admin_overrides');
+    const stored = localStorage.getItem(overrideKey());
     if (stored) overrides = JSON.parse(stored);
-  } catch(e) {}
+    else overrides = {};
+  } catch(e) { overrides = {}; }
 
   document.getElementById('last-updated').textContent = 'Last loaded: ' + new Date().toLocaleTimeString('en-GB');
   updateStats();
   renderTable();
 }
 
-// ── Apply overrides to a course object ────────────────────
+// ── Apply overrides ────────────────────────────────────────
 function getEffective(course) {
   const ov = overrides[course.id] || {};
   return {
@@ -645,33 +849,17 @@ function updateStats() {
   document.getElementById('stat-generating').textContent = effective.filter(c => c.status === 'generating').length;
   document.getElementById('stat-issues').textContent = effective.filter(c => c.status === 'review' || c.status === 'issue').length;
 
-  // DEA hours = DEA courses + ALL courses (ready or review only, not generating)
   const readyStatuses = ['ready', 'review'];
-  const deaHrs = effective
-    .filter(c => (c.strand === 'DEA' || c.strand === 'ALL') && readyStatuses.includes(c.status))
-    .reduce((s, c) => s + c.hours, 0);
-  const raHrs = effective
-    .filter(c => (c.strand === 'RA' || c.strand === 'ALL') && readyStatuses.includes(c.status))
-    .reduce((s, c) => s + c.hours, 0);
-
-  // Include generating in total projection
-  const deaTotal = effective
-    .filter(c => c.strand === 'DEA' || c.strand === 'ALL')
-    .reduce((s, c) => s + c.hours, 0);
-  const raTotal = effective
-    .filter(c => c.strand === 'RA' || c.strand === 'ALL')
-    .reduce((s, c) => s + c.hours, 0);
-
+  const deaTotal = effective.filter(c => c.strand === 'DEA' || c.strand === 'ALL').reduce((s, c) => s + c.hours, 0);
+  const raTotal  = effective.filter(c => c.strand === 'RA'  || c.strand === 'ALL').reduce((s, c) => s + c.hours, 0);
   const target = 15;
-  const deaPct = Math.min((deaTotal / target) * 100, 100);
-  const raPct = Math.min((raTotal / target) * 100, 100);
 
-  document.getElementById('dea-bar').style.width = deaPct + '%';
+  document.getElementById('dea-bar').style.width = Math.min((deaTotal/target)*100,100) + '%';
   document.getElementById('dea-bar').className = 'progress-bar-fill ' + (deaTotal >= target ? 'green' : deaTotal >= 10 ? 'amber' : 'red');
   document.getElementById('dea-hours').textContent = deaTotal + ' hrs';
   document.getElementById('dea-hours').className = 'progress-count ' + (deaTotal >= target ? 'target-ok' : deaTotal >= 10 ? 'target-warn' : 'target-short');
 
-  document.getElementById('ra-bar').style.width = raPct + '%';
+  document.getElementById('ra-bar').style.width = Math.min((raTotal/target)*100,100) + '%';
   document.getElementById('ra-bar').className = 'progress-bar-fill ' + (raTotal >= target ? 'green' : raTotal >= 10 ? 'amber' : 'red');
   document.getElementById('ra-hours').textContent = raTotal + ' hrs';
   document.getElementById('ra-hours').className = 'progress-count ' + (raTotal >= target ? 'target-ok' : raTotal >= 10 ? 'target-warn' : 'target-short');
@@ -710,12 +898,13 @@ function renderTable() {
     const eff = getEffective(course);
     const hasPdf = eff.status !== 'generating';
     const strandLabel = eff.strand === 'ALL' ? 'All Strands' : eff.strand === 'RA' ? 'Retrofit Assessor' : 'DEA';
+    const pdf = pdfUrl(course.id);
 
     const statusMap = {
-      ready: ['status-ready', '✓ Ready'],
+      ready:      ['status-ready',      '✓ Ready'],
       generating: ['status-generating', '⟳ Generating'],
-      review: ['status-review', '⚠ Needs Review'],
-      issue: ['status-issue', '✕ Has Issues']
+      review:     ['status-review',     '⚠ Needs Review'],
+      issue:      ['status-issue',      '✕ Has Issues']
     };
     const [statusClass, statusLabel] = statusMap[eff.status] || statusMap.ready;
 
@@ -725,10 +914,7 @@ function renderTable() {
       <td><div class="course-id">${course.id}</div></td>
       <td>
         <div class="course-title">
-          ${hasPdf
-            ? `<a href="${eff.pdf}" target="_blank" title="Open PDF">${course.title}</a>`
-            : course.title
-          }
+          ${hasPdf ? `<a href="${pdf}" target="_blank" title="Open PDF">${course.title}</a>` : course.title}
         </div>
       </td>
       <td><span class="strand-badge strand-${course.strand}">${strandLabel}</span></td>
@@ -738,10 +924,10 @@ function renderTable() {
           <span class="status-dot"></span>${statusLabel}
         </span>
         <select class="status-select" data-id="${course.id}" onchange="onStatusChange(this)">
-          <option value="ready" ${eff.status==='ready'?'selected':''}>✓ Ready</option>
-          <option value="generating" ${eff.status==='generating'?'selected':''}>⟳ Generating</option>
-          <option value="review" ${eff.status==='review'?'selected':''}>⚠ Needs Review</option>
-          <option value="issue" ${eff.status==='issue'?'selected':''}>✕ Has Issues</option>
+          <option value="ready"      ${eff.status==='ready'      ?'selected':''}>✓ Ready</option>
+          <option value="generating" ${eff.status==='generating' ?'selected':''}>⟳ Generating</option>
+          <option value="review"     ${eff.status==='review'     ?'selected':''}>⚠ Needs Review</option>
+          <option value="issue"      ${eff.status==='issue'      ?'selected':''}>✕ Has Issues</option>
         </select>
       </td>
       <td>
@@ -750,9 +936,8 @@ function renderTable() {
       </td>
       <td>
         ${hasPdf
-          ? `<a class="action-btn btn-view" href="${eff.pdf}" target="_blank">📄 Open PDF</a>`
-          : `<span class="action-btn btn-disabled">📄 Pending</span>`
-        }
+          ? `<a class="action-btn btn-view" href="${pdf}" target="_blank">📄 Open PDF</a>`
+          : `<span class="action-btn btn-disabled">📄 Pending</span>`}
       </td>
     `;
     tbody.appendChild(tr);
@@ -766,7 +951,7 @@ function onStatusChange(sel) {
   overrides[id].status = sel.value;
   markUnsaved();
   updateStats();
-  renderTable(); // re-render badge
+  renderTable();
 }
 
 function onNotesChange(ta) {
@@ -783,14 +968,14 @@ function markUnsaved() {
 
 // ── Save / discard ────────────────────────────────────────
 function saveAll() {
-  localStorage.setItem('meridian_admin_overrides', JSON.stringify(overrides));
+  localStorage.setItem(overrideKey(), JSON.stringify(overrides));
   hasUnsaved = false;
   document.getElementById('save-bar').classList.remove('visible');
   document.getElementById('last-updated').textContent = 'Saved at ' + new Date().toLocaleTimeString('en-GB');
 }
 
 function discardChanges() {
-  const stored = localStorage.getItem('meridian_admin_overrides');
+  const stored = localStorage.getItem(overrideKey());
   overrides = stored ? JSON.parse(stored) : {};
   hasUnsaved = false;
   document.getElementById('save-bar').classList.remove('visible');
@@ -798,8 +983,8 @@ function discardChanges() {
   renderTable();
 }
 
-// ── Boot ──────────────────────────────────────────────────
-init();
+// ── Boot (only if already logged in) ──────────────────────
+if (currentUser) init();
 </script>
 </body>
 </html>
