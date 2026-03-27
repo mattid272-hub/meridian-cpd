@@ -6,8 +6,8 @@
       "strand": "DEA",
       "hours": 2.0,
       "status": "ready",
-      "format": "pptx",
-      "pdf": null,
+      "format": "pdf",
+      "pdf": "../../courses/MER-DEA-001/MER-DEA-001.pdf",
       "notes": ""
     },
     {
