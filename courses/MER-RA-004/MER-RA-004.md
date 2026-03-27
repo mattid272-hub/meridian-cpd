@@ -115,60 +115,65 @@ The assessor does not write "CWI suitable" or "CWI not suitable" in the assessme
 
 **Q1.** A 1968 semi-detached property is in a wind-driven rain Severe exposure zone. The assessor records the cavity as 65 mm wide, with mortar joints in good condition. What additional data field is essential for the designer to determine CWI product suitability?
 
-A) The property's orientation
-B) Whether the exposure zone is Severe or Very Severe, and the BBA certificate conditions of available products for that zone
-C) The boiler fuel type
-D) The floor construction
+A) The boiler fuel type
+B) The floor construction
+C) The property's orientation
+D) Whether the exposure zone is Severe or Very Severe, and the BBA certificate conditions of available products for that zone
 
-**Correct answer: B**
+**Correct answer: D**
+
 *The exposure zone is the key constraint on CWI product selection. In a Severe exposure zone, not all CWI products are certified — the designer must check BBA certificate conditions against the recorded exposure zone. The assessor's duty is to record the exposure zone accurately; the designer determines product suitability from that data.*
 
 ---
 
 **Q2.** During a survey, an assessor notices diffuse damp staining on the internal face of the south-west elevation of a 1975 semi-detached property. The occupant confirms that CWI was installed approximately 15 years ago. What should the assessor do?
 
-A) Record the CWI as present and in good condition — it was professionally installed
-B) Record the moisture evidence, its location and pattern, flag the possibility of CWI failure, and note that specialist investigation of the fill condition may be required
-C) Remove the CWI from the records and treat the wall as unfilled
-D) Record the moisture as rising damp — the DPC level proximity indicates this
+A) Record the moisture evidence, its location and pattern, flag the possibility of CWI failure, and note that specialist investigation of the fill condition may be required
+B) Record the moisture as rising damp — the DPC level proximity indicates this
+C) Record the CWI as present and in good condition — it was professionally installed
+D) Remove the CWI from the records and treat the wall as unfilled
 
-**Correct answer: B**
+**Correct answer: A**
+
 *Diffuse damp on an insulated elevation with a history of CWI installation is a potential indicator of CWI failure. The assessor records the moisture evidence and flags it for specialist investigation — they do not determine whether failure has occurred, and they do not reclassify the fill status without evidence.*
 
 ---
 
 **Q3.** A Retrofit Assessment for a 1983 property records "partial fill boards present, residual cavity approximately 30 mm." A designer proposes blown mineral fibre CWI. What is the likely design issue?
 
-A) No issue — blown mineral fibre is suitable for all residual cavity widths
-B) 30 mm is likely too narrow for blown mineral fibre installation, which typically requires 50 mm minimum residual cavity
+A) The designer should have made this assessment, not the Retrofit Assessor
+B) No issue — blown mineral fibre is suitable for all residual cavity widths
 C) Partial fill boards must be extracted before any CWI product is installed
-D) The designer should have made this assessment, not the Retrofit Assessor
+D) 30 mm is likely too narrow for blown mineral fibre installation, which typically requires 50 mm minimum residual cavity
 
-**Correct answer: B**
+**Correct answer: D**
+
 *Most blown mineral fibre CWI products require a minimum residual cavity of approximately 50 mm for adequate fill. A 30 mm residual cavity would prevent proper installation. The designer would need to consider alternative products or determine that CWI is not viable for this property.*
 
 ---
 
 **Q4.** An assessor writes the following in the Retrofit Assessment: "Based on the wall construction and condition, CWI appears suitable for this property, subject to mortar joint repair." What is wrong with this statement?
 
-A) Nothing — the assessor is providing helpful guidance for the design stage
-B) The assessor has made a design-stage determination (CWI suitability) that is outside the assessor's scope. The assessor should record the wall construction, condition (including the mortar joint defects), and let the Retrofit Designer make the suitability determination.
+A) The assessor has made a design-stage determination (CWI suitability) that is outside the assessor's scope. The assessor should record the wall construction, condition (including the mortar joint defects), and let the Retrofit Designer make the suitability determination.
+B) Nothing — the assessor is providing helpful guidance for the design stage
 C) The assessor should have stated "CWI is suitable" more definitively
 D) The statement is acceptable only if the assessor also holds a Retrofit Designer qualification
 
-**Correct answer: B**
+**Correct answer: A**
+
 *Determining whether CWI is "suitable" is a design-stage function, not an assessment function. The assessor records observable facts: construction type, cavity width, wall condition, exposure zone, DPC position, and defects observed. The suitability determination is made by the Retrofit Designer based on this data.*
 
 ---
 
 **Q5.** What does the DPC position affect in the context of CWI installation?
 
-A) The efficiency of the CWI product once installed
+A) The exposure zone classification
 B) Whether the CWI can be installed without bridging the DPC, which would compromise its function and create a pathway for moisture from the ground
 C) The required cavity width for the product
-D) The exposure zone classification
+D) The efficiency of the CWI product once installed
 
 **Correct answer: B**
+
 *The DPC (damp-proof course) prevents moisture from rising from the ground into the wall above. CWI must not bridge the DPC. If the fill material extends below the DPC level, it creates a capillary pathway that bypasses the DPC, allowing moisture to rise into the insulated fabric. The DPC position must be recorded so the installer can ensure the fill terminates correctly.*
 
 ---

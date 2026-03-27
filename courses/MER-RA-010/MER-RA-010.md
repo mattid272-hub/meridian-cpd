@@ -91,60 +91,65 @@ The Retrofit Assessor's thermal bridge data feeds into the retrofit design in se
 
 **Q1.** Black mould is observed precisely at the skirting board level along the entire external north wall of a ground floor living room, but not on any other wall surface. Ventilation assessment shows adequate trickle vents and functional extract fans. What is the most likely cause?
 
-A) Penetrating damp through the north wall
+A) Ventilation failure — the north wall receives insufficient air movement
 B) Thermal bridging at the wall-to-ground-floor junction, creating a cold surface at the perimeter where dew point is reached
-C) Rising damp — the DPC has failed
-D) Ventilation failure — the north wall receives insufficient air movement
+C) Penetrating damp through the north wall
+D) Rising damp — the DPC has failed
 
 **Correct answer: B**
+
 *Localised mould at skirting board level along the full external wall, in a dwelling with adequate ventilation, is the classic indicator of thermal bridging at the wall-to-floor junction. The cold perimeter surface (where the external wall meets the uninsulated ground slab) falls below dew point in cold weather, causing surface condensation and mould.*
 
 ---
 
 **Q2.** A 1975 cavity masonry property has concrete lintels over all window and door openings. The assessor observes cold, damp soffit surfaces under the lintels in the living room windows during a winter survey. What must be recorded?
 
-A) The windows are draughty — the damp soffits indicate infiltration, not bridging
-B) The concrete lintel type, approximate length, and the observed cold/damp condition at the soffit — flagging thermal bridging at the lintel locations as an assessment finding
-C) Nothing — concrete lintels are standard in this construction period
-D) The assessor should only record this if mould is visibly present
+A) Nothing — concrete lintels are standard in this construction period
+B) The windows are draughty — the damp soffits indicate infiltration, not bridging
+C) The assessor should only record this if mould is visibly present
+D) The concrete lintel type, approximate length, and the observed cold/damp condition at the soffit — flagging thermal bridging at the lintel locations as an assessment finding
 
-**Correct answer: B**
+**Correct answer: D**
+
 *Cold, damp surfaces under concrete lintels during cold weather are indicative of thermal bridging at the lintel. The assessor records the lintel material, length (approximate, from opening width), and the observed surface condition. This data informs the designer's decision about targeted lintel insulation as part of any IWI or EWI specification.*
 
 ---
 
 **Q3.** A Retrofit Assessment records "thermal bridges present at window reveals throughout." The designer requests more specific data. What information is missing?
 
-A) The window glass specification
-B) The specific location of each reveal with an observed problem (which rooms, which windows), the reveal depth (approximate), the reveal construction (insulated return or uninsulated masonry), and any mould or condensation evidence at each location
-C) The thermal conductivity of the masonry
-D) The external orientation of each reveal
+A) The external orientation of each reveal
+B) The thermal conductivity of the masonry
+C) The specific location of each reveal with an observed problem (which rooms, which windows), the reveal depth (approximate), the reveal construction (insulated return or uninsulated masonry), and any mould or condensation evidence at each location
+D) The window glass specification
 
-**Correct answer: B**
+**Correct answer: C**
+
 *"Thermal bridges present at window reveals throughout" is not actionable data. The designer needs: specific locations (room-by-room, window-by-window for significant cases), reveal depth and construction type, and evidence of impact (mould, condensation) at each. Precise, location-referenced data is what enables targeted bridge mitigation design.*
 
 ---
 
 **Q4.** What is the Y-factor in RdSAP 10, and how does thermal bridging data from the Retrofit Assessment affect it?
 
-A) The Y-factor is the thermal transmittance of the roof element — accurate roof insulation data improves it
-B) The Y-factor is a global coefficient representing the aggregate heat loss from all thermal bridges and junctions. Where assessed junction Psi values are available from detailed survey data, they can replace the default Y-factor with a more accurate calculation
+A) The Y-factor is a global coefficient representing the aggregate heat loss from all thermal bridges and junctions. Where assessed junction Psi values are available from detailed survey data, they can replace the default Y-factor with a more accurate calculation
+B) The Y-factor is only used in full SAP, not in retrofit assessments
 C) The Y-factor is the air permeability measure — ventilation data affects it
-D) The Y-factor is only used in full SAP, not in retrofit assessments
+D) The Y-factor is the thermal transmittance of the roof element — accurate roof insulation data improves it
 
-**Correct answer: B**
+**Correct answer: A**
+
 *The Y-factor is the calculated or defaulted addition to heat loss representing all thermal junctions. Default Y-factors (applied when no junction-specific data is available) are typically conservative. Where the Retrofit Assessment includes detailed junction characterisation, calculated Psi values can be used in a more refined calculation, often producing a better (lower) Y-factor than the age-band default.*
 
 ---
 
 **Q5.** An assessor writes in the Retrofit Assessment: "Concrete lintels over all openings — recommend insulated lintel casing be specified as part of the IWI package." What is wrong with this statement?
 
-A) Nothing — the assessor is providing helpful guidance to the designer
-B) Specifying "insulated lintel casing as part of the IWI package" is a design determination that exceeds the Retrofit Assessor's scope. The assessor should record the lintel type and evidence of thermal impact; the Retrofit Designer determines whether and how to mitigate the bridge
-C) The recommendation is acceptable because it is flagged as a recommendation rather than a requirement
-D) The assessor can make this recommendation if they also hold a Retrofit Coordinator qualification
+A) The recommendation is acceptable because it is flagged as a recommendation rather than a requirement
+B) Nothing — the assessor is providing helpful guidance to the designer
+C) The assessor can make this recommendation if they also hold a Retrofit Coordinator qualification
+D) Specifying "insulated lintel casing as part of the IWI package" is a design determination that exceeds the Retrofit Assessor's scope. The assessor should record the lintel type and evidence of thermal impact; the Retrofit Designer determines whether and how to mitigate the bridge
 
-**Correct answer: B**
+**Correct answer: D**
+
 *Specifying retrofit measures — even in the form of recommendations — is outside the Retrofit Assessor's scope under PAS 2035:2023. The assessor records data. The Retrofit Designer specifies measures. An assessor who writes measure recommendations introduces liability (what if the recommendation is wrong?) and blurs the role boundary that PAS 2035 is designed to enforce.*
 
 ---

@@ -116,24 +116,26 @@ The RdSAP 10 solar thermal input requires: collector type, aperture area (m²), 
 
 **Q1.** A 1960s property has a copper hot water cylinder in the airing cupboard with no visible insulation — bare metal exterior, clearly no jacket. What is the correct RdSAP 10 input?
 
-A) Factory foam-insulated cylinder — all modern cylinders are foam-insulated
-B) Uninsulated cylinder
-C) Jacket-insulated cylinder at 25 mm (minimum default)
+A) Jacket-insulated cylinder at 25 mm (minimum default)
+B) Factory foam-insulated cylinder — all modern cylinders are foam-insulated
+C) Uninsulated cylinder
 D) Cylinder with no standing losses — the airing cupboard provides thermal mass
 
-**Correct answer: B**
+**Correct answer: C**
+
 *A bare copper cylinder with no jacket or foam insulation is an uninsulated cylinder. This is the highest-loss category and the RdSAP 10 default standing loss for an uninsulated cylinder applies. It should not be entered as a jacketed cylinder simply to avoid the energy penalty.*
 
 ---
 
 **Q2.** A combi boiler is found to have a keep-hot button on its controls panel. The occupant states they always have it switched on. How should this be entered in RdSAP 10?
 
-A) Do not enter keep-hot — the occupant's statement is not sufficient evidence
-B) Enter keep-hot as active — the occupant's confirmation, combined with the presence of the function, is sufficient
-C) Enter keep-hot only if an MCS certificate for the boiler is available
+A) Enter keep-hot as active — the occupant's confirmation, combined with the presence of the function, is sufficient
+B) Enter keep-hot only if an MCS certificate for the boiler is available
+C) Do not enter keep-hot — the occupant's statement is not sufficient evidence
 D) Enter the boiler as a storage combi instead
 
-**Correct answer: B**
+**Correct answer: A**
+
 *The presence of the keep-hot function on the boiler controls panel combined with the occupant's confirmation that it is active is sufficient to enter it in RdSAP 10. The occupant's confirmation of actively used features is an acceptable evidence basis; what the assessor must not do is credit keep-hot in the absence of the physical function on the boiler.*
 
 ---
@@ -141,23 +143,25 @@ D) Enter the boiler as a storage combi instead
 **Q3.** A flat plate solar thermal system is installed on a south-facing roof at approximately 35° tilt. The installation certificate states a gross collector area of 4.0 m² and an aperture area of 3.6 m². What area should be entered in RdSAP 10?
 
 A) 4.0 m² — the total panel area
-B) 3.6 m² — the aperture area as stated on the installation certificate
+B) 3.0 m² — an average between gross and aperture area
 C) 2.0 m² — a 50% deduction for shading must always be applied
-D) 3.0 m² — an average between gross and aperture area
+D) 3.6 m² — the aperture area as stated on the installation certificate
 
-**Correct answer: B**
+**Correct answer: D**
+
 *RdSAP 10 requires aperture area (the active collector area), not gross or overall panel area. The installation certificate value of 3.6 m² is the correct input. No blanket shading deduction is applied — overshading is a separate input based on the assessed level from site observation.*
 
 ---
 
 **Q4.** A property has a gas boiler-heated hot water cylinder. The cylinder has a factory foam outer casing (smooth white plastic jacket, no retrofitted insulation wrap). It has a cylinder thermostat. How should this be entered in RdSAP 10?
 
-A) Jacket-insulated cylinder at 80 mm (BS standard) — foam and jacket have equivalent performance
+A) Uninsulated cylinder — factory foam is not recognised in RdSAP 10
 B) Factory foam-insulated cylinder with cylinder thermostat present
-C) Uninsulated cylinder — factory foam is not recognised in RdSAP 10
-D) No cylinder input is required because the boiler is a regular boiler
+C) No cylinder input is required because the boiler is a regular boiler
+D) Jacket-insulated cylinder at 80 mm (BS standard) — foam and jacket have equivalent performance
 
 **Correct answer: B**
+
 *A factory foam-insulated cylinder is a specific input category in RdSAP 10 with lower standing losses than a jacketed cylinder. It must be selected correctly to avoid understating the cylinder's thermal performance. The cylinder thermostat present/absent input is separate and must also be recorded.*
 
 ---
@@ -165,11 +169,12 @@ D) No cylinder input is required because the boiler is a regular boiler
 **Q5.** An immersion heater is the sole DHW source on an all-electric property. The occupant believes they are on Economy 7. The electricity meter is a single-register smart meter showing one tariff. What should the assessor enter?
 
 A) Economy 7 — the occupant's belief is sufficient
-B) Standard rate electricity — the single-register meter confirms no off-peak supply is active
-C) Economy 10 as a conservative alternative to Economy 7
+B) Economy 10 as a conservative alternative to Economy 7
+C) Standard rate electricity — the single-register meter confirms no off-peak supply is active
 D) The assessor should defer and ask the supplier before lodging
 
-**Correct answer: B**
+**Correct answer: C**
+
 *A single-register meter confirms standard rate supply regardless of the occupant's belief. Economy 7 must be confirmed by a two-register meter or equivalent off-peak supply evidence. The occupant may believe they are on Economy 7 because storage heaters were originally installed with that tariff, but subsequent meter replacement may have changed the supply.*
 
 ---

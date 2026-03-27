@@ -172,33 +172,68 @@ Update your client communication. When you book an assessment, advise clients th
 
 ## Self-Assessment Questions
 
-**Q1.** Under RdSAP 10, you are assessing a semi-detached house. There are 14 windows of various sizes, orientations, and ages. How many window entries must you record in your assessment software?
+**Q1.** Under RdSAP 10, you are assessing a semi-detached house with 14 windows of various sizes, orientations, and ages. How many individual window entries must you record in your assessment software?
 
-**A.** 14 — one for each individual window. Individual measurement of every opening is required. Representative sampling is no longer accepted under RdSAP 10.
+A) As many as needed to cover each distinct glazing type — typically 3 to 5 representative entries
+B) One entry per elevation — so 4 entries for a standard semi-detached
+C) 14 — one for each individual window opening
+D) The number is discretionary — the assessor uses professional judgement to determine representative samples
 
----
+**Correct answer: C**
 
-**Q2.** You are assessing a 1930s semi-detached house with a dormer loft conversion added in 2018. The converted space has stud walls on all sides and a ceiling that follows the roof slope throughout. What Room in Roof type is this?
-
-**A.** Type 1. The conversion was built wholly within the roof void after the original construction, has stud walls on all sides, and a ceiling that follows the roof slope — meeting all three criteria for Type 1 classification.
-
----
-
-**Q3.** A property has a 4 kWp solar PV system, a 9.6 kWh battery storage unit, and a PV diverter feeding the hot water cylinder. What three items do you record in RdSAP 10?
-
-**A.** (1) Solar PV capacity (4 kWp), orientation and pitch as before. (2) Battery storage capacity: 9.6 kWh — this enables modelling of on-site self-consumption. (3) PV diverter: present — this enables modelling of solar contribution to domestic hot water. All three affect the calculated energy performance.
+*RdSAP 10 requires individual measurement and recording of every window opening. Representative sampling — accepted under RdSAP 9.94 — is no longer permitted. Each opening must have its own entry covering width, height, orientation, frame type, and glazing type.*
 
 ---
 
-**Q4.** During a survey you notice a small box labelled "iBoost+" installed next to the consumer unit. The property also has solar panels. What is this device and what do you record?
+**Q2.** A 1930s semi-detached house has a dormer loft conversion added in 2018. The converted space has stud walls on all sides and a ceiling that follows the roof slope throughout, with no flat ceiling sections. What Room in Roof type is this under RdSAP 10?
 
-**A.** An iBoost+ is a PV diverter. It redirects surplus solar generation to heat the hot water cylinder. Record it as "PV diverter: present" in the RdSAP 10 inputs. Failing to record it means the solar contribution to domestic hot water is not captured in the calculation.
+A) Type 1 — the conversion was built wholly within the roof void after the original construction, with stud walls on all sides and a roof-slope ceiling
+B) Type 2 — dormer conversions are always Type 2 regardless of construction method
+C) Neither type — dormers are recorded as standard upper-floor rooms in RdSAP 10
+D) Type 2 — the 1930s host structure means the space is within the original roof
+
+**Correct answer: A**
+
+*Type 1 applies to loft conversions built wholly within the roof void after original construction, with stud walls on all sides and a ceiling that follows the roof slope. This dormer meets all three criteria. Type 2 applies where the room is accommodated within the original roof structure, with part of the original construction retained.*
 
 ---
 
-**Q5.** A bathroom ceiling light fitting contains 6 small halogen-equivalent LED bulbs in a single circular fitting. How many bulbs do you record for this fitting under RdSAP 10?
+**Q3.** A property has a 4 kWp solar PV system, a 9.6 kWh battery storage unit, and a PV diverter feeding the hot water cylinder. What three items must be recorded as distinct RdSAP 10 inputs?
 
-**A.** 6. RdSAP 10 requires bulb counting, not fitting counting. A single fitting with 6 bulbs records as 6.
+A) Solar PV capacity, roof orientation, and MCS certificate reference only — battery and diverter are not RdSAP 10 inputs
+B) Battery capacity only — the PV and diverter are already captured under the existing solar PV input
+C) Solar PV is the only input — battery and diverter data is entered on a supplementary form, not in RdSAP 10 directly
+D) Solar PV capacity and specification, battery storage capacity in kWh, and PV diverter presence — all three have distinct calculation pathways in RdSAP 10
+
+**Correct answer: D**
+
+*RdSAP 10 introduces distinct input pathways for battery storage (capacity in kWh, enabling modelling of on-site self-consumption) and PV diverters (presence, enabling modelling of solar contribution to domestic hot water) alongside the existing solar PV inputs. All three affect the calculated energy performance and must be recorded separately.*
+
+---
+
+**Q4.** Under the RdSAP 10 lighting methodology, a kitchen has two ceiling fittings: one with a single LED bulb and one with four LED bulbs arranged in a bar. How many bulbs does the assessor record for the kitchen?
+
+A) 2 — one per fitting, as fitting count is what RdSAP 10 uses
+B) 5 — one bulb for the single fitting plus four for the bar fitting
+C) 4 — only multi-bulb fittings are counted under the new methodology
+D) 1 — the assessor records fittings not bulbs, so both fittings combine to one entry
+
+**Correct answer: B**
+
+*RdSAP 10 changes the lighting methodology from fitting-based counting to bulb-based counting. The single fitting contributes 1 bulb; the bar fitting contributes 4 bulbs. Total for the kitchen: 5 bulbs. This change captures the higher installed wattage of multi-bulb fittings and makes LED conversion savings more accurately reflected in the calculated energy demand.*
+
+---
+
+**Q5.** An airtightness test was carried out on a property in 2023 and lodged with a registered Competent Person Scheme under ATTMA TS1. The test result is 4.2 m³/h·m² at 50 Pa. What should the assessor do with this result under RdSAP 10?
+
+A) Ignore it — RdSAP 10 does not accept airtightness test data; the age-band default must always be used
+B) Note it in site records but use the default table value, as test results can only be used in full SAP not RdSAP
+C) Enter the test result of 4.2 m³/h·m² directly as the air permeability input, replacing the default table value
+D) Average the test result with the age-band default to produce a blended value
+
+**Correct answer: C**
+
+*RdSAP 10 introduces a direct input pathway for valid airtightness test results from tests conducted under ATTMA TS1 or equivalent and lodged to a recognised CPS. The test result of 4.2 m³/h·m² replaces the default table value entirely. This can meaningfully improve the calculated energy performance for properties that have undergone air-sealing work.*
 
 ---
 

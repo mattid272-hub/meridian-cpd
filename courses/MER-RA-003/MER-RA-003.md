@@ -109,24 +109,26 @@ TrustMark's Retrofit Assessment data submission requirements build on PAS 2035:2
 
 **Q1.** A Retrofit Assessor completes a survey but does not record the occupant count or any health/vulnerability information because the occupants were not present during the survey. Under PAS 2035:2023, what must the assessor do?
 
-A) Submit the assessment with a note that the occupants were absent — this is acceptable
-B) Return to the property or arrange a remote consultation to collect the mandatory occupancy data before submitting
+A) Return to the property or arrange a remote consultation to collect the mandatory occupancy data before submitting
+B) Submit the assessment with a note that the occupants were absent — this is acceptable
 C) Estimate the occupant count from the property size and bedroom count
 D) Omit the occupancy section — it is a recommended rather than mandatory field
 
-**Correct answer: B**
+**Correct answer: A**
+
 *Occupancy data (including occupant count and health/vulnerability flags) is a mandatory Annex A field. The assessment cannot be submitted without it. The assessor must arrange to collect the data — either by revisiting, by a structured telephone or video call, or by a written questionnaire returned before submission.*
 
 ---
 
 **Q2.** A Retrofit Assessment records the wall construction as "cavity masonry, 1965." The TrustMark data submission is rejected. Which additional mandatory field is most likely missing?
 
-A) The wall age band — 1965 is not a valid RdSAP age band
-B) The insulation status — whether the cavity is filled or unfilled
-C) The wall colour — required for solar gain calculations
-D) The wall height — required for U-value calculation
+A) The wall colour — required for solar gain calculations
+B) The wall height — required for U-value calculation
+C) The insulation status — whether the cavity is filled or unfilled
+D) The wall age band — 1965 is not a valid RdSAP age band
 
-**Correct answer: B**
+**Correct answer: C**
+
 *Insulation status (filled or unfilled cavity, and insulation type if filled) is a mandatory field when wall construction is recorded. A construction type entry without insulation status is a partial entry and a submission rejection trigger.*
 
 ---
@@ -134,23 +136,25 @@ D) The wall height — required for U-value calculation
 **Q3.** A property has a gas combi boiler and electric panel heaters in two bedrooms as supplementary heating. Under PAS 2035:2023 Annex A, what must the assessor record?
 
 A) The gas combi boiler only — supplementary electric heaters are below the threshold for recording
-B) Both the gas combi boiler (primary) and the electric panel heaters (secondary heating system), including their locations
+B) The electric panel heaters only, as they are the highest-running-cost element
 C) The gas combi boiler and a note that "secondary heating is present"
-D) The electric panel heaters only, as they are the highest-running-cost element
+D) Both the gas combi boiler (primary) and the electric panel heaters (secondary heating system), including their locations
 
-**Correct answer: B**
+**Correct answer: D**
+
 *Both primary and secondary heating systems must be recorded in full, including system type, fuel, location (for secondary elements), and controls. A note that secondary heating "is present" without specifics is not compliant.*
 
 ---
 
 **Q4.** What is the UPRN and why is it a mandatory field in the TrustMark data submission?
 
-A) The UPRN is the utility provider reference number — required to verify gas and electricity connection
-B) The UPRN is the Unique Property Reference Number — a government-assigned identifier for every addressable property in the UK, required for data traceability and cross-referencing with other datasets
-C) The UPRN is the utility rates provision number — required for fuel poverty calculations
-D) The UPRN is optional — it is the Retrofit Coordinator's responsibility, not the assessor's
+A) The UPRN is the Unique Property Reference Number — a government-assigned identifier for every addressable property in the UK, required for data traceability and cross-referencing with other datasets
+B) The UPRN is the utility rates provision number — required for fuel poverty calculations
+C) The UPRN is optional — it is the Retrofit Coordinator's responsibility, not the assessor's
+D) The UPRN is the utility provider reference number — required to verify gas and electricity connection
 
-**Correct answer: B**
+**Correct answer: A**
+
 *The UPRN (Unique Property Reference Number) is a government-assigned unique identifier for every addressable location in Great Britain, managed by Ordnance Survey. It is mandatory for TrustMark data submission because it enables traceability, cross-referencing with EPC Register data, and data quality verification. It is the assessor's responsibility to look it up and record it accurately.*
 
 ---
@@ -163,6 +167,7 @@ C) The assessment is compliant but should note that rainwater goods were not che
 D) The assessment is compliant — rainwater goods are a recommended, not mandatory, field
 
 **Correct answer: B**
+
 *Rainwater goods condition is a mandatory observation under PAS 2035:2023 where moisture-sensitive measures are proposed. IWI on a solid wall is explicitly moisture-sensitive — defective rainwater goods causing penetrating damp will drive moisture into the wall fabric behind the insulation, causing failure. The assessor must record rainwater goods condition for all IWI and EWI projects.*
 
 ---

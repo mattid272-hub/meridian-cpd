@@ -109,47 +109,51 @@ These pre-conditions are not recommendations from the assessor — they are data
 **Q1.** A Retrofit Assessor surveys a 1905 stone-built terrace for EWI. The stone is soft limestone with lime mortar pointing. What critical design constraint must the assessor flag in the assessment?
 
 A) The cost of EWI on stone is typically prohibitive — the assessor should recommend a different measure
-B) The traditional construction requires vapour-open insulation systems to maintain fabric breathability — the design must specify materials compatible with the breathable wall
-C) Stone walls cannot receive EWI under any circumstances — the assessment should note this as a barrier
-D) The assessor should check whether the wall is structurally sound enough for mechanical fixings
+B) The assessor should check whether the wall is structurally sound enough for mechanical fixings
+C) The traditional construction requires vapour-open insulation systems to maintain fabric breathability — the design must specify materials compatible with the breathable wall
+D) Stone walls cannot receive EWI under any circumstances — the assessment should note this as a barrier
 
-**Correct answer: B**
+**Correct answer: C**
+
 *Soft limestone with lime mortar is traditional construction that relies on vapour-open behaviour to manage moisture. EWI systems must use vapour-open materials (typically lime-based renders and mineral fibre or wood fibre insulation boards) to maintain breathability. Vapour-impermeable EWI on traditional construction causes moisture accumulation and structural damage. The assessor flags the construction type; the designer selects the appropriate system.*
 
 ---
 
 **Q2.** During a Retrofit Assessment for IWI, the assessor observes active penetrating damp on the north gable wall, traceable to a defective chimney flashing. What is the correct assessment action?
 
-A) Record the IWI as suitable on the other elevations and recommend IWI proceed on the dry elevations first
-B) Record the active penetrating damp, identify the source (chimney flashing), flag it as a mandatory pre-condition that must be resolved before IWI can proceed on any elevation
+A) Record the active penetrating damp, identify the source (chimney flashing), flag it as a mandatory pre-condition that must be resolved before IWI can proceed on any elevation
+B) Classify the project as Path A — the defect is minor and easily resolved
 C) Note the defect and advise the client to repair the flashing before the survey report is finalised
-D) Classify the project as Path A — the defect is minor and easily resolved
+D) Record the IWI as suitable on the other elevations and recommend IWI proceed on the dry elevations first
 
-**Correct answer: B**
+**Correct answer: A**
+
 *Active penetrating damp is a pre-installation pre-condition under PAS 2035:2023 — IWI cannot proceed until the moisture source is resolved and the wall has dried. The assessor records the evidence and flags it in the assessment data as a pre-condition. The project is also likely Path C given active moisture in a solid-wall property proposed for a moisture-sensitive measure.*
 
 ---
 
 **Q3.** An assessor is surveying a 1890s semi-detached property in a conservation area for EWI. What check must the assessor make, and why?
 
-A) Check whether the property is listed — conservation area properties have the same status as listed buildings
-B) Check whether the conservation area has Article 4 directions removing permitted development rights for changes to external appearance, and record this as a planning constraint requiring resolution before EWI can proceed
-C) No specific check is required — conservation areas do not restrict external works to dwellings
-D) Check whether the property is within 10 metres of a listed building
+A) Check whether the property is within 10 metres of a listed building
+B) No specific check is required — conservation areas do not restrict external works to dwellings
+C) Check whether the property is listed — conservation area properties have the same status as listed buildings
+D) Check whether the conservation area has Article 4 directions removing permitted development rights for changes to external appearance, and record this as a planning constraint requiring resolution before EWI can proceed
 
-**Correct answer: B**
+**Correct answer: D**
+
 *Conservation area designation does not automatically prevent EWI, but many conservation areas have Article 4 directions removing permitted development rights for external changes. The assessor must record the conservation area status and flag that planning advice (and potentially planning permission) is required. This is a data flag, not a design determination.*
 
 ---
 
 **Q4.** A 1975 brick-built semi-detached property is assessed for IWI. The assessor notes that the property has alcove shelving and a fitted wardrobe fixed to the main external rear wall. What must be recorded in the assessment?
 
-A) Nothing — fitted furniture is not relevant to IWI assessment
+A) The furniture should be recorded only if it is at least 50% of the wall area
 B) The presence of built-in furniture and services fixed to the external wall, noting that these will need to be removed or accommodated before IWI can be installed — this is a pre-installation condition and a cost factor for the client and designer
-C) The furniture should be recorded only if it is at least 50% of the wall area
+C) Nothing — fitted furniture is not relevant to IWI assessment
 D) The assessor should recommend that the client removes the furniture before the design stage
 
 **Correct answer: B**
+
 *Fixed furniture and services on external walls are mandatory data items for IWI assessment. They represent a pre-installation condition (furniture must be removed) and a design challenge (services must be re-routed or accommodated within the insulation thickness). The assessor records their presence; the Retrofit Coordinator and client address the pre-conditions.*
 
 ---
@@ -157,11 +161,12 @@ D) The assessor should recommend that the client removes the furniture before th
 **Q5.** What is the key difference between a Retrofit Assessor's assessment of solid wall insulation suitability and a Retrofit Designer's determination?
 
 A) The assessor determines suitability; the designer confirms it
-B) The assessor records factual data about the wall and its condition; the designer uses that data to determine whether insulation is appropriate, select the product and system, and specify any ancillary measures
-C) There is no difference — both roles assess suitability
-D) The assessor determines suitability for IWI; the designer determines suitability for EWI
+B) There is no difference — both roles assess suitability
+C) The assessor determines suitability for IWI; the designer determines suitability for EWI
+D) The assessor records factual data about the wall and its condition; the designer uses that data to determine whether insulation is appropriate, select the product and system, and specify any ancillary measures
 
-**Correct answer: B**
+**Correct answer: D**
+
 *The assessor's role is data collection — recording wall construction, condition, moisture, exposure, planning constraints, and pre-installation conditions. The determination of suitability, product selection, and system specification is the designer's role. This boundary is explicit in PAS 2035:2023 and essential to maintain — assessors who make suitability determinations exceed their scope and create liability risk.*
 
 ---

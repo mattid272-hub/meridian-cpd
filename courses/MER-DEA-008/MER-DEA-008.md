@@ -101,35 +101,38 @@ Scheme auditor data from 2024 and 2025 shows a consistent set of fabric-related 
 **Q1.** A 1932 semi-detached property has external walls laid entirely in stretcher bond with no visible through-headers. The wall appears to be approximately 275 mm thick externally. What is the most likely construction?
 
 A) 9-inch solid brick
-B) Cavity masonry wall
-C) Timber frame with brick cladding
-D) Concrete panel system build
+B) Concrete panel system build
+C) Cavity masonry wall
+D) Timber frame with brick cladding
 
-**Correct answer: B**
+**Correct answer: C**
+
 *Stretcher bond throughout with no visible through-headers is consistent with cavity wall construction. The 275 mm thickness is also consistent with a standard cavity wall. Solid brick in English or Flemish bond would show alternating header courses.*
 
 ---
 
 **Q2.** An assessor visits a 1960s semi-detached property. The occupant states the cavity was insulated "about ten years ago" but cannot produce any paperwork. What should the assessor record?
 
-A) CWI present — occupant verbal confirmation is acceptable evidence
-B) Unfilled cavity — no documentary evidence available
-C) CWI present, type unknown, estimated date 2015
-D) The assessor should decline to survey until documentation is provided
+A) CWI present, type unknown, estimated date 2015
+B) The assessor should decline to survey until documentation is provided
+C) CWI present — occupant verbal confirmation is acceptable evidence
+D) Unfilled cavity — no documentary evidence available
 
-**Correct answer: B**
+**Correct answer: D**
+
 *Verbal confirmation from the occupant is not acceptable evidence for CWI under RdSAP 10 conventions. The assessor records unfilled cavity and notes in the site file that the occupant claimed CWI but no documentation was available.*
 
 ---
 
 **Q3.** A loft space contains variable mineral wool insulation: 180 mm at the centre, thinning to approximately 50 mm at the eaves. What depth should be entered in RdSAP 10?
 
-A) 50 mm — the minimum depth governs
-B) 180 mm — the depth at the centre governs
-C) 115 mm — the average of 180 mm and 50 mm
-D) The depth measured at the loft hatch
+A) 180 mm — the depth at the centre governs
+B) 50 mm — the minimum depth governs
+C) The depth measured at the loft hatch
+D) 115 mm — the average of 180 mm and 50 mm
 
-**Correct answer: B**
+**Correct answer: A**
+
 *RdSAP 10 convention is to record the depth at the centre of the loft. Thinning at the eaves is normal and is not used to reduce the recorded depth. The centre measurement represents the thermally significant zone.*
 
 ---
@@ -142,18 +145,20 @@ C) Suspended timber floor — common in 1970s terraces
 D) Insulated floor, screed over insulation, as the 1970s Building Regulations required it
 
 **Correct answer: B**
+
 *1970s Building Regulations did not mandate floor insulation. Occupant perception of warmth is not evidence of insulation. Without a building control completion certificate, renovation record, or visible evidence of an insulation layer, the uninsulated default applies.*
 
 ---
 
 **Q5.** A property has a room above an integral unheated garage. The assessor enters this floor as a standard ground floor. What is the likely audit outcome?
 
-A) No issue — ground floor and floor over unheated space have the same default U-value
-B) Audit failure — the floor should be classified as an exposed floor over unheated space, producing a different U-value
-C) Minor discrepancy — acceptable within tolerance
-D) No issue if the floor is carpeted
+A) No issue if the floor is carpeted
+B) Minor discrepancy — acceptable within tolerance
+C) No issue — ground floor and floor over unheated space have the same default U-value
+D) Audit failure — the floor should be classified as an exposed floor over unheated space, producing a different U-value
 
-**Correct answer: B**
+**Correct answer: D**
+
 *A floor above an unheated space is an exposed floor element in RdSAP 10 with its own U-value calculation, not a ground floor. Entering it as a ground floor produces an incorrect (and typically better) U-value, which is a methodology failure on audit.*
 
 ---

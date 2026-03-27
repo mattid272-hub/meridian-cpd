@@ -98,60 +98,65 @@ This data allows the designer to calculate (or estimate) the existing radiator o
 
 **Q1.** A Retrofit Assessor surveys a 1985 semi-detached house with a 2014 gas combi boiler and 12 double-panel radiators. The property is proposed for heat pump installation. What additional data must the assessor collect that is frequently omitted?
 
-A) The boiler service history
-B) The height and width of each radiator, their location, and the presence of TRVs — to enable heat pump flow temperature and emitter adequacy assessment
-C) The gas tariff the occupant is currently paying
-D) The Seasonal Coefficient of Performance of the existing boiler
+A) The gas tariff the occupant is currently paying
+B) The Seasonal Coefficient of Performance of the existing boiler
+C) The boiler service history
+D) The height and width of each radiator, their location, and the presence of TRVs — to enable heat pump flow temperature and emitter adequacy assessment
 
-**Correct answer: B**
+**Correct answer: D**
+
 *Radiator sizing data (height, width, panel type) is critical for heat pump design but is frequently omitted from assessments. Without it, the designer cannot assess whether existing radiators will deliver adequate output at heat pump flow temperatures and must either assume replacement or request a return visit.*
 
 ---
 
 **Q2.** A property has a sealed pressurised central heating system with visible black sludge visible at a drain point. What must the assessor record, and what design implication does this have?
 
-A) Record the system as "functional" — sludge does not affect design decisions
-B) Record the presence of visible system contamination (sludge at drain point), note the system type as sealed/pressurised, and flag system flushing as a likely pre-installation condition — particularly relevant for heat pump installation where contamination can damage the compressor
-C) Advise the client to have the system flushed before the survey
-D) Record the system as "unsuitable for heat pump" — contamination is an absolute barrier
+A) Advise the client to have the system flushed before the survey
+B) Record the system as "unsuitable for heat pump" — contamination is an absolute barrier
+C) Record the presence of visible system contamination (sludge at drain point), note the system type as sealed/pressurised, and flag system flushing as a likely pre-installation condition — particularly relevant for heat pump installation where contamination can damage the compressor
+D) Record the system as "functional" — sludge does not affect design decisions
 
-**Correct answer: B**
+**Correct answer: C**
+
 *System contamination (sludge, scale, debris) is a mandatory data observation and a relevant pre-installation condition. The assessor records what is observed and flags the pre-condition. Whether flushing resolves the issue, or whether it disqualifies the system from heat pump installation, is a design determination — not an assessment determination.*
 
 ---
 
 **Q3.** A property has a combi boiler installed in 2016. There is no hot water cylinder. The property is proposed for an air source heat pump with hot water provision. What data gap does the assessor need to address?
 
-A) None — combi boiler properties do not need hot water assessment
-B) The property will require a hot water cylinder for heat pump DHW provision; the assessor should identify available space and location for a cylinder, and record this as a design-relevant space constraint
-C) The assessor should advise the client that a cylinder will be needed
-D) This is a Retrofit Coordinator decision, not an assessment data requirement
+A) The property will require a hot water cylinder for heat pump DHW provision; the assessor should identify available space and location for a cylinder, and record this as a design-relevant space constraint
+B) None — combi boiler properties do not need hot water assessment
+C) This is a Retrofit Coordinator decision, not an assessment data requirement
+D) The assessor should advise the client that a cylinder will be needed
 
-**Correct answer: B**
+**Correct answer: A**
+
 *Heat pumps require a hot water cylinder for domestic hot water provision — they do not function as combi-style instant hot water heaters in most configurations. The assessor should note the absence of a cylinder and identify available space for one (airing cupboard size, loft space, utility room). This is design-relevant data that affects the feasibility of heat pump installation.*
 
 ---
 
 **Q4.** An assessor surveys a 1970s bungalow with a gas boiler and all-rooms underfloor heating installed in a screed in 2018. What does this tell the designer about heat pump viability?
 
-A) UFH is incompatible with heat pumps — the assessment should flag this as a barrier
+A) The high thermal mass of screed UFH prevents heat pump operation
 B) The property is likely well-suited for heat pump installation, as wet UFH in screed operates at low flow temperatures (30–40°C) compatible with heat pump output; the assessor should record the UFH area coverage, manifold location, and installation year
 C) The assessor cannot determine heat pump viability — this is a designer role
-D) The high thermal mass of screed UFH prevents heat pump operation
+D) UFH is incompatible with heat pumps — the assessment should flag this as a barrier
 
 **Correct answer: B**
+
 *Wet underfloor heating in screed operates at low flow temperatures (typically 30–40°C) that are directly compatible with heat pump output, making this property a good candidate. The assessor records the UFH data (coverage, manifold, year, condition); the designer uses it to confirm suitability and specify the system.*
 
 ---
 
 **Q5.** The occupant of a 1960s mid-terrace reports that the front bedroom "has never been warm enough." The radiator in the room is a single-panel unit, 600 mm × 400 mm, serving a north-facing room with a double-glazed bay window. What should the assessor record?
 
-A) The occupant's complaint is subjective — no data recording is required
-B) Record the radiator size (600 × 400 mm, single panel), location (north-facing bedroom), the occupant's report of inadequate heating, and flag the potential emitter under-sizing for the designer to assess against calculated room heat loss
+A) Record the radiator size (600 × 400 mm, single panel), location (north-facing bedroom), the occupant's report of inadequate heating, and flag the potential emitter under-sizing for the designer to assess against calculated room heat loss
+B) The occupant's complaint is subjective — no data recording is required
 C) Recommend a larger radiator in the assessment report
 D) Record the room as "adequate" — single-panel radiators are standard in bedrooms
 
-**Correct answer: B**
+**Correct answer: A**
+
 *The occupant report of inadequate heating is a data point that must be recorded, as is the specific radiator size and location. The designer will calculate whether the radiator is undersized for the room heat loss, particularly at lower heat pump flow temperatures. The assessor records; the designer determines adequacy.*
 
 ---
