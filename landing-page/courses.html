@@ -1288,6 +1288,12 @@ document.addEventListener('keydown', e => {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 renderGrid();
+
+// Deep-link: courses.html#MER-DEA-001 auto-opens that course modal
+if (window.location.hash) {
+  const id = window.location.hash.slice(1);
+  if (COURSES.find(c => c.id === id)) openModal(id);
+}
 </script>
 </body>
 </html>
