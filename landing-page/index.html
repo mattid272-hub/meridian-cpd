@@ -821,6 +821,12 @@
     }
     .course-card-buy {
       display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      margin-top: auto;
+    }
+    .course-card-price-row {
+      display: flex;
       align-items: center;
       justify-content: space-between;
       gap: .8rem;
@@ -832,21 +838,37 @@
       letter-spacing: .02em;
     }
     .course-buy-btn {
-      display: inline-block;
-      background: transparent;
-      color: var(--accent);
-      border: 1.5px solid var(--accent);
+      display: block;
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
       border-radius: 5px;
       font-weight: 700;
-      font-size: .75rem;
-      letter-spacing: .1em;
+      font-size: .78rem;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      padding: .45rem 1rem;
+      padding: .55rem 1rem;
       text-decoration: none;
-      transition: background .18s, color .18s;
+      text-align: center;
+      transition: opacity .18s;
       white-space: nowrap;
     }
-    .course-buy-btn:hover { background: var(--accent); color: var(--dark); }
+    .course-buy-btn:hover { opacity: .85; }
+    .course-details-btn {
+      display: block;
+      background: transparent;
+      color: var(--muted-d);
+      border: 1px solid rgba(212,255,0,.2);
+      border-radius: 5px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      padding: .5rem 1rem;
+      text-decoration: none;
+      text-align: center;
+      transition: border-color .18s, color .18s;
+    }
+    .course-details-btn:hover { border-color: var(--accent); color: var(--accent); }
     .courses-grid-cta {
       text-align: center;
       padding: 2.5rem 6vw 0;
@@ -1460,7 +1482,7 @@
     </div>
   </div>
 
-  <!-- Course grid -->
+  <!-- Course grid — 3 featured courses -->
   <div class="course-grid">
 
     <div class="course-card">
@@ -1470,80 +1492,11 @@
       </div>
       <p class="course-title">RdSAP 10: What&apos;s Changed and Why</p>
       <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <div class="course-card-top">
-        <span class="course-strand strand-dea">DEA</span>
-        <span class="course-hours"><strong>1</strong> CPD hr</span>
-      </div>
-      <p class="course-title">Measuring Windows in RdSAP 10</p>
-      <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <div class="course-card-top">
-        <span class="course-strand strand-dea">DEA</span>
-        <span class="course-hours"><strong>1</strong> CPD hr</span>
-      </div>
-      <p class="course-title">Ventilation in RdSAP 10: PIV, MVHR, Natural</p>
-      <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <div class="course-card-top">
-        <span class="course-strand strand-dea">DEA</span>
-        <span class="course-hours"><strong>1</strong> CPD hr</span>
-      </div>
-      <p class="course-title">Room in Roof: Type 1 and Type 2</p>
-      <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <div class="course-card-top">
-        <span class="course-strand strand-dea">DEA</span>
-        <span class="course-hours"><strong>1</strong> CPD hr</span>
-      </div>
-      <p class="course-title">Lighting and Renewables in RdSAP 10</p>
-      <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <div class="course-card-top">
-        <span class="course-strand strand-dea">DEA</span>
-        <span class="course-hours"><strong>1</strong> CPD hr</span>
-      </div>
-      <p class="course-title">Solar PV, Battery Storage and PV Diverters</p>
-      <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <div class="course-card-top">
-        <span class="course-strand strand-dea">DEA</span>
-        <span class="course-hours"><strong>1</strong> CPD hr</span>
-      </div>
-      <p class="course-title">Airtightness Testing in RdSAP 10</p>
-      <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
+        <div class="course-card-price-row">
+          <span class="course-price">&#163;19.99</span>
+        </div>
+        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course &mdash; &#163;19.99</a>
+        <a href="courses.html" class="course-details-btn">View Course Details</a>
       </div>
     </div>
 
@@ -1554,32 +1507,11 @@
       </div>
       <p class="course-title">PAS 2035:2023 Overview</p>
       <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <div class="course-card-top">
-        <span class="course-strand strand-ra">Retrofit Assessor</span>
-        <span class="course-hours"><strong>1</strong> CPD hr</span>
-      </div>
-      <p class="course-title">EPR Variation: RdSAP 10 Transition</p>
-      <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <div class="course-card-top">
-        <span class="course-strand strand-ra">Retrofit Assessor</span>
-        <span class="course-hours"><strong>1</strong> CPD hr</span>
-      </div>
-      <p class="course-title">EWI: Planning Permission and Fire Risk</p>
-      <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
+        <div class="course-card-price-row">
+          <span class="course-price">&#163;19.99</span>
+        </div>
+        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course &mdash; &#163;19.99</a>
+        <a href="courses.html" class="course-details-btn">View Course Details</a>
       </div>
     </div>
 
@@ -1590,20 +1522,11 @@
       </div>
       <p class="course-title">UK Energy Policy 2026</p>
       <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <div class="course-card-top">
-        <span class="course-strand strand-all">All Strands</span>
-        <span class="course-hours"><strong>1</strong> CPD hr</span>
-      </div>
-      <p class="course-title">Fire Safety in Retrofit</p>
-      <div class="course-card-buy">
-        <span class="course-price">&#163;19.99</span>
-        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course</a>
+        <div class="course-card-price-row">
+          <span class="course-price">&#163;19.99</span>
+        </div>
+        <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="course-buy-btn">Buy Course &mdash; &#163;19.99</a>
+        <a href="courses.html" class="course-details-btn">View Course Details</a>
       </div>
     </div>
 
