@@ -1125,8 +1125,9 @@ function applyPromo() {
 
 function getStripeLink(courseId) {
   const base = STRIPE_SINGLE;
-  if (promoCode) return base + '?prefilled_promo_code=' + encodeURIComponent(promoCode);
-  return base;
+  const params = new URLSearchParams({ client_reference_id: courseId });
+  if (promoCode) params.set('prefilled_promo_code', promoCode);
+  return base + '?' + params.toString();
 }
 
 // ── Filtering ────────────────────────────────────────────────────────────────
