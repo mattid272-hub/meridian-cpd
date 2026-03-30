@@ -117,6 +117,90 @@ COURSES = {
         "cpd_hours": 1.0,
         "pdf_url": os.environ.get("PDF_MER_ALL_004", ""),
     },
+    "MER-DEA-005": {
+        "course_id": "MER-DEA-005",
+        "title": "Heating Systems Primary: Boilers, Controls and Data Entry in RdSAP 10",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_DEA_005", ""),
+    },
+    "MER-DEA-006": {
+        "course_id": "MER-DEA-006",
+        "title": "Heating Systems Secondary: Storage Heaters, Direct Electric and Room Heaters",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_DEA_006", ""),
+    },
+    "MER-DEA-007": {
+        "course_id": "MER-DEA-007",
+        "title": "Hot Water Systems in RdSAP 10: Cylinders, Combis and Immersions",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_DEA_007", ""),
+    },
+    "MER-DEA-008": {
+        "course_id": "MER-DEA-008",
+        "title": "Insulation in RdSAP 10: Walls, Roofs, Floors and Common Errors",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_DEA_008", ""),
+    },
+    "MER-DEA-014": {
+        "course_id": "MER-DEA-014",
+        "title": "EPC Audit Preparation: How to Pass Your Annual Audit",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_DEA_014", ""),
+    },
+    "MER-RA-002": {
+        "course_id": "MER-RA-002",
+        "title": "Moisture Risk Assessment in PAS 2035:2023: The Updated Framework",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_RA_002", ""),
+    },
+    "MER-RA-003": {
+        "course_id": "MER-RA-003",
+        "title": "Dwelling Data Collection: PAS 2035:2023 Annex A Requirements",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_RA_003", ""),
+    },
+    "MER-RA-004": {
+        "course_id": "MER-RA-004",
+        "title": "Cavity Wall Insulation: Risk Factors and the Retrofit Assessor's Role",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_RA_004", ""),
+    },
+    "MER-RA-005": {
+        "course_id": "MER-RA-005",
+        "title": "Solid Wall Insulation: IWI vs EWI — Risks, Evidence and Assessment",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_RA_005", ""),
+    },
+    "MER-RA-007": {
+        "course_id": "MER-RA-007",
+        "title": "Heating System Assessment for Retrofit: What the Retrofit Assessor Must Record",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_RA_007", ""),
+    },
+    "MER-RA-008": {
+        "course_id": "MER-RA-008",
+        "title": "Ventilation Assessment in Retrofit: Background Ventilation to MVHR",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_RA_008", ""),
+    },
+    "MER-RA-010": {
+        "course_id": "MER-RA-010",
+        "title": "Thermal Bridging in Retrofit Assessment: What Assessors Must Record",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_RA_010", ""),
+    },
+    "MER-RA-011": {
+        "course_id": "MER-RA-011",
+        "title": "Occupancy Assessment: Health Conditions, Vulnerability and Overheating Risk",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_RA_011", ""),
+    },
+    "MER-RA-012": {
+        "course_id": "MER-RA-012",
+        "title": "TrustMark Data Requirements: What Retrofit Assessors Must Submit",
+        "cpd_hours": 1.0,
+        "pdf_url": os.environ.get("PDF_MER_RA_012", ""),
+    },
     # Subscription — welcome email only; library access granted via plan field
     "SUBSCRIPTION": {
         "course_id": "SUBSCRIPTION",
@@ -211,23 +295,32 @@ async def stripe_webhook(request: Request):
 
 
 async def handle_checkout(session):
-    email = session.get("customer_details", {}).get("email", "")
-    name = session.get("customer_details", {}).get("name", "") or email.split("@")[0].title()
-    stripe_customer_id = session.get("customer", "") or ""
-    session_id = session["id"]
-    amount = session.get("amount_total", 0)
+    customer_details = getattr(session, "customer_details", None) or {}
+    email = (getattr(customer_details, "email", None) or customer_details.get("email", "")) if customer_details else ""
+    name = (getattr(customer_details, "name", None) or customer_details.get("name", "")) if customer_details else ""
+    name = name or (email.split("@")[0].title() if email else "")
+    stripe_customer_id = getattr(session, "customer", "") or ""
+    session_id = getattr(session, "id", None) or session["id"]
+    amount = getattr(session, "amount_total", 0) or 0
 
     # Determine what was purchased
+    # client_reference_id carries the course ID set by the buy link (e.g. MER-DEA-001)
+    client_ref = getattr(session, "client_reference_id", None) or ""
     line_items = stripe.checkout.Session.list_line_items(session_id, limit=5)
-    course_keys = []
+    course_keys: list[str] = []
     plan = "single"
     for item in line_items.data:
         price_id = item.price.id
         course_key = PRICE_TO_COURSE.get(price_id, "")
-        if course_key:
+        if course_key == "subscription":
+            plan = "subscription"
             course_keys.append(course_key)
-            if course_key == "subscription":
-                plan = "subscription"
+        elif client_ref and client_ref in COURSES:
+            # client_reference_id set on the buy link — use it directly
+            course_keys.append(client_ref)
+        elif course_key:
+            course_keys.append(course_key)
+    print(f"Checkout: email={email}, client_ref={client_ref}, course_keys={course_keys}")
 
     if not email:
         print(f"No email in session {session_id} — skipping")
@@ -298,26 +391,38 @@ async def completion_page(token: str):
         body {{ font-family: Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }}
         h1 {{ color: #0f2547; }}
         .btn {{ background: #0891b2; color: white; padding: 16px 32px; border: none;
-                font-size: 18px; border-radius: 6px; cursor: pointer; text-decoration: none;
-                display: inline-block; margin-top: 24px; }}
+                font-size: 18px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 24px; }}
+        .name-box {{ background: #fff8e1; border: 1px solid #f59e0b; border-radius: 6px;
+                     padding: 16px 20px; margin: 24px 0; }}
+        .name-box p {{ margin: 0 0 12px 0; font-size: 14px; color: #444; }}
+        .name-box strong {{ color: #0f2547; }}
+        .name-box input {{ width: 100%; padding: 10px 12px; font-size: 16px; border: 1px solid #ccc;
+                           border-radius: 4px; box-sizing: border-box; margin-top: 4px; }}
         .small {{ color: #666; font-size: 13px; margin-top: 20px; }}
       </style>
     </head>
     <body>
       {_logo()}
       <h1>Complete Your CPD</h1>
-      <p>Hi {name},</p>
-      <p>Please confirm you have read and understood <strong>Course {course_id}</strong>.</p>
-      <p>Once confirmed, your CPD certificate will be generated and emailed to you immediately.</p>
+      <p>Hi {name}, you&apos;re one step away from your certificate for <strong>Course {course_id}</strong>.</p>
       <form method="POST" action="/complete/{token}">
+        <div class="name-box">
+          <p><strong>Your name for this certificate</strong></p>
+          <p>This is the name that will appear on your CPD certificate. Please make sure it
+          matches <strong>exactly</strong> the name registered with your accreditation body
+          (e.g. Elmhurst, Quidos, ECMK, TrustMark). Your accreditation body will use this
+          to verify your CPD record — a mismatch may mean they cannot accept it.</p>
+          <input type="text" name="cert_name" value="{name}" required
+                 placeholder="Your full name as registered with your accreditation body">
+        </div>
         <label style="display:flex;align-items:center;gap:10px;margin:20px 0">
-          <input type="checkbox" name="confirm" required style="width:20px;height:20px">
+          <input type="checkbox" name="confirm" required style="width:20px;height:20px;flex-shrink:0">
           <span>I confirm I have read and understood the course material.</span>
         </label>
         <button type="submit" class="btn">Confirm Completion &amp; Get Certificate</button>
       </form>
-      <p class="small">Your certificate will be sent to your registered email address.
-      It serves as evidence of CPD completion for your accreditation body.</p>
+      <p class="small">Your certificate will be sent to your registered email address
+      and serves as evidence of CPD completion for your accreditation body.</p>
     </body>
     </html>
     """)
@@ -339,8 +444,10 @@ async def confirm_completion(token: str, request: Request):
     row = result.data[0]
     member_id = row["member_id"]
     course_id = row["course_id"]
-    member_name = row["members"]["name"] or "Assessor"
     member_email = row["members"]["email"]
+    # Use the accreditation name submitted on the form, fall back to stored name
+    cert_name = str(form.get("cert_name", "")).strip()
+    member_name = cert_name or row["members"]["name"] or "Assessor"
 
     # Mark completion
     supabase.table("completions").update({
