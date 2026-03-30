@@ -347,10 +347,11 @@ async def confirm_completion(token: str, request: Request):
         issued_date=datetime.now(timezone.utc).strftime("%-d %B %Y"),
     )
 
-    # Log certificate
+    # Log certificate — store member_name as it appears on the certificate
     supabase.table("certificates").insert({
         "cert_number": cert_number,
         "member_id": member_id,
+        "member_name": member_name,
         "course_id": course_id,
         "course_title": course["title"],
         "cpd_hours": course["cpd_hours"],
@@ -493,7 +494,7 @@ async def verify_certificate(cert_number: str):
         <div class="row"><span class="label">Certificate Number</span>
              <span class="value">{cert["cert_number"]}</span></div>
         <div class="row"><span class="label">Issued To</span>
-             <span class="value">{cert["members"]["name"]}</span></div>
+             <span class="value">{cert.get("member_name") or cert["members"]["name"]}</span></div>
         <div class="row"><span class="label">Course</span>
              <span class="value">{cert["course_title"]} ({cert["course_id"]})</span></div>
         <div class="row"><span class="label">CPD Hours</span>
