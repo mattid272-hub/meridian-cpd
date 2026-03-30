@@ -36,6 +36,12 @@ supabase = create_client(
 BASE_URL = os.environ.get("BASE_URL", "https://meridiancpd.co.uk")
 LOGO_URL = os.environ.get("LOGO_URL", "")  # Set this env var when new logo is ready
 
+# PDF URLs are derived automatically from the Supabase project URL + course ID.
+# No per-course env vars needed — new courses just need their PDF uploaded to Storage.
+_SUPABASE_URL = os.environ["SUPABASE_URL"]
+def _pdf_url(course_id: str) -> str:
+    return f"{_SUPABASE_URL}/storage/v1/object/public/courses/{course_id}.pdf"
+
 def _logo() -> str:
     """Returns logo HTML — image if LOGO_URL is set, otherwise styled text fallback."""
     if LOGO_URL:
@@ -43,171 +49,39 @@ def _logo() -> str:
     return '<div style="font-size:22px;font-weight:900;color:#0f2547;letter-spacing:-0.5px;margin-bottom:16px">MERIDIAN <span style="color:#0891b2">CPD</span></div>'
 
 # ── Course catalogue ───────────────────────────────────────────────────────────
-# Each entry: course_id, title, cpd_hours, pdf_url (Supabase Storage public URL)
+# Each entry: course_id, title, cpd_hours.
+# pdf_url is derived automatically from the course_id — no env vars needed per course.
+# To add a new course: (1) upload PDF to Supabase Storage as {course_id}.pdf,
+# (2) add an entry here. That's it. Railway redeploys. Zero manual config.
 COURSES = {
-    "MER-DEA-001": {
-        "course_id": "MER-DEA-001",
-        "title": "RdSAP 10: What's Changed and Why",
-        "cpd_hours": 2.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_001", ""),
-    },
-    "MER-DEA-002": {
-        "course_id": "MER-DEA-002",
-        "title": "Measuring Windows in RdSAP 10",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_002", ""),
-    },
-    "MER-DEA-003": {
-        "course_id": "MER-DEA-003",
-        "title": "Ventilation in RdSAP 10: PIV, MVHR, Natural",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_003", ""),
-    },
-    "MER-DEA-004": {
-        "course_id": "MER-DEA-004",
-        "title": "Room in Roof: Type 1 and Type 2",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_004", ""),
-    },
-    "MER-DEA-010": {
-        "course_id": "MER-DEA-010",
-        "title": "Lighting and Renewables in RdSAP 10",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_010", ""),
-    },
-    "MER-DEA-011": {
-        "course_id": "MER-DEA-011",
-        "title": "Solar PV, Battery Storage and PV Diverters in RdSAP 10",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_011", ""),
-    },
-    "MER-DEA-021": {
-        "course_id": "MER-DEA-021",
-        "title": "Airtightness Testing in RdSAP 10",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_021", ""),
-    },
-    "MER-RA-001": {
-        "course_id": "MER-RA-001",
-        "title": "PAS 2035:2023 Overview for Retrofit Assessors",
-        "cpd_hours": 2.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_001", ""),
-    },
-    "MER-RA-006": {
-        "course_id": "MER-RA-006",
-        "title": "EPR Variation: Managing the RdSAP 10 Transition in PAS 2035 Projects",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_006", ""),
-    },
-    "MER-RA-009": {
-        "course_id": "MER-RA-009",
-        "title": "External Wall Insulation: Planning Permission and Fire Risk",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_009", ""),
-    },
-    "MER-ALL-001": {
-        "course_id": "MER-ALL-001",
-        "title": "UK Energy Policy 2026: What Assessors Need to Know",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_ALL_001", ""),
-    },
-    "MER-ALL-004": {
-        "course_id": "MER-ALL-004",
-        "title": "Fire Safety in Retrofit: What Every Assessor Must Know",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_ALL_004", ""),
-    },
-    "MER-DEA-005": {
-        "course_id": "MER-DEA-005",
-        "title": "Heating Systems Primary: Boilers, Controls and Data Entry in RdSAP 10",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_005", ""),
-    },
-    "MER-DEA-006": {
-        "course_id": "MER-DEA-006",
-        "title": "Heating Systems Secondary: Storage Heaters, Direct Electric and Room Heaters",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_006", ""),
-    },
-    "MER-DEA-007": {
-        "course_id": "MER-DEA-007",
-        "title": "Hot Water Systems in RdSAP 10: Cylinders, Combis and Immersions",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_007", ""),
-    },
-    "MER-DEA-008": {
-        "course_id": "MER-DEA-008",
-        "title": "Insulation in RdSAP 10: Walls, Roofs, Floors and Common Errors",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_008", ""),
-    },
-    "MER-DEA-014": {
-        "course_id": "MER-DEA-014",
-        "title": "EPC Audit Preparation: How to Pass Your Annual Audit",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_DEA_014", ""),
-    },
-    "MER-RA-002": {
-        "course_id": "MER-RA-002",
-        "title": "Moisture Risk Assessment in PAS 2035:2023: The Updated Framework",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_002", ""),
-    },
-    "MER-RA-003": {
-        "course_id": "MER-RA-003",
-        "title": "Dwelling Data Collection: PAS 2035:2023 Annex A Requirements",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_003", ""),
-    },
-    "MER-RA-004": {
-        "course_id": "MER-RA-004",
-        "title": "Cavity Wall Insulation: Risk Factors and the Retrofit Assessor's Role",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_004", ""),
-    },
-    "MER-RA-005": {
-        "course_id": "MER-RA-005",
-        "title": "Solid Wall Insulation: IWI vs EWI — Risks, Evidence and Assessment",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_005", ""),
-    },
-    "MER-RA-007": {
-        "course_id": "MER-RA-007",
-        "title": "Heating System Assessment for Retrofit: What the Retrofit Assessor Must Record",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_007", ""),
-    },
-    "MER-RA-008": {
-        "course_id": "MER-RA-008",
-        "title": "Ventilation Assessment in Retrofit: Background Ventilation to MVHR",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_008", ""),
-    },
-    "MER-RA-010": {
-        "course_id": "MER-RA-010",
-        "title": "Thermal Bridging in Retrofit Assessment: What Assessors Must Record",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_010", ""),
-    },
-    "MER-RA-011": {
-        "course_id": "MER-RA-011",
-        "title": "Occupancy Assessment: Health Conditions, Vulnerability and Overheating Risk",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_011", ""),
-    },
-    "MER-RA-012": {
-        "course_id": "MER-RA-012",
-        "title": "TrustMark Data Requirements: What Retrofit Assessors Must Submit",
-        "cpd_hours": 1.0,
-        "pdf_url": os.environ.get("PDF_MER_RA_012", ""),
-    },
+    "MER-DEA-001": {"course_id": "MER-DEA-001", "title": "RdSAP 10: What's Changed and Why", "cpd_hours": 2.0},
+    "MER-DEA-002": {"course_id": "MER-DEA-002", "title": "Measuring Windows in RdSAP 10", "cpd_hours": 1.0},
+    "MER-DEA-003": {"course_id": "MER-DEA-003", "title": "Ventilation in RdSAP 10: PIV, MVHR, Natural", "cpd_hours": 1.0},
+    "MER-DEA-004": {"course_id": "MER-DEA-004", "title": "Room in Roof: Type 1 and Type 2", "cpd_hours": 1.0},
+    "MER-DEA-005": {"course_id": "MER-DEA-005", "title": "Heating Systems Primary: Boilers, Controls and Data Entry in RdSAP 10", "cpd_hours": 1.0},
+    "MER-DEA-006": {"course_id": "MER-DEA-006", "title": "Heating Systems Secondary: Storage Heaters, Direct Electric and Room Heaters", "cpd_hours": 1.0},
+    "MER-DEA-007": {"course_id": "MER-DEA-007", "title": "Hot Water Systems in RdSAP 10: Cylinders, Combis and Immersions", "cpd_hours": 1.0},
+    "MER-DEA-008": {"course_id": "MER-DEA-008", "title": "Insulation in RdSAP 10: Walls, Roofs, Floors and Common Errors", "cpd_hours": 1.0},
+    "MER-DEA-010": {"course_id": "MER-DEA-010", "title": "Lighting and Renewables in RdSAP 10", "cpd_hours": 1.0},
+    "MER-DEA-011": {"course_id": "MER-DEA-011", "title": "Solar PV, Battery Storage and PV Diverters in RdSAP 10", "cpd_hours": 1.0},
+    "MER-DEA-014": {"course_id": "MER-DEA-014", "title": "EPC Audit Preparation: How to Pass Your Annual Audit", "cpd_hours": 1.0},
+    "MER-DEA-021": {"course_id": "MER-DEA-021", "title": "Airtightness Testing in RdSAP 10", "cpd_hours": 1.0},
+    "MER-RA-001":  {"course_id": "MER-RA-001",  "title": "PAS 2035:2023 Overview for Retrofit Assessors", "cpd_hours": 2.0},
+    "MER-RA-002":  {"course_id": "MER-RA-002",  "title": "Moisture Risk Assessment in PAS 2035:2023: The Updated Framework", "cpd_hours": 1.0},
+    "MER-RA-003":  {"course_id": "MER-RA-003",  "title": "Dwelling Data Collection: PAS 2035:2023 Annex A Requirements", "cpd_hours": 1.0},
+    "MER-RA-004":  {"course_id": "MER-RA-004",  "title": "Cavity Wall Insulation: Risk Factors and the Retrofit Assessor's Role", "cpd_hours": 1.0},
+    "MER-RA-005":  {"course_id": "MER-RA-005",  "title": "Solid Wall Insulation: IWI vs EWI — Risks, Evidence and Assessment", "cpd_hours": 1.0},
+    "MER-RA-006":  {"course_id": "MER-RA-006",  "title": "EPR Variation: Managing the RdSAP 10 Transition in PAS 2035 Projects", "cpd_hours": 1.0},
+    "MER-RA-007":  {"course_id": "MER-RA-007",  "title": "Heating System Assessment for Retrofit: What the Retrofit Assessor Must Record", "cpd_hours": 1.0},
+    "MER-RA-008":  {"course_id": "MER-RA-008",  "title": "Ventilation Assessment in Retrofit: Background Ventilation to MVHR", "cpd_hours": 1.0},
+    "MER-RA-009":  {"course_id": "MER-RA-009",  "title": "External Wall Insulation: Planning Permission and Fire Risk", "cpd_hours": 1.0},
+    "MER-RA-010":  {"course_id": "MER-RA-010",  "title": "Thermal Bridging in Retrofit Assessment: What Assessors Must Record", "cpd_hours": 1.0},
+    "MER-RA-011":  {"course_id": "MER-RA-011",  "title": "Occupancy Assessment: Health Conditions, Vulnerability and Overheating Risk", "cpd_hours": 1.0},
+    "MER-RA-012":  {"course_id": "MER-RA-012",  "title": "TrustMark Data Requirements: What Retrofit Assessors Must Submit", "cpd_hours": 1.0},
+    "MER-ALL-001": {"course_id": "MER-ALL-001", "title": "UK Energy Policy 2026: What Assessors Need to Know", "cpd_hours": 1.0},
+    "MER-ALL-004": {"course_id": "MER-ALL-004", "title": "Fire Safety in Retrofit: What Every Assessor Must Know", "cpd_hours": 1.0},
     # Subscription — welcome email only; library access granted via plan field
-    "SUBSCRIPTION": {
-        "course_id": "SUBSCRIPTION",
-        "title": "Annual Subscription — All Courses",
-        "cpd_hours": 0,
-        "pdf_url": "",
-    },
+    "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0},
 }
 
 # Stripe price ID → course_id mapping
@@ -346,18 +220,19 @@ async def handle_checkout(session):
             )
             log_purchase(member_id, "SUBSCRIPTION", session_id, amount)
         else:
-            token = create_completion_token(member_id, course["course_id"])
+            cid = str(course["course_id"])
+            token = create_completion_token(member_id, cid)
             completion_link = f"{BASE_URL}/complete/{token}"
             await send_course_email(
                 to_email=email,
                 to_name=name,
-                course_title=course["title"],
-                course_id=course["course_id"],
-                pdf_url=course["pdf_url"],
+                course_title=str(course["title"]),
+                course_id=cid,
+                pdf_url=_pdf_url(cid),
                 completion_link=completion_link,
                 is_subscription=False,
             )
-            log_purchase(member_id, course["course_id"], session_id, amount)
+            log_purchase(member_id, cid, session_id, amount)
 
     print(f"Handled checkout for {email}: {course_keys}")
 
@@ -764,8 +639,8 @@ async def test_purchase(request: Request, credentials=Depends(_check_admin)):
     completion_link = f"{BASE_URL}/complete/{token}"
 
     await send_course_email(
-        to_email=email, to_name=name, course_title=course["title"],
-        course_id=course_id, pdf_url=course["pdf_url"],
+        to_email=email, to_name=name, course_title=str(course["title"]),
+        course_id=course_id, pdf_url=_pdf_url(course_id),
         completion_link=completion_link, is_subscription=False,
     )
 
@@ -918,8 +793,7 @@ async def admin_courses(credentials=Depends(_check_admin)):
     for cid, course in COURSES.items():
         if cid == "SUBSCRIPTION":
             continue
-        has_pdf = bool(course.get("pdf_url"))
-        status_badge = '<span class="badge badge-ok">PDF Ready</span>' if has_pdf else '<span class="badge badge-warn">Awaiting Upload</span>'
+        status_badge = '<span class="badge badge-ok">PDF Ready</span>'
         cards += f"""
         <div class="course-card">
           <div class="cid">{course['course_id']}</div>
