@@ -60,41 +60,16 @@ STRAND_LABELS = {
     "MER-ALL": "All Strands",
 }
 
-# Relevant Unsplash images per course (landscape, 1200×630)
-COVER_IMAGES = {
-    "MER-DEA-001": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&h=400&fit=crop",
-    "MER-DEA-002": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&h=400&fit=crop",
-    "MER-DEA-003": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=900&h=400&fit=crop",
-    "MER-DEA-004": "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&h=400&fit=crop",
-    "MER-DEA-005": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&h=400&fit=crop",
-    "MER-DEA-006": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&h=400&fit=crop",
-    "MER-DEA-007": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&h=400&fit=crop",
-    "MER-DEA-008": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&h=400&fit=crop",
-    "MER-DEA-010": "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=900&h=400&fit=crop",
-    "MER-DEA-011": "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?w=900&h=400&fit=crop",
-    "MER-DEA-014": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&h=400&fit=crop",
-    "MER-DEA-021": "https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?w=900&h=400&fit=crop",
-    "MER-RA-001":  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&h=400&fit=crop",
-    "MER-RA-002":  "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&h=400&fit=crop",
-    "MER-RA-003":  "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&h=400&fit=crop",
-    "MER-RA-004":  "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&h=400&fit=crop",
-    "MER-RA-005":  "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&h=400&fit=crop",
-    "MER-RA-006":  "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&h=400&fit=crop",
-    "MER-RA-007":  "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&h=400&fit=crop",
-    "MER-RA-008":  "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=900&h=400&fit=crop",
-    "MER-RA-009":  "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&h=400&fit=crop",
-    "MER-RA-010":  "https://images.unsplash.com/photo-1497366412874-3415097a27e7?w=900&h=400&fit=crop",
-    "MER-RA-011":  "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&h=400&fit=crop",
-    "MER-RA-012":  "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&h=400&fit=crop",
-    "MER-ALL-001": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=900&h=400&fit=crop",
-    "MER-ALL-004": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&h=400&fit=crop",
-}
-DEFAULT_IMG = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&h=400&fit=crop"
+# Season cover image — one consistent image across ALL courses.
+# To change for a new season, update SEASON_IMAGE only.
+# Season 1 (2026): clean modern residential exterior — works at 38% opacity on dark green.
+SEASON = "1"
+SEASON_IMAGE = "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&h=500&fit=crop"
 
 
-def fetch_image(url: str, course_id: str) -> Optional[str]:
+def fetch_image(url: str, cache_key: str) -> Optional[str]:
     """Download image to cache, return local path or None."""
-    safe = re.sub(r'[^a-z0-9]', '_', course_id.lower())
+    safe = re.sub(r'[^a-z0-9]', '_', cache_key.lower())
     cache_path = IMG_CACHE / f"{safe}.jpg"
     if cache_path.exists():
         return str(cache_path)
@@ -118,13 +93,13 @@ def draw_cover(canvas, doc, meta: dict):
     canvas.setFillColor(DARK)
     canvas.rect(0, 0, W, H, fill=1, stroke=0)
 
-    # Cover photo (top portion, with opacity via transparency)
+    # Cover photo (top 42% of page, relevant to course topic)
     img_path = meta.get('img_path')
     if img_path:
         try:
             ih = H * 0.42
             canvas.saveState()
-            canvas.setFillAlpha(0.30)
+            canvas.setFillAlpha(0.38)
             canvas.drawImage(img_path, 0, H - ih, W, ih, preserveAspectRatio=False, mask='auto')
             canvas.restoreState()
         except Exception:
@@ -139,7 +114,7 @@ def draw_cover(canvas, doc, meta: dict):
     strand_col = meta['strand_colour']
     badge_text = meta['strand_label']
     badge_x = 22*mm
-    badge_y = H * 0.42 - 18*mm  # 18mm below accent bar
+    badge_y = bar_y - 18*mm  # 18mm below accent bar
     canvas.setFillColor(strand_col)
     canvas.roundRect(badge_x, badge_y, len(badge_text)*5.2 + 14, 16, 8, fill=1, stroke=0)
     canvas.setFillColor(WHITE)
@@ -288,6 +263,9 @@ def make_styles():
 
 
 def inline_fmt(text: str) -> str:
+    # Remove em/en dashes — strip surrounding whitespace and replace with comma
+    text = re.sub(r'\s*\u2014\s*', ', ', text)  # — em dash
+    text = re.sub(r'\s*\u2013\s*', ', ', text)  # – en dash
     text = text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     # Handle bold-italic (***...***) first to avoid crossed tags
     text = re.sub(r'\*\*\*(.+?)\*\*\*', r'<b><i>\1</i></b>', text)
@@ -317,21 +295,18 @@ def section_box(heading: str, items: list, bg: colors.Color, fg: colors.Color,
         ('ROUNDEDCORNERS', [4]),
     ]))
 
+    # Inline bullet + text in single column — avoids separate bullet cell with its own background
     rows = []
     for item in items:
-        bullet_char = Paragraph(
-            f'<font color="#{ACCENT.hexval()[2:]}">\u25b8</font>',
-            ParagraphStyle("BChar", fontSize=9, fontName="Helvetica-Bold",
-                           textColor=ACCENT, alignment=TA_CENTER)
-        ) if bg == DARK else Paragraph(
-            f'<font color="#{DARK.hexval()[2:]}">\u25b8</font>',
-            ParagraphStyle("BChar", fontSize=9, fontName="Helvetica-Bold",
-                           textColor=DARK, alignment=TA_CENTER)
+        text_p = Paragraph(
+            f'<font color="#D4FF00"><b>\u2022</b></font>\u2002{inline_fmt(item)}',
+            ParagraphStyle("BoxBullet", fontSize=10, fontName="Helvetica", leading=15,
+                           textColor=WHITE if bg == DARK else BLACK,
+                           leftIndent=4*mm, firstLineIndent=-4*mm, spaceAfter=0),
         )
-        text_p = Paragraph(inline_fmt(item), bullet_style)
-        rows.append([bullet_char, text_p])
+        rows.append([text_p])
 
-    body_table = Table(rows, colWidths=[6*mm, W_box - 6*mm])
+    body_table = Table(rows, colWidths=[W_box])
     body_table.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), bg),
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
@@ -341,15 +316,12 @@ def section_box(heading: str, items: list, bg: colors.Color, fg: colors.Color,
         ('RIGHTPADDING', (0,0), (-1,-1), 8),
     ]))
 
-    foot_table = Table([['']], colWidths=[W_box])
-    foot_table.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,-1), bg),
-        ('TOPPADDING', (0,0), (-1,-1), 4),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
-        ('ROUNDEDCORNERS', [4]),
+    # Extra bottom padding on last bullet row — no separate foot_table needed
+    body_table.setStyle(TableStyle([
+        ('BOTTOMPADDING', (0,-1), (-1,-1), 10),
     ]))
 
-    return [KeepTogether([head_table, body_table, foot_table]), Spacer(1, 4*mm)]
+    return [KeepTogether([head_table, body_table]), Spacer(1, 4*mm)]
 
 
 def reading_box(heading: str, items: list, S: dict) -> list:
@@ -377,33 +349,11 @@ def reading_box(heading: str, items: list, S: dict) -> list:
 
 
 def quiz_box(heading: str, qa_blocks: list, S: dict) -> list:
-    """Self-assessment questions box."""
+    """Self-assessment questions box.
+    Questions and options are shown first; answers collected into a key at the bottom.
+    """
     W_box = 170*mm
-    rows = [[Paragraph(f'<b>{heading}</b>',
-        ParagraphStyle("QH", fontSize=11, fontName="Helvetica-Bold",
-                       textColor=DARK, spaceBefore=0, spaceAfter=0))]]
-    t_head = Table(rows, colWidths=[W_box])
-    t_head.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,-1), colors.HexColor("#f8faf8")),
-        ('TOPPADDING', (0,0), (-1,-1), 6),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 6),
-        ('LEFTPADDING', (0,0), (-1,-1), 9),
-        ('RIGHTPADDING', (0,0), (-1,-1), 9),
-        ('LINEBELOW', (0,0), (-1,-1), 2, DARK),
-    ]))
-
-    body_rows = []
-    for q_text, opts, ans_text, exp_text in qa_blocks:
-        body_rows.append([Paragraph(inline_fmt(q_text), S['quiz_q'])])
-        for opt in opts:
-            body_rows.append([Paragraph(inline_fmt(opt), S['quiz_opt'])])
-        body_rows.append([Paragraph(f'<b>{inline_fmt(ans_text)}</b>', S['quiz_ans'])])
-        if exp_text:
-            body_rows.append([Paragraph(inline_fmt(exp_text), S['quiz_exp'])])
-        body_rows.append([Spacer(1, 2*mm)])
-
-    t_body = Table(body_rows, colWidths=[W_box])
-    t_body.setStyle(TableStyle([
+    TABLE_STYLE = TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), colors.HexColor("#f8faf8")),
         ('LEFTPADDING', (0,0), (-1,-1), 9),
         ('RIGHTPADDING', (0,0), (-1,-1), 9),
@@ -411,9 +361,58 @@ def quiz_box(heading: str, qa_blocks: list, S: dict) -> list:
         ('BOTTOMPADDING', (0,0), (-1,-1), 1),
         ('BOX', (0,0), (-1,-1), 0.75, BORDER),
         ('LINEBEFORE', (0,0), (0,-1), 3, DARK),
-    ]))
+    ])
 
-    return [KeepTogether([t_head, t_body]), Spacer(1, 4*mm)]
+    def make_head(label):
+        t = Table([[Paragraph(f'<b>{label}</b>',
+            ParagraphStyle("QH", fontSize=11, fontName="Helvetica-Bold",
+                           textColor=DARK, spaceBefore=0, spaceAfter=0))]],
+            colWidths=[W_box])
+        t.setStyle(TableStyle([
+            ('BACKGROUND', (0,0), (-1,-1), colors.HexColor("#f8faf8")),
+            ('TOPPADDING', (0,0), (-1,-1), 6),
+            ('BOTTOMPADDING', (0,0), (-1,-1), 6),
+            ('LEFTPADDING', (0,0), (-1,-1), 9),
+            ('RIGHTPADDING', (0,0), (-1,-1), 9),
+            ('LINEBELOW', (0,0), (-1,-1), 2, DARK),
+        ]))
+        return t
+
+    # ── Questions (no answers shown) ──────────────────────────────────────────
+    q_rows = []
+    for q_text, opts, _ans, _exp in qa_blocks:
+        q_rows.append([Paragraph(inline_fmt(q_text), S['quiz_q'])])
+        for opt in opts:
+            q_rows.append([Paragraph(inline_fmt(opt), S['quiz_opt'])])
+        q_rows.append([Spacer(1, 3*mm)])
+
+    t_q_body = Table(q_rows, colWidths=[W_box])
+    t_q_body.setStyle(TABLE_STYLE)
+
+    # ── Answer key ────────────────────────────────────────────────────────────
+    QUIZ_KEY = ParagraphStyle("QuizKey", fontSize=9, fontName="Helvetica",
+                               leading=13, leftIndent=0, spaceAfter=2*mm,
+                               textColor=colors.HexColor("#1a3a1a"))
+    key_rows = []
+    for i, (q_text, _opts, ans_text, exp_text) in enumerate(qa_blocks, 1):
+        # Extract just the letter: "Correct answer: C" → "C"
+        letter = ans_text.replace('Correct answer:', '').replace('*', '').strip()
+        line = f'<b>Q{i}: {letter}</b>'
+        if exp_text:
+            line += f' — {inline_fmt(exp_text)}'
+        key_rows.append([Paragraph(line, QUIZ_KEY)])
+
+    t_key_body = Table(key_rows, colWidths=[W_box])
+    t_key_body.setStyle(TABLE_STYLE)
+
+    return [
+        # Keep heading with question body start, but allow question table to split across pages
+        make_head(heading),
+        t_q_body,
+        Spacer(1, 3*mm),
+        KeepTogether([make_head("Answer Key"), t_key_body]),
+        Spacer(1, 4*mm),
+    ]
 
 
 # ── Markdown parser ───────────────────────────────────────────────────────────
@@ -529,24 +528,13 @@ def build_story(parsed: dict, S: dict) -> list:
             nonlocal in_list, bullets_buf
             if bullets_buf:
                 for b in bullets_buf:
-                    row = [
-                        Paragraph('<b>\u25b8</b>',
-                            ParagraphStyle("BC", fontSize=8.5, fontName="Helvetica-Bold",
-                                           textColor=WHITE, alignment=TA_CENTER)),
-                        Paragraph(inline_fmt(b), S['bullet']),
-                    ]
-                    t = Table([row], colWidths=[5*mm, W_inner - 5*mm])
-                    t.setStyle(TableStyle([
-                        ('VALIGN', (0,0), (-1,-1), 'TOP'),
-                        ('BACKGROUND', (0,0), (0,-1), DARK),
-                        ('LEFTPADDING', (0,0), (0,-1), 1),
-                        ('RIGHTPADDING', (0,0), (0,-1), 1),
-                        ('TOPPADDING', (0,0), (-1,-1), 2),
-                        ('BOTTOMPADDING', (0,0), (-1,-1), 2),
-                        ('LEFTPADDING', (1,0), (1,-1), 4),
-                    ]))
-                    story.append(t)
-                    story.append(Spacer(1, 1.5*mm))
+                    p = Paragraph(
+                        f'<font color="#D4FF00"><b>\u2022</b></font>\u2002{inline_fmt(b)}',
+                        ParagraphStyle("BulletInline", fontSize=10, fontName="Helvetica",
+                                       leading=15, leftIndent=4*mm, firstLineIndent=-4*mm,
+                                       spaceAfter=2*mm, textColor=BLACK),
+                    )
+                    story.append(p)
                 bullets_buf = []
             in_list = False
 
@@ -587,7 +575,9 @@ class MeridianDoc(BaseDocTemplate):
         super().__init__(filename, **kwargs)
         self.course_id = course_id
         W, H = A4
-        content_frame = Frame(20*mm, 20*mm, W - 40*mm, H - 42*mm, id='content')
+        content_frame = Frame(20*mm, 20*mm, W - 40*mm, H - 42*mm,
+                              leftPadding=0, rightPadding=0,
+                              topPadding=0, bottomPadding=0, id='content')
         cover_frame = Frame(20*mm, H/2, W - 40*mm, 1, id='cover')  # near-zero height — nothing flows in
         cover_cb = on_cover_page if on_cover_page else lambda c, d: None
         self.addPageTemplates([
@@ -605,8 +595,7 @@ def build_pdf(course_id: str, md_content: str) -> bytes:
     strand_colour = STRAND_COLOURS.get(strand_prefix, GREEN)
     strand_label = STRAND_LABELS.get(strand_prefix, 'All Strands')
     hours_str = f"{parsed['cpd_hours']:g}"
-    img_url = COVER_IMAGES.get(course_id, DEFAULT_IMG)
-    img_path = fetch_image(img_url, course_id)
+    img_path = fetch_image(SEASON_IMAGE, f"season_{SEASON}_cover")
 
     meta = dict(
         title=parsed['title'],
@@ -615,7 +604,7 @@ def build_pdf(course_id: str, md_content: str) -> bytes:
         published=parsed['published'],
         strand_colour=strand_colour,
         strand_label=strand_label,
-        img_path=img_path,
+        img_path=img_path or "",
     )
 
     buf = io.BytesIO()
