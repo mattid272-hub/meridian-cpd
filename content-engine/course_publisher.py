@@ -48,7 +48,7 @@ def upload_pdf(course_id: str, pdf_bytes: bytes) -> str:
     bucket = "courses"
 
     # Upload (upsert)
-    result = supabase.storage.from_(bucket).upload(
+    supabase.storage.from_(bucket).upload(
         filename,
         pdf_bytes,
         file_options={"content-type": "application/pdf", "upsert": "true"},
@@ -61,7 +61,7 @@ def upload_pdf(course_id: str, pdf_bytes: bytes) -> str:
 
 # ── Subscriber notification ───────────────────────────────────────────────────
 
-def notify_subscribers(course_id: str, title: str, cpd_hours: float, pdf_url: str):
+def notify_subscribers(course_id: str, title: str, cpd_hours: float):
     """Email all active subscribers to let them know a new course is available."""
     # Get all subscription members
     result = supabase.table("members").select("email, name").eq(
@@ -78,9 +78,10 @@ def notify_subscribers(course_id: str, title: str, cpd_hours: float, pdf_url: st
     import asyncio
     import sys
     sys.path.insert(0, str(ROOT / "webhook"))
-    from email_sender import send_new_course_notification
+    from email_sender import send_new_course_notification, send_admin_new_course_alert
 
     async def send_all():
+        # Notify subscribers
         for member in result.data:
             try:
                 await send_new_course_notification(
@@ -92,6 +93,18 @@ def notify_subscribers(course_id: str, title: str, cpd_hours: float, pdf_url: st
                 )
             except Exception as e:
                 print(f"    Failed to notify {member['email']}: {e}")
+
+        # Alert admins (Matt + Ceri)
+        try:
+            await send_admin_new_course_alert(
+                course_id=course_id,
+                course_title=title,
+                cpd_hours=cpd_hours,
+                subscriber_count=len(result.data),
+            )
+            print("  Admin alert sent to Matt and Ceri.")
+        except Exception as e:
+            print(f"  Admin alert failed: {e}")
 
     asyncio.run(send_all())
     print(f"  Notifications sent.")
@@ -133,7 +146,7 @@ def main():
             cpd_hours = float(match.group(1))
 
     # Notify subscribers
-    notify_subscribers(course_id, title, cpd_hours, pdf_url)
+    notify_subscribers(course_id, title, cpd_hours)
 
     print(f"\n  {course_id} published successfully.")
 

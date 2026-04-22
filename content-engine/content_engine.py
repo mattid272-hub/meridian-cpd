@@ -37,16 +37,32 @@ claude = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def fetch_source(url: str) -> str:
-    """Fetch a URL and return text content (best effort)."""
+    """Fetch a URL and return readable article text (strips nav/footer/scripts)."""
     try:
+        from bs4 import BeautifulSoup
+        import re
         headers = {"User-Agent": "MeridianCPD-ContentBot/1.0 (hello@meridiancpd.co.uk)"}
         r = httpx.get(url, headers=headers, timeout=15, follow_redirects=True)
-        if r.status_code == 200:
-            # Strip HTML tags roughly
-            import re
-            text = re.sub(r"<[^>]+>", " ", r.text)
-            text = re.sub(r"\s+", " ", text)
-            return text[:8000]  # cap at 8k chars per source
+        if r.status_code != 200:
+            return ""
+        soup = BeautifulSoup(r.text, "html.parser")
+        # Remove noise elements
+        for tag in soup(["script", "style", "nav", "header", "footer",
+                          "aside", "form", "button", "noscript", "iframe"]):
+            tag.decompose()
+        # Prefer article/main content areas
+        content = (
+            soup.find("main") or soup.find("article") or
+            soup.find(id=re.compile(r"content|main|article", re.I)) or
+            soup.find(class_=re.compile(r"content|article|post|news|body", re.I)) or
+            soup.body
+        )
+        if not content:
+            return ""
+        # Get clean text
+        text = content.get_text(separator=" ", strip=True)
+        text = re.sub(r"\s+", " ", text)
+        return text[:8000]
     except Exception as e:
         print(f"  Warning: could not fetch {url}: {e}")
     return ""
@@ -212,6 +228,32 @@ IMPORTANT: Base all content on factual, accurate information. Do not invent regu
     return response.content[0].text
 
 
+# ── Phase 2b: Curriculum gap fallback ────────────────────────────────────────
+
+# Known valuable topics not yet covered — engine works through these when no news found
+CURRICULUM_BACKLOG = [
+    {"course_id_prefix": "MER-DEA", "title": "Flat Roof and Roof Room Insulation in RdSAP 10", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "RdSAP 10 introduced updated conventions for flat roof U-values and room-in-roof assessments. This course covers correct identification, measurement and data entry."},
+    {"course_id_prefix": "MER-DEA", "title": "Party Walls and Heat Loss in Semi-Detached Properties", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "Correct treatment of party wall heat loss is a common source of error in RdSAP assessments. This course covers the conventions and their practical application."},
+    {"course_id_prefix": "MER-DEA", "title": "Heating System Controls: Programmers, TRVs and Smart Controls", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "RdSAP 10 scoring of heating controls has changed. This course covers correct identification and data entry for all common control types including smart thermostats."},
+    {"course_id_prefix": "MER-RA", "title": "Moisture Risk Assessment in Solid Wall Retrofit", "cpd_hours": 1, "target_audience": "Retrofit Assessors", "topic_summary": "PAS 2035 requires moisture risk assessment before solid wall insulation. This course covers the assessment process, risk factors and documentation requirements."},
+    {"course_id_prefix": "MER-RA", "title": "Structural Surveys and Retrofit: When to Refer On", "cpd_hours": 1, "target_audience": "Retrofit Assessors", "topic_summary": "Retrofit assessors must identify structural issues that affect the suitability of retrofit measures. This course covers recognition, documentation and referral pathways."},
+    {"course_id_prefix": "MER-ALL", "title": "Data Protection and GDPR for Energy Assessors", "cpd_hours": 1, "target_audience": "All assessors", "topic_summary": "Energy assessors hold significant personal and property data. This course covers GDPR obligations, data storage, consent and breach reporting requirements."},
+    {"course_id_prefix": "MER-ALL", "title": "Professional Indemnity Insurance: What Assessors Need to Know", "cpd_hours": 1, "target_audience": "All assessors", "topic_summary": "PII requirements for DEAs and retrofit professionals. Covers minimum cover levels, common exclusions, claim scenarios and choosing appropriate cover."},
+    {"course_id_prefix": "MER-DEA", "title": "Extensions and Conservatories in RdSAP 10", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "Correct treatment of extensions, conservatories and glazed additions in RdSAP 10 assessments, including thermal separation rules and heated/unheated space conventions."},
+    {"course_id_prefix": "MER-RA", "title": "Heat Pump Readiness Assessment: A Practical Guide", "cpd_hours": 1, "target_audience": "Retrofit Assessors", "topic_summary": "Assessing whether a property is suitable for heat pump installation under PAS 2035. Covers fabric first principles, heat loss calculations, radiator sizing and common barriers."},
+    {"course_id_prefix": "MER-ALL", "title": "Energy Poverty and Vulnerable Occupants: Assessor Responsibilities", "cpd_hours": 1, "target_audience": "All assessors", "topic_summary": "Recognising fuel poverty, safeguarding obligations, signposting to ECO4/GBIS and local authority schemes, and handling sensitive situations on site."},
+]
+
+def generate_curriculum_gap_topic(existing_topics: list[str]) -> dict | None:
+    """Return the next undelivered curriculum topic, or None if all done."""
+    existing_lower = [t.lower() for t in existing_topics]
+    for topic in CURRICULUM_BACKLOG:
+        if topic["title"].lower() not in existing_lower:
+            print(f"  Selected curriculum gap: {topic['title']}")
+            return topic
+    return None
+
+
 # ── Main ─────────────────────────────────────────────────────────────────────
 
 def main():
@@ -228,9 +270,12 @@ def main():
     topic = identify_topic(source_digest, existing_topics)
 
     if topic.get("skip"):
-        print(f"\nNo new topic found: {topic.get('reason')}")
-        print("Skipping this run.")
-        sys.exit(0)
+        print(f"\nNo fresh news topic found: {topic.get('reason')}")
+        print("Falling back to curriculum gap generation...")
+        topic = generate_curriculum_gap_topic(existing_topics)
+        if not topic:
+            print("No curriculum gaps remaining. Skipping this run.")
+            sys.exit(0)
 
     print(f"\nSelected topic: {topic['title']}")
     print(f"  Prefix: {topic['course_id_prefix']}")

@@ -44,21 +44,59 @@ async def send_course_email(
     is_subscription: bool = False,
 ):
     if is_subscription:
-        subject = "Welcome to Meridian CPD — your subscription is active"
+        subject = "Welcome to Meridian CPD — a few things worth knowing"
+        base_url = os.environ.get("BASE_URL", "https://app.meridiancpd.co.uk")
         body = f"""Hi {to_name},
 
-Your Meridian CPD annual subscription is now active.
+⚠ QUICK NOTE: This email may have landed in your junk or spam folder. If it did, please mark it as safe and add hello@meridiancpd.co.uk to your contacts — this ensures your CPD certificates reach you without any issues.
 
-You have unlimited access to our full course library. Browse all available courses and start logging your CPD hours today.
+─────────────────────────────
 
-Visit your library: https://meridiancpd.co.uk/library
+Welcome to Meridian CPD. Your annual subscription is active and your full library of 26 courses is ready and waiting.
 
-When you complete each course, you'll receive a CPD certificate immediately — just click the completion link at the end of each course.
+Before you dive in, a few things worth knowing from people who've been in the industry a while:
 
-Any questions? Reply to this email.
+─────────────────────────────
+SPREAD YOUR CPD THROUGH THE YEAR — IT MATTERS MORE THAN YOU THINK
+─────────────────────────────
+Accreditation bodies don't just count hours — some look at when you completed them. A portfolio showing steady engagement across the year looks far more credible than 10 hours logged in a single weekend.
 
-Matt
-Meridian CPD | Stay Sharp. Stay Certified.
+We'd suggest one course every few weeks, whenever you have a quiet hour. By the end of the year your CPD record tells a story of a professional who takes their development seriously.
+
+─────────────────────────────
+DON'T RUSH TO COMPLETE EVERYTHING AT ONCE
+─────────────────────────────
+Each course is designed to be read properly — not skimmed. Download it, read it, mark it complete, get your certificate. Then move on. The library isn't going anywhere.
+
+─────────────────────────────
+YOUR CERTIFICATES ARRIVE INSTANTLY
+─────────────────────────────
+No waiting, no monthly batch. As soon as you click Mark Complete and confirm, your certificate lands in your inbox. Keep them somewhere safe — a dedicated folder works well. Your dashboard also holds a permanent record.
+
+─────────────────────────────
+START WITH WHAT'S MOST RELEVANT RIGHT NOW
+─────────────────────────────
+If you're actively doing retrofit assessments, start with the PAS 2035 courses. If you're a DEA dealing with the RdSAP 10 transition, start there. Use the library in the order that makes sense for your practice.
+
+Your dashboard is always at:
+{base_url}/my-cpd/dashboard
+
+─────────────────────────────
+
+One last thing — we occasionally develop new tools, resources, and products for energy assessors and retrofit professionals. If you'd be happy to hear about those from time to time, just let us know with one click:
+
+Yes, keep me in the loop → {base_url}/my-cpd/consent/yes?email={to_email}
+
+No thanks, CPD only → {base_url}/my-cpd/consent/no?email={to_email}
+
+No hard sell, ever. Just the occasional heads-up when something genuinely useful comes along.
+
+Welcome aboard.
+
+Matt Davies
+Meridian CPD
+Stay Sharp. Stay Certified.
+hello@meridiancpd.co.uk
 """
         await _send(to_email, to_name, subject, body)
         return
@@ -158,7 +196,7 @@ A new course has just been added to your Meridian CPD library.
 
 As a subscriber, this course is included in your plan at no extra cost.
 
-Access it now: https://meridiancpd.co.uk/library
+Access it now: https://app.meridiancpd.co.uk/my-cpd
 
 Once you've read the course, use the completion link to receive your CPD certificate immediately.
 
@@ -167,3 +205,31 @@ Meridian CPD | Stay Sharp. Stay Certified.
 hello@meridiancpd.co.uk
 """
     await _send(to_email, to_name, subject, body)
+
+
+async def send_admin_new_course_alert(
+    course_id: str,
+    course_title: str,
+    cpd_hours: float,
+    subscriber_count: int,
+):
+    """Alert Matt and Ceri that a new course has been published."""
+    subject = f"[Meridian CPD] New course published — {course_id}"
+    body = f"""New course published automatically by the content engine.
+
+Course ID:    {course_id}
+Title:        {course_title}
+CPD Hours:    {cpd_hours:g}
+Notified:     {subscriber_count} subscriber{'s' if subscriber_count != 1 else ''}
+
+View in admin: https://app.meridiancpd.co.uk/admin
+Course PDF:   https://app.meridiancpd.co.uk/courses/{course_id}
+
+— Meridian CPD Content Engine
+"""
+    admin_recipients = [
+        ("mattid272@gmail.com", "Matt"),
+        ("ceri@docsurveying.co.uk", "Ceri"),
+    ]
+    for email, name in admin_recipients:
+        await _send(email, name, subject, body)
