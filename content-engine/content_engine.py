@@ -100,19 +100,56 @@ def next_course_id(prefix: str = "MER-ALL") -> str:
 
 # ── Phase 1: Harvest new developments ─────────────────────────────────────────
 
+def query_notebooklm(question: str) -> str:
+    """Query the Meridian CPD NotebookLM notebook for research insights."""
+    import subprocess
+    notebook_id = os.environ.get("NLM_NOTEBOOK_ID", "11cb61e2-2901-43ea-beee-3342be74fabb")
+    try:
+        result = subprocess.run(
+            ["nlm", "query", notebook_id, question, "--format", "text"],
+            capture_output=True, text=True, timeout=90
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.strip()
+        else:
+            print(f"  NotebookLM query warning: {result.stderr[:200]}")
+            return ""
+    except Exception as e:
+        print(f"  NotebookLM unavailable: {e}")
+        return ""
+
+
 def harvest_sources() -> str:
-    """Fetch all configured sources and return combined digest."""
+    """Research new developments — NotebookLM first, website scraping as supplement."""
+    combined = []
+
+    # Primary: query NotebookLM notebook (curated, authoritative sources)
+    print("Querying NotebookLM research notebook...")
+    nlm_queries = [
+        "What are the most recent updates or changes to UK energy assessment standards, RdSAP, or retrofit regulations that practitioners need to know about?",
+        "What new guidance has been issued by TrustMark, Elmhurst, Quidos, ECMK or government bodies relevant to DEAs and retrofit assessors?",
+        "What CPD topics are most urgently needed for UK Domestic Energy Assessors and Retrofit Assessors right now based on current industry developments?",
+    ]
+    for q in nlm_queries:
+        print(f"  Asking: {q[:80]}...")
+        answer = query_notebooklm(q)
+        if answer:
+            combined.append(f"=== NotebookLM Research ===\n{answer}\n")
+            break  # One good answer is enough
+
+    # Supplement: scrape live news feeds for anything very recent
     with open(SOURCES_FILE) as f:
         config = json.load(f)
 
-    print("Harvesting sources...")
-    combined = []
+    print("\nSupplement: scraping live industry sources...")
+    scraped = []
     for source in config["sources"]:
         print(f"  Fetching: {source['name']}")
         text = fetch_source(source["url"])
         if text:
-            combined.append(f"=== {source['name']} ({source['url']}) ===\n{text}\n")
+            scraped.append(f"=== {source['name']} ({source['url']}) ===\n{text}\n")
 
+    combined.extend(scraped)
     return "\n".join(combined)
 
 
