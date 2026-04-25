@@ -24,6 +24,7 @@ from supabase import create_client
 # ── Config ────────────────────────────────────────────────────────────────────
 ROOT = Path(__file__).parent.parent
 SOURCES_FILE = Path(__file__).parent / "sources.json"
+REFERENCE_LIBRARY_FILE = Path(__file__).parent / "reference_library.json"
 COURSES_DIR = ROOT / "courses"
 COURSES_DIR.mkdir(exist_ok=True)
 
@@ -117,6 +118,19 @@ def harvest_sources() -> str:
 
 # ── Phase 2: Identify best CPD topic ──────────────────────────────────────────
 
+def get_relevant_references(tags: list[str]) -> list[dict]:
+    """Return reference library docs that match any of the given topic tags."""
+    with open(REFERENCE_LIBRARY_FILE) as f:
+        library = json.load(f)
+    matched = []
+    tags_lower = [t.lower() for t in tags]
+    for doc in library["documents"]:
+        doc_tags = [t.lower() for t in doc.get("tags", [])]
+        if any(t in doc_tags for t in tags_lower):
+            matched.append(doc)
+    return matched
+
+
 def identify_topic(source_digest: str, existing_topics: list[str]) -> dict:
     """Ask Claude to identify the most valuable new CPD topic."""
     existing_str = "\n".join(f"- {t}" for t in existing_topics)
@@ -168,6 +182,17 @@ If no genuinely new topic is found in the sources, respond with:
 
 def generate_course(topic: dict, course_id: str) -> str:
     """Generate a full course from a topic dict."""
+    # Find authoritative references relevant to this topic
+    topic_tags = topic.get("tags", []) + topic["title"].lower().split()
+    relevant_refs = get_relevant_references(topic_tags)
+    if relevant_refs:
+        refs_block = "Authoritative references to draw on for this course (cite by code + title where appropriate):\n"
+        for ref in relevant_refs[:12]:
+            year = f" ({ref['year']})" if ref.get("year") else ""
+            refs_block += f"  [{ref['code']}] {ref['title']}{year}\n"
+    else:
+        refs_block = ""
+
     prompt = f"""You are writing a CPD course for Meridian CPD, a UK platform for Domestic Energy Assessors and Retrofit professionals.
 
 Course to write:
@@ -177,6 +202,7 @@ Course to write:
 - Target audience: {topic['target_audience']}
 - Topic context: {topic['topic_summary']}
 
+{refs_block}
 Tone: Expert-to-expert. Peer professional. Assume the reader is a working assessor. No corporate padding. No hand-holding.
 
 Write a complete CPD course in this exact structure:
@@ -212,7 +238,7 @@ Write a complete CPD course in this exact structure:
 [5 multiple choice questions, A/B/C/D options, correct answer + brief explanation]
 
 ## Further Reading
-[4 references to primary sources with URLs where available]
+[4-6 references — use the authoritative references provided above where relevant, citing code and full title. Add URLs where known. Prefer primary regulatory sources over secondary commentary.]
 
 ---
 *© Meridian CPD 2026. All rights reserved. Unauthorised reproduction prohibited.*
@@ -232,16 +258,16 @@ IMPORTANT: Base all content on factual, accurate information. Do not invent regu
 
 # Known valuable topics not yet covered — engine works through these when no news found
 CURRICULUM_BACKLOG = [
-    {"course_id_prefix": "MER-DEA", "title": "Flat Roof and Roof Room Insulation in RdSAP 10", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "RdSAP 10 introduced updated conventions for flat roof U-values and room-in-roof assessments. This course covers correct identification, measurement and data entry."},
-    {"course_id_prefix": "MER-DEA", "title": "Party Walls and Heat Loss in Semi-Detached Properties", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "Correct treatment of party wall heat loss is a common source of error in RdSAP assessments. This course covers the conventions and their practical application."},
-    {"course_id_prefix": "MER-DEA", "title": "Heating System Controls: Programmers, TRVs and Smart Controls", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "RdSAP 10 scoring of heating controls has changed. This course covers correct identification and data entry for all common control types including smart thermostats."},
-    {"course_id_prefix": "MER-RA", "title": "Moisture Risk Assessment in Solid Wall Retrofit", "cpd_hours": 1, "target_audience": "Retrofit Assessors", "topic_summary": "PAS 2035 requires moisture risk assessment before solid wall insulation. This course covers the assessment process, risk factors and documentation requirements."},
-    {"course_id_prefix": "MER-RA", "title": "Structural Surveys and Retrofit: When to Refer On", "cpd_hours": 1, "target_audience": "Retrofit Assessors", "topic_summary": "Retrofit assessors must identify structural issues that affect the suitability of retrofit measures. This course covers recognition, documentation and referral pathways."},
-    {"course_id_prefix": "MER-ALL", "title": "Data Protection and GDPR for Energy Assessors", "cpd_hours": 1, "target_audience": "All assessors", "topic_summary": "Energy assessors hold significant personal and property data. This course covers GDPR obligations, data storage, consent and breach reporting requirements."},
-    {"course_id_prefix": "MER-ALL", "title": "Professional Indemnity Insurance: What Assessors Need to Know", "cpd_hours": 1, "target_audience": "All assessors", "topic_summary": "PII requirements for DEAs and retrofit professionals. Covers minimum cover levels, common exclusions, claim scenarios and choosing appropriate cover."},
-    {"course_id_prefix": "MER-DEA", "title": "Extensions and Conservatories in RdSAP 10", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "Correct treatment of extensions, conservatories and glazed additions in RdSAP 10 assessments, including thermal separation rules and heated/unheated space conventions."},
-    {"course_id_prefix": "MER-RA", "title": "Heat Pump Readiness Assessment: A Practical Guide", "cpd_hours": 1, "target_audience": "Retrofit Assessors", "topic_summary": "Assessing whether a property is suitable for heat pump installation under PAS 2035. Covers fabric first principles, heat loss calculations, radiator sizing and common barriers."},
-    {"course_id_prefix": "MER-ALL", "title": "Energy Poverty and Vulnerable Occupants: Assessor Responsibilities", "cpd_hours": 1, "target_audience": "All assessors", "topic_summary": "Recognising fuel poverty, safeguarding obligations, signposting to ECO4/GBIS and local authority schemes, and handling sensitive situations on site."},
+    {"course_id_prefix": "MER-DEA", "title": "Flat Roof and Roof Room Insulation in RdSAP 10", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "RdSAP 10 introduced updated conventions for flat roof U-values and room-in-roof assessments. This course covers correct identification, measurement and data entry.", "tags": ["room in roof", "loft insulation", "RdSAP", "thermal"]},
+    {"course_id_prefix": "MER-DEA", "title": "Party Walls and Heat Loss in Semi-Detached Properties", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "Correct treatment of party wall heat loss is a common source of error in RdSAP assessments. This course covers the conventions and their practical application.", "tags": ["thermal", "heat load", "RdSAP"]},
+    {"course_id_prefix": "MER-DEA", "title": "Heating System Controls: Programmers, TRVs and Smart Controls", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "RdSAP 10 scoring of heating controls has changed. This course covers correct identification and data entry for all common control types including smart thermostats.", "tags": ["heating systems", "central heating", "building controls", "commissioning"]},
+    {"course_id_prefix": "MER-RA", "title": "Moisture Risk Assessment in Solid Wall Retrofit", "cpd_hours": 1, "target_audience": "Retrofit Assessors", "topic_summary": "PAS 2035 requires moisture risk assessment before solid wall insulation. This course covers the assessment process, risk factors and documentation requirements.", "tags": ["moisture", "damp", "EWI", "pas", "retrofit", "condensation"]},
+    {"course_id_prefix": "MER-RA", "title": "Structural Surveys and Retrofit: When to Refer On", "cpd_hours": 1, "target_audience": "Retrofit Assessors", "topic_summary": "Retrofit assessors must identify structural issues that affect the suitability of retrofit measures. This course covers recognition, documentation and referral pathways.", "tags": ["structure", "retrofit", "survey", "pas"]},
+    {"course_id_prefix": "MER-ALL", "title": "Data Protection and GDPR for Energy Assessors", "cpd_hours": 1, "target_audience": "All assessors", "topic_summary": "Energy assessors hold significant personal and property data. This course covers GDPR obligations, data storage, consent and breach reporting requirements.", "tags": ["GDPR", "data protection", "legal"]},
+    {"course_id_prefix": "MER-ALL", "title": "Professional Indemnity Insurance: What Assessors Need to Know", "cpd_hours": 1, "target_audience": "All assessors", "topic_summary": "PII requirements for DEAs and retrofit professionals. Covers minimum cover levels, common exclusions, claim scenarios and choosing appropriate cover.", "tags": ["insurance", "professional standards", "legal"]},
+    {"course_id_prefix": "MER-DEA", "title": "Extensions and Conservatories in RdSAP 10", "cpd_hours": 1, "target_audience": "DEAs", "topic_summary": "Correct treatment of extensions, conservatories and glazed additions in RdSAP 10 assessments, including thermal separation rules and heated/unheated space conventions.", "tags": ["glazing", "windows", "thermal", "RdSAP", "energy efficiency"]},
+    {"course_id_prefix": "MER-RA", "title": "Heat Pump Readiness Assessment: A Practical Guide", "cpd_hours": 1, "target_audience": "Retrofit Assessors", "topic_summary": "Assessing whether a property is suitable for heat pump installation under PAS 2035. Covers fabric first principles, heat loss calculations, radiator sizing and common barriers.", "tags": ["heat pumps", "heat load", "calculation", "pas", "retrofit"]},
+    {"course_id_prefix": "MER-ALL", "title": "Energy Poverty and Vulnerable Occupants: Assessor Responsibilities", "cpd_hours": 1, "target_audience": "All assessors", "topic_summary": "Recognising fuel poverty, safeguarding obligations, signposting to ECO4/GBIS and local authority schemes, and handling sensitive situations on site.", "tags": ["health and safety", "professional standards", "safeguarding"]},
 ]
 
 def generate_curriculum_gap_topic(existing_topics: list[str]) -> dict | None:
