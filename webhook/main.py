@@ -86,6 +86,7 @@ COURSES = {
     "MER-RA-012":  {"course_id": "MER-RA-012",  "title": "TrustMark Data Requirements: What Retrofit Assessors Must Submit", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-ALL-001": {"course_id": "MER-ALL-001", "title": "UK Energy Policy 2026: What Assessors Need to Know", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-ALL-004": {"course_id": "MER-ALL-004", "title": "Fire Safety in Retrofit: What Every Assessor Must Know", "cpd_hours": 1.0, "published": "2026-03-01"},
+    "MER-ALL-005": {"course_id": "MER-ALL-005", "title": "Future Homes Standard 2025: What Energy Assessors Need to Know", "cpd_hours": 1.0, "published": "2026-04-15"},
     # Subscription — welcome email only; library access granted via plan field
     "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0, "published": "2026-03-01"},
 }

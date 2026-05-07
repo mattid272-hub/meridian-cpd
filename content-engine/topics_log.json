@@ -1,0 +1,32 @@
+{
+  "description": "Persistent log of all generated course topics. Read by content engine on every run to prevent repetition. Committed to git after each successful run.",
+  "generated": [
+    {"course_id": "MER-DEA-001", "title": "RdSAP 10: What's Changed and Why"},
+    {"course_id": "MER-DEA-002", "title": "Measuring Windows in RdSAP 10"},
+    {"course_id": "MER-DEA-003", "title": "Ventilation in RdSAP 10: PIV, MVHR, Natural"},
+    {"course_id": "MER-DEA-004", "title": "Room in Roof: Type 1 and Type 2"},
+    {"course_id": "MER-DEA-005", "title": "Heating Systems Primary: Boilers, Controls and Data Entry in RdSAP 10"},
+    {"course_id": "MER-DEA-006", "title": "Heating Systems Secondary: Storage Heaters, Direct Electric and Room Heaters"},
+    {"course_id": "MER-DEA-007", "title": "Hot Water Systems in RdSAP 10: Cylinders, Combis and Immersions"},
+    {"course_id": "MER-DEA-008", "title": "Insulation in RdSAP 10: Walls, Roofs, Floors and Common Errors"},
+    {"course_id": "MER-DEA-010", "title": "Lighting and Renewables in RdSAP 10"},
+    {"course_id": "MER-DEA-011", "title": "Solar PV, Battery Storage and PV Diverters in RdSAP 10"},
+    {"course_id": "MER-DEA-014", "title": "EPC Audit Preparation: How to Pass Your Annual Audit"},
+    {"course_id": "MER-DEA-021", "title": "Airtightness Testing in RdSAP 10"},
+    {"course_id": "MER-RA-001", "title": "PAS 2035:2023 Overview for Retrofit Assessors"},
+    {"course_id": "MER-RA-002", "title": "Moisture Risk Assessment in PAS 2035:2023: The Updated Framework"},
+    {"course_id": "MER-RA-003", "title": "Dwelling Data Collection: PAS 2035:2023 Annex A Requirements"},
+    {"course_id": "MER-RA-004", "title": "Cavity Wall Insulation: Risk Factors and the Retrofit Assessor's Role"},
+    {"course_id": "MER-RA-005", "title": "Solid Wall Insulation: IWI vs EWI — Risks, Evidence and Assessment"},
+    {"course_id": "MER-RA-006", "title": "EPR Variation: Managing the RdSAP 10 Transition in PAS 2035 Projects"},
+    {"course_id": "MER-RA-007", "title": "Heating System Assessment for Retrofit: What the Retrofit Assessor Must Record"},
+    {"course_id": "MER-RA-008", "title": "Ventilation Assessment in Retrofit: Background Ventilation to MVHR"},
+    {"course_id": "MER-RA-009", "title": "External Wall Insulation: Planning Permission and Fire Risk"},
+    {"course_id": "MER-RA-010", "title": "Thermal Bridging in Retrofit Assessment: What Assessors Must Record"},
+    {"course_id": "MER-RA-011", "title": "Occupancy Assessment: Health Conditions, Vulnerability and Overheating Risk"},
+    {"course_id": "MER-RA-012", "title": "TrustMark Data Requirements: What Retrofit Assessors Must Submit"},
+    {"course_id": "MER-ALL-001", "title": "UK Energy Policy 2026: What Assessors Need to Know"},
+    {"course_id": "MER-ALL-004", "title": "Fire Safety in Retrofit: What Every Assessor Must Know"},
+    {"course_id": "MER-ALL-005", "title": "Future Homes Standard 2025: What Energy Assessors Need to Know"}
+  ]
+}

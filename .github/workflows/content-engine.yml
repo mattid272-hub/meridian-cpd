@@ -61,6 +61,6 @@ jobs:
         run: |
           git config user.name "Meridian CPD Bot"
           git config user.email "hello@meridiancpd.co.uk"
-          git add courses/
+          git add courses/ content-engine/topics_log.json
           git diff --staged --quiet || git commit -m "chore: add auto-generated course [skip ci]"
           git push

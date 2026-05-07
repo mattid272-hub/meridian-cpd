@@ -27,6 +27,7 @@ SOURCES_FILE = Path(__file__).parent / "sources.json"
 REFERENCE_LIBRARY_FILE = Path(__file__).parent / "reference_library.json"
 COURSES_DIR = ROOT / "courses"
 COURSES_DIR.mkdir(exist_ok=True)
+TOPICS_LOG_FILE = Path(__file__).parent / "topics_log.json"
 
 supabase = create_client(
     os.environ["SUPABASE_URL"],
@@ -70,15 +71,40 @@ def fetch_source(url: str) -> str:
 
 
 def get_existing_topics() -> list[str]:
-    """Return list of all existing course titles to avoid repetition."""
-    existing = []
-    for course_dir in COURSES_DIR.iterdir():
-        if course_dir.is_dir():
-            md_files = list(course_dir.glob("*.md"))
-            if md_files:
-                first_line = md_files[0].read_text(encoding="utf-8").split("\n")[0]
-                existing.append(first_line.lstrip("# ").strip())
-    return existing
+    """Return list of all existing course titles to avoid repetition.
+    Reads from topics_log.json (primary) — reliable across GitHub Actions runs.
+    Falls back to scanning courses/ directory for any not yet logged.
+    """
+    titles = set()
+    # Primary: topics log committed to git
+    if TOPICS_LOG_FILE.exists():
+        with open(TOPICS_LOG_FILE) as f:
+            log = json.load(f)
+        for entry in log.get("generated", []):
+            if entry.get("title"):
+                titles.add(entry["title"])
+    # Supplement: scan course dirs for anything not in log
+    if COURSES_DIR.exists():
+        for course_dir in COURSES_DIR.iterdir():
+            if course_dir.is_dir():
+                md_files = list(course_dir.glob("*.md"))
+                if md_files:
+                    first_line = md_files[0].read_text(encoding="utf-8").split("\n")[0]
+                    title = first_line.lstrip("# ").strip()
+                    if title:
+                        titles.add(title)
+    return list(titles)
+
+
+def log_generated_topic(course_id: str, title: str) -> None:
+    """Append a newly generated course to topics_log.json."""
+    log = {"description": "", "generated": []}
+    if TOPICS_LOG_FILE.exists():
+        with open(TOPICS_LOG_FILE) as f:
+            log = json.load(f)
+    log["generated"].append({"course_id": course_id, "title": title})
+    with open(TOPICS_LOG_FILE, "w") as f:
+        json.dump(log, f, indent=2)
 
 
 def next_course_id(prefix: str = "MER-ALL") -> str:
@@ -359,6 +385,10 @@ def main():
     md_path.write_text(course_md, encoding="utf-8")
     print(f"\nCourse saved: {md_path}")
     print(f"Word count: {len(course_md.split())}")
+
+    # Log topic so future runs don't repeat it
+    log_generated_topic(course_id, topic["title"])
+    print(f"Topic logged: {topic['title']}")
 
     # Phase 4: Build PDF + publish
     print("\nTriggering publisher...")
