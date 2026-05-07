@@ -1,19 +1,24 @@
 """
-Meridian CPD — Stripe Webhook + Course Delivery + Admin Panel
+Meridian CPD — Stripe Webhook + Course Delivery + Admin Panel + Subscriber Dashboard
 Deployed on Railway. Handles:
   - checkout.session.completed → deliver course PDF + log member
   - GET /complete/[token]      → show completion confirmation page
   - POST /complete/[token]     → record completion + issue certificate
   - GET /verify/[cert-number]  → certificate verification page
   - GET /admin                 → admin dashboard (password protected)
+  - GET /my-cpd                → subscriber login page
+  - GET /my-cpd/dashboard      → subscriber CPD portal (session cookie auth)
 """
 import os
 import secrets
 import uuid
+import hmac
+import hashlib
+import time
 from datetime import datetime, timezone
 
 import stripe
-from fastapi import FastAPI, HTTPException, Request, Response, Depends
+from fastapi import FastAPI, HTTPException, Request, Response, Depends, Cookie
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 import httpx
@@ -100,12 +105,15 @@ def get_or_create_member(email: str, name: str, stripe_customer_id: str, plan: s
     result = supabase.table("members").select("*").eq("email", email).execute()
     if result.data:
         member = result.data[0]
-        # Update plan if upgrading to subscription
+        # Update plan if upgrading to subscription — always update by email to be safe
         if plan == "subscription" and member["plan"] != "subscription":
             supabase.table("members").update({
                 "plan": "subscription",
                 "stripe_customer_id": stripe_customer_id,
-            }).eq("id", member["id"]).execute()
+            }).eq("email", email).execute()
+            # Re-fetch to return the updated record
+            updated = supabase.table("members").select("*").eq("email", email).execute()
+            return updated.data[0]
         return member
     else:
         new_member = {
@@ -187,7 +195,7 @@ async def handle_checkout(session):
     for item in line_items.data:
         price_id = item.price.id
         course_key = PRICE_TO_COURSE.get(price_id, "")
-        if course_key == "subscription":
+        if course_key == "SUBSCRIPTION":
             plan = "subscription"
             course_keys.append(course_key)
         elif client_ref and client_ref in COURSES:
@@ -238,6 +246,34 @@ async def handle_checkout(session):
     print(f"Handled checkout for {email}: {course_keys}")
 
 
+# ── Download gate — marks course as downloaded before serving PDF ──────────────
+
+@app.get("/download/{course_id}")
+async def download_course(course_id: str, request: Request):
+    """Records that subscriber has downloaded the PDF, then redirects to it.
+    Requires active session. Sets downloaded_at on the completion record."""
+    session_token = request.cookies.get("session_token")
+    email = _verify_session_token(session_token) if session_token else None
+    if not email:
+        return RedirectResponse("/my-cpd", status_code=302)
+
+    if course_id not in COURSES:
+        raise HTTPException(status_code=404, detail="Course not found")
+
+    # Mark downloaded_at on the completion record if not already set
+    member_res = supabase.table("members").select("id").eq("email", email).execute()
+    if member_res.data:
+        member_id = member_res.data[0]["id"]
+        supabase.table("completions").update({
+            "downloaded_at": datetime.now(timezone.utc).isoformat(),
+        }).eq("member_id", member_id).eq("course_id", course_id).is_(
+            "downloaded_at", "null"
+        ).execute()
+        print(f"Download recorded: {email} → {course_id}")
+
+    return RedirectResponse(_pdf_url(course_id), status_code=302)
+
+
 # ── Completion flow ────────────────────────────────────────────────────────────
 
 @app.get("/complete/{token}", response_class=HTMLResponse)
@@ -258,6 +294,42 @@ async def completion_page(token: str):
     row = result.data[0]
     course_id = row["course_id"]
     name = row["members"]["name"] or "there"
+    has_downloaded = bool(row.get("downloaded_at"))
+
+    # Gate: subscriber must have downloaded the PDF first
+    if not has_downloaded:
+        course = COURSES.get(course_id, {})
+        course_title = course.get("title", course_id)
+        return HTMLResponse(f"""
+        <html>
+        <head>
+          <title>Read Course First — Meridian CPD</title>
+          <style>
+            body {{ font-family: Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }}
+            h1 {{ color: #0f2547; }}
+            .box {{ background: #fff8e1; border: 1px solid #f59e0b; border-radius: 8px;
+                    padding: 24px; margin: 24px 0; }}
+            .btn {{ display: inline-block; background: #0891b2; color: white; padding: 14px 28px;
+                    border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 16px;
+                    margin-top: 16px; }}
+            .small {{ color: #666; font-size: 13px; margin-top: 20px; }}
+          </style>
+        </head>
+        <body>
+          {_logo()}
+          <h1>Please read the course first</h1>
+          <div class="box">
+            <p>Hi {name}, before you can claim your certificate for <strong>{course_title}</strong>,
+            you need to download and read the course material.</p>
+            <p style="margin-top:12px">This ensures your CPD record accurately reflects the learning you've completed —
+            which is what your accreditation body expects to see.</p>
+            <a class="btn" href="/download/{course_id}">Download course PDF →</a>
+          </div>
+          <p class="small">Once you've read the course, return to your
+          <a href="{BASE_URL}/my-cpd/dashboard">CPD dashboard</a> and click Mark Complete.</p>
+        </body>
+        </html>
+        """)
 
     return HTMLResponse(f"""
     <html>
@@ -321,7 +393,6 @@ async def confirm_completion(token: str, request: Request):
     member_id = row["member_id"]
     course_id = row["course_id"]
     member_email = row["members"]["email"]
-    # Use the accreditation name submitted on the form, fall back to stored name
     cert_name = str(form.get("cert_name", "")).strip()
     member_name = cert_name or row["members"]["name"] or "Assessor"
 
@@ -347,7 +418,7 @@ async def confirm_completion(token: str, request: Request):
         issued_date=datetime.now(timezone.utc).strftime("%-d %B %Y"),
     )
 
-    # Log certificate — store member_name as it appears on the certificate
+    # Log certificate
     supabase.table("certificates").insert({
         "cert_number": cert_number,
         "member_id": member_id,
@@ -358,14 +429,28 @@ async def confirm_completion(token: str, request: Request):
         "issued_for_month": datetime.now(timezone.utc).strftime("%Y-%m"),
     }).execute()
 
-    # Email certificate
-    await send_certificate_email(
-        to_email=member_email,
-        to_name=member_name,
-        cert_number=cert_number,
-        course_title=course["title"],
-        cpd_hours=course["cpd_hours"],
-        cert_pdf_bytes=cert_pdf_bytes,
+    # Email certificate — catch errors so page always loads, log failure clearly
+    email_sent = False
+    try:
+        await send_certificate_email(
+            to_email=member_email,
+            to_name=member_name,
+            cert_number=cert_number,
+            course_title=course["title"],
+            cpd_hours=course["cpd_hours"],
+            cert_pdf_bytes=cert_pdf_bytes,
+        )
+        email_sent = True
+        print(f"Certificate email sent: {cert_number} → {member_email}")
+    except Exception as e:
+        print(f"ERROR sending certificate email {cert_number} to {member_email}: {e}")
+
+    email_note = (
+        f"Your certificate has been emailed to <strong>{member_email}</strong>."
+        if email_sent else
+        f"""<span style="color:#dc2626">We couldn't send the certificate email automatically —
+        please contact <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a>
+        quoting your certificate number above and we'll send it straight away.</span>"""
     )
 
     return HTMLResponse(f"""
@@ -383,7 +468,7 @@ async def confirm_completion(token: str, request: Request):
     <body>
       {_logo()}
       <h1>CPD Completed</h1>
-      <p>Well done, {member_name}. Your certificate has been emailed to <strong>{member_email}</strong>.</p>
+      <p>Well done, {member_name}. {email_note}</p>
       <div class="cert-num">{cert_number}</div>
       <p>Keep this certificate number — your accreditation body can verify it at
          <a href="https://meridiancpd.co.uk/verify/{cert_number}">meridiancpd.co.uk/verify/{cert_number}</a>
@@ -516,6 +601,577 @@ async def verify_certificate(cert_number: str):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+# ── Unsubscribe ────────────────────────────────────────────────────────────────
+
+UNSUBSCRIBE_SECRET = os.environ.get("UNSUBSCRIBE_SECRET", "")
+
+def _verify_unsubscribe_token(email: str, token: str) -> bool:
+    if not UNSUBSCRIBE_SECRET:
+        return False
+    expected = hmac.new(
+        UNSUBSCRIBE_SECRET.encode(),
+        email.encode(),
+        hashlib.sha256,
+    ).hexdigest()[:16]
+    return hmac.compare_digest(expected, token)
+
+
+@app.get("/unsubscribe", response_class=HTMLResponse)
+async def unsubscribe(email: str = "", token: str = ""):
+    if not email or not token or not _verify_unsubscribe_token(email, token):
+        return HTMLResponse(f"""<!DOCTYPE html>
+<html><head><title>Unsubscribe — Meridian CPD</title>
+<style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+h2{{color:#dc2626}}p{{color:#64748b;line-height:1.6}}</style></head>
+<body>
+  <h2>Invalid link</h2>
+  <p>This unsubscribe link is invalid or has already been used.<br>
+  If you want to stop receiving emails, contact
+  <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a> and we will remove you immediately.</p>
+</body></html>""", status_code=400)
+
+    # Mark suppressed in both tables
+    supabase.table("outreach_contacts").update({
+        "suppressed": True,
+        "suppressed_reason": "unsubscribed",
+    }).eq("email", email).execute()
+
+    supabase.table("outreach_suppressed").upsert({
+        "email": email,
+        "reason": "unsubscribed",
+    }).execute()
+
+    print(f"Unsubscribed: {email}")
+
+    return HTMLResponse(f"""<!DOCTYPE html>
+<html><head><title>Unsubscribed — Meridian CPD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+.logo{{font-size:20px;font-weight:900;color:#0f2547;margin-bottom:40px;display:block;text-decoration:none}}
+.logo span{{color:#0891b2}}
+h2{{color:#0f2547;font-size:22px;margin-bottom:12px}}
+p{{color:#64748b;line-height:1.6;font-size:15px}}
+</style></head>
+<body>
+  <a class="logo" href="https://meridiancpd.co.uk">MERIDIAN <span>CPD</span></a>
+  <h2>You have been unsubscribed.</h2>
+  <p>We have removed <strong>{email}</strong> from all future Meridian CPD marketing emails.<br>
+  You will not hear from us again.</p>
+  <p style="margin-top:24px;font-size:13px;color:#94a3b8">
+  Changed your mind? Email <a href="mailto:hello@meridiancpd.co.uk" style="color:#0891b2">hello@meridiancpd.co.uk</a>
+  and we will reinstate you.</p>
+</body></html>""")
+
+
+# ── Marketing consent ─────────────────────────────────────────────────────────
+
+@app.get("/my-cpd/consent/yes", response_class=HTMLResponse)
+async def consent_yes(email: str):
+    supabase.table("members").update({"marketing_consent": True}).eq("email", email).execute()
+    return HTMLResponse(f"""
+    <html><head><title>Meridian CPD</title>
+    <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+    h2{{color:#0f2547}}p{{color:#64748b;line-height:1.6}}
+    .btn{{display:inline-block;margin-top:24px;background:#0f2547;color:white;padding:12px 24px;
+          border-radius:8px;text-decoration:none;font-weight:bold}}</style></head>
+    <body>
+      <h2>Thanks — you're in the loop.</h2>
+      <p>We'll only reach out when there's something genuinely useful for you.<br>
+      No spam, no hard sell — ever.</p>
+      <a class="btn" href="{BASE_URL}/my-cpd/dashboard">Back to my dashboard →</a>
+    </body></html>""")
+
+
+@app.get("/my-cpd/consent/no", response_class=HTMLResponse)
+async def consent_no(email: str):
+    supabase.table("members").update({"marketing_consent": False}).eq("email", email).execute()
+    return HTMLResponse(f"""
+    <html><head><title>Meridian CPD</title>
+    <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+    h2{{color:#0f2547}}p{{color:#64748b;line-height:1.6}}
+    .btn{{display:inline-block;margin-top:24px;background:#0f2547;color:white;padding:12px 24px;
+          border-radius:8px;text-decoration:none;font-weight:bold}}</style></head>
+    <body>
+      <h2>No problem at all.</h2>
+      <p>CPD only — we respect that. Your preference has been saved.<br>
+      Your subscription and course access are completely unaffected.</p>
+      <a class="btn" href="{BASE_URL}/my-cpd/dashboard">Back to my dashboard →</a>
+    </body></html>""")
+
+
+# ── Subscriber dashboard ──────────────────────────────────────────────────────
+
+DASHBOARD_SECRET = os.environ.get("DASHBOARD_SECRET", secrets.token_hex(32))
+
+_DASH_CSS = """
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background: #f8fafc; color: #1e293b; font-size: 14px; min-height: 100vh; }
+.topbar { background: #0f2547; padding: 0 28px; display: flex; align-items: center;
+          justify-content: space-between; height: 56px; }
+.topbar-brand { font-size: 18px; font-weight: 900; color: white; letter-spacing: -0.5px;
+                text-decoration: none; }
+.topbar-brand span { color: #0891b2; }
+.topbar-right { display: flex; align-items: center; gap: 16px; }
+.topbar-name { color: #94a3b8; font-size: 13px; }
+.topbar-logout { color: #caf0f8; font-size: 13px; text-decoration: none;
+                 border: 1px solid #1e3a5f; padding: 5px 12px; border-radius: 5px; }
+.topbar-logout:hover { background: #1e3a5f; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+.hero { background: white; border-radius: 12px; padding: 28px 32px;
+        border-left: 4px solid #0891b2; margin-bottom: 28px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.hero h1 { font-size: 22px; color: #0f2547; margin-bottom: 6px; }
+.hero p { color: #64748b; font-size: 14px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+.stat { background: white; border-radius: 10px; padding: 20px 24px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-align: center; }
+.stat .val { font-size: 36px; font-weight: 800; color: #0f2547; line-height: 1.1; }
+.stat .lbl { color: #64748b; font-size: 12px; font-weight: 600;
+             text-transform: uppercase; letter-spacing: 0.5px; margin-top: 6px; }
+.card { background: white; border-radius: 10px; padding: 24px 28px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 24px; }
+.card-title { font-size: 13px; font-weight: 700; color: #0f2547; margin-bottom: 18px;
+              text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #f1f5f9;
+              padding-bottom: 12px; }
+.course-row { display: flex; align-items: center; justify-content: space-between;
+              padding: 14px 0; border-bottom: 1px solid #f1f5f9; gap: 12px; }
+.course-row:last-child { border-bottom: none; }
+.course-info { flex: 1; }
+.course-id { font-size: 11px; color: #0891b2; font-weight: 700;
+             letter-spacing: 0.5px; margin-bottom: 3px; }
+.course-title { font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 2px; }
+.course-meta { font-size: 12px; color: #94a3b8; }
+.course-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.pill { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px;
+        border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.pill-complete { background: #dcfce7; color: #15803d; }
+.pill-pending { background: #fef9c3; color: #854d0e; }
+.pill-locked { background: #f1f5f9; color: #94a3b8; }
+.btn { display: inline-block; padding: 8px 16px; border-radius: 6px; font-size: 13px;
+       font-weight: 600; text-decoration: none; cursor: pointer; border: none; }
+.btn-dl { background: #0891b2; color: white; }
+.btn-dl:hover { background: #0f2547; }
+.btn-read { background: #0f2547; color: white; }
+.btn-read:hover { background: #0891b2; }
+.empty { color: #94a3b8; text-align: center; padding: 32px; font-size: 14px; }
+.cert-table { width: 100%; border-collapse: collapse; }
+.cert-table th { text-align: left; font-size: 11px; font-weight: 700; color: #64748b;
+                 text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px;
+                 border-bottom: 2px solid #e2e8f0; }
+.cert-table td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+.cert-table tr:last-child td { border-bottom: none; }
+.cert-num { font-family: monospace; color: #0891b2; font-weight: 700; font-size: 12px; }
+.progress-bar { background: #e2e8f0; border-radius: 10px; height: 8px; margin-top: 8px; }
+.progress-fill { background: linear-gradient(90deg, #0891b2, #0f2547);
+                 border-radius: 10px; height: 8px; transition: width 0.3s; }
+@media (max-width: 640px) {
+  .stats { grid-template-columns: 1fr; }
+  .course-row { flex-direction: column; align-items: flex-start; }
+  .topbar { padding: 0 16px; }
+  .wrap { padding: 20px 16px; }
+}
+"""
+
+def _make_session_token(email: str) -> str:
+    exp = int(time.time()) + 86400 * 30  # 30 days
+    payload = f"{email}:{exp}"
+    sig = hmac.new(DASHBOARD_SECRET.encode(), payload.encode(), hashlib.sha256).hexdigest()
+    return f"{payload}:{sig}"
+
+def _verify_session_token(token: str):
+    """Returns email if valid, None if invalid/expired."""
+    try:
+        parts = token.rsplit(":", 2)
+        if len(parts) != 3:
+            return None
+        email, exp_str, sig = parts
+        exp = int(exp_str)
+        if time.time() > exp:
+            return None
+        payload = f"{email}:{exp_str}"
+        expected = hmac.new(DASHBOARD_SECRET.encode(), payload.encode(), hashlib.sha256).hexdigest()
+        if not hmac.compare_digest(sig, expected):
+            return None
+        return email
+    except Exception:
+        return None
+
+def _dash_header(name: str, email: str) -> str:
+    return f"""
+    <div class="topbar">
+      <a class="topbar-brand" href="/my-cpd/dashboard">MERIDIAN <span>CPD</span></a>
+      <div class="topbar-right">
+        <span class="topbar-name">{name or email}</span>
+        <a class="topbar-logout" href="/my-cpd/logout">Sign out</a>
+      </div>
+    </div>"""
+
+def _get_dashboard_member(session_token: str = Cookie(default=None)):
+    if not session_token:
+        return None
+    return _verify_session_token(session_token)
+
+
+@app.get("/my-cpd", response_class=HTMLResponse)
+async def dashboard_login_page(request: Request):
+    # If already logged in, redirect to dashboard
+    token = request.cookies.get("session_token")
+    if token and _verify_session_token(token):
+        return RedirectResponse("/my-cpd/dashboard", status_code=302)
+    msg = request.query_params.get("msg", "")
+    msg_html = ""
+    if msg == "sent":
+        msg_html = '<div class="msg-ok">Check your inbox — we\'ve sent you a login link.</div>'
+    elif msg == "invalid":
+        msg_html = '<div class="msg-err">That link has expired or is invalid. Please request a new one.</div>'
+    elif msg == "notfound":
+        msg_html = '<div class="msg-err">No account found for that email. Have you purchased a course?</div>'
+    return HTMLResponse(f"""<!DOCTYPE html>
+<html><head>
+<title>My CPD — Meridian CPD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+* {{ box-sizing: border-box; margin: 0; padding: 0; }}
+body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background: #f8fafc; display: flex; align-items: center;
+       justify-content: center; min-height: 100vh; padding: 24px; }}
+.card {{ background: white; border-radius: 14px; padding: 40px 36px; width: 100%;
+         max-width: 420px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }}
+.brand {{ font-size: 22px; font-weight: 900; color: #0f2547; letter-spacing: -0.5px;
+          margin-bottom: 8px; }}
+.brand span {{ color: #0891b2; }}
+.sub {{ color: #64748b; font-size: 14px; margin-bottom: 32px; line-height: 1.5; }}
+label {{ display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; }}
+input {{ width: 100%; padding: 12px 14px; font-size: 15px; border: 1.5px solid #d1d5db;
+         border-radius: 8px; outline: none; }}
+input:focus {{ border-color: #0891b2; box-shadow: 0 0 0 3px rgba(8,145,178,0.12); }}
+.btn {{ margin-top: 18px; width: 100%; padding: 13px; background: #0f2547; color: white;
+        font-size: 15px; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }}
+.btn:hover {{ background: #0891b2; }}
+.hint {{ margin-top: 16px; font-size: 12px; color: #9ca3af; text-align: center; line-height: 1.5; }}
+.msg-ok {{ background: #f0fdf4; border: 1px solid #86efac; color: #15803d; padding: 12px 16px;
+           border-radius: 8px; font-size: 14px; margin-bottom: 20px; }}
+.msg-err {{ background: #fef2f2; border: 1px solid #fca5a5; color: #dc2626; padding: 12px 16px;
+            border-radius: 8px; font-size: 14px; margin-bottom: 20px; }}
+</style>
+</head><body>
+<div class="card">
+  <div class="brand">MERIDIAN <span>CPD</span></div>
+  <p class="sub">Sign in to view your courses, track your CPD hours, and download your certificates.</p>
+  {msg_html}
+  <form method="POST" action="/my-cpd/send-link">
+    <label for="email">Your email address</label>
+    <input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="email">
+    <button class="btn" type="submit">Send me a login link</button>
+  </form>
+  <p class="hint">We'll email you a secure one-click link. No password needed.</p>
+</div>
+</body></html>""")
+
+
+@app.post("/my-cpd/send-link")
+async def dashboard_send_link(request: Request):
+    form = await request.form()
+    email = str(form.get("email", "")).strip().lower()
+    if not email:
+        return RedirectResponse("/my-cpd?msg=invalid", status_code=302)
+
+    # Check member exists
+    result = supabase.table("members").select("id, name").eq("email", email).execute()
+    if not result.data:
+        return RedirectResponse("/my-cpd?msg=notfound", status_code=302)
+
+    # Create a short-lived magic link token (1 hour)
+    exp = int(time.time()) + 3600
+    payload = f"{email}:{exp}"
+    sig = hmac.new(DASHBOARD_SECRET.encode(), payload.encode(), hashlib.sha256).hexdigest()
+    magic_token = f"{payload}:{sig}"
+    import base64
+    encoded = base64.urlsafe_b64encode(magic_token.encode()).decode()
+
+    login_url = f"{BASE_URL}/my-cpd/login/{encoded}"
+
+    # Send magic link email
+    async with httpx.AsyncClient() as client:
+        await client.post(
+            "https://api.resend.com/emails",
+            headers={"Authorization": f"Bearer {os.environ.get('RESEND_API_KEY', '')}"},
+            json={
+                "from": "Meridian CPD <hello@meridiancpd.co.uk>",
+                "to": [email],
+                "subject": "Your Meridian CPD login link",
+                "html": f"""
+                <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:32px 24px">
+                  <div style="font-size:20px;font-weight:900;color:#0f2547;margin-bottom:8px">
+                    MERIDIAN <span style="color:#0891b2">CPD</span>
+                  </div>
+                  <h2 style="color:#0f2547;font-size:18px;margin:24px 0 8px">Your login link</h2>
+                  <p style="color:#64748b;font-size:14px;line-height:1.6;margin-bottom:24px">
+                    Click the button below to access your CPD dashboard. This link expires in 1 hour.
+                  </p>
+                  <a href="{login_url}"
+                     style="display:inline-block;background:#0f2547;color:white;padding:14px 28px;
+                            border-radius:8px;text-decoration:none;font-weight:700;font-size:15px">
+                    Sign in to My CPD →
+                  </a>
+                  <p style="color:#94a3b8;font-size:12px;margin-top:32px;line-height:1.5">
+                    If you didn't request this, ignore this email.<br>
+                    Meridian CPD · meridiancpd.co.uk
+                  </p>
+                </div>""",
+            },
+        )
+
+    return RedirectResponse("/my-cpd?msg=sent", status_code=302)
+
+
+@app.get("/my-cpd/login/{encoded_token}", response_class=HTMLResponse)
+async def dashboard_magic_login(encoded_token: str):
+    try:
+        import base64
+        magic_token = base64.urlsafe_b64decode(encoded_token.encode()).decode()
+        parts = magic_token.rsplit(":", 2)
+        if len(parts) != 3:
+            raise ValueError
+        email, exp_str, sig = parts
+        exp = int(exp_str)
+        if time.time() > exp:
+            return RedirectResponse("/my-cpd?msg=invalid", status_code=302)
+        payload = f"{email}:{exp_str}"
+        expected = hmac.new(DASHBOARD_SECRET.encode(), payload.encode(), hashlib.sha256).hexdigest()
+        if not hmac.compare_digest(sig, expected):
+            return RedirectResponse("/my-cpd?msg=invalid", status_code=302)
+    except Exception:
+        return RedirectResponse("/my-cpd?msg=invalid", status_code=302)
+
+    # Issue a 30-day session cookie
+    session_token = _make_session_token(email)
+    response = RedirectResponse("/my-cpd/dashboard", status_code=302)
+    response.set_cookie("session_token", session_token, max_age=86400 * 30,
+                        httponly=True, samesite="lax", secure=True)
+    return response
+
+
+@app.get("/my-cpd/logout")
+async def dashboard_logout():
+    response = RedirectResponse("/my-cpd", status_code=302)
+    response.delete_cookie("session_token")
+    return response
+
+
+@app.get("/my-cpd/dashboard", response_class=HTMLResponse)
+async def subscriber_dashboard(request: Request):
+    session_token = request.cookies.get("session_token")
+    email = _verify_session_token(session_token) if session_token else None
+    if not email:
+        return RedirectResponse("/my-cpd", status_code=302)
+
+    # Fetch member
+    member_res = supabase.table("members").select("*").eq("email", email).execute()
+    if not member_res.data:
+        return RedirectResponse("/my-cpd", status_code=302)
+    member = member_res.data[0]
+    member_id = member["id"]
+    member_name = member["name"] or email.split("@")[0].title()
+    is_sub = member["plan"] == "subscription"
+
+    # Fetch purchases
+    purchases_res = supabase.table("purchases").select("course_id, purchased_at").eq(
+        "member_id", member_id
+    ).execute()
+    purchased_ids = {p["course_id"] for p in (purchases_res.data or [])}
+
+    # Fetch completions
+    completions_res = supabase.table("completions").select(
+        "course_id, completed_at, completion_token"
+    ).eq("member_id", member_id).execute()
+    completed = {c["course_id"]: c for c in (completions_res.data or []) if c.get("completed_at")}
+    pending_tokens = {c["course_id"]: c["completion_token"] for c in (completions_res.data or []) if not c.get("completed_at")}
+
+    # For subscribers: ensure every course has a completion token so "Mark Complete" works.
+    # Tokens are created lazily on first dashboard load — no email needed, just DB record.
+    if is_sub:
+        all_course_ids = [k for k in COURSES if k != "SUBSCRIPTION"]
+        for cid in all_course_ids:
+            if cid not in completed and cid not in pending_tokens:
+                token = create_completion_token(member_id, cid)
+                pending_tokens[cid] = token
+
+    # Fetch certificates
+    certs_res = supabase.table("certificates").select("*").eq("member_id", member_id).order(
+        "issued_at", desc=True
+    ).execute()
+    certs = certs_res.data or []
+
+    # CPD stats
+    total_hours = sum(
+        COURSES[cid]["cpd_hours"] for cid in completed if cid in COURSES
+    )
+    completed_count = len(completed)
+
+    # Determine which courses to show — subscribers see full library, single buyers see only purchases
+    if is_sub:
+        show_courses = {k: v for k, v in COURSES.items() if k != "SUBSCRIPTION"}
+    else:
+        show_courses = {k: COURSES[k] for k in purchased_ids if k in COURSES and k != "SUBSCRIPTION"}
+
+    # Build course rows
+    course_rows = ""
+    for cid, course in show_courses.items():
+        hours = course["cpd_hours"]
+        title = course["title"]
+        if cid in completed:
+            status_pill = '<span class="pill pill-complete">✓ Completed</span>'
+            action = f'<a class="btn btn-dl" href="/download/{cid}">Download PDF</a>'
+        elif cid in pending_tokens:
+            tok = pending_tokens[cid]
+            status_pill = '<span class="pill pill-pending">⏳ Awaiting completion</span>'
+            action = (f'<a class="btn btn-dl" href="/download/{cid}">Download PDF</a>'
+                      f'<a class="btn btn-read" href="{BASE_URL}/complete/{tok}">Mark Complete</a>')
+        else:
+            status_pill = '<span class="pill pill-locked">Available</span>'
+            action = f'<a class="btn btn-dl" href="/download/{cid}">Download PDF</a>'
+
+        course_rows += f"""
+        <div class="course-row">
+          <div class="course-info">
+            <div class="course-id">{cid}</div>
+            <div class="course-title">{title}</div>
+            <div class="course-meta">{hours:g} CPD hour{'s' if hours != 1 else ''}</div>
+          </div>
+          <div class="course-actions">
+            {status_pill}
+            {action}
+          </div>
+        </div>"""
+
+    if not course_rows:
+        course_rows = '<p class="empty">No courses yet. <a href="https://meridiancpd.co.uk">Browse the library →</a></p>'
+
+    # Upsell banner — shown only to single-course buyers
+    total_courses = len([k for k in COURSES if k != "SUBSCRIPTION"])
+    courses_owned = len(show_courses)
+    upsell_html = ""
+    if not is_sub:
+        upsell_html = f"""
+        <div style="background:linear-gradient(135deg,#0f2547,#0891b2);border-radius:12px;
+                    padding:28px 32px;margin-bottom:28px;color:white;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1px;
+                      text-transform:uppercase;color:#caf0f8;margin-bottom:8px">
+            Unlock the full library
+          </div>
+          <div style="font-size:20px;font-weight:800;margin-bottom:8px">
+            You have access to {courses_owned} of {total_courses} courses.
+          </div>
+          <p style="font-size:14px;color:#caf0f8;margin-bottom:20px;line-height:1.6">
+            An annual subscription gives you unlimited access to all {total_courses} courses —
+            DEA, Retrofit Assessor, and cross-strand — plus every new course added throughout the year.
+            At £79/year, it pays for itself after just 4 courses.
+          </p>
+          <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
+             style="display:inline-block;background:#d4ff00;color:#0f2547;padding:12px 24px;
+                    border-radius:8px;text-decoration:none;font-weight:800;font-size:14px">
+            Upgrade to Annual — £79/year →
+          </a>
+        </div>"""
+
+    # Build certificates table
+    cert_rows = ""
+    for cert in certs:
+        issued = cert["issued_at"][:10]
+        cert_rows += f"""
+        <tr>
+          <td><span class="cert-num">{cert["cert_number"]}</span></td>
+          <td>{cert["course_title"]}</td>
+          <td>{cert["cpd_hours"]:g} hrs</td>
+          <td>{issued}</td>
+          <td><a href="{BASE_URL}/verify/{cert['cert_number']}" target="_blank"
+                 style="color:#0891b2;font-size:12px;text-decoration:none">Verify ↗</a></td>
+        </tr>"""
+
+    if not cert_rows:
+        cert_rows = '<tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:24px">No certificates yet — complete a course to earn your first one.</td></tr>'
+
+    # Progress bar (DEA requirement = 10 hours/year)
+    target = 25 if is_sub and "RC" in str(purchased_ids) else 10
+    pct = min(int((total_hours / target) * 100), 100)
+
+    plan_badge = "Annual Subscription" if is_sub else "Pay Per Course"
+
+    return HTMLResponse(f"""<!DOCTYPE html>
+<html><head>
+<title>My CPD Dashboard — Meridian CPD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>{_DASH_CSS}</style>
+</head>
+<body>
+{_dash_header(member_name, email)}
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Welcome back, {member_name}</h1>
+    <p>{email} &nbsp;·&nbsp; {plan_badge} &nbsp;·&nbsp;
+       <a href="https://meridiancpd.co.uk" style="color:#0891b2;text-decoration:none">Browse all courses →</a></p>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="val">{total_hours:g}</div>
+      <div class="lbl">CPD Hours Earned</div>
+    </div>
+    <div class="stat">
+      <div class="val">{completed_count}</div>
+      <div class="lbl">Courses Completed</div>
+    </div>
+    <div class="stat">
+      <div class="val">{len(certs)}</div>
+      <div class="lbl">Certificates Issued</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Annual CPD Progress — {total_hours:g} of {target} hours</div>
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:{pct}%"></div>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;margin-top:8px">
+      Based on a {target}-hour annual CPD requirement. Check your accreditation body for your specific obligations.
+    </p>
+  </div>
+
+  {upsell_html}
+
+  <div class="card">
+    <div class="card-title">My Courses</div>
+    {course_rows}
+  </div>
+
+  <div class="card">
+    <div class="card-title">Certificate Record</div>
+    <table class="cert-table">
+      <thead>
+        <tr>
+          <th>Certificate No.</th>
+          <th>Course</th>
+          <th>Hours</th>
+          <th>Date Issued</th>
+          <th>Verify</th>
+        </tr>
+      </thead>
+      <tbody>{cert_rows}</tbody>
+    </table>
+  </div>
+
+  <p style="text-align:center;font-size:12px;color:#cbd5e1;margin-top:8px">
+    Meridian CPD · meridiancpd.co.uk · hello@meridiancpd.co.uk
+  </p>
+
+</div>
+</body></html>""")
 
 
 # ── Admin panel ────────────────────────────────────────────────────────────────
