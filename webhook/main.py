@@ -24,7 +24,7 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 import httpx
 from supabase import create_client
 
-from email_sender import send_course_email, send_certificate_email
+from email_sender import send_course_email, send_certificate_email, send_unsubscribe_goodbye_email
 from certificate_generator import generate_certificate
 
 app = FastAPI()
@@ -180,7 +180,7 @@ async def stripe_webhook(request: Request):
 
 async def handle_checkout(session):
     customer_details = getattr(session, "customer_details", None) or {}
-    email = (getattr(customer_details, "email", None) or customer_details.get("email", "")) if customer_details else ""
+    email = ((getattr(customer_details, "email", None) or customer_details.get("email", "")) if customer_details else "").strip().lower()
     name = (getattr(customer_details, "name", None) or customer_details.get("name", "")) if customer_details else ""
     name = name or (email.split("@")[0].title() if email else "")
     stripe_customer_id = getattr(session, "customer", "") or ""
@@ -645,6 +645,11 @@ h2{{color:#dc2626}}p{{color:#64748b;line-height:1.6}}</style></head>
     }).execute()
 
     print(f"Unsubscribed: {email}")
+
+    try:
+        await send_unsubscribe_goodbye_email(email)
+    except Exception as e:
+        print(f"Goodbye email failed for {email}: {e}")
 
     return HTMLResponse(f"""<!DOCTYPE html>
 <html><head><title>Unsubscribed — Meridian CPD</title>
@@ -1324,6 +1329,7 @@ def _nav(active: str) -> str:
     tabs = [
         ("dashboard", "Dashboard"),
         ("members", "Members"),
+        ("contacts", "Contacts"),
         ("courses", "Courses"),
         ("certificates", "Certificates"),
         ("system", "System"),
@@ -1444,6 +1450,185 @@ async def admin_members(credentials=Depends(_check_admin)):
       </table>
     </div>"""
     return _page("Members", "members", body)
+
+
+@app.get("/admin/contacts", response_class=HTMLResponse)
+async def admin_contacts(request: Request, credentials=Depends(_check_admin)):
+    # Postcode area → region mapping
+    POSTCODE_REGIONS = {
+        "AB": "Scotland", "DD": "Scotland", "DG": "Scotland", "EH": "Scotland",
+        "FK": "Scotland", "G": "Scotland", "HS": "Scotland", "IV": "Scotland",
+        "KA": "Scotland", "KW": "Scotland", "KY": "Scotland", "ML": "Scotland",
+        "PA": "Scotland", "PH": "Scotland", "TD": "Scotland", "ZE": "Scotland",
+        "BT": "Northern Ireland",
+        "CF": "Wales", "LD": "Wales", "LL": "Wales", "NP": "Wales",
+        "SA": "Wales", "SY": "Wales",
+        "TR": "South West", "PL": "South West", "TQ": "South West", "EX": "South West",
+        "TA": "South West", "BA": "South West", "BS": "South West", "GL": "South West",
+        "DT": "South West", "SP": "South West",
+        "BH": "South East", "PO": "South East", "SO": "South East", "RG": "South East",
+        "GU": "South East", "SL": "South East", "RH": "South East", "TN": "South East",
+        "CT": "South East", "ME": "South East", "DA": "South East", "BR": "South East",
+        "CR": "South East", "SM": "South East", "KT": "South East", "TW": "South East",
+        "BN": "South East", "SN": "South West",
+        "OX": "South East", "HP": "South East", "MK": "South East", "LU": "East of England",
+        "SG": "East of England", "AL": "East of England", "WD": "East of England",
+        "EN": "East of England", "CM": "East of England", "SS": "East of England",
+        "CO": "East of England", "IP": "East of England", "NR": "East of England",
+        "PE": "East of England", "CB": "East of England",
+        "E": "London", "EC": "London", "N": "London", "NW": "London",
+        "SE": "London", "SW": "London", "W": "London", "WC": "London",
+        "IG": "London", "RM": "London", "UB": "London", "HA": "London",
+        "B": "West Midlands", "CV": "West Midlands", "WS": "West Midlands",
+        "WV": "West Midlands", "DY": "West Midlands", "ST": "West Midlands",
+        "TF": "West Midlands", "HR": "West Midlands", "WR": "West Midlands",
+        "NN": "East Midlands", "MK": "East Midlands", "LE": "East Midlands",
+        "DE": "East Midlands", "NG": "East Midlands", "LN": "East Midlands",
+        "S": "Yorkshire", "DN": "Yorkshire", "HU": "Yorkshire", "YO": "Yorkshire",
+        "HG": "Yorkshire", "BD": "Yorkshire", "LS": "Yorkshire", "WF": "Yorkshire",
+        "HD": "Yorkshire", "HX": "Yorkshire",
+        "M": "North West", "WN": "North West", "WA": "North West", "SK": "North West",
+        "CW": "North West", "CH": "North West", "L": "North West", "PR": "North West",
+        "BB": "North West", "BL": "North West", "OL": "North West", "FY": "North West",
+        "LA": "North West", "CA": "North West",
+        "NE": "North East", "SR": "North East", "DH": "North East", "TS": "North East",
+        "DL": "North East",
+        "HG": "Yorkshire",
+    }
+
+    def get_region(postcode):
+        if not postcode:
+            return "Unknown"
+        area = ''.join(c for c in postcode.split()[0] if c.isalpha()).upper()
+        # Try longest match first
+        for length in [3, 2, 1]:
+            key = area[:length]
+            if key in POSTCODE_REGIONS:
+                return POSTCODE_REGIONS[key]
+        return "Unknown"
+
+    # Get filter params from query string
+    search = request.query_params.get("search", "").strip().lower()
+    scheme_filter = request.query_params.get("scheme", "").strip().lower()
+    region_filter = request.query_params.get("region", "").strip().lower()
+    postcode_filter = request.query_params.get("postcode", "").strip().upper()
+
+    res = supabase.table("outreach_contacts").select(
+        "full_name, email, accreditation_scheme, assessor_type, source_postcode, suppressed, created_at"
+    ).order("created_at", desc=False).execute()
+
+    all_contacts = res.data or []
+
+    # Count by region and scheme for summary (unfiltered totals)
+    region_counts = {}
+    scheme_counts = {}
+    for c in all_contacts:
+        r = get_region(c.get("source_postcode", ""))
+        region_counts[r] = region_counts.get(r, 0) + 1
+        s = c.get("accreditation_scheme", "Unknown") or "Unknown"
+        s_short = s.replace("Energy Systems Ltd", "").replace("Limited", "").replace("Ltd", "").strip()
+        scheme_counts[s_short] = scheme_counts.get(s_short, 0) + 1
+
+    # Apply filters
+    contacts = all_contacts
+    if search:
+        contacts = [c for c in contacts if
+            search in (c.get("full_name") or "").lower() or
+            search in (c.get("email") or "").lower()]
+    if scheme_filter:
+        contacts = [c for c in contacts if scheme_filter in (c.get("accreditation_scheme") or "").lower()]
+    if region_filter:
+        contacts = [c for c in contacts if get_region(c.get("source_postcode", "")).lower() == region_filter]
+    if postcode_filter:
+        contacts = [c for c in contacts if (c.get("source_postcode") or "").upper().startswith(postcode_filter)]
+
+    total_all = len(all_contacts)
+    total_filtered = len(contacts)
+
+    # Build unique scheme options for dropdown
+    all_schemes = sorted(set(
+        (c.get("accreditation_scheme") or "").replace("Energy Systems Ltd","").replace("Limited","").replace("Ltd","").strip()
+        for c in all_contacts if c.get("accreditation_scheme")
+    ))
+    scheme_options = '<option value="">All Schemes</option>' + "".join(
+        f'<option value="{s.lower()}" {"selected" if s.lower() == scheme_filter else ""}>{s}</option>'
+        for s in all_schemes
+    )
+
+    all_regions = sorted(set(get_region(c.get("source_postcode","")) for c in all_contacts))
+    region_options = '<option value="">All Regions</option>' + "".join(
+        f'<option value="{r.lower()}" {"selected" if r.lower() == region_filter else ""}>{r}</option>'
+        for r in all_regions
+    )
+
+    # Region summary pills
+    region_pills = "".join(
+        f'<a href="/admin/contacts?region={r.lower()}" style="display:inline-block;background:#e0f2fe;color:#0369a1;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;margin:3px;text-decoration:none">{r}: {n}</a>'
+        for r, n in sorted(region_counts.items(), key=lambda x: -x[1])
+    )
+    scheme_pills = "".join(
+        f'<a href="/admin/contacts?scheme={s.lower()}" style="display:inline-block;background:#f0fdf4;color:#15803d;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;margin:3px;text-decoration:none">{s}: {n}</a>'
+        for s, n in sorted(scheme_counts.items(), key=lambda x: -x[1])
+    )
+
+    # Contact rows
+    rows = ""
+    for c in contacts[:500]:
+        suppressed = c.get("suppressed", False)
+        region = get_region(c.get("source_postcode", ""))
+        scheme = (c.get("accreditation_scheme") or "—").replace("Energy Systems Ltd", "").replace("Limited", "").replace("Ltd", "").strip()
+        status_badge = '<span class="badge" style="background:#fee2e2;color:#dc2626">Suppressed</span>' if suppressed else '<span class="badge badge-ok">Active</span>'
+        rows += f"""<tr>
+            <td>{c.get('full_name') or '—'}</td>
+            <td style="font-size:12px">{c.get('email','—')}</td>
+            <td>{scheme}</td>
+            <td>{c.get('source_postcode','—')}</td>
+            <td>{region}</td>
+            <td>{status_badge}</td>
+        </tr>"""
+
+    showing = f"Showing {min(total_filtered,500):,} of {total_filtered:,} filtered" if (search or scheme_filter or region_filter or postcode_filter) else f"Showing first 500 of {total_all:,}"
+
+    body = f"""
+    <div class="card">
+      <h2>DEA Contact Database — {total_all:,} total contacts</h2>
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">By Region (click to filter)</div>
+        {region_pills}
+      </div>
+      <div style="margin-bottom:20px">
+        <div style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">By Scheme (click to filter)</div>
+        {scheme_pills}
+      </div>
+    </div>
+    <div class="card">
+      <form method="GET" action="/admin/contacts" style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:20px">
+        <div>
+          <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px">Search name / email</label>
+          <input name="search" value="{search}" placeholder="e.g. John Smith" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;width:200px">
+        </div>
+        <div>
+          <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px">Postcode prefix</label>
+          <input name="postcode" value="{postcode_filter}" placeholder="e.g. TR, SW, EX" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;width:120px">
+        </div>
+        <div>
+          <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px">Region</label>
+          <select name="region" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px">{region_options}</select>
+        </div>
+        <div>
+          <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px">Scheme</label>
+          <select name="scheme" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px">{scheme_options}</select>
+        </div>
+        <button type="submit" style="padding:8px 20px;background:#0f2547;color:white;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">Filter</button>
+        <a href="/admin/contacts" style="padding:8px 16px;background:#f1f5f9;color:#64748b;border-radius:6px;font-size:13px;text-decoration:none">Clear</a>
+      </form>
+      <h2>Contacts — {showing}</h2>
+      <table>
+        <tr><th>Name</th><th>Email</th><th>Scheme</th><th>Postcode Area</th><th>Region</th><th>Status</th></tr>
+        {rows or '<tr><td colspan="6" class="empty">No contacts match your filters</td></tr>'}
+      </table>
+    </div>"""
+    return _page("Contacts", "contacts", body)
 
 
 @app.get("/admin/courses", response_class=HTMLResponse)

@@ -207,6 +207,24 @@ hello@meridiancpd.co.uk
     await _send(to_email, to_name, subject, body)
 
 
+async def send_unsubscribe_goodbye_email(to_email: str):
+    """Confirmation email after a successful unsubscribe."""
+    subject = "Removed from Meridian CPD emails"
+    body = """Hi,
+
+As requested, we've removed your address from all future Meridian CPD marketing emails.
+
+You won't hear from us again.
+
+If you change your mind at any point, you're always welcome back at meridiancpd.co.uk.
+
+Matt Davies
+Meridian CPD
+hello@meridiancpd.co.uk
+"""
+    await _send(to_email, "", subject, body)
+
+
 async def send_admin_new_course_alert(
     course_id: str,
     course_title: str,
