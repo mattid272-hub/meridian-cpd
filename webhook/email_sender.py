@@ -52,7 +52,7 @@ async def send_course_email(
 
 ─────────────────────────────
 
-Welcome to Meridian CPD. Your annual subscription is active and your full library of 26 courses is ready and waiting.
+Welcome to Meridian CPD. Your annual subscription is active and your full library of 32 courses is ready and waiting.
 
 Before you dive in, a few things worth knowing from people who've been in the industry a while:
 

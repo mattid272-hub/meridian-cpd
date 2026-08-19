@@ -87,6 +87,11 @@ COURSES = {
     "MER-ALL-001": {"course_id": "MER-ALL-001", "title": "UK Energy Policy 2026: What Assessors Need to Know", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-ALL-004": {"course_id": "MER-ALL-004", "title": "Fire Safety in Retrofit: What Every Assessor Must Know", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-ALL-005": {"course_id": "MER-ALL-005", "title": "Future Homes Standard 2025: What Energy Assessors Need to Know", "cpd_hours": 1.0, "published": "2026-04-15"},
+    "MER-ALL-008": {"course_id": "MER-ALL-008", "title": "Renters' Rights Act 2025: Impact on EPCs and Energy Assessors", "cpd_hours": 1.0, "published": "2026-07-01"},
+    "MER-ALL-009": {"course_id": "MER-ALL-009", "title": "Heat Loss Assessments: The DEA's Role in Heat Pump Readiness", "cpd_hours": 1.0, "published": "2026-07-15"},
+    "MER-ALL-010": {"course_id": "MER-ALL-010", "title": "Damp and Mould Assessments: Scotland's New Framework and UK Implications", "cpd_hours": 1.0, "published": "2026-08-01"},
+    "MER-ALL-011": {"course_id": "MER-ALL-011", "title": "Non-Domestic MEES 2031: EPC B Target and Implications for Assessors", "cpd_hours": 1.0, "published": "2026-08-01"},
+    "MER-ALL-012": {"course_id": "MER-ALL-012", "title": "Whole Life Carbon for Energy Assessors: What It Means and Why Now", "cpd_hours": 1.0, "published": "2026-08-15"},
     # Subscription — welcome email only; library access granted via plan field
     "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0, "published": "2026-03-01"},
 }
