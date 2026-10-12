@@ -1,179 +1,278 @@
-
-
 # Ventilation in RdSAP 10: PIV, MVHR and Natural Ventilation
-**Course ID:** MER-DEA-003 | **CPD Hours:** 1.0 | **Published:** March 2026
+**Course ID:** MER-DEA-003 | **CPD Hours:** 1.0 | **Published:** March 2026, revised October 2026 (Conventions v12.2)
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Identify how RdSAP 10 categorises and models the three principal ventilation strategies—natural, positive input ventilation (PIV), and mechanical ventilation with heat recovery (MVHR)—and distinguish the specific input parameters each requires at data entry.
-- Explain the relationship between air permeability, ventilation heat loss, and the infiltration assumptions embedded in the RdSAP 10 calculation, including the default values applied when no pressure test result is available.
-- Correctly record ventilation system type, ductwork configuration, and commissioning evidence during a domestic energy assessment, applying the conventions set out in RdSAP 10 and its accompanying conventions document.
-- Evaluate the impact of each ventilation strategy on the dwelling's Energy Efficiency Rating (EER) and Environmental Impact Rating (EIR), and articulate why that impact can vary significantly with fabric performance and heating fuel type.
-- Apply PAS 2035:2023 ventilation safeguarding principles when recommending fabric improvements on an EPC, recognising the assessor's duty-of-care boundary and when to flag referral to a retrofit coordinator.
+- List the chimney, flue, fan and vent counts in the RdSAP 10 ventilation calculation and the flow rate attached to each.
+- Apply convention 9.01 to tell an open chimney from a blocked chimney, a flue and a chimney that is not counted.
+- Decide when mechanical ventilation is entered from the product database, when by defaults, and when vents are entered as passive stack.
+- Set wet rooms, duct type and duct insulation under conventions 7.03b to 7.03d, and choose between two systems under convention 7.03e.
+- Record draught lobbies and draught proofing correctly, and know when an air pressure test result may be entered.
 
 ---
 
 ## Introduction
 
-Ventilation has always been the orphan topic in domestic energy assessment. Most DEAs can recite U-values in their sleep but hesitate over ductwork insulation classes. RdSAP 10 makes that hesitation costly. The revised methodology—live since its phased rollout began under SAP 10.2 and now fully embedded in lodgement software—treats ventilation heat loss with considerably more granularity than its predecessor. Input errors that once nudged a rating by a single point can now shift it by five or six, enough to move a dwelling across an EPC band boundary and, in a rental market shaped by Minimum Energy Efficiency Standards (MEES), enough to determine whether a property can be legally let.
+Ventilation is one of the areas the RdSAP10 Specification lists as changed from RdSAP 2012: mechanical ventilation is treated as in full SAP with database entry (default values still allowed), the ventilation algorithm allows more options, and an air pressure test result can be used if available (specification, Introduction).
 
-Three things have changed the landscape. First, RdSAP 10 applies updated wind-speed and shielding factors drawn from revised climate data, which alter the background infiltration calculation for every dwelling regardless of ventilation system. Second, the Product Characteristics Database (PCDB) now holds performance records for a far wider range of mechanical ventilation units, including most mainstream PIV systems, meaning the days of lumping all positive input ventilation under a single generic entry are ending. Third, PAS 2035:2023 has hardened the expectation that anyone recommending fabric measures on a retrofit path must consider ventilation adequacy—a principle that directly touches the improvement recommendations section of every EPC.
+This edition has been rebuilt from two documents: the Conventions v12.2 for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification of 9 June 2025. Each rule carries a reference in brackets so you can check it. Where the two conflict, the convention takes precedence (conventions v12.2, front page). Where they are silent, the course says so and points you to your accreditation scheme.
 
-This course is not a primer. It assumes you already hold a Level 3 DEA qualification, that you are actively lodging EPCs, and that you understand the broad architecture of an RdSAP calculation. What it offers is a focused, one-hour examination of how ventilation inputs flow through the RdSAP 10 model, where the common errors lie, and what the regulatory framework now expects of you when ventilation and fabric interact. We will work through natural ventilation, PIV, and MVHR in turn, then close with practical guidance on site recording and EPC recommendations.
-
-Throughout, references to specific RdSAP conventions relate to the version current at the date of publication. Always verify against the latest edition of the RdSAP conventions document and PCDB before lodging.
+The March 2026 edition taught rules on trickle vents, cooker hoods, a default duct type, commissioning evidence and default air permeability by age band. None could be found in either document, and they have been removed.
 
 ---
 
-## Section 1: Ventilation Heat Loss in the RdSAP 10 Model — What Actually Changed
+## Section 1: What the Calculation Takes From Your Survey
 
-The RdSAP calculation estimates total ventilation heat loss using an effective air change rate, expressed in air changes per hour (ach). That rate is built from two components: infiltration (uncontrolled air leakage through the fabric) and purposeful ventilation (deliberate airflow via trickle vents, extract fans, or a mechanical system). RdSAP 10 did not reinvent this framework, but it recalibrated several of the numbers inside it, and the cumulative effect is significant.
+Specification section 4.1 says the parameters for the ventilation rate come from its Table 5 and that the calculation follows the SAP 10.2 worksheet. The first part of Table 5 is a list of openings. Each one counted is multiplied by a fixed flow rate in m3 per hour:
+- Open chimneys: 80
+- Open flues: 20
+- Chimneys or flues attached to a closed fire: 10
+- Flues attached to a solid fuel boiler: 20
+- Flues attached to other heater: 35
+- Blocked chimneys: 20
+- Intermittent extract fans: 10
+- Passive vents: 10
+- Flueless gas fires: 40
 
-**Infiltration assumptions.** Where no air pressure test result is entered, RdSAP 10 assigns a default air permeability based on dwelling age band, construction type, and the number of storeys. These defaults were revised upward for some pre-1976 archetypes following post-occupancy monitoring data, meaning untested older dwellings may now show higher infiltration rates than they did under RdSAP 2012. Where a valid pressure test is available, the measured value at 50 Pa is divided by 20 (the standard convention for converting to an approximate ach at ambient conditions) and then adjusted by shelter and wind factors. Those shelter and wind factors now use updated regional climate datasets aligned with SAP 10.2 weather files, which shifts results modestly for exposed and heavily sheltered sites alike.
+The total is converted to air changes per hour and carried into the infiltration rate (specification section 4.1, Table 5).
 
-**Purposeful ventilation.** For naturally ventilated dwellings, RdSAP 10 accounts for the number of open flues, intermittent extract fans, and passive stack vents. Each carries an associated airflow rate in litres per second (l/s) that feeds into the effective air change rate. The l/s values themselves have not changed dramatically, but the way the model balances infiltration against purposeful ventilation has been tightened: the "greater of" rule—where the effective rate is the higher of infiltration alone or a minimum whole-dwelling ventilation rate—still applies, but the minimum rate has been nudged upward in line with Approved Document F Volume 1 (2021 edition) background ventilation provisions.
+Table 5 also says how the counts are made. Chimneys are the number of open fireplaces for main and for secondary heating. The flue rows are counted the same way, and a flue for a solid fuel boiler in an unheated space is not counted. Extract fans, passive stack vents and flueless gas fires are the number if known. The ventilation system is natural with intermittent extract fans unless a mechanical ventilation system is clearly identified (specification section 4.1, Table 5). Where the number of extract fans is unknown, Table 5 supplies a default; the printed table is badly aligned, so its figures are not reproduced here. Neither document says whether a cooker hood counts as an extract fan, and trickle vents appear in neither; ask your scheme.
 
-**Why it matters at the keyboard.** If you under-record extract fans in a naturally ventilated dwelling, you may inadvertently trigger the minimum ventilation rate floor instead of the fan-based calculation, producing a lower heat loss figure and an artificially generous rating. Conversely, recording an open flue that has been sealed without updating the combustion appliance entry creates a phantom air path. Accuracy here is not pedantic—it is the difference between a defensible EPC and a lodgement that will not survive audit.
+When there is no pressure test result, two more items come straight from your survey. Having no draught lobby adds 0.05 to the infiltration rate. Window infiltration is 0.25 minus 0.2 times the fraction of windows and doors draught proofed (specification section 4.1, Table 5).
 
----
-
-## Section 2: Natural Ventilation — Defaults, Overrides, and the Flue Problem
-
-The majority of EPCs lodged in England and Wales are for naturally ventilated dwellings. RdSAP 10 treats natural ventilation as the baseline: no mechanical supply, no mechanical extract beyond intermittent fans in wet rooms. The model's effective air change rate for these properties is dominated by infiltration and modified by chimneys, flues, fans, and vents.
-
-**Chimneys and flues remain disproportionately influential.** An open fireplace chimney adds approximately 40 l/s equivalent airflow to the calculation—a figure drawn from established conventions that RdSAP 10 carries forward. A blocked chimney with no ventilation provision registers zero. Between those extremes sit partially blocked chimneys, chimney breasts with ventilated caps, and decommissioned gas flue terminals. The conventions document distinguishes between an "open flue" (serving a working appliance or genuinely open to the room) and a "blocked" or "sealed" chimney. A chimney with a capped pot and no room vent is treated as blocked; a chimney with a cowl but an open register plate is not. This is site-observation territory: you must physically verify the register plate or closure state. Photographs of chimney breast configuration should be standard practice in your evidence pack.
-
-**Intermittent extract fans.** RdSAP 10 requires you to record the number of intermittent extract fans. Each is assigned a default airflow contribution. A common audit finding is under-counting—assessors record the extractor in the bathroom but miss the one in the utility room or en suite. Walk the dwelling systematically. Open every door. Check above hobs: a recirculating cooker hood is not an extract fan and should not be recorded; a ducted-to-outside hood is.
-
-**Trickle vents.** RdSAP 10 asks whether trickle vents are present. This is a binary input (present/absent) rather than a count. Where trickle vents are fitted to all habitable room windows and wet room windows, record them as present. Partial provision—a handful of vents in a dwelling where many windows lack them—should be recorded as absent per the conventions. This input modifies the infiltration offset within the calculation.
-
-**Passive stack ventilation (PSV).** PSV systems—vertical ducts running from wet rooms to roof terminals using buoyancy-driven airflow—are treated separately. They are not common in new-build since the rise of continuous mechanical extract, but they persist in 1990s and early 2000s housing stock. Record the number of PSV ducts. Each replaces one intermittent extract fan in the calculation and carries its own default airflow rate.
-
-Accuracy in this section pays compound dividends: every litre per second of ventilation airflow affects the space heating demand, which propagates through fuel cost, CO₂ emissions, and both EPC ratings.
+For a park home, open fireplaces are always none and ventilation is always natural (specification section 1.18).
 
 ---
 
-## Section 3: Mechanical Systems — PIV and MVHR in the RdSAP 10 Framework
+## Section 2: Chimneys, Blocked Chimneys and Flues
 
-**Positive Input Ventilation (PIV).** PIV units supply filtered, tempered air into the dwelling—typically from the loft space via a ceiling diffuser—creating a slight positive pressure that displaces moist, stale air through the fabric's natural leakage paths. In energy terms, the critical question is whether the incoming air is pre-warmed (loft-mounted units benefit from residual loft heat) and how much electrical energy the fan consumes.
+The specification refers you to the conventions for chimney and fireplace definitions and count (specification section 4.1). The governing text is convention 9.01, amended in v12.2.
 
-RdSAP 10 treats PIV as a sub-category of mechanical supply ventilation. If the specific unit is listed on the PCDB, the assessor enters the PCDB reference and the software draws the tested specific fan power (SFP) in W/(l/s) and any associated heat contribution factor. If the unit is not on the PCDB, the software applies a default SFP that is considerably less favourable. This is a practical issue: PIV is one of the most commonly retro-fitted ventilation systems in the UK social housing sector, yet many older units have never been submitted to the PCDB. Where you encounter a PIV unit without a PCDB entry, record the manufacturer and model in your notes and apply the default—do not guess an SFP.
+### Open chimney
 
-The interaction between PIV and air permeability is important. PIV assumes leakage paths exist for air to escape; in a very airtight dwelling, it can pressurise the structure and drive moist air into interstitial spaces. RdSAP 10 does not model moisture risk, but PAS 2035:2023 requires that any retrofit measure which changes the ventilation regime must be assessed for moisture safety. If you are generating an EPC that will feed into a retrofit programme—PAS 2035 medium-term improvement plan territory—flagging existing PIV and its interaction with proposed fabric tightening is a professional obligation.
+An open chimney is a vertical duct for combustion gases with a diameter of 200 mm or more, or a rectangular duct of equivalent area. The convention prints that area as 125,000 mm2; use the published figure and raise any borderline rectangular duct with your scheme. Count all open chimneys and fireplaces, upstairs and downstairs, but only when they are unrestricted and suitable for use. An open chimney is modelled at 80 m3 per hour. A chimney attached to a decorative gas fire and a chimney fitted with a damper are also treated as open chimneys (convention 9.01).
 
-**Mechanical Ventilation with Heat Recovery (MVHR).** MVHR systems supply fresh air to habitable rooms and extract from wet rooms through a ducted network, passing both streams through a heat exchanger. RdSAP 10 models the heat recovery efficiency (as a percentage of the temperature difference recovered) and the SFP for the combined supply-and-extract fans.
+### Decommissioned chimneys and the 30,000 mm2 test
 
-For MVHR, the PCDB entry is even more consequential. A well-commissioned system with tested efficiency of 90% or above at a low SFP can dramatically reduce ventilation heat loss in an airtight dwelling, producing EPC improvements of 5–10 SAP points compared with natural ventilation, depending on fuel type and climate zone. A system entered with defaults—because the PCDB reference is missing or the unit is unrecognisable on site—will be modelled at a generic, far less favourable efficiency.
+A chimney or fireplace can be decommissioned by filling in the fireplace and capping or removing the stack. Convention 9.01 then gives three outcomes:
+- Sealed completely, with no air bricks: it does not need to be counted as a chimney.
+- Air bricks installed, ventilation area less than 30,000 mm2: a blocked chimney, modelled at 20 m3 per hour.
+- Ventilation area greater than or equal to 30,000 mm2: treated as an open chimney, at 80 m3 per hour.
 
-**Ductwork.** RdSAP 10 distinguishes between rigid and flexible ductwork for MVHR, because flexible duct carries higher pressure drops and thus higher in-use SFP. If you cannot determine ductwork type—for instance in a dwelling where ducts are concealed within the building fabric—the convention is to assume flexible, which produces the more conservative result.
+Exactly 30,000 mm2 is therefore an open chimney under v12.2. The convention does not say how the ventilation area is measured (overall vent size or free open area), so check your scheme's guidance.
 
-**Commissioning evidence.** Where an MVHR system has been commissioned and the commissioning certificate is available, this should inform your assessment. Uncommissioned MVHR receives a penalty in the calculation, reflecting real-world evidence that poorly balanced systems underperform significantly. Ask the householder. Check the document pack. Note the presence or absence of commissioning records in your site notes.
+### Flues
+
+A vertical duct with a diameter of less than 200 mm is counted as a flue. That includes a chimney with a flexible gas flue liner sealed into it, because the liner reduces the diameter to less than 200 mm. The convention lists the cases considered (convention 9.01):
+- An open flue gas fire with the flue products outlet sealed to the chimney, including radiant gas fires and ILFE (insert live fuel effect) fires.
+- A chimney or open flue attached to a wood or solid fuel boiler.
+- A chimney or open flue attached to a wood or solid fuel stove or appliance with a controlled air supply.
+
+Table 5 has four flue rows, at 10, 20 or 35 m3 per hour. Neither document states in words which row each of these cases belongs to, so follow your scheme's guidance on the flue categories.
+
+### Open fires and the heating assessment
+
+An open fire is considered in the heating assessment if the fireplace is capable of supporting an open fire, which includes having a grate suitable for holding fuel, even if no fuel is present. The number of open fireplaces is used in the calculation as the number of open chimneys for ventilation (convention 5.02). Convention 9.01 adds that its count affects only the ventilation rate; other rules decide the choice of main or secondary heating.
+
+### A change in v12.2
+
+Version 12.1 listed a chimney temporarily blocked with cardboard, newspaper bungs, chimney balloons and similar as an open chimney. Version 12.2 no longer contains that line and says nothing else about temporary blocking, though a chimney is still counted only when unrestricted and suitable for use (convention 9.01). Ask your scheme how to record one.
+
+### Worked example
+
+A house has four chimney positions (conventions 5.02 and 9.01):
+- Front room: a fireplace with a grate, no fuel, and an unrestricted chimney of 200 mm or more. An open chimney.
+- Rear room: a gas fire with a flexible flue liner sealed into the chimney. A flue.
+- Front bedroom: fireplace filled in, with an air brick giving a ventilation area under 30,000 mm2. A blocked chimney.
+- Rear bedroom: fireplace filled in and sealed completely, no air brick. Not counted.
 
 ---
 
-## Section 4: Site Practice, EPC Recommendations, and PAS 2035 Boundaries
+## Section 3: Natural, Mechanical and Passive Stack
 
-**On-site recording.** Ventilation assessment begins at the front door. Before you enter data, you need answers to a clear checklist:
+### The names the sources use
 
-1. What is the primary ventilation strategy? (Natural / MEV / MVHR / PIV / PSV)
-2. How many intermittent extract fans are present, and where?
-3. Are trickle vents fitted to all or most windows?
-4. Are there open chimneys or flues? What is the state of each?
-5. If mechanical, what is the make, model, and PCDB reference of the unit?
-6. For MVHR, is the ductwork rigid or flexible? Is there a commissioning certificate?
-7. Is an air pressure test result available?
+Convention 7.03a defines mechanical ventilation systems as those that circulate fresh air via ducts and vents and use continually running fans when in operation. They can be input-only, extract-only or balanced (input and extract).
 
-Photograph every ventilation-relevant feature: fan grilles, MVHR unit labels, chimney breast states, trickle vents (or their absence). Auditors are increasingly requesting photographic evidence for ventilation inputs specifically because error rates are high.
+The specification lists seven methods of providing ventilation (specification section 4.2):
+- Natural ventilation
+- Positive input, from loft (treated as natural)
+- Positive input, from outside
+- Mechanical extract, centralised
+- Mechanical extract, decentralised
+- Whole House Mechanical Ventilation, no heat recovery
+- Whole House Mechanical Ventilation, with heat recovery
 
-**EPC improvement recommendations.** RdSAP 10 software generates recommended measures. Where ventilation features, exercise professional judgement. Recommending cavity wall insulation or internal wall insulation on a naturally ventilated dwelling with no trickle vents and open flues may improve the notional EPC rating, but it tightens the fabric without addressing ventilation adequacy. Since PAS 2035:2023 Section 8 requires that retrofit projects must not degrade indoor air quality, your recommendation narrative should note where ventilation upgrades are a necessary companion to fabric measures.
+The conventions use "PIV" only in convention 7.03e, and neither document uses "MVHR". The specification is not tidy about positive input from the loft: the list labels it "treated as natural", and the next sentence says every method except natural ventilation is treated as mechanical ventilation (specification section 4.2). If the distinction matters for an entry, ask your scheme.
 
-You are not a retrofit coordinator. You do not design the ventilation strategy. But as the assessor generating the data that triggers funding and compliance pathways, you sit at the front of the information chain. A note in the assessor comments field—"dwelling has no mechanical ventilation; fabric measures should be accompanied by ventilation review per PAS 2035:2023"—costs you ten seconds and may prevent a significant moisture and IAQ problem downstream.
+### Intermittent fans are not a system
 
-**MEES and the rating boundary.** For rental properties, the difference between an E and a D can determine legal lettability under current and anticipated MEES thresholds. Ventilation inputs can tip that boundary. This is not a reason to manipulate data—it is a reason to get data right. An accurate ventilation entry is your defence in any compliance challenge.
+The comments against the mechanical ventilation data item settle several points (specification Table 31, item 10-1):
+- If the type of ventilation cannot be identified, assume natural ventilation.
+- The item applies to a whole house ventilation system only; otherwise assume natural ventilation.
+- Intermittent extract fans in kitchens and bathrooms are not a mechanical ventilation system for the calculation.
+- Continuously running extract fans in wet rooms are treated as mechanical extract ventilation.
+
+### Database entry or defaults
+
+Where make and model details are available, the system should be entered via the product database (written PCDF in conventions 7.03a to 7.03d, and PCDB in 7.03e and the specification). Where there is no evidence of the make and model, it must be entered using the defaults (convention 7.03a). The specification agrees: with details and documentary evidence, select the system by brand name and model; otherwise use the default data (specification section 4.2).
+
+The default data are (specification section 4.1, Table 5):
+- Mechanical extract ventilation (centralised or decentralised), or positive input ventilation from outside: specific fan power 0.8 W per litre per second.
+- Balanced whole house mechanical ventilation without heat recovery: specific fan power 2.0.
+- Balanced whole house mechanical ventilation with heat recovery: specific fan power 2.0 and heat recovery efficiency 66%.
+- Default in-use factors: 2.5 for specific fan power and 0.70 for heat recovery efficiency.
+
+### Vents with no confirmed system
+
+If vents, excluding air bricks, are present in the property and the presence of mechanical ventilation cannot be confirmed, enter the number of vents as passive stack (convention 7.03a).
+
+Worked example: a flat has ceiling vents in the kitchen and bathroom. You cannot find a fan unit and there is no documentation. Mechanical ventilation is not confirmed, so the two vents are entered as passive stack (convention 7.03a), each carrying 10 m3 per hour (specification section 4.1, Table 5).
+
+---
+
+## Section 4: Wet Rooms, Ducts and Two Systems
+
+Conventions 7.03b, 7.03c and 7.03d apply when a system is chosen from the product database.
+
+### Wet rooms
+
+When a balanced whole house system or a centralised system is chosen from the database, the number of wet rooms must be set for the dwelling being assessed. Wet rooms are kitchens, utility rooms, rooms with one or more flush toilets or urinals, bathrooms and shower rooms. Bedrooms with hand basins are not included (convention 7.03b).
+
+Worked example: a house has a kitchen, a utility room, a ground floor WC, a family bathroom, an en-suite shower room and a bedroom with a hand basin. The wet room count is five; the bedroom is not a wet room (convention 7.03b).
+
+### Duct type
+
+The duct type has to be identified and entered for decentralised systems. Rigid ducting is solid ductwork made from a rigid material, likely plastic, with no movement at all. Flexible ducting is typically flexible plastic over a metal wire coil forming a tube (convention 7.03c). Neither document gives a default for ductwork you cannot see, so ask your scheme.
+
+### Duct insulation
+
+For balanced whole house mechanical ventilation, an insulation level is required where the ducting is inside the heated envelope. Establish the length of the supply or extract duct, whichever is longer. Level 1 is met where (convention 7.03d):
+- The length is less than or equal to 2 m and the duct system is continuously insulated throughout to at least 25 mm, with a thermal conductivity of 0.04 W/m.K or less.
+- The length is greater than or equal to 2 m and the duct system is continuously insulated throughout to at least 50 mm, with a thermal conductivity of 0.04 W/m.K or less.
+
+Level 2 applies where Level 1 is not satisfied or the insulation specification is not known. Where the ducting is outside the heated envelope, establish whether it is insulated or uninsulated. Convention 3.07 is cited for insulation types and equivalent thermal conductivity values (convention 7.03d).
+
+As printed, both Level 1 conditions include a length of exactly 2 m, and the convention does not say which applies. Table 31 shows duct insulation only as yes or no (specification Table 31, item 10-1); the convention is more detailed and takes precedence.
+
+### Two mechanical ventilation systems
+
+Convention 7.03e was added in v12.2. Where two mechanical ventilation systems are present, one is entered:
+- If the systems are identical, choose this system and input it with half the number of wet rooms.
+- If the systems are different, input the system which can be selected from the database.
+- If both can be selected from the database, or both are default systems, use this order of precedence: mechanical ventilation with heat recovery, then mechanical ventilation, then mechanical extract ventilation, then PIV from outside, then PIV from loft.
+
+The notes give the reasoning. Halving the wet rooms reflects two systems in effect halving the load. Entering the database system means entering the system you can physically evidence, which the note accepts differs from a worst-case approach. The order of precedence is a sliding scale of functionality, with centralised and decentralised extract bundled together (convention 7.03e, notes 1 to 3).
+
+Worked examples (convention 7.03e):
+- Two identical units in a dwelling with six wet rooms: enter that system with three wet rooms.
+- A heat recovery system and a positive input system from outside, neither with make and model evidence: both are default systems, so enter the heat recovery system.
+
+The convention does not say what to do when the wet room count is an odd number; ask your scheme.
+
+---
+
+## Section 5: Draught Lobby, Draught Proofing, Air Tightness and Cooling
+
+### Draught lobby
+
+A draught lobby is an arrangement of two doors that forms an airlock on the Main Entrance to the dwelling. It may be heated or unheated. To be included, the enclosed space must (convention 2.09b):
+- Cover the Main Entrance to the dwelling.
+- Have a floor area of at least 2 m2.
+- Have a door arrangement that lets a person with a pushchair or similar close the outer door before opening the inner door.
+- Lead into a further circulation area and not directly into any other room type, although it may also give access to a cloakroom, with or without a WC.
+
+The Main Entrance is the one designed as the main entrance, which may not be the one the occupier uses most. Flats with access via an enclosed heated or unheated corridor or stairwell should be classified as having a draught lobby (convention 2.09b). For a house, bungalow or park home, assume no draught lobby if it cannot be determined (specification section 4.1, Table 5).
+
+Worked example: an enclosed porch covers the main entrance and has an inner and an outer door, but its floor area is 1.6 m2. It fails the 2 m2 test, so no draught lobby is recorded (convention 2.09b).
+
+### Draught proofing
+
+All external doors and openable windows in each building part should be examined for draught proofing (specification section 8.1). If the state of the draught proofing cannot be determined, take triple, double or secondary glazed as draught proofed, and single glazed windows and doors as not draught proofed, unless there is contrary evidence. Include glazing in a non-separated conservatory (convention 3.11a). The percentage is the number of draught proofed openable windows and doors divided by the total number of openable windows and doors, times 100 (specification section 8.1).
+
+### Air tightness
+
+The pressure test result stays at the RdSAP default unless specific documentary evidence is available. That evidence is a pressure test certificate giving the measured air permeability from a blower door test at 50 Pa or a low-pressure pulse test at 4 Pa, produced by a person with suitable expertise and experience, which can be shown by membership of a recognised air tightness Competent Persons Scheme (EAS or ATTMA) approved by Government. If material changes have been made to the property since the test, the certificate becomes invalid for RdSAP entry. Results from background ventilation tests are not included (convention 10.01). Course MER-DEA-021 covers this convention in full.
+
+### Cooling
+
+For a cooling system, include fixed systems only and do not include reversible heat pumps (convention 9.04).
 
 ---
 
 ## Key Takeaways
-
-- RdSAP 10 applies revised default air permeability values and updated wind and shelter factors; untested older dwellings may now model with higher infiltration than under previous versions.
-- Every open chimney or flue adds substantial ventilation heat loss—verify register plate and closure state on site and photograph the evidence.
-- PIV and MVHR performance in RdSAP 10 is heavily dependent on whether a valid PCDB entry is available; default values are significantly less favourable than tested product data.
-- For MVHR, record ductwork type (rigid vs flexible) and commissioning status—both directly modify the calculation and both are common audit failure points.
-- Trickle vent presence is a binary input in RdSAP 10; partial provision should be recorded as absent per conventions.
-- PAS 2035:2023 requires ventilation adequacy to be safeguarded during retrofit; your EPC recommendations should flag where fabric measures need to be accompanied by ventilation review.
-- Photograph all ventilation features systematically—audit scrutiny of ventilation inputs is increasing, and photographic evidence is your primary defence.
+- An open chimney is a vertical duct of 200 mm diameter or more, counted only when unrestricted and suitable for use, at 80 m3 per hour (convention 9.01).
+- A decommissioned chimney with a ventilation area under 30,000 mm2 is a blocked chimney at 20 m3 per hour; at 30,000 mm2 or more it is an open chimney; sealed completely it is not counted (convention 9.01).
+- Intermittent kitchen and bathroom fans are not a mechanical ventilation system (specification Table 31, item 10-1).
+- Mechanical ventilation is entered from the database where make and model are evidenced, otherwise by defaults; vents with no confirmed system are passive stack (convention 7.03a).
+- Wet rooms are kitchens, utility rooms, rooms with a flush toilet or urinal, bathrooms and shower rooms (convention 7.03b).
+- Two identical mechanical ventilation systems are entered once with half the wet rooms; otherwise the database system, then the order of precedence, decides (convention 7.03e).
+- A draught lobby must cover the Main Entrance, be at least 2 m2, work as an airlock and lead into a circulation area (convention 2.09b).
 
 ---
 
 ## Self-Assessment Questions
 
-**Question 1.** In RdSAP 10, where no air pressure test result is available for a pre-1976 masonry dwelling, the software applies:
+**Q1.** A decommissioned chimney has air bricks giving a ventilation area of less than 30,000 mm2. How is it treated?
 
-A) A default air permeability of 5 m³/(h·m²) at 50 Pa for all age bands
-B) An age-band and construction-type specific default air permeability, which may be higher than the equivalent default under RdSAP 2012
-C) Zero infiltration, on the assumption that untested dwellings cannot be modelled
-D) The Building Regulations Part F minimum ventilation rate as a proxy for infiltration
+A) As an open chimney, modelled at 80 m3 per hour
+B) As a blocked chimney, modelled at 20 m3 per hour
+C) It is not counted at all
+D) As a flue
 
-**Correct answer: B.** RdSAP 10 assigns default air permeability values by dwelling age band and construction type. These defaults were revised using post-occupancy monitoring data, and for some pre-1976 archetypes the values increased compared with RdSAP 2012.
-
----
-
-**Question 2.** A dwelling has an MVHR system installed, but the assessor cannot determine whether the ductwork is rigid or flexible. Under RdSAP 10 conventions, the assessor should:
-
-A) Record the ductwork as rigid, as this is the most common type
-B) Record the ductwork as flexible, as this produces the more conservative result
-C) Omit the MVHR system from the assessment entirely
-D) Enter a 50/50 split between rigid and flexible
-
-**Correct answer: B.** The convention is to assume flexible ductwork where the type cannot be determined, because flexible duct is associated with higher pressure drops and a less favourable SFP, producing the more conservative modelled outcome.
+**Correct answer: B.** Convention 9.01 treats it as a blocked chimney at 20 m3 per hour; only a chimney sealed completely with no air bricks is left out of the count.
 
 ---
 
-**Question 3.** A recirculating cooker hood is installed above the hob. How should this be recorded in RdSAP 10?
+**Q2.** Vents (not air bricks) are present in a dwelling, but the presence of mechanical ventilation cannot be confirmed. What is entered?
 
-A) As one intermittent extract fan
-B) As a continuous mechanical extract ventilation (MEV) system
-C) It should not be recorded as an extract fan, because it does not exhaust air to outside
-D) As a passive stack vent
+A) Mechanical extract ventilation using the default data
+B) Nothing, because the vents are disregarded
+C) The vents, counted as intermittent extract fans
+D) The number of vents, as passive stack
 
-**Correct answer: C.** A recirculating cooker hood filters and returns air to the kitchen; it does not extract air from the dwelling. Only fans or hoods ducted to outside should be recorded as intermittent extract fans.
-
----
-
-**Question 4.** A PIV unit is installed in the loft space of a dwelling, but the unit does not have a PCDB entry. What is the correct approach under RdSAP 10?
-
-A) Estimate the specific fan power from the manufacturer's marketing literature and enter it manually
-B) Enter the system using the PCDB reference for the closest equivalent product from the same manufacturer
-C) Record the system as PIV and allow the software to apply the default (generic) specific fan power
-D) Record the dwelling as naturally ventilated, since the PIV unit cannot be verified
-
-**Correct answer: C.** Where a mechanical ventilation product does not have a PCDB entry, the assessor records the system type and the software applies generic default values. Estimating performance data or substituting another product's PCDB reference is not permitted.
+**Correct answer: D.** Convention 7.03a says the number of vents (excluding air bricks) is entered as passive stack when mechanical ventilation cannot be confirmed.
 
 ---
 
-**Question 5.** Under PAS 2035:2023, when an EPC recommends fabric insulation measures for a naturally ventilated dwelling, the assessor should:
+**Q3.** Two identical mechanical ventilation systems are present in one dwelling. How are they entered?
 
-A) Design and specify a replacement mechanical ventilation system as part of the EPC recommendation
-B) Note in the assessor's comments that fabric measures should be accompanied by a ventilation adequacy review, as ventilation must be safeguarded during retrofit
-C) Suppress the insulation recommendation if no mechanical ventilation is present
-D) Assume that Building Control will address ventilation at the point of installation
+A) Choose this system and input it with half the number of wet rooms
+B) Choose this system and input it with the full number of wet rooms
+C) Choose this system and input it with double the number of wet rooms
+D) Enter the dwelling as naturally ventilated
 
-**Correct answer: B.** The assessor's role is to flag the interaction between fabric tightening and ventilation adequacy, not to design the ventilation solution. PAS 2035:2023 requires that retrofit does not degrade indoor air quality; a note in the assessor comments ensures this consideration enters the retrofit decision chain.
+**Correct answer: A.** Convention 7.03e says identical systems are entered as one system with half the number of wet rooms.
+
+---
+
+**Q4.** An enclosed porch covers the Main Entrance of a house, has an inner and an outer door, leads into a hallway and has a floor area of 1.6 m2. Is it recorded as a draught lobby?
+
+A) Yes, any two-door arrangement on the Main Entrance counts
+B) Yes, but only if the porch is heated
+C) No, because the enclosed space must be at least 2 m2
+D) No, because a house can never have a draught lobby
+
+**Correct answer: C.** Convention 2.09b requires a floor area of at least 2 m2, and says a draught lobby may be heated or unheated.
+
+---
+
+**Q5.** Which of these is not a wet room when setting the wet room count for a system chosen from the product database?
+
+A) A utility room
+B) A bedroom with a hand basin
+C) A room with a flush toilet
+D) A shower room
+
+**Correct answer: B.** Convention 7.03b states that bedrooms with hand basins are not included; the other three are in its list of wet rooms.
 
 ---
 
 ## Further Reading
-
-1. **BRE — RdSAP 10 Conventions Document (current edition).** The primary reference for all data entry conventions, including ventilation inputs, defaults, and PCDB lookup requirements. Available via the BRE SAP website: [https://www.bregroup.com/sap/](https://www.bregroup.com/sap/)
-
-2. **HM Government — Approved Document F: Ventilation, Volume 1: Dwellings (2021 edition, as amended).** Sets the statutory ventilation provisions for new and existing dwellings in England. Essential context for understanding minimum ventilation rates referenced in the RdSAP model. Available at: [https://www.gov.uk/government/publications/ventilation-approved-document-f](https://www.gov.uk/government/publications/ventilation-approved-document-f)
-
-3. **BSI — PAS 2035:2023 Retrofitting Dwellings for Improved Energy Efficiency — Specification and Guidance.** The overarching retrofit specification for publicly funded energy efficiency schemes. Section 8 addresses ventilation safeguarding. Available for purchase from the BSI shop: [https://www.bsigroup.com/](https://www.bsigroup.com/)
-
-4. **PCDB — SAP Product Characteristics Database.** The authoritative database of tested mechanical ventilation products, including SFP and heat recovery efficiency data used by RdSAP 10 software. Searchable online at: [https://www.ncm-pcdb.org.uk/sap/](https://www.ncm-pcdb.org.uk/sap/)
+- **Conventions (v 12.2) for RdSAP 10.** Applicable from 6 August 2026. Read conventions 7.03a to 7.03e, 9.01, 5.02, 2.09b, 3.11a, 9.04 and 10.01 in full.
+- **RdSAP10 Specification.** BRE, 9 June 2025. See section 4 (Table 5 and the list of ventilation methods), section 8.1 and Table 31 item 10-1.
 
 ---
 

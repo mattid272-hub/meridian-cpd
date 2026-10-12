@@ -1,186 +1,263 @@
-
-
 # Measuring Windows in RdSAP 10
-**Course ID:** MER-DEA-002 | **CPD Hours:** 1.0 | **Published:** March 2026
+**Course ID:** MER-DEA-002 | **CPD Hours:** 1.0 | **Published:** March 2026, revised October 2026 (Conventions v12.2)
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Apply the revised RdSAP 10 window measurement conventions correctly, distinguishing between the frame opening method and the previous RdSAP 9.94 approach.
-- Identify when default window areas apply and calculate the threshold conditions that trigger their use within the RdSAP 10 methodology.
-- Correctly assign glazing types, frame types, and gap sizes to measured windows using the RdSAP 10 input conventions, including the updated treatment of secondary glazing.
-- Recognise and avoid the most common audit failure points related to window measurement, orientation assignment, and data entry as identified in recent Elmhurst and Stroma scheme auditor bulletins.
-- Determine the appropriate evidence standard for window age, specification, and U-value claims in both EPC and retrofit (PAS 2035:2023) contexts.
+- Decide whether an opening is a window, a highly glazed door or an external door, using convention 2.14 and the 60% test.
+- Identify which windows, glazed doors and roof windows are relevant, including around conservatories, sun rooms and porches.
+- Measure width and height as convention 2.15 defines them, and work out the entries for arched, circular, oval and other unusual shapes.
+- Record glazing type, age, gap and secondary glazing from the evidence the conventions accept.
+- Apply the rules on draught proofing, shutters and overwriting default values, and recognise where the sources are silent.
 
 ---
 
 ## Introduction
 
-Window measurement has always been a disproportionate source of audit failures, lodgement queries, and — more consequentially — inaccurate EPC ratings. With the transition to RdSAP 10, the conventions governing how we measure, record, and characterise windows have been refined in ways that are subtle but materially significant to calculated energy performance.
+RdSAP 10 requires every window to be measured. The specification lists this among its significant changes from RdSAP 2012, along with allocating each window to a wall, an expanded table of window U-values, and shutters as a new feature (specification, list of significant changes). The assessor measures each individual window and the software totals the area (specification section 3.7.1).
 
-The shift matters now for three reasons. First, the RdSAP 10 calculation engine treats solar gain, thermal bridging at openings, and ventilation heat loss with greater granularity than its predecessor. Inaccurate window data therefore propagates more aggressively through the calculation than it did under RdSAP 9.94. Second, the convergence of EPC and retrofit assessment pathways — formalised through PAS 2035:2023 and the updated TrustMark data requirements — means that window data captured during an EPC survey increasingly feeds directly into medium-term retrofit plans. Getting it wrong has downstream consequences beyond the certificate itself. Third, scheme auditors have tightened tolerances. Recent bulletins from accreditation bodies have made clear that window measurement discrepancies exceeding defined thresholds will be treated as methodology failures, not minor variances.
+This course takes the questions in site order: is it a window, is it relevant, how is it measured, and what else is recorded. Each rule is tied to the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, or to the RdSAP10 Specification of 9 June 2025. Where the two conflict, the convention takes precedence (conventions, front page). Where neither answers a question, the course says so and points you to your accreditation scheme.
 
-This course is not a primer on what a window is. You measure windows regularly. The purpose here is to nail the specific RdSAP 10 conventions — where they differ from what you may have been doing for years, where the tolerances sit, and where the methodology gives you discretion versus where it does not. We will address the measurement protocol itself, the classification and specification inputs, the default and override mechanisms, and the practical application of all of this on site.
-
-Throughout, references are to the RdSAP 10 specification document (BEIS/DESNZ), the SAP 10.2 conventions it derives from, and current scheme guidance. Where PAS 2035:2023 imposes additional or different requirements for retrofit assessments, these are noted explicitly.
-
-If you are still measuring windows the way you were taught in 2013, parts of this course will require you to change your practice. That is the point.
+This edition replaces the March 2026 edition, which said windows are measured as the structural opening from the external face of the wall, with an addition for reveal depth when measured inside. Convention 2.15 says otherwise, and Section 2 sets out the rule as written. Other figures in that edition that could not be traced to either source have been removed.
 
 ---
 
-## Section 1: The RdSAP 10 Measurement Convention — What Has Actually Changed
+## Section 1: Is It a Window, and Is It Relevant?
 
-The foundational rule in RdSAP 10 remains consistent with SAP convention: windows are measured as the total area of the opening in the wall, including the frame. You are measuring the structural opening, not the glazed area alone. This has not changed. What has changed is the rigour with which this principle is now expected to be applied and the way the methodology handles situations where direct measurement is not possible.
+### The definition
 
-**Frame opening versus reveal-to-reveal.** Under RdSAP 9.94, common practice among many assessors was to measure reveal-to-reveal internally — the visible opening from inside the room. RdSAP 10 makes explicit that the correct measurement is the full structural opening as seen from the external face of the wall. In cavity wall construction, this typically adds 25–50 mm per side compared with an internal reveal measurement, depending on reveal depth and plaster thickness. On a standard 1200 × 1050 mm window, this can represent a 5–8% increase in recorded area. Across a dwelling with 15–20 openings, the cumulative effect on total glazed area — and therefore on fabric heat loss, solar gain, and the balance between the two — is not trivial.
+A window is an opening in an external wall or roof of a building, fitted with glass or similar material, usually in a frame, that admits light (convention 2.14).
 
-In practice, direct external measurement of every opening is not always feasible (access constraints, height, extensions built to boundary). The RdSAP 10 conventions permit internal measurement with an addition for the reveal depth on each side where external measurement cannot be taken. The convention specifies that where reveal depth cannot be determined, a default addition is applied based on wall construction type. For standard masonry cavity walls, this is 25 mm per reveal side and 25 mm at the cill. For solid walls (stone or brick), the default is larger — typically 50 mm per side — reflecting deeper reveals. Timber frame constructions assume minimal reveal depth and no default addition is required beyond the measured internal dimension.
+### Highly glazed doors and the 60% test
 
-**Measurement tolerance.** RdSAP 10 does not define an explicit percentage tolerance for window measurement in the specification document itself, but scheme auditor guidance — most recently updated by Elmhurst Energy (Auditor Technical Bulletin 2025-07) and Quidos — applies a ±10% tolerance on individual window areas and a ±5% tolerance on total glazed area for the dwelling. Exceeding these thresholds on audit constitutes a methodology failure. This is tighter than the informal tolerances many assessors were working to previously.
+A door may be treated as a window if it is considered to be highly glazed. The convention gives patio doors, fully glazed doors and French doors as examples and adds a test: if in doubt, measure it, and treat it as a window if the glazing area is 60% or more (convention 2.14). The specification says the glazing is compared with the area of the whole opening, meaning door and frame (specification section 3.7). Two worked examples:
+- French doors measuring 1.50 m by 2.10 m including the frame have a whole opening of 3.15 m². Each of the two leaves has a pane of 0.55 m by 1.75 m, giving 1.925 m² of glazing. 1.925 divided by 3.15 is 61%, so the doors are treated as a window.
+- A back door measuring 0.90 m by 2.05 m including the frame is 1.845 m². Its single pane of 0.60 m by 0.90 m is 0.54 m². 0.54 divided by 1.845 is 29%, so it stays an external door.
 
-**Rounding.** Individual window dimensions should be recorded to the nearest 10 mm. Areas should be calculated in square metres to two decimal places. Do not round individual window areas before summing.
+One sentence in the specification says "more than 60%" where the convention says "60% or more"; apply the convention's wording. The test does not run the other way: a window with less than 60% glazing is not a door, because a door always provides a means of entry (specification section 3.7).
+
+### External doors
+
+An external door is a door that forms part of the heat loss perimeter of the dwelling (convention 3.09). Note also:
+- Door area can be taken as 1.85 m² without measuring, although a non-standard door can be measured (specification section 3.7).
+- A double door counts as two doors (convention 3.09).
+- A dwelling can have no external door in the data set, when every entrance is through highly glazed doors counted as windows or through a heated corridor (convention 3.09).
+
+### Which windows are relevant
+
+Relevant windows are all windows, highly glazed doors and roof lights in the heat loss envelopes (convention 2.15). The convention names these cases:
+- Included: those in the envelope between the dwelling and a separated conservatory.
+- Included: those in the envelope between the dwelling and an unheated corridor.
+- Included: those in the envelope between the dwelling and a porch, if the porch is excluded. A porch is disregarded when it is not heated and is thermally separated (convention 2.09a).
+- Not included: windows in a non-separated conservatory.
+
+### Conservatories and sun rooms
+
+A non-separated conservatory's windows are not measured because it has its own data items: floor area, glazed perimeter, whether it is double glazed, and height (specification Table 31, item 1-10). Its walls and roof are taken as fully glazed, in addition to the measured window areas (specification section 6.1).
+
+A separated conservatory, with or without fixed heaters, is disregarded (specification section 6.2), but the door or window between it and the house is in the heat loss envelope and is measured (convention 2.15). A conservatory is thermally separated when there is an external quality door between it and the dwelling (specification section 9.1.1).
+
+Version 12.2 added a definition. A conservatory is a building part where 50% or more of the external heat loss walls are glazed and 75% or more of the roof is glazed. Where the roof has been replaced or a false ceiling added, so that the definition is no longer met, it must be recorded as an extension (convention 2.28).
+
+For a highly glazed part of the dwelling, such as a sun room, which does not meet the conservatory criteria, measure all windows and roof windows as per convention 2.15 (convention 2.17). So in a former conservatory with a solid replacement roof, each window and highly glazed door is measured.
+
+### Curtain walling
+
+Where a dwelling has a curtain wall, opaque panels are treated as a curtain wall of the relevant age band and any translucent areas are measured and entered as glazing. If documentary evidence is available, the calculated U-value for the whole curtain wall is used (convention 2.27).
 
 ---
 
-## Section 2: Glazing Classification, Frame Types, and the Updated Input Matrix
+## Section 2: Measuring Width and Height
 
-Measuring the opening accurately is only half the task. The energy impact of a window in RdSAP 10 depends on the interplay between area, orientation, glazing type, frame material, gas fill, gap size, and — now more prominently — the window energy rating (WER) or declared U-value where available.
+### The rule
 
-**Glazing type hierarchy.** RdSAP 10 maintains the hierarchy: single glazed, double glazed, triple glazed, secondary glazing. Within double and triple glazing, the methodology differentiates by gap size (6 mm, 12 mm, 16 mm or more) and gas fill (air, argon, krypton). The critical change in RdSAP 10 is the updated default U-values assigned to each combination. These have been recalculated using EN 673:2011 conventions and are marginally different from the RdSAP 9.94 defaults — in most cases slightly worse for older air-filled units and slightly better for modern argon-filled 16 mm+ units. The net effect is a wider spread between good and poor glazing in the calculation, which amplifies the importance of correct classification.
+Assessors are required to measure and enter the width and height of all relevant windows, including the visible frame. The width is the overall width of the window between the internal reveals. The height is the overall height of the window between the inner sill and the top reveal (convention 2.15).
 
-**Window Energy Rating (WER) and manufacturer data.** Where a window carries a BFRC (British Fenestration Rating Council) rating, this can be entered directly into RdSAP 10 using the WER band (A++ through E) or, preferably, the specific declared U-value and g-value from the BFRC certificate or datasheet. The RdSAP 10 software interface now requires assessors to declare the basis for any claimed performance — WER band, declared U-value, or default. This declaration is auditable. Claiming a WER band without supporting evidence (FENSA certificate, BFRC label, building control sign-off, or manufacturer documentation) is a fail point. In the absence of evidence, you must use the appropriate default for the assessed age and type.
+So the measuring points are inside, and the visible frame is included: this is not a measurement of the glass alone. You enter a width and a height, and the software calculates the area (specification Table 31, item 6-3).
 
-**Frame types.** RdSAP 10 classifies frames as wood, PVC-U, metal (with and without thermal break), and composite. The frame type affects both the U-value (through frame factor adjustments) and the solar gain (through the frame-to-glazing ratio assumed in the calculation). The frame factor defaults are: wood 0.70, PVC-U 0.70, metal with thermal break 0.70, metal without thermal break 0.80, composite per manufacturer data or 0.70. These frame factors represent the fraction of the opening area that is glazed. Note that metal frames without thermal breaks — still common in pre-1990s local authority housing — have a meaningfully different frame factor that reduces effective glazed area while simultaneously having a higher frame U-value.
+Neither the conventions nor the specification asks for the structural opening, a measurement from the external face, or an addition for reveal depth, and neither sets a percentage tolerance on window sizes. What they set is a precision.
 
-**Secondary glazing.** RdSAP 10 retains secondary glazing as a separate input category but now requires the gap between primary and secondary panes to be estimated and recorded (less than 20 mm or 20 mm and above). The effective U-value calculation for secondary glazing is significantly more favourable with a gap of 20 mm or more. If you cannot determine the gap, the default is less than 20 mm.
+### Precision
 
-**Curtain walling and non-standard glazing.** Full-height glazed elements, structural glazing, and curtain walling systems are entered as windows in RdSAP but must be measured to the full extent of the glazed structural opening. Where curtain walling extends below floor level or into non-heated zones, only the portion bounding the heated envelope is measured.
+Measure to two decimal places (0.01 m) or better (convention 2.02). The specification applies the same to window dimensions and gives the example of 2 m 35 cm entered as 2.35 m (specification section 3.1). A window 1.20 m between the internal reveals and 1.05 m from inner sill to top reveal is entered as width 1.20 and height 1.05.
+
+### Arched windows
+
+Enter the actual width, and enter the height as the average between the shoulder height and the height to the top point (convention 2.15). For an arched window 0.90 m wide, 1.20 m high at the shoulder and 1.50 m high at the top point, the average of 1.20 and 1.50 is 1.35, so enter width 0.90 and height 1.35.
+
+### Circular, oval and other unusual shapes
+
+For other unusually shaped windows, calculate the area by the most appropriate means, enter the area as the width, and enter the height as 1 (convention 2.15). The convention gives the arithmetic for three shapes, using 3.14:
+- Circular: square the radius, which is half the diameter, and multiply by 3.14. A window 0.60 m in diameter has a radius of 0.30 m. 0.30 multiplied by 0.30 is 0.09, and 0.09 multiplied by 3.14 is 0.2826. Enter width 0.28 and height 1.
+- Oval: multiply the longest radius by the shortest radius, then by 3.14. A window 1.20 m across and 0.80 m high has radii of 0.60 m and 0.40 m. 0.60 multiplied by 0.40 is 0.24, and 0.24 multiplied by 3.14 is 0.7536. Enter width 0.75 and height 1.
+- Semi-circular or half oval: work it out as if the other half were present, then halve the result. A semi-circular window 1.00 m across has a radius of 0.50 m. The full circle would be 0.25 multiplied by 3.14, which is 0.785, and half of that is 0.3925. Enter width 0.39 and height 1.
+
+### Roof windows
+
+Roof lights are relevant windows, so the same rule applies (convention 2.15). Each opening is recorded as a window (vertical) or a roof window (inclined), and the orientation options are the eight compass points or horizontal (specification Table 31, items 6-3 and 6-5). The sources use "roof light", "rooflight" and "roof window" without drawing a distinction between them.
 
 ---
 
-## Section 3: Defaults, Overrides, and the Age-Based Fallback Logic
+## Section 3: Glazing Type, Age, Gap and Secondary Glazing
 
-RdSAP 10, like its predecessors, is a reduced-data methodology. Its entire architecture is built around the principle that where measured or evidenced data is not available, a defensible default is applied. For windows, the default logic is more layered than many assessors appreciate, and misapplication of defaults is a persistent audit issue.
+### What is recorded against each window
 
-**When defaults apply.** You use default window areas when you genuinely cannot measure the windows — the classic example being an inaccessible elevation, or a survey conducted under conditions where measurement is physically impossible (rare, and requiring justification in site notes). Under RdSAP 10, the default total window area is calculated as a percentage of total floor area, varying by dwelling age band. For dwellings in age band A–B (pre-1900), the default is approximately 15% of total floor area. For age bands up to and including J (2003–2006), it increases progressively to around 22%. Post-2006 bands reflect the larger glazed areas typical of modern construction standards and Building Regulations Part L requirements. These percentages are applied to total floor area, and the resulting area is distributed across orientations using a standard split unless the assessor specifies otherwise.
+Alongside width and height, the data set includes the following for each window (specification Table 31, items 6-3 to 6-11):
+- Orientation: one of S, SE, E, NE, N, NW, W, SW, or horizontal.
+- Location: main wall or alternative wall 1 or 2 of the building part, or for a room in roof its roof, gable 1, gable 2 or common wall.
+- Frame type: wooden or PVC, or metal.
+- Glazing type: single, double, triple, secondary with normal emissivity, or secondary with low emissivity.
+- Glazing gap: 6 mm, 12 mm, or 16 mm or more.
+- Window age, which is not required for single or secondary glazing.
+- Whether it is draught proofed, whether it has shutters, and whether the shutters are insulated.
 
-**The critical point: defaults are a fallback, not a shortcut.** If you can measure the windows, you must measure the windows. Entering default areas because measurement is tedious or time-consuming is a methodology violation. Scheme auditors will check site photographs against recorded areas and, increasingly, use satellite and street-level imagery to verify that measured areas are broadly consistent with the visible fenestration.
+The software deducts window areas from the wall each window is allocated to (specification section 3.2.2).
 
-**Age-based glazing type defaults.** Where the glazing type cannot be determined (sealed unit with no markings, no FENSA certificate, no Building Control record, and visual inspection is inconclusive), RdSAP 10 assigns a default based on the window installation date — which is often, but not always, the same as the dwelling age band. If there is evidence that windows have been replaced (different style from originals, FENSA sticker, visible trickle vents on a property where originals would not have had them), the assessor must estimate the replacement date and apply the corresponding default. For replacements where the date cannot be determined but post-2002 installation is evident (trickle vents present, modern PVC-U profile), the default is double glazed, air-filled, 12 mm gap, PVC-U frame. For known post-April 2006 installations, the default shifts to double glazed, low-E hard coat, argon-filled, 16 mm gap.
+### Glazing age
 
-**Override with evidence.** An assessor may override the defaults with better performance data only where documentary evidence exists and can be retained. Acceptable evidence under RdSAP 10 conventions includes: FENSA or CERTASS certificate, Building Control completion certificate, BFRC rating label or certificate, manufacturer's declaration with U-value data, or a GGF (Glass and Glazing Federation) data sheet referencing the specific installation. Anecdotal evidence from the occupant ("we had them done about five years ago, they're triple glazed") is not acceptable as the sole basis for an override, though it can support a reasonable assessment of installation age where combined with visual evidence.
+Convention 2.16 defines three ages:
+- Age 1: pre 2002 in England and Wales, pre 2003 in Scotland, pre 2006 in Northern Ireland.
+- Age 2: 2002 to 2021 in England and Wales, 2003 to 2022 in Scotland, 2006 to 2021 in Northern Ireland.
+- Age 3: 2022 onwards in England, Wales and Northern Ireland, 2023 onwards in Scotland.
 
-**Mixing window types.** Most dwellings contain a mix of window ages and types. RdSAP 10 allows multiple window groups to be defined, each with its own glazing type, frame type, orientation, and area. There is no limit on the number of window groups. Best practice is to group windows by common specification — for example, all original single-glazed timber sash windows as one group, all replacement PVC-U double-glazed units as another. Avoid defining excessive groups where the specification is identical; this increases data entry time without improving accuracy and can introduce rounding discrepancies.
+Choose unknown date if there is no evidence of the date. Multiple glazed units can be dated by (convention 3.12a):
+- The manufacturing date on the spacer bar, or possibly on the frame.
+- Documentary evidence of the installation date, for example a FENSA, CERTASS or Building Control certificate, or a manufacturer's guarantee.
+- The property build date, if it is after the trigger dates: post 2002 or post 2022 in England and Wales, post 2003 or post 2023 in Scotland, post 2006 or post 2022 in Northern Ireland.
+
+In the absence of all of those, the presence of a thermal spacer bar indicates a glazing age post 2002 in England and Wales, 2003 in Scotland or 2006 in Northern Ireland (convention 3.12a). Only the earlier date is named, so a thermal spacer bar alone does not support Age 3. If none of these applies, choose unknown.
+
+Convention 3.12a says "post 2002" for the build date trigger, while convention 2.16 starts Age 2 at 2002. Neither resolves a date in the boundary year, so check with your accreditation scheme if it arises.
+
+### Glazing gap
+
+The glazing gap is the width of the spacer bar between the two panes of glass. If windows with non-metal frames are Age 1 or of unknown period, identify the gap to the nearest of 6, 12 or 16 mm. If the gap cannot easily be identified, select 6 if it is narrow or 16 if it is wide (convention 3.12b).
+
+### Why age and gap matter
+
+The default U-values for a window in a PVC or wooden frame, in W/m²K, show why (specification Table 24):
+- Single glazed: 4.8.
+- Double glazed, Age 1: 3.1 with a 6 mm gap, 2.8 with 12 mm, 2.7 with 16 mm or more.
+- Double or triple glazed, Age 2: 2.0 with any gap.
+- Double or triple glazed, Age 3: 1.4 with any gap.
+- Secondary glazing: 2.9 with normal emissivity, 2.2 with low emissivity.
+
+The gap changes the default only for Age 1, which fits convention 3.12b. A footnote to Table 24 says to use the Age 1 double glazed row for double or triple glazing whose installation date is unknown, so "unknown" brings the older values, but it is still the correct entry when there is no evidence (convention 3.12a).
+
+### Secondary glazing
+
+Convention 2.16 sets out how to record secondary glazing according to what it is fitted with:
+- With single glazing: record as secondary glazing, normal or low-E if that can be determined.
+- With Age 1 double glazing: record as Age 2 double glazing.
+- With Age 2 double glazing: record as Age 3 double glazing.
+
+If secondary glazing has been removed for the summer, enter it only if you can confirm that the panels exist and can be re-fitted, and record the evidence in your site notes. Version 12.2 added that unusual single glazing improvements, such as plastic glazing units over single glass, or panes of glass separated by large distances, are treated as secondary glazing (convention 2.16).
 
 ---
 
-## Section 4: On-Site Best Practice and Common Audit Failures
+## Section 4: Draught Proofing, Shutters, Known Values and Open Questions
 
-Knowing the conventions is necessary. Applying them reliably on a wet Tuesday afternoon in a terraced house with an uncooperative occupant is the actual skill. This section addresses the practical workflow.
+### Draught proofing
 
-**Kit.** A laser measure is now effectively mandatory for defensible window measurement. Tape measures remain acceptable under scheme rules, but the accuracy and speed of a laser measure — particularly for heights and for windows above ground floor — make it the professional standard. Record all measurements in your site notes contemporaneously. Photograph every window group with the laser measure display visible in the shot where possible.
+All external doors and openable windows should be examined for draught proofing (specification section 8.1). If the state of the draught proofing cannot be determined, take triple, double or secondary glazed units as draught proofed, and single glazed windows and doors as not draught proofed unless there is evidence that they are. Include glazing in a non-separated conservatory (convention 3.11a). You record yes or no for each window, and the software calculates the percentage (specification Table 31, item 6-8).
 
-**Orientation.** RdSAP 10 assigns solar gain by orientation. Compass bearings must be taken on site (phone compass is acceptable if calibrated). A common audit failure is to assign orientation based on assumed north from the surveyor's mental model of the property rather than measured bearing. If the front of the property faces, say, 280° (west-north-west), all window orientations must be derived from this measured reference, not from "front = north" shorthand. RdSAP 10 uses eight compass points. Assign each window group to the nearest.
+### Shutters
 
-**Documenting evidence.** Photograph FENSA certificates, BFRC labels, and any visible manufacturer stamps on spacer bars or frame profiles. Where you are claiming a specification above the age-band default, the audit file must contain the supporting evidence. No photo, no claim.
+Internal or external shutters, with or without insulation, are recognised in RdSAP 10 (convention 3.11b). The convention's conditions are:
+- Shutters are hinged panels, usually of timber, which can be closed to fully cover a window, and which generally sit within the window reveal when open.
+- They must be operational on the day of the survey, confirmed by opening the shutter.
+- They can be insulated with a thin material, such as aerogel blanket, within the panels, and evidence needs to prove that they are insulated.
 
-**The top five audit failure points for windows, per scheme auditor data (2024–2025):**
+### Overwriting default U-values and g-values
 
-1. Total glazed area outside ±5% tolerance due to inconsistent measurement method (internal vs. external).
-2. Glazing specification claimed without retained evidence.
-3. Orientation misassigned by one or more compass points.
-4. Secondary glazing gap not recorded or incorrectly defaulted.
-5. Replacement windows recorded at dwelling age-band default instead of estimated replacement date default.
+Default U-values and g-values can be overwritten only if documentary evidence is provided, which can be either a Window Energy Rating certificate as defined by BFRC, or manufacturer's data. The U-value is for the whole window, not the centre pane (convention 3.10). Two cautions:
+- A FENSA certificate is listed as evidence of installation date (convention 3.12a). It is not on the list for overwriting a U-value (convention 3.10).
+- The specification also mentions "modelled values" (specification section 8.2). The convention lists only the two sources above and takes precedence, so ask your accreditation scheme before relying on a modelled value.
 
-Each of these is avoidable with disciplined site practice. None of them require additional time on site — they require attention to the correct convention applied consistently.
+### Where the sources stop
+
+On these points the conventions and the specification give no clear answer, so ask your accreditation scheme:
+- A window that cannot be reached. Every relevant window is to be measured and no default area is given.
+- The lower measuring point for a highly glazed door. Convention 2.15 words the height as inner sill to top reveal and does not reword it for doors.
+- A bay window. Neither source says whether it is entered as one window or several.
+- A dormer window in a room in roof. The specification does not say which of the location options it takes.
+- Secondary glazing with Age 3 double glazing or with triple glazing. Convention 2.16 covers single, Age 1 and Age 2 only.
+- Roller shutters and external blinds. The specification refers to all shutters and external venetian blinds (specification section 11.5), but convention 3.11b describes hinged panels and takes precedence.
 
 ---
 
 ## Key Takeaways
-
-- Measure the full structural opening from the exterior face where accessible; apply the wall-type-specific reveal addition when measuring internally.
-- Record dimensions to the nearest 10 mm; calculate areas to two decimal places; do not round individual areas before summing.
-- The ±5% tolerance on total glazed area is an audit hard line — cumulative small errors across many windows will breach it.
-- Always declare the basis for glazing performance claims (WER, declared U-value, or default) and retain photographic or documentary evidence for any claim above the age-band default.
-- Measure compass orientation on site for every property; assign window groups to the nearest of eight compass points based on the measured bearing of the elevation, not assumed orientation.
-- Use replacement-date defaults for windows that have clearly been replaced, even where the exact date is unknown — do not default to the dwelling age band for visibly modern fenestration.
-- Secondary glazing gap size (below or above 20 mm) now affects the calculated U-value materially; estimate and record it.
+- Measure width between the internal reveals and height from inner sill to top reveal, including the visible frame, to two decimal places or better (conventions 2.15 and 2.02).
+- A door with glazing of 60% or more of the door and frame is treated as a window. If in doubt, measure it (convention 2.14).
+- Relevant windows are those in the heat loss envelope, including the envelope to a separated conservatory, unheated corridor or excluded porch. Windows in a non-separated conservatory are not measured (convention 2.15).
+- A conservatory has 50% or more of its external heat loss walls and 75% or more of its roof glazed. Otherwise, measure all windows and roof windows (conventions 2.28 and 2.17).
+- Arched windows take the actual width and the average of the shoulder and top heights. Other unusual shapes are entered as area in the width, with height 1 (convention 2.15).
+- Glazing age needs evidence. A thermal spacer bar indicates post 2002 only, not 2022 or later. With no evidence, choose unknown (convention 3.12a).
+- Default U-values and g-values are overwritten only with a BFRC Window Energy Rating certificate or manufacturer's data (convention 3.10).
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** Under RdSAP 10 conventions, what is the correct measurement basis for a window opening?
+**Q1.** How does convention 2.15 define the width and height to be entered for a window?
 
-A) The visible glazed area only, excluding frame
-B) The internal reveal-to-reveal dimension
-C) The full structural opening as seen from the external face of the wall, including the frame
-D) The manufacturer's nominal frame size from the order specification
+A) The structural opening measured from the external face of the wall
+B) The overall width between the internal reveals and the overall height between the inner sill and the top reveal, including the visible frame
+C) The glass only, excluding the frame
+D) The internal measurement plus an allowance for reveal depth on each side
 
-**Correct answer: C**
-*RdSAP 10 specifies the full structural opening measured externally. Where external measurement is not possible, internal measurement with a construction-type-specific reveal addition is applied.*
-
----
-
-**Q2.** An assessor measures all windows internally on a standard cavity-wall dwelling and applies no reveal depth addition. The total recorded glazed area is 18.5 m². Approximately what total area might more accurately reflect the RdSAP 10 convention, assuming a 25 mm addition per reveal side and cill across all openings?
-
-A) 18.5 m² — no difference expected
-B) 19.4–19.9 m²
-C) 22.0 m²
-D) 17.0 m²
-
-**Correct answer: B**
-*A 25 mm addition per side and cill on typical window dimensions adds approximately 5–8% to total recorded area. On 18.5 m², this equates broadly to 19.4–19.9 m². The exact figure depends on the number and size distribution of openings.*
+**Correct answer: B.** Convention 2.15 defines the measurement in these terms and mentions neither the external face nor a reveal allowance.
 
 ---
 
-**Q3.** The occupant states their windows were replaced "about eight years ago" and are triple glazed with argon fill. No FENSA certificate, BFRC label, or Building Control record is available. What should the assessor enter?
+**Q2.** A circular window has a diameter of 0.80 m. What is entered under convention 2.15?
 
-A) Triple glazed, argon-filled, based on the occupant's statement
-B) The dwelling age-band default glazing type
-C) Double glazed, low-E, argon-filled, 16 mm gap — the post-2006 replacement default — supported by visual evidence of modern installation
-D) Single glazed, as no documentary evidence is available
+A) Width 0.80 and height 0.80
+B) Width 2.01 and height 1
+C) Width 0.40 and height 0.40
+D) Width 0.50 and height 1
 
-**Correct answer: C**
-*Occupant statements alone are insufficient to claim triple glazing. However, the assessor should apply the appropriate replacement-date default (not the dwelling age-band default) where visual evidence confirms modern replacement. If the replacement is clearly post-April 2006 but the triple-glazing claim cannot be evidenced, the post-2006 double-glazed default applies.*
-
----
-
-**Q4.** In RdSAP 10, what is the default frame factor applied to PVC-U frames?
-
-A) 0.60
-B) 0.70
-C) 0.80
-D) 0.90
-
-**Correct answer: B**
-*PVC-U frames have a default frame factor of 0.70, meaning 70% of the measured opening area is assumed to be glazed. This is the same default as wood frames and metal frames with a thermal break.*
+**Correct answer: D.** Convention 2.15 says to square the radius and multiply by 3.14, then enter the area as the width with a height of 1: 0.40 multiplied by 0.40 is 0.16, and 0.16 multiplied by 3.14 is 0.5024, entered as 0.50.
 
 ---
 
-**Q5.** An assessor records secondary glazing but does not determine or record the gap between primary and secondary panes. What gap default does RdSAP 10 apply?
+**Q3.** Secondary glazing is fitted with Age 1 double glazing. How does convention 2.16 say to record the window?
 
-A) 20 mm or more
-B) Less than 20 mm
-C) 12 mm (same as standard double-glazing default)
-D) No default is applied; the software rejects the entry
+A) As Age 2 double glazing
+B) As secondary glazing
+C) As Age 1 double glazing, ignoring the secondary glazing
+D) As triple glazing
 
-**Correct answer: B**
-*Where the gap cannot be determined, RdSAP 10 applies the less favourable default of less than 20 mm. This produces a higher (worse) effective U-value than the 20 mm or more category. Assessors should attempt to estimate the gap where possible.*
+**Correct answer: A.** Convention 2.16 says secondary glazing with Age 1 double glazing is recorded as Age 2 double glazing; the secondary glazing entry is for secondary glazing with single glazing.
+
+---
+
+**Q4.** Which of these is not a relevant window to be measured under convention 2.15?
+
+A) A patio door with 70% glazing between the dwelling and a separated conservatory
+B) A roof light in the heat loss envelope of the main dwelling
+C) A window in a non-separated conservatory
+D) A window between a flat and an unheated corridor
+
+**Correct answer: C.** Convention 2.15 says relevant windows do not include windows in a non-separated conservatory; the other three are all named as relevant.
+
+---
+
+**Q5.** A 1970s house in England has double glazing with no date on the spacer bar or frame and no documents, but the units have a thermal spacer bar. What glazing age does convention 3.12a support?
+
+A) Unknown date
+B) Post 2002, but not 2022 or later
+C) 2022 or later
+D) Pre 2002
+
+**Correct answer: B.** Convention 3.12a says that in the absence of other evidence a thermal spacer bar indicates glazing age post 2002 in England and Wales; it names no later date.
 
 ---
 
 ## Further Reading
-
-- **RdSAP 10 Specification Document** — Department for Energy Security and Net Zero (DESNZ). Available via the BRE SAP website: [https://www.bregroup.com/sap/](https://www.bregroup.com/sap/)
-
-- **SAP 10.2: The Government's Standard Assessment Procedure for Energy Rating of Dwellings (2022 edition)** — DESNZ. Available at: [https://www.gov.uk/guidance/standard-assessment-procedure](https://www.gov.uk/guidance/standard-assessment-procedure)
-
-- **PAS 2035:2023 — Retrofitting Dwellings for Improved Energy Efficiency: Specification and Guidance** — British Standards Institution (BSI). Available via BSI Shop: [https://www.bsigroup.com/](https://www.bsigroup.com/)
-
-- **BFRC (British Fenestration Rating Council) — Window Energy Rating Scheme Documentation and Rated Product Directory.** Available at: [https://www.bfrc.org/](https://www.bfrc.org/)
+- **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read conventions 2.02, 2.14 to 2.17, 2.27, 2.28 and 3.09 to 3.12b for the rules covered here.
+- **RdSAP10 Specification.** BRE, 9 June 2025. See section 3.7 for door and window areas, section 8 and Table 24 for window U-values and g-values, and Table 31 items 6-1 to 6-11 for the data collected.
 
 ---
 
