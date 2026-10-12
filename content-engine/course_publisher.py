@@ -59,6 +59,40 @@ def upload_pdf(course_id: str, pdf_bytes: bytes) -> str:
     return url_result
 
 
+# ── Catalogue ─────────────────────────────────────────────────────────────────
+
+def update_catalogue(course_id: str, title: str, cpd_hours: float) -> None:
+    """Record the course in courses/catalogue.json in Supabase Storage.
+
+    The app (webhook/main.py) reads this file, so a newly published course shows
+    up in every subscriber's library without a code change or a redeploy.
+    """
+    import json
+    from datetime import datetime, timezone
+
+    bucket = supabase.storage.from_("courses")
+    catalogue = {"courses": {}}
+    try:
+        existing = json.loads(bucket.download("catalogue.json"))
+        if isinstance(existing, dict) and isinstance(existing.get("courses"), dict):
+            catalogue = existing
+    except Exception:
+        pass  # first run — no catalogue yet
+
+    catalogue["courses"][course_id] = {
+        "title": title,
+        "cpd_hours": cpd_hours,
+        "published": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+    }
+    catalogue["updated_at"] = datetime.now(timezone.utc).isoformat()
+
+    bucket.upload(
+        "catalogue.json",
+        json.dumps(catalogue, indent=2).encode("utf-8"),
+        file_options={"content-type": "application/json", "upsert": "true"},
+    )
+
+
 # ── Subscriber notification ───────────────────────────────────────────────────
 
 def notify_subscribers(course_id: str, title: str, cpd_hours: float):
@@ -80,6 +114,8 @@ def notify_subscribers(course_id: str, title: str, cpd_hours: float):
     sys.path.insert(0, str(ROOT / "webhook"))
     from email_sender import send_new_course_notification, send_admin_new_course_alert
 
+    failures = []
+
     async def send_all():
         # Notify subscribers
         for member in result.data:
@@ -92,7 +128,8 @@ def notify_subscribers(course_id: str, title: str, cpd_hours: float):
                     cpd_hours=cpd_hours,
                 )
             except Exception as e:
-                print(f"    Failed to notify {member['email']}: {e}")
+                failures.append(str(e))
+                print(f"    Failed to notify a subscriber: {e}")
 
         # Alert admins (Matt + Ceri)
         try:
@@ -104,10 +141,16 @@ def notify_subscribers(course_id: str, title: str, cpd_hours: float):
             )
             print("  Admin alert sent to Matt and Ceri.")
         except Exception as e:
+            failures.append(f"admin alert: {e}")
             print(f"  Admin alert failed: {e}")
 
     asyncio.run(send_all())
-    print(f"  Notifications sent.")
+    if failures:
+        # Surfaces on the GitHub Actions run page instead of being buried in the log.
+        print(f"::warning title=Course emails not sent::{len(failures)} of "
+              f"{len(result.data) + 1} emails failed for {course_id}. First error: {failures[0][:200]}")
+    else:
+        print(f"  Notifications sent.")
 
 
 # ── Main ─────────────────────────────────────────────────────────────────────
@@ -144,6 +187,15 @@ def main():
         match = re.search(r"CPD Hours:\*\*\s*([\d.]+)", line)
         if match:
             cpd_hours = float(match.group(1))
+
+    # Make the course visible in the app without a redeploy
+    print("  Updating storage catalogue...")
+    try:
+        update_catalogue(course_id, title, cpd_hours)
+        print("  Catalogue updated.")
+    except Exception as e:
+        print(f"::warning title=Catalogue not updated::{course_id} was published but could not be "
+              f"added to catalogue.json, so it will not appear in the library yet: {str(e)[:200]}")
 
     # Notify subscribers
     notify_subscribers(course_id, title, cpd_hours)

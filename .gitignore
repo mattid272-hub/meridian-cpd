@@ -6,3 +6,10 @@ __pycache__/
 .DS_Store
 *.pdf
 node_modules/
+
+# Handover notes hold logins and customer details — never publish (this repo is public)
+HANDOVER.md
+HANDOVER*.md
+
+# Outreach engine working copy (has its own .env and node_modules)
+Meridian/

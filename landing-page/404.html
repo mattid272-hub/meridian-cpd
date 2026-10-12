@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Meridian CPD</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8fafc; color: #1e293b; margin: 0;
+           display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
+    .wrap { max-width: 480px; padding: 0 24px; }
+    .logo { font-size: 22px; font-weight: 900; color: #0f2547; letter-spacing: -0.5px; margin-bottom: 28px; }
+    .logo span { color: #0891b2; }
+    h1 { font-size: 22px; color: #0f2547; margin: 0 0 10px; }
+    p { color: #64748b; font-size: 15px; line-height: 1.6; margin: 0 0 22px; }
+    a.btn { display: inline-block; background: #0f2547; color: #fff; padding: 12px 24px;
+            border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; }
+  </style>
+  <script>
+    // Certificates, emails and older links point at meridiancpd.co.uk/verify/..., but the
+    // verification page, completion links and subscriber dashboard are served by the app
+    // at app.meridiancpd.co.uk. Forward those paths so every issued certificate still verifies.
+    (function () {
+      var APP = 'https://app.meridiancpd.co.uk';
+      var path = window.location.pathname;
+      var appPaths = ['/verify', '/complete', '/my-cpd', '/download', '/unsubscribe'];
+      for (var i = 0; i < appPaths.length; i++) {
+        var p = appPaths[i];
+        if (path === p || path.indexOf(p + '/') === 0) {
+          window.location.replace(APP + path + window.location.search);
+          return;
+        }
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo">MERIDIAN <span>CPD</span></div>
+    <h1>Page not found</h1>
+    <p>That page doesn't exist. If you're checking a certificate, enter its number on the verification page.</p>
+    <a class="btn" href="https://app.meridiancpd.co.uk/verify">Verify a certificate</a>
+    &nbsp;
+    <a class="btn" href="https://meridiancpd.co.uk" style="background:#0891b2">Home</a>
+  </div>
+</body>
+</html>

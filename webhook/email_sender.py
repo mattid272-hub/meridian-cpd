@@ -3,6 +3,8 @@ import os
 
 import httpx
 
+from settings import APP_URL, APP_HOST
+
 RESEND_API = "https://api.resend.com/emails"
 FROM_EMAIL = "hello@meridiancpd.co.uk"
 FROM_NAME = "Meridian CPD"
@@ -45,14 +47,14 @@ async def send_course_email(
 ):
     if is_subscription:
         subject = "Welcome to Meridian CPD — a few things worth knowing"
-        base_url = os.environ.get("BASE_URL", "https://app.meridiancpd.co.uk")
+        base_url = APP_URL
         body = f"""Hi {to_name},
 
 ⚠ QUICK NOTE: This email may have landed in your junk or spam folder. If it did, please mark it as safe and add hello@meridiancpd.co.uk to your contacts — this ensures your CPD certificates reach you without any issues.
 
 ─────────────────────────────
 
-Welcome to Meridian CPD. Your annual subscription is active and your full library of 32 courses is ready and waiting.
+Welcome to Meridian CPD. Your annual subscription is active and the full course library is ready and waiting.
 
 Before you dive in, a few things worth knowing from people who've been in the industry a while:
 
@@ -122,7 +124,7 @@ Your course PDF is attached to this email. Download and save it for your records
 Certificate details:
 • CPD Hours: see course cover page
 • Your certificate will be a PDF you can upload to your accreditation body
-• Accreditation bodies can verify any Meridian CPD certificate at meridiancpd.co.uk/verify
+• Accreditation bodies can verify any Meridian CPD certificate at {APP_HOST}/verify
 
 Questions? Reply to this email.
 
@@ -162,7 +164,7 @@ Your CPD certificate for {course_title} is attached.
 
 Certificate number: {cert_number}
 CPD hours: {cpd_hours}
-Verified at: https://meridiancpd.co.uk/verify/{cert_number}
+Verified at: {APP_URL}/verify/{cert_number}
 
 Keep this certificate — you can upload it to your accreditation body as evidence of CPD completion. Your accreditation body can independently verify the certificate number at the link above.
 
@@ -196,7 +198,7 @@ A new course has just been added to your Meridian CPD library.
 
 As a subscriber, this course is included in your plan at no extra cost.
 
-Access it now: https://app.meridiancpd.co.uk/my-cpd
+Access it now: {APP_URL}/my-cpd
 
 Once you've read the course, use the completion link to receive your CPD certificate immediately.
 
@@ -240,8 +242,7 @@ Title:        {course_title}
 CPD Hours:    {cpd_hours:g}
 Notified:     {subscriber_count} subscriber{'s' if subscriber_count != 1 else ''}
 
-View in admin: https://app.meridiancpd.co.uk/admin
-Course PDF:   https://app.meridiancpd.co.uk/courses/{course_id}
+View in admin: {APP_URL}/admin
 
 — Meridian CPD Content Engine
 """
