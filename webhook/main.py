@@ -29,6 +29,7 @@ from supabase import create_client
 from email_sender import send_course_email, send_certificate_email, send_unsubscribe_goodbye_email
 from certificate_generator import generate_certificate
 from settings import APP_URL, SITE_URL
+import corrections
 
 app = FastAPI()
 
@@ -1298,7 +1299,9 @@ async def subscriber_dashboard(request: Request):
 
 # ── Admin panel ────────────────────────────────────────────────────────────────
 
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "meridian-admin")
+# No built-in fallback: this repository is public, so a default password in the code
+# would be known to anyone. If ADMIN_PASSWORD is not set, the admin area stays shut.
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "").strip()
 security = HTTPBasic()
 
 _ADMIN_CSS = """
@@ -1355,7 +1358,12 @@ a.vlink:hover { text-decoration: underline; }
 
 
 def _check_admin(credentials: HTTPBasicCredentials = Depends(security)):
-    if credentials.password != ADMIN_PASSWORD:
+    if not ADMIN_PASSWORD:
+        raise HTTPException(
+            status_code=503,
+            detail="Admin is switched off: set the ADMIN_PASSWORD variable on the hosting service.",
+        )
+    if not secrets.compare_digest(credentials.password.encode(), ADMIN_PASSWORD.encode()):
         raise HTTPException(
             status_code=401,
             detail="Incorrect password",
@@ -1448,6 +1456,7 @@ def _nav(active: str) -> str:
         ("contacts", "Contacts"),
         ("courses", "Courses"),
         ("certificates", "Certificates"),
+        ("corrections", "Corrections"),
         ("system", "System"),
     ]
     links = "".join(
@@ -1903,3 +1912,9 @@ async def admin_system(credentials=Depends(_check_admin)):
       </table>
     </div>"""
     return _page("System", "system", body)
+
+
+# ── Course correction notices (admin only) ─────────────────────────────────────
+# Tells members who studied a withdrawn edition, and sends them the corrected PDFs.
+# Nothing is sent without a typed confirmation. See corrections.py.
+app.include_router(corrections.build_router(supabase, _check_admin, _page, COURSES))
