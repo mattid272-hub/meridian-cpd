@@ -31,7 +31,7 @@ When photovoltaics are present, the peak power of the array in kWp is required (
 
 If the kWp cannot be found, the declared net capacity (DNC) stated on the MCS certificate may be used instead (convention 9.05).
 
-Paperwork you rely on has to meet the general test for documentary evidence. Acceptable evidence includes certificates, warranties, guarantees or any documents verifying that work has been carried out. You must be confident, and able to demonstrate, that it relates to the actual property and that there is no physical or other documentary evidence to the contrary (convention 9.02). Evidence of intent to install does not on its own qualify, and under the separate wording for Scotland it does not qualify at all (convention 9.02).
+Paperwork you rely on has to meet the general test for documentary evidence. In the wording for England, Wales and Northern Ireland, acceptable evidence includes certificates, warranties, guarantees or any documents verifying that work has been carried out, and you must be confident, and able to demonstrate, that it relates to the actual property and that there is no physical or other documentary evidence to the contrary (convention 9.02). Evidence of intent to install does not on its own qualify, and under the separate wording for Scotland it does not qualify at all (convention 9.02).
 
 ### What goes in with the kWp
 
@@ -142,7 +142,7 @@ The units in that paragraph are not consistent. The default in the preceding sen
 
 Worked example. A single battery has documented usable capacity of 8 kWh. Following convention 9.05, it is entered as two batteries: the first at 5 and the second carrying the excess of 3.
 
-The convention does not say what to do when the excess is itself more than 5, for example a single 12 kWh unit, where the excess would be 7. The specification allows up to 4 batteries (specification section 17, Table 31, item 11-4) but does not settle the point either. Ask your scheme.
+Read literally, the paragraph gives two entries whatever the size, so a single 12 kWh unit would be 5 and an excess of 7. The convention does not say whether an excess that is itself more than 5 should be split again. The specification allows up to 4 batteries (specification section 17, Table 31, item 11-4) but does not settle the point either. Ask your scheme.
 
 At least one accreditation scheme bulletin states that no more than three batteries can be recorded, and that a diverter is ignored where batteries are present. Neither statement appears in the conventions or the specification. Treat them as that scheme's practice and check what your own scheme says.
 
@@ -152,7 +152,7 @@ Convention 9.05 and the data set both speak of PV batteries. The specification's
 
 ### PV diverters
 
-The data set has a yes or no item, PV diverter for water heating, described as for when PV is used for water heating (specification section 17, Table 31, item 11-2). If the answer is yes, the specification says only that the calculation follows SAP 10.2 section G4 (specification section 11.2).
+The data set has a yes or no item, PV diverter for water heating, described as for when PV is used for water heating (specification section 17, Table 31, item 11-2). If the answer is yes, the specification says only that the calculation follows SAP 10.2, naming section G4 and a beta-factor from Appendix M1 (specification section 11.2 and section 17, Table 31, item 11-2).
 
 For PV diverters, written evidence of the manufacturer and model of the diverter system installed is required, and if this cannot be obtained the diverter cannot be entered (convention 9.05). Compare the two rules:
 - Battery: photographic or written evidence, with a 5 kWh default if it cannot be obtained.

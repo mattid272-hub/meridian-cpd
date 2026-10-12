@@ -19,7 +19,7 @@ This October 2026 revision replaces the March 2026 edition. It has been rebuilt 
 
 Some things you might expect are deliberately missing. The specification does not reproduce the SAP 10.2 tables of heating system types, efficiencies and controls. It says only that systems and controls are those marked "rd" in SAP 10.2 Tables 4a, 4b and 4e (specification sections 10.1 and 10.3). This course therefore gives no efficiency or responsiveness figures and does not describe controls or software screens.
 
-Four v12.2 changes dated 13 July 2026 touch this topic. Convention 4.09 now covers a high heat retention storage heater that is not in the database. Convention 4.20 now refers to the sole source of heat, where v12.1 said the primary source. Convention 4.22 on electric combi boilers is new. Convention 4.03 now covers hot water systems as well as heating.
+Four v12.2 changes dated 13 July 2026 are covered in this course. Convention 4.09 now covers a high heat retention storage heater that is not in the database. Convention 4.20 now refers to the sole source of heat, where v12.1 said the primary source. Convention 4.22 on electric combi boilers is new. Convention 4.03 now covers hot water systems as well as heating.
 
 ---
 
@@ -27,7 +27,7 @@ Four v12.2 changes dated 13 July 2026 touch this topic. Convention 4.09 now cove
 
 ### Habitable rooms
 
-Habitable rooms include any living room, sitting room, dining room, kitchen/diner, bedroom, study and similar, and also a non-separated conservatory (convention 2.04a). The same convention excludes the following from the count:
+Habitable rooms include any living room, sitting room, dining room, kitchen/diner, bedroom, study and similar. A non-separated conservatory adds to the count if it has an internal quality door between it and the dwelling, but one open to the rest of the dwelling is not counted as a separate room (convention 2.04a). The same convention excludes the following from the count:
 - any room used solely as a kitchen, and any utility room, bathroom, cloakroom, or en-suite bathroom, shower room or toilet
 - any hallway, stairs or landing
 - any room without access to natural daylight
@@ -170,7 +170,7 @@ Specification section 12 links the meter to the tariff used in the calculation:
 - Single meter: the standard tariff.
 - Dual 18-hour or dual 24-hour meter: the 18-hour or 24-hour tariff.
 - Any other dual meter where the main heating is an electric CPSU: the 10-hour tariff.
-- Otherwise, where either main system is electric storage heaters, an electric dry core or water storage boiler, or electric underfloor heating: the 7-hour tariff.
+- Otherwise, where either main system is electric storage heaters, an electric dry core or water storage boiler, or electric underfloor heating (index numbers 421 or 422): the 7-hour tariff.
 - Failing that, where either main system is a direct-acting electric boiler, a heat pump or electric room heaters: the 10-hour tariff.
 - If none of these applies, including where electric heaters are assumed because there is no heating system: the 7-hour tariff.
 
@@ -188,11 +188,11 @@ Convention 4.15 says an electric CPSU uses a 10-hour or 18-hour tariff. On a 7-h
 
 ## Key Takeaways
 - Main systems cannot be room heaters unless the heating consists solely of room heaters (convention 4.09).
-- A storage heater is high heat retention only if its brand name and model is located in the database. Otherwise enter it as fan-assisted. More than one type means two main systems (convention 4.09).
+- A storage heater is high heat retention only if its brand name and model is located in the database. One identified as high heat retention but not in the PCDB is entered as fan-assisted. More than one type means two main systems (convention 4.09).
 - Storage heaters on a single rate meter are entered as panel heaters, and a dual immersion as a single immersion, each with Addendum 6 (conventions 4.02 and 6.03).
 - A storage heater in a non-habitable room that is the sole source of heat is main heating and counts as one heated habitable room (convention 4.20).
 - Secondary heating is included wherever a fixed emitter is present. Choose between several by habitable rooms heated, then cheapest fuel, then lowest efficiency (convention 5.01).
-- A tele-switch is treated as a single meter and a time-switch as dual (convention 9.13).
+- Unless you are choosing a particular tariff on additional information such as a recent bill, a tele-switch is treated as a single meter and a time-switch as dual (convention 9.13).
 
 ---
 

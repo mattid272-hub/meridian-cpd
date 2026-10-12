@@ -56,9 +56,9 @@ Relevant windows are all windows, highly glazed doors and roof lights in the hea
 
 A non-separated conservatory's windows are not measured because it has its own data items: floor area, glazed perimeter, whether it is double glazed, and height (specification Table 31, item 1-10). Its walls and roof are taken as fully glazed, in addition to the measured window areas (specification section 6.1).
 
-A separated conservatory, with or without fixed heaters, is disregarded (specification section 6.2), but the door or window between it and the house is in the heat loss envelope and is measured (convention 2.15). A conservatory is thermally separated when there is an external quality door between it and the dwelling (specification section 9.1.1).
+A separated conservatory, with or without fixed heaters, is disregarded (specification section 6.2), but a window or highly glazed door between it and the house is in the heat loss envelope and is measured (convention 2.15). A conservatory is thermally separated when there is an external quality door between it and the dwelling (specification section 9.1.1).
 
-Version 12.2 added a definition. A conservatory is a building part where 50% or more of the external heat loss walls are glazed and 75% or more of the roof is glazed. Where the roof has been replaced or a false ceiling added, so that the definition is no longer met, it must be recorded as an extension (convention 2.28).
+Version 12.2 moved the conservatory definition out of convention 2.17 into a convention of its own. A conservatory is a building part where 50% or more of the external heat loss walls are glazed and 75% or more of the roof is glazed. Where the roof has been replaced or a false ceiling added, so that the definition is no longer met, it must be recorded as an extension (convention 2.28).
 
 For a highly glazed part of the dwelling, such as a sun room, which does not meet the conservatory criteria, measure all windows and roof windows as per convention 2.15 (convention 2.17). So in a former conservatory with a solid replacement roof, each window and highly glazed door is measured.
 
@@ -128,7 +128,7 @@ Choose unknown date if there is no evidence of the date. Multiple glazed units c
 
 In the absence of all of those, the presence of a thermal spacer bar indicates a glazing age post 2002 in England and Wales, 2003 in Scotland or 2006 in Northern Ireland (convention 3.12a). Only the earlier date is named, so a thermal spacer bar alone does not support Age 3. If none of these applies, choose unknown.
 
-Convention 3.12a says "post 2002" for the build date trigger, while convention 2.16 starts Age 2 at 2002. Neither resolves a date in the boundary year, so check with your accreditation scheme if it arises.
+Convention 3.12a says "post 2002" for the build date trigger, while convention 2.16 starts Age 2 at 2002, so glazing dated 2002 in England and Wales is Age 2. Whether a property built in the boundary year meets the "post 2002" trigger is not spelt out, so check with your accreditation scheme if it arises.
 
 ### Glazing gap
 
@@ -189,11 +189,11 @@ On these points the conventions and the specification give no clear answer, so a
 
 ## Key Takeaways
 - Measure width between the internal reveals and height from inner sill to top reveal, including the visible frame, to two decimal places or better (conventions 2.15 and 2.02).
-- A door with glazing of 60% or more of the door and frame is treated as a window. If in doubt, measure it (convention 2.14).
+- A door with glazing of 60% or more of the door and frame is treated as a window. If in doubt, measure it (convention 2.14, specification section 3.7).
 - Relevant windows are those in the heat loss envelope, including the envelope to a separated conservatory, unheated corridor or excluded porch. Windows in a non-separated conservatory are not measured (convention 2.15).
 - A conservatory has 50% or more of its external heat loss walls and 75% or more of its roof glazed. Otherwise, measure all windows and roof windows (conventions 2.28 and 2.17).
 - Arched windows take the actual width and the average of the shoulder and top heights. Other unusual shapes are entered as area in the width, with height 1 (convention 2.15).
-- Glazing age needs evidence. A thermal spacer bar indicates post 2002 only, not 2022 or later. With no evidence, choose unknown (convention 3.12a).
+- Glazing age needs evidence. A thermal spacer bar indicates post 2002 in England and Wales (2003 in Scotland, 2006 in Northern Ireland), not Age 3. With no evidence, choose unknown (convention 3.12a).
 - Default U-values and g-values are overwritten only with a BFRC Window Energy Rating certificate or manufacturer's data (convention 3.10).
 
 ---

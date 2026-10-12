@@ -85,7 +85,7 @@ Version 12.1 listed a chimney temporarily blocked with cardboard, newspaper bung
 A house has four chimney positions (conventions 5.02 and 9.01):
 - Front room: a fireplace with a grate, no fuel, and an unrestricted chimney of 200 mm or more. An open chimney.
 - Rear room: a gas fire with a flexible flue liner sealed into the chimney. A flue.
-- Front bedroom: fireplace filled in, with an air brick giving a ventilation area under 30,000 mm2. A blocked chimney.
+- Front bedroom: fireplace filled in and stack capped, with an air brick giving a ventilation area under 30,000 mm2. A blocked chimney.
 - Rear bedroom: fireplace filled in and sealed completely, no air brick. Not counted.
 
 ---
@@ -206,7 +206,7 @@ For a cooling system, include fixed systems only and do not include reversible h
 - An open chimney is a vertical duct of 200 mm diameter or more, counted only when unrestricted and suitable for use, at 80 m3 per hour (convention 9.01).
 - A decommissioned chimney with a ventilation area under 30,000 mm2 is a blocked chimney at 20 m3 per hour; at 30,000 mm2 or more it is an open chimney; sealed completely it is not counted (convention 9.01).
 - Intermittent kitchen and bathroom fans are not a mechanical ventilation system (specification Table 31, item 10-1).
-- Mechanical ventilation is entered from the database where make and model are evidenced, otherwise by defaults; vents with no confirmed system are passive stack (convention 7.03a).
+- Mechanical ventilation is entered from the database where make and model are evidenced, otherwise by defaults; vents (excluding air bricks) with no confirmed system are passive stack (convention 7.03a).
 - Wet rooms are kitchens, utility rooms, rooms with a flush toilet or urinal, bathrooms and shower rooms (convention 7.03b).
 - Two identical mechanical ventilation systems are entered once with half the wet rooms; otherwise the database system, then the order of precedence, decides (convention 7.03e).
 - A draught lobby must cover the Main Entrance, be at least 2 m2, work as an airlock and lead into a circulation area (convention 2.09b).

@@ -64,7 +64,7 @@ The assessor enters counts. The efficacy figures are defaults built into the met
 
 The data item asks for the total number of bulbs and the numbers of LED, CFL and incandescent bulbs, or the LEL total. It has no entry for lamp wattage, an efficacy band, or lighting controls such as dimmers and sensors, and convention 7.01 mentions none of them. A lamp recorded as CFL because you could not identify it is given the CFL default, not the LED one, so identify lamps wherever you safely can.
 
-Low energy lights are considered as an improvement when LEL is less than 100% of fixed outlets, and the recommendation is made only if it raises the SAP rating by at least half a point (specification section 20, Table 33 item E).
+Low energy lights are recommended when LEL is less than 100% of fixed outlets, but only if the measure raises the SAP rating by at least half a point, a threshold that may be overridden by amended values in the PCDB (specification section 20, Table 33 item E).
 
 ### Worked example
 
@@ -178,7 +178,7 @@ Manufacturers must display an NCM (SAP) identifier label so that assessors can i
 - Suppress EPC recommendations when the spreadsheet instructs you to.
 - Save and retain the spreadsheet containing the calculation.
 
-Two things are unclear in the sources. The step list refers to technologies recognised under the "RdSAP 2012 heading", although the paragraph before it mentions both headings; if you are unsure which spreadsheet applies, ask your accreditation scheme. And the specification describes the identification label with the words "if present" (specification section 17, Table 31 item 12-3), while the convention says to disregard the technology if the label cannot be found. The convention takes precedence.
+Two things are unclear in the sources. The step list refers to technologies recognised under the "RdSAP 2012 heading", although the paragraph before it mentions both headings; if you are unsure which spreadsheet applies, ask your accreditation scheme. And the specification describes the identification label with the words "if present" (specification section 17, Table 31 item 12-3), while the convention says to disregard the technology if the label and, where applicable, a commissioning certificate cannot be found. The convention takes precedence.
 
 ### BRE Technical Notes
 
@@ -199,7 +199,7 @@ Include fixed systems only. Do not include reversible heat pumps (convention 9.0
 - Wind turbine defaults stay unless you hold documentary evidence (convention 9.07a).
 - Hydro is a yes or no entry with basic documentary evidence. No usage information is required (convention 9.07b).
 - FGHRS and WWHRS are included only if found in the PCDB. If not, leave them out and note their presence (conventions 9.06 and 9.08).
-- Disregard an Appendix Q technology with no label or no RdSAP spreadsheet (conventions Appendix 5).
+- Disregard an Appendix Q technology if the label and, where applicable, a commissioning certificate cannot be found, or if there is no RdSAP spreadsheet (conventions Appendix 5).
 - For cooling, record fixed systems only, never a reversible heat pump (convention 9.04).
 
 ---

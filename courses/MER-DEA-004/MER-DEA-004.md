@@ -82,7 +82,7 @@ Worked example. An upper floor has 18.00 m of accessible common wall, excluding 
 
 ### Where the sources do not agree
 
-The body of convention 2.06 says "equal to or less than 1.8 m" for "50% or more". Appendix 2 describes Type 2 as "less than 1.8 m for at least 50%" and a separate storey as "1.8 m or more for at least 50%", and specification section 1.15.2 also says "less than 1.8 m". A common wall of exactly 1.80 m, or one split exactly half and half, is therefore not treated the same way by the body of the convention and its own appendix, and the conventions do not say which governs. Record the measurements and ask your accreditation scheme.
+The body of convention 2.06 says "equal to or less than 1.8 m" for "50% or more". Appendix 2 describes Type 2 as "less than 1.8 m for at least 50%" and a separate storey as "1.8 m or more for at least 50%", and specification section 1.15.2 also says "less than 1.8 m". A common wall of exactly 1.80 m is therefore a roof room under the body of the convention but a separate storey under its own appendix. A wall split exactly half and half is a roof room under the body, but meets both Appendix 2 descriptions. The conventions do not say which governs. Record the measurements and ask your accreditation scheme.
 
 ---
 
@@ -143,7 +143,7 @@ Where a connected gable is not connected for its full area, because of stepped a
 
 The age band for a roof room is the same as the building part unless evidence proves otherwise. Evidence includes documentary evidence such as planning applications, and dated photographs of the property that validate the date of construction. A photograph in which the roof room is absent might establish the earliest possible date (convention 3.13).
 
-Where the roof room insulation is as built or unknown, the default U-value comes from the "Room-in-roof, all elements" column of specification Table 18 for the age band of the roof room (specification section 3.10.1). The defaults are 2.3 W/m2K for age bands A to D, 1.5 for E, 0.80 for F, 0.50 for G, 0.35 for H and I, 0.30 for J, 0.25 for K (0.20 in Scotland), 0.18 for L and 0.15 for M (specification Table 18).
+Where the roof room insulation is as built or unknown, the default U-value comes from the "Room-in-roof, all elements" column of specification Table 18 for the age band of the roof room (specification section 3.10.1). The defaults are 2.3 W/m2K for age bands A to D, 1.5 for E, 0.80 for F, 0.50 for G, 0.35 for H and I, 0.30 for J, 0.25 for K (0.20 in Scotland), 0.18 for L and 0.15 for M (specification Table 18). Table 18 has a separate column for a room in roof under a thatched roof.
 
 ### No access and no evidence
 
@@ -153,7 +153,7 @@ Assume as built where there is no evidence of retrofitted insulation. The conven
 
 Convention 2.06 refers to convention 3.07 for known insulation levels. Under convention 3.07:
 - multi-foil insulation, with at least three layers of foil-type material, is entered at twice its actual thickness
-- thickness can be doubled if there is documentary evidence of the insulation type and manufacturer's information that its thermal conductivity is 0.025 W/mK or less
+- thickness can be doubled, except for insulation on solid brick and stone walls of age bands A to E, if there is documentary evidence of the insulation type and manufacturer's information that its thermal conductivity is 0.025 W/mK or less
 - thickness is halved if the thermal conductivity is more than 0.08 W/mK
 - these rules apply only where a thickness is specified, not where a U-value is calculated.
 

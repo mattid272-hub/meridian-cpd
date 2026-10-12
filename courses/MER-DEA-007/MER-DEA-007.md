@@ -148,7 +148,7 @@ For storage types the convention says to record the total number of baths and sh
 
 ### Worked example: counting for an instantaneous system
 
-A house has three wet rooms. The bathroom has a bath with a switchable bath and shower unit fed from the combi boiler, a bracket 1.7 m above the plughole and a glass screen. The en-suite has an electric shower only. The ground floor shower room has a fixed shower fed from the combi.
+A house has three rooms with a bath or shower. The bathroom has a bath with a switchable bath and shower unit fed from the combi boiler, a bracket 1.7 m above the plughole and a glass screen. The en-suite has an electric shower only. The ground floor shower room has a fixed shower fed from the combi.
 - Rooms with a bath and/or shower: three. The en-suite counts even though it has only an electric shower.
 - Baths: one.
 - Mixer showers: two. The shower room shower is fed by a boiler, and the bath unit passes both the bracket test and the screen test.

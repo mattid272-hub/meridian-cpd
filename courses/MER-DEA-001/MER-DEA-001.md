@@ -155,7 +155,7 @@ A roof room is included when it is reached by a permanent fixed staircase that y
 
 Whether the space is a roof room or a separate storey turns on the common wall, which the convention defines as a vertical continuation of the external wall of the storey below. For a roof room to be classed as such, there must be no common wall, or the height of the common wall must be equal to or less than 1.8 m for 50% or more of the common wall, excluding gable ends and party walls. Otherwise it is a separate storey (convention 2.06). The height is measured from the floor to the point where the roof plane meets the head of the common wall (conventions v12.2, Appendix 2).
 
-There is a small inconsistency at exactly 1.8 m. Convention 2.06 says "equal to or less than 1.8 m". Appendix 2 and the specification say "less than 1.8 m" for a roof room and "1.8 m or more" for a separate storey (conventions v12.2, Appendix 2; specification section 1.15.2). If you measure a common wall at exactly 1.8 m, ask your accreditation scheme.
+There is a small inconsistency at exactly 1.8 m. Convention 2.06 says "equal to or less than 1.8 m". Appendix 2 says "less than 1.8 m" for a roof room and "1.8 m or more" for a separate storey, and the specification says "less than 1.8 m" and "at least 1.8 m" (conventions v12.2, Appendix 2; specification section 1.15.2). One figure in the specification is labelled "1.8 m or less" (specification section 3.9.2). If you measure a common wall at exactly 1.8 m, ask your accreditation scheme.
 
 ### The two types
 
@@ -239,7 +239,7 @@ Two mechanical ventilation systems (convention 7.03e). If the two systems are id
 
 Comparing the text of v12.1 with v12.2 shows the following. The red marking in the published document is the authority.
 - 1.02b: a bungalow now has all habitable accommodation "at the ground floor only". The earlier wording was "on one floor only".
-- 2.06: a connected gable is treated as exposed if less than 25% of its area is connected. A stud wall is recorded as insulated to the same level as the rafters where evidence shows the rafter insulation continues to the eaves without a significant gap. Appendix 4, the table of roof room U-values, is deleted.
+- 2.06: a connected gable is treated as exposed if less than 25% of its area is connected. A stud wall with no observed insulation is recorded as insulated to the same level and thickness as the rafters where visual or physical evidence shows the rafter insulation continues to the eaves without a significant gap. Appendix 4, the table of roof room U-values, is deleted.
 - 2.13: a construction of very poor thermal quality that has to be included, such as an uninsulated timber panel below windows, is treated as a curtain wall.
 - 4.03: the convention on systems that are incomplete or not working now covers hot water as well as heating.
 - 4.20: the rule for a storage heater in a non-habitable room now applies where it is the sole source of heat. The earlier wording was the primary source.

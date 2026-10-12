@@ -25,7 +25,7 @@ The course uses the data item names in specification Table 31, not software scre
 
 ### What "as built" delivers
 
-RdSAP assigns default insulation from the age band of the part of the property concerned (specification section 5.1), so "as built" does not mean "uninsulated". In England, a cavity wall as built is 1.5 W/m2K in age bands A to E and 0.26 in band M (specification Table 6). An element that has only the insulation that was part of its original construction is "as built" (Table 31 item 4-4).
+RdSAP assigns default insulation from the age band of the part of the property concerned (specification section 5.1), so "as built" does not mean "uninsulated". In England, a cavity wall as built is 1.5 W/m2K in age bands A to E and 0.26 in band M (specification Table 6). A wall that has only the insulation that was part of its original construction is "as built" (Table 31 item 4-4).
 
 Assume "as built" if there is no evidence of retro-fitted insulation (convention 3.03a). The convention applies this expressly to roof rooms where there is no access and no documentary evidence, and to the roof cases in Section 3.
 
@@ -42,9 +42,9 @@ Selecting "unknown" automatically suppresses any insulation recommendation, so i
 
 Where there is evidence of additional insulation you can give its thickness, give the U-value of the element, or select unknown thickness and let RdSAP default (specification section 5.1). Thickness and U-value are mutually exclusive (Table 31 items 3-4, 4-7 and 5-6).
 
-In England, Wales and Northern Ireland, acceptable documentary evidence includes, but is not limited to, official correspondence from the applicable Registered Social Landlord, certificates, warranties, guarantees, or any documents verifying that work has been carried out (convention 9.02). You must be able to demonstrate that it relates to the actual property, with no physical or other documentary evidence to the contrary. Evidence of intent to install does not qualify on its own, but:
-- (a) where both an intention to upgrade the element (in planning documents, for example) and Building Control oversight can be demonstrated, treat the element as upgraded as the planning documents indicate
-- (b) where only one of those can be demonstrated, but it can also be seen that an upgrade has occurred, use the minimum selectable upgrade of the relevant type, with "unknown insulation thickness" if there is no evidence of thickness; for roof insulation between joists, use 100 mm as the lowest selectable thickness
+In England, Wales and Northern Ireland, acceptable documentary evidence includes, but is not limited to, official correspondence from the applicable Registered Social Landlord, certificates, warranties, guarantees, or any documents verifying that work has been carried out (convention 9.02). You must be confident, and able to demonstrate, that it relates to the actual property being assessed and/or that the work has been carried out, and that there is no physical or other documentary evidence to the contrary. Evidence of intent to install does not qualify on its own, but:
+- (a) where both an intention to upgrade the element (in planning documents, for example) and Building Control oversight can be demonstrated, the element can be treated as upgraded as the planning documents indicate
+- (b) where only one of those can be demonstrated, but it can also be seen that an upgrade has occurred, the element can be treated as upgraded using the minimum selectable upgrade of the relevant type, with "unknown insulation thickness" if there is no evidence of thickness; for roof insulation between joists, use 100 mm as the lowest selectable thickness
 
 The Scotland-only wording of convention 9.02 does not contain rules (a) and (b): there, evidence of intent to install does not qualify.
 
@@ -73,7 +73,7 @@ Wall construction is one of: stone (granite or whinstone), stone (sandstone or l
 
 Measure wall thickness in mm for each building part and any alternative wall within it; evidence is required for each different thickness (convention 2.22). Measure at door or window reveals, or compare internal and external measurements. Where thickness varies a little for the same construction, use the average.
 
-For solid brick in age bands A to E the default is 2.5 W/m2K up to 200 mm, 1.7 from 200 to 280 mm, and lower again for thicker walls (specification Table 13); for stone it is calculated from the thickness (specification Table 12).
+For solid brick in age bands A to E the default is 2.5 W/m2K up to 200 mm, 1.7 from 200 to 280 mm, and lower again for thicker walls (specification Table 13); for stone it is calculated from the thickness (specification Table 12), except that band E takes a fixed value, 1.7 in England, unless the calculated value is lower (specification Table 6, note a).
 
 ### Alternative walls
 
@@ -98,7 +98,7 @@ Convention 3.07 adjusts the thickness you enter. It applies only where a thickne
 - Any insulation, except on solid brick and stone walls in age bands A to E, can be doubled if there is documentary evidence of the insulation type and manufacturer's information that its thermal conductivity is 0.025 W/mK or less.
 - If the thermal conductivity is more than 0.08 W/mK (vermiculite, for example), halve the thickness.
 
-For solid brick and stone walls in age bands A to E there is no doubling. You enter the thickness and select a thermal conductivity of 0.040, 0.030 or 0.025 W/mK (convention 3.07). A documented value between these is rounded to the closest: 0.019 is entered as 0.025, and 0.044 as 0.040. Where insulation is confirmed but its conductivity is not available, use 0.040 for mineral wool, rock wool, fibre glass or EPS, 0.030 for XPS, and 0.025 for PUR, PIR or phenolic foam. Table 31 item 4-6 says to assume 0.04 where there is no documentary evidence of the thermal property; where you can identify the material, the convention's list is the more specific rule.
+For solid brick and stone walls in age bands A to E the doubling for low thermal conductivity does not apply. You enter the thickness and select a thermal conductivity of 0.040, 0.030 or 0.025 W/mK (convention 3.07). A documented value between these is rounded to the closest: 0.019 is entered as 0.025, and 0.044 as 0.040. Where insulation is confirmed but its conductivity is not available, use 0.040 for mineral wool, rock wool, fibre glass or EPS, 0.030 for XPS, and 0.025 for PUR, PIR or phenolic foam. Table 31 item 4-6 says to assume 0.04 where there is no documentary evidence of the thermal property; where you can identify the material, the convention's list is the more specific rule.
 
 Worked examples:
 - 50 mm of PIR on a cavity wall, with documentary evidence of the type and a manufacturer's conductivity of 0.022 W/mK, can be entered as 100 mm.
@@ -111,7 +111,7 @@ Convention 9.10 defines three items:
 - Narrow cavity: indicated by a stretcher bond brick pattern with wall thickness 220 to 250 mm.
 - Possible high exposure: any dwelling in exposure zones 3 or 4 (Appendix 1 of the conventions); if in doubt, record it.
 
-For a flat on the third storey or above where cavity construction is identified, select "Access issues" (convention 3.14).
+For a flat on the third storey or above where cavity construction is identified (and retro-fit cavity insulation is therefore recommended), select "Access issues" (convention 3.14).
 
 Basement walls are those adjacent to earth, and are only included when the basement is heated (convention 3.17). Basement walls above ground level are treated as a different wall construction (convention 2.05).
 
@@ -147,7 +147,7 @@ The U-values behind the thicknesses are 0.40 W/m2K at 100 mm, 0.21 at 200 mm and
 
 ### Rafters, sloping ceilings and flat roofs
 
-Rafter, flat roof and sloping ceiling insulation each take "unknown", "as built" or a known thickness (Table 31 items 5-3 to 5-5). "None" does not apply to a flat roof or a pitched roof with sloping ceiling (Table 31 item 5-1). Assume "as built" for a flat roof or sloping ceiling without documentary evidence, and for rafter insulation with no evidence of retro-fitting (convention 3.03a). The comment on Table 31 item 5-1 says that without evidence the entry is "unknown"; the convention takes precedence. The U-value is the same either way (specification Table 18, note 1), but "unknown" loses the recommendation (convention 3.03b).
+Rafter, flat roof and sloping ceiling insulation each take "unknown", "as built" or a known thickness (Table 31 items 5-3 to 5-5). "None" does not apply to a flat roof or a pitched roof with sloping ceiling (Table 31 item 5-1). Assume "as built" for a flat roof or sloping ceiling without documentary evidence, and for rafter insulation with no evidence of retro-fitting (convention 3.03a). The comment on Table 31 item 5-1 says that without evidence the entry is "unknown"; the convention takes precedence. The U-value is the same either way (specification Table 18, note 1), but "unknown" loses the recommendation (convention 3.03b). A conservatory recorded as an extension because its roof has been replaced or a false ceiling added has its own roof entries (convention 2.28).
 
 The age band of a roof room is the same as the building part unless evidence, such as planning applications or dated photographs, proves otherwise (convention 3.13).
 
@@ -179,7 +179,7 @@ A basement that meets the criteria in convention 2.05 becomes the lowest occupie
 - "As built" delivers the age band default; assume it wherever there is no evidence of retro-fitted insulation (convention 3.03a).
 - "Unknown" is for exceptional circumstances and suppresses the insulation recommendation (convention 3.03b).
 - A U-value entry needs the evidence in convention 3.08; product and thickness alone lead to a thickness entry under convention 3.07.
-- Solid brick and stone walls in age bands A to E take a conductivity of 0.040, 0.030 or 0.025 W/mK, with no doubling of thickness (convention 3.07).
+- Solid brick and stone walls in age bands A to E take a conductivity of 0.040, 0.030 or 0.025 W/mK, with no doubling of thickness for low conductivity (convention 3.07).
 - "No access" means no hatch or other means of access; a hatch you could not use, or insulation fully obstructed, is "access, loft insulation unknown" (convention 3.04).
 - Varying loft insulation is an area-weighted average; an area with none means splitting into building parts (convention 3.04).
 
@@ -216,7 +216,7 @@ B) 100 mm, because the conductivity is 0.025 W/mK or less
 C) 25 mm, because the thickness is halved
 D) As a U-value worked out by the assessor from the product and thickness
 
-**Correct answer: A.** Convention 3.07 excludes solid brick and stone walls in age bands A to E from doubling; the thickness is entered with the closest of 0.040, 0.030 or 0.025 W/mK.
+**Correct answer: A.** Convention 3.07 excludes solid brick and stone walls in age bands A to E from the doubling for a conductivity of 0.025 W/mK or less; the thickness is entered with the closest of 0.040, 0.030 or 0.025 W/mK.
 
 ---
 

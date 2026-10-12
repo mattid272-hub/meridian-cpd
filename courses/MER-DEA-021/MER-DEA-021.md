@@ -137,7 +137,7 @@ A vertical duct with a diameter of less than 200 mm is counted as a flue. That i
 - A chimney or open flue attached to a wood or solid fuel boiler
 - A chimney or open flue attached to a wood or solid fuel stove or appliance with a controlled air supply
 
-The worksheet has four flue lines with different flow rates, listed in Section 2. Neither document states which line each of the convention's cases belongs to, so follow your scheme's guidance on the flue categories. A flue for a solid fuel boiler in an unheated space is not counted (specification section 4.1, Table 5).
+The worksheet has four flue lines, listed with their flow rates in Section 2. Neither document states which line each of the convention's cases belongs to, so follow your scheme's guidance on the flue categories. A flue for a solid fuel boiler in an unheated space is not counted (specification section 4.1, Table 5).
 
 ### Ventilation and heating are separate questions
 
@@ -216,7 +216,7 @@ The floor infiltration for the whole dwelling is determined by the floor type of
 - Material changes since the test make the certificate invalid for RdSAP entry. The sources do not define a material change (convention 10.01).
 - A test result replaces the fabric allowances, but the chimney, flue, fan and vent counts are still added (specification section 4.1, Table 5).
 - An open chimney is an unrestricted, usable duct of 200 mm diameter or more, or 125,000 mm2. Smaller ducts are flues (convention 9.01).
-- A decommissioned chimney is not counted if sealed completely, is blocked with a ventilation area below 30,000 mm2 and is open at 30,000 mm2 or more (convention 9.01).
+- A decommissioned chimney need not be counted if sealed completely, is blocked with a ventilation area below 30,000 mm2 and is open at 30,000 mm2 or more (convention 9.01).
 - A draught lobby must meet all four tests in convention 2.09b. Flats reached by an enclosed corridor or stairwell are classified as having one.
 
 ---

@@ -70,7 +70,7 @@ A heat pump is identified from the database whenever possible and entered as a d
 
 Convention 4.01a gives two treatments, depending on the heat source.
 
-For anything other than a heat pump, specify the same heat source as main heating 1 and main heating 2, following the two main systems rules in convention 4.09. Specification section 10.1 repeats this.
+For anything other than a heat pump, specify the same heat source as main heating 1 and main heating 2, following the two main systems rules in convention 4.09. Specification section 10.1 gives the same instruction, but without the heat pump exception.
 
 For a heat pump there is a single entry. Enter radiators when they serve 50% or more of the total floor area. The convention then says that where the proportion is the same the emitters are entered as underfloor. Read literally, those two sentences overlap at an exact 50/50 split, and the case where radiators serve less than half is not spelled out, although underfloor is the evident reading. For an even split, check with your accreditation scheme.
 
@@ -87,9 +87,9 @@ With a heat pump instead there would be one entry. Radiators serve 40% of the fl
 
 ### Design flow temperature
 
-For condensing boilers and heat pumps, the design flow temperature is recorded as unknown unless there is documentary evidence that the system has been designed and commissioned as a low temperature one (convention 4.01b). The options are unknown, over 45°C, 45°C or below but over 35°C, and 35°C or below (Table 31 item 7-4). Where the entry is unknown, the calculation takes radiators as over 45°C and underfloor heating as 35°C or below (specification section 10.11, Table 29).
+For condensing boilers and heat pumps, the design flow temperature is recorded as unknown unless there is documentary evidence that the system has been designed and commissioned as a low temperature one (convention 4.01b). The options are unknown, over 45°C, 45°C or below but over 35°C, and 35°C or below, the third of which is not available for heat pumps from the SAP tables (Table 31 item 7-4). Where the entry is unknown, the calculation takes radiators as over 45°C and underfloor heating as 35°C or below (specification section 10.11, Table 29).
 
-Neither document describes what that evidence should look like, so ask your accreditation scheme what it accepts.
+Convention 9.02 describes acceptable documentary evidence only in general terms, and the specification asks for evidence giving the design flow temperature (Table 31 item 7-4). Neither names particular documents, so ask your accreditation scheme what it accepts.
 
 ---
 
@@ -141,7 +141,7 @@ Convention 4.05b is new in v12.2. A Heat-as-a-Service system is treated as commu
 - Where the service is powered by electricity, use community heat pump.
 - In other circumstances, use community boiler.
 
-The convention does not say what form the evidence must take, so confirm with your accreditation scheme what it will accept.
+Convention 4.05b does not say what form the evidence must take, and convention 9.02 describes acceptable documentary evidence only in general terms, so confirm with your accreditation scheme what it will accept.
 
 ---
 
@@ -184,7 +184,7 @@ Include a flue gas heat recovery system only if it is found in the PCDB, identif
 - Radiators and underfloor from one system: a boiler is entered as main heating 1 and 2, while a heat pump has one entry, with radiators when they serve 50% or more of the floor area (convention 4.01a).
 - Installed but not working still counts (convention 4.03). Design flow temperature is unknown unless there is documentary evidence of low temperature design and commissioning (convention 4.01b).
 - Main system 1 is settled by living area, then most habitable rooms, then water heating, then cheapest to run. Proportions follow floor area, with 50/50 the default on a shared circuit (convention 4.09).
-- Community heating applies when the heat generator is not in the dwelling (convention 4.05a), and to an evidenced Heat-as-a-Service system wherever the generator sits (convention 4.05b).
+- Community heating applies when a heat generator serving more than one premises is not in the dwelling (convention 4.05a), and to an evidenced Heat-as-a-Service system whose provider owns and/or operates the generator, wherever it sits (convention 4.05b).
 - TRVs count when on 50% or more of all radiators (convention 4.13). TTZC needs at least two zones with independent time and temperature control (convention 4.17).
 
 ---

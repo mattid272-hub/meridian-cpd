@@ -19,7 +19,7 @@ This course is about the file behind the EPC: the photographs, sketch, site note
 
 Neither the conventions nor the specification says how often a scheme audits its members, how files are selected, what counts as a pass or what follows an unsuccessful audit. Convention 1.01 simply tells assessors to refer to scheme guidance for the use of RdSAP. Ask your accreditation scheme for its own audit rules.
 
-Section 4 uses one accreditation scheme's published "Evidence Required for Audit" list for RdSAP. It is that scheme's requirement, not a rule for every scheme. Its change record ends in February 2022 and it does not mention items such as pressure test certificates or PV batteries. Use your own scheme's current version.
+Section 4 uses one accreditation scheme's "Evidence Required for Audit" list for RdSAP. It is that scheme's requirement, not a rule for every scheme. Its change record ends in February 2022 and it does not mention items such as pressure test certificates or PV batteries. Use your own scheme's current version.
 
 ---
 
@@ -27,7 +27,7 @@ Section 4 uses one accreditation scheme's published "Evidence Required for Audit
 
 ### Three kinds of evidence
 
-The conventions rely on three kinds of evidence: what you see or measure on the day, photographs, and documents. Some entries accept more than one kind. Upgraded elements in a converted building can be specified where documentary or visual evidence is available (convention 3.05a). Others accept only a document: a door is counted as insulated only if documentary evidence is provided (convention 3.09).
+The conventions rely on three kinds of evidence: what you see or measure on the day, photographs, and documents. Some entries accept more than one kind. In England, Wales and Northern Ireland, upgraded elements in a converted building can be specified where documentary or visual evidence is available (convention 3.05a). Others accept only a document: a door is counted as insulated only if documentary evidence is provided (convention 3.09).
 
 The starting position is "as built". Assume it wherever there is no evidence of retrofitted insulation (convention 3.03a).
 
@@ -36,8 +36,8 @@ The starting position is "as built". Assume it wherever there is no evidence of 
 Convention 9.02 says acceptable documentary evidence includes, but is not limited to, official correspondence from the applicable Registered Social Landlord, certificates, warranties or guarantees, or any documents verifying that work has been carried out. You must be confident, and able to demonstrate, that the documentation relates to the actual property being assessed and/or that the work has been carried out, and that there is no physical or other documentary evidence to the contrary (convention 9.02).
 
 Evidence of intent to install does not qualify on its own. It does qualify when supported by evidence of subsequent Building Control oversight, or by visual evidence that the upgrade has been undertaken (convention 9.02). The convention then sets out two cases:
-- Rule (a): if you can demonstrate both an intention to upgrade the element (in planning documents, for example) and Building Control oversight of the work, treat the element as upgraded as indicated in the planning documents (convention 9.02).
-- Rule (b): if you can demonstrate only one of those, but can also see that an upgrade has occurred, treat the element as upgraded using the minimum selectable upgrade of the relevant type defined in RdSAP. If the change is from "as built" to "insulated" and you have no evidence of thickness, use unknown insulation thickness. For roof insulation between joists, use 100 mm as the lowest selectable thickness (convention 9.02).
+- Rule (a): if you can demonstrate both an intention to upgrade the element (in planning documents, for example) and Building Control oversight of the work, the element can be treated as upgraded as indicated in the planning documents (convention 9.02).
+- Rule (b): if you can demonstrate only one of those, but can also see that an upgrade has occurred, the element can be treated as upgraded using the minimum selectable upgrade of the relevant type defined in RdSAP. If the change is from "as built" to "insulated" and you have no evidence of thickness, use unknown insulation thickness. For roof insulation between joists, use 100 mm as the lowest selectable thickness (convention 9.02).
 
 ### Scotland
 
@@ -87,7 +87,7 @@ Default U-values for walls, roofs and floors must not be overwritten unless ther
 - relevant building control approval that both correctly defines the construction and states the calculated U-value
 - a U-value calculation produced or verified by a person with suitable expertise and experience (convention 3.08).
 
-Suitable expertise and experience can be shown by, but is not limited to, membership of a recognised U-value calculation competency scheme, or OCDEA or Level 4 non-domestic energy assessor membership (convention 3.08).
+Suitable expertise and experience can be shown by, but is not limited to, membership of a recognised U-value calculation competency scheme, or OCDEA or Level 4 non-domestic energy assessor membership, or any other process recognised by accreditation schemes or approved organisations and Government. For Scotland, the convention's footnote to OCDEA reads: membership of an Approved Organisation scheme for EPCs for new domestic buildings (convention 3.08).
 
 ---
 
@@ -130,8 +130,8 @@ Recommendations should be removed only if there is documentary evidence showing 
 
 ### What one scheme asks to see
 
-The example scheme's test is that the evidence must be sufficient for an auditor to re-create the EPC without using the data input report, so every entry must be supported by a photograph, floor plan sketch, written site notes or other acceptable documentary evidence (scheme evidence list). That one scheme asks for:
-- Photographs of all elevations, showing the dwelling from its highest to its lowest extent.
+The example scheme's test is that the evidence must be sufficient for an auditor to re-create the EPC without using the data input report, so every entry must be supported by a photograph, floor plan sketch, written site notes or other acceptable documentary evidence (scheme evidence list). That one scheme's list includes:
+- Photographs of all elevations appropriate to the detachment of the property, showing the dwelling from its highest to its lowest extent.
 - Wall construction: evidence of build type, wall thickness measurements and retrofitted insulation.
 - Evidence of access to the loft space or lack of it, and loft insulation photographs showing both depth and overall coverage.
 - Photographs of roof rooms, openings, heating systems and controls, and the hot water cylinder including insulation type and depth. If a cylinder thermostat is assumed, that should be documented in site notes.
@@ -162,8 +162,8 @@ If you lodge an EPC in error and lodge a corrected one, inform your accreditatio
 ---
 
 ## Key Takeaways
-- Audit frequency, selection and outcomes are not in the conventions or the specification. Refer to your scheme (convention 1.01).
-- Documentary evidence must relate to the actual property, with no physical or other documentary evidence to the contrary (convention 9.02).
+- Audit frequency, selection and outcomes are not in the conventions or the specification. Ask your scheme. Convention 1.01 says only to refer to scheme guidance for the use of RdSAP.
+- Documentary evidence must relate to the actual property, with no physical evidence to the contrary. The England, Wales and Northern Ireland wording adds "or other documentary evidence" (convention 9.02).
 - Intent to install alone is not evidence. Rules (a) and (b) apply in England, Wales and Northern Ireland only (convention 9.02).
 - Measured loft insulation needs a photograph of the measured thickness (convention 3.04), and "unknown" insulation must be explained in site notes (convention 3.03b).
 - Defaults for U-values, windows, doors, air permeability and design flow temperature are replaced only with the documents the conventions name (conventions 3.08, 3.10, 3.09, 10.01 and 4.01b).
@@ -174,14 +174,14 @@ If you lodge an EPC in error and lodge a corrected one, inform your accreditatio
 
 ## Self-Assessment Questions
 
-**Q1.** In England, planning documents show an intention to add internal wall insulation, there is no evidence of Building Control oversight, you can see that the upgrade has occurred, and there is no evidence of its thickness. How is the wall entered?
+**Q1.** In England, planning documents show an intention to add internal wall insulation, there is no evidence of Building Control oversight, you can see that the upgrade has occurred, and there is no evidence of its thickness. Under convention 9.02, how can the wall be entered?
 
 A) As built, because evidence of intent to install never counts
 B) As insulated, using the minimum selectable upgrade with unknown insulation thickness
 C) As insulated to the thickness shown in the planning documents
 D) With "unknown" insulation type
 
-**Correct answer: B.** Rule (b) of convention 9.02 applies where only one of intent or Building Control oversight can be shown but the upgrade can be seen: use the minimum selectable upgrade, with unknown thickness if none is evidenced.
+**Correct answer: B.** Rule (b) of convention 9.02 applies where only one of intent or Building Control oversight can be shown but the upgrade can be seen: the element can be treated as upgraded using the minimum selectable upgrade, with unknown thickness if none is evidenced.
 
 ---
 
