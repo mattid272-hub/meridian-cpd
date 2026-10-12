@@ -1,4 +1,4 @@
-# EPC Audit Preparation: How to Pass Your Annual Audit
+# EPC Audit Preparation: Building an Evidence File That Stands Up
 **Course ID:** MER-DEA-014 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 

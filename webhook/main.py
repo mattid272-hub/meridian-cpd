@@ -75,7 +75,7 @@ COURSES = {
     "MER-DEA-008": {"course_id": "MER-DEA-008", "title": "Insulation in RdSAP 10: Walls, Roofs, Floors and Common Errors", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-DEA-010": {"course_id": "MER-DEA-010", "title": "Lighting and Renewables in RdSAP 10", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-DEA-011": {"course_id": "MER-DEA-011", "title": "Solar PV, Battery Storage and PV Diverters in RdSAP 10", "cpd_hours": 1.0, "published": "2026-03-01"},
-    "MER-DEA-014": {"course_id": "MER-DEA-014", "title": "EPC Audit Preparation: How to Pass Your Annual Audit", "cpd_hours": 1.0, "published": "2026-03-01"},
+    "MER-DEA-014": {"course_id": "MER-DEA-014", "title": "EPC Audit Preparation: Building an Evidence File That Stands Up", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-DEA-021": {"course_id": "MER-DEA-021", "title": "Airtightness Testing in RdSAP 10", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-001":  {"course_id": "MER-RA-001",  "title": "PAS 2035:2023 Overview for Retrofit Assessors", "cpd_hours": 2.0, "published": "2026-03-01"},
     "MER-RA-002":  {"course_id": "MER-RA-002",  "title": "Moisture Risk Assessment in PAS 2035:2023: The Updated Framework", "cpd_hours": 1.0, "published": "2026-03-01"},
