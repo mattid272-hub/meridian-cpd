@@ -9,7 +9,9 @@ Deployed on Railway. Handles:
   - GET /my-cpd                → subscriber login page
   - GET /my-cpd/dashboard      → subscriber CPD portal (session cookie auth)
 """
+import json
 import os
+import re
 import secrets
 import uuid
 import hmac
@@ -26,6 +28,7 @@ from supabase import create_client
 
 from email_sender import send_course_email, send_certificate_email, send_unsubscribe_goodbye_email
 from certificate_generator import generate_certificate
+from settings import APP_URL, SITE_URL
 
 app = FastAPI()
 
@@ -38,7 +41,9 @@ supabase = create_client(
     os.environ["SUPABASE_SERVICE_ROLE_KEY"],
 )
 
-BASE_URL = os.environ.get("BASE_URL", "https://meridiancpd.co.uk")
+# All app routes live on the app domain. See settings.py for why BASE_URL is not
+# read directly from the environment any more.
+BASE_URL = APP_URL
 LOGO_URL = os.environ.get("LOGO_URL", "")  # Set this env var when new logo is ready
 
 # PDF URLs are derived automatically from the Supabase project URL + course ID.
@@ -92,9 +97,74 @@ COURSES = {
     "MER-ALL-010": {"course_id": "MER-ALL-010", "title": "Damp and Mould Assessments: Scotland's New Framework and UK Implications", "cpd_hours": 1.0, "published": "2026-08-01"},
     "MER-ALL-011": {"course_id": "MER-ALL-011", "title": "Non-Domestic MEES 2031: EPC B Target and Implications for Assessors", "cpd_hours": 1.0, "published": "2026-08-01"},
     "MER-ALL-012": {"course_id": "MER-ALL-012", "title": "Whole Life Carbon for Energy Assessors: What It Means and Why Now", "cpd_hours": 1.0, "published": "2026-08-15"},
+    "MER-ALL-013": {"course_id": "MER-ALL-013", "title": "Overheating Assessment in Existing Homes: TM59 2026 Update", "cpd_hours": 1.0, "published": "2026-08-01"},
+    "MER-ALL-014": {"course_id": "MER-ALL-014", "title": "SMETER Technology: Measured Building Performance for Energy Assessors", "cpd_hours": 1.0, "published": "2026-08-15"},
+    "MER-ALL-015": {"course_id": "MER-ALL-015", "title": "EPC Reform and the Future Home Buying Process: What Assessors Must Know", "cpd_hours": 1.0, "published": "2026-09-01"},
+    "MER-ALL-016": {"course_id": "MER-ALL-016", "title": "Scheme Operating Requirements 2026: What's Changed for Energy Assessors", "cpd_hours": 1.0, "published": "2026-09-15"},
+    "MER-ALL-017": {"course_id": "MER-ALL-017", "title": "Awaab's Law Phase 2: What Energy Assessors Must Know", "cpd_hours": 1.0, "published": "2026-10-01"},
     # Subscription — welcome email only; library access granted via plan field
     "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0, "published": "2026-03-01"},
 }
+
+# ── Catalogue sync ─────────────────────────────────────────────────────────────
+# The content engine publishes a new course on the 1st and 15th. It uploads the PDF
+# and records the course in courses/catalogue.json in Supabase Storage. Reading that
+# file here means a new course appears in the library without a code change or a
+# redeploy. The COURSES dict above stays as the built-in baseline: if the catalogue
+# is missing or unreadable, nothing is lost.
+CATALOGUE_BUCKET = "courses"
+CATALOGUE_FILE = "catalogue.json"
+CATALOGUE_TTL_SECONDS = 600
+_COURSE_ID_RE = re.compile(r"^MER-[A-Z]{2,4}-\d{3}$")
+_catalogue_checked_at = 0.0
+
+
+def _merge_catalogue(data) -> int:
+    """Add valid, not-yet-known courses from a catalogue payload. Returns how many were added."""
+    added = 0
+    entries = data.get("courses", {}) if isinstance(data, dict) else {}
+    if not isinstance(entries, dict):
+        return 0
+    for cid, entry in entries.items():
+        if cid in COURSES or not isinstance(entry, dict):
+            continue
+        if not isinstance(cid, str) or not _COURSE_ID_RE.match(cid):
+            continue
+        title = str(entry.get("title") or "").strip()
+        if not title:
+            continue
+        try:
+            hours = float(entry.get("cpd_hours", 1.0))
+        except (TypeError, ValueError):
+            hours = 1.0
+        if not 0 < hours <= 10:
+            hours = 1.0
+        COURSES[cid] = {
+            "course_id": cid,
+            "title": title[:200],
+            "cpd_hours": hours,
+            "published": str(entry.get("published") or "")[:10],
+        }
+        added += 1
+    return added
+
+
+def refresh_catalogue(force: bool = False) -> None:
+    """Pick up newly published courses. Cheap: at most one storage read every 10 minutes."""
+    global _catalogue_checked_at
+    now = time.time()
+    if not force and now - _catalogue_checked_at < CATALOGUE_TTL_SECONDS:
+        return
+    _catalogue_checked_at = now
+    try:
+        raw = supabase.storage.from_(CATALOGUE_BUCKET).download(CATALOGUE_FILE)
+        added = _merge_catalogue(json.loads(raw))
+        if added:
+            print(f"Catalogue: added {added} newly published course(s)")
+    except Exception as e:
+        # No catalogue yet, or storage unavailable — the built-in list still applies.
+        print(f"Catalogue not loaded ({type(e).__name__}); using built-in course list")
+
 
 # Stripe price ID → course_id mapping
 # Single course payment link maps to MER-DEA-001 (flagship)
@@ -192,6 +262,8 @@ async def handle_checkout(session):
     session_id = getattr(session, "id", None) or session["id"]
     amount = getattr(session, "amount_total", 0) or 0
 
+    refresh_catalogue()
+
     # Determine what was purchased
     # client_reference_id carries the course ID set by the buy link (e.g. MER-DEA-001)
     client_ref = getattr(session, "client_reference_id", None) or ""
@@ -263,19 +335,24 @@ async def download_course(course_id: str, request: Request):
     if not email:
         return RedirectResponse("/my-cpd", status_code=302)
 
+    refresh_catalogue()
     if course_id not in COURSES:
         raise HTTPException(status_code=404, detail="Course not found")
 
-    # Mark downloaded_at on the completion record if not already set
-    member_res = supabase.table("members").select("id").eq("email", email).execute()
-    if member_res.data:
-        member_id = member_res.data[0]["id"]
-        supabase.table("completions").update({
-            "downloaded_at": datetime.now(timezone.utc).isoformat(),
-        }).eq("member_id", member_id).eq("course_id", course_id).is_(
-            "downloaded_at", "null"
-        ).execute()
-        print(f"Download recorded: {email} → {course_id}")
+    # Mark downloaded_at on the completion record if not already set.
+    # A database hiccup here must never stop a subscriber getting their PDF.
+    try:
+        member_res = supabase.table("members").select("id").eq("email", email).execute()
+        if member_res.data:
+            member_id = member_res.data[0]["id"]
+            supabase.table("completions").update({
+                "downloaded_at": datetime.now(timezone.utc).isoformat(),
+            }).eq("member_id", member_id).eq("course_id", course_id).is_(
+                "downloaded_at", "null"
+            ).execute()
+            print(f"Download recorded: {email} → {course_id}")
+    except Exception as e:
+        print(f"ERROR recording download for {email} → {course_id}: {e}")
 
     return RedirectResponse(_pdf_url(course_id), status_code=302)
 
@@ -297,6 +374,7 @@ async def completion_page(token: str):
         </body></html>
         """, status_code=404)
 
+    refresh_catalogue()
     row = result.data[0]
     course_id = row["course_id"]
     name = row["members"]["name"] or "there"
@@ -395,6 +473,7 @@ async def confirm_completion(token: str, request: Request):
     if not result.data:
         return HTMLResponse("<p>This link has already been used.</p>", status_code=400)
 
+    refresh_catalogue()
     row = result.data[0]
     member_id = row["member_id"]
     course_id = row["course_id"]
@@ -477,9 +556,9 @@ async def confirm_completion(token: str, request: Request):
       <p>Well done, {member_name}. {email_note}</p>
       <div class="cert-num">{cert_number}</div>
       <p>Keep this certificate number — your accreditation body can verify it at
-         <a href="https://meridiancpd.co.uk/verify/{cert_number}">meridiancpd.co.uk/verify/{cert_number}</a>
+         <a href="{BASE_URL}/verify/{cert_number}">{BASE_URL.split("://", 1)[-1]}/verify/{cert_number}</a>
       </p>
-      <p><a href="https://meridiancpd.co.uk/library">Browse more courses →</a></p>
+      <p><a href="{BASE_URL}/my-cpd/dashboard">Back to my CPD dashboard →</a></p>
     </body>
     </html>
     """)
@@ -606,7 +685,7 @@ async def verify_certificate(cert_number: str):
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {"status": "ok", "courses": len([k for k in COURSES if k != "SUBSCRIPTION"])}
 
 
 # ── Unsubscribe ────────────────────────────────────────────────────────────────
@@ -679,9 +758,39 @@ p{{color:#64748b;line-height:1.6;font-size:15px}}
 
 # ── Marketing consent ─────────────────────────────────────────────────────────
 
+def _save_marketing_consent(email: str, consent: bool) -> bool:
+    """Record the choice. Returns False (and logs) if it could not be saved.
+    Requires members.marketing_consent — see migrations/2026-10-12_marketing_consent.sql."""
+    try:
+        supabase.table("members").update({"marketing_consent": consent}).eq(
+            "email", email.strip().lower()
+        ).execute()
+        return True
+    except Exception as e:
+        print(f"ERROR saving marketing consent ({consent}) for {email}: {e}")
+        return False
+
+
+def _consent_not_saved_page() -> HTMLResponse:
+    return HTMLResponse(f"""
+    <html><head><title>Meridian CPD</title>
+    <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+    h2{{color:#0f2547}}p{{color:#64748b;line-height:1.6}}
+    .btn{{display:inline-block;margin-top:24px;background:#0f2547;color:white;padding:12px 24px;
+          border-radius:8px;text-decoration:none;font-weight:bold}}</style></head>
+    <body>
+      <h2>Sorry — we couldn't save that just now.</h2>
+      <p>Your subscription and course access are unaffected.<br>
+      Reply to any Meridian CPD email, or write to
+      <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a>, and we'll set your preference for you.</p>
+      <a class="btn" href="{BASE_URL}/my-cpd/dashboard">Back to my dashboard →</a>
+    </body></html>""", status_code=200)
+
+
 @app.get("/my-cpd/consent/yes", response_class=HTMLResponse)
 async def consent_yes(email: str):
-    supabase.table("members").update({"marketing_consent": True}).eq("email", email).execute()
+    if not _save_marketing_consent(email, True):
+        return _consent_not_saved_page()
     return HTMLResponse(f"""
     <html><head><title>Meridian CPD</title>
     <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
@@ -698,7 +807,8 @@ async def consent_yes(email: str):
 
 @app.get("/my-cpd/consent/no", response_class=HTMLResponse)
 async def consent_no(email: str):
-    supabase.table("members").update({"marketing_consent": False}).eq("email", email).execute()
+    if not _save_marketing_consent(email, False):
+        return _consent_not_saved_page()
     return HTMLResponse(f"""
     <html><head><title>Meridian CPD</title>
     <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
@@ -989,6 +1099,7 @@ async def subscriber_dashboard(request: Request):
     member_id = member["id"]
     member_name = member["name"] or email.split("@")[0].title()
     is_sub = member["plan"] == "subscription"
+    refresh_catalogue()
 
     # Fetch purchases
     purchases_res = supabase.table("purchases").select("course_id, purchased_at").eq(
@@ -1639,6 +1750,7 @@ async def admin_contacts(request: Request, credentials=Depends(_check_admin)):
 @app.get("/admin/courses", response_class=HTMLResponse)
 async def admin_courses(credentials=Depends(_check_admin)):
     from datetime import date, timedelta
+    refresh_catalogue(force=True)
     today = date.today()
     new_threshold = today - timedelta(days=14)
 

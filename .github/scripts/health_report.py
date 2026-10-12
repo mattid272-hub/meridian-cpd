@@ -13,18 +13,36 @@ Checks:
 - Course library count
 """
 import os
+import sys
 import httpx
 from datetime import datetime, timezone, timedelta
 from supabase import create_client
-import resend
 
-SUPABASE_URL = os.environ["SUPABASE_URL"]
-SUPABASE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
-REPORT_TO    = os.environ.get("REPORT_TO_EMAIL", "mattid272@gmail.com")
 
-resend.api_key = os.environ["RESEND_API_KEY"]
+def fail(reason: str):
+    """Stop with a reason that shows on the GitHub Actions run page (not just in the log)."""
+    print(f"::error title=Health report not sent::{reason}")
+    sys.exit(1)
 
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+SUPABASE_URL   = os.environ.get("SUPABASE_URL", "").strip()
+SUPABASE_KEY   = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "").strip()
+REPORT_TO      = os.environ.get("REPORT_TO_EMAIL", "mattid272@gmail.com")
+
+missing = [name for name, val in [
+    ("SUPABASE_URL", SUPABASE_URL),
+    ("SUPABASE_SERVICE_ROLE_KEY", SUPABASE_KEY),
+    ("RESEND_API_KEY", RESEND_API_KEY),
+] if not val]
+if missing:
+    fail("Missing GitHub repository secret(s): " + ", ".join(missing)
+         + ". Add them under Settings > Secrets and variables > Actions.")
+
+try:
+    supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+except Exception as e:
+    fail(f"Could not connect to Supabase: {type(e).__name__}: {str(e)[:200]}")
 
 now = datetime.now(timezone.utc)
 yesterday = (now - timedelta(hours=24)).isoformat()
@@ -38,10 +56,20 @@ def q(label, fn):
         return None
 
 
+live_course_count = None
+
+
 def check_backend():
+    global live_course_count
     try:
         r = httpx.get("https://app.meridiancpd.co.uk/health", timeout=8)
-        return "UP" if r.status_code < 400 else f"DOWN ({r.status_code})"
+        if r.status_code < 400:
+            try:
+                live_course_count = r.json().get("courses")
+            except Exception:
+                pass
+            return "UP"
+        return f"DOWN ({r.status_code})"
     except Exception:
         return "UNREACHABLE"
 
@@ -75,11 +103,10 @@ def get_suppressions_today():
 
 
 def get_course_count():
-    from pathlib import Path
-    courses_dir = Path(__file__).parent.parent.parent / "courses"
-    if courses_dir.exists():
-        return len([d for d in courses_dir.iterdir() if d.is_dir() and not d.name.startswith(".")])
-    return "?"
+    """Courses actually visible to subscribers (reported by the live app)."""
+    if live_course_count is not None:
+        return live_course_count
+    return "? (app did not report)"
 
 
 # ── Gather ────────────────────────────────────────────────────────────────────
@@ -132,8 +159,8 @@ Emails sent yesterday: {emails_yesterday}
 {suppression_lines}
 NOTES
 ─────
-• Admin panel: https://meridiancpd.co.uk/admin/
-• Subscriber dashboard: https://app.meridiancpd.co.uk/admin/
+• Admin panel (members, certificates): https://app.meridiancpd.co.uk/admin
+• Subscriber login: https://app.meridiancpd.co.uk/my-cpd
 • Content engine runs on the 1st and 15th automatically.
 
 —
@@ -193,8 +220,8 @@ body_html = f"""<!DOCTYPE html>
 
 <div class="links card">
   <h2>Quick Links</h2>
-  <a href="https://meridiancpd.co.uk/admin/">Course Admin</a>
-  <a href="https://app.meridiancpd.co.uk/admin/">Subscriber Admin</a>
+  <a href="https://app.meridiancpd.co.uk/admin">Admin panel</a>
+  <a href="https://app.meridiancpd.co.uk/my-cpd">Subscriber login</a>
   <a href="https://dashboard.stripe.com">Stripe</a>
   <a href="https://railway.app">Railway</a>
 </div>
@@ -208,13 +235,25 @@ body_html = f"""<!DOCTYPE html>
 # ── Send ──────────────────────────────────────────────────────────────────────
 print(f"Sending report to {REPORT_TO}...")
 
-resend.Emails.send({
-    "from": "Meridian CPD <hello@meridiancpd.co.uk>",
-    "to": [REPORT_TO],
-    "subject": subject,
-    "text": body_text,
-    "html": body_html,
-})
+try:
+    resp = httpx.post(
+        "https://api.resend.com/emails",
+        headers={"Authorization": f"Bearer {RESEND_API_KEY}"},
+        json={
+            "from": "Meridian CPD <hello@meridiancpd.co.uk>",
+            "to": [REPORT_TO],
+            "subject": subject,
+            "text": body_text,
+            "html": body_html,
+        },
+        timeout=30,
+    )
+except Exception as e:
+    fail(f"Could not reach the email service (Resend): {type(e).__name__}: {str(e)[:200]}")
+
+if resp.status_code >= 400:
+    fail(f"Resend rejected the email (HTTP {resp.status_code}): {resp.text[:300]}. "
+         "The same key sends new-course emails from this repo, so those are failing too.")
 
 print("Report sent.")
 print(f"  Backend: {backend_status}")

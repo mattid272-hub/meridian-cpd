@@ -31,7 +31,9 @@ MID_GREY  = (0.50, 0.50, 0.50)
 SOFT_GREY = (0.60, 0.62, 0.65)          # subtle text
 SHADOW    = (0.75, 0.78, 0.82)          # shadow colour
 
-BASE_URL = os.environ.get("BASE_URL", "https://meridiancpd.co.uk")
+from settings import APP_URL, APP_HOST
+
+BASE_URL = APP_URL
 
 
 # ── Logo drawing (all primitives — no file dependency) ─────────────────────────
@@ -345,7 +347,7 @@ def generate_certificate(
     c.setFillColorRGB(*SOFT_GREY)
     c.setFont("Helvetica", 7)
     c.drawCentredString(width/2, qr_y - 6*mm,
-                        f"Scan to verify: meridiancpd.co.uk/verify/{cert_number}")
+                        f"Scan to verify: {APP_HOST}/verify/{cert_number}")
 
     # ── Disclaimer ────────────────────────────────────────────────────────────
     disclaimer_y = qr_y - 18*mm
