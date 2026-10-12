@@ -1,5 +1,5 @@
 # Airtightness Testing in RdSAP 10
-**Course ID:** MER-DEA-021 | **CPD Hours:** 1.0 | **Published:** March 2026, revised October 2026 (Conventions v12.2)
+**Course ID:** MER-DEA-021 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
@@ -21,7 +21,7 @@ The specification lists "air pressure test result can be used if available" amon
 
 Everything here comes from the Conventions v12.2 for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification of 9 June 2025. Where the two conflict, the convention takes precedence (conventions v12.2, front page). Statements about what v12.2 changed come from comparing the v12.1 and v12.2 texts.
 
-The sources say nothing about how a pressure test is carried out, what result to expect or what it costs, so nor does this course. Where they are silent on something you need on site, it says so.
+This edition replaces the March 2026 edition. That edition gave a three-year limit on the age of a certificate and named testing standards. Neither is in the conventions or the specification, and both have been removed. The sources say nothing about how a pressure test is carried out, what result to expect or what it costs, so nor does this course. Where they are silent on something you need on site, it says so.
 
 ---
 

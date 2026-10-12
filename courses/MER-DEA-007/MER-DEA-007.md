@@ -1,5 +1,5 @@
 # Hot Water Systems in RdSAP 10: Cylinders, Combis and Immersions
-**Course ID:** MER-DEA-007 | **CPD Hours:** 1.0 | **Published:** March 2026, revised October 2026 (Conventions v12.2)
+**Course ID:** MER-DEA-007 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
@@ -21,7 +21,7 @@ This revised edition has been rebuilt from the two governing documents: the Conv
 
 Three of the v12.2 changes touch hot water (conventions, revision history). Convention 4.03 now covers a hot water system that is incomplete or not working, as well as heating. Convention 4.22 on electric combi boilers is new. Convention 9.08 on waste water heat recovery has gained a list of bath and shower items.
 
-A note on what is not here. Neither the conventions nor the specification's water heating data items (Table 31, items 7-9 to 7-20) mention a combi boiler "keep-hot" facility, so this course says nothing about one. Where the sources are silent on something you need, that is said plainly and you are pointed to your accreditation scheme.
+This edition replaces the March 2026 edition. That edition taught rules for a combi boiler "keep-hot" facility. Neither the conventions nor the specification's water heating data items (Table 31, items 7-9 to 7-20) mention a combi boiler "keep-hot" facility, so those rules have been removed. Where the sources are silent on something you need, that is said plainly and you are pointed to your accreditation scheme.
 
 ---
 

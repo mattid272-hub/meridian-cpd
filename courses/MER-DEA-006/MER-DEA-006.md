@@ -1,5 +1,5 @@
 # Heating Systems Secondary: Storage Heaters, Direct Electric and Room Heaters in RdSAP 10
-**Course ID:** MER-DEA-006 | **CPD Hours:** 1.0 | **Published:** March 2026, revised October 2026 (Conventions v12.2)
+**Course ID:** MER-DEA-006 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---

@@ -1,5 +1,5 @@
 # EPC Audit Preparation: How to Pass Your Annual Audit
-**Course ID:** MER-DEA-014 | **CPD Hours:** 1.0 | **Published:** March 2026, revised October 2026 (Conventions v12.2)
+**Course ID:** MER-DEA-014 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
@@ -17,7 +17,7 @@
 
 This course is about the file behind the EPC: the photographs, sketch, site notes and documents that show why each entry was made. It is built from the RdSAP 10 Conventions v12.2, which apply from 6 August 2026 and take precedence over the specification where the two conflict (conventions, front page).
 
-Neither the conventions nor the specification says how often a scheme audits its members, how files are selected, what counts as a pass or what follows an unsuccessful audit. Convention 1.01 simply tells assessors to refer to scheme guidance for the use of RdSAP. Ask your accreditation scheme for its own audit rules.
+This edition replaces the March 2026 edition. That edition gave audit sampling rates, an annual audit cycle and a list of common failures, none of which could be traced to a source, and they have been removed. Neither the conventions nor the specification says how often a scheme audits its members, how files are selected, what counts as a pass or what follows an unsuccessful audit. Convention 1.01 simply tells assessors to refer to scheme guidance for the use of RdSAP. Ask your accreditation scheme for its own audit rules.
 
 Section 4 uses one accreditation scheme's "Evidence Required for Audit" list for RdSAP. It is that scheme's requirement, not a rule for every scheme. Its change record ends in February 2022 and it does not mention items such as pressure test certificates or PV batteries. Use your own scheme's current version.
 

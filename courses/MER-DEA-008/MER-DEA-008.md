@@ -1,5 +1,5 @@
 # Insulation in RdSAP 10: Walls, Roofs, Floors and Common Errors
-**Course ID:** MER-DEA-008 | **CPD Hours:** 1.0 | **Published:** March 2026, revised October 2026 (Conventions v12.2)
+**Course ID:** MER-DEA-008 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
