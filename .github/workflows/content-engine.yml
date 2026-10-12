@@ -1,12 +1,17 @@
 name: Meridian CPD — Content Engine
 
+# PAUSED 12 October 2026. The schedule (1st and 15th at 07:00 UTC) is switched off
+# because courses were being generated without the source documents and published
+# with no review; the RdSAP courses had to be rewritten. Since the catalogue fix on
+# 12 October, anything this workflow publishes appears in every subscriber's library
+# straight away. Restore the schedule only once a review step exists.
+#
+# To restore, put these lines back under "on:":
+#   schedule:
+#     - cron: '0 7 1 * *'
+#     - cron: '0 7 15 * *'
 on:
-  schedule:
-    # 1st of month at 07:00 UTC
-    - cron: '0 7 1 * *'
-    # 15th of month at 07:00 UTC
-    - cron: '0 7 15 * *'
-  # Allow manual trigger from GitHub Actions UI
+  # Manual trigger from the GitHub Actions UI still works
   workflow_dispatch:
 
 jobs:
