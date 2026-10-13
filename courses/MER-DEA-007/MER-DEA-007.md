@@ -17,7 +17,7 @@
 
 The hot water rules in RdSAP 10 are short. Most of the conventions in section 6 are one or two sentences long. Short rules are easy to half remember.
 
-This revised edition has been rebuilt from the two governing documents: the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification dated 9 June 2025. Every rule carries a reference so that you can check it. Where the two documents disagree, the convention takes precedence (conventions, front page).
+This revised edition has been rebuilt from the two governing documents: the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification version 4.0 (7 June 2026). Every rule carries a reference so that you can check it. Where the two documents disagree, the convention takes precedence (conventions, front page).
 
 Three of the v12.2 changes touch hot water (conventions, revision history). Convention 4.03 now covers a hot water system that is incomplete or not working, as well as heating. Convention 4.22 on electric combi boilers is new. Convention 9.08 on waste water heat recovery has gained a list of bath and shower items.
 
@@ -243,7 +243,7 @@ D) Both electric and non-electric, to cover both possibilities
 
 ## Further Reading
 - **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read section 6 (water heating), then conventions 4.03, 4.15, 4.22, 9.05, 9.06, 9.08 and 9.09.
-- **RdSAP10 Specification.** BRE, 9 June 2025. See sections 10.5 to 10.11 and 12, Tables 28, 29 and 30, and Table 31 items 7-9 to 7-20, 8-1 to 8-6, 9-1, 9-2 and 11-2.
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). See sections 10.5 to 10.11 and 12, Tables 28, 29 and 30, and Table 31 items 7-9 to 7-20, 8-1 to 8-6, 9-1, 9-2 and 11-2.
 - **BRE Technical Notes.** https://www.bregroup.com/sap/bre-technical-notes/ Convention 9.16 requires you to check this list when you find a technology that might be the subject of a Technical Note.
 
 ---

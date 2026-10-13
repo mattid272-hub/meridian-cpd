@@ -19,7 +19,7 @@ Despite the title, nothing in RdSAP 10 asks a DEA to test a dwelling. Convention
 
 The specification lists "air pressure test result can be used if available" among its significant changes from RdSAP 2012 (specification, introduction). This course covers the certificate rules first, then the recorded items.
 
-Everything here comes from the Conventions v12.2 for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification of 9 June 2025. Where the two conflict, the convention takes precedence (conventions v12.2, front page). Statements about what v12.2 changed come from comparing the v12.1 and v12.2 texts.
+Everything here comes from the Conventions v12.2 for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification version 4.0 (7 June 2026). Where the two conflict, the convention takes precedence (conventions v12.2, front page). Statements about what v12.2 changed come from comparing the v12.1 and v12.2 texts.
 
 This edition replaces the March 2026 edition. That edition gave a three-year limit on the age of a certificate and named testing standards. Neither is in the conventions or the specification, and both have been removed. The sources say nothing about how a pressure test is carried out, what result to expect or what it costs, so nor does this course. Where they are silent on something you need on site, it says so.
 
@@ -280,7 +280,7 @@ D) It can be used if the tester is a scheme member
 
 ## Further Reading
 - **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read conventions 10.01, 9.01, 9.02, 5.02, 2.09b, 3.11a, 7.03a, 3.02 and 3.14 in full.
-- **RdSAP10 Specification.** 9 June 2025. Section 4.1 and Table 5 for infiltration, section 8.1 for draught proofing, Table 31 for the data items.
+- **RdSAP10 Specification.** Version 4.0 (7 June 2026). Section 4.1 and Table 5 for infiltration, section 8.1 for draught proofing, Table 31 for the data items.
 
 ---
 

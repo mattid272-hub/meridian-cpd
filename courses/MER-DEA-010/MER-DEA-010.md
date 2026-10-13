@@ -15,7 +15,7 @@
 
 ## Introduction
 
-This edition was rewritten in October 2026 from two documents: the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification dated 9 June 2025. Each statement about how something is identified, counted or entered carries a reference in brackets so that you can check it. Where a convention conflicts with the specification, the convention takes precedence (Conventions v12.2, opening statement).
+This edition was rewritten in October 2026 from two documents: the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification version 4.0 (7 June 2026). Each statement about how something is identified, counted or entered carries a reference in brackets so that you can check it. Where a convention conflicts with the specification, the convention takes precedence (Conventions v12.2, opening statement).
 
 If you studied the March 2026 edition, note one correction. That edition described lighting efficacy bands chosen by the assessor and lighting controls as an input. Neither appears in convention 7.01 or in the specification's data set (specification section 17, Table 31 item 12-1).
 
@@ -263,7 +263,7 @@ D) Enter it as an Appendix Q special feature
 
 ## Further Reading
 - **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read conventions 7.01, 9.04 to 9.09, 9.13, 9.15, 9.16 and Appendix 5.
-- **RdSAP10 Specification.** BRE, 9 June 2025. See section 11, Table 29, Table 31 (items 7-16, 8-1 to 9-2 and 11-1 to 12-3) and Table 33.
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). See section 11, Table 29, Table 31 (items 7-16, 8-1 to 9-2 and 11-1 to 12-3) and Table 33.
 - **BRE Technical Notes.** BRE, https://www.bregroup.com/sap/bre-technical-notes/. The list shows which notes apply to RdSAP.
 
 ---

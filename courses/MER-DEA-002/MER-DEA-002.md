@@ -17,7 +17,7 @@
 
 RdSAP 10 requires every window to be measured. The specification lists this among its significant changes from RdSAP 2012, along with allocating each window to a wall, an expanded table of window U-values, and shutters as a new feature (specification, list of significant changes). The assessor measures each individual window and the software totals the area (specification section 3.7.1).
 
-This course takes the questions in site order: is it a window, is it relevant, how is it measured, and what else is recorded. Each rule is tied to the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, or to the RdSAP10 Specification of 9 June 2025. Where the two conflict, the convention takes precedence (conventions, front page). Where neither answers a question, the course says so and points you to your accreditation scheme.
+This course takes the questions in site order: is it a window, is it relevant, how is it measured, and what else is recorded. Each rule is tied to the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, or to the RdSAP10 Specification version 4.0 (7 June 2026). Where the two conflict, the convention takes precedence (conventions, front page). Where neither answers a question, the course says so and points you to your accreditation scheme.
 
 This edition replaces the March 2026 edition, which said windows are measured as the structural opening from the external face of the wall, with an addition for reveal depth when measured inside. Convention 2.15 says otherwise, and Section 2 sets out the rule as written. Other figures in that edition that could not be traced to either source have been removed.
 
@@ -257,7 +257,7 @@ D) Pre 2002
 
 ## Further Reading
 - **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read conventions 2.02, 2.14 to 2.17, 2.27, 2.28 and 3.09 to 3.12b for the rules covered here.
-- **RdSAP10 Specification.** BRE, 9 June 2025. See section 3.7 for door and window areas, section 8 and Table 24 for window U-values and g-values, and Table 31 items 6-1 to 6-11 for the data collected.
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). See section 3.7 for door and window areas, section 8 and Table 24 for window U-values and g-values, and Table 31 items 6-1 to 6-11 for the data collected.
 
 ---
 

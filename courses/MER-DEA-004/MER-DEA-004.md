@@ -15,7 +15,7 @@
 
 ## Introduction
 
-RdSAP 10 recognises two types of roof room and two ways of assessing each. The rules are in convention 2.06 of the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, with illustrations in Appendix 2 and Appendix 3, and in sections 1.15, 3.9 and 3.10 of the RdSAP10 Specification of 9 June 2025. Where a convention conflicts with the specification, the convention takes precedence (Conventions v12.2, opening statement).
+RdSAP 10 recognises two types of roof room and two ways of assessing each. The rules are in convention 2.06 of the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, with illustrations in Appendix 2 and Appendix 3, and in sections 1.15, 3.9 and 3.10 of the RdSAP10 Specification version 4.0 (7 June 2026). Where a convention conflicts with the specification, the convention takes precedence (Conventions v12.2, opening statement).
 
 This course follows the decisions in site order: is it a roof room, which type, which method, what to measure, and how to record age band, insulation and U-values. Each statement cites its source. Where the sources are silent or disagree, the course says so and points you to your accreditation scheme.
 
@@ -245,7 +245,7 @@ D) Insulation as built, and one age band newer than the building part
 
 ## Further Reading
 - **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read convention 2.06 with Appendices 2 and 3, then 1.02b, 2.07, 2.08, 2.11, 2.18, 3.03a, 3.07, 3.08, 3.13 and 9.02.
-- **RdSAP10 Specification.** BRE, 9 June 2025. See sections 1.15, 3.9 and 3.10 for roof rooms, and Tables 4, 17 and 18 for U-values.
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). See sections 1.15, 3.9 and 3.10 for roof rooms, and Tables 4, 17 and 18 for U-values.
 
 ---
 

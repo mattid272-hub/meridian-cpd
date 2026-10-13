@@ -231,7 +231,7 @@ D) Never
 
 ## Further Reading
 - **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Start with conventions 9.02, 3.03b, 3.04, 3.08 and 8.01.
-- **RdSAP10 Specification.** 9 June 2025. See Table 31, Data to be collected, and section 16 on removing recommendations.
+- **RdSAP10 Specification.** Version 4.0 (7 June 2026). See Table 31, Data to be collected, and section 16 on removing recommendations.
 - **BRE Technical Notes.** https://www.bregroup.com/sap/bre-technical-notes/ Convention 9.16 requires you to check this list where a technology that may be covered by a Technical Note is found in a dwelling.
 
 ---

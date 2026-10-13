@@ -15,9 +15,9 @@
 
 ## Introduction
 
-This October 2026 revision replaces the March 2026 edition. It has been rebuilt from the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification dated 9 June 2025. Each rule is followed by the convention or specification section it comes from, so you can check it. Where the two documents conflict, the conventions state that the convention takes precedence.
+This October 2026 revision replaces the March 2026 edition. It has been rebuilt from the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification version 4.0 (7 June 2026). Each rule is followed by the convention or specification section it comes from, so you can check it. Where the two documents conflict, the conventions state that the convention takes precedence.
 
-Some things you might expect are deliberately missing. The specification does not reproduce the SAP 10.2 tables of heating system types, efficiencies and controls. It says only that systems and controls are those marked "rd" in SAP 10.2 Tables 4a, 4b and 4e (specification sections 10.1 and 10.3). This course therefore gives no efficiency or responsiveness figures and does not describe controls or software screens.
+Some things you might expect are deliberately missing. The specification does not reproduce the SAP 10.2 tables of heating system types, efficiencies and controls. For those it points to the entries marked "rd" in SAP 10.2 Tables 4a, 4b and 4e (specification sections 10.1 and 10.3). This course therefore gives no efficiency or responsiveness figures and does not describe controls or software screens.
 
 Four v12.2 changes dated 13 July 2026 are covered in this course. Convention 4.09 now covers a high heat retention storage heater that is not in the database. Convention 4.20 now refers to the sole source of heat, where v12.1 said the primary source. Convention 4.22 on electric combi boilers is new. Convention 4.03 now covers hot water systems as well as heating.
 
@@ -255,7 +255,7 @@ D) Smokeless fuel
 
 ## Further Reading
 - **Conventions (v 12.2) for RdSAP 10.** Applicable from 6 August 2026. Read conventions 2.04a, 2.04b, 4.02, 4.03, 4.09, 4.14, 4.15, 4.20, 4.22, 5.01 to 5.03, 6.03 and 9.13.
-- **RdSAP10 Specification.** BRE, 9 June 2025. See sections 9.1, 10.1 to 10.4 and 12, Table 30 (addenda), Table 31 (data items) and Table 32 (fuel prices).
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). See sections 9.1, 10.1 to 10.4 and 12, Table 30 (addenda), Table 31 (data items) and Table 32 (fuel prices).
 
 ---
 

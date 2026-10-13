@@ -17,7 +17,7 @@
 
 Ventilation is one of the areas the RdSAP10 Specification lists as changed from RdSAP 2012: mechanical ventilation is treated as in full SAP with database entry (default values still allowed), the ventilation algorithm allows more options, and an air pressure test result can be used if available (specification, Introduction).
 
-This edition has been rebuilt from two documents: the Conventions v12.2 for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification of 9 June 2025. Each rule carries a reference in brackets so you can check it. Where the two conflict, the convention takes precedence (conventions v12.2, front page). Where they are silent, the course says so and points you to your accreditation scheme.
+This edition has been rebuilt from two documents: the Conventions v12.2 for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification version 4.0 (7 June 2026). Each rule carries a reference in brackets so you can check it. Where the two conflict, the convention takes precedence (conventions v12.2, front page). Where they are silent, the course says so and points you to your accreditation scheme.
 
 The March 2026 edition taught rules on trickle vents, cooker hoods, a default duct type, commissioning evidence and default air permeability by age band. None could be found in either document, and they have been removed.
 
@@ -272,7 +272,7 @@ D) A shower room
 
 ## Further Reading
 - **Conventions (v 12.2) for RdSAP 10.** Applicable from 6 August 2026. Read conventions 7.03a to 7.03e, 9.01, 5.02, 2.09b, 3.11a, 9.04 and 10.01 in full.
-- **RdSAP10 Specification.** BRE, 9 June 2025. See section 4 (Table 5 and the list of ventilation methods), section 8.1 and Table 31 item 10-1.
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). See section 4 (Table 5 and the list of ventilation methods), section 8.1 and Table 31 item 10-1.
 
 ---
 

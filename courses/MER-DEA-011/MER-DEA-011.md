@@ -15,7 +15,7 @@
 
 ## Introduction
 
-This course covers how photovoltaics, PV batteries and PV diverters are identified, evidenced and entered in an RdSAP 10 assessment. Almost all of the rules sit in one place: convention 9.05 of the RdSAP 10 Conventions, version 12.2, applicable from 6 August 2026. The RdSAP10 Specification of 9 June 2025 adds the list of data items (section 17, Table 31), a short section on photovoltaics (section 11.1) and another on diverters and batteries (section 11.2).
+This course covers how photovoltaics, PV batteries and PV diverters are identified, evidenced and entered in an RdSAP 10 assessment. Almost all of the rules sit in one place: convention 9.05 of the RdSAP 10 Conventions, version 12.2, applicable from 6 August 2026. The RdSAP10 Specification version 4.0 (7 June 2026) adds the list of data items (section 17, Table 31), a short section on photovoltaics (section 11.1) and another on diverters and batteries (section 11.2).
 
 This revised edition replaces the March 2026 edition and is written directly from those two documents. Where it differs from the earlier edition, follow this one. Every rule carries a reference in brackets so you can check it. Where a convention conflicts with the specification, the convention takes precedence (conventions, opening statement).
 
@@ -240,7 +240,7 @@ D) Enter it under convention 6.10, water heated by PV
 
 ## Further Reading
 - **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read convention 9.05 in full, with 9.02 for documentary evidence, 9.13 for meters and 9.16 for technologies outside the standard entries.
-- **RdSAP10 Specification.** 9 June 2025. See sections 11.1 and 11.2, section 13 Table 30 (addenda 8, 15 and 16) and section 17 Table 31 (items 1-16 to 1-18 and 11-1 to 11-4).
+- **RdSAP10 Specification.** Version 4.0 (7 June 2026). See sections 11.1 and 11.2, section 13 Table 30 (addenda 8, 15 and 16) and section 17 Table 31 (items 1-16 to 1-18 and 11-1 to 11-4).
 - **BRE Technical Notes.** BRE, https://www.bregroup.com/sap/bre-technical-notes/. The list that convention 9.16 requires you to check.
 
 ---

@@ -15,7 +15,7 @@
 
 ## Introduction
 
-This course is an overview of what an RdSAP 10 assessment requires. It is written from three documents: the Conventions (v12.2) for RdSAP 10, the RdSAP10 Specification dated 9 June 2025, and a technical bulletin that one accreditation scheme issued in June 2025 for the move to RdSAP 10. Each rule is followed by a reference in brackets so that you can check it. Where we rely on the bulletin we say "a scheme technical bulletin", because that is one scheme's reading and not a rule for every assessor. Section 6 also compares v12.2 with the v12.1 edition it replaced.
+This course is an overview of what an RdSAP 10 assessment requires. It is written from three documents: the Conventions (v12.2) for RdSAP 10, the RdSAP10 Specification version 4.0 (7 June 2026), and a technical bulletin that one accreditation scheme issued in June 2025 for the move to RdSAP 10. Each rule is followed by a reference in brackets so that you can check it. Where we rely on the bulletin we say "a scheme technical bulletin", because that is one scheme's reading and not a rule for every assessor. Section 6 also compares v12.2 with the v12.1 edition it replaced.
 
 This edition replaces the March 2026 edition. If you studied the earlier edition, note that its description of Room in Roof Type 1 and Type 2 was wrong. Section 4 gives the definitions that are in the conventions.
 
@@ -346,7 +346,7 @@ D) Three lamps: two LED and one incandescent
 
 ## Further Reading
 - **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read the opening page, conventions 2.06, 2.15, 7.01, 9.02 and 9.05, Appendix 2 and the revision history.
-- **RdSAP10 Specification.** BRE, 9 June 2025. Read the Introduction for the list of significant changes and Table 31 for every data item collected.
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). Read the Introduction for the list of significant changes and Table 31 for every data item collected.
 - **BRE Technical Notes.** BRE, https://www.bregroup.com/sap/bre-technical-notes/ The list that convention 9.16 tells you to check.
 
 ---

@@ -15,7 +15,7 @@
 
 ## Introduction
 
-This course covers how wall, roof and floor construction and insulation are recorded for RdSAP 10. Every rule comes from the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, or the RdSAP10 Specification of 9 June 2025, with the reference in brackets. Where the two conflict, the convention takes precedence (Conventions v12.2, opening statement). This edition replaces the March 2026 edition; where they differ, rely on this one.
+This course covers how wall, roof and floor construction and insulation are recorded for RdSAP 10. Every rule comes from the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, or the RdSAP10 Specification version 4.0 (7 June 2026), with the reference in brackets. Where the two conflict, the convention takes precedence (Conventions v12.2, opening statement). This edition replaces the March 2026 edition; where they differ, rely on this one.
 
 The course uses the data item names in specification Table 31, not software screens. Roof rooms are covered in MER-DEA-004.
 
@@ -244,7 +244,7 @@ D) Internal insulation, thickness unknown
 
 ## Further Reading
 - **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read section 3 and conventions 2.13, 2.22, 9.02 and 9.10.
-- **RdSAP10 Specification.** BRE, 9 June 2025. See section 5 for the U-value tables and Table 31 for the floor, wall and roof data items.
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). See section 5 for the U-value tables and Table 31 for the floor, wall and roof data items.
 
 ---
 

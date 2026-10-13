@@ -15,9 +15,9 @@
 
 ## Introduction
 
-This course covers how the main heating system is identified and entered in an RdSAP 10 assessment: boilers, heat pumps, community heating and their controls. This October 2026 rewrite replaces the March 2026 edition. Every rule is referenced to the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, or to the RdSAP10 Specification of 9 June 2025, so you can check it.
+This course covers how the main heating system is identified and entered in an RdSAP 10 assessment: boilers, heat pumps, community heating and their controls. This October 2026 rewrite replaces the March 2026 edition. Every rule is referenced to the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, or to the RdSAP10 Specification version 4.0 (7 June 2026), so you can check it.
 
-Where a convention conflicts with the specification, the convention takes precedence (conventions, opening statement), and where the two differ on this topic the course says so. The specification does not itself list the heating systems or the controls. It refers to SAP 10.2 Tables 4a, 4b and 4e for them (specification sections 10.1 and 10.3). Those tables sit outside the two documents this course is built on, so no efficiency figures or control adjustments are quoted here.
+Where a convention conflicts with the specification, the convention takes precedence (conventions, opening statement), and where the two differ on this topic the course says so. The specification does not reproduce the tables of heating systems and controls. It refers to SAP 10.2 Tables 4a, 4b and 4e for them (specification sections 10.1 and 10.3), and names individual controls only in its rule for smart thermostats, which is covered in Section 5. Those tables sit outside the two documents this course is built on, so no efficiency figures or control adjustments are quoted here.
 
 Version 12.2 added conventions 4.05b on Heat as a Service and 4.22 on electric combi boilers (conventions, revision history). Storage heaters, room heaters and secondary heating are covered in MER-DEA-006 and water heating in MER-DEA-007.
 
@@ -165,6 +165,16 @@ Heating control from a mobile application can be included only where a fixed rec
 
 Convention 4.16 on weather compensators has been deleted, so there is no current convention on them.
 
+### Smart thermostats
+
+Version 4.0 of the specification added a rule for smart thermostats. A smart thermostat may be selected alongside four of the controls in SAP 10.2 Table 4e (specification section 10.3):
+- programmer and room thermostat (2104)
+- programmer and at least two room thermostats (2105)
+- programmer, room thermostat and TRVs (2106)
+- time and temperature control by a device in the PCDB (2112), in which case the smart thermostat is regarded as the TTZC control
+
+A smart thermostat is always defined from the PCDB (specification section 10.3; Table 31 item 7-7). The specification does not say what to do with a smart thermostat that is not in the PCDB, and the conventions do not mention smart thermostats, so in that case ask your accreditation scheme.
+
 ### Central heating pump age
 
 Convention 4.18 sets the test:
@@ -248,7 +258,7 @@ D) As no heating system, with the calculation done for portable electric heaters
 
 ## Further Reading
 - **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read section 4 (Main heating) in full, with conventions 6.04, 6.08, 8.02 and 9.06.
-- **RdSAP10 Specification.** BRE, 9 June 2025. See section 10 (Space and water heating), Table 29, Table 30 (addenda) and the heating items in Table 31 (data to be collected).
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). See section 10 (Space and water heating), Table 29, Table 30 (addenda) and the heating items in Table 31 (data to be collected).
 - **BRE Technical Notes.** BRE, https://www.bregroup.com/sap/bre-technical-notes/. Convention 9.16 requires you to check this list when a technology on site might be the subject of a Technical Note.
 
 ---
