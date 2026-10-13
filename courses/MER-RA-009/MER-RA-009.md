@@ -62,7 +62,7 @@ The front pages say what each amendment changed:
 - 2026: second stairs in blocks of flats with a storey 18 m or more, and evacuation lifts.
 - 2029: removal of national classes for fire resistance, taking effect on 2 September 2029, with transitional provisions.
 
-Pages the 2029 amendments change are marked "Effective until 1 September 2029". No Section 10 page is, so Section 10 appears unchanged; Appendix B pages are marked, but the Appendix B points cited below read the same in both versions. Neither the document nor the gov.uk page dates the 2025 and 2026 amendments' effect; if that matters, ask building control.
+Pages the 2029 amendments change are marked "Effective until 1 September 2029". No Section 10 page is, so Section 10 appears unchanged; Appendix B pages are marked, but the Appendix B points cited below read the same in both versions. The separate amendment booklets on gov.uk give the other dates: the 2025 amendments took effect on 2 March 2025 and the 2026 amendments on 30 September 2026, each for use in England and with transitional provisions.
 
 ---
 
