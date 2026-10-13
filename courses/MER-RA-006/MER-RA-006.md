@@ -1,185 +1,229 @@
-
-
-# EPR Variation: Managing the RdSAP 10 Transition in PAS 2035 Projects
-**Course ID:** MER-RA-006 | **CPD Hours:** 1.0 | **Published:** March 2026
+# EPR Variation: The RdSAP 10 Transition in ECO4 and GBIS Projects
+**Course ID:** MER-RA-006 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
 
-- Identify the principal methodological differences between RdSAP 9.94 and RdSAP 10 that materially affect dwelling fabric and services assessments within PAS 2035 retrofit projects
-- Evaluate how revised Energy Performance Ratings (EPRs) generated under RdSAP 10 may trigger variation requirements in live Medium Term Improvement Plans (MTIPs) and retrofit designs already lodged with TrustMark
-- Apply a structured decision framework for determining whether an existing PAS 2035 project requires a formal EPR variation, a recalculation note, or no action under the current TrustMark Framework Operating Requirements
-- Correctly document RdSAP version discrepancies within retrofit assessment reports and coordinate with Retrofit Coordinators to maintain compliance with PAS 2035:2023 Clause 8 and Clause 10 requirements
-- Demonstrate awareness of the transitional arrangements published by DLUHC and the BRE for the RdSAP 10 switchover period, including dual-lodgement provisions and their implications for funded scheme eligibility
+By the end of this course you should be able to:
+- Explain what an Energy Performance Report (EPR) is and what TrustMark's EPR Variation Conventions contain.
+- Give the dates of the move from RdSAP 2012 (version 9.94) to RdSAP 10 for ECO4 and Great British Insulation Scheme (GBIS) evidence.
+- Apply article 11 of SI 2025/802 to decide which RdSAP version a post-installation EPR must use.
+- Say which RdSAP 10 changes can move a rating and which, such as the fuel prices behind the SAP rating, did not change.
+- Describe the position in October 2026 and who owns the improvement plan under PAS 2035:2023.
 
 ---
 
 ## Introduction
 
-Every Retrofit Assessor working in PAS 2035 projects has, by now, built a working practice around RdSAP 9.94. Your assessment reports, your pre- and post-measure EPCs, your improvement option evaluations, and the MTIPs flowing from them all rest on the conventions, default assumptions, and SAP algorithms embedded in that version. RdSAP 10 changes a significant number of those conventions. This is not a cosmetic update.
+This course is for retrofit assessors who produce RdSAP assessments for projects funded under ECO4 or GBIS. In those schemes the pre-installation and post-installation RdSAP assessments are Energy Performance Reports (EPRs), and TrustMark publishes "Energy Performance Report (EPR) Variation Conventions" that govern how they are produced (EPR Variation Conventions v1.4, introduction and convention 5.01). When RdSAP 10 replaced RdSAP 2012, government made transitional rules so that a project begun in one version could be finished in it.
 
-The revised methodology incorporates updated carbon emission factors reflecting the continued decarbonisation of the electricity grid, a restructured heating system efficiency framework, refined thermal bridging defaults, and changes to how hot water demand and renewable generation are credited. For many dwelling archetypes, these revisions will produce materially different Energy Performance Ratings from those generated under RdSAP 9.94 — in some cases improving a dwelling's rating, in others reducing it. The directional shift is not uniform and depends heavily on the dwelling's heating fuel, fabric specification, and installed renewable technologies.
+The ECO legislation discussed extends to England and Wales and Scotland (SI 2025/802, article 1(3)). It does not extend to Northern Ireland, and this course does not cover any Northern Ireland scheme.
 
-For assessors operating purely in the EPC market, this is a lodgement transition to be managed. For assessors working within PAS 2035, it is considerably more complex. A retrofit project that was designed around a baseline EPC generated under RdSAP 9.94 may now produce a different baseline under RdSAP 10. The projected post-improvement rating may shift. The cost-effectiveness ranking of improvement measures may change. In funded schemes operating under ECO4 or the Great British Insulation Scheme (GBIS), eligibility thresholds, minimum score uplift requirements, and deemed score methodologies are all calibrated to EPC bands that are version-sensitive.
+The sources differ in kind. SI 2025/802 is a statutory instrument, in force since 29 July 2025. The EPR Variation Conventions are TrustMark's scheme requirement. The DESNZ letter of 12 June 2025 and the government response of March 2024 are policy, not law. Ofgem's guidance is the administrator's. PAS 2035:2023 is a BSI specification, binding where your scheme, contract or funding rules adopt it.
 
-This course addresses the practical problem directly: you have live projects, you have a methodology transition underway, and you need to know when a project requires formal variation, when a file note is sufficient, and when you should leave it alone. We will work through the key technical divergences, the contractual and regulatory trigger points, and a decision framework you can apply from tomorrow morning.
+This edition replaces the March 2026 edition. That edition taught the central rule backwards, saying a project with an RdSAP 9.94 baseline must take its completion assessment in RdSAP 10, when for ECO4 and GBIS the law requires the post-installation assessment to use RdSAP 2012 where the pre-installation assessment used it in the transition period. It also expanded EPR as "Energy Performance Rating", invented a "materiality test" and a "formal EPR variation", said RdSAP 10 changed the fuel prices behind the SAP rating, and cited the wrong PAS 2035:2023 clauses.
 
-This is not a general introduction to RdSAP 10. It assumes you have completed foundational training on the new methodology and focuses exclusively on the intersection between the RdSAP transition and PAS 2035 project management.
-
----
-
-## Section 1: Key RdSAP 10 Divergences That Affect Retrofit Assessment Outputs
-
-The full schedule of RdSAP 10 changes is extensive, but not all changes carry equal weight for retrofit assessment purposes. This section isolates the revisions most likely to alter the outputs you feed into the PAS 2035 process.
-
-**Carbon Emission Factors and the Fuel Factor Rebalance.** RdSAP 10 adopts substantially updated carbon emission factors for grid electricity, reflecting the trajectory of UK grid decarbonisation. The electricity emission factor drops significantly compared to 9.94. This has a cascading effect: heat pumps, electric storage heating, and direct electric systems all perform better in carbon terms, while the relative advantage of mains gas narrows. For dwellings already fitted with heat pumps or targeted for electrification under an MTIP, the projected post-improvement carbon performance may appear stronger than previously modelled — but the SAP rating, which is primarily cost-based, responds to a different set of fuel price assumptions. The cost-based rating for electric heating systems is sensitive to the updated fuel price dataset, which in RdSAP 10 reflects more recent tariff structures. Assessors must avoid conflating the carbon and cost metrics; a dwelling can see its Environmental Impact Rating improve while its Energy Efficiency Rating moves in the opposite direction.
-
-**Heating System Efficiency and Default Assumptions.** RdSAP 10 introduces revised PCDB (Product Characteristics Database) efficiency values and updated defaults for heating systems where specific manufacturer data is unavailable. The treatment of boiler efficiency, particularly for older systems assessed via the default table rather than the PCDB, has been recalibrated. For retrofit assessments, this matters at baseline: if the pre-improvement dwelling is assessed with a different assumed boiler efficiency, the calculated energy demand shifts, and with it the modelled savings from any proposed insulation or heating upgrade. In practice, this means the same physical dwelling, assessed by the same assessor on the same day, may produce a different starting SAP score under RdSAP 10 than under 9.94.
-
-**Thermal Bridging and Fabric Defaults.** The default y-value used for thermal bridging where junction details are not individually assessed has been revised. The revised defaults more accurately reflect the thermal bridging performance typical of common construction periods. For certain dwelling ages, this will improve the baseline fabric performance; for others, particularly certain post-war system-built types, the effect may be neutral or marginally adverse. Since fabric improvement measures are evaluated against the baseline fabric heat loss, any shift in the baseline thermal bridging assumption feeds through to the modelled benefit of wall insulation, floor insulation, and draught-proofing measures.
-
-**Hot Water and Renewables.** The methodology for crediting solar photovoltaic generation, solar thermal contribution, and waste water heat recovery has been updated. The revised algorithms affect the modelled contribution of these technologies to the dwelling's energy balance. For MTIPs that include solar PV as a later-phase measure, the projected uplift from that measure may change under the new calculation, potentially affecting phasing decisions.
-
-The net effect of these changes is not a simple upward or downward shift. It is dwelling-specific and measure-specific. Your professional obligation under PAS 2035 is to ensure that the improvement plan for each dwelling is based on an accurate assessment. Where the underlying methodology changes materially, you need to determine whether your existing assessment remains fit for purpose.
+This course depends on dates and scheme status. It is correct to 12 October 2026.
 
 ---
 
-## Section 2: Regulatory Trigger Points — When Does a Project Require Formal Variation?
+## Section 1: EPRs, EPCs and the EPR Variation Conventions
 
-The existence of a new RdSAP version does not automatically invalidate every live assessment. The question is whether the change is material to the project as lodged. This section maps the regulatory and contractual trigger points.
+### What an EPR is
 
-**PAS 2035:2023 Clause 8 — Dwelling Assessment Requirements.** Clause 8 requires that the dwelling assessment provides an accurate representation of the dwelling's condition and performance. It does not prescribe a specific SAP version, but it requires that the assessment method used is current and appropriate. During a formal transition period — where both RdSAP 9.94 and RdSAP 10 are accepted for EPC lodgement — an assessment conducted under 9.94 remains valid for PAS 2035 purposes provided it was lodged before the switchover deadline. However, if the project requires a new EPC to be generated after the mandatory switchover date (for example, a post-improvement EPC at project completion), that EPC must be produced under RdSAP 10. This creates the possibility of a baseline EPC under 9.94 and a completion EPC under 10, with the two not being directly comparable.
+TrustMark's conventions say the RdSAP assessment for an ECO4 or GBIS project "may also be referred to as an EPR (Energy Performance Report)" and is "not to be confused with EPCs". An EPR must be lodged on TrustMark's Retrofit Portal with the XML file from the approved RdSAP engine, and TrustMark and the accreditation scheme quality assure that XML (EPR Variation Conventions v1.4, convention 5.01).
 
-**TrustMark Framework Operating Requirements.** TrustMark's data warehouse and lodgement requirements specify that improvement measures must be supported by valid, current EPCs. The Framework Operating Requirements (FOR) have historically addressed version transitions by permitting a defined co-existence period, after which all new lodgements must use the updated methodology. Assessors should confirm the precise dates and conditions published in the FOR updates accompanying the RdSAP 10 rollout. Where a project was lodged with a 9.94-based assessment and the measures have not yet been installed, the FOR may require the assessment to be updated to RdSAP 10 before the installation phase proceeds — particularly where the project is linked to a funded scheme with score-based eligibility criteria.
+An EPC is a separate product. TrustMark's guidance says an EPC is produced "as a separate exercise" from a second RdSAP data set, lodged on the national EPC register for England and Wales or for Scotland and not shared with TrustMark, and that a post-installation EPC needs another site visit by an accredited DEA (RdSAP Data Production for Retrofit Projects v1.1, 2022). Under PAS 2035:2023, after handover the Retrofit Coordinator shall recommend a new or updated EPC to the client and, if the client agrees, arrange for a domestic energy assessor to prepare it (clause 11.1.4).
 
-**ECO4 and GBIS Scheme Rules.** Both ECO4 and GBIS operate eligibility criteria tied to EPC bands and SAP scores. ECO4's minimum requirement and score uplift thresholds are calibrated to the EPC band structure. If a dwelling's EPC band changes as a result of the RdSAP version — for example, a dwelling assessed as Band E under 9.94 that recalculates as Band D under RdSAP 10 — this may affect its eligibility for the scheme or the eligible measures. Ofgem's administration of these schemes includes specific guidance on version transitions; assessors working on funded projects must cross-reference the applicable Ofgem guidance notes published for the RdSAP 10 transition. Failure to do so risks lodging a project that is subsequently rejected or subject to clawback.
+### What the conventions are
 
-**The Materiality Test.** Not every change in calculated SAP score constitutes a material variation. A dwelling whose rating moves by one or two SAP points within the same EPC band, where the improvement measures remain the same and the projected post-improvement band is unchanged, is unlikely to require formal variation. Conversely, where the RdSAP 10 recalculation changes the EPC band (baseline or projected), alters the cost-effectiveness ranking of measures, or affects the dwelling's eligibility under a funded scheme, the variation is material and must be formally managed. The Retrofit Coordinator must be informed, and the MTIP may need to be revised and re-lodged.
+Version 1.4 is dated 22 September 2025 and listed by TrustMark as "Live from 23/09/25". It is headed "For use in Energy Company Obligation (ECO4) & The Great British Insulation Scheme only". Its introduction says the conventions must not be used in producing any EPC, that EPCs must follow the current government approved RdSAP conventions, and that where a convention conflicts with PAS 2035 the conventions "take precedence" (EPR Variation Conventions v1.4, introduction).
 
-Assessors should note that the determination of materiality is a professional judgement, but it is a documented professional judgement. Your file must contain a clear record of the version under which the original assessment was produced, a note of whether RdSAP 10 recalculation has been undertaken, and a statement of whether the results are materially different. This protects you, the Coordinator, and the scheme.
+The "variation" is a variation in how RdSAP data is produced for these two schemes, not a procedure for re-lodging a project. No TrustMark document found in preparing this course describes a "formal EPR variation", "recalculation note" or "materiality test".
 
----
+### What they say
 
-## Section 3: Documentation, Coordination, and Version Control in Live Projects
+The v1.4 conventions include:
+- 1.01: changes not installed through the ECO project, such as added low energy lighting, are left out of the post-install EPR and its XML, unless the conventions allow otherwise; 1.01 points to 6.01 on ventilation.
+- 1.02: no more than 12 months between assessment date and project creation in the Retrofit Portal, provided condition and tenancy are unchanged and the property has not materially changed; otherwise reassess.
+- 2.01: overridden U-values are not accepted without prior agreement from the scheme provider.
+- 2.03: "no loft access" is not permissible; if the loft cannot be reached, a revisit is required.
+- 3.01: new heating or hot water controls can be scored only as part of an ECO applicable heating system measure.
+- 6.01: where ventilation is upgraded as part of the project, the updated system must be reflected in the post EPR, even though ventilation is not an ECO4 or GBIS eligible measure.
+- 6.02: airtightness testing must be done by a trained Level 1 or Level 2 tester registered with a government approved competent person scheme, to CIBSE TM23, and lodged with that scheme, with the certificate kept as audit evidence.
 
-Managing the RdSAP transition in a live PAS 2035 project is fundamentally a documentation and coordination exercise. This section sets out the practical workflow.
-
-**Version Recording in the Retrofit Assessment Report.** Every retrofit assessment report produced during the transition period must clearly state the RdSAP version used. This is not optional metadata; it is essential for any subsequent reviewer, auditor, or Retrofit Coordinator to understand the basis of the assessment. Where you are producing a new assessment under RdSAP 10 for a dwelling that was previously assessed under 9.94 within the same project, the report should include a brief comparative note identifying any material changes to the baseline rating, the fuel costs, the carbon emissions, and the recommended measures. This comparative note does not need to be a full technical analysis, but it must be sufficient for the Retrofit Coordinator to make an informed decision about whether the MTIP requires amendment.
-
-**Communication with the Retrofit Coordinator.** PAS 2035:2023 Clause 10 places responsibility for the overall management of the retrofit project on the Retrofit Coordinator. The Coordinator cannot manage what they do not know about. If your recalculation under RdSAP 10 produces a materially different result, you must notify the Coordinator promptly, in writing, with the specific data. Best practice is to provide the original 9.94 outputs alongside the RdSAP 10 outputs in a side-by-side format, highlighting the divergences that affect the improvement plan. The Coordinator will then determine whether the MTIP needs to be amended, whether the client or funding body needs to be notified, and whether any installed measures need to be reassessed.
-
-**Handling the Dual-EPC Scenario.** Where a project spans the version switchover — baseline EPC lodged under 9.94, completion EPC to be lodged under RdSAP 10 — you face a comparability problem. The apparent energy performance improvement may be overstated or understated simply because of the methodology change rather than the physical improvement to the dwelling. PAS 2035:2023 does not currently contain a specific provision for normalising cross-version comparisons, so the burden falls on the assessor and Coordinator to document the discrepancy clearly. In your completion report, you should note the version change, present the calculated improvement under the completion version, and include a note explaining that the baseline and completion ratings are not directly comparable due to the methodology transition. Where the funded scheme requires a specific SAP point uplift, confirm with the scheme administrator how cross-version uplift is to be calculated — do not assume the answer.
-
-**Audit Trail Integrity.** TrustMark audits and scheme compliance audits will, in due course, examine projects that straddled the version transition. Your documentation must be robust enough to withstand scrutiny. At minimum, your project file should contain: the original assessment report with RdSAP version stated; any recalculation outputs under RdSAP 10; the comparative note or materiality assessment; evidence of communication with the Retrofit Coordinator; and confirmation of any MTIP amendments lodged. If no variation was required, the file should contain a brief reasoned note explaining why — for example, "RdSAP 10 recalculation produced a SAP score change of [X] points; EPC band unchanged; improvement measures and projected outcomes unaffected; no variation required."
-
-This is administrative discipline, but it is the kind of administrative discipline that protects your professional standing and your PI insurance position.
+Conventions 6.01 and 6.02 carry an issue date of 10 November 2025, and TrustMark says the revision made for RdSAP 10 "will apply only to new projects with retrofit assessments conducted on or after 10th November 2025" (TrustMark quality assurance page). For an older project, ask your scheme which edition applies.
 
 ---
 
-## Section 4: Decision Framework for Assessors — A Practical Workflow
+## Section 2: The Dates and the Transitional Law
 
-The following decision framework is designed to be applied to each live PAS 2035 project in your current caseload. It is not exhaustive of every edge case, but it covers the standard scenarios.
+### RdSAP 10 arrives
 
-**Step 1: Identify the RdSAP version of the existing assessment.** Check the lodged EPC and your assessment file. If the project was assessed under RdSAP 9.94 and all measures have been installed and the completion EPC has been lodged under 9.94 before the mandatory switchover date, no action is required. The project is complete under the version in which it was conducted.
+DESNZ wrote on 12 June 2025 that RdSAP10 was "scheduled to be released on 15 June 2025". From that date Ofgem, as ECO and GBIS administrator, would accept RdSAP10 assessments "even where RdSAP2012 is still required by the ECO regulations". A project evidenced through RdSAP10 needs a pre-assessment dated "on or after the 15 June 2025", because the amendments "are not retrospective" (DESNZ letter, 12 June 2025).
 
-**Step 2: Determine the project stage.** If the project is pre-installation — the assessment and MTIP are lodged but measures have not yet been installed — proceed to Step 3. If the project is mid-installation with some measures complete and others pending, proceed to Step 3 but note the additional complexity of partially completed works.
+ecmk's June 2025 bulletin told its members that a 9.94 EPC not lodged before its Assessor Hub went offline (planned for 14 June) could not then be lodged in 9.94, but "EPRs will still be able to be created in RdSAP 9.94 for retrofit projects". That is one scheme's account.
 
-**Step 3: Run the RdSAP 10 recalculation.** Using the same dwelling data, produce the RdSAP 10 output. Compare the baseline SAP score, the EPC band, the environmental impact rating, and the projected post-improvement ratings for the proposed measures.
+### SI 2025/802
 
-**Step 4: Apply the materiality test.** Does the EPC band change? Does the funded scheme eligibility change? Does the cost-effectiveness ranking of proposed measures change? Does the projected post-improvement band change? If the answer to any of these is yes, the variation is material.
+The law is the Electricity and Gas (Energy Company Obligation) (Amendment, Saving and Transitional Provisions) Order 2025 (SI 2025/802), made on 3 July 2025 and in force on 29 July 2025 (article 1(2)). It amends the Electricity and Gas (Energy Company Obligation) Order 2022, which governs ECO4, and the 2023 Order of the same name, which established GBIS (Ofgem, GBIS Delivery Guidance v1.0, cover).
 
-**Step 5: Act on the result.** If material: notify the Retrofit Coordinator in writing, provide comparative data, and support the MTIP amendment process. If not material: record the recalculation and your reasoned assessment in the project file. No formal variation required, but the documentation must be present.
+The "transition period" is "the period of six months beginning with the date on which this Order comes into force", 29 July 2025 (article 11(8)(h)). Neither the Order nor its Explanatory Memorandum gives a calendar end date. It ended in late January 2026; if an assessment falls in the last days of that month, have the obligated supplier confirm the end date before relying on article 11. "RdSAP2012" means version 9.94 of the 2012 edition (article 11(8)(g) and footnote). Article 11 provides as follows:
+- ECO4: during the transition period, the pre-project assessment may use RdSAP2012 instead of RdSAP10 (article 11(1)). If it does, RdSAP2012 "must also be used" for the post-project RdSAP assessment under article 49(3)(b) of the 2022 Order (article 11(2)).
+- Those two rules do not apply to an ECO4 project referred to in article 12(2)(b) of the 2022 Order with respect to novel data light measures (article 11(3)).
+- GBIS: the same applies to the pre-installation and post-installation assessments under article 22(1) of the 2023 Order (article 11(4) and (5)).
+- After the transition period, a post-assessment may use RdSAP2012 where the pre-assessment did and the post-assessment is to be re-determined to recalculate the SAP rating (article 11(6)).
+- Nothing in the Order affects an RdSAP2012 assessment performed before 29 July 2025 that a participant relies on for a measure installed at the premises (article 11(7)).
 
-**Step 6: Confirm completion EPC requirements.** If the project will complete after the mandatory switchover date, confirm that the completion EPC will be produced under RdSAP 10 and that the scheme administrator has confirmed how cross-version uplift is to be treated.
+Separately, article 5 requires the post-project full SAP assessment on a project consisting only of a district heating connection (with or without novel data light measures) to use "the same version of the Standard Assessment Procedure" as the pre-project assessment (2022 Order, article 49(3)(a)(i), as amended).
 
-This framework takes approximately 30–45 minutes per dwelling for the recalculation and documentation. For a portfolio of projects, prioritise those closest to the switchover deadline and those linked to funded schemes with score-based eligibility.
+### The policy behind it
+
+Government's March 2024 response said retrofits straddling the go-live date "will be able to use a RdSAP2012 post-retrofit assessment" where the pre-retrofit assessment was completed in RdSAP2012 before go-live (Government Response, March 2024, paragraph 33). It kept the existing SAP2012 based scores for ECO4 and GBIS "given fuel prices will remain stable in RdSAP10" (executive summary and paragraph 41). The DESNZ letter says the arrangements allow both versions "for six months after the regulations come into force, and until the end of the schemes' respective final determination periods for retrofits where compliance issues arise", and that software providers will keep allowing RdSAP2012 post-retrofit assessments so that retrofits started in RdSAP2012 can be completed in it, "only where the pre-retrofit assessment took place before the 'go-live' date of RdSAP10". The letter predates the Order; where they differ, the Order is the law.
+
+---
+
+## Section 3: What RdSAP 10 Changed, and What It Did Not
+
+### Data a 9.94 survey does not hold
+
+The current RdSAP10 Specification (version 4.0, 7 June 2026) lists significant changes from RdSAP 2012 in its introduction, including:
+- window measurements for all windows, each allocated to a main wall, extension or alternative wall;
+- hot water tank size and tank insulation;
+- a new age band M with all U-value tables updated, and brick wall U-values revised for wall thickness;
+- PV calculated as in SAP 10.2, with PV diverters and batteries added;
+- heat pumps and waste water heat recovery calculated according to SAP 10.2;
+- an air pressure test result usable where available.
+
+A 9.94 data set will not hold all of these, so an RdSAP 10 EPR needs RdSAP 10 data.
+
+### The fuel prices did not change
+
+For the SAP rating, which the specification calls the EER, "Fuel prices are the same as in Table 12 of the SAP 2012 specification but replicated in Table 32" (RdSAP10 Specification v4.0, section 19.1). Table 32 (mains gas 3.48 p/kWh, standard tariff electricity 13.19 p/kWh) replaces the fuel prices in Table 12 of SAP 10.2 (introduction).
+
+### The emission factors come from SAP 10.2
+
+Carbon dioxide and primary energy factors are those of Table 12 of SAP 10.2, replicated in Table 32, and the Environmental Impact Rating is calculated as in section 14 of SAP 10.2 (RdSAP10 Specification v4.0, section 19.2). Table 32 gives grid electricity at 0.136 kg CO2e per kWh, an annual average (the worksheet uses SAP 10.2's monthly factors, Table 32 note (s)), and mains gas at 0.210. The SAP rating and the Environmental Impact Rating therefore respond to different inputs.
+
+### Thermal bridging
+
+The default thermal bridging factor y comes from Table 21 by the age band of the main dwelling: 0.15 for bands A to I, 0.11 for J, and 0.08 for K, L and M, with 0.15 for park homes in every band (RdSAP10 Specification v4.0, section 5.15 and Table 21). It varies only by age band and park home status, and thermal bridging is not in the specification's list of significant changes.
+
+### Eligibility
+
+Government accepted that RdSAP10 "may in some cases affect the eligibility of properties for ECO4 and the GB Insulation Scheme" (Government Response, March 2024, executive summary). The ECO4 minimum requirement is band based: band D and E homes to at least band C, and band F and G homes to at least band D (Ofgem ECO4 Delivery Guidance v4.0, paragraph 1.9). Ofgem's summary of updates (March 2026) says paragraph 5.164 now covers "differences in eligibility and scoring between RdSAP versions", and paragraphs 4.25 to 4.31 ("RdSAP 10 Update") cover version requirements and the transitional period. I could not read those paragraphs; read them in the guidance before advising on a version-specific eligibility question.
+
+---
+
+## Section 4: Where Things Stand in October 2026, and Your Part
+
+### The schemes
+
+GBIS "closed on 31 March 2026" (Ofgem, summary of updates to ECO4 Delivery Guidance v4.0, 26 March 2026). ECO4 was extended by nine months, and its obligation period runs from 27 July 2022 to 31 December 2026 (Ofgem ECO4 Delivery Guidance v4.0, paragraph 1.4). Government's response of 23 January 2026 says "there will be no successor supplier obligation to ECO4" and that it has instead committed additional grant funding to the Warm Homes Plan (Extending the ECO4 end date: government response).
+
+The EPR Variation Conventions are for ECO4 and GBIS only; nothing was found from TrustMark on what applies to EPRs in later grant schemes, so ask TrustMark or your scheme.
+
+### Which version for the post-installation EPR
+
+Work it out from the pre-installation EPR:
+- Pre-installation EPR in RdSAP 10: article 11 allows RdSAP2012 for a post-installation assessment only where the pre-installation assessment used it (article 11(2), (5) and (6)), so the post-installation EPR is RdSAP 10.
+- Pre-installation EPR in RdSAP 9.94 done during the transition period: the post-installation EPR uses RdSAP 2012 as well (article 11(2) for ECO4, 11(5) for GBIS); see below if it is made after the window. None of the sources read for this course requires or provides for re-running the project in RdSAP 10.
+- Pre-installation EPR in RdSAP 9.94 done before 29 July 2025: article 11(7) protects that assessment, and government policy was that a retrofit whose pre-retrofit assessment was in RdSAP2012 before RdSAP10 went live could be completed in RdSAP2012 (Government Response, paragraph 33; DESNZ letter). But article 11 has no express rule for its post-installation assessment: paragraphs (2) and (5) apply only where RdSAP2012 was used under paragraph (1) or (4), in the transition period. The version is unsettled; see below.
+- District heating or novel data light measure projects: read article 11(3) and article 49(3)(a) of the 2022 Order, which treat them separately.
+
+Article 11(2) carries no end date in its wording, and article 11(6) covers re-determinations after the transition period. But DESNZ's Explanatory Memorandum to the Order describes either version being allowed "for a period of six months after the instrument comes into force, and RdSAP10 thereafter" (paragraph 6.1), with retrofits reassessed for compliance reasons keeping their original methodology until the end of the scheme's final determination period (paragraph 7.3). So it is also unsettled whether a first post-installation assessment made after the window, where the 9.94 pre-installation assessment was within it, must use RdSAP 2012. In either case, get the version confirmed in writing by the obligated supplier, who can put it to Ofgem, before you lodge.
+
+### Your part under PAS 2035:2023
+
+PAS 2035:2023 names no RdSAP version. It requires "a recognized domestic energy model, such as RdSAP, SAP or PHPP" (clause 7.3.3). Your assessment is reported to the Retrofit Designer with the RdSAP, SAP or PHPP data file and a photographic record (clause 7.4.1). If the Retrofit Designer finds it insufficient, the Retrofit Coordinator arranges for you to add the missing information to an updated assessment report (clause 7.4.4).
+
+The Retrofit Coordinator oversees the project from inception to completion (clause 6.1.3), carries out the improvement options evaluation from your data files (clause 8.1.1), prepares the recommended package that forms the basis of the medium-term improvement plan (clause 8.1.4), and provides a new or updated plan after each stage (clause 11.1.5). For reference, clause 7 covers whole-dwelling assessments, clause 8 retrofit designs and clause 10 testing and commissioning.
+
+As practice rather than requirement, state the RdSAP version on every assessment report, and put any version question on a live project to the Retrofit Coordinator in writing.
 
 ---
 
 ## Key Takeaways
 
-- RdSAP 10 is not a marginal update; revised emission factors, fuel prices, heating system defaults, and thermal bridging assumptions will produce materially different SAP scores for many dwelling archetypes — the direction and magnitude of change is dwelling-specific
-- The critical risk for Retrofit Assessors is not the version change itself but the failure to identify and document its impact on live PAS 2035 projects, particularly those linked to funded schemes with score-based eligibility thresholds
-- A formal EPR variation is required only where the RdSAP 10 recalculation produces a material change — defined as a shift in EPC band, a change in funded scheme eligibility, or an alteration to the cost-effectiveness ranking or projected outcome of proposed improvement measures
-- Where no material change results, a documented file note recording the recalculation and the reasoned basis for concluding that no variation is required is essential for audit trail integrity
-- The Retrofit Coordinator must be notified promptly and in writing of any material variation; do not wait for the Coordinator to discover the discrepancy at lodgement or audit
-- Projects spanning the version switchover will produce baseline and completion EPCs that are not directly comparable; document the version discrepancy explicitly in the completion report and confirm the funded scheme's approach to cross-version uplift calculation before lodging
-- Check and re-check the published transitional arrangements from DLUHC, BRE, TrustMark, and Ofgem — the co-existence period dates, dual-lodgement provisions, and scheme-specific rules are the governing constraints on your workflow
+The points to keep are these:
+- An EPR is the ECO4 or GBIS RdSAP assessment lodged on TrustMark's Retrofit Portal, and an EPC is separate (convention 5.01); the EPR Variation Conventions v1.4 are TrustMark's rules for EPRs, not a project variation procedure.
+- An ECO project evidenced in RdSAP 10 needs a pre-assessment dated on or after 15 June 2025 (DESNZ letter, 12 June 2025).
+- Under SI 2025/802, in force 29 July 2025, where a pre-installation assessment used RdSAP 2012 in the transition period, the post-installation assessment must too (article 11(1), (2), (4) and (5)).
+- RdSAP 10 kept the SAP 2012 fuel prices for the SAP rating, uses SAP 10.2 emission factors, and needs data a 9.94 survey does not hold (RdSAP10 Specification v4.0, sections 19.1 and 19.2).
+- New projects with retrofit assessments from 10 November 2025 carry the revised ventilation and airtightness conventions (6.01 and 6.02).
+- GBIS closed on 31 March 2026; ECO4 runs to 31 December 2026 with no successor supplier obligation.
+- The improvement options evaluation and medium-term improvement plan are the Retrofit Coordinator's (PAS 2035:2023, clauses 8.1.1, 8.1.4 and 11.1.5).
 
 ---
 
 ## Self-Assessment Questions
 
-**Question 1:** A dwelling was assessed under RdSAP 9.94 as EPC Band E (SAP 38). Under RdSAP 10, the same dwelling recalculates as EPC Band D (SAP 55). The project is funded under ECO4. What is the most appropriate immediate action?
+**Q1.** An ECO4 project's pre-project RdSAP assessment was carried out in RdSAP 9.94 in October 2025, during the transition period, and the post-project RdSAP assessment is carried out in December 2025. Which version must it use?
 
-A) No action required — the dwelling has improved its rating
-B) Lodge the RdSAP 10 EPC to replace the original and continue the project as planned
-C) Notify the Retrofit Coordinator in writing, provide comparative data, and confirm ECO4 eligibility under the revised band before proceeding
-D) Withdraw the project from ECO4 and re-register under GBIS
+A) RdSAP 10, because RdSAP 10 replaced 9.94 for EPCs in June 2025
+B) RdSAP 2012 (version 9.94), the same as the pre-project assessment
+C) Either version, at the installer's choice
+D) RdSAP 10, once a materiality test shows the band has not changed
 
-**Correct answer: C.** A band change on a funded scheme project is a material variation. The dwelling's ECO4 eligibility is tied to its EPC band; a shift from Band E to Band D may affect which measures are eligible and the required uplift. The Retrofit Coordinator must be informed, and scheme eligibility must be confirmed with the obligation holder or scheme administrator before installation proceeds. Option B is procedurally incomplete — lodging a new EPC without coordinating with the Retrofit Coordinator and confirming scheme eligibility is non-compliant. Option D is premature; eligibility under the revised band needs to be assessed first.
-
----
-
-**Question 2:** Under RdSAP 10, which of the following changes is most likely to improve the calculated SAP rating of a dwelling with an existing air source heat pump?
-
-A) Revised default thermal bridging y-values for pre-1965 construction
-B) Updated grid electricity carbon emission factors reflecting decarbonisation
-C) Revised fuel price assumptions for electricity tariffs
-D) Updated default boiler efficiency values for gas condensing boilers
-
-**Correct answer: C.** The SAP Energy Efficiency Rating is primarily a cost-based metric. While updated carbon emission factors (Option B) will improve the Environmental Impact Rating for electric heating systems, the SAP rating itself responds to fuel price assumptions. If updated electricity tariff data reflects a more favourable cost position relative to gas (or a less unfavourable one), the cost-based rating for a heat pump dwelling will improve. Option A may have some effect but is not specific to heat pump performance. Option D is irrelevant to a dwelling with a heat pump. Option B affects the EIR, not the primary SAP cost-based rating.
+**Correct answer: B.** Where RdSAP 2012 was used for the pre-project assessment during the transition period, RdSAP 2012 "must also be used" for the post-project assessment, and no source describes a materiality test (SI 2025/802, article 11(1) and (2)).
 
 ---
 
-**Question 3:** A PAS 2035 project has a baseline EPC lodged under RdSAP 9.94. The mandatory switchover to RdSAP 10 occurs before the completion EPC is due to be lodged. What documentation should the completion report include?
+**Q2.** Under TrustMark's EPR Variation Conventions v1.4, what is an EPR?
 
-A) Only the RdSAP 10 completion EPC, with no reference to the baseline version
-B) The RdSAP 10 completion EPC and a statement that the baseline and completion EPCs were produced under different RdSAP versions, noting that the ratings are not directly comparable
-C) A recalculation of the baseline EPC under RdSAP 10 to ensure both EPCs use the same version, replacing the original lodged EPC
-D) A request to the scheme administrator for an exemption from the completion EPC requirement
+A) An Energy Performance Rating, meaning the SAP number shown on an EPC
+B) A request to TrustMark to vary a project after an RdSAP 10 recalculation
+C) An EPC produced with the ECO variations applied and lodged on the national register
+D) The ECO4 or GBIS RdSAP assessment, lodged on the Retrofit Portal with its XML and not to be confused with an EPC
 
-**Correct answer: B.** The completion EPC must be produced under the version current at the time of lodgement (RdSAP 10 post-switchover). The baseline EPC, already validly lodged under 9.94, remains the lodged record. The completion report must clearly note the version discrepancy and state that the baseline and completion ratings are not directly comparable. Option C may be appropriate as a supplementary exercise to support the materiality assessment, but it does not replace the original lodged baseline EPC. Option A is inadequate documentation. Option D is not a standard provision.
-
----
-
-**Question 4:** Under PAS 2035:2023, who holds primary responsibility for determining whether an MTIP requires amendment following a material change identified by the Retrofit Assessor?
-
-A) The Retrofit Assessor
-B) The Retrofit Coordinator
-C) The homeowner or client
-D) The TrustMark scheme provider
-
-**Correct answer: B.** PAS 2035:2023 Clause 10 assigns overall responsibility for managing the retrofit project, including the MTIP, to the Retrofit Coordinator. The Retrofit Assessor's obligation is to identify and communicate the material change; the decision on MTIP amendment rests with the Coordinator. The assessor provides the data and professional analysis; the Coordinator determines the project response.
+**Correct answer: D.** Convention 5.01 calls the RdSAP assessment an EPR (Energy Performance Report), lodged on the Retrofit Portal with its XML and not to be confused with EPCs (EPR Variation Conventions v1.4, convention 5.01).
 
 ---
 
-**Question 5:** You recalculate a dwelling under RdSAP 10 and find that the SAP score changes by 2 points but the EPC band remains the same, the funded scheme eligibility is unaffected, and the proposed improvement measures and their projected outcomes are unchanged. What is the correct course of action?
+**Q3.** Which fuel prices does RdSAP 10 use to calculate the SAP rating (EER)?
 
-A) Lodge a formal EPR variation with TrustMark
-B) Notify the Retrofit Coordinator and recommend the MTIP be amended
-C) Record the recalculation result and a reasoned note in the project file confirming no material variation; no formal variation required
-D) Take no action and do not record the recalculation
+A) Those in Table 32, which are the same as Table 12 of the SAP 2012 specification
+B) Updated prices that replaced the SAP 2012 figures to reflect recent tariffs
+C) Those in Table 12 of the SAP 10.2 specification
+D) Prices set each quarter by the accreditation schemes
 
-**Correct answer: C.** A non-material change does not require formal variation, but it must be documented. The project file should contain the recalculation output and a brief reasoned note explaining why the change is not material. This protects the assessor and the project at audit. Option D is non-compliant — the absence of any record creates an audit vulnerability. Options A and B are disproportionate responses to a non-material change.
+**Correct answer: A.** Fuel prices "are the same as in Table 12 of the SAP 2012 specification but replicated in Table 32", and Table 32 replaces the SAP 10.2 Table 12 prices (RdSAP10 Specification v4.0, section 19.1 and introduction).
+
+---
+
+**Q4.** On an ECO4 project whose retrofit assessment was carried out in December 2025, the ventilation is upgraded as part of the project. How should the post EPR treat it?
+
+A) Leave it out, because convention 1.01 excludes everything that is not an ECO measure
+B) Record it only on a separate EPC
+C) Reflect the updated ventilation system in the post EPR, even though ventilation is not an eligible measure
+D) Leave it out unless the EPC band changes
+
+**Correct answer: C.** Convention 6.01 requires upgraded ventilation to be reflected in the post EPR, for new projects with retrofit assessments on or after 10 November 2025 (EPR Variation Conventions v1.4, convention 6.01; TrustMark quality assurance page).
+
+---
+
+**Q5.** Which statement describes the position at 12 October 2026?
+
+A) ECO4 and GBIS both run to 31 March 2027
+B) GBIS closed on 31 March 2026, ECO4 runs to 31 December 2026, and government has said there will be no successor supplier obligation
+C) GBIS replaced ECO4 from April 2026
+D) ECO4 closed on 31 March 2026 and GBIS was extended to December 2026
+
+**Correct answer: B.** GBIS closed on 31 March 2026, ECO4's obligation period runs to 31 December 2026, and government has said there will be no successor supplier obligation (Ofgem ECO4 Delivery Guidance v4.0, paragraph 1.4 and summary of updates; Extending the ECO4 end date: government response).
 
 ---
 
 ## Further Reading
 
-- **BRE: RdSAP 10 Specification and Technical Manual** — Available via the BRE SAP website. The primary technical reference for all RdSAP 10 methodology changes, including the updated fuel price tables, emission factor datasets, and calculation conventions.
-  [https://www.bregroup.com/sap/](https://www.bregroup.com/sap/)
-
-- **PAS 2035:2023 — Retrofitting dwellings for improved energy efficiency: Specification and guidance** — BSI. The governing standard for retrofit project delivery, including Clause 8 (dwelling assessment requirements) and Clause 10 (Retrofit Coordinator responsibilities). Available via the BSI shop or through TrustMark-affiliated access.
-  [https://knowledge.bsigroup.com/](https://knowledge.bsigroup.com/)
-
-- **TrustMark Framework Operating Requirements** — The current FOR document, including any addenda or updates issued in connection with the RdSAP 10 transition. Check the TrustMark Business Hub for the latest version.
-  [https://www.trustmark.org.uk/](https://www.trustmark.org.uk/)
-
-- **Ofgem: ECO4 Guidance and GBIS Guidance** — Ofgem publishes detailed administration guidance for both schemes, including provisions for EPC version transitions, score uplift calculations, and measure eligibility criteria. Essential reading for any assessor working on funded scheme projects.
-  [https://www.ofgem.gov.uk/environmental-and-social-schemes](https://www.ofgem.gov.uk/environmental-and-social-schemes)
+Sources used for this course:
+- **The Electricity and Gas (Energy Company Obligation) (Amendment, Saving and Transitional Provisions) Order 2025 (SI 2025/802).** legislation.gov.uk, made 3 July 2025. Article 11 and its definitions, and DESNZ's Explanatory Memorandum to it, paragraphs 6.1 and 7.3.
+- **Energy Performance Report (EPR) Variation Conventions, version 1.4.** TrustMark, 22 September 2025. The introduction and conventions 1.01, 5.01, 6.01 and 6.02.
+- **ECO Schemes: SAP10.2 and RdSAP10 transitional arrangements (letter).** DESNZ, published by TrustMark, 12 June 2025. The 15 June 2025 date and RdSAP2012 post-retrofit assessments.
+- **RdSAP10 Specification, version 4.0.** BRE, 7 June 2026. The list of changes, Table 21, section 19 and Table 32.
+- **ECO4 Delivery Guidance, version 4.0.** Ofgem, 26 March 2026. Paragraph 1.4, and paragraphs 4.25 to 4.31 and 5.164 on RdSAP versions, which this course could not check.
+- **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, 2023. Clauses 6.1, 7.3, 7.4, 8.1 and 11.1.
 
 ---
 
