@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Course Library — Meridian CPD</title>
-  <meta name="description" content="Browse 26 practitioner-written CPD courses for UK DEAs and Retrofit Assessors. RdSAP 10, PAS 2035:2023, fire safety, energy policy and more. From £19.99.">
+  <meta name="description" content="CPD courses for UK Domestic Energy Assessors and Retrofit Assessors, written from the RdSAP 10 conventions and specification with every rule referenced. From £19.99.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -707,19 +707,19 @@
   <div class="page-hero-inner">
     <span class="page-label">Course Library</span>
     <h1 class="page-title">Browse &amp; Enrol</h1>
-    <p class="page-sub">Practitioner-written courses for DEAs and Retrofit Assessors. Download the PDF, read it, claim your CPD. New courses every two weeks.</p>
+    <p class="page-sub">Courses for DEAs and Retrofit Assessors, written from the source documents with every rule referenced. Download the PDF, read it, claim your CPD. Our Retrofit Assessor and cross-strand courses are being updated to the latest standards and return as each one is completed.</p>
     <div class="hero-stats">
       <div class="hero-stat-item">
         <span class="hero-stat-num" id="statTotal">26</span>
         <span class="hero-stat-lbl">Courses available</span>
       </div>
       <div class="hero-stat-item">
-        <span class="hero-stat-num">29</span>
+        <span class="hero-stat-num" id="statHours">13</span>
         <span class="hero-stat-lbl">CPD hours in library</span>
       </div>
       <div class="hero-stat-item">
-        <span class="hero-stat-num">2</span>
-        <span class="hero-stat-lbl">New courses / month</span>
+        <span class="hero-stat-num">v12.2</span>
+        <span class="hero-stat-lbl">RdSAP 10 conventions covered</span>
       </div>
     </div>
   </div>
@@ -766,7 +766,7 @@
     <p class="sub-strip-label">Annual Subscription</p>
     <h2 class="sub-strip-title">Everything.<br>Always.</h2>
     <ul class="sub-strip-pts">
-      <li>Unlimited access to all 26 current courses</li>
+      <li>Unlimited access to every course in the library</li>
       <li>Every new course the moment it publishes</li>
       <li>CPD certificates for every course you complete</li>
       <li>Cancel any time — PDFs and certs are yours to keep</li>
@@ -816,7 +816,18 @@
 const STRIPE_SINGLE = 'https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00';
 const STRIPE_SUB    = 'https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01';
 
-const COURSES = [
+// Courses withdrawn while they are revised against the current standards. They are not
+// shown or sold. To restore one, publish its corrected PDF and delete its ID here and
+// in UNDER_REVIEW in webhook/main.py.
+const UNDER_REVIEW = new Set([
+  'MER-RA-001','MER-RA-002','MER-RA-003','MER-RA-004','MER-RA-005','MER-RA-006',
+  'MER-RA-007','MER-RA-008','MER-RA-009','MER-RA-010','MER-RA-011','MER-RA-012',
+  'MER-ALL-001','MER-ALL-004','MER-ALL-005','MER-ALL-008','MER-ALL-009','MER-ALL-010',
+  'MER-ALL-011','MER-ALL-012','MER-ALL-013','MER-ALL-014','MER-ALL-015','MER-ALL-016',
+  'MER-ALL-017',
+]);
+
+const ALL_COURSES = [
   {
     id: 'MER-DEA-001', strand: 'DEA', hours: 2.0,
     title: 'RdSAP 10: What\'s Changed and Why',
@@ -1106,6 +1117,9 @@ const COURSES = [
   }
 ];
 
+const COURSES = ALL_COURSES.filter(c => !UNDER_REVIEW.has(c.id));
+const HIDDEN_COUNT = ALL_COURSES.length - COURSES.length;
+
 // ── State ────────────────────────────────────────────────────────────────────
 let activeFilter = 'all';
 let searchQuery = '';
@@ -1173,9 +1187,18 @@ function renderGrid() {
   const counts = { DEA: 0, RA: 0, ALL: 0 };
   COURSES.forEach(c => counts[c.strand]++);
   document.getElementById('countAll').textContent = '(' + COURSES.length + ')';
+  const statTotal = document.getElementById('statTotal');
+  if (statTotal) statTotal.textContent = COURSES.length;
+  const statHours = document.getElementById('statHours');
+  if (statHours) statHours.textContent = COURSES.reduce((t, c) => t + c.hours, 0);
   document.getElementById('countDEA').textContent = '(' + counts.DEA + ')';
   document.getElementById('countRA').textContent  = '(' + counts.RA  + ')';
   document.getElementById('countALL').textContent = '(' + counts.ALL + ')';
+  // A strand with nothing on sale (its courses are being revised) gets no tab.
+  ['DEA', 'RA', 'ALL'].forEach(k => {
+    const tab = document.querySelector('.filter-tab[data-filter="' + k + '"]');
+    if (tab) tab.style.display = counts[k] ? '' : 'none';
+  });
 
   // Meta
   const showing = courses.length;

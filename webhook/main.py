@@ -106,6 +106,44 @@ COURSES = {
     "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0, "published": "2026-03-01"},
 }
 
+# ── Courses withdrawn for revision ─────────────────────────────────────────────
+# An accuracy check in October 2026 found that these courses contain statements that
+# are wrong, out of date or cannot be traced to a source. They are hidden from the
+# library, cannot be downloaded and cannot be completed until a corrected edition has
+# been written from the source documents and independently checked. To restore a
+# course, publish its corrected PDF and delete its ID from this set (and from the same
+# list in landing-page/courses.html). Certificates already issued are not affected.
+UNDER_REVIEW = {
+    "MER-RA-001", "MER-RA-002", "MER-RA-003", "MER-RA-004", "MER-RA-005", "MER-RA-006",
+    "MER-RA-007", "MER-RA-008", "MER-RA-009", "MER-RA-010", "MER-RA-011", "MER-RA-012",
+    "MER-ALL-001", "MER-ALL-004", "MER-ALL-005", "MER-ALL-008", "MER-ALL-009",
+    "MER-ALL-010", "MER-ALL-011", "MER-ALL-012", "MER-ALL-013", "MER-ALL-014",
+    "MER-ALL-015", "MER-ALL-016", "MER-ALL-017",
+}
+
+
+def is_available(course_id: str) -> bool:
+    """A course a member can download and complete today."""
+    return course_id in COURSES and course_id != "SUBSCRIPTION" and course_id not in UNDER_REVIEW
+
+
+def _under_review_page(course_id: str) -> HTMLResponse:
+    title = str(COURSES.get(course_id, {}).get("title", course_id))
+    return HTMLResponse(f"""<!DOCTYPE html>
+<html><head><title>Course being updated — Meridian CPD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="font-family:Arial,sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1e293b">
+<h2 style="color:#0f2547">This course is being updated</h2>
+<p style="line-height:1.6"><strong>{title}</strong> ({course_id}) has been withdrawn while we
+revise it against the current standards and guidance. The updated edition will appear in
+your library as soon as it has been checked, and you will be able to download and complete
+it then.</p>
+<p style="line-height:1.6">Certificates you already hold are not affected.</p>
+<p><a style="color:#0891b2" href="/my-cpd/dashboard">Back to my courses</a> &nbsp;·&nbsp;
+<a style="color:#0891b2" href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a></p>
+</body></html>""")
+
+
 # ── Catalogue sync ─────────────────────────────────────────────────────────────
 # The content engine publishes a new course on the 1st and 15th. It uploads the PDF
 # and records the course in courses/catalogue.json in Supabase Storage. Reading that
@@ -306,6 +344,13 @@ async def handle_checkout(session):
                 is_subscription=True,
             )
             log_purchase(member_id, "SUBSCRIPTION", session_id, amount)
+        elif str(course["course_id"]) in UNDER_REVIEW:
+            # Should not happen (withdrawn courses have no buy button), but an old link could
+            # still be used. Record the payment and do not send a withdrawn edition.
+            cid = str(course["course_id"])
+            log_purchase(member_id, cid, session_id, amount)
+            print(f"ACTION NEEDED: {cid} was bought while withdrawn for revision "
+                  f"(session {session_id}). Nothing was sent. Contact the buyer or refund.")
         else:
             cid = str(course["course_id"])
             token = create_completion_token(member_id, cid)
@@ -338,6 +383,8 @@ async def download_course(course_id: str, request: Request):
     refresh_catalogue()
     if course_id not in COURSES:
         raise HTTPException(status_code=404, detail="Course not found")
+    if course_id in UNDER_REVIEW:
+        return _under_review_page(course_id)
 
     # Mark downloaded_at on the completion record if not already set.
     # A database hiccup here must never stop a subscriber getting their PDF.
@@ -377,6 +424,8 @@ async def completion_page(token: str):
     refresh_catalogue()
     row = result.data[0]
     course_id = row["course_id"]
+    if course_id in UNDER_REVIEW:
+        return _under_review_page(course_id)
     name = row["members"]["name"] or "there"
     has_downloaded = bool(row.get("downloaded_at"))
 
@@ -477,6 +526,9 @@ async def confirm_completion(token: str, request: Request):
     row = result.data[0]
     member_id = row["member_id"]
     course_id = row["course_id"]
+    if course_id in UNDER_REVIEW:
+        # No new certificates for an edition that has been withdrawn.
+        return _under_review_page(course_id)
     member_email = row["members"]["email"]
     cert_name = str(form.get("cert_name", "")).strip()
     member_name = cert_name or row["members"]["name"] or "Assessor"
@@ -685,7 +737,13 @@ async def verify_certificate(cert_number: str):
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "courses": len([k for k in COURSES if k != "SUBSCRIPTION"])}
+    listed = [k for k in COURSES if k != "SUBSCRIPTION"]
+    return {
+        "status": "ok",
+        "courses": len(listed),
+        "available": len([k for k in listed if is_available(k)]),
+        "under_review": len([k for k in listed if k in UNDER_REVIEW]),
+    }
 
 
 # ── Unsubscribe ────────────────────────────────────────────────────────────────
@@ -1117,7 +1175,7 @@ async def subscriber_dashboard(request: Request):
     # For subscribers: ensure every course has a completion token so "Mark Complete" works.
     # Tokens are created lazily on first dashboard load — no email needed, just DB record.
     if is_sub:
-        all_course_ids = [k for k in COURSES if k != "SUBSCRIPTION"]
+        all_course_ids = [k for k in COURSES if is_available(k)]
         for cid in all_course_ids:
             if cid not in completed and cid not in pending_tokens:
                 token = create_completion_token(member_id, cid)
@@ -1146,7 +1204,13 @@ async def subscriber_dashboard(request: Request):
     for cid, course in show_courses.items():
         hours = course["cpd_hours"]
         title = course["title"]
-        if cid in completed:
+        if cid in UNDER_REVIEW:
+            # Withdrawn for revision: listed so the library does not silently shrink,
+            # but with nothing to download or complete.
+            done = '<span class="pill pill-complete">✓ Completed</span>' if cid in completed else ""
+            status_pill = done + '<span class="pill pill-locked">Being updated</span>'
+            action = ""
+        elif cid in completed:
             status_pill = '<span class="pill pill-complete">✓ Completed</span>'
             action = f'<a class="btn btn-dl" href="/download/{cid}">Download PDF</a>'
         elif cid in pending_tokens:
@@ -1175,8 +1239,8 @@ async def subscriber_dashboard(request: Request):
         course_rows = '<p class="empty">No courses yet. <a href="https://meridiancpd.co.uk">Browse the library →</a></p>'
 
     # Upsell banner — shown only to single-course buyers
-    total_courses = len([k for k in COURSES if k != "SUBSCRIPTION"])
-    courses_owned = len(show_courses)
+    total_courses = len([k for k in COURSES if is_available(k)])
+    courses_owned = len([k for k in show_courses if is_available(k)])
     upsell_html = ""
     if not is_sub:
         upsell_html = f"""
@@ -1298,7 +1362,9 @@ async def subscriber_dashboard(request: Request):
 
 # ── Admin panel ────────────────────────────────────────────────────────────────
 
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "meridian-admin")
+# No built-in fallback: this repository is public, so a default password in the code
+# would be known to anyone. If ADMIN_PASSWORD is not set, the admin area stays shut.
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "").strip()
 security = HTTPBasic()
 
 _ADMIN_CSS = """
@@ -1355,7 +1421,12 @@ a.vlink:hover { text-decoration: underline; }
 
 
 def _check_admin(credentials: HTTPBasicCredentials = Depends(security)):
-    if credentials.password != ADMIN_PASSWORD:
+    if not ADMIN_PASSWORD:
+        raise HTTPException(
+            status_code=503,
+            detail="Admin is switched off: set the ADMIN_PASSWORD variable on the hosting service.",
+        )
+    if not secrets.compare_digest(credentials.password.encode(), ADMIN_PASSWORD.encode()):
         raise HTTPException(
             status_code=401,
             detail="Incorrect password",
@@ -1410,6 +1481,8 @@ async def test_purchase(request: Request, credentials=Depends(_check_admin)):
     course = COURSES.get(course_id)
     if not course:
         return HTMLResponse(f"<p>Unknown course_id: {course_id}</p>", status_code=400)
+    if course_id in UNDER_REVIEW:
+        return HTMLResponse(f"<p>{course_id} is withdrawn for revision and cannot be sent.</p>", status_code=400)
 
     fake_session_id = f"cs_test_{secrets.token_hex(8)}"
     member = get_or_create_member(email, name, "cus_test", "single")
@@ -1768,6 +1841,8 @@ async def admin_courses(credentials=Depends(_check_admin)):
             is_new = False
 
         new_badge = '<span class="badge" style="background:#7c3aed;color:white">NEW</span> ' if is_new else ""
+        if cid in UNDER_REVIEW:
+            new_badge += '<span class="badge" style="background:#b45309;color:white">WITHDRAWN FOR REVISION</span> '
         if is_new:
             new_courses.append(course)
 
@@ -1797,7 +1872,7 @@ async def admin_courses(credentials=Depends(_check_admin)):
     body = f"""
     {alert}
     <div class="card">
-      <h2>Course Library ({len(COURSES) - 1} courses)</h2>
+      <h2>Course Library ({len([k for k in COURSES if is_available(k)])} available, {len([k for k in COURSES if k in UNDER_REVIEW])} withdrawn for revision)</h2>
       <div class="course-grid">{cards}</div>
     </div>"""
     return _page("Courses", "courses", body)
