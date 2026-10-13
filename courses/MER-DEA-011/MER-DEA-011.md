@@ -1,197 +1,249 @@
-
-
 # Solar PV, Battery Storage and PV Diverters in RdSAP 10
-**Course ID:** MER-DEA-011 | **CPD Hours:** 1.0 | **Published:** March 2026
+**Course ID:** MER-DEA-011 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Correctly identify and record all required solar PV input parameters in RdSAP 10, including array orientation, tilt, overshading, peak kilowatt capacity and MCS certification status.
-- Distinguish between the RdSAP 10 treatment of battery storage systems and explain when and how battery storage modifies the dwelling's energy performance calculation.
-- Apply the correct methodology for logging PV diverters (solar-to-hot-water switches) within RdSAP 10, including eligibility criteria and the interaction with the domestic hot water circuit.
-- Identify common site-assessment errors related to PV, battery and diverter installations and apply appropriate evidence-gathering procedures consistent with Conventions and current scheme guidance.
-- Evaluate the combined impact of PV generation, battery storage and PV diverters on the dwelling emission rate (DER), primary energy rate and EPC band, and explain the limitations of the modelled assumptions to clients and stakeholders.
+- Identify the capacity figure RdSAP 10 needs for a PV array: kWp first, declared net capacity second, and percentage of roof area only in one defined case.
+- Enter panels on different roof planes as separate systems and apportion a single total kWp or DNC between them.
+- Apply the generation meter and connection rules, including what to record when connection to the dwelling's meter cannot be determined.
+- Allocate a PV array that serves more than one building or dwelling on an area-weighted basis.
+- State the evidence required for PV batteries and PV diverters, the battery default, and how a battery above the default is entered.
 
 ---
 
 ## Introduction
 
-RdSAP 10 represents the most significant revision to the reduced data Standard Assessment Procedure since its inception. For solar technologies in particular, the changes are substantial. The previous RdSAP 9.94 framework treated photovoltaic arrays in a relatively simplified manner, offered no pathway for battery storage and handled PV diverters through a narrow appendix mechanism that many assessors either misunderstood or overlooked entirely. RdSAP 10 addresses all three technologies with materially revised input logic, new data fields and a more granular calculation engine that better reflects real-world energy flows.
+This course covers how photovoltaics, PV batteries and PV diverters are identified, evidenced and entered in an RdSAP 10 assessment. Almost all of the rules sit in one place: convention 9.05 of the RdSAP 10 Conventions, version 12.2, applicable from 6 August 2026. The RdSAP10 Specification of 9 June 2025 adds the list of data items (section 17, Table 31), a short section on photovoltaics (section 11.1) and another on diverters and batteries (section 11.2).
 
-The timing matters. As of early 2026, DESNZ deployment statistics indicate that over 1.4 million homes in England and Wales now have solar PV, with battery retrofit rates accelerating sharply since 2024. PV diverter installations, once a niche product, have become a routine addition to PV systems, particularly in off-gas dwellings where immersion heaters are present. Assessors are encountering these technologies on a daily basis, and the consequences of incorrect data entry are no longer trivial. Under the reformed compliance and enforcement framework, lodgement errors relating to renewable technologies are flagged by automated audit rules within the central register. An incorrectly recorded PV array can shift an EPC by one or even two bands, with direct implications for MEES compliance, Green Deal eligibility, ECO4 and Great British Insulation Scheme funding, and property transactions under the Home Energy Model roadmap.
+This revised edition replaces the March 2026 edition and is written directly from those two documents. Where it differs from the earlier edition, follow this one. Every rule carries a reference in brackets so you can check it. Where a convention conflicts with the specification, the convention takes precedence (conventions, opening statement).
 
-This course is built for working DEAs who already hold a Level 3 or equivalent qualification and are active on a recognised accreditation scheme. It assumes familiarity with RdSAP conventions, the structure of the SAP 10.2 calculation and the general principles of on-site evidence gathering. The objective is not to teach you what solar PV is; it is to ensure you record it correctly, understand what the software does with your inputs, and know where the methodological boundaries lie. We will work through the PV, battery and diverter input fields in sequence, examine their interaction within the calculation, address the most common convention and evidence pitfalls, and then consolidate with practical scenarios.
-
----
-
-## Section 1: Solar PV in RdSAP 10 — Inputs, Conventions and Calculation Logic
-
-The RdSAP 10 PV input set is expanded relative to 9.94 and demands more precise site observation. The core parameters you are required to record are as follows:
-
-**Peak kilowatt capacity (kWp).** This is the declared peak output of the array under standard test conditions. The primary evidence source is the MCS certificate or the manufacturer's datasheet. Where neither is available on site and the homeowner cannot provide documentation, you must estimate kWp from the panel count and a default wattage per panel as specified in the prevailing conventions. RdSAP 10 conventions currently default to 350 Wp per panel where the panel wattage is unknown and the installation post-dates 2020, and 250 Wp for installations pre-dating 2014. For installations between those dates, 300 Wp applies. These defaults are deliberately conservative. Always use the documented figure where available — it will almost always produce a more favourable result for the homeowner.
-
-**Orientation and tilt.** RdSAP 10 uses the same eight-point compass segmentation as before (N, NE, E, SE, S, SW, W, NW) plus a horizontal option for flat-roof or near-flat installations. Tilt is recorded in degrees from horizontal. The most common error remains assessors recording roof pitch rather than array tilt on systems with mounting frames that alter the effective angle. If the panels are flush-mounted on a pitched roof, array tilt equals roof pitch. If they are mounted on an A-frame on a flat roof, you must estimate the frame angle. The SAP 10.2 solar irradiance tables are sensitive to tilt in 15-degree bands; getting this wrong by one band can shift annual yield by 5–8%.
-
-**Overshading.** The four-tier overshading classification (none or very little / modest / significant / heavy) applies to the PV array specifically, not to the dwelling generally. Assess overshading as it affects the panels, considering nearby buildings, trees, roof features such as dormers and chimneys, and adjacent array sections on complex roofs. RdSAP 10 retains the percentage-reduction factors applied to annual generation: none or very little applies a 1.0 factor, modest 0.8, significant 0.65, and heavy 0.5. There is no partial shading model within RdSAP — the factor applies uniformly to the entire declared array.
-
-**MCS certification.** A new explicit Boolean field in RdSAP 10 records whether the installation holds a valid MCS certificate (or equivalent, such as a legacy Microgeneration Certification Scheme certificate under the predecessor framework). This affects the assumed system loss factor. MCS-certified systems attract a lower default system loss, reflecting that the installation met design standards at commissioning. Non-MCS systems attract a higher loss factor. This is not a trivial difference — the loss adjustment can alter modelled annual generation by approximately 5%.
-
-**Multiple arrays.** Where a dwelling has panels on more than one roof plane, each array must be entered separately with its own orientation, tilt, kWp and overshading. RdSAP 10 permits up to three distinct PV arrays per dwelling. If a dwelling genuinely has panels across four or more orientations, the conventions require you to combine the two closest-oriented arrays into a single entry using the capacity-weighted average orientation and tilt. Document this in your site notes.
-
-The calculation engine takes these inputs and applies the regional solar irradiance data from SAP 10.2 Table H4 (updated from the older tables in SAP 2012), applies the tilt and orientation correction, the overshading reduction and the system loss factor, and produces an annual electricity generation figure in kWh/year. That figure is then split between electricity used on-site and electricity exported, using a default on-site usage fraction. In SAP 10.2, the assumed on-site usage fraction for PV without battery storage is 0.50 for systems up to 2.5 kWp and reduces for larger systems — a material change from the flat 0.50 used in earlier SAP versions.
+The course does not describe software screens, which differ between schemes and are not in the sources. It says little about how the calculation credits these technologies, because the specification largely refers to SAP 10.2 for that. Where the sources are silent, it says so and points you to your accreditation scheme.
 
 ---
 
-## Section 2: Battery Storage — The New RdSAP 10 Framework
+## Section 1: Capacity: kWp, DNC and the percentage of roof route
 
-The treatment of battery storage is one of the headline changes in RdSAP 10. Under RdSAP 9.94, there was no mechanism to record or credit domestic battery storage at all. The SAP 10.2 methodology, which RdSAP 10 now implements in reduced-data form, introduces a defined approach.
+### The figure you are looking for
 
-**What qualifies.** The battery must be a dedicated electrical energy storage system connected to the PV array (AC- or DC-coupled) and configured to store surplus PV generation for later use within the dwelling. Vehicle-to-grid (V2G) systems are not currently eligible. Portable or plug-in battery units without a fixed electrical connection to the consumer unit do not qualify. The system must be permanently installed and, ideally, evidenced through an installer's commissioning certificate, an MCS battery certificate, or the manufacturer's documentation. Where no documentation is available, the assessor may record the battery based on visual inspection and identification of the unit, but must note the evidence limitation.
+When photovoltaics are present, the peak power of the array in kWp is required (convention 9.05). The convention names where you might find it: the system specification documents, or the schematic wiring diagram, which may be next to the electricity meter or the consumer unit (convention 9.05).
 
-**Input parameters.** RdSAP 10 requires the following battery inputs:
+If the kWp cannot be found, the declared net capacity (DNC) stated on the MCS certificate may be used instead (convention 9.05).
 
-- **Usable storage capacity (kWh).** This is the manufacturer's declared usable capacity, not the total cell capacity. For example, a Tesla Powerwall 2 has a usable capacity of 13.5 kWh. If the exact figure is unavailable, the conventions provide a default of 4.0 kWh, which is deliberately conservative and will understate the benefit.
-- **Battery present (Boolean).** A simple yes/no flag that activates the battery calculation pathway.
+Paperwork you rely on has to meet the general test for documentary evidence. In the wording for England, Wales and Northern Ireland, acceptable evidence includes certificates, warranties, guarantees or any documents verifying that work has been carried out, and you must be confident, and able to demonstrate, that it relates to the actual property and that there is no physical or other documentary evidence to the contrary (convention 9.02). Evidence of intent to install does not on its own qualify, and under the separate wording for Scotland it does not qualify at all (convention 9.02).
 
-That is it. RdSAP 10 does not require you to record battery chemistry, round-trip efficiency, charge/discharge rate or degradation state. The methodology applies fixed default assumptions for these: a round-trip efficiency of 0.85 and no degradation adjustment. The rationale, as set out in the SAP 10.2 accompanying notes, is that real-world battery efficiency variations are smaller than the uncertainty already inherent in the occupancy-independent SAP model, and introducing additional inputs would add assessment burden without proportionate accuracy gain.
+### What goes in with the kWp
 
-**Calculation impact.** The presence of a battery modifies the on-site usage fraction for PV-generated electricity. Without a battery, SAP 10.2 assumes that a proportion of PV generation is exported because it is generated when demand is low. With a battery, more of that surplus is retained. The methodology uses a lookup relationship between battery capacity, PV array size and the dwelling's annual electricity demand to determine a revised on-site usage fraction. In practical terms, for a typical 3–4 kWp system with a 5+ kWh battery in a medium-demand dwelling, the on-site usage fraction increases from approximately 0.45–0.50 to 0.70–0.80. This is significant. On-site consumption of PV electricity displaces grid electricity at the full grid carbon intensity and fuel cost, whereas exported electricity receives only a partial credit. A battery therefore improves both the DER and the energy cost rating, and can shift the EPC band.
+Where the kWp or DNC is known, the data set holds these details for the array (specification section 17, Table 31, item 11-1):
+- kWp.
+- Pitch, as one of horizontal, 30 degrees, 45 degrees, 60 degrees or vertical.
+- Orientation, if not horizontal, as one of S, SE, E, NE, N, NW, W or SW.
+- Overshading, as one of very little, modest, significant or heavy.
+- Whether the PVs are connected to the dwelling's electricity meter.
 
-**Common pitfalls.** The most frequent error is recording a battery that is not connected to the PV system. Some dwellings have standalone batteries installed for tariff arbitrage (charging from the grid at off-peak rates). These do not qualify under the SAP methodology because they are not storing PV generation — they are storing grid electricity. The SAP 10.2 model only credits battery storage in the context of PV self-consumption. If the battery is connected to the grid but there is no PV system on the dwelling, the battery field should not be activated. Similarly, hybrid inverter systems that combine PV and grid charging should still be recorded as battery present, because the SAP model does not distinguish — it simply adjusts the PV self-consumption fraction upward. The methodology inherently assumes the battery is used to maximise PV self-consumption regardless of real-world dispatch logic.
+Up to three separate PV arrays are allowed for, each with its own kWp, tilt, orientation and overshading (specification section 11.1). The specification rounds kWp to two decimal places before the calculation (specification section 15).
 
-A second pitfall relates to shared systems in converted flats. Where a PV array and battery serve multiple dwellings, you must apportion the kWp and battery capacity to the individual dwelling using the same approach as for shared PV — typically by floor area fraction — and record only the apportioned share. The conventions are explicit on this point. Do not record the total system capacity for each flat.
+Neither the conventions nor the specification sections covered here say how to choose between the four overshading categories for a PV array. If you are unsure which applies, check your scheme's guidance.
 
----
+### When neither kWp nor DNC can be found
 
-## Section 3: PV Diverters — Eligibility, Input Requirements and Hot Water Interaction
+If the kWp or DNC cannot be ascertained, the instruction is not to allocate the PV, with one exception: where it is connected to a meter serving a single dwelling (convention 9.05). In that case you record the percentage of the total roof area occupied by PVs, and the total roof area includes the main dwelling and all extensions where present (convention 9.05).
 
-PV diverters — also known as solar PV diverters, immersion optimisers, or power diverters — redirect surplus PV-generated electricity to an immersion heater in the hot water cylinder rather than exporting it to the grid. Common products include the Eddi (myenergi), iBoost and Solar iBoost. In RdSAP 10, these devices have a defined input pathway that differs from both the PV and battery treatments.
+The percentage is therefore of the whole roof of the dwelling, extensions included, not of the slope the panels sit on.
 
-**Eligibility criteria.** For a PV diverter to be recorded in RdSAP 10, all of the following must be true:
+The specification explains what is done with the percentage (specification section 11.1):
+- PV area is the roof area used for heat loss, before any amendment for a room in roof, multiplied by the percentage of roof area covered by PVs.
+- For a pitched roof that area is divided by the cosine of 35 degrees. Where there is an extension, the cosine factor is applied only to the parts with a pitched roof.
+- kWp is taken as 0.12 multiplied by the PV area, on the stated basis that mainstream panels produce around 120 Wp per square metre.
+- If orientation, pitch and overshading are not provided in the data set, the array is taken as facing south, at 30 degrees pitch, with modest overshading.
 
-1. The dwelling must have a solar PV array (already recorded).
-2. The dwelling must have a hot water storage cylinder with an electric immersion heater. Combi boiler systems and unvented direct systems without a cylinder do not qualify, because there is no thermal store to receive the diverted electricity.
-3. The diverter must be a permanently installed, hardwired device that automatically routes surplus PV generation to the immersion element. A manual timer switch or a smart plug does not meet the definition. The device must sense export and divert in real time.
-
-**What to record.** RdSAP 10 introduces a single Boolean field: PV diverter present (yes/no). There is no requirement to record the make, model, capacity or rated power of the diverter. The methodology applies a fixed set of assumptions about diverter behaviour.
-
-**Calculation logic.** The PV diverter modifies the domestic hot water (DHW) energy calculation. SAP 10.2 models the diverter as providing a fraction of the dwelling's annual DHW demand from diverted PV electricity, reducing the fuel consumption attributed to the primary DHW heating system. The fraction is derived from the PV array size, the dwelling's DHW demand and a seasonal availability curve that reflects the correlation between PV surplus and hot water demand. In summer months, a larger fraction of DHW can be met by the diverter; in winter, the contribution is minimal.
-
-The key point for assessors to understand is this: the PV diverter credit is applied to the hot water energy demand, not to the electrical self-consumption fraction. This means the diverter and the battery are modelled through different pathways in the calculation and their benefits are partially additive. A dwelling with PV, a battery and a diverter will see the battery increase the electrical self-consumption fraction (reducing lighting and appliance grid electricity consumption) and the diverter reduce the modelled fuel input for DHW. However, there is an interaction cap — the total PV generation cannot be double-counted. The SAP 10.2 algorithm ensures that the electricity allocated to the diverter is deducted from the electricity available for self-consumption or export. In effect, the model partitions annual PV generation into three streams: on-site electrical use (enhanced by the battery), diverted-to-DHW (via the diverter) and exported.
-
-**Interaction with solar thermal.** If the dwelling also has a solar thermal panel contributing to DHW, the PV diverter credit is applied after the solar thermal contribution. The combined solar thermal and PV diverter benefit is capped so that the modelled renewable DHW contribution does not exceed the total DHW demand. In practice, this cap is rarely reached — but in a well-insulated, low-occupancy dwelling with a large PV array and solar thermal panels, it is theoretically possible.
-
-**Evidence requirements.** Visual identification of the diverter unit (typically mounted near the consumer unit or the hot water cylinder) is the primary evidence. Photograph the unit and its wiring. If you can see a branded unit with a clear label (e.g., "myenergi eddi"), that is sufficient. If the homeowner claims a diverter is installed but you cannot identify the device, you cannot record it. The conventions are clear: if it cannot be evidenced, it is not recorded. A receipt or invoice without physical verification is insufficient.
-
-**Common error.** Some assessors confuse PV diverters with solar thermal diverter valves (motorised valves in solar thermal plumbing). These are entirely different technologies. A PV diverter is an electrical device. A solar thermal diverter valve is a plumbing component. Ensure you are identifying the correct technology.
+An illustration using those rules: a dwelling has 50 square metres of roof area for heat loss and you record 20% covered, which gives 10 square metres. The roof is pitched, so 10 divided by 0.819 gives 12.2 square metres of PV area, and 0.12 multiplied by 12.2 gives 1.46 kWp. The specification's own example reaches the same 1.46 kWp from 10 square metres, although it prints the multiplier as 1.2 where the rule says 0.12. You record only the percentage; the conversion is part of the calculation.
 
 ---
 
-## Section 4: Combined Scenarios and Practical Auditing Considerations
+## Section 2: Roof planes, the generation meter and connection
 
-In practice, you will increasingly encounter dwellings with all three technologies — PV, battery and diverter — installed together, often as part of a single package from an MCS-certified installer. Getting the inputs right for the combination requires a systematic approach.
+### Panels on different roof planes
 
-**Recommended site workflow:**
+If there are PV panels on different planes of the roof, enter them as separate systems (convention 9.05). If only a total kWp or DNC is provided, estimate the relative area of each and apportion the value accordingly (convention 9.05).
 
-1. **Identify the PV array first.** Count panels, record orientation and tilt per array plane, assess overshading at panel level, and collect the MCS certificate or datasheet. Record kWp per array.
-2. **Identify the inverter.** Check whether it is a hybrid (battery-compatible) inverter. This often indicates a battery is present or was planned. Note the inverter's rated capacity — if it is significantly larger than the PV array, a battery may be connected.
-3. **Locate the battery.** Check the garage, utility room, or adjacent to the consumer unit. Record the make, model and usable capacity from the unit label or commissioning documentation.
-4. **Locate the PV diverter.** Check near the consumer unit and near the hot water cylinder. Confirm the cylinder has an immersion heater (check for an immersion boss and wiring). Confirm the diverter is wired to the immersion.
-5. **Photograph everything.** MCS certificate, panel array, inverter nameplate, battery nameplate, diverter unit, cylinder with immersion wiring. These photographs form your audit trail.
+Worked example. The paperwork gives a single figure of 4.00 kWp. You estimate about 15 square metres of panels on the south-east plane and about 10 on the north-west plane, 25 in total. The south-east system is 15 divided by 25, or 60%, so it is entered as 2.40 kWp. The north-west system takes the remaining 40%, entered as 1.60 kWp. Each system then carries its own pitch, orientation and overshading (specification section 11.1).
 
-**Audit exposure.** Under the reformed quality assurance framework, renewable technology inputs are high-priority audit items. A desk-based audit can cross-reference your declared kWp against the MCS installation database. If the figures diverge, your lodgement will be flagged. Ensure your recorded kWp matches the MCS register entry, not an approximation.
+The sources do not say what to do where panels sit on more planes than the three arrays the specification allows for (specification section 11.1). If you meet that, ask your accreditation scheme.
 
-**Impact on EPC outcomes.** For a typical mid-terrace, gas-heated dwelling (SAP band D), adding a 4 kWp PV system alone may lift the rating by 8–14 SAP points. Adding a 5 kWh battery may add a further 3–6 points. Adding a PV diverter may add 1–3 points, depending on DHW demand and existing heating system. These are indicative ranges — actual outcomes depend on dwelling geometry, demand profile and existing efficiency measures. Do not quote specific point improvements to clients; run the calculation.
+### Verifying connection
+
+The data set asks, whichever way the array is entered, whether the PVs are connected to the dwelling's electricity meter (specification section 17, Table 31, item 11-1). Convention 9.05 sets out how that is established, in two sentences that need reading together:
+- PV connection to the dwelling's meter must be verified by the presence of a PV generation meter or documentary evidence.
+- In all cases, the PV-generated electricity is included in the assessment of a dwelling only if the dwelling has a PV generation meter serving it.
+
+The first sentence accepts either a generation meter or documents as verification. The second makes a generation meter serving the dwelling the condition in every case. The convention does not explain how to treat documentary evidence of connection where no generation meter can be found. If that is your situation, ask your accreditation scheme before lodging. The conventions also do not describe what a PV generation meter looks like.
+
+Where it cannot be determined that the PV supply is feeding into a meter serving the dwelling being assessed, the PV panels are still allocated to the dwelling but should not be specified as being connected (convention 9.05).
+
+### The four outcomes
+
+Putting the paragraphs of convention 9.05 side by side gives four outcomes:
+- kWp or DNC known, and connection to a meter serving the dwelling verified: enter the system or systems as connected.
+- kWp or DNC known, but connection cannot be determined: the panels are still allocated to the dwelling, but not specified as connected.
+- Neither can be ascertained, and the PV is connected to a meter serving a single dwelling: record the percentage of the total roof area occupied by PVs.
+- Neither can be ascertained, and there is no such connection: do not allocate the PV.
+
+### Electricity meters, smart meters and export
+
+The dwelling's electricity meter type is a separate entry, covered by convention 9.13. Smart meters are defined there as meters that communicate wirelessly with the meter network. They do not have to be functioning at the time of the visit, but the evidence must be either a smart meter unit or a portable display that shows meter readings (convention 9.13). The smart meter items do not affect the calculation and are used for statistical reasons only (specification section 17, Table 31, items 1-17 and 1-18).
+
+The data set also asks whether the dwelling is export-capable, yes or no, because the savings from generated electricity depend on whether it is used within the dwelling or exported (specification section 17, Table 31, item 1-16). The conventions give no rule on how export capability is identified or evidenced, so follow your scheme's guidance.
+
+---
+
+## Section 3: PV shared between buildings or dwellings
+
+### The rule
+
+Where the PV supply is serving more than one building, or multiple dwellings within the building, the total capacity of the PV is allocated between the buildings on an area-weighted basis, based on an estimate of the total floor area of all of the buildings or dwellings served by the PV (convention 9.05).
+
+This applies in all scenarios where the PV supplies more than one building or multiple dwellings within a building, including where the other buildings are all dwellings, a mix of dwellings and non-domestic buildings, or all non-domestic buildings (convention 9.05). The floor area used is an estimate of everything served, not only the dwelling you are assessing.
+
+### Worked example: flats sharing one array
+
+An array on the roof of a small block has a documented capacity of 6.00 kWp and serves three flats. You are assessing the middle flat. You estimate the floor areas as 50, 70 and 80 square metres, 200 square metres in total.
+- Share for the flat being assessed: 70 divided by 200, which is 0.35.
+- Capacity allocated to it: 6.00 kWp multiplied by 0.35, which is 2.10 kWp.
+
+Entering the full 6.00 kWp against one flat, or an equal three-way split of 2.00 kWp, would not follow the convention, which requires area weighting (convention 9.05).
+
+### Where the sources stop
+
+Two points are not answered by the sources:
+- Area weighting needs a total capacity to share out. The convention does not explain how the percentage of roof route would work for a shared array whose kWp and DNC cannot be ascertained.
+- The sharing rule speaks only of the capacity of the PV. It does not say how a battery shared between dwellings should be treated.
+
+On either, ask your accreditation scheme.
+
+---
+
+## Section 4: Batteries, diverters and related entries
+
+### PV batteries: what is recorded
+
+The data set has an item for PV batteries, yes or no, and an item for the number of batteries, from 1 to a maximum of 4, used only if battery storage is present (specification section 17, Table 31, items 11-3 and 11-4). The assessor needs to collect the number of batteries and the capacity of each (specification section 11.2).
+
+### Battery evidence and the default
+
+For PV batteries, photographic or written evidence of the manufacturer and model of the battery unit, and of its usable capacity in kWh, is required. If this cannot be obtained, use a default of 5 kWh per battery (convention 9.05). The specification agrees: if the capacity is unknown or cannot be determined, assume 5 kWh (specification section 17, Table 31, item 11-4).
+
+### A battery above the default
+
+Version 12.2 added a paragraph to convention 9.05 that was not in version 12.1. It says that where an individual battery has a storage capacity greater than 5, the PV battery shall be entered as two separate batteries: the first entry shall be 5, with the excess entered as a second battery (convention 9.05).
+
+The units in that paragraph are not consistent. The default in the preceding sentence is given as 5kWh, but the new paragraph says "5Kw" and "5kW". The specification has the same mix: section 11.2 gives the default as 5kW, while Table 31 item 11-4 gives 5kWh and says that a known capacity of 10 kWh is specified as 2 batteries. If the difference matters for a unit you are assessing, ask your scheme.
+
+Worked example. A single battery has documented usable capacity of 8 kWh. Following convention 9.05, it is entered as two batteries: the first at 5 and the second carrying the excess of 3.
+
+Read literally, the paragraph gives two entries whatever the size, so a single 12 kWh unit would be 5 and an excess of 7. The convention does not say whether an excess that is itself more than 5 should be split again. The specification allows up to 4 batteries (specification section 17, Table 31, item 11-4) but does not settle the point either. Ask your scheme.
+
+At least one accreditation scheme bulletin states that no more than three batteries can be recorded, and that a diverter is ignored where batteries are present. Neither statement appears in the conventions or the specification. Treat them as that scheme's practice and check what your own scheme says.
+
+### Batteries that are not PV batteries
+
+Convention 9.05 and the data set both speak of PV batteries. The specification's list of EPC addenda, from which the assessor selects, includes one for "PV-independent battery storage present". Its text says the assessment does not include PV-independent battery storage (specification section 13, Table 30, addendum 16).
+
+### PV diverters
+
+The data set has a yes or no item, PV diverter for water heating, described as for when PV is used for water heating (specification section 17, Table 31, item 11-2). If the answer is yes, the specification says only that the calculation follows SAP 10.2, naming section G4 and a beta-factor from Appendix M1 (specification section 11.2 and section 17, Table 31, item 11-2).
+
+For PV diverters, written evidence of the manufacturer and model of the diverter system installed is required, and if this cannot be obtained the diverter cannot be entered (convention 9.05). Compare the two rules:
+- Battery: photographic or written evidence, with a 5 kWh default if it cannot be obtained.
+- Diverter: written evidence, with no default. Without it there is no entry.
+
+The former convention on water heated by PV is shown as deleted (convention 6.10), so convention 9.05 is where the diverter rule sits. Neither document sets out further eligibility tests for a diverter, such as the type of hot water system it must serve. If you are unsure whether a device counts, ask your scheme.
+
+### Related addenda and other technologies
+
+Two more addenda are relevant (specification section 13, Table 30):
+- Addendum 8, for PVs or a wind turbine present on the property in England, Wales or Scotland. Its text says the assessment does not include any feed-in tariffs but may include a benefit for the export of excess generation to the grid.
+- Addendum 15, for when PV is recommended. Its text suggests considering a PV battery and a PV diverter for water heating.
+
+If you meet a technology that does not fit these entries and might be the subject of a BRE Technical Note, check the published list and, if a note applies to RdSAP, follow its instructions (convention 9.16).
 
 ---
 
 ## Key Takeaways
-
-- Always use documented kWp from the MCS certificate or datasheet; only fall back to convention defaults when no evidence exists, and select the correct era-based default wattage per panel.
-- Record PV array tilt as the actual panel angle from horizontal, not the roof pitch, where mounting frames alter the effective angle.
-- Battery storage in RdSAP 10 requires only two inputs (present and usable capacity in kWh) and modifies the PV on-site usage fraction — do not record batteries that are not connected to a PV system.
-- PV diverters are recorded as a Boolean field and require a hot water cylinder with an immersion heater to be present; the benefit flows through the DHW calculation pathway, not the electrical self-consumption pathway.
-- The battery and diverter benefits are partially additive but the SAP 10.2 algorithm prevents double-counting of PV-generated electricity across the three output streams.
-- Photograph and document all renewable technology components — MCS certificates, nameplates and wiring configurations — as your primary audit defence.
-- Do not extrapolate SAP point improvements to clients without running the specific calculation; modelled outcomes depend on the full dwelling dataset, not isolated technology inputs.
+- The array's kWp is required; if it cannot be found, the DNC stated on the MCS certificate may be used instead (convention 9.05).
+- If neither can be ascertained, do not allocate the PV unless it is connected to a meter serving a single dwelling; then record the percentage of the total roof area occupied by PVs (convention 9.05).
+- Panels on different roof planes are separate systems; a single total kWp or DNC is apportioned by the estimated relative area of each (convention 9.05).
+- Connection must be verified by a PV generation meter or documentary evidence; if it cannot be determined, the panels are still allocated but not specified as connected (convention 9.05).
+- PV serving more than one building or dwelling is allocated by area weighting on estimated total floor area (convention 9.05).
+- Batteries need photographic or written evidence of manufacturer, model and usable capacity; without it the default is 5 kWh per battery, and a battery above that is entered as two (convention 9.05).
+- A PV diverter needs written evidence of manufacturer and model; without it the diverter cannot be entered (convention 9.05).
 
 ---
 
 ## Self-Assessment Questions
 
-**Question 1.** A dwelling has a PV array installed in 2022 but the homeowner cannot provide the MCS certificate or any panel documentation. You count 12 panels. Under RdSAP 10 conventions, what kWp should you record?
+**Q1.** The kWp of a PV array cannot be found in any document or on the wiring diagram, but the MCS certificate states the declared net capacity. What does convention 9.05 allow?
 
-A) 12 × 250 Wp = 3.0 kWp
-B) 12 × 300 Wp = 3.6 kWp
-C) 12 × 350 Wp = 4.2 kWp
-D) You cannot record the PV array without documentation
+A) Record the percentage of roof area covered
+B) Use the DNC stated on the MCS certificate instead of the kWp
+C) Do not allocate the PV to the dwelling
+D) Enter three arrays of equal size
 
-**Correct answer: B.** The installation post-dates 2014 but pre-dates the post-2020 threshold. The convention default for installations between 2014 and 2020 is 300 Wp per panel. However, note the installation date is 2022 — this falls into the post-2020 bracket, making the answer **C) 3.6 kWp at 300 Wp** only if the assessor misidentifies the date band. Re-reading the convention: installations post-dating 2020 use 350 Wp. The correct answer is **C) 12 × 350 Wp = 4.2 kWp.**
-
-**Correct answer: C.** The 2022 installation date falls into the post-2020 convention default of 350 Wp per panel. 12 × 350 Wp = 4.2 kWp.
+**Correct answer: B.** Convention 9.05 says that if the kWp cannot be found, the DNC stated on the MCS certificate may be used instead; the percentage of roof route is only for when neither can be ascertained.
 
 ---
 
-**Question 2.** A dwelling has a 5.0 kWh battery storage system installed, but no solar PV array. Should the battery be recorded in RdSAP 10?
+**Q2.** The kWp of an array is documented, but it cannot be determined that the PV supply is feeding into a meter serving the dwelling being assessed. How are the panels treated?
 
-A) Yes — battery storage is recorded regardless of PV presence
-B) Yes — but with the kWp field left at zero
-C) No — the battery calculation pathway is only activated when a PV array is also recorded
-D) No — batteries are not recognised in RdSAP 10
+A) They are left out of the assessment altogether
+B) They are entered as connected, because the kWp is known
+C) They are replaced by a percentage of roof area entry
+D) They are still allocated to the dwelling but not specified as being connected
 
-**Correct answer: C.** The SAP 10.2 battery methodology modifies the PV self-consumption fraction. Without a PV array, there is no self-consumption to modify. The battery field should not be activated.
-
----
-
-**Question 3.** An assessor records a PV diverter as present on a dwelling with a 3.5 kWp PV array. The dwelling has a combi boiler and no hot water cylinder. Is this correct?
-
-A) Yes — the PV diverter can heat water at the point of use
-B) Yes — the diverter will be credited against space heating instead
-C) No — a PV diverter requires a hot water cylinder with an immersion heater
-D) No — PV diverters are only valid with systems above 4.0 kWp
-
-**Correct answer: C.** A PV diverter requires a DHW cylinder with an immersion heater as the thermal store receiving the diverted electricity. A combi boiler system has no cylinder, so the diverter cannot function as modelled and must not be recorded.
+**Correct answer: D.** Convention 9.05 says that in this case the PV panels are still allocated to the dwelling but should not be specified as being connected.
 
 ---
 
-**Question 4.** A dwelling has PV panels flush-mounted on a roof pitched at 35 degrees from horizontal, facing south-west. An adjacent chimney stack casts a shadow across approximately one-third of the array during winter mornings. What overshading category is most likely appropriate?
+**Q3.** A PV battery is present. You can photograph the unit, but neither the photographs nor any paperwork give its usable capacity. What capacity applies?
 
-A) None or very little
-B) Modest
-C) Significant
-D) Heavy
+A) A default of 5 kWh per battery
+B) A default of 4 kWh per battery
+C) No battery can be entered without the capacity
+D) A default of 10 kWh, entered as two batteries
 
-**Correct answer: B.** Shadow from a chimney affecting approximately one-third of the array during a limited period (winter mornings) is consistent with the "modest" overshading category. "Significant" would apply if the obstruction affected a larger proportion of the array for a greater part of the year. Assessors should apply professional judgement within the four-tier classification framework, considering annual rather than worst-case seasonal shading.
+**Correct answer: A.** Convention 9.05 says that if evidence of manufacturer, model and usable capacity cannot be obtained, a default of 5kWh per battery is used.
 
 ---
 
-**Question 5.** In RdSAP 10, what is the assumed round-trip efficiency applied to battery storage systems in the SAP 10.2 calculation?
+**Q4.** A 6.00 kWp array serves three flats with estimated floor areas of 50, 70 and 80 square metres. What capacity is allocated to the 70 square metre flat?
 
-A) 0.80
-B) 0.85
-C) 0.90
-D) It varies depending on the battery chemistry recorded
+A) 6.00 kWp, because the array is on the building
+B) 2.00 kWp, an equal share between three flats
+C) 2.10 kWp, by area weighting
+D) None, because shared arrays are not allocated
 
-**Correct answer: B.** SAP 10.2 applies a fixed default round-trip efficiency of 0.85 for all battery storage systems. Battery chemistry is not a recorded input in RdSAP 10.
+**Correct answer: C.** Convention 9.05 allocates the total capacity by area weighting on the estimated total floor area served: 70 divided by 200 is 0.35, and 0.35 of 6.00 kWp is 2.10 kWp.
+
+---
+
+**Q5.** A householder tells you a PV diverter is installed, but no written evidence of the manufacturer and model of the diverter system can be obtained. What does convention 9.05 require?
+
+A) Enter the diverter using a default
+B) The diverter cannot be entered
+C) Enter it as a second PV battery of 5 kWh
+D) Enter it under convention 6.10, water heated by PV
+
+**Correct answer: B.** Convention 9.05 requires written evidence of manufacturer and model and says that if this cannot be obtained the diverter cannot be entered; convention 6.10 is deleted.
 
 ---
 
 ## Further Reading
-
-- **SAP 10.2: The Government's Standard Assessment Procedure for Energy Rating of Dwellings (2022 edition with 2025 amendments)** — BRE on behalf of DESNZ. Full methodology including Appendix H (solar PV), Appendix M (battery storage) and Appendix Q (PV diverters).
-  https://www.bregroup.com/sap/standard-assessment-procedure-sap-2012/
-
-- **RdSAP 10 Conventions** — Published by the scheme operators under licence from DESNZ. The definitive source for evidence hierarchies, default values and assessment rules for reduced data applications.
-  https://www.nher.co.uk/sap-rd-sap/
-
-- **MCS Installation Standards: MIS 3002 (Solar PV) and MIS 3012 (Battery Storage)** — Microgeneration Certification Scheme. Relevant for understanding the installation standards that underpin MCS certification and the evidence documents assessors should expect to encounter.
-  https://mcscertified.com/standards-tools-library/
-
-- **PAS 2035:2023 — Retrofitting dwellings for improved energy efficiency. Specification and guidance** — BSI. Relevant where PV, battery and diverter installations form part of a whole-house retrofit under ECO4 or the Great British Insulation Scheme, particularly regarding the role of the DEA in the pre-assessment process.
-  https://knowledge.bsigroup.com/products/retrofitting-dwellings-for-improved-energy-efficiency-specification-and-guidance
+- **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read convention 9.05 in full, with 9.02 for documentary evidence, 9.13 for meters and 9.16 for technologies outside the standard entries.
+- **RdSAP10 Specification.** 9 June 2025. See sections 11.1 and 11.2, section 13 Table 30 (addenda 8, 15 and 16) and section 17 Table 31 (items 1-16 to 1-18 and 11-1 to 11-4).
+- **BRE Technical Notes.** BRE, https://www.bregroup.com/sap/bre-technical-notes/. The list that convention 9.16 requires you to check.
 
 ---
 
-*© Meridian CP
+*© Meridian CPD 2026. All rights reserved. Unauthorised reproduction prohibited.*
+*This course material is licensed to individual subscribers only.*

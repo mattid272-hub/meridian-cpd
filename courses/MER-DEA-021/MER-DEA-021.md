@@ -1,185 +1,286 @@
-
-
 # Airtightness Testing in RdSAP 10
-**Course ID:** MER-DEA-021 | **CPD Hours:** 1.0 | **Published:** March 2026
+**Course ID:** MER-DEA-021 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Explain how RdSAP 10 treats measured airtightness data differently from RdSAP 9.94, including the revised default assumptions and their impact on dwelling energy ratings.
-- Identify the circumstances under which a measured air permeability value can and should be entered into RdSAP 10 for an existing dwelling EPC assessment.
-- Apply the correct ATTMA TSL1 / CIBSE TM23 testing protocols and determine whether a test certificate is compliant for RdSAP 10 input.
-- Evaluate the effect of airtightness improvements on SAP ratings within the context of PAS 2035:2023 retrofit pathways and medium-term improvement recommendations.
-- Distinguish between the regulatory treatment of airtightness for new-build SAP calculations (Part L1A / Part L1) and existing dwelling assessments under RdSAP 10, avoiding common data entry errors.
+- State what convention 10.01 requires before a pressure test result can replace the RdSAP default, and what makes a certificate invalid.
+- Explain how the specification uses a 50 Pa or 4 Pa test result, and which parts of the infiltration estimate it replaces.
+- Classify a chimney as open, blocked, a flue or not counted, using the 200 mm, 125,000 mm2 and 30,000 mm2 tests in convention 9.01.
+- Apply the draught lobby definition in convention 2.09b and the draught proofing rule in 3.11a.
+- Identify the other recorded items that feed the infiltration estimate: storeys, wall and floor construction, vents, fans and built form.
 
 ---
 
 ## Introduction
 
-Airtightness has always been a significant variable in domestic energy modelling, but for most of RdSAP's operational life it has been functionally invisible to DEAs working on existing dwellings. RdSAP 9.94 assigned a default air permeability derived from dwelling age, construction type, and a set of proxy assumptions about draught-stripping and flue presence. The assessor had no facility to enter a measured value. The model simply estimated infiltration and moved on.
+Despite the title, nothing in RdSAP 10 asks a DEA to test a dwelling. Convention 10.01 asks for something narrower: decide whether a pressure test certificate you are handed can go into the assessment, and otherwise leave the default alone. Where there is no certificate, infiltration is estimated from things you record anyway: fireplaces and flues, vents and fans, the main entrance, draught proofing, wall and floor construction, storeys and built form.
 
-RdSAP 10 changes this. The updated methodology, aligned with the 2025 iteration of SAP 10.2 and deployed through the Home Energy Model framework, now permits — and in certain retrofit scenarios, actively encourages — the entry of a measured air permeability result for existing dwellings. This is not a marginal technical adjustment. Airtightness directly influences space heating demand, which dominates the energy balance in the vast majority of the UK's 29 million existing homes. A dwelling tested at 5 m³/(h·m²) at 50 Pa versus one defaulting to 15 m³/(h·m²) at 50 Pa will show materially different fabric heat loss calculations and, consequently, a different EPC band.
+The specification lists "air pressure test result can be used if available" among its significant changes from RdSAP 2012 (specification, introduction). This course covers the certificate rules first, then the recorded items.
 
-For DEAs, this creates both an opportunity and a compliance obligation. Where a valid test result exists — for example, from a PAS 2035 retrofit project or a post-installation verification under a government-funded scheme — the assessor must understand when to use it, what constitutes a valid certificate, and how the software processes the input. Getting it wrong means an inaccurate EPC, potential enforcement action from the accreditation scheme, and a disservice to the homeowner or landlord relying on the rating.
+Everything here comes from the Conventions v12.2 for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification of 9 June 2025. Where the two conflict, the convention takes precedence (conventions v12.2, front page). Statements about what v12.2 changed come from comparing the v12.1 and v12.2 texts.
 
-This course walks through the mechanics: what RdSAP 10 actually does with the airtightness input, how the defaults have been recalibrated, the testing standards that underpin valid data, and the practical interface with PAS 2035 retrofit coordination. It assumes you are already producing EPCs and are familiar with the RdSAP conventions. The focus is on what has changed, what it means for your workflow, and where the errors are most likely to occur.
-
----
-
-## Section 1: How RdSAP 10 Models Infiltration — What Has Actually Changed
-
-RdSAP has always calculated an infiltration rate as part of its heat loss computation. The methodology converts air permeability (measured in m³/(h·m²) at 50 Pa pressure difference) into an effective infiltration rate in air changes per hour (ach) using a shelter factor and a division factor (typically ÷20 under SAP convention, though the precise treatment is more nuanced in the background calculations). That infiltration rate feeds into the ventilation heat loss coefficient, which combines with purposeful ventilation to produce total ventilation loss.
-
-Under RdSAP 9.94, the air permeability for existing dwellings was purely algorithmic. The model assigned a base value according to a matrix of wall construction type (masonry cavity, solid brick, timber frame, system-built, etc.) and age band. A pre-1900 solid-walled dwelling might default to approximately 15 m³/(h·m²) at 50 Pa; a post-2006 cavity masonry home to around 7–10 m³/(h·m²) at 50 Pa. These defaults were then adjusted by whether draught-stripping was recorded on windows and doors, whether open flues or chimneys were present, and the number and type of extract fans. The assessor had no override.
-
-RdSAP 10 retains the default pathway — you are not required to have a test for every EPC — but it introduces an explicit data entry field for measured air permeability. When a valid measured value is entered, it replaces the age-band default entirely. The software then adjusts for the ventilation strategy and purposeful ventilation provisions as before, but the baseline infiltration starts from a tested figure rather than a statistical proxy.
-
-The defaults themselves have also been recalibrated. BRE's supporting research, drawing on an expanded dataset of blower door tests conducted across the English Housing Survey and devolved-nation equivalents, revised several age-band assumptions. Notably, mid-century dwellings (1950–1975) saw their defaults tightened modestly, reflecting field evidence that these properties — often with smaller window areas and simpler construction — were somewhat less leaky than the previous assumptions suggested. Pre-1919 defaults remained broadly unchanged, reflecting the persistent leakiness of older solid-walled stock.
-
-Critically, the division factor and shelter model have been refined in line with SAP 10.2. Wind exposure is treated with greater regional granularity, meaning that two identical dwellings with identical air permeability values will show different infiltration rates depending on location and shielding — a change from the relatively blunt treatment in SAP 2012/RdSAP 9.94. For the DEA, this means the measured value you enter interacts more sensitively with the site context than it would have under the old methodology.
+This edition replaces the March 2026 edition. That edition gave a three-year limit on the age of a certificate and named testing standards. Neither is in the conventions or the specification, and both have been removed. The sources say nothing about how a pressure test is carried out, what result to expect or what it costs, so nor does this course. Where they are silent on something you need on site, it says so.
 
 ---
 
-## Section 2: When Measured Data Is Valid — Test Standards, Certificates, and Compliance
+## Section 1: The pressure test result and convention 10.01
 
-A measured air permeability value can only be entered into RdSAP 10 if it is supported by a compliant test certificate. The relevant testing standards are ATTMA Technical Standard L1 (Measuring Air Permeability of Building Envelopes — Dwellings) and CIBSE TM23, both of which align with BS EN ISO 9972:2015 (the international standard for fan pressurisation testing). For RdSAP 10 purposes, the test must have been conducted in accordance with one of these frameworks, and the certificate must be issued by a tester holding UKAS-accredited certification or registered with ATTMA's Lodgement Scheme.
+### The default comes first
 
-The test result recorded on the certificate is the air permeability at 50 Pa in m³/(h·m²), referenced to the total envelope area of the dwelling. This is the figure that enters the software. Do not confuse it with air changes per hour at 50 Pa (n₅₀), which is referenced to dwelling volume rather than envelope area. The two are related by a geometric ratio but are numerically different. Entering n₅₀ where the software expects q₅₀ (air permeability) will produce an incorrect result, and this is one of the most common data entry errors flagged in audits of new-build SAP calculations — there is no reason to import that error into existing dwelling assessments now that the field is available.
+The pressure test result must be the RdSAP default and must not be overwritten unless specific documentary evidence is available (convention 10.01). The specification agrees: the infiltration rate is calculated when a pressure test result is not available, and when one is available it can be used (specification section 4.1, Table 5). No certificate, no entry: you do not estimate a figure.
 
-For the certificate to be accepted, the test must have been conducted under appropriate conditions: the dwelling sealed as per the testing protocol (temporary sealing of intentional openings such as trickle vents, extract fans, and flues), wind speed below the threshold specified in BS EN ISO 9972 (generally ≤6 m/s, though the standard specifies Beaufort force 3 or a product-specific limit), and both pressurisation and depressurisation results recorded. The mean of the two is the reported result.
+### What the figure is
 
-There is a temporal dimension. RdSAP 10 software conventions, as specified in the associated conventions document, require that the test was conducted no more than three years prior to the date of the EPC assessment, unless the test was conducted as part of a completed PAS 2035 retrofit project and the measures have not been materially altered since. This prevents reliance on stale data in a dwelling that may have undergone changes — new windows, additional penetrations, removed draught-stripping — that would have altered the envelope's performance.
+The figure is the measured air permeability, which the convention writes as m3/m2/hr, from a blower door test at 50 Pa or a low-pressure pulse test at 4 Pa (convention 10.01). The specification applies a different formula to each (specification section 4.1, Table 5), so you need to know which test the certificate reports.
 
-DEAs should also be aware that they are not being asked to conduct the test themselves. Your role is to verify the certificate's validity, confirm it relates to the dwelling in question (address, UPRN where available, and envelope area should be cross-referenced), and enter the figure into the software with the appropriate source flag. If anything on the certificate appears inconsistent — for instance, an envelope area that differs significantly from what you would calculate from your survey — you should default to the algorithmic value and note the discrepancy.
+Note the word "measured". The worksheet text reproduced in the specification notes that an air permeability value applies if a pressurisation test has been done "or a design or specified air permeability is being used" (specification section 4.1, Table 5). Convention 10.01 describes only a measured figure evidenced by a certificate. The convention takes precedence, so a design or target figure is not evidence for an RdSAP entry.
+
+### Who produced the certificate
+
+The evidence is a pressure test certificate produced by a person with suitable expertise and experience. That can be demonstrated by membership of a recognised air tightness Competent Persons Scheme that is approved by Government; the convention names EAS or ATTMA (convention 10.01). It does not expand those abbreviations or say how to confirm a tester's membership; ask your accreditation scheme.
+
+### Does it relate to this dwelling
+
+You must be confident, and able to demonstrate, that the documentation relates to the actual property being assessed and that there is no physical or other documentary evidence to the contrary (convention 9.02; the Scotland text refers only to physical evidence to the contrary). A certificate for another flat in the block does not meet that test.
+
+### Material changes
+
+Version 12.2 added one sentence: if material changes have been made to the property since the original test, the certificate becomes invalid for RdSAP entry (convention 10.01). It is not in the v12.1 text; the rest of 10.01 is unchanged.
+
+Neither the convention nor the specification defines a material change or gives examples. Compare the test date with what you see and are told about works since then, record it, and if unsure ask your accreditation scheme. The default remains available when a certificate cannot be relied on (convention 10.01).
+
+### Background ventilation tests and other gaps
+
+Results from background ventilation tests are not included in the assessment (convention 10.01). Three other things the sources do not say:
+- They give no maximum age for a certificate, only the material changes rule.
+- They do not settle whether you must enter a valid certificate when one is offered. The specification says a result "can be used" in one line and "is used" in another.
+- They do not set out what a certificate must contain. Check what your scheme asks for.
 
 ---
 
-## Section 3: Interaction with PAS 2035:2023 Retrofit Pathways and Improvement Recommendations
+## Section 2: What the calculation does with a test, and without one
 
-The introduction of a measured airtightness input in RdSAP 10 is not coincidental to the maturation of PAS 2035. The 2023 revision of PAS 2035 (published by BSI and mandated for publicly funded retrofit under ECO4, the Great British Insulation Scheme, and their successor programmes) places significant emphasis on a fabric-first hierarchy, with airtightness identified as a key performance metric for both pre- and post-intervention assessment.
+The specification takes the infiltration calculation from the SAP 10.2 worksheet and reproduces the relevant lines in Table 5 (specification section 4.1). Every figure in this section comes from that table. There are two parts: openings you count, and fabric allowances that follow from what you record.
 
-Under PAS 2035:2023, a Retrofit Coordinator developing a Medium Term Improvement Plan for a dwelling in Pathway B or C is expected to consider airtightness improvement as part of the ventilation strategy. The standard explicitly warns against improving airtightness without addressing ventilation adequacy — the so-called "seal tight, ventilate right" principle. Where airtightness measures are installed (draught-stripping, sealing of service penetrations, floor sealing, chimney draught excluders), a post-works blower door test is strongly recommended at Assessment Risk Level 3 and may be mandated by scheme requirements.
+### Counted openings
 
-This is where the DEA's work intersects directly. When producing a post-retrofit EPC — which is required to demonstrate the energy improvement resulting from funded measures — the assessor now has the ability to enter the post-works measured air permeability. This can substantially improve the calculated energy rating compared to leaving the default in place, because the default assumes a statistically average dwelling of that age and type, not a dwelling that has just had its envelope systematically sealed.
+Each counted item is given a flow in m3 per hour:
+- Open chimneys: 80
+- Open flues: 20
+- Chimneys or flues attached to a closed fire: 10
+- Flues attached to a solid fuel boiler: 20
+- Flues attached to another heater: 35
+- Blocked chimneys: 20
+- Intermittent extract fans: 10
+- Passive vents: 10
+- Flueless gas fires: 40
 
-Consider a 1960s semi-detached house with solid concrete floors, cavity walls (now insulated), and replacement double-glazed windows. The RdSAP 10 age-band default air permeability for this archetype might sit around 11–13 m³/(h·m²) at 50 Pa. If post-retrofit testing demonstrates an achieved permeability of 6 m³/(h·m²) at 50 Pa, entering the measured value will reduce the ventilation heat loss significantly, potentially contributing one or more SAP points and, in borderline cases, shifting the EPC band.
+The total is divided by worksheet item (5) to give air changes per hour, which is item (8). Item (5) is not defined in the part of the worksheet the specification reproduces.
 
-However, the assessor must exercise caution. Entering a measured airtightness value without confirming that the ventilation provision is adequate creates a theoretical risk that the modelled ventilation heat loss will be unrealistically low. RdSAP 10 handles this through its ventilation algorithm — if the dwelling has no mechanical ventilation and no trickle vents, the model applies a minimum ventilation rate floor regardless of how tight the envelope tests. But the assessor should be aware that where airtightness improvements have been made, the PAS 2035 Retrofit Coordinator should have addressed ventilation. If the EPC is being produced and there is evidence of airtightness works but no corresponding ventilation upgrade, the DEA should record the measured value (if the certificate is valid) but may wish to flag the ventilation concern to the scheme provider or lodgement body.
+### Fabric allowances, used when there is no test
 
-The practical upshot: measured airtightness data from PAS 2035 projects is likely to become the most common source of valid test certificates for existing dwelling EPCs. DEAs working on post-retrofit assessments should proactively request the airtightness test certificate from the Retrofit Coordinator or installer at the same time as they collect details of the installed measures.
+With no pressure test the worksheet adds these, in air changes per hour:
+- Storeys: the number of storeys minus one, multiplied by 0.1. The number is the greater of that in the main part and in any extension.
+- Structural infiltration: 0.25 for steel or timber frame, 0.35 for masonry.
+- Floor: 0.2 for an unsealed suspended wooden ground floor, 0.1 for a sealed one, otherwise 0.
+- Draught lobby: 0.05 if there is none, otherwise 0.
+- Window infiltration: 0.25, less 0.2 multiplied by the percentage of windows and doors draught proofed and divided by 100.
+
+Those are added to item (8) to give the infiltration rate.
+
+### With a test result
+
+A test result replaces the fabric allowances but keeps item (8):
+- Test at 50 Pa: the air permeability divided by 20, plus item (8).
+- Test at 4 Pa: 0.263 multiplied by the air permeability raised to the power 0.924, plus item (8).
+
+A certificate does not switch off the chimney, flue, fan and vent counts: they are added to the tested figure, so they must be right either way. And because the 50 Pa and 4 Pa figures use different formulas, one must not be entered as the other. The sources do not say any recorded item can be skipped when a test is entered, so collect it all.
+
+### Shelter
+
+On either route the result is multiplied by a shelter factor: 1 minus 0.075 multiplied by the number of sheltered sides. That number is 0 for detached, 1 for semi-detached or end terraced, 3 for enclosed mid-terraced and 2 in other cases such as mid-terraced, including flats. So the built form you record feeds infiltration too.
+
+### Worked example
+
+Take a two-storey masonry semi-detached house with an unsealed suspended timber ground floor, no draught lobby and every openable window and door draught proofed. The allowances are 0.1 for the second storey, 0.35 for masonry, 0.2 for the floor, 0.05 for the missing lobby and 0.05 for the windows (0.25 minus 0.2). They total 0.75 air changes per hour, to which item (8) is added. The shelter factor for one sheltered side is 0.925.
+
+With a valid 50 Pa certificate, the 0.75 is replaced by the certificate figure divided by 20. A figure of 10 would give 0.5; a figure of 20 would give 1.0. Those are arithmetic illustrations, not typical results: a tested figure can sit below or above the default.
 
 ---
 
-## Section 4: Practical Workflow — Data Entry, Audit Risk, and Common Errors
+## Section 3: Chimneys, fireplaces and flues
 
-When you encounter a measured airtightness value in the field, the workflow is straightforward but demands attention to detail.
+The specification refers you to the conventions for the chimney and fireplace definitions and count (specification section 4.1). Everything in this section comes from convention 9.01 unless another source is cited.
 
-**Step 1: Verify the certificate.** Confirm the testing body's accreditation (ATTMA or equivalent UKAS scope). Match the address and envelope area to the dwelling you are assessing. Check the date against the three-year validity window. Confirm both pressurisation and depressurisation results are recorded and that the mean is the stated result.
+### Open chimneys
 
-**Step 2: Enter the data.** In your RdSAP 10 software, select "measured" as the airtightness data source and enter the q₅₀ value from the certificate. Do not convert, round aggressively, or estimate. Enter the figure as stated to one decimal place.
+An open chimney is a vertical duct for combustion gases with a diameter of 200 mm or more, or a rectangular duct of equivalent area, given as 125,000 mm2. Count all open chimneys and fireplaces, downstairs and upstairs, but only when they are unrestricted and suitable for use. An open chimney is modelled at 80 m3 per hour. Three other cases are treated as open chimneys:
+- A chimney attached to a decorative gas fire
+- A chimney fitted with a damper
+- A decommissioned chimney with a ventilation area greater than or equal to 30,000 mm2
 
-**Step 3: Retain the evidence.** The test certificate must be retained in your assessment file for audit purposes. Accreditation scheme audit protocols now include specific checks for measured airtightness entries — this is a flagged field because it has a material impact on the rating and is therefore a target for manipulation or error. If audited, you will need to produce the certificate.
+### Decommissioned chimneys
 
-**Common errors to avoid:**
+A chimney can be decommissioned with the fireplace filled in and the stack capped or removed completely. It may still need air bricks to manage moisture, for example on an external wall. Three outcomes follow:
+- Sealed completely, with no air bricks required: it does not need to be counted as a chimney.
+- Ventilation area less than 30,000 mm2: a blocked chimney, modelled at 20 m3 per hour.
+- Ventilation area of 30,000 mm2 or more: treated as an open chimney.
 
-- Entering n₅₀ (air changes per hour at 50 Pa) instead of q₅₀ (air permeability in m³/(h·m²) at 50 Pa). The certificate should clearly label which is which. If in doubt, check the units.
-- Using a test certificate from a different dwelling in a block of similar properties. Each certificate applies to a specific tested unit.
-- Entering a measured value for a dwelling where the test was conducted before significant alteration works (e.g., new windows installed after the test). The value no longer represents the dwelling's current state.
-- Assuming that a measured value will always improve the rating. In some cases — particularly well-built post-2000 homes — the age-band default may already assume reasonable airtightness, and a measured result could be higher (leakier) than the default, reducing the SAP score.
+The convention does not say how the ventilation area is measured, for example the overall size of the air brick or its free open area. For a vent near the threshold, ask your scheme.
 
-Where no valid test certificate is available, leave the software on its default setting. Do not estimate or guess at a value. The default pathway remains the correct and compliant approach for the majority of existing dwelling assessments.
+### Flues
+
+A vertical duct with a diameter of less than 200 mm is counted as a flue. That includes a flexible gas flue liner sealed into a chimney, because the liner reduces the diameter to less than 200 mm. The convention lists three cases as considered in SAP:
+- An open flue gas fire with the flue products outlet sealed to the chimney, including radiant gas fires and ILFE (insert live fuel effect) fires
+- A chimney or open flue attached to a wood or solid fuel boiler
+- A chimney or open flue attached to a wood or solid fuel stove or appliance with a controlled air supply
+
+The worksheet has four flue lines, listed with their flow rates in Section 2. Neither document states which line each of the convention's cases belongs to, so follow your scheme's guidance on the flue categories. A flue for a solid fuel boiler in an unheated space is not counted (specification section 4.1, Table 5).
+
+### Ventilation and heating are separate questions
+
+Convention 9.01 notes that it relates only to the number of open fireplaces for ventilation, and that other rules apply to the choice of main or secondary heating. Under convention 5.02 an open fire is considered in the heating assessment if the fireplace is capable of supporting an open fire, which includes having a grate suitable for holding fuel, even if no fuel is present. The number of open fireplaces is then used as the number of open chimneys for ventilation (convention 5.02). Neither convention says in terms whether an open chimney with no grate still counts for ventilation. If you meet one, ask your scheme.
+
+### What changed in v12.2
+
+Comparing the v12.1 and v12.2 texts of convention 9.01:
+- The passage on decommissioned chimneys is new, with its flow rates of 80 and 20 m3 per hour and the sealed chimney that need not be counted.
+- In v12.1 a decommissioned chimney was open with a ventilation area "greater than" 30,000 mm2. It is now "greater than or equal to".
+- The v12.1 text listed a chimney temporarily blocked with cardboard, newspaper bungs, chimney balloons and similar as an open chimney. That bullet is not in v12.2.
+
+On the last point, v12.2 does not say how such a chimney is now treated, although the test of unrestricted and suitable for use remains. Ask your scheme and record what you found.
+
+### Worked example: four fireplaces
+
+Applying convention 9.01 to one house:
+- Fireplace A has a grate and an unrestricted, usable chimney duct of 200 mm or more. It is an open chimney, and an open fire for heating (convention 5.02).
+- Fireplace B has a gas fire with a flexible flue liner sealed into the chimney. It is a flue, not a chimney.
+- Fireplace C is filled in, the stack is capped and an air brick gives a ventilation area of 15,000 mm2. It is a blocked chimney.
+- Fireplace D is as C, but the ventilation area is exactly 30,000 mm2. It is treated as an open chimney.
+
+That gives two open chimneys at 80 and one blocked chimney at 20: 180 m3 per hour before the flue is added.
+
+---
+
+## Section 4: Draught lobby, draught proofing, vents and construction
+
+### Draught lobby
+
+A draught lobby is an arrangement of two doors that forms an airlock on the Main Entrance to the dwelling. It may be heated or unheated. To be included, the enclosed space must meet all of these (convention 2.09b):
+- It covers the Main Entrance to the dwelling.
+- It has a floor area of at least 2 m2.
+- A person with a push-chair or similar can close the outer door before opening the inner door.
+- It leads into a further circulation area and not directly into any other room type. It may additionally give access to a cloakroom, with or without a WC.
+
+The Main Entrance is the one designed to be the main entrance, which may not be the one the occupier uses most (convention 2.09b). So a lobby on a door not designed as the main entrance does not count, and a porch opening straight into the living room fails the fourth test.
+
+A flat with access via an enclosed heated or unheated corridor or stairwell should be classified as having a draught lobby (convention 2.09b). For a house, bungalow or park home, assume no draught lobby if it cannot be determined (specification section 4.1, Table 5).
+
+### Draught proofing
+
+All external doors and openable windows in each building part should be examined for draught proofing. The percentage is the number draught proofed divided by the total number of openable windows and doors, multiplied by 100 (specification section 8.1).
+
+If the state of the draught proofing cannot be determined, take triple, double or secondary glazed as draught proofed, and single glazed windows and doors as not draught proofed unless there is contrary evidence of draught proofing. Include glazing in a non-separated conservatory (convention 3.11a).
+
+### Vents and fans
+
+If vents, excluding air bricks, are present in the property and the presence of mechanical ventilation cannot be confirmed, enter the number of vents as passive stack (convention 7.03a). Air bricks are left out of this count, but under 9.01 those serving a decommissioned chimney decide between blocked and open.
+
+Enter the number of extract fans if known; the specification gives defaults by age band and number of habitable rooms for when it is not (specification section 4.1, Table 5).
+
+### Wall construction
+
+The wall construction you record sets the structural infiltration when there is no test (specification section 4.1, Table 5):
+- System build is treated as masonry.
+- Where both frame and masonry are present, use the value for the greater wall area after deducting openings, and 0.35 if the areas are equal.
+- Walls of roof rooms are not included.
+- A park home uses the timber frame value.
+
+Timber frame should be recorded as timber frame and not as system build, irrespective of the external cladding (convention 3.02). For a flat, record the construction of the heat loss walls of the dwelling being assessed, not the overall superstructure (convention 3.14).
+
+### Floor construction
+
+Only a suspended timber ground floor adds floor infiltration; solid floors and suspended floors that are not timber add nothing. Whether a suspended timber floor counts as sealed follows from other entries (specification section 4.1, Table 5):
+- Main dwelling age band A to E: sealed if the floor U-value is below 0.5, or if the floor insulation is retro-fitted and no U-value is supplied. Otherwise unsealed.
+- Main dwelling age band F to M: sealed.
+- Park home: unsealed suspended timber.
+
+The floor infiltration for the whole dwelling is determined by the floor type of the main dwelling. There must be evidence for retro-fitted floor insulation (specification section 17, Table 31, item 3-2).
 
 ---
 
 ## Key Takeaways
-
-- RdSAP 10 introduces, for the first time, a data entry field for measured air permeability in existing dwelling assessments, replacing the default-only approach of RdSAP 9.94.
-- The age-band default air permeability values have been recalibrated using updated field data, with notable adjustments for mid-20th century dwelling archetypes.
-- A measured value may only be entered when supported by a compliant test certificate (ATTMA TSL1, CIBSE TM23, or BS EN ISO 9972:2015) from an accredited tester, dated within three years of assessment or linked to a completed PAS 2035 retrofit.
-- The correct unit for data entry is air permeability q₅₀ in m³/(h·m²) at 50 Pa — not air changes per hour (n₅₀). Confusing these is the single most common input error.
-- Post-retrofit EPCs following PAS 2035 projects represent the primary use case for measured airtightness data; DEAs should routinely request the test certificate from the Retrofit Coordinator.
-- A measured airtightness result will not always improve the SAP rating — it depends on how the measured value compares to the age-band default for that dwelling type.
-- The test certificate must be retained in the assessment evidence file; measured airtightness entries are specifically flagged in accreditation scheme audit protocols.
+- The pressure test result stays at the RdSAP default unless a certificate from a person with suitable expertise and experience gives the measured air permeability at 50 Pa or 4 Pa (convention 10.01).
+- Material changes since the test make the certificate invalid for RdSAP entry. The sources do not define a material change (convention 10.01).
+- A test result replaces the fabric allowances, but the chimney, flue, fan and vent counts are still added (specification section 4.1, Table 5).
+- An open chimney is an unrestricted, usable duct of 200 mm diameter or more, or 125,000 mm2. Smaller ducts are flues (convention 9.01).
+- A decommissioned chimney need not be counted if sealed completely, is blocked with a ventilation area below 30,000 mm2 and is open at 30,000 mm2 or more (convention 9.01).
+- A draught lobby must meet all four tests in convention 2.09b. Flats reached by an enclosed corridor or stairwell are classified as having one.
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** Under RdSAP 10, what is the correct unit for entering a measured airtightness result?
+**Q1.** Under convention 10.01, which of these allows the default pressure test result to be overwritten?
 
-A) Air changes per hour at 50 Pa (n₅₀)
-B) Air permeability in m³/(h·m²) at 50 Pa (q₅₀)
-C) Litres per second per square metre at 4 Pa
-D) Cubic metres per hour at 25 Pa
+A) A design air permeability figure
+B) A pressure test certificate produced by a person with suitable expertise and experience
+C) A background ventilation test result
+D) The householder's word that a test was done
 
-**Correct answer: B**
-*RdSAP 10 requires the air permeability value q₅₀, measured in m³/(h·m²) at 50 Pa, which is referenced to the total envelope area. This is distinct from n₅₀, which is referenced to dwelling volume.*
-
----
-
-**Q2.** What is the maximum age of an airtightness test certificate for it to be valid for entry into an RdSAP 10 existing dwelling assessment (under standard conditions)?
-
-A) 12 months
-B) 2 years
-C) 3 years
-D) 5 years
-
-**Correct answer: C**
-*The RdSAP 10 conventions specify that the test must have been conducted no more than three years prior to the assessment date, unless it is linked to a PAS 2035 project where the measures remain unaltered.*
+**Correct answer: B.** Convention 10.01 requires a pressure test certificate from a person with suitable expertise and experience, and excludes background ventilation test results.
 
 ---
 
-**Q3.** A DEA is producing a post-retrofit EPC for a 1950s semi-detached house. The PAS 2035 Retrofit Coordinator provides an airtightness test certificate showing a q₅₀ of 7.2 m³/(h·m²) at 50 Pa. The RdSAP 10 age-band default for this dwelling type is approximately 12 m³/(h·m²) at 50 Pa. What is the most likely impact of entering the measured value?
+**Q2.** A decommissioned chimney has air bricks giving a ventilation area of exactly 30,000 mm2. How does convention 9.01 treat it?
 
-A) No impact — measured and default values are treated identically
-B) The SAP rating will decrease because a lower permeability increases overheating risk
-C) The ventilation heat loss will reduce, likely improving the SAP rating
-D) The software will reject the value because it is below the default
+A) It is not counted
+B) As a blocked chimney
+C) As a flue
+D) As an open chimney
 
-**Correct answer: C**
-*A measured permeability significantly lower than the default reduces calculated infiltration and therefore ventilation heat loss. This will improve the fabric energy efficiency and likely improve the overall SAP rating.*
-
----
-
-**Q4.** Which of the following would be a valid reason for a DEA to decline to enter a measured airtightness value from a test certificate?
-
-A) The result is higher (leakier) than the RdSAP 10 default
-B) The test was conducted by an ATTMA-registered tester
-C) The certificate's envelope area differs significantly from the assessor's calculated envelope area
-D) The test was conducted using depressurisation only
-
-**Correct answer: C**
-*A significant discrepancy between the certificate's envelope area and the assessor's own calculation suggests the test may not relate to the dwelling as currently configured. Option D is also a concern (both pressurisation and depressurisation are required), but Option C is the clearest basis for rejecting the certificate's applicability to this specific assessment.*
+**Correct answer: D.** Convention 9.01 treats a ventilation area greater than or equal to 30,000 mm2 as an open chimney; only less than 30,000 mm2 is blocked.
 
 ---
 
-**Q5.** Under PAS 2035:2023, what principle governs the relationship between airtightness improvement and ventilation?
+**Q3.** A valid 50 Pa test result is entered. Which of these still contributes to the infiltration rate in the specification's calculation?
 
-A) "Build tight, ventilate later"
-B) "Seal tight, ventilate right"
-C) "Fabric first, services second"
-D) "Insulate before you ventilate"
+A) The count of chimneys, flues, fans and vents
+B) The structural infiltration allowance
+C) The 0.05 allowance for having no draught lobby
+D) The window infiltration allowance
 
-**Correct answer: B**
-*PAS 2035:2023 explicitly adopts the "seal tight, ventilate right" principle, requiring that any airtightness improvements are accompanied by adequate ventilation provision to maintain indoor air quality.*
+**Correct answer: A.** Specification section 4.1, Table 5 gives the rate as the air permeability divided by 20 plus item (8), the openings total, so only the fabric allowances are replaced.
+
+---
+
+**Q4.** A flat is entered from an enclosed, unheated communal stairwell. What does convention 2.09b say about a draught lobby?
+
+A) There is none, because the stairwell is unheated
+B) Only if the flat has its own lobby of at least 2 m2
+C) The flat should be classified as having a draught lobby
+D) It cannot be determined, so assume none
+
+**Correct answer: C.** Convention 2.09b says flats with access via an enclosed heated or unheated corridor or stairwell are classified as having a draught lobby.
+
+---
+
+**Q5.** Material changes have been made to a property since its pressure test. What does convention 10.01 say about the certificate?
+
+A) It can be used if it is less than three years old
+B) It becomes invalid for RdSAP entry
+C) Enter the figure with a note of the changes
+D) It can be used if the tester is a scheme member
+
+**Correct answer: B.** Convention 10.01 says the certificate becomes invalid for RdSAP entry if material changes have been made since the original test; it sets no age limit.
 
 ---
 
 ## Further Reading
-
-- **BRE: RdSAP 10 Specification and Conventions Document** — Available via the BRE SAP website. The definitive technical reference for all RdSAP 10 input conventions, including the treatment of measured and default airtightness.
-  [https://www.bregroup.com/sap/](https://www.bregroup.com/sap/)
-
-- **BSI PAS 2035:2023 — Retrofitting Dwellings for Improved Energy Efficiency: Specification and Guidance** — The current retrofit standard mandating fabric-first approaches and ventilation adequacy in publicly funded schemes.
-  [https://knowledge.bsigroup.com/products/retrofitting-dwellings-for-improved-energy-efficiency-specification-and-guidance](https://knowledge.bsigroup.com/products/retrofitting-dwellings-for-improved-energy-efficiency-specification-and-guidance)
-
-- **ATTMA Technical Standard L1: Measuring Air Permeability of Building Envelopes (Dwellings)** — The testing protocol and certificate requirements for domestic airtightness testing in the UK.
-  [https://www.attma.org/technical-standards/](https://www.attma.org/technical-standards/)
-
-- **BS EN ISO 9972:2015 — Thermal Performance of Buildings: Determination of Air Permeability of Buildings — Fan Pressurization Method** — The underlying international standard for blower door test methodology.
-  [https://www.iso.org/standard/55718.html](https://www.iso.org/standard/55718.html)
+- **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read conventions 10.01, 9.01, 9.02, 5.02, 2.09b, 3.11a, 7.03a, 3.02 and 3.14 in full.
+- **RdSAP10 Specification.** 9 June 2025. Section 4.1 and Table 5 for infiltration, section 8.1 for draught proofing, Table 31 for the data items.
 
 ---
 

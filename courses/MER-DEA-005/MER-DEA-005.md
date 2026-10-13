@@ -1,195 +1,255 @@
 # Heating Systems Primary: Boilers, Controls and Data Entry in RdSAP 10
-**Course ID:** MER-DEA-005 | **CPD Hours:** 1.0 | **Published:** March 2026
+**Course ID:** MER-DEA-005 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Correctly classify boiler types (combi, regular, system) and assign appropriate efficiency values in RdSAP 10, distinguishing between manufacturer data, PCDB defaults and age-band defaults.
-- Apply the RdSAP 10 controls hierarchy accurately, understanding how TRVs, programmers, room thermostats, weather compensation and load compensation each affect the heating efficiency multiplier.
-- Identify the data entry conventions for fuel type, flue type, and boiler age that influence the RdSAP 10 calculation outcome.
-- Recognise the top audit failure categories for primary heating data and apply the evidence standards required to defend a lodged EPC.
+- Identify the main heating system from the Product Characteristics Database wherever possible, and apply the defaults when a boiler, heat pump or micro-CHP unit is not listed.
+- Apply the heat emitter rules for systems serving both radiators and underfloor heating, and the design flow temperature rule for condensing boilers and heat pumps.
+- Decide which system is main system 1 when a dwelling has two main heating systems, and record the proportions, using convention 4.09.
+- Recognise community heating and Heat as a Service arrangements and select the correct heat source and fuel.
+- Record TRVs, zone control, app-based control, central heating pump age and flue gas heat recovery as the conventions require.
 
 ---
 
 ## Introduction
 
-Boilers remain the primary heating system in the overwhelming majority of dwellings assessed in England and Wales. Gas-fired central heating, with a range of boiler configurations and control arrangements, dominates the housing stock from the 1960s through to the present. Despite this familiarity, heating system data entry generates a disproportionate share of EPC audit failures — not because assessors do not know what a boiler is, but because the RdSAP 10 input conventions are more nuanced than they appear, the controls hierarchy is frequently misapplied, and the interaction between efficiency data sources is poorly understood.
+This course covers how the main heating system is identified and entered in an RdSAP 10 assessment: boilers, heat pumps, community heating and their controls. This October 2026 rewrite replaces the March 2026 edition. Every rule is referenced to the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, or to the RdSAP10 Specification of 9 June 2025, so you can check it.
 
-RdSAP 10 introduced meaningful changes to how heating system efficiency is determined and how controls are entered. The Product Characteristics Database (PCDB) is now the primary efficiency source for qualifying products, and its use is not optional where a product is listed. The controls multiplier — the factor applied to the base efficiency to reflect how well the system is controlled — has been restructured, with clearer differentiation between control types and more material consequences for getting the hierarchy wrong.
+Where a convention conflicts with the specification, the convention takes precedence (conventions, opening statement), and where the two differ on this topic the course says so. The specification does not itself list the heating systems or the controls. It refers to SAP 10.2 Tables 4a, 4b and 4e for them (specification sections 10.1 and 10.3). Those tables sit outside the two documents this course is built on, so no efficiency figures or control adjustments are quoted here.
 
-This course works through the complete heating data entry workflow for gas, oil, and LPG boilers: boiler classification, efficiency determination (PCDB versus default), flue type, fuel type, age, and the controls hierarchy in full. It addresses the specific data entry conventions that trip up experienced assessors and the evidence standards required to defend each input. The goal is not theoretical knowledge of SAP methodology — you have that. The goal is accurate, audit-ready data entry every time.
-
----
-
-## Section 1: Boiler Classification — Combi, Regular and System Boilers in RdSAP 10
-
-The first input decision for any gas, oil, or LPG central heating system is boiler type. RdSAP 10 recognises three principal configurations, and the classification affects not only efficiency defaults but also how hot water provision is treated in the overall dwelling assessment.
-
-**Combination (combi) boilers** heat space and provide domestic hot water on demand from a single unit, with no stored hot water cylinder. In RdSAP 10, selecting a combi boiler eliminates the need for a separate DHW cylinder input — the hot water section of the assessment is handled through the combi's hot water performance parameters (instantaneous or storage combi, keep-hot function, standby losses). The key classification decision for combis is whether they are truly instantaneous or whether they incorporate an internal stored hot water volume (typically 10–50 litres). This distinction matters: storage combis have different standby loss profiles to instantaneous units. If the boiler model is in the PCDB, the software will pull the correct parameters automatically; if not, the assessor must determine the configuration from the boiler data plate or installation manual.
-
-**Regular (open-flued or room-sealed heat-only) boilers** supply heat to the central heating circuit and, via a coil, to a separate hot water cylinder. They require a feed and expansion cistern in the loft and a hot water cylinder elsewhere in the property. The cylinder must be assessed separately as part of the DHW system input. Under RdSAP 10, the regular boiler classification triggers the cylinder assessment workflow. Confusingly, older boilers are sometimes labelled as "conventional" or "traditional" boilers rather than "regular" — the classification should be based on the system configuration, not the label.
-
-**System boilers** supply heat to a sealed central heating circuit and incorporate a separate hot water cylinder. Unlike regular boilers, they do not require a separate feed and expansion cistern. System boilers are common in post-2000 gas-fired installations. The distinction from a regular boiler matters principally because of the sealed versus vented system designation, which affects certain efficiency assumptions in the calculation.
-
-**Back boilers** — gas boilers installed behind a fire grate, common in 1960s–1980s housing — are a separate classification in RdSAP 10. Their efficiency defaults are significantly lower than modern boilers and their treatment in the PCDB is limited because most are no longer manufactured. If you encounter a back boiler, the age-band default efficiency applies unless a PCDB listing exists.
-
-**Oil and LPG boilers** follow the same classification framework but use different fuel type inputs. The key practical distinction is that oil boilers almost always have a flue through the external wall (balanced flue or open flue to a conventional flue) rather than through the roof. LPG boilers behave identically to gas boilers in RdSAP 10 terms — the fuel input is changed, not the boiler classification or control hierarchy.
+Version 12.2 added conventions 4.05b on Heat as a Service and 4.22 on electric combi boilers (conventions, revision history). Storage heaters, room heaters and secondary heating are covered in MER-DEA-006 and water heating in MER-DEA-007.
 
 ---
 
-## Section 2: Efficiency Values — PCDB, Manufacturer Data and Age-Band Defaults
+## Section 1: Identifying the Main Heating System and Its Fuel
 
-The efficiency value assigned to a boiler in RdSAP 10 is the most consequential single data entry decision for the heating system assessment. It drives the primary energy demand calculation for space heating and, for regular and system boilers, interacts with the DHW cylinder losses.
+The main heating system is the one that heats the largest proportion of the dwelling. It is not usually based on individual room heaters, unless room heaters are all there is (specification section 10.1).
 
-**The PCDB hierarchy.** RdSAP 10 mandates use of the Product Characteristics Database where a boiler model is listed. The PCDB is maintained by BRE and contains seasonal efficiency data (SEDBUK — Seasonal Efficiency of Domestic Boilers in the UK, now expressed as SAP efficiency) for gas, oil, and LPG boilers tested under standardised conditions. Assessors should search for the boiler model by brand and model number using the boiler registration number from the data plate. Where the exact model is found, the PCDB value is used directly; where only a family entry exists, the family default applies. Using an age-band default when a PCDB listing exists is a methodology failure and a common audit finding.
+### Database first, default second
 
-**PCDB search practice.** The data plate on a boiler — typically inside the casing, behind the front panel — contains the model number, GC number (for gas appliances), and installation year. These are the search terms for PCDB lookup. The GC number (Gas Council number) is the most reliable identifier for older gas boilers. For very old boilers (pre-1990), PCDB listings may not exist; for these, the age-band default is applied.
+Main heating systems are either identified through the Product Characteristics Database (PCDB) or categorised using the generic types in SAP 10.2 Tables 4a and 4b. For gas or oil boilers, micro-CHP and heat pumps the database is to be used whenever possible (specification section 10.1).
 
-**Age-band defaults.** Where no PCDB listing is available, RdSAP 10 applies efficiency defaults by fuel type and age band. The age band is determined by the installation date if known, or estimated from the boiler model era if the exact date cannot be established. Current age-band defaults for gas boilers range from approximately 70% seasonal efficiency for pre-1979 boilers to 89–90% for post-2005 condensing boilers. Non-condensing gas boilers installed post-2005 are rare (Building Regulations required condensing from 2005) but do exist as replacement units in heritage properties with planning restrictions. Oil boiler defaults follow similar bands with slightly lower efficiency values at older age bands.
+Where the product cannot be found:
+- A boiler or heat pump that is not in the PCDB is entered using the default (convention 4.07). The convention does not say which default; the specification's fallback is the generic system types just mentioned.
+- Micro-CHP that cannot be found in the database is entered as a default condensing boiler, with Addendum 5 included (convention 4.04).
 
-**Condensing versus non-condensing.** RdSAP 10 requires explicit identification of whether a boiler is condensing or non-condensing. A condensing boiler has a visible plastic (typically white or grey) flue pipe exhausting at low level, often near the base of an external wall, and a condensate drain pipe. The flue exhaust temperature is low enough to condense water vapour, which is a visual indicator. A non-condensing boiler will have a metal flue pipe exhausting at high level or via a chimney. Misclassifying a non-condensing boiler as condensing assigns it an erroneously high efficiency and is a hard audit fail.
+If there is no heating system, "none" is recorded and the calculation is done for portable electric heaters with no controls (specification section 17, Table 31 item 7-3).
 
-**Manufacturer-declared efficiency.** Where a boiler is not listed in the PCDB but manufacturer documentation is available giving a SEDBUK or seasonal efficiency figure, this may be used subject to scheme-specific rules. The documentation must be retained. Most scheme guidance requires the figure to be a certified SEDBUK value, not a marketing efficiency claim. Net and gross efficiency distinctions also apply — RdSAP 10 uses gross efficiency for gas and oil; manufacturer data expressed on a net basis must be converted using the appropriate calorific value ratio (approximately ÷ 1.11 for gas).
+Alongside the system, Table 31 item 7-4 collects the flue type (open or room-sealed), the heat emitter type (radiators, underfloor or, for heat pumps only, fan coil units) and, for heat pumps, whether it is an MCS installation, which is "yes" only if documentary evidence is available.
+
+### Cases the conventions settle
+- Electric combi boiler. Space heating is recorded manually as a standard boiler, direct acting, with electricity as the fuel (convention 4.22, new in v12.2). Its water heating is specified as "instantaneous at point of use" (convention 6.08).
+- Range cooker boiler. Where a cast iron range-style cooker boiler is present, the cooker is treated as a radiator (convention 4.01a).
+
+### Not working, not fitted or not accessible
+
+Convention 4.03 separates three situations:
+- Fitted but not working, or condemned. Any fixed heating or hot water source, or heat emitters, that are installed are still taken into account when deciding the main and secondary heating and the hot water type.
+- Not fitted. If the heating source or the heat emitters are not installed, enter no heating system, or do another survey when the system is installed.
+- Present but not accessible. If the heating source or emitters cannot be inspected and no documentary evidence is made available, the assessment cannot be completed until access has been provided. Community heating is excluded from this rule.
+
+### Fuel
+- Mains gas available. This is "yes" only if a mains gas meter is present or a mains gas burning appliance is fixed within the property (convention 8.02). The specification adds that a closed-off gas pipe does not count (Table 31 item 10-3).
+- LPG at mains gas prices. If documentary evidence such as billing information confirms that the property receives LPG at mains gas prices, enter the fuel as "LPG subject to special condition 18" (convention 4.11). The specification's fuel table names it "LPG subject to Special Condition 11F" (specification Table 32).
+- LNG. Liquefied Natural Gas networks are treated as mains gas (convention 4.11).
+- Straw bales and other biomass fuels not available in RdSAP. Select wood logs and include addendum 12 (convention 4.12).
+- Biogas. The convention says to specify "mains bulk LPG" and include addendum 12 (convention 4.21).
+- Biodiesel, and appliances able to use mineral oil or liquid biofuel. Specify oil and include addendum 12 (convention 4.21).
+
+Convention 4.21 adds a note: if the boiler model is in the database with mains gas as its fuel type but not bulk LPG, the database entry must not be used. The note's final words, on how to specify the boiler instead, are incomplete in the published text, so ask your accreditation scheme. Convention 4.10 on liquid biofuels has been deleted.
 
 ---
 
-## Section 3: Controls Hierarchy — TRVs, Programmers, Room Stats, Weather and Load Compensation
+## Section 2: Heat Pumps, Heat Emitters and Design Flow Temperature
 
-The controls multiplier in RdSAP 10 adjusts the effective efficiency of the heating system to reflect the quality of system control. A well-controlled system wastes less energy because it delivers heat more precisely — reducing overheating, cycling losses, and unnecessary operation. RdSAP 10 uses a structured controls hierarchy with defined efficiency multipliers for each combination of control types.
+A heat pump is identified from the database whenever possible and entered as a default if it is not listed (convention 4.07). A reversible heat pump is not recorded as a cooling system (convention 9.04).
 
-**The basic control suite.** The RdSAP 10 controls matrix is built around four primary control types: time control (programmer or time switch), temperature control (room thermostat), zone control (thermostatic radiator valves or separate zone controls), and enhanced control (weather compensation, load compensation). The multiplier applied to the boiler efficiency reflects the combination present.
+### One system serving radiators and underfloor
 
-**Programmer or time switch.** A basic time switch provides on/off control with no temperature modulation. A full programmer provides separate time control for heating and hot water. The distinction matters in RdSAP 10: a full programmer (separate timing for CH and DHW) attracts a better multiplier than a basic time switch. On-site, the difference is visible: a programmer with two channel controls (two rocker switches or two sets of time segments) is a full programmer. A single-channel time switch is not.
+Convention 4.01a gives two treatments, depending on the heat source.
 
-**Room thermostat.** A fixed room thermostat provides a set-point temperature for the whole dwelling. Its presence is required for the standard multiplier for a room thermostat-controlled system. The thermostat must be functional — a broken or disconnected thermostat does not count. The location matters for audit purposes: a thermostat buried behind furniture or in an unheated hallway may be present but functionally compromised. Record what you see; the methodology does not require you to verify function beyond visual inspection.
+For anything other than a heat pump, specify the same heat source as main heating 1 and main heating 2, following the two main systems rules in convention 4.09. Specification section 10.1 gives the same instruction, but without the heat pump exception.
 
-**Thermostatic radiator valves (TRVs).** TRVs on radiators provide room-by-room temperature control in addition to the whole-house room thermostat. RdSAP 10 requires TRVs on all or most radiators (typically defined as at least 50% of radiators in heated rooms) to qualify for the TRV multiplier benefit. One radiator in the dwelling must be left without a TRV (typically the one in the room containing the thermostat — this is a heating best-practice requirement to ensure the thermostat circuit remains open). If all radiators have TRVs with no bypass arrangement, this is a controls deficiency, but it does not change the RdSAP classification. TRVs present only on some radiators do not qualify for the full multiplier.
+For a heat pump there is a single entry. Enter radiators when they serve 50% or more of the total floor area. The convention then says that where the proportion is the same the emitters are entered as underfloor. Read literally, those two sentences overlap at an exact 50/50 split, and the case where radiators serve less than half is not spelled out, although underfloor is the evident reading. For an even split, check with your accreditation scheme.
 
-**Programmer + room stat + TRVs.** This combination — the standard for a reasonably well-controlled gas central heating system — gives the best multiplier available without enhanced controls. It represents the majority of post-2000 domestic installations.
+The specification's data table carries a comment that reads differently: if underfloor downstairs and radiators upstairs, select radiators (Table 31 item 7-4). That does not match convention 4.01a, and the convention takes precedence.
 
-**Weather compensation.** A weather compensation controller modulates boiler flow temperature based on external air temperature — lowering output temperature in mild weather and increasing it in cold weather. This significantly reduces cycling losses and is particularly beneficial for condensing boilers (which operate more efficiently at lower flow temperatures). Weather compensation requires a weather sensor and a compatible boiler. Its presence in the controls input in RdSAP 10 attracts a meaningful additional multiplier. Evidence: a weather sensor visible on an external wall, wired to the boiler or controller.
+### Worked example
 
-**Load compensation.** Load compensation modulates boiler output based on the difference between set-point and actual room temperature. It is similar in effect to weather compensation but uses internal signals rather than external temperature. Less common in practice. The same evidential standard applies.
+A two-storey house has a gas boiler feeding underfloor heating on the ground floor and radiators upstairs. The ground floor includes the living area and is 60% of the floor area.
+- Convention 4.01a: this is not a heat pump, so the boiler is entered as both main heating 1 and main heating 2, one entry for each emitter type.
+- Convention 4.09 rule a): system 1 always heats the living area, so the underfloor entry is main system 1.
+- Convention 4.09: the two entries serve different spaces, so the proportion is based on floor area served. The second system serves 40%.
 
-**Smart and connected controls.** Smart thermostats (Nest, Hive, Honeywell Evohome, Drayton Wiser etc.) introduce complexity. RdSAP 10 guidance does not have a dedicated "smart thermostat" classification; instead, these systems are classified based on what control functions they actually provide. A smart thermostat providing time and temperature control with load compensation logic qualifies for the load compensation multiplier; one providing basic time and temperature control is classified as programmer + room thermostat. Assessors should record the functionality present, not the product brand.
+With a heat pump instead there would be one entry. Radiators serve 40% of the floor area, below the 50% test, so on the evident reading of convention 4.01a the emitter is underfloor.
+
+### Design flow temperature
+
+For condensing boilers and heat pumps, the design flow temperature is recorded as unknown unless there is documentary evidence that the system has been designed and commissioned as a low temperature one (convention 4.01b). The options are unknown, over 45°C, 45°C or below but over 35°C, and 35°C or below, the third of which is not available for heat pumps from the SAP tables (Table 31 item 7-4). Where the entry is unknown, the calculation takes radiators as over 45°C and underfloor heating as 35°C or below (specification section 10.11, Table 29).
+
+Convention 9.02 describes acceptable documentary evidence only in general terms, and the specification asks for evidence giving the design flow temperature (Table 31 item 7-4). Neither names particular documents, so ask your accreditation scheme what it accepts.
 
 ---
 
-## Section 4: Flue Type, Fuel Type, and Common Audit Failures
+## Section 3: Two Main Heating Systems
 
-Beyond boiler type and efficiency, RdSAP 10 requires correct entry of flue configuration and fuel type. These inputs influence combustion efficiency assumptions and interact with the controls and building fabric data.
+RdSAP allows for two main heating systems, to cover different systems heating different parts of the dwelling. If main system 1 heats all habitable rooms there is no main system 2, unless the second system serves hot water only (specification section 10.2). Main systems 1 and 2 cannot be room heaters unless the dwelling's heating consists solely of room heaters, and a second main system is not to be confused with a secondary heater (convention 4.09).
 
-**Flue type.** RdSAP 10 recognises four main flue types: open flue (conventional chimney or flue liner), balanced flue (room-sealed with air supply and exhaust via a co-axial or twin-pipe arrangement through the external wall or roof), open-flued with a draught diverter, and fan-assisted flue (most modern boilers). The flue type affects thermal performance because an open flue draws air from the heated space for combustion, increasing ventilation heat loss. A balanced flue (room-sealed) uses external air only. Modern fan-assisted balanced flue boilers represent the vast majority of post-1990 gas installations and are the default classification for any boiler with a plastic horizontal flue through an external wall.
+### Which is main system 1
 
-**Identifying flue type on site.** The distinguishing features: a metal flue liner in a chimney = open flue; a co-axial pipe (pipe within a pipe) through the wall = balanced flue; a single plastic pipe through the wall at low level = fan-assisted balanced flue. For older back boilers with a conventional chimney flue, the open-flue classification applies and its efficiency penalties are built into the age-band default.
+Convention 4.09 gives four rules, each applying when the one before does not settle it:
+- a) System 1 always heats the living area.
+- b) When both systems heat the living area, main system 1 is the one that heats the most habitable rooms.
+- c) When both heat the same number of habitable rooms, main system 1 is the system that provides water heating.
+- d) When neither or both heat water, main system 1 is the system that is cheapest to run: the fuel cost from specification Table 32 divided by the efficiency of the heating system.
 
-**Fuel type.** Gas, oil, and LPG are the three fossil fuel inputs. Mains gas uses the OFGEM/SAP standard calorific value. Oil defaults to standard heating oil (kerosene/28-second oil for domestic use). LPG covers both bulk tank and bottled supplies — the distinction does not change the RdSAP calculation outcome. Bottled gas (butane or propane cylinders with no fixed distribution pipework) is a separate fuel category in RdSAP 10. Dual-fuel systems (e.g., gas boiler with electric immersion backup) require both heating and DHW fuel inputs to be captured correctly.
+Habitable rooms are as defined in convention 2.04a, so a room used solely as a kitchen, a bathroom or a hallway does not add to either system's count.
 
-**Top audit failure categories for primary heating data (scheme auditor data, 2024–2025):**
+### Proportions and other rules
+- Different spaces. Record the heating proportion based on the floor area served by each system (convention 4.09). The specification asks for the percentage served by the second system, estimated to the nearest 10% (Table 31 item 7-5).
+- Same heating circuit. The default is a 50/50 split. A different ratio can be used only with clear documentary evidence (convention 4.09).
+- Hot water only. Where a separate boiler or heat pump provides hot water only, main system 1 is the one providing space heating, at 100%, and main system 2 is the one providing hot water, at 0% (convention 6.04; specification section 10.5.1).
+- More than two main systems. Use the rules above to determine main systems 1 and 2 and disregard the third (convention 4.09).
+- A single system with multiple outputs, such as warm air and radiators. Treat it as two main systems, with the option that heats most floor area as main system 1 (convention 4.09a).
+- Addendum 9. When there are two main systems and a heating system upgrade is recommended, include addendum 9 (convention 4.09).
 
-1. PCDB not consulted — age-band default applied where a PCDB listing exists for the boiler model. This is the single most common heating-related audit finding across multiple scheme bulletins.
+Convention 4.09a also says that any system that has a heat pump must be main system 1. It does not say how that sits with rule a) of convention 4.09 when a different system heats the living area, so confirm that arrangement with your accreditation scheme.
 
-2. Boiler type misclassified — regular boiler entered as system boiler (or vice versa), leading to incorrect cylinder assessment in DHW section.
+### Worked example
 
-3. Controls over-credited — programmer + TRVs entered without a functioning room thermostat (e.g., room stat missing, unplugged, or clearly non-functional).
+Two gas boilers both feed radiators in a large living room. Boiler A also heats three other habitable rooms and boiler B heats two. Rule a) does not separate them, because both heat the living area. Under rule b) boiler A heats more habitable rooms, so it is main system 1. Had the counts been equal, rule c) would give it to whichever boiler provides the hot water.
 
-4. Non-condensing boiler classified as condensing — usually resulting from unfamiliarity with flue identification. If the flue is metal and exits via the roof or chimney, it is almost certainly non-condensing.
+---
 
-5. Fuel type wrong — LPG boilers entered as mains gas (a common error on rural properties where mains gas is assumed). Always confirm mains supply at the meter: a regulator cabinet or LPG tank on the property indicates off-grid supply.
+## Section 4: Community Heating and Heat as a Service
 
-6. Controls data inconsistent with photographs — site photographs show TRVs absent or room thermostat not visible, but controls data claims programmer + room stat + TRVs.
+### What counts as community heating
 
-**Evidence retention for heating data.** Photograph the data plate, the flue terminal, the controls panel (programmer/thermostat), and a representative radiator for TRV presence. Note the boiler model number and GC number in site records. If PCDB was consulted, retain a screenshot or record the database entry used. This evidence pack is the defence against audit queries.
+Community heating is a system in which a heat generator provides heat, hot water or both to more than one premises. Each dwelling is assessed individually. If the heat generator is in the dwelling, it is the heating system for that dwelling. If it is not in the dwelling, treat it as community heating (convention 4.05a).
+
+### Heat source and fuel
+- Where the community scheme can be identified in the community network database, it is to be selected. If there is more than one data record, only the current record can be used (convention 4.06).
+- Otherwise, try to find out what the fuel is. If it cannot be ascertained, select mains gas (convention 4.06).
+- For a network that is not in the database, the specification asks for the fuel and the heat generator type: boilers, CHP and boilers, or heat pump (Table 31 item 7-6).
+
+### Heat as a Service
+
+Convention 4.05b is new in v12.2. A Heat-as-a-Service system is treated as community heating where the service provider owns and/or operates the heat generator, regardless of whether the generator is inside or outside the dwelling. It is therefore an exception to the location test in convention 4.05a.
+- Specific documentary evidence must be provided to confirm the presence of a Heat-as-a-Service installation.
+- Where the service is powered by electricity, use community heat pump.
+- In other circumstances, use community boiler.
+
+Convention 4.05b does not say what form the evidence must take, and convention 9.02 describes acceptable documentary evidence only in general terms, so confirm with your accreditation scheme what it will accept.
+
+---
+
+## Section 5: Controls, Pump Age and Flue Gas Heat Recovery
+
+### Where the control options come from
+
+Space heating controls are those marked "rd" in SAP 10.2 Table 4e (specification section 10.3). The control item is chosen from that table according to the main system type, for both main systems if there are two, and a compensating controller, if present, is taken from the PCDB (Table 31 item 7-7). The conventions do not define a programmer or a room thermostat. They add the rules below.
+
+### TRVs
+
+Include TRVs when they are present on 50% or more of the radiators. For this purpose count all radiators, including those not in a habitable room, such as one in a hallway (convention 4.13).
+
+Example. A house has ten radiators, seven in habitable rooms and three elsewhere. TRVs are fitted to four. Four out of ten is below 50%, so TRVs are not included, even though four is more than half of the seven in habitable rooms. With TRVs on five of the ten, the test is met.
+
+### Zone control and app control
+
+Time and Temperature Zone Control (TTZC) is a system of controls that allows the heating times of at least two zones to be programmed independently, as well as having independent temperature control. It includes wired or wireless remote or mobile control systems (convention 4.17).
+
+Heating control from a mobile application can be included only where a fixed receiver is present and there is evidence of the type of controls: time, temperature, zone (convention 4.19).
+
+Convention 4.16 on weather compensators has been deleted, so there is no current convention on them.
+
+### Central heating pump age
+
+Convention 4.18 sets the test:
+- Separate pump, not within the boiler. Record the age as unknown if the pump cannot be seen. The age is 2013 or later if the pump has a label stating the EEI (energy efficiency index), or if the date of manufacture on the ID plate indicates it. Otherwise it is 2012 or earlier.
+- Integral pump. If supporting information is available for the presence of an integral pump to the EEI standard, treat it as 2013 or later.
+
+The convention does not say what to record for an integral pump with no supporting information, so check with your accreditation scheme.
+
+### Flue gas heat recovery
+
+Include a flue gas heat recovery system only if it is found in the PCDB, identified in the same way as for heating systems. When the model cannot be found there is no default option: the device is not included in the assessment, but its presence should be recorded in site notes (convention 9.06). The specification makes it an option only where the main heating is a condensing boiler fired by mains gas, LPG or oil (Table 31 item 8-5).
 
 ---
 
 ## Key Takeaways
-
-- Combi, regular, and system boilers each trigger different assessment workflows in RdSAP 10; correct classification is the foundation of accurate heating data entry.
-- The PCDB must be consulted for every boiler — age-band defaults apply only where no PCDB listing exists; bypassing PCDB when a listing is available is a methodology failure.
-- Condensing versus non-condensing classification is determined by flue type and exit temperature, not by boiler age alone; misclassification is the most consequential single efficiency error.
-- The controls hierarchy (time + temperature + zone + enhanced) must be assessed against what is actually present and functional on site; over-crediting controls is a persistent audit failure.
-- Weather compensation and load compensation attract meaningful multiplier benefits but require hardware evidence (external sensor, compatible controller); do not credit these without photographic evidence.
-- Fuel type must be verified at the meter or supply — do not assume mains gas without confirming the supply method, particularly on rural properties.
-- Evidence retention for heating data should include: data plate photograph, GC/model number recorded, flue terminal photograph, controls panel photograph, TRV presence on radiators.
+- Use the PCDB whenever possible. An unlisted boiler or heat pump is entered as a default (convention 4.07), and unlisted micro-CHP as a default condensing boiler with Addendum 5 (convention 4.04).
+- Radiators and underfloor from one system: a boiler is entered as main heating 1 and 2, while a heat pump has one entry, with radiators when they serve 50% or more of the floor area (convention 4.01a).
+- Installed but not working still counts (convention 4.03). Design flow temperature is unknown unless there is documentary evidence of low temperature design and commissioning (convention 4.01b).
+- Main system 1 is settled by living area, then most habitable rooms, then water heating, then cheapest to run. Proportions follow floor area, with 50/50 the default on a shared circuit (convention 4.09).
+- Community heating applies when a heat generator serving more than one premises is not in the dwelling (convention 4.05a), and to an evidenced Heat-as-a-Service system whose provider owns and/or operates the generator, wherever it sits (convention 4.05b).
+- TRVs count when on 50% or more of all radiators (convention 4.13). TTZC needs at least two zones with independent time and temperature control (convention 4.17).
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** A 2008 gas boiler is found on site. The data plate shows a model number. What is the correct first step for determining the efficiency value to enter in RdSAP 10?
+**Q1.** When are TRVs included in the assessment?
 
-A) Apply the post-2005 condensing boiler age-band default (approximately 89–90%)
-B) Search the PCDB using the model number or GC number from the data plate
-C) Ask the occupant for the installation manual
-D) Apply the ErP regulation minimum efficiency for that installation year
+A) Only when fitted to every radiator in the dwelling
+B) When present on 50% or more of the radiators, counting all radiators including those not in habitable rooms
+C) When present on 50% or more of the radiators in habitable rooms, ignoring radiators elsewhere
+D) When at least one radiator has one
 
-**Correct answer: B**
-*RdSAP 10 mandates PCDB consultation where a listing may exist. Age-band defaults are a fallback only when the PCDB confirms no listing. The post-2005 age-band default should never be applied without first checking the PCDB.*
-
----
-
-**Q2.** An assessor identifies a boiler with a white plastic horizontal pipe exiting through an external wall at low level, with a visible condensate drain pipe running to a nearby drain. How should the boiler be classified?
-
-A) Open flue, non-condensing
-B) Balanced flue, non-condensing
-C) Fan-assisted balanced flue, condensing
-D) Open flue, condensing
-
-**Correct answer: C**
-*A plastic horizontal flue through an external wall indicates a fan-assisted balanced flue (room-sealed). The visible condensate drain confirms condensing operation. This combination is standard for modern domestic gas boilers installed post-2005.*
+**Correct answer: B.** Convention 4.13 says to include TRVs when present on 50% or more of the radiators, counting all radiators including those not in a habitable room.
 
 ---
 
-**Q3.** A dwelling has a full programmer (separate time channels for CH and DHW), a room thermostat in the hallway, and TRVs on all radiators including the one in the room containing the thermostat. What is the correct assessment of this controls arrangement for RdSAP 10 purposes?
+**Q2.** Two main heating systems both heat the living area and the same number of habitable rooms, but only one provides water heating. Which is main system 1?
 
-A) Full controls credit — programmer + room stat + TRVs with full multiplier
-B) Reduced controls credit — TRV on thermostat radiator is a minor deficiency but does not affect RdSAP 10 classification
-C) No controls credit — the absence of a free radiator bypasses the thermostat circuit, invalidating the entire controls credit
-D) Weather compensation credit applies automatically
+A) The system that is cheapest to run
+B) The system that was installed most recently
+C) The system that serves the larger floor area
+D) The system that provides water heating
 
-**Correct answer: B**
-*The TRV on the thermostat radiator is a heating best-practice issue but does not change the RdSAP 10 controls classification. The assessor records the controls present (programmer + room stat + TRVs) and applies the corresponding multiplier. The best-practice advisory may be noted in the recommendations, but it does not invalidate the classification.*
-
----
-
-**Q4.** What is the defining visual difference between a regular boiler and a system boiler installation?
-
-A) Regular boilers are always older than system boilers
-B) Regular boilers require a feed and expansion cistern in the loft; system boilers use a sealed pressurised circuit without one
-C) System boilers always have weather compensation fitted
-D) Regular boilers use LPG; system boilers use mains gas only
-
-**Correct answer: B**
-*The presence of a feed and expansion cistern (typically a small rectangular tank in the loft connected to the boiler circuit) is the diagnostic indicator of a regular (vented) boiler installation. System boilers use a sealed pressurised circuit with a pressure gauge and filling loop but no cistern.*
+**Correct answer: D.** Under convention 4.09 rule c), when both systems heat the same number of habitable rooms, main system 1 is the one that provides water heating. Rule d), cheapest to run, applies only when neither or both heat water.
 
 ---
 
-**Q5.** A Nest Learning Thermostat is installed, connected to a gas boiler. The system has no separate TRVs and no weather sensor. How should this be classified in RdSAP 10?
+**Q3.** A house is heated by an air source heat pump owned and operated by a Heat-as-a-Service provider, and specific documentary evidence is provided. How is the main heating treated?
 
-A) Weather compensation, because the Nest uses predictive algorithms
-B) Load compensation + programmer, because the Nest adjusts based on room temperature and time scheduling
-C) Room thermostat + programmer equivalent, with load compensation if the Nest's load compensation mode is active and documented
-D) No controls credit — smart thermostats are not recognised in RdSAP 10
+A) As community heating, using community heat pump
+B) As an individual heat pump, because the heat generator serves only this dwelling
+C) As community heating, using community boiler
+D) As no heating system, because the occupier does not own the heat generator
 
-**Correct answer: C**
-*Smart thermostats are classified by the functions they perform, not by brand. A Nest providing time programming and temperature set-point equates to programmer + room thermostat. If the Nest's load compensation mode (Home/Away adjustment, True Radiant learning) is documented as active, load compensation credit may apply. Weather compensation requires a physical external sensor — algorithmic weather response does not qualify.*
+**Correct answer: A.** Convention 4.05b treats a Heat-as-a-Service system as community heating where the provider owns and/or operates the heat generator, and says to use community heat pump where the service is powered by electricity.
+
+---
+
+**Q4.** A condensing boiler serves radiators and there is no documentary evidence about how the system was designed or commissioned. What is recorded for design flow temperature?
+
+A) 35°C or below, because the boiler is a condensing type
+B) Over 45°C, because the emitters are radiators
+C) Unknown
+D) Whatever temperature is currently set on the boiler
+
+**Correct answer: C.** Convention 4.01b says the design flow temperature is recorded as unknown unless there is documentary evidence that the system has been designed and commissioned as a low temperature one.
+
+---
+
+**Q5.** How is the space heating from an electric combi boiler recorded?
+
+A) Manually, as a standard boiler, direct acting, with electricity as the fuel
+B) As an electric CPSU
+C) As electric storage heaters
+D) As no heating system, with the calculation done for portable electric heaters
+
+**Correct answer: A.** Convention 4.22, added in v12.2, says space heating provided by an electric combi boiler should be recorded manually as a standard boiler, direct acting, fuel type electricity.
 
 ---
 
 ## Further Reading
-
-- **RdSAP 10 Specification Document** — Department for Energy Security and Net Zero (DESNZ) / BRE. Available at: [https://www.bregroup.com/sap/](https://www.bregroup.com/sap/)
-
-- **Product Characteristics Database (PCDB)** — BRE. Boiler efficiency lookup tool. Available at: [https://www.ncm-pcdb.org.uk/](https://www.ncm-pcdb.org.uk/)
-
-- **SEDBUK Database and Boiler Efficiency Database** — Boiler efficiency ratings for gas and oil appliances. Available at: [https://www.boilers.org.uk/](https://www.boilers.org.uk/)
-
-- **SAP 10.2: The Government's Standard Assessment Procedure** — DESNZ. Full methodology document including controls tables. Available at: [https://www.gov.uk/guidance/standard-assessment-procedure](https://www.gov.uk/guidance/standard-assessment-procedure)
-
-- **Elmhurst Energy Auditor Technical Bulletins** — Scheme-specific guidance on heating data entry and common audit failures. Available via Elmhurst member portal: [https://www.elmhurstenergy.co.uk/](https://www.elmhurstenergy.co.uk/)
+- **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read section 4 (Main heating) in full, with conventions 6.04, 6.08, 8.02 and 9.06.
+- **RdSAP10 Specification.** BRE, 9 June 2025. See section 10 (Space and water heating), Table 29, Table 30 (addenda) and the heating items in Table 31 (data to be collected).
+- **BRE Technical Notes.** BRE, https://www.bregroup.com/sap/bre-technical-notes/. Convention 9.16 requires you to check this list when a technology on site might be the subject of a Technical Note.
 
 ---
 

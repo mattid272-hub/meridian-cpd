@@ -1,175 +1,250 @@
-
-
 # Insulation in RdSAP 10: Walls, Roofs, Floors and Common Errors
-**Course ID:** MER-DEA-008 | **CPD Hours:** 1.0 | **Published:** March 2026
+**Course ID:** MER-DEA-008 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Apply the correct wall construction classification and insulation input conventions in RdSAP 10, distinguishing between evidenced and default U-values across all wall types.
-- Record roof and loft insulation data accurately under RdSAP 10 conventions, including accessible and inaccessible configurations and the treatment of room-in-roof constructions.
-- Identify the floor insulation input requirements for suspended timber, solid, and insulated slab floors, and correctly apply default and evidenced U-values.
-- Recognise the top audit failure categories for fabric insulation data and implement site practices that prevent them.
-- Determine the correct evidence standard required to claim insulation performance above the age-band default for each element type.
+- Choose between "as built", "unknown" and an added insulation entry using conventions 3.03a, 3.03b and 3.03c.
+- Record wall construction, wall thickness and alternative walls under conventions 2.13, 2.22, 3.01, 3.02 and 3.14.
+- Apply the thickness rules in convention 3.07 and explain when a U-value may be entered under convention 3.08.
+- Record roof insulation under convention 3.04, including lofts that cannot be inspected.
+- Record floor construction and insulation, and recognise where the conventions and the specification disagree.
 
 ---
 
 ## Introduction
 
-Fabric insulation is the largest single determinant of a dwelling's space-heating energy demand in RdSAP 10. Walls, roofs, and floors account collectively for the majority of calculated heat loss in most UK housing stock, and errors in insulation inputs propagate directly into the EPC rating, the improvement recommendations, and — where the assessment feeds into a retrofit project — the specification and budget for any fabric measures.
+This course covers how wall, roof and floor construction and insulation are recorded for RdSAP 10. Every rule comes from the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, or the RdSAP10 Specification of 9 June 2025, with the reference in brackets. Where the two conflict, the convention takes precedence (Conventions v12.2, opening statement). This edition replaces the March 2026 edition; where they differ, rely on this one.
 
-RdSAP 10 has tightened the input conventions, updated the default U-value tables, and clarified what constitutes acceptable evidence for above-default claims. The changes are incremental rather than revolutionary, but they are changes you need to apply consistently. The most common audit failures in insulation data are not exotic edge cases — they are systematic errors: wrong construction type classification, failure to identify insulation that is present, and overclaiming insulation performance without adequate evidence.
-
-This course covers walls, roofs, and floors in sequence. For each element, the focus is on the RdSAP 10 input logic, the default and override mechanism, the evidence requirements, and the specific failure points that scheme auditors flag most frequently. Throughout, references are to the RdSAP 10 specification and current accreditation scheme guidance.
+The course uses the data item names in specification Table 31, not software screens. Roof rooms are covered in MER-DEA-004.
 
 ---
 
-## Section 1: Wall Insulation — Construction Types, Defaults and the Evidence Hierarchy
+## Section 1: As built, unknown, or added insulation
 
-**Construction type classification.** RdSAP 10 organises wall construction into the following main categories: masonry cavity wall, masonry solid wall, timber frame, system build (concrete panel, prefabricated), and stone wall (sandstone or limestone; granite). The correct classification is the starting point for everything else — the wrong construction type produces incorrect default U-values and incorrect insulation options in the software.
+### What "as built" delivers
 
-The most common misclassification is between cavity wall and solid wall in properties built between 1920 and 1945. Not all interwar housing has a cavity: many properties of this era are solid 9-inch brick. The test is not age alone — it is construction evidence. Check the external wall at the DPC level or at any exposed return (corner, window reveal, door frame). A brick bond with through-headers visible (Flemish or English bond) indicates solid construction. A stretcher bond throughout, with no visible through-headers, is consistent with cavity construction. Where evidence is genuinely ambiguous and the property predates 1935, the conservative default is solid wall.
+RdSAP assigns default insulation from the age band of the part of the property concerned (specification section 5.1), so "as built" does not mean "uninsulated". In England, a cavity wall as built is 1.5 W/m2K in age bands A to E and 0.26 in band M (specification Table 6). A wall that has only the insulation that was part of its original construction is "as built" (Table 31 item 4-4).
 
-**Cavity wall insulation.** For unfilled cavities, RdSAP 10 applies a default U-value based on wall construction type and age. For filled cavities (CWI), the assessor must enter the insulation type (blown mineral fibre, EPS beads, polyurethane foam, or other) and the approximate installation date. RdSAP 10 uses this to apply an appropriate insulated U-value. Critically, you must not enter CWI unless you have evidence that the cavity is filled. Acceptable evidence includes: a CIGA guarantee (Cavity Insulation Guarantee Agency), a BBA certificate on file, a CO2 registration certificate, a building control completion certificate, or a formal declaration from the property owner confirmed by documentary trail. Visual inspection from outside is insufficient — a cavity can appear undisturbed while being filled, and vice versa. If in doubt, the unfilled default applies.
+Assume "as built" if there is no evidence of retro-fitted insulation (convention 3.03a). The convention applies this expressly to roof rooms where there is no access and no documentary evidence, and to the roof cases in Section 3.
 
-**Solid wall insulation.** For solid walls with IWI (internal wall insulation) or EWI (external wall insulation), the assessor must identify whether insulation is present and, if so, record the insulation type and thickness. IWI is identifiable by a reduced room depth compared with external dimensions, or by the presence of a plasterboard lining with an obvious depth addition at reveals and junctions. EWI is identifiable externally by the tell-tale signs: render over a different texture to the original walling, thickened reveals, recessed windows, or a visible edge detail at the DPC. Both are frequently missed by assessors who do not look carefully at reveals and junctions. Missed insulation is a direct audit failure — you have recorded a worse performance than the property actually has.
+### "Unknown" is for exceptional circumstances
 
-**Default versus evidenced U-values.** RdSAP 10 provides age-band default U-values for all construction types. An assessor may override the default only where the actual insulation specification is known and evidenced. For CWI, the insulation type is the override trigger — the software derives the insulated U-value from the construction and insulation combination. For IWI and EWI on solid walls, if you have the insulation thickness and type (rigid PIR, mineral wool, EPS), you can enter a calculated or manufacturer-declared U-value. Without evidence of the specification, you must use the appropriate insulated default, which RdSAP 10 provides for each combination.
+Selecting "unknown" automatically suppresses any insulation recommendation, so it must not be used inappropriately, and it must be explained in site notes (convention 3.03b). The convention's examples are:
+- conflicting evidence (inspection and/or documentary) of added insulation whose presence cannot be ascertained conclusively
+- a fully boarded or obstructed loft, unless the householder has documentary evidence or is prepared to lift the boards
+- a pitched roof with no access to the loft space, or access prevented, and no documentary evidence
 
----
+"Unknown insulation thickness" is for exceptional circumstances: conflicting evidence of thickness, or insulation you can see but cannot measure (convention 3.03c).
 
-## Section 2: Roof Insulation — Accessible Loft, Inaccessible, and Room-in-Roof
+### Evidence for added insulation
 
-**Accessible loft insulation.** For standard pitched roofs with an accessible loft space, RdSAP 10 requires the assessor to record the insulation position (at ceiling joist level), the insulation type, and the depth. The assessor must physically access the loft to measure insulation depth — or, where access is genuinely impossible, apply the age-band default. The depth measurement should be taken at the centre of the loft, not at the eaves where insulation typically compresses or thins. Where the depth varies significantly across the loft, record the average. RdSAP 10 defines minimum depth categories (the software maps depth to a U-value using construction-specific thermal conductivity assumptions), so exact depth matters — the difference between 100 mm and 150 mm is a step change in calculated U-value.
+Where there is evidence of additional insulation you can give its thickness, give the U-value of the element, or select unknown thickness and let RdSAP default (specification section 5.1). Thickness and U-value are mutually exclusive (Table 31 items 3-4, 4-7 and 5-6).
 
-Do not record loft insulation that the occupant claims is present without visual confirmation. The most common fraud vector in EPC data is overclaimed loft insulation. If you cannot access the loft, you cannot confirm depth, and the default applies.
+In England, Wales and Northern Ireland, acceptable documentary evidence includes, but is not limited to, official correspondence from the applicable Registered Social Landlord, certificates, warranties, guarantees, or any documents verifying that work has been carried out (convention 9.02). You must be confident, and able to demonstrate, that it relates to the actual property being assessed and/or that the work has been carried out, and that there is no physical or other documentary evidence to the contrary. Evidence of intent to install does not qualify on its own, but:
+- (a) where both an intention to upgrade the element (in planning documents, for example) and Building Control oversight can be demonstrated, the element can be treated as upgraded as the planning documents indicate
+- (b) where only one of those can be demonstrated, but it can also be seen that an upgrade has occurred, the element can be treated as upgraded using the minimum selectable upgrade of the relevant type, with "unknown insulation thickness" if there is no evidence of thickness; for roof insulation between joists, use 100 mm as the lowest selectable thickness
 
-**Inaccessible pitched roof.** Where the loft is inaccessible (hatch sealed or absent, storage rammed to the apex, health and safety concern), RdSAP 10 requires the assessor to use the appropriate default. This should be clearly documented in site notes with the reason for inaccessibility. "Occupant said it is insulated" is not a basis for an override.
+The Scotland-only wording of convention 9.02 does not contain rules (a) and (b): there, evidence of intent to install does not qualify.
 
-**Flat roofs.** For flat roofs, RdSAP 10 distinguishes between insulated and uninsulated. An insulated flat roof has insulation either above the structural deck (warm roof) or below it (cold roof with insulation at ceiling level). The key input is whether insulation is confirmed present and, where the specification is known, the type and thickness. Age-band defaults apply where specification is unknown. Many flat roofs have had insulation added retrospectively — a sudden step in the internal ceiling height visible from the room below, or a thickness increase at the roof edge, can indicate this.
+### Entering a U-value
 
-**Room-in-roof.** Room-in-roof construction requires the assessor to classify the element as Type 1 (separate room-in-roof construction, insulated at the sloping ceiling and knee walls) or Type 2 (integrated room-in-roof where the roof slope forms the room envelope). The insulation inputs for each type differ — this is covered in detail in MER-DEA-004. For this course, the key point is that room-in-roof elements are not entered as loft insulation; they are a separate construction category.
+Default U-values must not be overwritten unless there is specific documentary evidence of the thermal conductivity of the individual materials of the element in the property being assessed, calculated in accordance with BR 443 (convention 3.08). The evidence is either building control approval that correctly defines the construction and states the calculated U-value, or a U-value calculation produced or verified by a person with suitable expertise and experience. Knowing the product and its thickness leads to a thickness entry under convention 3.07, not a U-value.
 
----
+### Conversions
 
-## Section 3: Floor Insulation — Solid, Suspended Timber, and Insulated Slab
-
-Floor insulation is the element type most frequently recorded incorrectly in RdSAP 10 assessments, both through over-claim (recording insulation that is not present) and under-claim (missing insulation added during renovation works).
-
-**Solid ground floors.** For solid concrete slab ground floors, the default assumption in RdSAP 10 is uninsulated for most age bands. Where insulation is present below the slab, above the slab (screed insulation), or at the perimeter (edge insulation only), this must be identifiable from the construction. Below-slab insulation is not visible during a survey and cannot be confirmed without documentation (building regulations completion certificate, thermal specification drawings, or a renovation record from the owner). Perimeter insulation only (edge insulation) has a different effect on calculated U-value than full below-slab insulation and is entered separately in the software.
-
-**Suspended timber floors.** For suspended timber ground floors, the default is uninsulated. Insulation in a suspended floor (typically mineral wool batts between the joists) is visible either by lifting a loose board, looking through a vent opening, or — in many cases — by a marked change in the underfloor draught characteristics when the vent is opened. Where the floor is carpeted and boards are not accessible, the default applies unless documentary evidence exists. Do not enter suspended floor insulation based on an occupant claim without visual or documentary confirmation.
-
-**Underfloor heating as a proxy.** Properties with underfloor heating (particularly wet UFH in a screed) are sometimes assumed to have floor insulation by assessors. This is not necessarily true — the installation of UFH does not mandate insulation, though good practice requires it. Unless the installation specification or building control sign-off confirms the insulation layer, the default applies.
-
-**Upper floors.** Floors above unheated spaces (garages, unheated utility rooms, basement areas) are treated as exposed floor elements in RdSAP 10. The insulation inputs follow the same logic — evidenced or default — but the exposure condition (floor over unheated space) must be correctly identified. A floor entered as ground floor when it is actually over an unheated garage will produce a materially incorrect U-value.
+For a conversion of a building originally intended to be heated, or a sub-divided dwelling, use the original construction date and specify upgraded elements only with documentary or visual evidence (convention 3.05a; Scotland has its own version, tied to the building warrant application date). For a conversion of an unheated building, such as a barn, use the conversion date, based on documentary evidence (convention 3.05b).
 
 ---
 
-## Section 4: Common Audit Failures in Fabric Data
+## Section 2: Walls
 
-Scheme auditor data from 2024 and 2025 shows a consistent set of fabric-related audit failure categories. These are not isolated incidents — they represent systematic errors made by a significant proportion of assessors across all scheme providers.
+### Construction type
 
-**Failure 1: Wrong wall construction type.** Solid walls recorded as cavity, or vice versa. Most common in interwar stock (1920–1939) and system-built properties (1950s–1970s). The fix is to check brick bond visually and consult construction databases (the BRE's English Housing Survey data, Historic England's guidance on interwar housing construction) where the external evidence is ambiguous.
+Wall construction is one of: stone (granite or whinstone), stone (sandstone or limestone), solid brick, cob, cavity, timber frame, park home wall, system build, basement wall or curtain wall (Table 31 item 4-2). These rules decide the choice:
+- A cavity wall is entered as such irrespective of the width of the cavity; record its insulation level, any dry-lining and the wall thickness (convention 3.01).
+- Timber frame is recorded as timber frame, not system build, irrespective of the external cladding (convention 3.02).
+- A system built wall is a wall other than masonry or timber framed (specification section 5.2.2).
+- If no option corresponds closely, select the nearest equivalent and include Addendum 1 (specification section 5.2).
+- For flats, record the construction of the heat loss walls of the dwelling being assessed, not the overall superstructure, and select Addendum 1 (convention 3.14).
 
-**Failure 2: CWI claimed without evidence.** Cavity wall insulation entered where no evidence is available. This is the most frequently challenged failure because it inflates the EPC rating, which can affect renewable heat incentive eligibility and mortgage valuations. The fix is to record unfilled cavity and note "no CWI evidence available" in site notes.
+### Wall thickness
 
-**Failure 3: Loft insulation depth overclaimed.** The most common depth error is recording 200 mm when the measured depth is 100–150 mm. This is a significant error — the difference in U-value between 100 mm and 200 mm of mineral wool is approximately 0.08 W/m²K, which translates directly into space heating demand and rating. Measure, do not estimate.
+Measure wall thickness in mm for each building part and any alternative wall within it; evidence is required for each different thickness (convention 2.22). Measure at door or window reveals, or compare internal and external measurements. Where thickness varies a little for the same construction, use the average.
 
-**Failure 4: Floor construction not verified.** Suspended timber floors recorded as solid, or floors over unheated spaces recorded as ground floors. The fix is to check floor construction at the accessible perimeter (under stairs, at a threshold, through a vent).
+For solid brick in age bands A to E the default is 2.5 W/m2K up to 200 mm, 1.7 from 200 to 280 mm, and lower again for thicker walls (specification Table 13); for stone it is calculated from the thickness (specification Table 12), except that band E takes a fixed value, 1.7 in England, unless the calculated value is lower (specification Table 6, note a).
 
-**Failure 5: Insulation claimed on the basis of age alone.** Entering insulated values for elements because the property was "built after Building Regulations required it" without confirming the insulation is actually present. Regulations require it; that does not mean it was done.
+### Alternative walls
+
+An alternative wall is a sheltered wall, a wall whose construction type or U-value differs from the main external wall, or both (convention 2.13). Each building part can have two, only one of them sheltered. The rules are:
+- Always include a sheltered alternative wall, irrespective of size.
+- Disregard a non-sheltered alternative wall of less than 10% of the total exposed wall area of the building part, including windows and doors. On 90 m2, a 6 m2 panel (6.7%) is disregarded and a 12 m2 section (13.3%) is entered.
+- For stone walls, assess thickness at each external elevation and each storey, and use an alternative wall if it varies by more than 100 mm. Specification section 3.2.2 words this rule as covering stone or solid brick walls in age bands A to E.
+
+### Wall insulation type and dry lining
+
+The options are as built, external, filled cavity, internal, cavity plus external, cavity plus internal, and unknown; external, cavity or internal insulation is indicated only if it was added after the original construction and evidence exists (Table 31 item 4-4). Table 31 has no item for cavity fill material or installation date. The sources do not say which visual signs of cavity fill are sufficient; convention 3.03b describes evidence as inspection and/or documentary, so if in doubt ask your accreditation scheme. Three specific cases:
+- A system built wall with evidence of retro cavity fill is recorded as system build with internal insulation, thickness unknown, with Addendum 1 (convention 3.02).
+- A timber framed wall with external brick or block work and added external wall insulation is treated "as built", with Addendum 1 (convention 3.02a).
+- Where there is both internal and external insulation, add the thicknesses together and enter as external (convention 3.07).
+
+Dry lining is any internal lining that creates an airspace behind it, such as plasterboard on dabs or lath and plaster (convention 3.06). Use a tap test; if inconclusive, regard the wall as not dry-lined. Dry lining alone does not confirm the presence of insulation. The item applies only to stone, solid brick and cavity walls in age bands A to E.
+
+### Insulation thickness and thermal conductivity
+
+Convention 3.07 adjusts the thickness you enter. It applies only where a thickness is specified, not where a U-value is calculated.
+- Multi-foil (a blanket with at least three layers of foil-type material) is entered at twice its actual thickness.
+- Any insulation, except on solid brick and stone walls in age bands A to E, can be doubled if there is documentary evidence of the insulation type and manufacturer's information that its thermal conductivity is 0.025 W/mK or less.
+- If the thermal conductivity is more than 0.08 W/mK (vermiculite, for example), halve the thickness.
+
+For solid brick and stone walls in age bands A to E the doubling for low thermal conductivity does not apply. You enter the thickness and select a thermal conductivity of 0.040, 0.030 or 0.025 W/mK (convention 3.07). A documented value between these is rounded to the closest: 0.019 is entered as 0.025, and 0.044 as 0.040. Where insulation is confirmed but its conductivity is not available, use 0.040 for mineral wool, rock wool, fibre glass or EPS, 0.030 for XPS, and 0.025 for PUR, PIR or phenolic foam. Table 31 item 4-6 says to assume 0.04 where there is no documentary evidence of the thermal property; where you can identify the material, the convention's list is the more specific rule.
+
+Worked examples:
+- 50 mm of PIR on a cavity wall, with documentary evidence of the type and a manufacturer's conductivity of 0.022 W/mK, can be entered as 100 mm.
+- The same PIR on a solid brick wall in age band B is entered as 50 mm at 0.025 W/mK.
+
+### Hard to treat cavities and basement walls
+
+Convention 9.10 defines three items:
+- Access issue: any facade where it is not possible to pitch a 5 metre ladder considering health and safety requirements.
+- Narrow cavity: indicated by a stretcher bond brick pattern with wall thickness 220 to 250 mm.
+- Possible high exposure: any dwelling in exposure zones 3 or 4 (Appendix 1 of the conventions); if in doubt, record it.
+
+For a flat on the third storey or above where cavity construction is identified (and retro-fit cavity insulation is therefore recommended), select "Access issues" (convention 3.14).
+
+Basement walls are those adjacent to earth, and are only included when the basement is heated (convention 3.17). Basement walls above ground level are treated as a different wall construction (convention 2.05).
+
+---
+
+## Section 3: Roofs
+
+### What is above the building part
+
+Table 31 item 2-3 lists what can be above a building part: four pitched roof options, a flat roof, non-residential or other unheated space, the same dwelling, or another dwelling. The sources conflict on commercial premises above: convention 2.21 says non-residential/other unheated space, specification section 5.2.5 says another dwelling above. The convention takes precedence.
+
+### Loft access
+
+Where safe and practicable access is possible, measure the loft insulation and provide photographic evidence of the measured thickness (convention 3.04). Otherwise:
+- "No access" means there is no loft hatch or other means of gaining access to the loft space.
+- If there is a hatch or other means of access that could not be used on the day (painted over, or an obstruction preventing access for health and safety reasons), record "access, loft insulation unknown".
+- If the insulation is fully obstructed, by boarding or stored items, enter "pitched, access, loft insulation unknown" unless the householder has documentary evidence (maximum thickness is the depth of the joists), lifts the boards or removes the obstructions.
+- If you can establish and evidence the insulation under boards at multiple locations, through gaps or extending in from the edges, treat the boarded area as insulated to the thickness the evidence proves.
+
+With no access, or insulation unknown, the U-value comes from the age band: 0.40 W/m2K, equivalent to 100 mm, for bands A to G (specification section 5.11.2 and Table 18, column 1). "None" is 2.3 W/m2K (specification Table 16), so keep it for a loft seen to be uninsulated.
+
+### Loft insulation thickness
+
+Thickness at joists is selected from fixed values between 12 mm and 400+ mm (Table 31 item 5-2). The rules in convention 3.04 are:
+- If the level of insulation varies, use an area-weighted average thickness.
+- If there is an area with no insulation, split the dwelling into building parts so that each roof insulation scenario can be entered.
+- If joist and rafter insulation are both present, base the assessment on the joist insulation only.
+- Multi-foil or foam insulation at joists or rafters is entered under convention 3.07, which also halves the thickness of materials such as vermiculite: 100 mm is entered as 50 mm.
+
+Worked example: a 40 m2 loft has 30 m2 insulated to 300 mm and 10 m2 to 100 mm. The average is ((30 x 300) + (10 x 100)) divided by 40, which is 250 mm. The sources do not say what to do when the average falls between two listed thicknesses, so ask your accreditation scheme.
+
+The U-values behind the thicknesses are 0.40 W/m2K at 100 mm, 0.21 at 200 mm and 0.16 at 270 mm (specification Table 16, column 1).
+
+### Rafters, sloping ceilings and flat roofs
+
+Rafter, flat roof and sloping ceiling insulation each take "unknown", "as built" or a known thickness (Table 31 items 5-3 to 5-5). "None" does not apply to a flat roof or a pitched roof with sloping ceiling (Table 31 item 5-1). Assume "as built" for a flat roof or sloping ceiling without documentary evidence, and for rafter insulation with no evidence of retro-fitting (convention 3.03a). The comment on Table 31 item 5-1 says that without evidence the entry is "unknown"; the convention takes precedence. The U-value is the same either way (specification Table 18, note 1), but "unknown" loses the recommendation (convention 3.03b). A conservatory recorded as an extension because its roof has been replaced or a false ceiling added has its own roof entries (convention 2.28).
+
+The age band of a roof room is the same as the building part unless evidence, such as planning applications or dated photographs, proves otherwise (convention 3.13).
+
+---
+
+## Section 4: Floors
+
+### What is below, and the floor construction
+
+Table 31 item 2-2 records what is below each building part. Commercial premises below are recorded as partially heated space below (convention 2.21).
+
+Floor construction is unknown, solid, basement floor, suspended timber, or suspended not timber, recorded for the lowest floor of the building part (Table 31 item 3-1). If the floor construction cannot be determined, "unknown" is appropriate (convention 3.03b). The software then assumes suspended timber for age bands A and B, or solid if there is underfloor heating, and solid from band C onwards (specification Table 19).
+
+### Floor insulation
+
+Floor insulation is unknown, as built, or retro-fitted, and there must be evidence for retro-fitted insulation (Table 31 item 3-2). Thickness is entered only if the insulation is retro-fitted: unknown, or 25 to 200 mm in 25 mm steps (Table 31 item 3-3). A known floor U-value is the alternative (Table 31 item 3-4) and needs the evidence in convention 3.08.
+
+There is no single default floor U-value: it is calculated from the floor area, exposed perimeter and wall thickness of each building part, the floor construction and the thickness of all-over floor insulation (specification section 5.12). Where no thickness is given, the insulation assumed depends on age band and country: in the England and Wales column, none up to band H, 25 mm for I, 75 mm for J, 100 mm for K and L, and 140 mm for M (specification Table 19). For retro-fitted insulation of unknown thickness, the greater of 50 mm and the age band thickness is used (Table 19, note 2).
+
+### Exposed floors and basements
+
+An exposed floor has external air below and a semi-exposed floor has an unheated space below, such as an integral garage (specification section 3.11); no distinction is made between them for U-value (specification section 5.13).
+
+A basement that meets the criteria in convention 2.05 becomes the lowest occupied floor. Where it does not, the sources conflict: convention 2.05 says to treat the floor above it as a suspended floor above unheated space, while specification section 5.17 says a floor above a basement is treated as a ground floor for heat loss. The convention takes precedence.
 
 ---
 
 ## Key Takeaways
-
-- Classify wall construction from visual evidence (brick bond, reveals, wall thickness), not from age alone — interwar and system-build properties are frequently misclassified.
-- Do not enter CWI without documentary evidence: CIGA guarantee, BBA certificate, CO2 registration, or building control sign-off.
-- Measure loft insulation depth physically and at the centre of the loft — do not accept occupant claims without visual confirmation.
-- Floor construction type and insulation must be confirmed from the accessible perimeter or from documentation — carpet is not an obstacle to inquiry.
-- Floors above unheated spaces are exposed floor elements and must be identified as such, not entered as ground floors.
-- Any insulation claim above the age-band default requires retained evidence — the audit file must support the claim.
-- The five most common fabric audit failures are wall type misclassification, uncertified CWI claims, loft depth overclaim, floor type error, and age-based insulation assumptions. All are avoidable.
+- "As built" delivers the age band default; assume it wherever there is no evidence of retro-fitted insulation (convention 3.03a).
+- "Unknown" is for exceptional circumstances and suppresses the insulation recommendation (convention 3.03b).
+- A U-value entry needs the evidence in convention 3.08; product and thickness alone lead to a thickness entry under convention 3.07.
+- Solid brick and stone walls in age bands A to E take a conductivity of 0.040, 0.030 or 0.025 W/mK, with no doubling of thickness for low conductivity (convention 3.07).
+- "No access" means no hatch or other means of access; a hatch you could not use, or insulation fully obstructed, is "access, loft insulation unknown" (convention 3.04).
+- Varying loft insulation is an area-weighted average; an area with none means splitting into building parts (convention 3.04).
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** A 1932 semi-detached property has external walls laid entirely in stretcher bond with no visible through-headers. The wall appears to be approximately 275 mm thick externally. What is the most likely construction?
+**Q1.** A house has a loft hatch, but on the day of the visit it is painted over and cannot be opened, and there is no documentary evidence. How is the roof recorded?
 
-A) 9-inch solid brick
-B) Concrete panel system build
-C) Cavity masonry wall
-D) Timber frame with brick cladding
+A) Pitched roof, no access
+B) Access, loft insulation unknown
+C) Roof insulation "none"
+D) Insulation at joists, 100 mm
 
-**Correct answer: C**
-
-*Stretcher bond throughout with no visible through-headers is consistent with cavity wall construction. The 275 mm thickness is also consistent with a standard cavity wall. Solid brick in English or Flemish bond would show alternating header courses.*
+**Correct answer: B.** Under convention 3.04, "no access" means no hatch or other means of access; a hatch that could not be used on the day is "access, loft insulation unknown".
 
 ---
 
-**Q2.** An assessor visits a 1960s semi-detached property. The occupant states the cavity was insulated "about ten years ago" but cannot produce any paperwork. What should the assessor record?
+**Q2.** A 40 m2 loft is fully insulated at joist level: 30 m2 at 300 mm and 10 m2 at 100 mm. What thickness is entered?
 
-A) CWI present, type unknown, estimated date 2015
-B) The assessor should decline to survey until documentation is provided
-C) CWI present — occupant verbal confirmation is acceptable evidence
-D) Unfilled cavity — no documentary evidence available
+A) 300 mm, the thickness over most of the loft
+B) 100 mm, the lowest thickness found
+C) The thickness measured at the centre of the loft
+D) 250 mm, the area-weighted average
 
-**Correct answer: D**
-
-*Verbal confirmation from the occupant is not acceptable evidence for CWI under RdSAP 10 conventions. The assessor records unfilled cavity and notes in the site file that the occupant claimed CWI but no documentation was available.*
+**Correct answer: D.** Convention 3.04 requires an area-weighted average where insulation varies: ((30 x 300) + (10 x 100)) divided by 40 is 250 mm.
 
 ---
 
-**Q3.** A loft space contains variable mineral wool insulation: 180 mm at the centre, thinning to approximately 50 mm at the eaves. What depth should be entered in RdSAP 10?
+**Q3.** A solid brick wall in age band C has 50 mm of PIR internal insulation, with documentary evidence of a thermal conductivity of 0.022 W/mK. How is it entered?
 
-A) 180 mm — the depth at the centre governs
-B) 50 mm — the minimum depth governs
-C) The depth measured at the loft hatch
-D) 115 mm — the average of 180 mm and 50 mm
+A) 50 mm, with thermal conductivity 0.025 W/mK
+B) 100 mm, because the conductivity is 0.025 W/mK or less
+C) 25 mm, because the thickness is halved
+D) As a U-value worked out by the assessor from the product and thickness
 
-**Correct answer: A**
-
-*RdSAP 10 convention is to record the depth at the centre of the loft. Thinning at the eaves is normal and is not used to reduce the recorded depth. The centre measurement represents the thermally significant zone.*
+**Correct answer: A.** Convention 3.07 excludes solid brick and stone walls in age bands A to E from the doubling for a conductivity of 0.025 W/mK or less; the thickness is entered with the closest of 0.040, 0.030 or 0.025 W/mK.
 
 ---
 
-**Q4.** A 1970s terraced property has a solid concrete ground floor throughout the ground level. No renovation records are available. The occupant says the floor "feels warm." What should the assessor enter?
+**Q4.** A flat roof extension has no documentary evidence of insulation, and none is visible. What is the insulation entry?
 
-A) Insulated solid floor — occupant perception suggests insulation
-B) Uninsulated solid floor — age-band default applies, no documentary evidence of insulation
-C) Suspended timber floor — common in 1970s terraces
-D) Insulated floor, screed over insulation, as the 1970s Building Regulations required it
+A) "None"
+B) Flat roof insulation, 100 mm
+C) "As built"
+D) A U-value of 2.3 W/m2K
 
-**Correct answer: B**
-
-*1970s Building Regulations did not mandate floor insulation. Occupant perception of warmth is not evidence of insulation. Without a building control completion certificate, renovation record, or visible evidence of an insulation layer, the uninsulated default applies.*
+**Correct answer: C.** Convention 3.03a says to assume "as built" for a flat roof with no documentary evidence; "none" does not apply to a flat roof (Table 31 item 5-1).
 
 ---
 
-**Q5.** A property has a room above an integral unheated garage. The assessor enters this floor as a standard ground floor. What is the likely audit outcome?
+**Q5.** A cavity wall in age band D shows no evidence, from inspection or documents, that insulation has been added. What is the wall insulation entry?
 
-A) No issue if the floor is carpeted
-B) Minor discrepancy — acceptable within tolerance
-C) No issue — ground floor and floor over unheated space have the same default U-value
-D) Audit failure — the floor should be classified as an exposed floor over unheated space, producing a different U-value
+A) "Unknown"
+B) "As built"
+C) Filled cavity
+D) Internal insulation, thickness unknown
 
-**Correct answer: D**
-
-*A floor above an unheated space is an exposed floor element in RdSAP 10 with its own U-value calculation, not a ground floor. Entering it as a ground floor produces an incorrect (and typically better) U-value, which is a methodology failure on audit.*
+**Correct answer: B.** Convention 3.03a says to assume "as built" if there is no evidence of retro-fitted insulation; "unknown" is for exceptional circumstances such as conflicting evidence (convention 3.03b).
 
 ---
 
 ## Further Reading
-
-- **RdSAP 10 Specification Document** — Department for Energy Security and Net Zero (DESNZ). Available via: https://www.bregroup.com/sap/
-- **BRE Housing Stock Data — Construction Type Reference** — BRE Group. Available at: https://www.bregroup.com/
-- **CIGA (Cavity Insulation Guarantee Agency) — Guarantee and Installation Standards.** Available at: https://www.ciga.co.uk/
-- **Historic England — Thermal Improvements to Traditional Buildings.** Available at: https://historicengland.org.uk/
-- **PAS 2035:2023 — Retrofitting Dwellings for Improved Energy Efficiency** — BSI. Available at: https://www.bsigroup.com/
+- **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read section 3 and conventions 2.13, 2.22, 9.02 and 9.10.
+- **RdSAP10 Specification.** BRE, 9 June 2025. See section 5 for the U-value tables and Table 31 for the floor, wall and roof data items.
 
 ---
 

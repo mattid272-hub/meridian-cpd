@@ -1,255 +1,355 @@
 # Introduction to RdSAP 10: What's Changed and Why
-**Course ID:** MER-DEA-001 | **CPD Hours:** 2.0 | **Published:** March 2026
+**Course ID:** MER-DEA-001 | **CPD Hours:** 2.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Explain why RdSAP 10 was introduced, what it replaces, and the timeline from original launch to current mandatory adoption.
-- Identify the seven major changes that affect every domestic energy assessment from June 2025 onwards, including windows, ventilation, Room in Roof, solar technology, lighting, heating recommendations, and new technologies.
-- Apply the new window data collection requirements correctly, understanding the shift from representative sampling to individual measurement of every opening.
-- Distinguish between Room in Roof Type 1 and Type 2 using the RdSAP 10 definitions, and understand the differing data collection requirements for each.
-- Describe the new recording requirements for PIV, MVHR, open flues, and airtightness test results under RdSAP 10.
-- Explain the updated treatment of solar PV, battery storage, and PV diverters in the RdSAP 10 calculation engine.
-- Apply the revised lighting methodology — counting individual bulbs rather than fittings — and understand the practical implications for energy ratings.
-- Advise clients confidently on what RdSAP 10 means for their EPC and why assessments now take longer.
+- Explain how the RdSAP10 Specification, the Conventions and BRE Technical Notes fit together, and which document takes precedence when they disagree.
+- Identify the changes the specification lists against the previous methodology and the conventions that were added for RdSAP 10.
+- Apply the rules for measuring every relevant window and for recording glazing age and glazing gap.
+- Classify an upper space as a Type 1 roof room, a Type 2 roof room or a separate storey using convention 2.06 and Appendix 2.
+- Record PV, batteries, diverters and lighting as conventions 9.05 and 7.01 require, and recognise what v12.2 changed and what evidence the conventions ask for.
 
 ---
 
 ## Introduction
 
-RdSAP 10 is the most significant revision to the Reduced Data Standard Assessment Procedure in over a decade. Published by BRE and the Department for Energy Security and Net Zero (DESNZ) in June 2025, it replaces RdSAP 9.94 — a version of the methodology that, in its essentials, had been in place since 2012. Understanding RdSAP 10 is not optional. It is the current methodology. Every EPC lodged from June 2025 onwards uses it. Every audit will be conducted against it.
+This course is an overview of what an RdSAP 10 assessment requires. It is written from three documents: the Conventions (v12.2) for RdSAP 10, the RdSAP10 Specification dated 9 June 2025, and a technical bulletin that one accreditation scheme issued in June 2025 for the move to RdSAP 10. Each rule is followed by a reference in brackets so that you can check it. Where we rely on the bulletin we say "a scheme technical bulletin", because that is one scheme's reading and not a rule for every assessor. Section 6 also compares v12.2 with the v12.1 edition it replaced.
 
-This course is not about learning how to do a domestic energy assessment from scratch. You are already an accredited assessor. The purpose here is to identify precisely what has changed, why those changes were made, and what they mean in practical terms on every assessment you carry out from this point forward. There are seven major areas of change. Some of them will alter how you spend your time on site. Several will require you to update your site notes template. At least one — the window measurement requirement — will extend the duration of most assessments meaningfully and may require you to review your pricing.
+This edition replaces the March 2026 edition. If you studied the earlier edition, note that its description of Room in Roof Type 1 and Type 2 was wrong. Section 4 gives the definitions that are in the conventions.
 
-The driving logic behind RdSAP 10 is accuracy. The previous methodology accepted approximations and defaults in areas where modern practice has made precision achievable. Windows were assumed rather than measured. Ventilation systems were poorly characterised. New technologies like battery storage and PV diverters had no pathway into the calculation at all. Room in Roof constructions were interpreted differently by different assessors, producing inconsistent ratings on comparable properties. RdSAP 10 closes those gaps. The result is a methodology that is harder to apply quickly but substantially more defensible — and one that produces ratings that more faithfully reflect the actual energy performance of the dwelling.
-
-For the professional assessor, this update is an opportunity. The additional rigour required by RdSAP 10 raises the floor of what constitutes a competent assessment. Assessors who adapt quickly, update their practice, and communicate the changes clearly to clients will be better positioned than those who treat RdSAP 10 as an inconvenience. This course gives you what you need to do that.
+We describe something as new or changed only where the specification, the conventions' revision history or the bulletin says so. As for why, the documents rarely give reasons. Where they do, we report them, and we have not added reasons of our own. Where the sources are silent or disagree, we say so and point you to your accreditation scheme.
 
 ---
 
-## Section 1: Why RdSAP 10? Context, Timeline and What the Update Was Designed to Fix
+## Section 1: The documents and how they fit together
 
-### The Timeline
+### What RdSAP is
 
-RdSAP was first introduced in 2005 as a simplified derivation of the full Standard Assessment Procedure, designed for use on existing dwellings where detailed construction information was not always available. The original methodology made extensive use of defaults and assumptions, accepting reduced data precision in exchange for a protocol that could be applied consistently and efficiently across the existing housing stock.
+The specification describes Reduced data SAP as the UK approved methodology for assessing energy performance and generating EPCs for existing dwellings. Any new dwelling must be assessed using SAP (specification, Introduction; convention 1.01).
 
-The most significant revision prior to RdSAP 10 was the transition to RdSAP 9.90 in 2012, which updated the underlying SAP calculation engine and introduced a number of refinements. Between 2012 and 2025, incremental updates were applied — RdSAP 9.91, 9.92, 9.93, 9.94 — but none constituted a fundamental overhaul of the data collection requirements. Assessors who qualified under RdSAP 9.90 in 2012 and continued practising through to 2025 were, in most respects, applying the same core methodology they had always used.
+The calculation has two stages. The data you collect, the reduced data set, is expanded into a full data set using defaults and inference rules, and the SAP calculation is run on the result. RdSAP 10 forms part of the SAP 10.2 specification, and for any item the RdSAP specification does not mention, the SAP 10.2 procedures apply (specification, Introduction). Table 31 lists the reduced data set item by item (specification section 17).
 
-RdSAP 10, introduced in June 2025 and mandatory for all new EPC lodgements from that date, represents the first genuinely comprehensive revision since the methodology's original launch. It incorporates changes that reflect thirteen years of accumulated evidence about where the previous methodology was producing inaccurate or inconsistent results, and it integrates technologies and building configurations that simply did not exist in their current form when RdSAP was last substantially updated.
+### The conventions and the precedence rule
 
-### What the Update Was Designed to Fix
+The specification says the Conventions are primarily concerned with the consistency of data collection and are addressed to energy assessors. Assessors should read the specification together with the Conventions applicable at the time of assessment. Any deviation from the specification and those Conventions invalidates the calculation, which cannot then be used to generate an EPC (specification, Introduction).
 
-The RdSAP 10 development process was informed by a detailed analysis of where the previous methodology was failing. Four specific weaknesses were identified as the primary drivers of the update.
+The opening page of the Conventions adds three points (conventions v12.2, opening page):
+- This edition supersedes all previous editions.
+- Where any convention is in conflict with the published SAP specification, the convention takes precedence.
+- Amended and additional conventions have a light blue background, with the changes marked in red.
 
-**Windows were assumed, not measured.** Under RdSAP 9.94, assessors could characterise a property's glazing by recording a representative window and applying it to similar openings. For a typical semi-detached house with a mix of window sizes and orientations, this practice compressed meaningful variation into a single figure and introduced systematic error into the solar gain and fabric heat loss calculations. Properties with predominantly south-facing glazing and properties with predominantly north-facing glazing could receive similar window characterisations despite having meaningfully different calculated energy demands. RdSAP 10 ends this. Every window must now be individually measured and recorded.
+Where this course points out such a conflict, follow the convention.
 
-**Ventilation systems were oversimplified.** The proliferation of Positive Input Ventilation units, Mechanical Ventilation with Heat Recovery systems, and whole-house ventilation strategies in the UK housing stock has accelerated significantly since 2012. The previous methodology lacked the input pathways to characterise these systems adequately. PIV units were frequently omitted or recorded as basic extract fans. MVHR systems — which have a material and positive effect on calculated energy performance — had no standardised recording protocol and were often entered inconsistently. RdSAP 10 adds structured input fields for each system type and, critically, introduces the requirement to record specific make, model, and configuration data for MVHR.
+### Editions and dates
 
-**New technologies had no pathway into the calculation.** Battery storage systems, PV diverters (which redirect solar export to hot water heating), and small-scale hydro generation were not modelled in RdSAP 9.94 at all. A property with a 10 kWp solar array, a 13 kWh battery, and a PV diverter feeding a hot water cylinder received exactly the same modelled benefit from its solar installation as a property with a 2 kWp array and no storage. This was not a marginal inaccuracy — it produced materially incorrect EPC ratings for a growing segment of the housing stock. RdSAP 10 introduces calculation pathways for all three.
+The revision history at the back of v12.2 lists the recent editions (conventions v12.2, revision history):
+- Version 12, listed against 01 May 2025. This edition added the conventions described in Section 2.
+- Version 12.1, listed against 14 August 2025, amending Appendix 5.
+- Version 12.2, listed against 13 July 2026. Its pages are marked "Applicable from 06/08/2026".
 
-**Room in Roof was inconsistently applied.** The treatment of loft conversions, attic rooms, and other Room in Roof configurations under RdSAP 9.94 was a persistent source of audit failures and inter-assessor inconsistency. The previous guidance left significant room for assessor judgement, and different accreditation bodies had accumulated slightly different interpretations. RdSAP 10 resolves this by defining two distinct Room in Roof configurations — Type 1 and Type 2 — with clear, observable criteria for distinguishing between them and different data collection requirements for each.
+The earlier documents print different dates. The v12.1 edition was marked applicable from 21 August 2025 and dated version 12 as 15 June 2025, the day a scheme technical bulletin gave its members for RdSAP 10 and version 12 going live. The conventions do not explain the difference.
 
----
+The conventions also do not say whether "applicable from" refers to the date of the inspection or the date of lodgement. Check your scheme's bulletin for any assessment carried out close to 6 August 2026.
 
-## Section 2: The Seven Major Changes
+### BRE Technical Notes
 
-### Change 1 — Windows: Measure Every One
-
-This is the change with the largest practical impact on your site visit procedure. Under RdSAP 9.94, recording a representative window and applying it to similar openings was accepted practice. Under RdSAP 10, it is not. Every window must be individually measured, classified, and recorded.
-
-**What you must now record for each window:**
-- Width and height of the structural opening (to nearest 10 mm)
-- Orientation (N, NE, E, SE, S, SW, W, NW)
-- Frame type (wood, PVC-U, metal with thermal break, metal without thermal break, composite)
-- Glazing type (single, double, triple, secondary)
-- For double and triple glazing: gap size (less than 12 mm, 12 mm, 16 mm or more) and gas fill (air, argon) where determinable
-- Age of glazing where distinguishable from the dwelling age
-- Any WER rating or declared U-value where documentation is available
-
-The practical implication is that a standard three-bedroom semi with 12–15 openings will require individual measurement of each. Budget 5–15 additional minutes per property, more for larger or older properties with mixed glazing ages or multiple glazing types.
-
-This change also affects how you organise your site notes. A site notes template that captured a single representative window entry per elevation is no longer adequate. You will need a window schedule — a row per opening — as the minimum data capture standard.
-
-### Change 2 — Ventilation: Far Greater Detail Required
-
-RdSAP 10 introduces structured recording requirements for three ventilation system types that were inadequately captured in the previous methodology.
-
-**Positive Input Ventilation (PIV).** PIV units must now be identified and recorded as a distinct system type. A PIV unit is typically installed in the loft space or, in flats, in a ceiling-mounted position, drawing fresh air from outside and distributing it gently through the dwelling to dilute and displace moisture-laden air. They are present in a significant proportion of the existing housing stock — particularly in social housing and properties that have undergone cavity wall insulation. Check for the unit in the loft on every assessment. The presence of a PIV has a defined impact on the calculated ventilation heat loss in RdSAP 10 and must not be omitted.
-
-**Mechanical Ventilation with Heat Recovery (MVHR).** For properties with MVHR, RdSAP 10 requires full system recording: make, model, installation date, duct configuration (radial or conventional), and unit location. The calculated efficiency of an MVHR system has a material positive effect on the EPC rating — the heat recovery function reduces ventilation heat loss substantially compared with simple extract or natural ventilation. This makes accurate recording important in both directions: failing to record an MVHR system understates the property's energy performance, while claiming MVHR efficiency credit without adequate supporting evidence is an audit risk. Photograph the unit, the ductwork connections, and any commissioning plate or label visible on the unit.
-
-**Open Flues.** All open flues associated with boilers, room heaters, and fireplaces — including those that have been blocked off — must now be recorded separately. An open flue represents a source of uncontrolled air infiltration and has a defined negative effect on the calculated air permeability of the dwelling. Under RdSAP 9.94, open flues were not always captured as a discrete input. Under RdSAP 10, they are required. Count them all and record their association (boiler flue, gas fire, blocked-off fireplace).
-
-**Airtightness Test Results.** Where a valid airtightness test certificate exists — lodged to a registered Competent Person Scheme — the test result can now be entered directly into RdSAP 10 as the air permeability value for the calculation. This replaces the default table value normally used for the dwelling's construction type and age. For properties that have undergone significant air-sealing work, this can make a meaningful positive difference to the calculated energy performance. The certificate must be from a test conducted in accordance with ATTMA TS1 or equivalent and must be lodged to a recognised scheme. If the certificate is not available for inspection, the default value must be used.
-
-### Change 3 — Room in Roof: Type 1 and Type 2 Defined
-
-RdSAP 10 introduces a formal binary classification for Room in Roof configurations that replaces the previous unstructured approach.
-
-**Type 1 — Room in Roof fully within the roof space.** This applies to loft conversions that were constructed wholly within the roof void after the original build. The defining characteristics are: stud walls on all sides, ceiling that follows the roof slope (no flat ceiling sections within the converted space), and no elements of the original roof structure retained within the habitable zone. The classic example is a dormer loft conversion added to a 1960s or 1970s semi-detached house. Type 1 requires expanded data collection, including the full insulation specification of the sloping roof and the dormer walls.
-
-**Type 2 — Room in Roof built into the original roof structure.** This applies where the room is accommodated within the original roof structure, with partial stud walls present within the existing roof. Part of the original roof structure is retained and the ceiling may be flat or a combination of flat and sloped. This configuration is more common in Victorian and Edwardian properties where the upper floor was designed as habitable space within a steeply pitched roof, and in some 1930s–1950s semi-detached houses where the roof was designed to accommodate a future attic room. Type 2 has different calculation inputs from Type 1, reflecting the different thermal envelope geometry.
-
-The critical practical skill is correctly distinguishing between the two types on site. If you are uncertain, the determining question is: was this space created by converting a void (Type 1) or was it always part of the original habitable structure (Type 2)? Construction age alone is not determinative — some modern properties have Type 2 configurations, and some Victorian properties have had full loft conversions.
-
-### Change 4 — Solar PV, Battery Storage and PV Diverters
-
-The RdSAP 10 calculation engine now models solar PV systems, battery storage, and PV diverters as distinct components with defined impacts on calculated energy performance.
-
-**Solar PV.** The recording requirements for solar PV under RdSAP 10 are consistent with the previous methodology: total installed peak capacity in kWp, orientation, pitch, and whether the system is MCS certified. What has changed is the calculation treatment of energy flows where battery storage and diverters are present.
-
-**Battery Storage.** Where a battery storage system is installed alongside a solar PV array, its capacity in kWh must now be recorded. The RdSAP 10 calculation models the storage capacity to assess the proportion of generated solar energy that is consumed on-site rather than exported. A property with a 10 kWh battery will achieve a higher modelled self-consumption rate — and therefore a better EPC rating — than an identical property without storage. Battery capacity must be recorded from the system installation documentation or the battery label (which is typically accessible in the property).
-
-**PV Diverters.** A PV diverter (also sold under trade names including Immersun, iBoost, and Solar iBoost) redirects solar energy that would otherwise be exported to the grid into the property's hot water cylinder, effectively using surplus generation for free hot water. The presence of a PV diverter is now a recordable input in RdSAP 10 and affects the calculated contribution of solar to domestic hot water. Check for the diverter unit — typically a small box installed near the consumer unit or the hot water cylinder — and record its presence where found.
-
-### Change 5 — Lighting: Count Bulbs, Not Fittings
-
-The lighting methodology in RdSAP 10 changes from fitting-based counting to bulb-based counting. Under RdSAP 9.94, a ceiling rose with three bulbs was recorded as one light fitting. Under RdSAP 10, it is recorded as three bulbs.
-
-This change reflects the reality that a multi-bulb fitting has a higher installed wattage — and therefore a higher energy demand — than a single-bulb fitting of the same type. The previous methodology understated the energy impact of lighting in properties with multi-bulb fittings and overstated the benefit of LED conversion on a per-fitting basis.
-
-In practice, this change will increase the recorded lighting count considerably in properties with pendant light fittings, chandeliers, track lighting, bathroom vanity strips, and similar multi-bulb configurations. The assessment implication is that thorough lighting survey is now more important — you need to count individual bulbs in every room, not just note the number of fittings. The positive side of this change is that properties where the occupant has replaced all multi-bulb fittings with LED equivalents will now show a more accurate and more favourable calculated lighting energy demand.
-
-### Change 6 — Heat Pump Recommendations
-
-RdSAP 10 updates the recommendation logic for heat pump upgrades on EPCs. Under the previous methodology, heat pump recommendations were suppressed for properties that did not meet minimum insulation thresholds on the grounds that a heat pump in a poorly insulated property would be inefficient and potentially counterproductive for fuel bills.
-
-Under RdSAP 10, the threshold conditions for a heat pump recommendation have been refined. Properties that meet updated insulation and airtightness criteria — reflecting current standards for solid wall and cavity wall insulation, and the improved baseline efficiency of modern heat pumps — may now receive a heat pump recommendation where the previous methodology would not have generated one. This means that more EPCs in the existing housing stock will carry heat pump recommendations. Be prepared for client questions about this. The recommendation reflects the RdSAP 10 modelled improvement potential and does not constitute a full feasibility assessment — explain this clearly.
-
-### Change 7 — Small Hydro and Additional Technologies
-
-RdSAP 10 introduces calculation pathways for small-scale hydroelectric generation. Where a property is served by a small hydro installation generating electricity on-site, the system can now be characterised in the assessment. This is a relatively rare configuration in practice — primarily applicable to rural properties with watercourse access — but assessors working in upland and rural areas should be aware of the new input pathway and the documentation required.
-
-Additionally, RdSAP 10 makes provision for further emerging technologies to be integrated into the calculation framework through future updates. The underlying architecture of the methodology has been designed to accommodate additional generation, storage, and demand-side flexibility technologies as they become prevalent in the housing stock.
+BRE produces Technical Notes so that certain technologies can be recognised in SAP or RdSAP assessments. If you find a technology that might be the subject of one, you must check BRE's list to see whether it is included and whether it applies to RdSAP. If it does, download the note and follow its instructions (convention 9.16; specification section 11.7).
 
 ---
 
-## Section 3: Practical Implications for Your Site Visit
+## Section 2: What is new in RdSAP 10
 
-### What Changes on Every Assessment
+### The specification's own list
 
-The following items must now be added to your standard site visit protocol for every property:
+The Introduction to the specification lists "significant changes compared to RdSAP2012 specification". A scheme technical bulletin calls the outgoing version RdSAP 9.94. The items that most affect site work are these (specification, Introduction):
+- Window measurements are required for all windows, each allocated to a main wall, an extension or an alternative wall.
+- Curtain wall is added as a wall type and window shutters as a feature.
+- Room in roof is revised to take account of all elements, including a continuous main wall.
+- An additional alternative or sheltered wall is added.
+- Mechanical ventilation is treated as in full SAP, with entry from the product database or default values, and an air pressure test result can be used if available.
+- PV diverters, PV batteries and small scale hydro are added.
+- A new age band M is added and all U-value tables are updated.
 
-- Individual measurement of every window opening: width, height, orientation, frame type, glazing type, specification where evidenced
-- Explicit check for PIV unit (loft, ceiling void) — record if present
-- Explicit check for open flues on all combustion appliances and blocked-off fireplaces — count and record all
-- Count of individual light bulbs per room, not fittings
-- Check for battery storage system alongside any solar PV — record capacity in kWh
-- Check for PV diverter unit alongside any solar PV — record presence
+### The conventions added for RdSAP 10
 
-### What Takes Longer
+The revision history shows nine conventions added in version 12: 2.09b, 2.27, 3.11b, 7.03a to 7.03d, 9.07b and 10.01 (conventions v12.2, revision history). Convention 10.01 sits alone under the heading "New items in RdSAP10".
 
-**Window data collection.** For a typical three-bedroom semi-detached house, individual window measurement adds a minimum of 5–10 minutes to the external survey. Properties with many openings of different sizes and types, mixed glazing ages across different elevations, or complex additions and extensions will take longer. Properties with loft dormers, conservatories, or bay windows with multiple panes will require careful counting and measurement. You should not underestimate this change — it is the single largest addition to the physical survey time under RdSAP 10.
+Draught lobby (convention 2.09b). A draught lobby is an arrangement of two doors forming an airlock on the main entrance, heated or unheated. To be included, the enclosed space must:
+- cover the main entrance to the dwelling
+- have a floor area of at least 2 m2
+- allow a person with a pushchair or similar to close the outer door before opening the inner door
+- lead into a further circulation area and not directly into any other room type, although it may also give access to a cloakroom.
 
-**MVHR properties.** For properties with MVHR systems, recording the make, model, and configuration adds survey time and may require accessing the loft or service void to identify and photograph the unit. This will be a minority of properties in the existing stock, but the number is growing.
+Flats reached through an enclosed corridor or stairwell, heated or unheated, should be classified as having a draught lobby.
 
-**Room in Roof properties.** Correctly classifying a Room in Roof as Type 1 or Type 2 and completing the expanded data collection requirements for the relevant type will add time on attic and dormer properties. Ensure your site notes template includes the Type 1/Type 2 checklist.
+Curtain wall (convention 2.27). A curtain wall is an independent outer covering, fitted in or connected to frames, that carries no structural load other than its own weight. Opaque panels are treated as a curtain wall of the relevant age band, and translucent areas are measured and entered as glazing. If documentary evidence is available, the calculated U-value for the whole curtain wall is used.
 
-### Business Implication
+Shutters (convention 3.11b). Shutters are hinged panels that can be closed to cover a window fully. They must be operational on the day of the survey, confirmed by opening them, and a claim that they are insulated needs evidence.
 
-RdSAP 10 assessments take longer than RdSAP 9.94 assessments. This is not a matter of assessor efficiency or speed — it is a function of the increased data collection requirements. Assessors who do not adjust their pricing to account for the additional time will absorb that time as an unpaid cost. Review your pricing now.
+Mechanical ventilation (conventions 7.03a to 7.03d). A scheme technical bulletin notes that there were previously no conventions on ventilation systems. The new ones say:
+- Mechanical ventilation systems use continually running fans and can be input-only, extract-only or balanced. Where make and model are available the system is entered from the product database. Otherwise the defaults are used (convention 7.03a).
+- If vents, excluding air bricks, are present and mechanical ventilation cannot be confirmed, the number of vents is entered as passive stack (convention 7.03a).
+- For a balanced whole house or centralised system chosen from the database, the number of wet rooms is set. Wet rooms are kitchens, utility rooms, bathrooms, shower rooms and rooms with one or more flush toilets or urinals. Bedrooms with hand basins are not included (convention 7.03b).
+- For systems chosen from the database, duct type is recorded for decentralised systems and duct insulation for balanced whole house systems (conventions 7.03c and 7.03d).
 
-Update your site notes template to capture all new data fields before your next assessment. An updated site notes sheet is not optional — working from memory or adding fields by hand introduces the risk of missing data, which either requires a return visit or forces you to use default values where you had the actual measurement. Neither outcome is acceptable.
+Intermittent extract fans in kitchens and bathrooms are not a mechanical ventilation system, and if the type of ventilation cannot be identified, natural ventilation is assumed (specification Table 31, item 10-1).
 
-Update your client communication. When you book an assessment, advise clients that the RdSAP 10 methodology requires individual window measurement and may require access to loft spaces to check ventilation systems and confirm Room in Roof configurations. Setting expectations in advance avoids friction on the day.
+Small-scale hydro (convention 9.07b). Hydro is recorded as a simple yes or no, with basic documentary evidence confirming its presence, and no usage information is required. The specification's data table has an item for kWh supplied per year by hydro (specification Table 31, item 11-7). The two do not agree, so follow the convention.
+
+Air tightness (convention 10.01). The default applies unless specific documentary evidence is available. The figure is the measured air permeability from a blower door test at 50 Pa or a low-pressure pulse test at 4 Pa. The evidence is a pressure test certificate produced by a person with suitable expertise and experience, which can be shown by membership of a recognised air tightness Competent Persons Scheme approved by Government. Results from background ventilation tests are not included.
+
+### Other changes a scheme bulletin points out
+
+A scheme technical bulletin also draws attention to the following. Each can be found in the conventions or the specification:
+- Two alternative walls can be entered per building part, but only one sheltered wall (convention 2.13).
+- Basement wall is a wall type. Basement walls are those adjacent to earth and are included only when the basement is heated (convention 3.17; specification Table 31, item 4-2).
+- The data set records whether the dwelling is export-capable and whether smart meters are present. Smart meter presence does not affect the calculation (specification Table 31, items 1-16 to 1-18).
+- The bulletin counts five new addenda, numbered 14 to 18 (specification Table 30).
+
+---
+
+## Section 3: Windows measured individually
+
+### What counts as a window
+
+A window is an opening in an external wall or roof, fitted with glass or similar material, usually in a frame, that admits light. A door may be treated as a window if it is highly glazed, for example a patio door, a fully glazed door or a French door. If in doubt, measure it and treat it as a window if the glazing area is 60% or more (convention 2.14).
+
+### What to measure
+
+Assessors are required to measure and enter the width and height of all relevant windows, including the visible frame, to 0.01 m or better (conventions 2.15 and 2.02). Width is the overall width between the internal reveals, and height the overall height between the inner sill and the top reveal.
+
+Relevant windows are all windows, highly glazed doors and roof lights in the heat loss envelope. That includes openings between the dwelling and a separated conservatory, an unheated corridor, or a porch that has been excluded. It does not include windows in a non-separated conservatory (convention 2.15). A scheme technical bulletin confirms that the earlier option of recording glazing as typical, more than typical or less than typical has gone.
+
+The convention gives rules for arched, circular, oval and semi-circular windows. For other unusual shapes, calculate the area by the most appropriate means, enter the area as the width and enter the height as 1 (convention 2.15).
+
+### What else is recorded for each window
+
+Alongside the dimensions, the specification asks for the type of glazing, the glazing age, the frame type, the glazing gap, the location within the construction and the orientation (specification section 3.7.1). Each window is assigned to the main wall or an alternative wall of its building part. Orientation is one of the eight compass points or horizontal. Draught proofing and shutters are recorded for each window (specification Table 31, items 6-3 and 6-8 to 6-11).
+
+### Glazing age and glazing gap
+
+Choose unknown if there is no evidence of the date. Multiple glazed units can be dated by any of the following (convention 3.12a):
+- The manufacturing date on the spacer bar, or possibly on the frame.
+- Documentary evidence of the installation date, such as a FENSA, CERTASS or Building Control certificate or a manufacturer's guarantee.
+- The property build date, if it is after the trigger dates, which in England and Wales are post 2002 and post 2022.
+
+Failing those, a thermal spacer bar indicates glazing from after 2002 in England and Wales, 2003 in Scotland or 2006 in Northern Ireland (convention 3.12a).
+
+The glazing gap is the width of the spacer bar between the two panes. For windows with non-metal frames that are from before 2002 (2003 in Scotland, 2006 in Northern Ireland) or of unknown period, identify the gap to the nearest of 6, 12 or 16 mm. If it cannot easily be identified, select 6 for a narrow gap or 16 for a wide gap (convention 3.12b).
+
+### Secondary glazing and known U-values
+
+Secondary glazing over single glazing is recorded as secondary glazing. Over Age 1 double glazing it is recorded as Age 2 double glazing, and over Age 2 as Age 3. In England and Wales, Age 1 is before 2002, Age 2 is 2002 to 2021 and Age 3 is 2022 onwards. Scotland and Northern Ireland have their own dates (convention 2.16).
+
+Default window U-values and g-values can be overwritten only with documentary evidence, either a Window Energy Rating certificate as defined by BFRC or manufacturer's data. The U-value is for the whole window, not the centre pane (convention 3.10).
+
+---
+
+## Section 4: Roof rooms, Type 1 and Type 2
+
+### Is it a roof room at all?
+
+A roof room is included when it is reached by a permanent fixed staircase that you can walk down facing forwards (convention 2.06).
+
+Whether the space is a roof room or a separate storey turns on the common wall, which the convention defines as a vertical continuation of the external wall of the storey below. For a roof room to be classed as such, there must be no common wall, or the height of the common wall must be equal to or less than 1.8 m for 50% or more of the common wall, excluding gable ends and party walls. Otherwise it is a separate storey (convention 2.06). The height is measured from the floor to the point where the roof plane meets the head of the common wall (conventions v12.2, Appendix 2).
+
+There is a small inconsistency at exactly 1.8 m. Convention 2.06 says "equal to or less than 1.8 m". Appendix 2 says "less than 1.8 m" for a roof room and "1.8 m or more" for a separate storey, and the specification says "less than 1.8 m" and "at least 1.8 m" (conventions v12.2, Appendix 2; specification section 1.15.2). One figure in the specification is labelled "1.8 m or less" (specification section 3.9.2). If you measure a common wall at exactly 1.8 m, ask your accreditation scheme.
+
+### The two types
+
+The conventions define the two types by where the room sits in relation to the roof and the common wall (convention 2.06 and Appendix 2):
+- Type 1 is a roof room fully within the roof. Either there are no common walls, or the stud walls are built inside the common walls so that the common walls are left outside the boundary of the accessible floor area. Type 1 is always treated as a roof room regardless of the height of the stud walls, and the 1.8 m rule does not apply to it.
+- Type 2 is a roof room not fully within the roof, where an accessible common wall is part of the room. This is the type the 1.8 m rule tests.
+
+Neither definition refers to whether the space is a loft conversion or part of the original house. A roof room takes the same age band as the building part unless evidence proves otherwise (convention 3.13).
+
+### Simplified and detailed assessment
+
+There are two assessment methods, and both are available for both types (convention 2.06). Under the simplified method the extra measurements are:
+- Type 1: the length of the gable or gables.
+- Type 2: the length and the height, to the highest point, of the gable or gables and of the common wall or walls.
+
+The detailed method must be used if any element of the roof room, whether ceiling, slope, stud wall, gable or common wall, has known insulation levels, and then all elements must be measured (convention 2.06). The specification words the trigger differently, referring to elements with differing levels of insulation where each U-value is known (specification section 3.10). Follow the convention.
+
+### Gables and dormers
+
+For each roof room the gable type is recorded as exposed, party wall (adjacent to heated space), sheltered wall (adjacent to unheated space) or connected (adjacent to another building part of the same dwelling). There is no explicit allowance for dormer windows except that they are included in the floor area of the roof room. The detailed method has its own rule for dormers (convention 2.06).
+
+---
+
+## Section 5: PV, batteries, diverters and lighting
+
+### Photovoltaics
+
+When PV is present, the peak power in kWp is required. If the kWp cannot be found, the declared net capacity on the MCS certificate may be used instead. If neither can be established, the PV is not allocated, with one exception: where it is connected to a meter serving a single dwelling, record the percentage of the total roof area occupied by panels (convention 9.05).
+
+Other points from convention 9.05:
+- Panels on different planes of the roof are entered as separate systems. If only a total figure is available, apportion it by the relative area of each.
+- Connection to the dwelling's meter must be verified by a PV generation meter or documentary evidence. PV electricity is included in the assessment only if the dwelling has a PV generation meter serving it.
+- Where it cannot be determined that the PV feeds a meter serving the dwelling, the panels are still allocated to the dwelling but are not specified as connected.
+
+### Batteries
+
+For PV batteries the convention requires photographic or written evidence of the manufacturer and model, and of the usable capacity in kWh. If that cannot be obtained, use a default of 5 kWh per battery (convention 9.05).
+
+From v12.2, an individual battery with a capacity above 5 is entered as two separate batteries, the first at 5 and the excess as the second. The new paragraph writes the unit as kW where the sentence before it uses kWh (convention 9.05). The specification's example fits the rule: a known capacity of 10 kWh is specified as two batteries (specification Table 31, item 11-4).
+
+The sources do not agree on how many batteries can be entered. The specification's data table says one to four. A scheme technical bulletin says a maximum of three. The conventions give no number. Check with your scheme.
+
+The same bulletin says batteries are recorded only when connected to PV. For a battery with no PV, addendum 16 states that the assessment does not include PV-independent battery storage (specification Table 30).
+
+### Diverters
+
+For PV diverters, written evidence of the manufacturer and model of the diverter system is required. If it cannot be obtained, the diverter cannot be entered (convention 9.05). A scheme technical bulletin tells its members that a diverter is recorded only where there is PV and no battery. The conventions do not say that, so check with your own scheme.
+
+### Lighting
+
+Consider all lamps, meaning bulbs or tubes, in permanent fittings within the dwelling, including fixed under-cupboard kitchen lights. Count the number of lamps, not the number of fittings (convention 7.01). A scheme technical bulletin describes this as the reverse of the earlier practice of recording fittings. The lamps are recorded in categories (convention 7.01):
+- Only LED lamps are recorded as LED.
+- Fluorescent tubes and compact fluorescent lamps are recorded as CFL.
+- Tungsten and halogen lamps are recorded as incandescent, which is not low energy.
+- LED strips count as one lamp per running metre, rounded to the nearest metre.
+- An individual lamp that is missing, or whose type cannot be identified, is recorded as CFL.
+- If more than 50% of the lamps that are not incandescent cannot be identified or are not present, record all non-incandescent lamps as LEL.
+
+---
+
+## Section 6: What v12.2 changed
+
+### The lists in the revision history
+
+The revision history for version 12.2 reads (conventions v12.2, revision history):
+- Amended: 1.02b, 1.04a, 2.06, 2.13, 2.16, 2.17, 4.01a, 4.03, 4.05a, 4.09, 4.20, 9.01, 9.02, 9.05, 9.08 and 10.01.
+- Added: 2.28, 4.05b, 4.22 and 7.03e.
+- Deleted: Appendix 4.
+
+### The added conventions
+
+Defining a conservatory (convention 2.28). A conservatory is a building part where 50% or more of the external heat loss walls are glazed and 75% or more of the roof is glazed. Where the roof no longer meets that definition, because it has been replaced or a false ceiling has been added, the conservatory must be recorded as an extension. The convention says to record the insulation present if there is visual or documentary evidence, to enter a roof of less than 10 degrees pitch as flat with insulation unknown, and to enter a roof of more than 10 degrees as pitched, no access, with insulation as none. For a roof of more than 10 degrees with access to the loft void, convention 3.04 applies.
+
+Heat as a service (convention 4.05b). A Heat-as-a-Service system is treated as community heating where the service provider owns or operates the heat generator, whether the generator is inside or outside the dwelling. Specific documentary evidence must be provided to confirm the installation. Where the service is powered by electricity, community heat pump is used. Otherwise community boiler is used.
+
+Electric combi boilers (convention 4.22). Space heating from an electric combi boiler is recorded manually as a standard boiler, direct acting, with electricity as the fuel. For the water heating, convention 6.08 applies.
+
+Two mechanical ventilation systems (convention 7.03e). If the two systems are identical, choose that system and input half the number of wet rooms. If they are different, input the one that can be selected from the product database. If both are in the database, or both are default systems, the order of precedence is: mechanical ventilation with heat recovery, mechanical ventilation, mechanical extract ventilation, positive input from outside, positive input from the loft. Here the conventions do give a reason: the notes say that halving the wet rooms reflects two systems in effect halving the load.
+
+### Changes we can see in the amended conventions
+
+Comparing the text of v12.1 with v12.2 shows the following. The red marking in the published document is the authority.
+- 1.02b: a bungalow now has all habitable accommodation "at the ground floor only". The earlier wording was "on one floor only".
+- 2.06: a connected gable is treated as exposed if less than 25% of its area is connected. A stud wall with no observed insulation is recorded as insulated to the same level and thickness as the rafters where visual or physical evidence shows the rafter insulation continues to the eaves without a significant gap. Appendix 4, the table of roof room U-values, is deleted.
+- 2.13: a construction of very poor thermal quality that has to be included, such as an uninsulated timber panel below windows, is treated as a curtain wall.
+- 4.03: the convention on systems that are incomplete or not working now covers hot water as well as heating.
+- 4.20: the rule for a storage heater in a non-habitable room now applies where it is the sole source of heat. The earlier wording was the primary source.
+- 9.01: a decommissioned chimney that is sealed completely does not need to be counted. One with a ventilation area of less than 30,000 mm2 is treated as a blocked chimney, and one with 30,000 mm2 or more as an open chimney. The earlier edition listed temporarily blocked chimneys as open. That item has gone and v12.2 does not say how to treat them, so ask your scheme.
+- 9.05: the rule for a battery above 5, described in Section 5.
+- 10.01: if material changes have been made to the property since the original air tightness test, the certificate becomes invalid for RdSAP entry.
+
+Conventions 1.04a, 2.16, 2.17, 4.09, 9.02 and 9.08 also have visible changes, and 4.05 is renumbered 4.05a. Convention 9.02 is covered in Section 7. Convention 4.01a is listed as amended, but in the text we compared its wording is the same in both editions, so check the red marking in the published v12.2.
+
+---
+
+## Section 7: Evidence
+
+### Documentary evidence
+
+Convention 9.02 has separate wording for Scotland. For England, Wales and Northern Ireland, acceptable documentary evidence includes, but is not limited to, official correspondence from the applicable Registered Social Landlord, certificates, warranties, guarantees, or any documents verifying that work has been carried out. You must be confident, and able to demonstrate, that the documentation relates to the actual property, and that there is no physical or other documentary evidence to the contrary (convention 9.02).
+
+Evidence of intent to install does not qualify on its own. The convention then gives two cases (convention 9.02):
+- If both an intention to upgrade, for example in planning documents, and Building Control oversight of the work can be demonstrated, the element can be treated as upgraded as the planning documents indicate.
+- If only one of those can be demonstrated, but you can also see that an upgrade has occurred, the element can be treated as upgraded using the minimum selectable upgrade of the relevant type.
+
+For the second case v12.2 changes the wording in brackets. It now refers to unknown insulation thickness where you have no evidence of the thickness. The v12.1 wording was the lowest selectable thickness better than the as-built assumption. The footnote setting 100 mm as the lowest selectable thickness for roof insulation between joists is still there (convention 9.02). If unsure how the two fit together for a loft, ask your scheme.
+
+### Overwriting a default U-value
+
+The U-values of existing walls, roofs and floors must be the RdSAP defaults. They must not be overwritten without specific documentary evidence for the property being assessed. That evidence must be either relevant building control approval that correctly defines the construction and states the calculated U-value, or a U-value calculation produced or verified by a person with suitable expertise and experience (convention 3.08).
+
+### Evidence written into individual conventions
+
+Many conventions carry their own evidence requirement. For example:
+- Where access is safe and practicable, loft insulation is measured, with photographic evidence of the measured thickness (convention 3.04).
+- Recommendations are removed only with documentary evidence that the specific recommendation is not appropriate, and the removal must be recorded in site notes (convention 8.01).
 
 ---
 
 ## Key Takeaways
-
-- RdSAP 10 is the current and only valid methodology for EPC lodgements from June 2025. There is no legacy path for RdSAP 9.94.
-- Every window must now be individually measured and recorded — orientation, frame type, glazing type, and size. Representative sampling is no longer permitted.
-- PIV, MVHR, and open flues are now formal recordable inputs with defined effects on calculated energy performance. Check for all three on every assessment.
-- Room in Roof must be classified as Type 1 (fully within roof void, typically a loft conversion) or Type 2 (built into original roof structure). Each has distinct data requirements.
-- Battery storage and PV diverters now have calculation pathways in RdSAP 10 and must be recorded where present alongside solar PV.
-- Count individual bulbs, not fittings. A fitting with four bulbs counts as four.
-- Airtightness test results from registered CPS-lodged tests can now be used directly in the calculation, replacing the default table value.
-- RdSAP 10 assessments take longer. Review your pricing and update your site notes template before your next assessment.
+- Where a convention conflicts with the specification, the convention takes precedence.
+- Version 12.2 is marked applicable from 6 August 2026. The conventions do not say whether that means the inspection date or the lodgement date, so check your scheme's bulletin.
+- Every relevant window is measured, including the visible frame. Windows in a non-separated conservatory are not relevant windows.
+- A Type 1 roof room is fully within the roof. A Type 2 roof room has an accessible common wall as part of the room. Neither definition depends on whether the space is a conversion.
+- The 1.8 m rule does not apply to Type 1. If any element of a roof room has known insulation levels, the detailed method is used.
+- Batteries default to 5 kWh each without evidence of capacity. A diverter needs written evidence of manufacturer and model.
+- Lamps are counted, not fittings. A missing or unidentifiable lamp is recorded as CFL.
+- Version 12.2 adds conventions 2.28, 4.05b, 4.22 and 7.03e, amends sixteen others and deletes Appendix 4.
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** Under RdSAP 10, you are assessing a semi-detached house with 14 windows of various sizes, orientations, and ages. How many individual window entries must you record in your assessment software?
+**Q1.** A convention and the RdSAP10 Specification give different instructions for the same item. Which do you follow?
 
-A) As many as needed to cover each distinct glazing type — typically 3 to 5 representative entries
-B) One entry per elevation — so 4 entries for a standard semi-detached
-C) 14 — one for each individual window opening
-D) The number is discretionary — the assessor uses professional judgement to determine representative samples
+A) The specification, because it is the approved methodology
+B) The convention, because the convention takes precedence
+C) Whichever gives the lower rating
+D) Whichever was published first
 
-**Correct answer: C**
-
-*RdSAP 10 requires individual measurement and recording of every window opening. Representative sampling — accepted under RdSAP 9.94 — is no longer permitted. Each opening must have its own entry covering width, height, orientation, frame type, and glazing type.*
+**Correct answer: B.** The opening page of the Conventions (v12.2) says that where any convention is in conflict with the published SAP specification, the convention takes precedence.
 
 ---
 
-**Q2.** A 1930s semi-detached house has a dormer loft conversion added in 2018. The converted space has stud walls on all sides and a ceiling that follows the roof slope throughout, with no flat ceiling sections. What Room in Roof type is this under RdSAP 10?
+**Q2.** Which openings are "relevant windows" that must be measured under convention 2.15?
 
-A) Type 1 — the conversion was built wholly within the roof void after the original construction, with stud walls on all sides and a roof-slope ceiling
-B) Type 2 — dormer conversions are always Type 2 regardless of construction method
-C) Neither type — dormers are recorded as standard upper-floor rooms in RdSAP 10
-D) Type 2 — the 1930s host structure means the space is within the original roof
+A) One representative window on each elevation
+B) Only windows in habitable rooms
+C) All windows, including those in a non-separated conservatory
+D) All windows, highly glazed doors and roof lights in the heat loss envelope, but not windows in a non-separated conservatory
 
-**Correct answer: A**
-
-*Type 1 applies to loft conversions built wholly within the roof void after original construction, with stud walls on all sides and a ceiling that follows the roof slope. This dormer meets all three criteria. Type 2 applies where the room is accommodated within the original roof structure, with part of the original construction retained.*
+**Correct answer: D.** Convention 2.15 says relevant windows are all windows, highly glazed doors and roof lights in the heat loss envelope, and that windows in a non-separated conservatory are not included.
 
 ---
 
-**Q3.** A property has a 4 kWp solar PV system, a 9.6 kWh battery storage unit, and a PV diverter feeding the hot water cylinder. What three items must be recorded as distinct RdSAP 10 inputs?
+**Q3.** According to convention 2.06 and Appendix 2, what makes a roof room Type 2?
 
-A) Solar PV capacity, roof orientation, and MCS certificate reference only — battery and diverter are not RdSAP 10 inputs
-B) Battery capacity only — the PV and diverter are already captured under the existing solar PV input
-C) Solar PV is the only input — battery and diverter data is entered on a supplementary form, not in RdSAP 10 directly
-D) Solar PV capacity and specification, battery storage capacity in kWh, and PV diverter presence — all three have distinct calculation pathways in RdSAP 10
+A) It is not fully within the roof, and an accessible common wall is part of the room
+B) It was created by converting an existing loft
+C) It has one or more dormer windows
+D) Its stud walls are less than 1.8 m high
 
-**Correct answer: D**
-
-*RdSAP 10 introduces distinct input pathways for battery storage (capacity in kWh, enabling modelling of on-site self-consumption) and PV diverters (presence, enabling modelling of solar contribution to domestic hot water) alongside the existing solar PV inputs. All three affect the calculated energy performance and must be recorded separately.*
+**Correct answer: A.** Convention 2.06 defines Type 2 as a Room in Roof not fully within the roof where an accessible common wall is part of the room. Conversions, dormers and stud wall height are not part of that definition.
 
 ---
 
-**Q4.** Under the RdSAP 10 lighting methodology, a kitchen has two ceiling fittings: one with a single LED bulb and one with four LED bulbs arranged in a bar. How many bulbs does the assessor record for the kitchen?
+**Q4.** A PV battery is present but no evidence of its usable capacity can be obtained. What does convention 9.05 say to do?
 
-A) 2 — one per fitting, as fitting count is what RdSAP 10 uses
-B) 5 — one bulb for the single fitting plus four for the bar fitting
-C) 4 — only multi-bulb fittings are counted under the new methodology
-D) 1 — the assessor records fittings not bulbs, so both fittings combine to one entry
+A) Leave the battery out of the assessment
+B) Enter the capacity the occupier tells you
+C) Use a default of 5 kWh per battery
+D) Use a default of 10 kWh per battery
 
-**Correct answer: B**
-
-*RdSAP 10 changes the lighting methodology from fitting-based counting to bulb-based counting. The single fitting contributes 1 bulb; the bar fitting contributes 4 bulbs. Total for the kitchen: 5 bulbs. This change captures the higher installed wattage of multi-bulb fittings and makes LED conversion savings more accurately reflected in the calculated energy demand.*
+**Correct answer: C.** Convention 9.05 says that if evidence of manufacturer, model and usable capacity cannot be obtained, a default of 5 kWh per battery is used.
 
 ---
 
-**Q5.** An airtightness test was carried out on a property in 2023 and lodged with a registered Competent Person Scheme under ATTMA TS1. The test result is 4.2 m³/h·m² at 50 Pa. What should the assessor do with this result under RdSAP 10?
+**Q5.** A permanent ceiling fitting holds three lamps. Two are LED and the third is missing. How is this recorded under convention 7.01?
 
-A) Ignore it — RdSAP 10 does not accept airtightness test data; the age-band default must always be used
-B) Note it in site records but use the default table value, as test results can only be used in full SAP not RdSAP
-C) Enter the test result of 4.2 m³/h·m² directly as the air permeability input, replacing the default table value
-D) Average the test result with the age-band default to produce a blended value
+A) One fitting, recorded as LED
+B) Three lamps: two LED and one CFL
+C) Two lamps, both LED
+D) Three lamps: two LED and one incandescent
 
-**Correct answer: C**
-
-*RdSAP 10 introduces a direct input pathway for valid airtightness test results from tests conducted under ATTMA TS1 or equivalent and lodged to a recognised CPS. The test result of 4.2 m³/h·m² replaces the default table value entirely. This can meaningfully improve the calculated energy performance for properties that have undergone air-sealing work.*
+**Correct answer: B.** Convention 7.01 says the number of lamps is counted, not the number of fittings, and that an individual lamp which is missing or cannot be identified is recorded as CFL.
 
 ---
 
 ## Further Reading
-
-**BRE / DESNZ.** *RdSAP 10 Technical Manual.* BRE, June 2025. The primary reference document. All data collection requirements, default values, and calculation conventions are defined here.
-
-**Elmhurst Energy.** *Auditor Technical Bulletin 2025-07: RdSAP 10 Audit Standards.* Elmhurst, 2025. Practical guidance on the tolerances and evidence standards applied at audit for RdSAP 10 assessments.
-
-**ATTMA.** *Technical Standard L1: Measuring Air Permeability of Building Envelopes.* Air Tightness Testing and Measurement Association. The standard underpinning the airtightness test certificates that can now be used directly in RdSAP 10.
-
-**CIBSE.** *AM10: Natural Ventilation in Non-domestic Buildings.* CIBSE. Background reading on ventilation principles, useful context for understanding the significance of the PIV, MVHR, and open flue changes in RdSAP 10.
-
-**TrustMark.** *Framework Operating Requirements — Data Standards.* TrustMark, 2025. The data standards that govern how RdSAP 10 assessment data flows into PAS 2035 retrofit projects via TrustMark lodgement.
+- **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read the opening page, conventions 2.06, 2.15, 7.01, 9.02 and 9.05, Appendix 2 and the revision history.
+- **RdSAP10 Specification.** BRE, 9 June 2025. Read the Introduction for the list of significant changes and Table 31 for every data item collected.
+- **BRE Technical Notes.** BRE, https://www.bregroup.com/sap/bre-technical-notes/ The list that convention 9.16 tells you to check.
 
 ---
 
-*© Meridian CPD 2026. All rights reserved. Unauthorised reproduction or redistribution is strictly prohibited.*
-*This course material is licensed to individual subscribers only. Certificate of completion issued on request.*
+*© Meridian CPD 2026. All rights reserved. Unauthorised reproduction prohibited.*
+*This course material is licensed to individual subscribers only.*
