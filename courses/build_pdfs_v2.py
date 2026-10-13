@@ -84,53 +84,145 @@ def draw_mark(canvas, x, y, r, line=WHITE, arc=None, weight=1.0):
     canvas.restoreState()
 
 
+def _soft_glow(canvas, x, y, rx, ry, colour, peak=0.22, steps=18):
+    """A soft-edged patch of light: stacked translucent ellipses, brightest at the centre."""
+    canvas.saveState()
+    canvas.setFillColor(colour)
+    canvas.setFillAlpha(peak / steps * 1.6)
+    for i in range(steps):
+        k = 1 - i / steps
+        canvas.ellipse(x - rx * k, y - ry * k, x + rx * k, y + ry * k, fill=1, stroke=0)
+    canvas.restoreState()
+
+
+def _glow_arc(canvas, box, start, extent, colour, core=2.4):
+    """An arc with a halo, so it reads as lit rather than printed."""
+    canvas.saveState()
+    canvas.setStrokeColor(colour)
+    canvas.setLineCap(1)
+    for width, alpha in ((core * 6.0, 0.05), (core * 3.6, 0.09), (core * 2.0, 0.18)):
+        canvas.setLineWidth(width)
+        canvas.setStrokeAlpha(alpha)
+        canvas.arc(*box, start, extent)
+    canvas.setLineWidth(core)
+    canvas.setStrokeAlpha(1)
+    canvas.arc(*box, start, extent)
+    canvas.setStrokeColor(WHITE)                 # a thin bright core, like a filament
+    canvas.setStrokeAlpha(0.55)
+    canvas.setLineWidth(core * 0.28)
+    canvas.arc(*box, start, extent)
+    canvas.restoreState()
+
+
 def draw_meridian_field(canvas, x0, y0, w, h, course_id: str):
-    """Cover artwork: a large globe of meridians, clipped to the box (x0, y0, w, h)."""
+    """Cover artwork: the mark as a glass globe of meridians, lit from the upper left,
+    clipped to the box (x0, y0, w, h)."""
     canvas.saveState()
     clip = canvas.beginPath()
     clip.rect(x0, y0, w, h)
     canvas.clipPath(clip, stroke=0, fill=0)
 
-    # A slightly lifted panel so the artwork reads as a band, not a void.
-    canvas.setFillColor(colors.HexColor("#122A14"))
-    canvas.rect(x0, y0, w, h, fill=1, stroke=0)
+    # Backdrop: light falls from the upper left and dies away to the lower right.
+    canvas.linearGradient(x0, y0 + h, x0 + w * 0.9, y0,
+                          (colors.HexColor("#1C3F21"), colors.HexColor("#102612"), colors.HexColor("#081409")),
+                          (0, 0.55, 1), extend=True)
 
     cx, cy, R = x0 + w * 0.80, y0 + h * 0.47, h * 0.62
-    fractions = [0.16, 0.30, 0.44, 0.58, 0.72, 0.86, 0.96]
+    lx, ly = cx - R * 0.42, cy + R * 0.46                 # where the light strikes the globe
 
+    # The globe's body: a sphere shaded from its lit point to its shadowed rim.
+    canvas.saveState()
+    ball = canvas.beginPath()
+    ball.circle(cx, cy, R)
+    canvas.clipPath(ball, stroke=0, fill=0)
+    canvas.radialGradient(lx, ly, R * 1.55,
+                          (colors.HexColor("#3A7A3F"), colors.HexColor("#1E4A23"),
+                           colors.HexColor("#0F2511"), colors.HexColor("#060F07")),
+                          (0, 0.30, 0.66, 1), extend=True)
+    # A broad band of reflected light across the glass, and a narrower one beside it.
+    canvas.setFillColor(WHITE)
+    for offset, width, alpha in ((-0.30, 0.22, 0.050), (-0.02, 0.07, 0.040)):
+        band = canvas.beginPath()
+        bx = cx + R * offset
+        band.moveTo(bx - R * 1.3, cy - R * 1.1)
+        band.lineTo(bx - R * 1.3 + R * width, cy - R * 1.1)
+        band.lineTo(bx + R * 0.9 + R * width, cy + R * 1.1)
+        band.lineTo(bx + R * 0.9, cy + R * 1.1)
+        band.close()
+        canvas.setFillAlpha(alpha)
+        canvas.drawPath(band, fill=1, stroke=0)
+    # Shadow gathering on the side away from the light.
+    _soft_glow(canvas, cx + R * 0.55, cy - R * 0.60, R * 0.95, R * 0.95, colors.HexColor("#020703"), peak=0.50)
+    canvas.restoreState()
+
+    # Meridians and parallels, etched on the surface.
+    fractions = [0.16, 0.30, 0.44, 0.58, 0.72, 0.86, 0.96]
     canvas.setStrokeColor(ACCENT)
     canvas.setLineWidth(0.7)
-    canvas.setStrokeAlpha(0.17)
-    for f in fractions:                                   # meridians (both halves)
+    canvas.setStrokeAlpha(0.20)
+    for f in fractions:
         canvas.ellipse(cx - R * f, cy - R, cx + R * f, cy + R, fill=0, stroke=1)
-    for deg in (-60, -40, -20, 20, 40, 60):               # parallels
+    for deg in (-60, -40, -20, 20, 40, 60):
         yy = cy + R * math.sin(math.radians(deg))
         half = R * math.cos(math.radians(deg))
         canvas.line(cx - half, yy, cx + half, yy)
+    canvas.setStrokeAlpha(0.32)
+    canvas.line(cx - R, cy, cx + R, cy)
+
+    # The specular highlight: the light source mirrored in the glass.
+    _soft_glow(canvas, lx, ly, R * 0.50, R * 0.36, WHITE, peak=0.16)
+    _soft_glow(canvas, lx - R * 0.04, ly + R * 0.05, R * 0.20, R * 0.13, WHITE, peak=0.22)
+
+    # Rim: bright where the light catches the edge, faint elsewhere.
+    canvas.setStrokeColor(ACCENT)
+    canvas.setLineWidth(1.0)
     canvas.setStrokeAlpha(0.30)
-    canvas.line(cx - R, cy, cx + R, cy)                   # equator
-    canvas.setLineWidth(1.1)
-    canvas.setStrokeAlpha(0.45)
-    canvas.circle(cx, cy, R, fill=0, stroke=1)            # the globe's edge
+    canvas.circle(cx, cy, R, fill=0, stroke=1)
+    rim = (cx - R, cy - R, cx + R, cy + R)
+    canvas.setStrokeColor(WHITE)
+    canvas.setLineCap(1)
+    for width, alpha in ((7.0, 0.05), (3.6, 0.10), (1.4, 0.55)):
+        canvas.setLineWidth(width)
+        canvas.setStrokeAlpha(alpha)
+        canvas.arc(*rim, 112, 62)
 
     # The prime meridian, as in the mark.
     canvas.setStrokeColor(WHITE)
-    canvas.setStrokeAlpha(0.55)
-    canvas.setLineWidth(1.4)
+    canvas.setStrokeAlpha(0.50)
+    canvas.setLineWidth(1.3)
     canvas.line(cx, cy - R, cx, cy + R)
 
-    # One meridian picked out, chosen by the course number.
+    # One meridian picked out and lit, chosen by the course number.
     digits = re.sub(r"\D", "", course_id) or "0"
     f = fractions[int(digits) % (len(fractions) - 1)]
-    canvas.setStrokeColor(ACCENT)
-    canvas.setStrokeAlpha(1)
-    canvas.setLineWidth(2.4)
-    canvas.arc(cx - R * f, cy - R, cx + R * f, cy + R, 90, 180)       # left-hand half
+    _glow_arc(canvas, (cx - R * f, cy - R, cx + R * f, cy + R), 90, 180, ACCENT)
+    node_x = cx - R * f
+    _soft_glow(canvas, node_x, cy, 15, 15, ACCENT, peak=0.45, steps=12)
     canvas.setFillColor(ACCENT)
-    canvas.circle(cx - R * f, cy, 4.2, fill=1, stroke=0)              # where it crosses the equator
+    canvas.circle(node_x, cy, 4.4, fill=1, stroke=0)
     canvas.setFillColor(WHITE)
     canvas.setFillAlpha(0.9)
-    canvas.circle(cx, cy, 3.2, fill=1, stroke=0)
+    canvas.circle(node_x - 1.2, cy + 1.3, 1.3, fill=1, stroke=0)      # glint on the node
+    canvas.circle(cx, cy, 3.0, fill=1, stroke=0)
+    canvas.restoreState()
+
+
+def draw_metal_bar(canvas, x, y, w, h):
+    """The accent bar as polished metal: a highlight travelling along it, a darker lower edge."""
+    canvas.saveState()
+    clip = canvas.beginPath()
+    clip.rect(x, y, w, h)
+    canvas.clipPath(clip, stroke=0, fill=0)
+    canvas.linearGradient(x, y, x + w, y,
+                          (colors.HexColor("#B9E000"), ACCENT, colors.HexColor("#F6FFB8"),
+                           ACCENT, colors.HexColor("#A9CE00")),
+                          (0, 0.16, 0.30, 0.46, 1), extend=True)
+    canvas.setFillColor(WHITE)
+    canvas.setFillAlpha(0.35)
+    canvas.rect(x, y + h * 0.72, w, h * 0.28, fill=1, stroke=0)      # top edge catching the light
+    canvas.setFillColor(colors.HexColor("#3D4D00"))
+    canvas.setFillAlpha(0.28)
+    canvas.rect(x, y, w, h * 0.22, fill=1, stroke=0)                  # lower edge in shade
     canvas.restoreState()
 
 
@@ -140,9 +232,10 @@ def draw_cover(canvas, doc, meta: dict):
     W, H = A4
     canvas.saveState()
 
-    # Dark green background
-    canvas.setFillColor(DARK)
-    canvas.rect(0, 0, W, H, fill=1, stroke=0)
+    # Dark green background, a little lighter towards the upper left where the light is.
+    canvas.linearGradient(0, H * 0.45, W, 0,
+                          (colors.HexColor("#14301A"), DARK, colors.HexColor("#081409")),
+                          (0, 0.55, 1), extend=True)
 
     # Brand artwork from the top of the page down to the accent bar (no photograph).
     art_h = H * 0.58
@@ -159,8 +252,7 @@ def draw_cover(canvas, doc, meta: dict):
 
     # Accent bar (horizontal stripe)
     bar_y = H * 0.42
-    canvas.setFillColor(ACCENT)
-    canvas.rect(0, bar_y - 3*mm, W, 3*mm, fill=1, stroke=0)
+    draw_metal_bar(canvas, 0, bar_y - 3*mm, W, 3*mm)
 
     # Strand badge (pill) — positioned below accent bar with breathing room
     strand_col = meta['strand_colour']
@@ -207,8 +299,16 @@ def draw_cover(canvas, doc, meta: dict):
 
     # Solid slightly-lighter dark background using setFillAlpha
     canvas.saveState()
-    canvas.setFillColor(colors.HexColor("#1a3320"))
-    canvas.rect(22*mm, box_y, W - 44*mm, box_h, fill=1, stroke=0)
+    panel = canvas.beginPath()
+    panel.roundRect(22*mm, box_y, W - 44*mm, box_h, 3)
+    canvas.clipPath(panel, stroke=0, fill=0)
+    canvas.linearGradient(22*mm, box_y + box_h, 22*mm, box_y,
+                          (colors.HexColor("#27492D"), colors.HexColor("#1a3320"), colors.HexColor("#142817")),
+                          (0, 0.5, 1), extend=True)
+    canvas.setStrokeColor(WHITE)                       # a hairline of light along the top edge
+    canvas.setStrokeAlpha(0.22)
+    canvas.setLineWidth(1.2)
+    canvas.line(22*mm, box_y + box_h, W - 22*mm, box_y + box_h)
     canvas.restoreState()
 
     items = [
