@@ -95,7 +95,7 @@ COURSES = {
     "MER-ALL-008": {"course_id": "MER-ALL-008", "title": "Renters' Rights Act 2025: Impact on EPCs and Energy Assessors", "cpd_hours": 1.0, "published": "2026-07-01"},
     "MER-ALL-009": {"course_id": "MER-ALL-009", "title": "Heat Loss Assessments: The DEA's Role in Heat Pump Readiness", "cpd_hours": 1.0, "published": "2026-07-15"},
     "MER-ALL-010": {"course_id": "MER-ALL-010", "title": "Damp and Mould Assessments: Scotland's New Framework and UK Implications", "cpd_hours": 1.0, "published": "2026-08-01"},
-    "MER-ALL-011": {"course_id": "MER-ALL-011", "title": "Non-Domestic MEES 2031: EPC B Target and Implications for Assessors", "cpd_hours": 1.0, "published": "2026-08-01"},
+    "MER-ALL-011": {"course_id": "MER-ALL-011", "title": "Non-Domestic MEES: The EPC E Minimum in Force and the Proposed EPC B Standard for 2031", "cpd_hours": 1.0, "published": "2026-08-01"},
     "MER-ALL-012": {"course_id": "MER-ALL-012", "title": "Whole Life Carbon for Energy Assessors: What It Means and Why Now", "cpd_hours": 1.0, "published": "2026-08-15"},
     "MER-ALL-013": {"course_id": "MER-ALL-013", "title": "Overheating Assessment in Existing Homes: TM59 2026 Update", "cpd_hours": 1.0, "published": "2026-08-01"},
     "MER-ALL-014": {"course_id": "MER-ALL-014", "title": "SMETER Technology: Measured Building Performance for Energy Assessors", "cpd_hours": 1.0, "published": "2026-08-15"},
@@ -114,10 +114,10 @@ COURSES = {
 # course, publish its corrected PDF and delete its ID from this set (and from the same
 # list in landing-page/courses.html). Certificates already issued are not affected.
 UNDER_REVIEW = {
-    "MER-RA-001", "MER-RA-002", "MER-RA-003", "MER-RA-004", "MER-RA-005", "MER-RA-006",
-    "MER-RA-007", "MER-RA-008", "MER-RA-009", "MER-RA-010", "MER-RA-011", "MER-RA-012",
-    "MER-ALL-001", "MER-ALL-004", "MER-ALL-005", "MER-ALL-008", "MER-ALL-009",
-    "MER-ALL-010", "MER-ALL-011", "MER-ALL-012", "MER-ALL-013", "MER-ALL-014",
+    "MER-RA-002", "MER-RA-003", "MER-RA-004", "MER-RA-005", "MER-RA-006",
+    "MER-RA-007", "MER-RA-008", "MER-RA-010", "MER-RA-011", "MER-RA-012",
+    "MER-ALL-004", "MER-ALL-005", "MER-ALL-008", "MER-ALL-009",
+    "MER-ALL-010", "MER-ALL-012", "MER-ALL-013", "MER-ALL-014",
     "MER-ALL-015", "MER-ALL-016", "MER-ALL-017",
 }
 
@@ -144,6 +144,29 @@ it then.</p>
 </body></html>""")
 
 
+# The withdrawn list is also published with the website (landing-page/under-review.json),
+# and the app follows that copy. Restoring a corrected course, or withdrawing one, then
+# only needs the website to be updated: no redeploy of this app. If the file cannot be
+# read or looks wrong, the list already in memory stays in force.
+UNDER_REVIEW_URL = f"{SITE_URL}/under-review.json"
+_COURSE_ID_RE = re.compile(r"^MER-[A-Z]{2,4}-\d{3}$")
+
+
+def _refresh_under_review() -> None:
+    try:
+        r = httpx.get(UNDER_REVIEW_URL, timeout=5, follow_redirects=True)
+        r.raise_for_status()
+        ids = r.json().get("under_review")
+        if not isinstance(ids, list) or not all(isinstance(i, str) and _COURSE_ID_RE.match(i) for i in ids):
+            raise ValueError("unexpected format")
+        if set(ids) != UNDER_REVIEW:
+            print(f"Withdrawn-course list updated: {len(ids)} course(s) under review")
+        UNDER_REVIEW.clear()
+        UNDER_REVIEW.update(ids)
+    except Exception as e:
+        print(f"Withdrawn-course list not refreshed ({type(e).__name__}); keeping the current list")
+
+
 # ── Catalogue sync ─────────────────────────────────────────────────────────────
 # The content engine publishes a new course on the 1st and 15th. It uploads the PDF
 # and records the course in courses/catalogue.json in Supabase Storage. Reading that
@@ -153,7 +176,6 @@ it then.</p>
 CATALOGUE_BUCKET = "courses"
 CATALOGUE_FILE = "catalogue.json"
 CATALOGUE_TTL_SECONDS = 600
-_COURSE_ID_RE = re.compile(r"^MER-[A-Z]{2,4}-\d{3}$")
 _catalogue_checked_at = 0.0
 
 
@@ -194,6 +216,7 @@ def refresh_catalogue(force: bool = False) -> None:
     if not force and now - _catalogue_checked_at < CATALOGUE_TTL_SECONDS:
         return
     _catalogue_checked_at = now
+    _refresh_under_review()
     try:
         raw = supabase.storage.from_(CATALOGUE_BUCKET).download(CATALOGUE_FILE)
         added = _merge_catalogue(json.loads(raw))
@@ -327,6 +350,10 @@ async def handle_checkout(session):
 
     member = get_or_create_member(email, name, stripe_customer_id, plan)
     member_id = member["id"]
+
+    if any(k in UNDER_REVIEW for k in course_keys):
+        # The course may have been restored in the last few minutes: read the list again.
+        refresh_catalogue(force=True)
 
     for course_key in course_keys:
         course = COURSES.get(course_key)
