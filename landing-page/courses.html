@@ -820,8 +820,8 @@ const STRIPE_SUB    = 'https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01';
 // shown or sold. To restore one, publish its corrected PDF and delete its ID here and
 // in UNDER_REVIEW in webhook/main.py.
 const UNDER_REVIEW = new Set([
-  'MER-RA-004','MER-RA-005',
-  'MER-RA-007','MER-RA-010','MER-RA-011','MER-RA-012',
+  
+  'MER-RA-011','MER-RA-012',
   'MER-ALL-005','MER-ALL-008','MER-ALL-009','MER-ALL-010',
   'MER-ALL-012','MER-ALL-013','MER-ALL-014','MER-ALL-015','MER-ALL-016',
   'MER-ALL-017',
@@ -997,23 +997,23 @@ const ALL_COURSES = [
   {
     id: 'MER-RA-004', strand: 'RA', hours: 1.0,
     title: 'Cavity Wall Insulation: Risk Factors and the Retrofit Assessor\'s Role',
-    desc: 'CWI remains the highest-volume retrofit measure and one of the highest-risk. This course covers the risk factors the Retrofit Assessor must evaluate, the evidence standard required, and the documentation that protects the assessor and the householder.',
+    desc: 'Cavity wall insulation under PAS 2035:2023 and PAS 2030:2023: what the assessment establishes about suitability and condition, what the installer\'s pre-installation inspection covers, how exposure is recorded under RdSAP convention 9.10 and Approved Document C, and what a product certificate does and does not settle.',
     objectives: [
-      'Identify the CWI risk factors that must be assessed under PAS 2035:2023',
-      'Apply the cavity wall suitability assessment methodology correctly',
-      'Determine when specialist pre-installation investigation is required',
-      'Document CWI risk assessment to the standard required for ECO4 and GBIS compliance'
+      'Say what PAS 2035:2023 clause 7.3.2 asks a retrofit assessment to cover for a cavity-walled dwelling, and how clause 7.4 has you report it',
+      'Record a cavity wall in RdSAP 10, including existing fill and the hard to treat cavity entries in convention 9.10',
+      'Name the risk factors the sources link to cavity fill and the documents that deal with each',
+      'Explain why conditions of use come from each product\'s certificate, using one certificate as an example rather than a general rule'
     ]
   },
   {
     id: 'MER-RA-005', strand: 'RA', hours: 1.0,
-    title: 'Solid Wall Insulation: IWI vs EWI — Risks, Evidence and Assessment',
-    desc: 'The choice between internal and external wall insulation has significant risk, planning, and performance implications. This course covers the assessment criteria, the evidence that informs the recommendation, and the risk documentation obligations under PAS 2035:2023.',
+    title: 'Solid Wall Insulation: IWI vs EWI, Risks, Evidence and Assessment',
+    desc: 'Internal or external solid wall insulation: who decides under PAS 2035:2023, what the assessor records about a solid wall (construction, condition, moisture, exposure, heritage significance), the RdSAP conventions for solid walls and added insulation, and the installer\'s checks under PAS 2030:2023.',
     objectives: [
-      'Compare IWI and EWI risk profiles using the PAS 2035:2023 assessment framework',
-      'Apply the evidence standard for solid wall construction and existing finishes',
-      'Assess interstitial condensation risk for both insulation pathways',
-      'Document solid wall insulation recommendations to TrustMark audit standard'
+      'Explain who chooses between internal wall insulation (IWI) and external wall insulation (EWI) after the assessment, and what in the assessment informs the choice',
+      'Record a solid wall under PAS 2035:2023 clause 7.3.2, including heritage significance under Annex E for traditional buildings',
+      'Describe how PAS 2035:2023 handles interstitial condensation, through BS 5250, and thermal bridging at junctions',
+      'Recognise the installer\'s pre-installation checks for EWI and IWI in PAS 2030:2023'
     ]
   },
   {
@@ -1030,12 +1030,12 @@ const ALL_COURSES = [
   {
     id: 'MER-RA-007', strand: 'RA', hours: 1.0,
     title: 'Heating System Assessment for Retrofit: What the Retrofit Assessor Must Record',
-    desc: 'Heating system data captured by the Retrofit Assessor feeds directly into the design stage. This course covers the PAS 2035:2023 requirements for heating system assessment, including the data fields, performance evidence, and the interface with the Retrofit Designer.',
+    desc: 'What clause 7.3.2 j) of PAS 2035:2023 asks the assessor to record about heating, hot water and controls, how that differs from what RdSAP needs, the RdSAP heating conventions that trip assessors up, distressed replacement, and where heat pump design sits.',
     objectives: [
-      'Record heating system type, age, and performance data to PAS 2035:2023 requirements',
-      'Apply the evidence standard for heat generator efficiency and controls documentation',
-      'Identify the assessment data that informs heat pump and low-carbon heating feasibility',
-      'Produce a heating system assessment output that satisfies Retrofit Designer requirements'
+      'State what PAS 2035:2023 clause 7.3.2 j) requires the assessment to record about heating, hot water and controls, and what it does not ask for',
+      'Record age, service history, locations, areas served, working condition, fuel, tariff and the cylinder in a form the coordinator and designer can use',
+      'Tell what the RdSAP 10 data set needs from what the PAS 2035 record needs, and apply the conventions where they differ',
+      'Explain the PAS 2035:2023 process for the distressed replacement of a heating appliance and the assessor\'s part in it'
     ]
   },
   {
@@ -1063,12 +1063,12 @@ const ALL_COURSES = [
   {
     id: 'MER-RA-010', strand: 'RA', hours: 1.0,
     title: 'Thermal Bridging in Retrofit Assessment: What Assessors Must Record',
-    desc: 'Thermal bridging can significantly affect as-built performance and is an increasing focus in PAS 2035 projects. This course covers what the Retrofit Assessor must record, the default and calculated options, and the audit exposure that under-recorded thermal bridging creates.',
+    desc: 'Thermal bridges in retrofit assessment: what PAS 2035:2023 requires you to record at junctions, openings and mould locations, what the designer must then do under clause 8 and Annex D, and how RdSAP 10\'s y-value works by age band and what it leaves out.',
     objectives: [
-      'Identify the thermal bridging data that the Retrofit Assessor must record under PAS 2035:2023',
-      'Apply the default Y-value and linear thermal transmittance options correctly',
-      'Evaluate when calculated thermal bridging is required versus where defaults apply',
-      'Document thermal bridging assessment to the standard required for TrustMark audit'
+      'Define a thermal bridge in the terms PAS 2035:2023 uses, and tell its guidance clauses from its requirements',
+      'State what clause 7.3.2 requires the assessment to capture at corners, junctions and openings, and separate that from good practice',
+      'Record condensation and mould at cold spots by location and severity, and report them under clause 7.4.2 without overstating the cause',
+      'Explain what clause 8 requires of the Retrofit Designer at junctions, and why that depends on your record'
     ]
   },
   {

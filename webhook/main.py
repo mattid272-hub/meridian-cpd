@@ -81,7 +81,7 @@ COURSES = {
     "MER-RA-002":  {"course_id": "MER-RA-002",  "title": "Moisture and PAS 2035:2023: What the Retrofit Assessor Records and Reports", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-003":  {"course_id": "MER-RA-003",  "title": "Retrofit Assessment: What PAS 2035:2023 Clause 7 Requires You to Record and Report", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-004":  {"course_id": "MER-RA-004",  "title": "Cavity Wall Insulation: Risk Factors and the Retrofit Assessor's Role", "cpd_hours": 1.0, "published": "2026-03-01"},
-    "MER-RA-005":  {"course_id": "MER-RA-005",  "title": "Solid Wall Insulation: IWI vs EWI — Risks, Evidence and Assessment", "cpd_hours": 1.0, "published": "2026-03-01"},
+    "MER-RA-005":  {"course_id": "MER-RA-005",  "title": "Solid Wall Insulation: IWI vs EWI, Risks, Evidence and Assessment", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-006":  {"course_id": "MER-RA-006",  "title": "EPR Variation: The RdSAP 10 Transition in ECO4 and GBIS Projects", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-007":  {"course_id": "MER-RA-007",  "title": "Heating System Assessment for Retrofit: What the Retrofit Assessor Must Record", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-008":  {"course_id": "MER-RA-008",  "title": "Ventilation Assessment in Retrofit: Background Ventilation to MVHR", "cpd_hours": 1.0, "published": "2026-03-01"},
@@ -114,8 +114,8 @@ COURSES = {
 # course, publish its corrected PDF and delete its ID from this set (and from the same
 # list in landing-page/courses.html). Certificates already issued are not affected.
 UNDER_REVIEW = {
-    "MER-RA-004", "MER-RA-005", 
-    "MER-RA-007", "MER-RA-010", "MER-RA-011", "MER-RA-012",
+    
+    "MER-RA-011", "MER-RA-012",
     "MER-ALL-005", "MER-ALL-008", "MER-ALL-009",
     "MER-ALL-010", "MER-ALL-012", "MER-ALL-013", "MER-ALL-014",
     "MER-ALL-015", "MER-ALL-016", "MER-ALL-017",
@@ -764,6 +764,9 @@ async def verify_certificate(cert_number: str):
 
 @app.get("/health")
 def health():
+    # Re-read the catalogue and the withdrawn list on the same ten-minute cycle as the
+    # member routes, so the counts here reflect what members can actually download.
+    refresh_catalogue()
     listed = [k for k in COURSES if k != "SUBSCRIPTION"]
     return {
         "status": "ok",
