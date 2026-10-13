@@ -9,11 +9,10 @@ Usage:
 """
 
 import io
+import math
 import os
 import re
 import sys
-import urllib.request
-import urllib.error
 from pathlib import Path
 from typing import Optional
 
@@ -35,8 +34,6 @@ except ImportError:
     sys.exit(1)
 
 ROOT = Path(__file__).parent
-IMG_CACHE = ROOT / ".img-cache"
-IMG_CACHE.mkdir(exist_ok=True)
 
 # ── Brand colours ─────────────────────────────────────────────────────────────
 DARK    = colors.HexColor("#0D1F0E")
@@ -60,27 +57,81 @@ STRAND_LABELS = {
     "MER-ALL": "All Strands",
 }
 
-# Season cover image — one consistent image across ALL courses.
-# To change for a new season, update SEASON_IMAGE only.
-# Season 1 (2026): clean modern residential exterior — works at 38% opacity on dark green.
-SEASON = "1"
-SEASON_IMAGE = "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&h=500&fit=crop"
+# ── The Meridian mark ─────────────────────────────────────────────────────────
+# The cover carries no photograph. Its artwork is the company mark (a circle, its
+# meridian line and one meridian arc) drawn large as a globe of meridians and
+# parallels, with one meridian picked out in the accent colour. Which meridian is
+# picked out depends on the course number, so every cover is recognisably the same
+# brand and none is identical to another.
+
+def draw_mark(canvas, x, y, r, line=WHITE, arc=None, weight=1.0):
+    """The Meridian mark, centred at (x, y) with radius r."""
+    arc = arc or ACCENT
+    canvas.saveState()
+    canvas.setStrokeColor(line)
+    canvas.setLineWidth(1.5 * weight)
+    canvas.circle(x, y, r, fill=0, stroke=1)
+    canvas.setLineWidth(1.2 * weight)
+    canvas.line(x, y - r, x, y + r)
+    canvas.setStrokeColor(arc)
+    canvas.setLineWidth(1.5 * weight)
+    canvas.arc(x - r * 0.55, y - r, x + r * 0.55, y + r, -90, 180)   # right-hand meridian
+    canvas.setFillColor(line)
+    canvas.circle(x, y + r, 1.3 * weight, fill=1, stroke=0)
+    canvas.circle(x, y - r, 1.3 * weight, fill=1, stroke=0)
+    canvas.setFillColor(arc)
+    canvas.circle(x, y, 1.9 * weight, fill=1, stroke=0)
+    canvas.restoreState()
 
 
-def fetch_image(url: str, cache_key: str) -> Optional[str]:
-    """Download image to cache, return local path or None."""
-    safe = re.sub(r'[^a-z0-9]', '_', cache_key.lower())
-    cache_path = IMG_CACHE / f"{safe}.jpg"
-    if cache_path.exists():
-        return str(cache_path)
-    try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            cache_path.write_bytes(resp.read())
-        return str(cache_path)
-    except Exception as e:
-        print(f"    [img] Could not fetch cover image: {e}")
-        return None
+def draw_meridian_field(canvas, x0, y0, w, h, course_id: str):
+    """Cover artwork: a large globe of meridians, clipped to the box (x0, y0, w, h)."""
+    canvas.saveState()
+    clip = canvas.beginPath()
+    clip.rect(x0, y0, w, h)
+    canvas.clipPath(clip, stroke=0, fill=0)
+
+    # A slightly lifted panel so the artwork reads as a band, not a void.
+    canvas.setFillColor(colors.HexColor("#122A14"))
+    canvas.rect(x0, y0, w, h, fill=1, stroke=0)
+
+    cx, cy, R = x0 + w * 0.80, y0 + h * 0.47, h * 0.62
+    fractions = [0.16, 0.30, 0.44, 0.58, 0.72, 0.86, 0.96]
+
+    canvas.setStrokeColor(ACCENT)
+    canvas.setLineWidth(0.7)
+    canvas.setStrokeAlpha(0.17)
+    for f in fractions:                                   # meridians (both halves)
+        canvas.ellipse(cx - R * f, cy - R, cx + R * f, cy + R, fill=0, stroke=1)
+    for deg in (-60, -40, -20, 20, 40, 60):               # parallels
+        yy = cy + R * math.sin(math.radians(deg))
+        half = R * math.cos(math.radians(deg))
+        canvas.line(cx - half, yy, cx + half, yy)
+    canvas.setStrokeAlpha(0.30)
+    canvas.line(cx - R, cy, cx + R, cy)                   # equator
+    canvas.setLineWidth(1.1)
+    canvas.setStrokeAlpha(0.45)
+    canvas.circle(cx, cy, R, fill=0, stroke=1)            # the globe's edge
+
+    # The prime meridian, as in the mark.
+    canvas.setStrokeColor(WHITE)
+    canvas.setStrokeAlpha(0.55)
+    canvas.setLineWidth(1.4)
+    canvas.line(cx, cy - R, cx, cy + R)
+
+    # One meridian picked out, chosen by the course number.
+    digits = re.sub(r"\D", "", course_id) or "0"
+    f = fractions[int(digits) % (len(fractions) - 1)]
+    canvas.setStrokeColor(ACCENT)
+    canvas.setStrokeAlpha(1)
+    canvas.setLineWidth(2.4)
+    canvas.arc(cx - R * f, cy - R, cx + R * f, cy + R, 90, 180)       # left-hand half
+    canvas.setFillColor(ACCENT)
+    canvas.circle(cx - R * f, cy, 4.2, fill=1, stroke=0)              # where it crosses the equator
+    canvas.setFillColor(WHITE)
+    canvas.setFillAlpha(0.9)
+    canvas.circle(cx, cy, 3.2, fill=1, stroke=0)
+    canvas.restoreState()
 
 
 # ── Page drawing callbacks ────────────────────────────────────────────────────
@@ -93,17 +144,18 @@ def draw_cover(canvas, doc, meta: dict):
     canvas.setFillColor(DARK)
     canvas.rect(0, 0, W, H, fill=1, stroke=0)
 
-    # Cover photo (top 42% of page, relevant to course topic)
-    img_path = meta.get('img_path')
-    if img_path:
-        try:
-            ih = H * 0.42
-            canvas.saveState()
-            canvas.setFillAlpha(0.38)
-            canvas.drawImage(img_path, 0, H - ih, W, ih, preserveAspectRatio=False, mask='auto')
-            canvas.restoreState()
-        except Exception:
-            pass
+    # Brand artwork from the top of the page down to the accent bar (no photograph).
+    art_h = H * 0.58
+    draw_meridian_field(canvas, 0, H - art_h, W, art_h, meta['course_id'])
+
+    # Brand lockup, top left: the mark and the wordmark as on the website.
+    lock_y = H - 21*mm
+    draw_mark(canvas, 22*mm + 9, lock_y + 4, 9)
+    canvas.setFont("Helvetica-Bold", 15)
+    canvas.setFillColor(WHITE)
+    canvas.drawString(22*mm + 25, lock_y - 1, "MERIDIAN")
+    canvas.setFillColor(ACCENT)
+    canvas.drawString(22*mm + 25 + canvas.stringWidth("MERIDIAN ", "Helvetica-Bold", 15), lock_y - 1, "CPD")
 
     # Accent bar (horizontal stripe)
     bar_y = H * 0.42
@@ -196,9 +248,10 @@ def draw_header(canvas, doc):
     canvas.setStrokeColor(DARK)
     canvas.setLineWidth(0.5)
     canvas.line(20*mm, H - 14*mm, W - 20*mm, H - 14*mm)
+    draw_mark(canvas, 20*mm + 3.2, H - 12*mm + 2.4, 3.2, line=DARK, arc=colors.HexColor("#5E8A00"), weight=0.45)
     canvas.setFillColor(DARK)
     canvas.setFont("Helvetica-Bold", 7)
-    canvas.drawString(20*mm, H - 12*mm, "MERIDIAN CPD")
+    canvas.drawString(20*mm + 10, H - 12*mm, "MERIDIAN CPD")
     canvas.setFillColor(GREY)
     canvas.setFont("Helvetica", 7)
     canvas.drawRightString(W - 20*mm, H - 12*mm, doc.course_id)
@@ -595,7 +648,6 @@ def build_pdf(course_id: str, md_content: str) -> bytes:
     strand_colour = STRAND_COLOURS.get(strand_prefix, GREEN)
     strand_label = STRAND_LABELS.get(strand_prefix, 'All Strands')
     hours_str = f"{parsed['cpd_hours']:g}"
-    img_path = fetch_image(SEASON_IMAGE, f"season_{SEASON}_cover")
 
     meta = dict(
         title=parsed['title'],
@@ -604,7 +656,6 @@ def build_pdf(course_id: str, md_content: str) -> bytes:
         published=parsed['published'],
         strand_colour=strand_colour,
         strand_label=strand_label,
-        img_path=img_path or "",
     )
 
     buf = io.BytesIO()

@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - 'courses/MER-*/MER-*.md'
+      - 'courses/build_pdfs_v2.py'
   workflow_dispatch:
     inputs:
       course_ids:
@@ -44,6 +45,18 @@ jobs:
         run: |
           if [ -n "$INPUT_IDS" ]; then
             ids="$INPUT_IDS"
+          elif git diff --name-only "$BEFORE" "$GITHUB_SHA" | grep -qx 'courses/build_pdfs_v2.py'; then
+            # The PDF design changed: rebuild every course that is on sale. Withdrawn
+            # courses (landing-page/under-review.json) and unregistered ones are left alone.
+            ids=$(python3 - <<'PY'
+          import json, pathlib, re
+          withdrawn = set(json.load(open("landing-page/under-review.json"))["under_review"])
+          registered = set(re.findall(r'"course_id": "(MER-[A-Z]+-[0-9]{3})"', pathlib.Path("webhook/main.py").read_text()))
+          ids = sorted(d.name for d in pathlib.Path("courses").glob("MER-*")
+                       if (d / f"{d.name}.md").exists() and d.name in registered and d.name not in withdrawn)
+          print(" ".join(ids))
+          PY
+            )
           else
             ids=$(git diff --name-only "$BEFORE" "$GITHUB_SHA" -- 'courses/MER-*/MER-*.md' \
                   | sed -E 's#^courses/(MER-[A-Z]+-[0-9]{3})/.*#\1#' | sort -u | tr '\n' ' ')
