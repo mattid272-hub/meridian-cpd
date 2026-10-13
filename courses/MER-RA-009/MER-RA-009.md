@@ -1,210 +1,245 @@
-
-
 # External Wall Insulation: Planning Permission and Fire Risk
-**Course ID:** MER-RA-009 | **CPD Hours:** 1.0 | **Published:** March 2026
+**Course ID:** MER-RA-009 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
 
-- Identify the specific conditions under which external wall insulation (EWI) qualifies as permitted development and the circumstances that trigger a full planning application under the Town and Country Planning (General Permitted Development) (England) Order 2015 (as amended).
-- Apply the requirements of Approved Document B (Fire Safety) Volume 1 (2024 edition) and the Building Safety Act 2022 to EWI specifications on dwellings of varying heights and typologies.
-- Assess EWI system classifications against BS 8414 large-scale fire test criteria and correctly interpret European Classification reports to BS EN 13501-1 when evaluating product suitability for a retrofit project.
-- Integrate EWI fire risk and planning constraint data into a PAS 2035:2023-compliant Medium Term Improvement Plan, ensuring accurate recording within the retrofit coordinator's project documentation and the TrustMark Data Warehouse.
-- Recognise the implications of the ban on combustible materials in the external walls of residential buildings above 18 m (Regulation 7(2) of the Building Regulations 2010, as amended) and evaluate emerging policy signals on the potential lowering of that threshold to 11 m.
+By the end of this course you should be able to:
+- Tell the law on external walls (requirement B4 and regulation 7) from the statutory guidance in Approved Document B Volume 1, and say what is in force and what is forthcoming.
+- Apply regulation 7(4) and the 11 m and 18 m provisions of Approved Document B Volume 1, Section 10, measuring height correctly.
+- Decide whether external wall insulation (EWI) on a house in England is permitted development under Part 1, Class A of the GPDO 2015.
+- Record what PAS 2035:2023 clause 7.3.2 asks, leaving fire safety verification to the retrofit design (clause 8.2.21).
+- Recognise where Wales and Scotland differ, and who to ask when the sources run out.
 
 ---
 
 ## Introduction
 
-External wall insulation remains one of the highest-impact single measures available in domestic retrofit. RdSAP 10 typically models EWI on a solid-walled dwelling as delivering a 15–30 point SAP uplift depending on starting condition, orientation, and insulation thickness. For retrofit assessors working under PAS 2035:2023, it is routinely the anchor measure in a whole-house retrofit sequence. None of that is new ground for this audience.
+For EWI on houses and flats, this course asks whether planning permission is needed, what the fire rules for external walls say, and where the assessor's job ends and the Retrofit Designer's starts.
 
-What has changed—and continues to change rapidly—is the regulatory landscape surrounding two critical risk domains: planning consent and fire safety. These are not peripheral concerns. A planning refusal stalls an entire funded project. A fire safety non-compliance discovered post-installation can result in enforcement action, remediation costs running into tens of thousands per dwelling, and professional liability exposure for every name on the project lodgement.
+The law and guidance taught here apply in England only. legislation.gov.uk marks the regulation 7 text used here as applying "to England only", Approved Document B is "for use in England" (cover), and the planning Order is the England Order. Wales and Scotland have their own rules, noted only where read on official sites. Northern Ireland is not covered.
 
-Since the Grenfell Tower Inquiry Phase 2 report (September 2024) and the subsequent tightening of guidance under the Building Safety Act 2022, the government has signalled a clear direction of travel toward stricter combustibility requirements at lower building heights. Meanwhile, local planning authorities (LPAs) have become materially more interventionist on EWI in conservation areas and on properties affected by Article 4 directions, driven partly by a backlog of poorly executed schemes funded under ECO3 and the Green Homes Grant.
+The Building Regulations 2010 (SI 2010/2214) and the Town and Country Planning (General Permitted Development) (England) Order 2015 (SI 2015/596, the GPDO) are law; Approved Document B is statutory guidance; the householder technical guidance is government guidance; PAS 2035:2023 and PAS 2030:2023 bind where your scheme, contract or funding adopts them.
 
-For retrofit assessors, the practical consequence is that risk assessment at the earliest project stage—before a specification is written, before a PAS 2035 improvement option evaluation is completed—must now incorporate a robust screening of both planning constraints and fire safety requirements. Getting this wrong does not merely delay a project. Under PAS 2035:2023 Clause 8.3, the Retrofit Assessor's dwelling assessment report is the foundational document from which the Retrofit Coordinator builds the improvement plan. Errors or omissions at this stage propagate through the entire project lifecycle.
+This edition replaces the March 2026 edition. That edition presented the 11 m fire provisions as a future change following a consultation said to have closed in January 2025, when Approved Document B has carried 11 m provisions for residential buildings since its 2022 amendments and the legal ban stays at 18 m. It also cited a non-existent "2024 edition" with wrong section, table and class figures, added "7 storeys" to regulation 7, gave wrong PAS 2035:2023 clauses with invented quotations, denied that government guidance covers EWI under Class A, and cited the wrong paragraphs of the planning Order.
 
-This course provides a technically precise, regulation-referenced framework for conducting that screening. It assumes you are already familiar with EWI systems, RdSAP 10 inputs, and the PAS 2035:2023 assessment process. It does not revisit basics. It focuses on the two areas where regulatory change is outpacing many assessors' working knowledge.
-
----
-
-## Section 1: Permitted Development Rights and Their Limits for EWI
-
-The starting point for any EWI planning assessment in England is the Town and Country Planning (General Permitted Development) (England) Order 2015 (GPDO), as amended. EWI does not have a dedicated permitted development (PD) class. It falls to be considered under **Part 1, Class A** (enlargement, improvement or other alteration of a dwellinghouse) where the insulation alters the external appearance, or—where the thickness is minimal and appearance is substantially unchanged—may not constitute "development" at all under Section 55 of the Town and Country Planning Act 1990. In practice, the addition of 90–200 mm of insulation board, mesh, basecoat, and render finish self-evidently alters the external appearance of a dwelling and constitutes development. Assessors should proceed on that assumption.
-
-Under Class A, PD rights are subject to conditions and limitations. The critical constraints for EWI are:
-
-**Projection beyond the principal elevation.** Class A, paragraph A.1(g) restricts any enlargement of the principal elevation or any side elevation fronting a highway. EWI applied to a principal elevation increases the forward projection of that wall plane. Strictly interpreted, this engages the limitation. However, most LPAs accept that a modest increase in wall thickness (up to approximately 100–110 mm total system build-up) does not constitute an "enlargement" in the meaning intended by the Order, which is directed at extensions. This is not a settled legal position. There is no reported case law, no appeal decision of universal authority, and no formal DLUHC guidance note specific to EWI under Class A. Assessors should note this ambiguity in the dwelling assessment report and flag it as a constraint requiring verification with the LPA.
-
-**Article 4 directions.** Where an Article 4 direction withdraws Class A PD rights—common in conservation areas, areas of outstanding natural beauty (AONBs), National Parks, World Heritage Sites, and the Broads—a full planning application is required regardless of EWI thickness or finish. Assessors must check Article 4 status as a non-negotiable step. This information is available on the relevant LPA's online planning policy map or by direct enquiry.
-
-**Listed buildings and conservation areas.** Listed building consent is required for EWI on a listed building in virtually all cases; the alteration is not de minimis. Within a conservation area, even where Article 4 has not been invoked, Class A PD is modified: paragraph A.4 requires that materials used in any exterior work must be of similar appearance to the existing. Applying render over exposed brickwork fails this test. A planning application is required.
-
-**Condition and prior approval.** Where PD does nominally apply, there is no prior approval mechanism for EWI under Class A. The applicant proceeds at risk. For funded projects under ECO4, SHDF, or HUG, most scheme administrators and Retrofit Coordinators now require either a Certificate of Lawful Development (CLUD) or explicit written confirmation from the LPA before installation. Assessors should record planning status as a constraint in the dwelling assessment, categorised as green (confirmed PD or planning consent in place), amber (PD likely but unconfirmed—CLUD recommended), or red (planning application required).
-
-**Scotland, Wales, and Northern Ireland.** Devolved planning regimes differ materially. Scotland's PD regime under the Town and Country Planning (General Permitted Development) (Scotland) Order 1992 (as amended) has different thresholds and conditions. Welsh PD is governed by the Town and Country Planning (General Permitted Development) Order 1995 (as amended for Wales). Assessors operating across jurisdictions must apply the correct Order. This course focuses on England; cross-border assessors should treat the framework as indicative and verify against the relevant devolved legislation.
+This course is correct to 12 October 2026.
 
 ---
 
-## Section 2: Fire Safety Requirements — The Regulatory Framework for EWI
+## Section 1: The Law and the Guidance in Force
 
-The fire safety requirements applicable to EWI on domestic buildings derive from multiple overlapping instruments. Assessors need a clear hierarchy.
+### What the regulations require
 
-**Building Regulations 2010 (as amended), Regulation 7(2) — the "ban on combustible materials."** Introduced via SI 2018/1230 and subsequently amended, Regulation 7(2) requires that materials forming part of the external wall of a "relevant building" or specified attachments to such a building achieve a European Classification of at least A2-s1,d0 when tested to BS EN 13501-1. A "relevant building" is defined as a building at least 18 m in height or with at least 7 storeys, and which contains one or more dwellings, an institution, or a room for residential purposes. This applies to new build and to material alterations—which includes the retrofit of EWI as a material change to the thermal element under Regulation 23 read with Regulation 3(2).
+Requirement B4(1) is law: external walls "shall adequately resist the spread of fire over the walls and from one building to another", having regard to the building's "height, use and position" (Approved Document B Volume 1, Requirement B4).
 
-**The 11 m question.** Following the Grenfell Inquiry Phase 2 recommendations and subsequent government consultation (closed January 2025), there is a stated policy intention to lower the Regulation 7(2) threshold from 18 m to 11 m (roughly 4 storeys). As of March 2026, the statutory instrument effecting this change has not been laid. However, assessors should be aware that several LPAs and building control bodies are already applying the 11 m threshold as a de facto requirement through building control conditions. Where the project building is between 11 m and 18 m in height, the assessment should flag this as a material risk and recommend specification of A2-s1,d0 or A1 materials as a precautionary approach. This should be explicitly noted in the dwelling assessment report.
+Regulation 7 (materials and workmanship) has five parts that matter here:
+- Paragraph (1): adequate and proper materials, and a workmanlike manner (Building Regulations 2010, regulation 7(1)).
+- Paragraph (1A): no relevant metal composite material in the external wall of any building, of any height (regulation 7(1A)).
+- Paragraph (2): in a relevant building, materials which become part of an external wall or specified attachment are to be "of European Classification A2-s1, d0 or A1" (regulation 7(2)).
+- Paragraph (3): exemptions, among them cavity trays between two leaves of masonry, membranes, fixings and sealants, insulation up to 300 mm above ground, and window frames and glass (regulation 7(3)).
+- Paragraph (4): a relevant building has a storey (ignoring roof-top plant) at least 18 metres above ground and contains dwellings, an institution or a room for residential purposes; height runs from the lowest adjoining ground level to the top of the floor surface of the storey (regulation 7(4)).
 
-**Approved Document B, Volume 1 (Dwellings), 2024 edition.** ADB Volume 1 provides statutory guidance on meeting the fire safety requirements of the Building Regulations for dwellings. For EWI, the relevant sections are:
+Paragraphs (2) to (4) were inserted for England from 21 December 2018 (SI 2018/1230), and paragraph (2) substituted from 1 December 2022 (SI 2022/603); no listed pending change affects it (legislation.gov.uk notes).
 
-- **Section 12: External fire spread (Requirement B4).** Diagram 12.1 sets out the provisions for external surfaces. For buildings up to 18 m, external surfaces must meet the criteria in Table 12.1, which requires Class B-s3,d2 or better (to BS EN 13501-1) for the external face, and Class C-s3,d2 or better for surfaces within the cavity or between insulation layers.
-- **Section 12.7: Insulation products.** Insulation used in external walls of buildings below 18 m must meet Class E or better (BS EN 13501-1). However, this is a minimum; the EWI system as a whole must demonstrate adequate fire performance, which in practice often requires BS 8414 system testing (see below) where the system includes any component classified below A2.
+Regulation 7(4) has no storey count. "At least 7 storeys" comes from section 65 of the Building Safety Act 2022, defining a "higher-risk building" for Part 4 of that Act: in England, at least 18 metres high or with at least 7 storeys, with at least 2 residential units. That is a different test for a different regime.
 
-**BS 8414-1:2020 and BR 135.** BS 8414-1 is the large-scale fire test for external cladding systems applied to the face of a building. BR 135 (BRE Report: Fire Performance of External Thermal Insulation for Walls of Multistorey Buildings) provides criteria against which BS 8414 test data is assessed. For buildings below 18 m using EWI systems incorporating EPS, mineral fibre, or phenolic insulation boards, a valid BS 8414 test report assessed against BR 135 criteria provides evidence that the system achieves adequate performance notwithstanding the use of individual components classified below A2. Assessors should verify that the specific EWI system proposed—including insulation board, adhesive, mechanical fixings, basecoat reinforcement mesh, and final render—matches the tested configuration. Substitution of any component may invalidate the test evidence.
+### When these rules reach an EWI job
 
-**BS EN 13501-1 classifications — what assessors need to know.** The Euroclasses most frequently encountered in EWI specifications are:
+Work required by regulation 23 (thermal elements) is "building work" (regulation 3(1)(h)). If it is not a material alteration, it "need only comply" with Part L, "in addition to the requirements of regulation 7" (regulation 4(2)). An alteration is material if the work would at any stage result in the building not complying with a relevant requirement, B4 among them, where it did before, or, if it did not comply, being more unsatisfactory (regulation 3(2) and (3)).
 
-| Material | Typical Classification |
-|---|---|
-| Mineral wool (stone wool/glass wool) | A1 or A2-s1,d0 |
-| Expanded polystyrene (EPS) | E |
-| Phenolic foam | C-s2,d0 (varies by product) |
-| Wood fibre | D-s2,d0 or E (varies by product) |
-| Render (mineral/silicone) | A1 or A2-s1,d0 |
+So regulation 7, including the 18 m ban, applies to EWI that is building work. Whether a job is also a material alteration, bringing in B4 and its guidance, is for the Retrofit Designer and building control to settle.
 
-For buildings at or above 18 m (or 11 m if/when the threshold is lowered), only A1 or A2-s1,d0 materials are compliant under Regulation 7(2). This effectively mandates mineral wool insulation boards with mineral render systems for high-rise EWI retrofit. EPS-based systems are non-compliant above 18 m and will be non-compliant above 11 m if the anticipated regulatory change proceeds.
+### Approved Document B: status and version
 
----
+The current document is Approved Document B Volume 1: Dwellings, "2019 edition incorporating 2020, 2022, 2025 and 2026 amendments", with the 2029 changes collated (gov.uk, updated 16 September 2026). It sets out "one way to comply"; following it does not guarantee compliance, and anyone preferring another approach should seek to agree it early with the building control body (Introduction). Text in the green boxes is law; the rest is statutory guidance (Diagram i).
 
-## Section 3: Assessing Risk — The Retrofit Assessor's Role Under PAS 2035:2023
+The front pages say what each amendment changed:
+- 2022: updated Section 10 provisions for residential buildings with a storey 11 m or more.
+- 2025: fire safety information (regulation 38); removal of national classes for reaction to fire and roofs.
+- 2026: second stairs in blocks of flats with a storey 18 m or more, and evacuation lifts.
+- 2029: removal of national classes for fire resistance, taking effect on 2 September 2029, with transitional provisions.
 
-PAS 2035:2023 does not explicitly require the Retrofit Assessor to conduct a fire risk assessment or a planning feasibility study. However, it establishes obligations that make both unavoidable in practice.
-
-**Clause 7.2: The dwelling assessment.** The Retrofit Assessor must conduct a dwelling assessment that identifies "constraints and risks that may affect the selection, design, installation, and performance of energy efficiency measures." Planning restrictions and fire safety requirements are unambiguously within this scope. Failure to identify a conservation area designation, a listed building status, or a building height that engages Regulation 7(2) is a deficiency in the assessment. Under Clause 7.2.3, the assessment must record dwelling characteristics including construction type, age, dimensions, and "any features that may affect the feasibility of improvement measures." Building height, number of storeys, and proximity to site boundaries (relevant to fire spread provisions under ADB Diagram 12.1) must be captured.
-
-**Clause 8.3: The improvement option evaluation.** The Retrofit Coordinator uses the assessor's data to evaluate improvement options. If the dwelling assessment fails to flag a planning or fire safety constraint, the Coordinator may specify an EWI system that is either non-consentable or non-compliant. The assessor bears professional responsibility for the accuracy of the foundational data.
-
-**Risk path assessment — a practical framework.** Assessors should adopt a structured screening at the dwelling assessment stage. The following checklist is recommended for integration into standard assessment practice:
-
-**Planning screen:**
-1. Is the property a listed building? (Check Historic England's National Heritage List for England.)
-2. Is it within a conservation area? (Check LPA planning policy maps.)
-3. Is it subject to an Article 4 direction? (Check LPA records.)
-4. Is it within an AONB, National Park, World Heritage Site, or the Broads? (Check MAGIC map.)
-5. Does the principal elevation front a highway? (Visual inspection, OS mapping.)
-6. Are there any existing planning conditions restricting external alterations? (Check planning history on LPA portal.)
-
-**Fire safety screen:**
-1. What is the building height (to top of uppermost storey floor surface, measured externally)? (Use surveying equipment or verified building plans. Do not estimate.)
-2. How many storeys? (Count all storeys including basements where relevant to ADB.)
-3. Is the building a "relevant building" under Regulation 7(2)? (≥18 m or ≥7 storeys with dwellings?)
-4. Is the building between 11 m and 18 m? (Flag for precautionary A2-s1,d0 specification.)
-5. What is the boundary distance from the external wall face to the relevant boundary? (Affects ADB Table 12.1 provisions for unprotected areas.)
-6. Are there existing combustible materials in the external wall? (Timber cladding, previous EWI, etc.)
-7. Is there a current fire risk assessment for the building (relevant to blocks of flats under the Regulatory Reform (Fire Safety) Order 2005, as amended by the Fire Safety Act 2021)?
-
-Each item should be recorded with a status (confirmed/unconfirmed/not applicable) and an evidence source. The completed screen forms part of the dwelling assessment report uploaded to the TrustMark Data Warehouse.
-
-**Interface with the Retrofit Coordinator.** Where the screen identifies a red-flag constraint—listed building, conservation area without confirmed PD, building ≥18 m, or building 11–18 m without A2-s1,d0 system specification—the assessor must communicate this clearly to the Coordinator. PAS 2035:2023 Clause 6.3 requires the Coordinator to "take account of constraints identified in the dwelling assessment." The assessor's obligation is to ensure those constraints are identified, documented, and unambiguous. The Coordinator's obligation is to act on them.
+Pages the 2029 amendments change are marked "Effective until 1 September 2029". No Section 10 page is, so Section 10 appears unchanged; Appendix B pages are marked, but the Appendix B points cited below read the same in both versions. Neither the document nor the gov.uk page dates the 2025 and 2026 amendments' effect; if that matters, ask building control.
 
 ---
 
-## Section 4: Case Application — Worked Scenarios for Common Dwelling Types
+## Section 2: Section 10 Applied to Houses and Flats
 
-**Scenario 1: Mid-terrace solid wall house, 1930s construction, non-designated area.**
-Two-storey, 6.5 m to eaves. Not listed, not in a conservation area, no Article 4 direction. Principal elevation fronts a residential road (adopted highway). EWI proposed to all elevations with 100 mm EPS and silicone render.
+### Routes and Table 10.1
 
-Planning: PD under Class A is arguable for rear and side elevations. The principal elevation fronting a highway engages the ambiguity discussed in Section 1. Recommendation: apply for a CLUD or seek written LPA confirmation. Fire: Building is well below 18 m. ADB Table 12.1 applies; EPS (Class E) is acceptable for insulation under Section 12.7, and the external render surface (A2-s1,d0) meets the external face requirement. The EWI system should have a valid BS 8414 test report assessed against BR 135 as a belt-and-braces measure. Record building height and storeys. No Regulation 7(2) engagement. Status: amber (planning), green (fire).
+Volume 1 covers flats (purpose group 1(a)) and dwellinghouses (1(b) and 1(c)) (Approved Document B Volume 1, Table 0.1). For buildings that are not relevant buildings, there are two routes: follow paragraphs 10.5 to 10.9, or meet the criteria of BRE report BR 135 using full-scale test data from BS 8414-1 or BS 8414-2 (paragraph 10.3). At any height, the choice of materials should be considered to reduce fire spread risk (paragraph 10.4).
 
-**Scenario 2: Purpose-built flat, 5-storey block, 1960s construction, 14 m height, non-designated area.**
-EWI proposed to all elevations with mineral wool and mineral render under SHDF Wave 3 funding.
+Table 10.1 sets the class of the external surface, the outermost material, wall by wall according to distance from the relevant boundary (paragraph 10.5). For residential buildings:
+- Relevant buildings under regulation 7(4): class A2-s1, d0 or better at any distance.
+- Building height more than 11 m: class A2-s1, d0 or better at any distance.
+- Building height 11 m or less: class B-s3, d2 or better less than 1000 mm from the relevant boundary; "no provisions" at 1000 mm or more.
 
-Planning: The block is not listed and not in a conservation area. PD rights for flats are more restricted than for houses; Part 1 Class A does not apply to flats. The EWI constitutes development requiring a planning application unless deemed de minimis (unlikely at 100 mm+ build-up). Recommendation: full planning application. Fire: Building is below 18 m but above 11 m. Regulation 7(2) does not currently apply, but the precautionary approach is to specify A2-s1,d0 materials throughout. Mineral wool with mineral render satisfies this. Record height accurately; if the building is measured at 17.8 m by a subsequent surveyor, the project is at severe risk if EPS was specified. Status: red (planning application required), green (fire—A2-compliant system specified).
+The relevant boundary is the boundary, or notional boundary, a side faces or coincides with, at up to 80 degrees (Appendix A).
 
-**Scenario 3: End-terrace cottage, Grade II listed, conservation area, 18th century stone construction.**
-EWI is almost certainly inappropriate. Internal wall insulation may be the only feasible option, subject to listed building consent for internal works affecting character. The Retrofit Assessor should flag EWI as unfeasible in the dwelling assessment and record the constraint clearly. The Coordinator should not include EWI in the improvement option evaluation. This is the correct outcome; documenting it properly protects every party in the project chain.
+### Insulation and the two height measures
+
+In residential buildings with a storey 11 m or more, insulation and filler materials in an external wall should be class A2-s1, d0 or better (paragraph 10.7); in any building with a storey 18 m or more, A2-s3, d2 or better (paragraph 10.6). Both exclude masonry cavity walls complying with Diagram 8.2, and in both regulation 7(2) prevails where it applies.
+
+Two measures are in play. Paragraphs 10.6 and 10.7, like regulation 7(4)(b), use the height of the top storey: from its floor surface to ground level on the lowest side, excluding roof-top plant (Appendix D, Diagram D6). Table 10.1 uses "building height", which Appendix A says is measured as in Diagram D4, from mean ground level to a roof level set for each roof type (for a double pitch roof, mean roof level, halfway up the slope). A building can exceed 11 m on the second measure with no storey at 11 m.
+
+Products other than floorings are classed A1, A2, B, C, D, E or F to BS EN 13501-1, A1 highest, and untested products cannot be classified (Appendix B, paragraph B6). Test evidence should be checked against the intended use, because small differences in fixing, joints, dimensions, insulation or air gaps "might significantly affect the performance" (paragraph B2). Assessments in lieu of a test cannot show compliance with regulation 7(2) (note to paragraph B4).
+
+### Three common cases
+
+Putting it together:
+- A house 11 m or less in building height, no storey 11 m up: regulation 7(2) and paragraph 10.7 do not apply; Table 10.1 asks only for B-s3, d2 or better on walls less than 1000 mm from the relevant boundary; paragraph 10.4 and regulation 7(1) still apply.
+- Flats over 11 m with no storey at 18 m: A2-s1, d0 or better for the external surface and, where a storey is 11 m up, the insulation, or the BR 135 route (paragraphs 10.3, 10.7, Table 10.1). This is current guidance, not a proposal.
+- Flats with a storey 18 m or more: by law, A2-s1, d0 or A1 for external wall materials apart from the regulation 7(3) exemptions, and no BR 135 route, since paragraph 10.3 covers only buildings outside regulation 7(4).
+
+No source read here gives any product's class; that comes from its own evidence, and choosing products is the Retrofit Designer's job.
+
+---
+
+## Section 3: Planning Permission for EWI in England
+
+### Houses: Part 1, Class A
+
+Class A permits "the enlargement, improvement or other alteration of a dwellinghouse" (SI 2015/596, Schedule 2, Part 1, Class A).
+
+The householder technical guidance (MHCLG, updated 10 September 2019) says solid wall insulation "constitutes an improvement rather than an enlargement or extension to the house" and is not caught by limitations (e), (f), (g), (h) and (j). Limitation A.1(e) concerns extending beyond the principal elevation, or a side elevation fronting a highway (paragraph A.1(e)), so EWI on a front wall does not by itself take a house outside Class A.
+
+Two other parts of Class A matter:
+- On article 2(3) land, Class A does not permit "the cladding of any part of the exterior" with "stone, artificial stone, pebble dash, render, timber, plastic or tiles" (paragraph A.2(a)); the guidance says such cladding "requires an application for planning permission".
+- Everywhere, materials used in exterior work "must be of a similar appearance" to those of the existing house (paragraph A.3(a)). The guidance says this means similar visual appearance, "but does not mean that they need to be the same materials". It gives no EWI example, so whether a finish passes is the local planning authority's judgement.
+
+Article 2(3) land is conservation areas, areas of outstanding natural beauty, areas specified under section 41(3) of the Wildlife and Countryside Act 1981, the Broads, National Parks and World Heritage Sites (SI 2015/596, Schedule 1, Part 1). There, EWI rendered or clad in those materials needs planning permission without any council direction.
+
+### Directions, listing and flats
+
+Three more checks:
+- Article 4 directions: the Secretary of State or the local planning authority may direct that the article 3 permission does not apply to stated development (SI 2015/596, article 4(1)). Ask the council.
+- Listed buildings: alterations affecting a listed building's character as a building of special architectural or historic interest need authorisation under section 8 of the Planning (Listed Buildings and Conservation Areas) Act 1990 (section 7).
+- Flats: a dwellinghouse "does not include buildings containing one or more flats" (technical guidance), so Class A does not cover a block of flats.
+
+For certainty, anyone can apply to the local planning authority for a lawful development certificate confirming that proposed works would be lawful (gov.uk, Lawful development certificates; Town and Country Planning Act 1990, section 192). The Retrofit Coordinator advises the client on statutory approvals and makes or supports the applications (PAS 2035:2023, clause 8.2.7).
+
+### Wales and Scotland
+
+The Welsh Government's householder page says EWI "must not project more than 16cm" without planning permission, needs permission in a Conservation Area, National Park, Area of Outstanding Natural Beauty or World Heritage Site, and elsewhere needs materials of similar appearance (gov.wales, Planning permission: external walls, undated). The page cites no legislation, so confirm with the local planning authority. The Welsh version of regulation 7 also uses an 18 m relevant building and A2-s1, d0 or A1, in force for Wales from 13 January 2020 (SI 2019/1499).
+
+The Scottish Government announced that from 1 June 2022 its ban would apply to buildings such as dwellings with a storey 11 m or more above ground, removing "the option of a fire test" (gov.scot news release, 22 April 2022). Scottish permitted development was not checked; confirm the Scottish position with your verifier and planning authority.
+
+---
+
+## Section 4: The Assessor's Record and the Designer's Decision
+
+### What the assessment includes
+
+Every dwelling is assessed "to provide information about the dwelling for use by a Retrofit Designer" (PAS 2035:2023, clause 7.1.1). The parts of clause 7.3.2 that matter for EWI are:
+- location, orientation and attachment to other buildings (7.3.2 a);
+- heritage, construction and condition (7.3.2 b), and main materials (7.3.2 g);
+- constraints imposed by the local planning authority, such as planning permission, listing and conservation area constraints (7.3.2 c);
+- any energy efficiency measure already installed or proposed (7.3.2 e), where existing insulation or cladding belongs;
+- a measured survey of the heat loss envelope (7.3.2 h);
+- site constraints, including access and adjoining properties (7.3.2 i).
+
+Traditional construction also needs a BS 7913 significance assessment (clause 7.3.4). The assessment goes to the Retrofit Designer with the data file and photographs (clause 7.4.1), and to the TrustMark data warehouse if the certification body requires it (note to clause 7.4.4).
+
+### What it does not include
+
+Clause 7.3.2 does not list building height, storeys or the fire class of existing materials, and clause 7 asks for no fire risk assessment. One scheme's Retrofit Assessments Standard Guide (version 2.4) says the assessor is "not required to undertake a fire risk assessment" but is "professionally bound to let someone know" of a fire risk seen. Check your own scheme.
+
+Sensible habits, as practice rather than requirement:
+- Record house or flat, storeys above ground and, near 11 m or 18 m, the heights you can establish and how.
+- Photograph and describe existing cladding, render or insulation without guessing its class, which comes from test or classification evidence (Approved Document B Volume 1, paragraphs B1 and B6).
+- Note walls close to a boundary, and the designations you found and where you checked.
+
+### Who decides
+
+The Retrofit Coordinator carries out the improvement options evaluation and prepares the medium-term improvement plan, which identifies the building's constraints (clauses 8.1.1, 8.1.4 and 8.1.7 a). The Retrofit Designer prepares the design, taking account of any planning or building control conditions (clause 8.2.8 d). It shall "verify that the fire safety of the building is not compromised" by the measures and, if necessary, include an updated fire safety strategy, with a note pointing to Approved Document B and BS 7974 (clause 8.2.21 e and note 2). The installer checks that the design provides "protection of the dwelling against the risk of fire" (PAS 2030:2023, clause 5.2.3).
+
+When the sources run out, ask building control, the local planning authority or your scheme.
 
 ---
 
 ## Key Takeaways
 
-- EWI does not have a dedicated permitted development class; it falls under Part 1 Class A of the GPDO (for houses in England), and its PD status is not legally settled—always verify with the LPA or recommend a CLUD for funded projects.
-- Listed buildings, conservation areas, Article 4 direction areas, AONBs, and National Parks impose absolute or near-absolute constraints that must be identified at the dwelling assessment stage before any specification work begins.
-- Regulation 7(2) of the Building Regulations bans combustible materials (below A2-s1,d0) in external walls of residential buildings ≥18 m / ≥7 storeys; the anticipated lowering to 11 m means assessors should flag buildings between 11 m and 18 m for precautionary A2-compliant specification now.
-- EPS-based EWI systems are compliant below 18 m under current regulations but must be supported by valid BS 8414 / BR 135 system test evidence; component substitution invalidates the test.
-- The Retrofit Assessor's dwelling assessment report under PAS 2035:2023 Clause 7.2 is the foundational document; omitting a planning or fire safety constraint creates liability exposure for the assessor and propagates risk through the entire project.
-- Building height must be measured or verified from reliable sources, not estimated—a measurement error that places a building above or below a regulatory threshold can render an entire specification non-compliant.
-- Record all planning and fire safety screening findings with evidence sources and status (green/amber/red) in the dwelling assessment report and ensure clear communication to the Retrofit Coordinator.
+The points to keep are these:
+- Regulation 7(2) is law: where a storey is at least 18 m up and the building contains dwellings, external wall materials are to be A2-s1, d0 or A1, with listed exemptions (regulation 7(2) to (4)).
+- "7 storeys" belongs to the Building Safety Act 2022 higher-risk building definition (section 65), not to regulation 7.
+- Approved Document B Volume 1 is statutory guidance. For residential buildings it recommends A2-s1, d0 external surfaces over 11 m and A2-s1, d0 insulation where a storey is 11 m or more, or the BR 135 route; at 11 m or less only B-s3, d2 surfaces less than 1000 mm from the relevant boundary (paragraphs 10.3, 10.7, Table 10.1).
+- Regulation 7(4) and paragraph 10.7 measure to the top storey's floor (Diagram D6); Table 10.1 uses building height (Diagram D4).
+- In England, the technical guidance treats solid wall insulation on a house as an improvement, not an enlargement; but on article 2(3) land, cladding in the materials listed in A.2(a), render among them, is not permitted development, materials must look similar everywhere, and flats have no Class A rights (SI 2015/596, article 2(1) and Class A).
+- The assessor identifies planning constraints and records construction, existing measures and the site (PAS 2035:2023, clause 7.3.2); the design verifies fire safety (clause 8.2.21 e).
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** Under the GPDO 2015 (as amended), which Part and Class is most commonly relied upon for EWI on a dwellinghouse in England?
+**Q1.** Which of these is a "relevant building" under regulation 7(4) of the Building Regulations 2010 (England)?
 
-A) Part 1, Class E
-B) Part 1, Class A
-C) Part 2, Class A
-D) Part 14, Class J
+A) A seven-storey block of flats whose top floor surface is 16 m above the lowest adjoining ground
+B) Any block of flats with a storey 11 m or more above ground
+C) A block of flats whose top floor surface is 18.2 m above the lowest adjoining ground
+D) A two-storey house with a wall less than 1000 mm from the relevant boundary
 
-**Correct answer: B**
-*Part 1, Class A covers enlargement, improvement or other alteration of a dwellinghouse. There is no EWI-specific permitted development class. Part 14, Class J relates to microgeneration (solar PV), not insulation.*
-
----
-
-**Q2.** Regulation 7(2) of the Building Regulations 2010 (as amended) currently requires materials in external walls of relevant residential buildings to achieve a minimum European Classification of:
-
-A) Class E to BS EN 13501-1
-B) Class B-s3,d2 to BS EN 13501-1
-C) A2-s1,d0 to BS EN 13501-1
-D) Class C-s3,d2 to BS EN 13501-1
-
-**Correct answer: C**
-*Regulation 7(2) requires A2-s1,d0 or A1 for materials in the external walls of relevant buildings (≥18 m or ≥7 storeys containing dwellings). Class B and Class C are relevant to ADB Table 12.1 provisions for external surfaces on lower buildings but do not satisfy Regulation 7(2).*
+**Correct answer: C.** A relevant building has a storey at least 18 m above the lowest adjoining ground, measured to the floor surface, and contains dwellings; there is no storey count (Building Regulations 2010, regulation 7(4)).
 
 ---
 
-**Q3.** A five-storey block of flats at 14 m height is proposed for EWI under a Social Housing Decarbonisation Fund project. Which statement is correct?
+**Q2.** For EWI on a block of flats whose top floor is 14 m above ground, what does Approved Document B Volume 1 recommend for the insulation?
 
-A) Permitted development rights under Part 1 Class A apply because the building is below 18 m.
-B) A full planning application is likely required because Part 1 Class A does not apply to flats.
-C) No planning permission is needed because the works are funded by a government programme.
-D) Regulation 7(2) applies because the building has five storeys.
+A) Class A2-s1, d0 or better, unless the BR 135 route with BS 8414 test data is followed
+B) Class E or better
+C) Nothing, until a future law lowers the ban to 11 m
+D) Class B-s3, d2 or better, only for walls less than 1000 mm from the relevant boundary
 
-**Correct answer: B**
-*Part 1 Class A of the GPDO applies to dwellinghouses, not to flats within a block. Government funding does not override planning requirements. Regulation 7(2) applies at ≥18 m or ≥7 storeys; a 5-storey block at 14 m does not meet either threshold, though precautionary A2-specification is recommended.*
-
----
-
-**Q4.** Under PAS 2035:2023, which clause requires the Retrofit Assessor to identify constraints and risks that may affect the selection, design, installation, and performance of energy efficiency measures?
-
-A) Clause 6.3
-B) Clause 8.3
-C) Clause 7.2
-D) Clause 10.1
-
-**Correct answer: C**
-*Clause 7.2 governs the dwelling assessment, which is the Retrofit Assessor's primary deliverable. Clause 6.3 relates to the Retrofit Coordinator's responsibilities. Clause 8.3 covers the improvement option evaluation, which is the Coordinator's task using the assessor's data.*
+**Correct answer: A.** Insulation in residential buildings with a storey 11 m or more should be A2-s1, d0 or better, and buildings outside regulation 7(4) may instead meet BR 135 using BS 8414 data (Approved Document B Volume 1, paragraphs 10.3 and 10.7).
 
 ---
 
-**Q5.** An EWI system has been tested to BS 8414-1 and assessed against BR 135 criteria using 100 mm EPS insulation with a specific mineral render system. The installer proposes substituting a different render product of the same thickness and classification. Which statement is correct?
+**Q3.** A householder in a conservation area in England wants rendered EWI on their semi-detached house. Which statement is correct?
 
-A) The substitution is acceptable because the render has the same European Classification.
-B) The substitution invalidates the BS 8414 test evidence; a new test or engineering assessment is required.
-C) The substitution is acceptable provided the insulation board is unchanged.
-D) BS 8414 testing is only required for buildings above 18 m, so the substitution is irrelevant.
+A) It is permitted development, because solid wall insulation is an improvement
+B) It is permitted development if it projects no more than 16 cm
+C) It is permitted development unless the council has made an Article 4 direction
+D) It is not permitted development, because Class A does not permit cladding with render on article 2(3) land
 
-**Correct answer: B**
-*BS 8414 tests are system-specific. Every component—insulation, adhesive, fixings, mesh, basecoat, and topcoat render—must match the tested configuration. Substitution of any component, even one with an equivalent or superior standalone classification, means the test evidence no longer applies to the installed system.*
+**Correct answer: D.** A conservation area is article 2(3) land, where Class A does not permit render cladding; 16 cm is a Welsh figure, and no Article 4 direction is needed (SI 2015/596, Schedule 1, Part 1; Class A, paragraph A.2(a)).
+
+---
+
+**Q4.** Under PAS 2035:2023, which of these is part of the retrofit assessment in clause 7.3.2?
+
+A) Verifying that fire safety is not compromised by the measures
+B) Identifying constraints imposed by the local planning authority, such as listing
+C) Applying for statutory approvals on the client's behalf
+D) Preparing an updated fire safety strategy to BS 7974
+
+**Correct answer: B.** Clause 7.3.2 c covers planning constraints; fire safety verification and strategy belong to the design (clause 8.2.21 e and note 2), applications to the Retrofit Coordinator (clause 8.2.7) (PAS 2035:2023).
+
+---
+
+**Q5.** Which statement about the rules on external walls in England is correct at 12 October 2026?
+
+A) Approved Document B is law, and departing from it is an offence in itself
+B) The 11 m provisions are a consultation proposal not yet in Approved Document B
+C) Regulation 7(2) is law, while Approved Document B is statutory guidance giving one way to comply, and another way can be agreed with building control
+D) The 2029 amendments to Approved Document B are already in effect
+
+**Correct answer: C.** Approved documents give "one way to comply", agreed alternatives are possible, the 11 m provisions came in 2022 and the 2029 amendments take effect on 2 September 2029 (Approved Document B Volume 1, Introduction and front matter).
 
 ---
 
 ## Further Reading
 
-1. **Ministry of Housing, Communities and Local Government (now DLUHC).** *Approved Document B: Fire Safety — Volume 1: Dwellings* (2024 edition).
-https://www.gov.uk/government/publications/fire-safety-approved-document-b
+Sources used for this course:
+- **Approved Document B (Fire safety) Volume 1: Dwellings, 2019 edition incorporating 2020, 2022, 2025 and 2026 amendments.** HM Government, gov.uk, updated 16 September 2026. The front pages, Section 10 and Appendix B.
+- **The Building Regulations 2010 (SI 2010/2214).** legislation.gov.uk, revised text as at October 2026. Regulations 3, 4(2) and 7.
+- **The Town and Country Planning (General Permitted Development) (England) Order 2015 (SI 2015/596).** legislation.gov.uk, revised to 7 October 2026. Schedule 2, Part 1, Class A, and Schedule 1, Part 1.
+- **Permitted development rights for householders: technical guidance.** MHCLG, updated 10 September 2019. The "Solid wall insulation" note under Class A.
+- **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, 2023. Clauses 7.3.2, 7.4, 8.1, 8.2.7 and 8.2.21.
+- **PAS 2030:2023 Installation of energy efficiency measures in existing dwellings. Specification.** BSI, 2023. Clause 5.2.3 and Annex B.4.
 
-2. **HM Government.** *The Building Regulations 2010: Regulation 7(2) — Guidance on the Ban on Combustible Materials in the External Walls of Buildings.* (Circular letter and guidance note, as updated.)
-https://www
+---
+
+*© Meridian CPD 2026. All rights reserved. Unauthorised reproduction prohibited.*
+*This course material is licensed to individual subscribers only.*

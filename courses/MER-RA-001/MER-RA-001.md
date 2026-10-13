@@ -1,219 +1,309 @@
-
-
 # PAS 2035:2023 Overview for Retrofit Assessors
-**Course ID:** MER-RA-001 | **CPD Hours:** 2.0 | **Published:** March 2026
+**Course ID:** MER-RA-001 | **CPD Hours:** 2.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
 
-- Identify the principal structural and procedural changes introduced in PAS 2035:2023 compared with the 2019 edition and explain their direct impact on the Retrofit Assessor role.
-- Apply the revised risk-assessment methodology, including the updated risk matrix and moisture-risk categorisation, to dwelling archetypes commonly encountered in publicly funded retrofit programmes.
-- Determine the correct assessment pathway (Path A, B, or C) for a given project using the 2023 decision criteria, including the revised thresholds for medium-risk designations.
-- Integrate dwelling-assessment outputs with the requirements of RdSAP 10 and the Home Energy Model so that data recorded on site feeds accurately into the retrofit design stage.
-- Evaluate the information requirements for the dwelling data collection process, including the updated data fields mandated by PAS 2035:2023 Annex A, and distinguish mandatory from recommended data items.
+By the end of this course you should be able to:
+- Describe the scope and status of PAS 2035:2023, the main changes from the 2019 edition, and how it works with PAS 2030:2023.
+- Name the roles the standard defines and the qualifications Annex A sets for each, including the extra award for traditional buildings.
+- List what a whole-dwelling assessment shall include under clause 7.3.2 and what the report to the Retrofit Designer shall contain under clause 7.4.
+- Explain how the assessment feeds the Coordinator's improvement options evaluation and medium-term improvement plan, and the design's provisions for ventilation, moisture, fire, overheating and airtightness.
+- Outline the requirements for installation, testing, commissioning, handover, advice, monitoring and evaluation, and claims of compliance.
 
 ---
 
 ## Introduction
 
-PAS 2035:2023 replaced the 2019 edition as the overarching specification for the retrofit of domestic buildings in the UK. For any assessor working on projects funded through ECO4, the Great British Insulation Scheme, the Social Housing Decarbonisation Fund, or local-authority-led programmes, the 2023 document is now the operative standard. If your practice still runs on habits formed around the 2019 text, there are gaps that will catch you — and they tend to surface at lodgement, at TrustMark audit, or worse, as a defect two winters after handover.
+This course walks through PAS 2035:2023, "Retrofitting dwellings for improved energy efficiency. Specification and guidance", from scope to claims of compliance, with an eye on what each later stage needs from the assessment. It is written from the text of the standard. Clause, annex and note references are to PAS 2035:2023 unless another document is named.
 
-The revision was not cosmetic. BSI and the Retrofit Standards Task Group restructured the risk pathway logic, tightened the relationship between assessment data and design decision-making, and clarified the demarcation lines between the Retrofit Assessor, Retrofit Coordinator, and Retrofit Designer. The intent was to close the feedback loop: too many 2019-era projects saw assessment data collected to a cursory standard, passed to a Coordinator who filled in the blanks with assumptions, and translated into a design that looked adequate on paper but failed to account for occupant behaviour, local exposure, or existing moisture pathways.
+The standard is written for the whole UK. It cites the ventilation standards of all four nations: Approved Document F for England (2021) and for Wales (2022), the Scottish Building Standards Technical Handbook 2023 and Northern Ireland's Technical Booklet K (clause 2, references N3 to N6). It accepts qualifications on the regulated registers of all four nations (A.1.1). Where this course cites a building regulations document or a funding scheme, it names the nation or scheme.
 
-The timing matters for a second reason. RdSAP 10, underpinning the Home Energy Model, has changed the way energy performance is calculated. Assessment data you record on site now populates a different calculation engine with different sensitivities. Wall U-values, thermal bridging defaults, ventilation parameters, and heating system efficiencies are handled differently. If your site notes and your data-entry conventions were calibrated to RdSAP 9.94, you need to recalibrate — not just to the software, but to the way the data is interpreted downstream.
+It is a Publicly Available Specification that "is not to be regarded as a British Standard", and compliance with it cannot confer immunity from legal obligations (Foreword). Its requirements are the sentences using "shall", while commentary and explanatory material are not normative (Foreword), and clauses 4 and 5 are guidance. A "shall" binds you where a scheme, contract or funding rule adopts the standard. This course says "requires" only for "shall" provisions.
 
-This course walks through the 2023 changes that bear directly on assessment practice. It assumes you hold a Level 3 Diploma in Retrofit Assessment or equivalent, that you are registered with a TrustMark-authorised scheme, and that you have working familiarity with the 2019 edition. We are not covering first principles. We are covering what has changed, what it means for the work you do on site and at your desk, and where the common errors are already appearing.
+This edition replaces the March 2026 edition. That edition taught that the 2023 standard kept the 2019 risk paths A, B and C with recalibrated thresholds; the paths are gone. It described Annex A as mandatory and recommended data fields, when Annex A sets out qualifications. It said RdSAP 10 underpins the Home Energy Model, when the RdSAP10 Specification says this version of RdSAP "forms part of" SAP 10.2 (RdSAP10 Specification v4.0, Introduction). It also presented a moisture-meter requirement, geotagged photographs as a minimum standard and a ban on assessors recommending measures as PAS requirements, and quoted an untraceable statistic on assessments. None of those requirements is in the standard.
 
----
-
-## Section 1: Structural Changes in PAS 2035:2023 — What Moved and Why
-
-The 2023 edition reorganises the standard into a clearer process sequence. The 2019 document was criticised — rightly — for scattering requirements across clauses in a way that made it difficult to follow a single role's obligations from project inception to completion. The revision restructured content so that the assessment phase, the coordination and design phase, the installation phase, and the monitoring and evaluation phase each sit in a more logical sequence. For assessors, the critical clauses are now concentrated in Sections 6 and 7, with supporting data requirements in Annex A.
-
-**The Risk Matrix Revision**
-
-The most consequential change for day-to-day assessment practice is the revision to the risk matrix. The 2019 edition used a relatively blunt categorisation: Path A (lowest risk), Path B (medium risk), and Path C (highest risk). The 2023 edition retains this three-path structure but has recalibrated the criteria that determine which path applies.
-
-Under the 2019 framework, a solid-walled mid-terrace house of traditional construction receiving internal wall insulation was generally classified as Path C. The 2023 edition maintains that high-risk designation for IWI on traditionally constructed solid walls but has introduced more granularity around moisture-risk assessment. Rather than relying on a single exposure zone check and a broad construction-type classification, the assessor is now required to record specific moisture-risk indicators: evidence of rising damp, penetrating damp, condensation patterns, ventilation adequacy (both purpose-provided and adventitious), and the condition of rainwater goods. These are not new observations for a competent assessor, but they are now mandatory, codified data fields rather than optional commentary.
-
-**Pathway Determination Thresholds**
-
-The threshold between Path A and Path B has shifted. The 2023 edition narrows Path A eligibility. Projects involving any change to the building's ventilation strategy — including the indirect effects of draught-stripping or window replacement on background ventilation — are now likely to fall into Path B at minimum. This is a direct response to evidence from post-2019 retrofit projects where nominally low-risk measures (loft insulation plus draught-proofing, for example) created unintended condensation and mould-growth issues because the cumulative effect on air-tightness was not assessed.
-
-**Assessor Competence and Scope**
-
-PAS 2035:2023 also more explicitly defines what an assessment must and must not include. The assessment is a dwelling survey and data-collection exercise; it is not a design recommendation. The 2019 edition's language occasionally blurred this boundary, and some scheme providers encouraged assessors to include indicative measure recommendations in their reports. The 2023 text is unambiguous: the assessor records the condition, characteristics, and risks of the dwelling. The Retrofit Coordinator determines the improvement pathway. The Retrofit Designer specifies the measures. If you are still writing "recommend cavity wall insulation" in your assessment reports, stop. Your role is to record that the dwelling has unfilled cavities of a stated construction type, that the cavity width is measured or estimated at a stated dimension, that the exposure zone is recorded, and that any observable risk factors are documented.
+Statements about scheme status and the standard's status are correct to 12 October 2026.
 
 ---
 
-## Section 2: Revised Dwelling Assessment and Data Collection Requirements
+## Section 1: What PAS 2035:2023 Is and How It Is Used
 
-Annex A of PAS 2035:2023 is the assessor's primary reference for data collection. It has been substantially expanded from the 2019 version.
+### Scope and status
 
-**Mandatory Data Fields**
+PAS 2035:2023 specifies requirements for the retrofit of dwellings in four activities: assessment; identification and evaluation of improvement options (energy efficiency measures, or EEMs); design and specification of EEMs; and monitoring and evaluation (clause 1). The EEMs in scope run from fabric insulation and airtightness through heating, hot water, ventilation and lighting to measures against overheating and climate change (clause 1, items 1 to 13). It does not apply to maintenance, repair or like-for-like replacement that does not improve energy performance or ventilation or reduce emissions, but it does apply to the distressed replacement of heating appliances (clause 1). It describes itself as the overarching document of the retrofit standards framework (Introduction).
 
-The 2023 Annex A distinguishes between mandatory data fields — those without which an assessment cannot be considered compliant — and recommended data fields, which support better design decisions but whose absence does not invalidate the assessment. In the 2019 edition, this distinction was less clear, and in practice many assessors treated the entire data template as a pick-list, completing whichever fields they could readily populate and leaving gaps.
+The second edition was published in September 2023 (publication history). It came into effect on 30 March 2025 and supersedes PAS 2035:2019+A1:2022, withdrawn on that date (Foreword). It is to be reviewed at intervals not exceeding two years (Foreword). In October 2026 BSI's online catalogue listed it as "Current".
 
-Under PAS 2035:2023, mandatory fields include: dwelling type and age band; construction type for each thermal element (walls, roof, floor); wall construction detail including thickness measurements; window type, frame material, and glazing specification; existing heating system type, fuel, and estimated age; existing ventilation provision (type, location, and operational condition); evidence of moisture-related defects (categorised by type and severity); EPC rating or most recent RdSAP/SAP output; and the assessed exposure zone per BS 8104 or the driving-rain index.
+### What changed from 2019
 
-**Moisture-Risk Recording**
+The Foreword lists the principal changes. Those that matter most to an assessor:
+- The risk assessment process "has been simplified to avoid unintended complexities". TrustMark says risk pathways "have been removed" in PAS 2035:2023 and that risk pathway data on a 2019 assessment "simply becomes superfluous" (TrustMark, Retrofit Assessment Transition, V1.0, 4 March 2025). There is no Path A, B or C in the 2023 text.
+- In scale retrofit, design can begin from assessments of archetypes, though every dwelling still needs its own assessment before the design package is complete (clauses 5.4.1 and 7.4.5).
+- The contents of a medium-term improvement plan are now a requirement, and there are new requirements for an airtightness strategy.
+- A new Annex E covers historic significance, and Annex C on ventilation has been simplified and aligned with the new Approved Document F.
+- Monitoring and evaluation runs from inception, distressed replacement can comply retrospectively, climate resilience is strengthened, and moisture language follows BS 5250.
 
-The enhanced moisture-risk recording requirements deserve particular attention. The 2023 standard requires the assessor to conduct a structured moisture assessment as part of every dwelling survey. This is not a damp survey in the Building Surveyor's sense — you are not expected to produce a full diagnosis. But you are required to record the presence or absence of observable damp, mould, or condensation; to identify the likely moisture source category (rising, penetrating, interstitial, surface condensation); and to record whether the dwelling's existing ventilation is adequate to manage moisture loads.
+### Where PAS 2030:2023 fits
 
-In practice, this means carrying a calibrated moisture meter on every survey — not as an optional extra, but as standard kit. Surface moisture readings at key locations (below-DPC zones, window reveals, chimney-breast walls in unheated rooms, party-wall junctions in solid-walled terraces) should be recorded. You are not diagnosing; you are recording measurable data that the Coordinator and Designer will use.
+Installation, commissioning and handover are covered by PAS 2030:2023, "Installation of energy efficiency measures in existing dwellings. Specification", or for some measures by the MCS standards (Introduction; clause 9.1). PAS 2030 does not specify design or the assessment of dwellings; PAS 2035 does (PAS 2030:2023, Introduction). The introduction to PAS 2035 says one standard cannot be used without the other, MCS installations aside. The installer shall obtain a location-specific design conforming to PAS 2035:2023 and shall not start until it has been obtained and validated (PAS 2030:2023, clause 5.1).
 
-**Ventilation Assessment**
+### How it is required in practice
 
-The 2023 edition significantly strengthens ventilation assessment requirements. Assessors must now record not just whether mechanical ventilation is present, but its type (intermittent extract, continuous extract, MVHR), its location, and — critically — whether it is operational at the time of survey. The standard explicitly notes that a significant proportion of existing mechanical extract fans in UK housing stock are either disconnected, non-functional, or have had their ducting compromised. Recording "extractor fan present in bathroom" is no longer sufficient. You must record whether it operates, whether it is ducted to outside, and whether the duct route is unobstructed as far as you can reasonably determine.
+A DESNZ letter of 5 March 2025, published by TrustMark, said measures completed after 30 March 2025 under ECO4, the Great British Insulation Scheme (GBIS), the Warm Homes: Local Grant and the Warm Homes: Social Housing Fund "must be delivered to PAS 2035:2023". Scheme status has moved on. The government response of 23 January 2026 said GBIS would end as planned on 31 March 2026, ECO4 would end on 31 December 2026, and there would be no successor supplier obligation (DESNZ, Extending the ECO4 end date: government response).
 
-Additionally, background ventilation must be assessed: trickle vents (open, closed, or sealed over), airbricks (present, blocked, or removed), and any other purpose-provided ventilation. The adventitious ventilation implied by the dwelling's general condition — draughty sash windows, unsealed suspended timber floors, gaps around service penetrations — should also be noted, because these are the ventilation pathways that retrofit measures are likely to disrupt.
-
-**Photography and Evidence Standards**
-
-PAS 2035:2023 introduces more explicit requirements for photographic evidence. Each thermal element, each identified defect, and each moisture observation should be photographed and keyed to the data record. This is not new best practice, but it is now a compliance requirement. Scheme auditors are increasingly checking that photographic records match the data entries, and discrepancies between the two are being flagged as non-conformances.
-
----
-
-## Section 3: Interface with RdSAP 10 and the Home Energy Model
-
-The assessment data you collect does not exist in isolation. It feeds into the energy performance calculation, and under RdSAP 10, that calculation has changed in ways that directly affect how your data is interpreted.
-
-**RdSAP 10 Changes Relevant to Assessment**
-
-RdSAP 10, which underpins the Home Energy Model for existing dwellings, introduced revised U-value defaults, updated heating system efficiencies, a more granular treatment of thermal bridging, and changes to the way ventilation heat loss is calculated. For assessors, the key implication is that the calculation is now more sensitive to the quality and specificity of the data you provide. Under RdSAP 9.94, the default assumptions were often generous enough that imprecise data entry still produced a broadly plausible output. Under RdSAP 10, defaults have been recalibrated — in many cases becoming less favourable — which means that site-specific data carries greater weight.
-
-**Wall Construction and U-Values**
-
-Wall construction is the clearest example. RdSAP 10 has revised the default U-values for several common wall types. The default for an uninsulated standard cavity wall, for instance, has been updated to reflect more recent field-measurement data, and it is generally less favourable than the RdSAP 9.94 default. If you record wall construction accurately — cavity width, insulation presence, construction material — the calculation can apply a more precise U-value. If you default, the calculation applies the new, typically worse, assumption. This matters because the gap between the as-assessed baseline and the post-retrofit prediction determines the projected energy saving, which in turn determines funding eligibility under ECO4 and GBIS.
-
-For solid walls, the revised defaults similarly reflect updated evidence on actual thermal performance. The well-documented "performance gap" in solid-wall insulation projects — where in-situ thermal performance after insulation is worse than predicted — has informed more conservative default assumptions. Your on-site observations about wall thickness, construction material (brick, stone, cob, mixed), pointing condition, and internal finish all feed into the selection of an appropriate U-value in the calculation.
-
-**Ventilation and Air-Tightness**
-
-RdSAP 10 also handles ventilation heat loss differently. The calculation now requires clearer input on the type and extent of ventilation provision, and the default assumptions about adventitious ventilation have been revised. If the dwelling has had draught-stripping measures installed (or if these are proposed), the ventilation heat-loss calculation is more sensitive to this input than it was under the previous version. This creates a direct feedback loop to your assessment data: if you record ventilation provision inaccurately, the baseline energy performance is wrong, and the projected savings from proposed measures will be unreliable.
-
-**Heating Systems**
-
-Heating system recording has also become more consequential. RdSAP 10 updated the PCDB (Product Characteristics Database) and revised efficiencies for older boiler types. The age and type of the existing boiler, which you record on site, maps to a different efficiency assumption than it did under 9.94. Mis-recording a boiler's age band — say, logging a 2005 boiler as "2008–2012" because you couldn't read the data plate — may shift the assumed efficiency by several percentage points, which propagates through the entire energy calculation.
-
-**Practical Implication**
-
-The overarching message is this: under RdSAP 10, your assessment data has higher-consequence downstream. Sloppy data entry that was tolerated (or invisible) under the old calculation engine now produces visibly wrong outputs. Coordinators and designers are already reporting that baseline assessments frequently don't reconcile with the energy bills or metered data from the dwelling. When that happens, the assessment gets sent back. Getting it right the first time — with accurate measurements, defensible observations, and properly populated data fields — is no longer just good practice. It is the only workflow that survives contact with the new calculation methodology.
+For England, Approved Document F Volume 1 (2021) says following PAS 2035 is considered an adequate means of demonstrating compliance with its paragraph 3.6, which says energy efficiency work should not leave ventilation below the minimum standard (Approved Document F Volume 1, paragraphs 3.6 and 3.7). This course does not cover which schemes run in which nation; your scheme provider or TrustMark can tell you which requirements apply to a job.
 
 ---
 
-## Section 4: Common Non-Conformances and Practical Application
+## Section 2: Roles and Qualifications
 
-TrustMark technical audits, scheme provider quality reviews, and Retrofit Coordinator feedback from the first two years of PAS 2035:2023 implementation have identified recurring non-conformances in assessment practice. Understanding these patterns is directly actionable.
+### The Retrofit Coordinator
 
-**1. Incomplete Moisture Assessment**
+Every domestic retrofit project shall be coordinated by a Retrofit Coordinator (clause 6.1.1), whose role is to identify, protect and document the client's interest and the public interest and to oversee the project from inception, through assessment, design and installation, to post-completion evaluation (clause 6.1.3). The Coordinator shall be involved from inception, before the assessment (clause 6.1.5), and shall declare to the client any employment by an organisation commissioned to do the work (clause 6.1.4). At the outset the Coordinator agrees and records the intended outcomes with the client, from a list running from reduced energy use and costs through comfort, air quality, damp and mould, and overheating to climate resilience and heritage (clause 6.2.1).
 
-The most frequently cited non-conformance is an incomplete or absent moisture assessment. Assessors record "no damp observed" without evidence of a structured inspection. Under PAS 2035:2023, the absence of damp must be a positive finding supported by observations at the required locations, not a default entry. If access constraints prevent inspection of certain elements — say, a basement soffit or an inaccessible flat-roof void — this must be recorded as a limitation, not omitted.
+The Coordinator shall hold the Level 5 Diploma in Retrofit Coordination and Risk Management, be working towards it by a recognised route, or hold the OCN NI Level 5 Extended Certificate in Retrofitting Domestic Properties (A.2.1). On a project with a traditionally constructed building the Coordinator also needs an A.1.2 award (A.2.2).
 
-**2. Ventilation Data Gaps**
+### The Retrofit Assessor
 
-The second recurring issue is ventilation data that is internally inconsistent. An assessment that records "trickle vents present" on windows but does not record whether they are open or closed, or that notes an extractor fan in a kitchen but does not record whether it is functional, will not satisfy the 2023 data requirements. Coordinators report that roughly one-third of assessments received in 2025 required clarification on ventilation data before a pathway determination could be made.
+A retrofit assessment is the "survey, inspection and assessment" of a building to collate information for a retrofit design (clause 3.27). The Retrofit Assessor shall be a domestic energy assessor certified and registered by an assessor body, or working towards that through a recognised RPEL process or a regulated course, or a RICS registered surveyor (AssocRICS, MRICS or FRICS) (A.1.1). A note says assessors can be registered with TrustMark. Annex A names no retrofit assessment diploma, so anything further your scheme asks for is a scheme requirement.
 
-**3. Photographic Evidence Mismatch**
+For a traditionally constructed dwelling the assessor shall also hold the Level 3 Award in Energy Efficiency for Older and Traditional Buildings, or the Scottish Level 6 or Welsh Level 3 equivalent; a note says those two are no longer offered but holders still qualify (A.1.2).
 
-Photographic records that do not correspond to the written assessment continue to be flagged. Ensure your image file-naming convention or metadata system links each photograph unambiguously to the relevant data field. Time-stamped, geotagged photographs taken on a device with a synchronised clock are the minimum standard.
+### The Retrofit Designer
 
-**4. Pathway Over-Reach**
+The Designer's qualification depends on the project (A.3):
+- A single measure needs a specialist designer of that measure with a measure-specific qualification, or for a proprietary system one trained and approved by its supplier, or in either case an A.3.7 professional (A.3.1 and A.3.2). A lone combustion appliance or MCS measure has its own routes, including a chartered building services engineer (A.3.3 and A.3.4).
+- Two interacting fabric measures, such as cavity wall and loft insulation, need an A.3.7 designer or a specialist designer meeting the conditions in A.3.5 (A.3.5; A.3, note 3).
+- Three or more interacting fabric measures, or any fabric insulation or replacement windows on a high-rise (over 11 m or four storeys) or system-built dwelling, need a chartered architectural technologist, an ARB registered architect, a professional member of the CIOB or a chartered building surveyor (A.3.7; clause 3.12).
+- A traditional building where measures are likely to affect heritage significance or fabric needs an A.3.7 professional with an A.1.2 award or a listed conservation accreditation (A.3.8).
 
-Finally, assessors continuing to include measure recommendations or pathway suggestions in their reports are being flagged for scope over-reach. Record the dwelling. Record the risks. Stop there. The Coordinator determines the pathway; the Designer specifies the measures. Your authority ends at data collection and risk observation.
+The Coordinator reviews the Designer's qualifications (A.3.6). A note says clause 8 makes the Designer responsible for the whole-house approach, including ventilation and overheating (A.3, note 2).
+
+### The Evaluator and multiple roles
+
+A Retrofit Evaluator shall be a Coordinator qualified under A.2 (A.4.1). One person can fill several roles if qualified for each and any conflict of interest is reported to the client and managed (A.5, note). For further monitoring and evaluation, though, the Evaluator shall not be the Coordinator and shall be independent of the assessor, Coordinator, Designer and installer (A.5.1).
+
+---
+
+## Section 3: The Whole-Dwelling Assessment
+
+### Who and when
+
+The Coordinator shall confirm that every dwelling to receive energy retrofit work is first assessed by a Retrofit Assessor, to inform the Retrofit Designer (clause 7.1.1). On large-scale projects every dwelling shall still be assessed before the design package is complete; a note allows dwellings of one archetype to be collated in one document, reporting differences by exception (clause 7.4.5).
+
+### What the assessment shall include
+
+Clause 7.3.2 sets out twelve items:
+- Location, orientation and attachment to other buildings (a).
+- An appraisal of heritage, architectural features, structure, construction, condition and installed services, enough to establish suitability for improvement (b).
+- Planning constraints such as listing, conservation areas and tree preservation orders (c).
+- The location and severity of defects, leaks, condensation and mould (d).
+- EEMs already installed or proposed (e).
+- An inspection and review of existing ventilation (f).
+- The main materials, U-values and moisture properties of exposed floors, walls and roofs (g).
+- A measured survey of the heat loss envelope, elements and openings, showing how elements relate at corners, junctions and openings (h).
+- Site constraints such as exposure to sun, wind and rain, access, party walls and adjoining properties (i).
+- Installed services and controls, their age, service history where available, location and areas served, and confirmation that they work correctly or not (j).
+- Occupancy, including any vulnerable people (k).
+- Other risks such as noise, air pollution, flooding, and climate-related overheating and humidity (l).
+
+### Notes that shape the survey
+
+The notes to 7.3.2 give guidance in "might" and "should", not "shall". Defects and construction might need test equipment or opening up (notes 1 and 6). A little condensation around bathroom fittings or window edges in extreme weather is normal (note 2). BS 5250:2021 Annex C is signposted for diagnosing dampness (note 4). For traditional construction it might not be appropriate to accept RdSAP default U-values (note 8). Window position matters because it governs thermal bridging if wall insulation follows (note 9). In a flood risk area an assessment by a property flood resilience surveyor should be included (note 10).
+
+The standard sets no moisture-meter readings at fixed locations, no photograph format such as geotagging, and no ban on an assessor mentioning measures. It gives the improvement options evaluation and recommended package to the Coordinator (clauses 8.1.1 and 8.1.4).
+
+### Ventilation
+
+Under 7.3.2 f) you record the position and type of any fans (intermittent, continuous extract, MVHR, single room heat recovery or PIV) with make and model where possible, and the reasons if not, and the size and location of all background ventilators. Any functional testing shall follow the relevant nation's ventilation standard, with BSRIA procedures for fan measurement, and air flows below the minimum shall be reported. The commentary on C.2 sums up the duty: identify and assess existing ventilation and confirm it is working correctly.
+
+There is a drafting gap. Clause 7.3.2 f) refers to "the checklist provided in Table C.1", but the September 2023 text has no Table C.1: its list of tables names only Tables E.1 and E.2. Ask your scheme provider which checklist it expects. For England, Approved Document F Volume 1 (2021) has a checklist for existing dwellings in Table D1, which Annex C cites (C.3.1).
+
+### Energy model and report
+
+The data shall be used to estimate annual fuel use, costs and carbon dioxide emissions, under actual or standard occupancy, with a recognised model "such as RdSAP, SAP or PHPP", run by the assessor, Coordinator or Designer (clause 7.3.3). No RdSAP version is named. The guidance warns that RdSAP makes default assumptions, so its data should be reviewed carefully and preferably exported to full SAP (clause 4.3.2).
+
+The assessment, including the ventilation assessment, shall be reported to the Designer with the RdSAP, SAP or PHPP data file and a photographic record of all recorded features and any defects (clause 7.4.1). Defects shall be reported in two categories: those to be repaired before any retrofit work can proceed, and those recommended but not an essential prerequisite (clause 7.4.2). If the report is not enough to design from, the Designer identifies what is missing and the Coordinator arranges for the assessor to update it (clauses 7.4.3, 7.4.4 and 8.2.5). Your report also goes to the installer (clause 8.2.26), who checks that the design documents include it (PAS 2030:2023, clause 5.2.2).
+
+### Distressed replacement
+
+Distressed replacement is fast-paced installation of an EEM, typically replacing heating and hot water in winter (clause 3.6). The whole-dwelling assessment shall then be completed as soon as possible during or after the work (clause 7.2.1). Once a Coordinator is engaged and the assessment done, all of clause 8 applies; if no further measures are planned, the minimum output is the improvement options evaluation and medium-term improvement plan (clause 8.3.2).
+
+### BS 40104:2025
+
+BSI published BS 40104:2025, "Retrofit assessment for domestic dwellings. Code of practice", describing it as a "risk-based methodology" for assessing dwellings before retrofit (BSI press release, 28 October 2025). PAS 2035:2023 does not refer to it. This course does not teach its content; ask your scheme provider whether and when it will apply to your work.
+
+---
+
+## Section 4: Traditional and Protected Buildings
+
+### Definitions
+
+Traditional construction means solid brick, stone or earth external walls of moisture-permeable materials, usually built before 1919, or pre-1919 timber frame (clause 3.39). A protected building is listed or in a designated conservation area (clause 3.23).
+
+### What the assessment adds
+
+For traditional construction, an assessment of significance shall also be carried out in accordance with BS 7913, and Annex E gives a simplified version (clause 7.3.4 and note). For a protected building the assessment shall also follow BS 7913 and include an assessment of significance, and where proposed measures are outside the Coordinator's competence, the Coordinator should bring in a suitably experienced engineer, surveyor or architect (clause 7.3.4).
+
+Annex E is normative. It describes significance through architectural and aesthetic, communal, evidential and historical values (Table E.1). Its requirements:
+- Significance shall be assessed before retrofit proposals are formulated and design starts, in proportion to the building's importance; many traditional buildings need only a brief assessment (E.1.3).
+- The checklist in Table E.2 shall be used by a Retrofit Assessor qualified for traditional buildings (E.1.4).
+- Where retrofit might affect appearance, significant walls, windows and doors, roofs and internal features shall be analysed (E.1.5).
+- Features found shall be ticked on Table E.2, with details and photographs (E.1.6).
+
+Table E.2 asks about year built, local recognition, built form, setting, roof covering, walls, original windows and historic glass, internal features, floor materials, alterations, and potential to enhance significance. The notes give examples of what retrofit can affect, such as ceiling cornices obscured by internal wall insulation (E.1.5, note 4).
+
+### What happens next
+
+The Designer and Coordinator shall take significance into account when selecting measures, and where a measure might affect a significant aspect, a heritage impact assessment following BS 7913 shall be carried out as part of the options appraisal (clause 8.2.33; E.1.2). The guidance explains why: heat loss and airtightness work might have unintended consequences for air quality and moisture, particularly in traditional buildings and in non-traditional buildings of the 1960s and 1970s (clause 4.2.6). An interstitial condensation calculation might not be enough for a BS 5250 moisture risk assessment of, for example, solid walls with internal insulation in exposed locations (clause 4.3.3, note 1).
+
+---
+
+## Section 5: Options, Plans and Design
+
+### Improvement options evaluation and plan
+
+Before design starts, the Coordinator shall carry out an improvement options evaluation for every dwelling or dwelling type, using the assessment's data file to calculate the simple payback and carbon cost-effectiveness of each candidate measure and any package (clause 8.1.1). Capital costs use independent rates, such as the Energy Saving Trust's, applied to the dwelling's areas, with actual tariffs where available and actual occupancy where known (clause 8.1.3). A note says deemed savings should not be used. That is one reason your measured survey matters.
+
+The Coordinator shall prepare a summary and recommended package to form the basis of a medium-term improvement plan, and a plan shall be prepared for every dwelling (clauses 8.1.4 and 8.1.5). The plan shall identify constraints, the measures and enabling works needed, interactions, the order of installation and a monitoring and evaluation plan (clause 8.1.7). The Coordinator agrees scope, outcomes, targets and budget with the client (clause 8.1.8).
+
+### The retrofit design
+
+The Designer shall confirm they hold a clause 7 assessment before designing (clause 8.2.3). The design takes account of the building's condition, including repairs and the causes of damp, the scope and targets, the assessment report, statutory conditions and the existing ventilation (clause 8.2.8). The provisions an assessor should know:
+- Moisture: the design shall provide for moisture management in line with BS 5250 (clause 8.2.10).
+- Airtightness: where fabric insulation, replacement windows or external doors are included, airtightness measures are deemed to be applied too (clause 8.2.11). Where fabric measures are included, the Designer or Coordinator shall develop an airtightness and air leakage testing strategy (clause 8.2.35), and any airtightness target shall be demonstrated by test following CIBSE guidance (clause 8.2.36).
+- Ventilation: if the specified and existing measures fall into Category B or C of Approved Document F Diagram 3.1 and Table 3.1, or the assessment found condensation or mould, the Designer shall confirm whether existing ventilation is adequate and, if needed, specify an upgrade under Annex C (clause 8.2.13).
+- Interactions: the Measures Interaction Matrix in Annex D sorts combinations into green, yellow, orange and red. Yellow junctions need construction details, orange interactions need specifications that allow for them, and red combinations shall not be used (clauses 8.2.14 to 8.2.20).
+- Fire and resilience: the design shall verify that fire safety is not compromised, with an updated fire safety strategy if necessary, and provide ventilation for combustion appliances, resilience against rainwater and flood, and maintenance requirements (clause 8.2.21). A note points to Approved Document B and BS 7974.
+- Overheating: the design shall include measures to inhibit overheating, identified using CIBSE TM59 and other named guidance (clause 8.2.31), with active cooling as a last resort (clause 8.2.32).
+
+### Approved Document F categories and Annex C
+
+The categories in 8.2.13 are Approved Document F's, not risk paths. Approved Document F counts the major and minor measures fitted since the dwelling was built and those planned, and Diagram 3.1 turns the count into Category A, B or C (Approved Document F Volume 1, 2021, paragraphs 3.8 and 3.9). PAS 2035:2023 cites that 2021 England edition; gov.uk also lists a 2026 edition, so ask building control which applies.
+
+For Category C measures, Annex C accepts continuous mechanical extract with correctly sized background ventilators, whole-dwelling MVHR, or an equivalent system on expert advice (C.2.2); for Category B it also accepts an existing intermittent extract system with correctly sized fans in all wet rooms and correctly sized background ventilators in all rooms (C.2.3). Where there is condensation or mould, no insulation or airtightness work is proposed and ventilation fails Approved Document F Table D1, ventilation shall be upgraded, and the Coordinator advises the client on condensation, damp and mould (C.3.1). Upgraded continuous systems need automatic control, not light or manual switches alone (C.3.6).
+
+---
+
+## Section 6: Installation, Testing, Commissioning, Handover and Advice
+
+### Installation and site inspection
+
+Installation shall follow PAS 2030, or MCS standards for systems within MCS scope (clause 9.1). The Coordinator shall collect evidence that PAS 2035 has been met, through in-person or remote site inspections, the number agreed with the client (clause 9.2). Third-party digital evidence is allowed, when an in-person visit is not possible, only for listed measures such as loft and cavity wall insulation, single replacement windows and boiler replacement; any unlisted measure, or a listed one that connects to another fabric measure, needs an in-person inspection (clause 9.2). Non-compliance is recorded, reported in writing and escalated to the quality assurance regime if not put right (clause 9.3.2). On the installer's side, PAS 2030 requires a pre-installation building inspection that reviews the design and confirms that the identified repairs have been done (PAS 2030:2023, clauses 7.2.1 and 7.2.4).
+
+### Testing, commissioning and handover
+
+The design shall specify testing, such as airtightness testing (clause 10.1.1), and commissioning of building services and of fabric measures with moving parts; where several measures need it, services are finally commissioned together (clauses 10.2.1 and 10.2.2). Handover covers demonstration of controls, safe operation, care, maintenance, efficient use, the importance of ventilation and the consequences of switching it off, and documentation (clause 11.1.2). The Coordinator keeps the documents for six years or the warranty period if longer (clause 11.1.3), recommends a new or updated EPC and, if the client agrees, arranges for a domestic energy assessor to produce it (clause 11.1.4), and updates the medium-term plan after each stage (clause 11.1.5).
+
+### Retrofit advice
+
+The Coordinator shall verify that retrofit advice is delivered on every project (clause 12.1.1). It goes to the occupants whatever the tenure, and tenants' landlords shall be offered the same advice (clause 12.1.2). It is given at initial engagement, after the improvement options evaluation, after design, and at or shortly after handover (clause 12.1.4). Inception advice covers use of systems, overheating, the health risks of fuel poverty, damp and mould, maintenance, tariffs, technologies and funding, the PAS 2035 process and complaints (clause 12.1.5). The guidance in clause 5.7.1 includes the Retrofit Assessor among those who can deliver advice, but advice after the options evaluation is for the Coordinator who did it, and advice after design for the Designer or Coordinator (clauses 12.1.6 and 12.1.7).
+
+---
+
+## Section 7: Monitoring, Evaluation and Claims of Compliance
+
+### Monitoring and evaluation
+
+The Coordinator prepares a monitoring and evaluation plan as part of the medium-term improvement plan (clauses 8.1.6 and 8.1.7) and shall evaluate every project to see whether the intended outcomes were achieved and to learn from problems, including with the dwelling assessment (clause 13.1). A Retrofit Evaluator does the work (clause 13.2.1), at two levels (clause 13.3.1):
+- Basic evaluation, the minimum for every project: a measure-specific questionnaire to client and occupants on outcomes, unintended consequences, satisfaction and anything not working (clause 13.4.1), completed and reported within three months after handover (clause 13.4.3).
+- Further monitoring and evaluation, where outcomes differ significantly, unintended consequences are suspected, the plan requires it or the Evaluator, Coordinator or client asks for it (clause 13.3.1), with consent (clause 13.3.2), planned under BS 40101 (clause 13.5.1).
+
+The Evaluator's findings go to the client, Coordinator, Designer, installer and the Retrofit Assessor (clauses 13.4.2 and 13.5.2). That is how an assessor learns whether the assessment held up.
+
+### Claims of compliance
+
+A claim of conformance shall say whether it rests on other-party validation or self-assessment (clause 14.2.1). A note gives TrustMark, providing assessment services for its members, as an example of an other-party body (clause 14.2.2, note 2). A self-assessing Coordinator shall be able to show the work followed the PAS and produce documents on request (clause 14.2.3). Claims are made by Retrofit Coordinators in a set form of words naming the property, the claimant and either the validating body or "self-assessed" (clause 14.3).
+
+### Putting it together
+
+Almost every later clause draws on clause 7: the options evaluation uses your data file and areas, the Designer's ventilation and moisture decisions use your records, the installer receives your report and the Evaluator reports back to you. A sensible habit is to read clause 8.2.13, Annex C and Annex E alongside clause 7. Where the standard leaves something open, such as which ventilation checklist to use, follow your scheme provider's rules and record in the report what you did.
 
 ---
 
 ## Key Takeaways
 
-- PAS 2035:2023 narrows Path A eligibility: any measure affecting the ventilation strategy is likely Path B minimum — verify pathway thresholds against the 2023 risk matrix for every project.
-- Moisture assessment is now a mandatory, structured component of every dwelling survey; carry a calibrated moisture meter as standard equipment and record readings at specified locations.
-- Ventilation data must include operational status, not just presence: record whether fans work, whether trickle vents are open, and whether ducting is intact and routed to outside.
-- The assessor role under PAS 2035:2023 is explicitly limited to data collection and risk observation — do not include measure recommendations or pathway determinations in your assessment report.
-- RdSAP 10 applies revised, generally less favourable defaults; site-specific data you record now carries significantly more weight in the energy calculation and in funding-eligibility determinations.
-- Photographic evidence must be systematically linked to data fields, time-stamped, and sufficient to independently verify every recorded observation and measurement.
-- Treat every assessment as if it will be technically audited, because under current TrustMark quality-assurance arrangements, the probability that it will be is materially higher than it was under the 2019 framework.
+The points to carry away:
+- PAS 2035:2023 has been in effect since 30 March 2025 and has no risk paths: the Foreword says risk assessment was simplified, and TrustMark says risk pathways were removed.
+- Annex A covers qualifications: a Retrofit Assessor is a certified domestic energy assessor (or working towards it) or a RICS registered surveyor, plus an older and traditional buildings award for traditional construction.
+- An assessment shall include clause 7.3.2 a) to l), and the report shall include the energy model data file and a photographic record of recorded features and defects (clause 7.4.1).
+- Defects are reported in two categories: repair before retrofit, or recommended but not an essential prerequisite (clause 7.4.2).
+- A traditional building needs a significance assessment to BS 7913, using the Annex E checklist, before design starts.
+- The Coordinator carries out the improvement options evaluation and leads the medium-term improvement plan; the design carries the ventilation, moisture, fire and overheating provisions.
+- Categories B and C in clause 8.2.13 are Approved Document F ventilation categories, not risk paths.
+- Basic evaluation is required on every project within three months of handover, and its findings go to the Retrofit Assessor.
 
 ---
 
 ## Self-Assessment Questions
 
-**Question 1**
-Under PAS 2035:2023, which of the following best describes the Retrofit Assessor's role?
+**Q1.** What does PAS 2035:2023 do with the risk paths A, B and C used under the 2019 edition?
 
-A) Collecting dwelling data, identifying risks, and recommending specific retrofit measures to the householder
-B) Collecting dwelling data and recording risk observations for use by the Retrofit Coordinator and Retrofit Designer
-C) Conducting a full building survey including structural assessment and damp diagnosis
-D) Determining the appropriate assessment pathway and specifying the ventilation strategy
+A) Keeps them, with recalibrated thresholds for Path B
+B) Drops them: the Foreword says the risk assessment process was simplified, and TrustMark says risk pathways were removed
+C) Replaces them with a Path D for traditional buildings
+D) Keeps them, but makes the assessor rather than the Coordinator choose the path
 
-**Correct answer: B**
-*Explanation: PAS 2035:2023 explicitly limits the assessor's scope to data collection and risk observation. Measure recommendations fall to the Designer; pathway determination falls to the Coordinator. A full structural/damp survey exceeds the assessor's defined competence boundary.*
+**Correct answer: B.** The 2023 text contains no risk paths; its Foreword says the process "has been simplified", and TrustMark says risk pathways "have been removed" (PAS 2035:2023, Foreword; TrustMark, Retrofit Assessment Transition, V1.0).
 
 ---
 
-**Question 2**
-A 1930s solid-walled mid-terrace dwelling is being assessed for internal wall insulation under ECO4 funding. Under PAS 2035:2023, what is the minimum likely assessment pathway?
+**Q2.** What is Annex A of PAS 2035:2023?
 
-A) Path A — the measure is a single, well-understood technology
-B) Path B — the dwelling is of traditional construction but the measure is low-risk
-C) Path C — IWI on a traditionally constructed solid-walled dwelling is categorised as high risk
-D) The pathway cannot be determined until the Coordinator reviews the assessment data
+A) A schedule of mandatory and recommended dwelling data fields
+B) The Measures Interaction Matrix
+C) The requirements for provision of adequate ventilation
+D) The qualifications for Retrofit Assessors, Coordinators, Designers and Evaluators
 
-**Correct answer: C**
-*Explanation: Internal wall insulation applied to solid walls of traditional construction is classified as high risk under PAS 2035:2023, placing it in Path C. While the formal pathway determination is the Coordinator's responsibility, the risk classification for this combination of dwelling type and measure is explicit in the standard.*
+**Correct answer: D.** Annex A is "Qualifications"; the interaction matrix is in Annex D, ventilation is Annex C, and no annex lists mandatory and recommended data fields (PAS 2035:2023, contents and Annex A).
 
 ---
 
-**Question 3**
-When recording ventilation data under PAS 2035:2023, which of the following is now a mandatory requirement?
+**Q3.** You are to assess a pre-1919 house of traditional construction, with solid stone walls, that is not listed and not in a conservation area. What does PAS 2035:2023 require beyond the clause 7.3.2 items?
 
-A) Recording the make and model number of all mechanical ventilation equipment
-B) Recording the presence of ventilation equipment only; operational status is a recommended but optional field
-C) Recording the presence, type, location, and operational status of mechanical ventilation, and the condition of background ventilation provisions
-D) Commissioning an air-tightness test to establish the dwelling's baseline air permeability
+A) The assessor must hold an A.1.2 older and traditional buildings award, and a significance assessment is carried out under BS 7913, with Annex E as a simplified version
+B) Calibrated moisture-meter readings at specified locations in every room
+C) A heritage impact assessment by the assessor before a Coordinator is appointed
+D) Nothing extra, because the significance provisions apply only to listed buildings
 
-**Correct answer: C**
-*Explanation: PAS 2035:2023 requires assessors to record not just whether ventilation equipment is present but whether it is functional, how it is ducted, and what background ventilation exists. Air-tightness testing may be required on some Path B and Path C projects but is not a mandatory part of every assessment.*
+**Correct answer: A.** A.1.2 adds the award for traditionally constructed dwellings, and clause 7.3.4 requires a significance assessment to BS 7913 for traditional construction, listed or not; a heritage impact assessment comes later, in the options appraisal (PAS 2035:2023, A.1.2, clauses 7.3.4 and 8.2.33).
 
 ---
 
-**Question 4**
-How has RdSAP 10 changed the significance of assessment data quality compared with RdSAP 9.94?
+**Q4.** Under clause 8.2.13, when must the Retrofit Designer confirm whether existing ventilation is adequate?
 
-A) RdSAP 10 uses identical defaults to RdSAP 9.94, so data quality has no differential impact
-B) RdSAP 10 has more favourable defaults, reducing the need for site-specific data
-C) RdSAP 10 has revised defaults that are generally less favourable, increasing the weight carried by accurate site-specific data
-D) RdSAP 10 no longer uses assessor-collected data; it relies entirely on remote sensing and EPC records
+A) Only when the assessor has placed the project in risk Path B or C
+B) Only when MVHR is proposed
+C) When the specified and existing measures fall into Category B or C of Approved Document F Diagram 3.1 and Table 3.1, or the assessment found condensation or mould
+D) Only on high-rise buildings
 
-**Correct answer: C**
-*Explanation: RdSAP 10 revised default U-values, heating system efficiencies, and ventilation parameters, generally making them less favourable than RdSAP 9.94 defaults. This means that accurate, site-specific data — wall thickness, insulation presence, boiler age — has a greater impact on the calculated baseline and projected savings.*
+**Correct answer: C.** Clause 8.2.13 uses the Approved Document F categories and evidence of condensation or mould as its triggers, with any upgrade managed under Annex C (PAS 2035:2023, clause 8.2.13).
 
 ---
 
-**Question 5**
-Under PAS 2035:2023, what is the required approach when a moisture assessment cannot be completed for a specific building element due to access restrictions?
+**Q5.** Who carries out the improvement options evaluation and leads the medium-term improvement plan?
 
-A) Record "no damp observed" for that element, as no contradictory evidence exists
-B) Omit the element from the assessment report entirely
-C) Record the access limitation explicitly and note which elements could not be inspected
-D) Defer the entire assessment until full access can be arranged
+A) The Retrofit Assessor, as part of the assessment report
+B) The Retrofit Coordinator
+C) The Retrofit Installer, at the pre-installation building inspection
+D) The Retrofit Evaluator, after handover
 
-**Correct answer: C**
-*Explanation: PAS 2035:2023 requires that access limitations be recorded as explicit constraints on the assessment. Defaulting to "no damp observed" when an area has not been inspected is a non-conformance. The Coordinator uses this information to determine whether additional investigation is needed before proceeding.*
+**Correct answer: B.** The Coordinator shall carry out the evaluation and identify the recommended package that forms the basis of the medium-term improvement plan, and updates the plan after each stage (PAS 2035:2023, clauses 8.1.1, 8.1.4 and 11.1.5).
 
 ---
 
 ## Further Reading
 
-- **PAS 2035:2023 — Retrofitting dwellings for improved energy efficiency: Specification and guidance** — Available from the BSI Shop: [https://shop.bsigroup.com](https://shop.bsigroup.com)
-
-- **PAS 2030:2023 — Specification for the installation of energy efficiency measures in existing buildings** — Available from the BSI Shop: [https://shop.bsigroup.com](https://shop.bsigroup.com)
-
-- **Home Energy Model and RdSAP 10 technical documentation** — Department for Energy Security and Net Zero: [https://www.gov.uk/government/publications/home-energy-model](https://www.gov.uk/government/publications/home-energy-model)
-
-- **TrustMark Framework Operating Requirements** — TrustMark Government Endorsed Quality Scheme: [https://www.trustmark.org.uk/tradespeople/framework-operating-requirements](https://www.trustmark.org.uk/tradespeople/framework-operating-requirements)
+Sources used for this course:
+- **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, September 2023. The Foreword, clauses 6 to 8 and 13, and Annexes A, C and E.
+- **PAS 2030:2023 Installation of energy efficiency measures in existing dwellings. Specification.** BSI, September 2023. Clauses 4, 5 and 7.2 on what the installer needs from the design and assessment.
+- **Approved Document F, Volume 1: Dwellings, 2021 edition, for use in England.** HM Government, in effect from 15 June 2022. Section 3 (Table 3.1, Diagram 3.1) and the Table D1 checklist.
+- **Retrofit Assessment Transition: PAS2035:2019 to PAS2035:2023 Assessment Conversion, V1.0.** TrustMark, 4 March 2025. The entry on risk pathways.
+- **DESNZ letter on PAS 2035 transition arrangements (untitled, addressed "To whom it may concern").** DESNZ, published by TrustMark, 5 March 2025. Which schemes must deliver to PAS 2035:2023.
+- **Extending the ECO4 end date: government response.** DESNZ, updated 23 January 2026. The ECO4 and GBIS end dates.
 
 ---
 

@@ -820,10 +820,10 @@ const STRIPE_SUB    = 'https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01';
 // shown or sold. To restore one, publish its corrected PDF and delete its ID here and
 // in UNDER_REVIEW in webhook/main.py.
 const UNDER_REVIEW = new Set([
-  'MER-RA-001','MER-RA-002','MER-RA-003','MER-RA-004','MER-RA-005','MER-RA-006',
-  'MER-RA-007','MER-RA-008','MER-RA-009','MER-RA-010','MER-RA-011','MER-RA-012',
-  'MER-ALL-001','MER-ALL-004','MER-ALL-005','MER-ALL-008','MER-ALL-009','MER-ALL-010',
-  'MER-ALL-011','MER-ALL-012','MER-ALL-013','MER-ALL-014','MER-ALL-015','MER-ALL-016',
+  'MER-RA-002','MER-RA-003','MER-RA-004','MER-RA-005','MER-RA-006',
+  'MER-RA-007','MER-RA-008','MER-RA-010','MER-RA-011','MER-RA-012',
+  'MER-ALL-004','MER-ALL-005','MER-ALL-008','MER-ALL-009','MER-ALL-010',
+  'MER-ALL-012','MER-ALL-013','MER-ALL-014','MER-ALL-015','MER-ALL-016',
   'MER-ALL-017',
 ]);
 
@@ -964,12 +964,12 @@ const ALL_COURSES = [
   {
     id: 'MER-RA-001', strand: 'RA', hours: 2.0,
     title: 'PAS 2035:2023 Overview for Retrofit Assessors',
-    desc: 'PAS 2035:2023 is not a minor revision of the 2019 edition. This two-hour overview covers every significant change to the risk pathway, assessment methodology, and data collection requirements — and what each means for your day-to-day practice.',
+    desc: 'A two-hour walk through PAS 2035:2023 as written: the roles and their qualifications, what a whole-dwelling assessment shall include and report, traditional buildings, design and ventilation, installation, handover, advice, and monitoring and evaluation. Every point carries its clause reference.',
     objectives: [
-      'Identify the principal structural changes introduced in PAS 2035:2023 versus the 2019 edition',
-      'Apply the revised risk-assessment methodology and updated moisture-risk categorisation',
-      'Determine the correct assessment pathway (A, B, or C) using the 2023 decision criteria',
-      'Integrate PAS 2035:2023 data collection requirements with RdSAP 10 and Home Energy Model inputs'
+      'Describe the scope and status of PAS 2035:2023, the main changes from the 2019 edition, and how it works with PAS 2030:2023',
+      'Name the roles the standard defines and the qualifications Annex A sets for each, including the extra award for traditional buildings',
+      'List what a whole-dwelling assessment shall include under clause 7.3.2 and what the report to the Retrofit Designer shall contain under clause 7.4',
+      'Explain how the assessment feeds the Coordinator\'s improvement options evaluation and medium-term improvement plan, and the design\'s provisions for ventilation, moisture, fire, overheating and airtightness'
     ]
   },
   {
@@ -1052,12 +1052,12 @@ const ALL_COURSES = [
   {
     id: 'MER-RA-009', strand: 'RA', hours: 1.0,
     title: 'External Wall Insulation: Planning Permission and Fire Risk',
-    desc: 'EWI projects carry planning permission and fire risk obligations that fall partly on the Retrofit Assessor. This course covers when householder and full consent applies, the fire risk documentation requirements, and the assessor\'s professional obligations.',
+    desc: 'What the law and the guidance say about external wall insulation in England: regulation 7, Approved Document B Section 10 applied to houses and flats, permitted development and conservation areas, and what the retrofit assessment records for the designer.',
     objectives: [
-      'Determine when EWI requires planning permission under permitted development rules',
-      'Identify the fire risk assessment requirements for EWI in multi-occupancy buildings',
-      'Apply the Annex B fire risk documentation obligations under PAS 2035:2023',
-      'Advise householders on planning and fire risk obligations as part of the assessment process'
+      'Tell the law on external walls (requirement B4 and regulation 7) from the statutory guidance in Approved Document B Volume 1, and say what is in force and what is forthcoming',
+      'Apply regulation 7(4) and the 11 m and 18 m provisions of Approved Document B Volume 1, Section 10, measuring height correctly',
+      'Decide whether external wall insulation (EWI) on a house in England is permitted development under Part 1, Class A of the GPDO 2015',
+      'Record what PAS 2035:2023 clause 7.3.2 asks, leaving fire safety verification to the retrofit design (clause 8.2.21)'
     ]
   },
   {
@@ -1096,12 +1096,12 @@ const ALL_COURSES = [
   {
     id: 'MER-ALL-001', strand: 'ALL', hours: 1.0,
     title: 'UK Energy Policy 2026: What Assessors Need to Know',
-    desc: 'A focused policy update covering RdSAP 10 rollout, MEES developments, the Warm Homes Plan, and the implications for working assessors — what has changed, what is confirmed, and what needs to be actioned now.',
+    desc: 'Where energy policy stands in October 2026: what is law today, the 2026 decisions on rented homes, EPC reform, the Future Homes Standard, and the Warm Homes Plan and its funding schemes. Each item is labelled as law, a decision or a proposal.',
     objectives: [
-      'Identify the principal UK energy policy developments from 2025–2026 and their assessment practice implications',
-      'Explain the current MEES thresholds and the confirmed and proposed policy trajectory',
-      'Understand how the Warm Homes Plan and Clean Energy Superpower mission affect publicly funded retrofit',
-      'Apply current policy knowledge to client advice, lodgement decisions, and CPD planning'
+      'State the minimum energy efficiency standard in law today for private rented property in England and Wales, with the regulation and dates',
+      'Explain what the A to G band on an RdSAP 10 EPC is based on, and why the grid carbon factor does not move it',
+      'Describe the 2026 decisions on EPC C for privately and socially rented homes, and separate what is decided from what is legislated',
+      'Give the current status and timing of EPC reform and of the Future Homes Standard'
     ]
   },
   {
@@ -1113,6 +1113,17 @@ const ALL_COURSES = [
       'Identify combustible insulation materials and their permitted use under current regulations',
       'Assess cladding and EWI fire risk in multi-occupancy dwellings',
       'Document fire safety considerations to the standard required by TrustMark and scheme auditors'
+    ]
+  },
+  {
+    id: 'MER-ALL-011', strand: 'ALL', hours: 1.0,
+    title: 'Non-Domestic MEES: The EPC E Minimum in Force and the Proposed EPC B Standard for 2031',
+    desc: 'The legal minimum for non-domestic lettings is EPC E. This course sets out the regulations in force, the seven-year payback test and the exemptions, and exactly what the June 2026 interim response proposes for 2031, so that a proposal is never presented to a client as a requirement.',
+    objectives: [
+      'State the minimum standard that is law for let non-domestic property in England and Wales, and where it is set',
+      'Explain the seven-year payback test and the registered exemptions',
+      'Distinguish what the government said on 18 June 2026 about larger buildings from 2031 from what has been legislated',
+      'Identify what that announcement leaves undecided and where the answers will come from'
     ]
   }
 ];
