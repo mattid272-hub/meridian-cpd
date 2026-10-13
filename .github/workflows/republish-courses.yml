@@ -1,0 +1,60 @@
+name: Meridian CPD — Republish Corrected Courses
+
+# Rebuilds course PDFs and replaces them in storage when a course's markdown changes
+# on main, so a merged correction reaches customers without anyone running a script.
+# The content engine's own commits carry [skip ci] and publish their own PDF.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'courses/MER-*/MER-*.md'
+  workflow_dispatch:
+    inputs:
+      course_ids:
+        description: 'Course IDs to rebuild, separated by spaces (e.g. MER-DEA-004 MER-DEA-011)'
+        required: true
+
+jobs:
+  republish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r content-engine/requirements.txt
+          pip install -r webhook/requirements.txt
+
+      - name: Work out which courses changed
+        id: changed
+        env:
+          INPUT_IDS: ${{ github.event.inputs.course_ids }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          if [ -n "$INPUT_IDS" ]; then
+            ids="$INPUT_IDS"
+          else
+            ids=$(git diff --name-only "$BEFORE" "$GITHUB_SHA" -- 'courses/MER-*/MER-*.md' \
+                  | sed -E 's#^courses/(MER-[A-Z]+-[0-9]{3})/.*#\1#' | sort -u | tr '\n' ' ')
+          fi
+          echo "Courses: $ids"
+          echo "ids=$ids" >> "$GITHUB_OUTPUT"
+
+      - name: Rebuild and replace PDFs
+        if: steps.changed.outputs.ids != ''
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          COURSE_IDS: ${{ steps.changed.outputs.ids }}
+        run: python3 content-engine/republish_courses.py $COURSE_IDS

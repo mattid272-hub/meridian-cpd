@@ -13,3 +13,7 @@ HANDOVER*.md
 
 # Outreach engine working copy (has its own .env and node_modules)
 Meridian/
+
+# Licensed standards and working files: never commit (this repository is public)
+reference/standards/
+reference/course-correction/

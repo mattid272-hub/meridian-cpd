@@ -193,7 +193,7 @@ meridian-library/
 | MER-DEA-011 | Solar PV, Battery Storage and PV Diverters in RdSAP 10 | 1 | ⚡ Launch |
 | MER-DEA-012 | Heat Pumps: Assessment, Recommendations and Data Entry | 1 | Core |
 | MER-DEA-013 | Older and Traditional Properties: Solid Walls, Suspended Floors, Sash Windows | 2 | Core |
-| MER-DEA-014 | EPC Audit Preparation: How to Pass Your Annual Audit | 1 | Core |
+| MER-DEA-014 | EPC Audit Preparation: Building an Evidence File That Stands Up | 1 | Core |
 | MER-DEA-015 | Common DEA Mistakes and How to Avoid Them | 1 | Core |
 | MER-DEA-016 | Floorplans and Measuring: Conventions, Accuracy and Evidence | 1 | Core |
 | MER-DEA-017 | Photography Evidence: What Auditors Need and Why | 1 | Core |

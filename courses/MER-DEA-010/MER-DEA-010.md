@@ -1,181 +1,270 @@
-
-
 # Lighting and Renewables in RdSAP 10
-**Course ID:** MER-DEA-010 | **CPD Hours:** 1.0 | **Published:** March 2026
+**Course ID:** MER-DEA-010 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Accurately record fixed lighting installations in RdSAP 10, including the revised efficacy thresholds and the treatment of smart lighting controls.
-- Correctly input solar photovoltaic systems using the updated RdSAP 10 methodology, including the handling of battery storage, diverters, and export assumptions.
-- Apply the RdSAP 10 framework for solar thermal, wind turbines, and micro-CHP, identifying where input conventions have changed from RdSAP 9.94.
-- Recognise the interaction between renewable technologies and fabric performance within the SAP energy balance, and how this affects the EPC rating output.
-- Identify common lodgement errors associated with lighting and renewables data and apply appropriate evidence-gathering strategies to withstand audit scrutiny.
+- Count and classify lamps as convention 7.01 requires, including LED strips, missing or unidentifiable lamps and the 50% rule.
+- Explain what the specification does with lamp counts, and why the assessor enters no efficacy band or lighting control.
+- Record wind turbines, small-scale hydro and solar water heating using conventions 9.07a, 9.07b and 9.09, and know which defaults apply without evidence.
+- Decide when heat recovery devices, Appendix Q technologies and BRE Technical Note technologies are included or disregarded.
+- Identify where the conventions and the specification differ or are silent, and take those points to your accreditation scheme.
 
 ---
 
 ## Introduction
 
-RdSAP 10 is the most substantial revision to the reduced data Standard Assessment Procedure since its original introduction. For working DEAs, the changes to how lighting and renewable technologies are handled are not cosmetic — they alter rating outcomes, recommendation reports, and the defensibility of your lodgements under the Accreditation Scheme's audit regime.
+This edition was rewritten in October 2026 from two documents: the Conventions (v12.2) for RdSAP 10, applicable from 6 August 2026, and the RdSAP10 Specification version 4.0 (7 June 2026). Each statement about how something is identified, counted or entered carries a reference in brackets so that you can check it. Where a convention conflicts with the specification, the convention takes precedence (Conventions v12.2, opening statement).
 
-On the lighting side, the long-overdue update to efficacy thresholds reflects the near-total market shift to LED. The old binary of "low energy yes/no" is gone. RdSAP 10 introduces a more granular treatment of lighting efficacy, recognising that not all LEDs are equal and that lighting controls — particularly occupancy sensors and smart dimming — can now be factored into the energy calculation. This matters because lighting remains a meaningful contributor to the dwelling emission rate and primary energy metric, and getting it wrong is one of the most common audit findings.
+If you studied the March 2026 edition, note one correction. That edition described lighting efficacy bands chosen by the assessor and lighting controls as an input. Neither appears in convention 7.01 or in the specification's data set (specification section 17, Table 31 item 12-1).
 
-On renewables, the changes are more consequential. The UK's installed domestic PV capacity has grown enormously since RdSAP 9.94 was drafted, and battery storage is now a mainstream addition. RdSAP 10 introduces explicit methodologies for battery systems, hot water diverters, and revised self-consumption assumptions that better reflect real-world usage patterns. Solar thermal inputs have been refined, wind turbine calculations updated, and the treatment of micro-CHP brought in line with current product data.
-
-For assessors working in the retrofit space, these changes intersect directly with PAS 2035:2023. Medium-term improvement plans frequently include renewable installations, and the accuracy of your baseline EPC — and any projected post-improvement rating — depends on getting these inputs right. Incorrect renewable data does not just produce a wrong rating; it can undermine a retrofit coordinator's whole-house approach and distort projected carbon savings used to justify public funding.
-
-This course assumes you are already competent with RdSAP conventions. The aim is to get you technically current, audit-ready, and confident with the specific inputs that have changed.
+Photovoltaics are covered in summary only; course MER-DEA-011 deals with PV, batteries and diverters in detail.
 
 ---
 
-## Section 1: Lighting in RdSAP 10 — Revised Efficacy Framework and Controls
+## Section 1: Lighting under convention 7.01
 
-RdSAP 9.94 used a simple count: how many fixed lighting outlets exist, and how many of those have "low-energy" fittings. The threshold was crude — any fitting with a lamp efficacy above 45 lumens per watt qualified. In a market now saturated with LED, this binary approach had become almost meaningless, with the vast majority of dwellings scoring 100% low-energy lighting regardless of actual installed quality.
+### What is counted
 
-RdSAP 10 replaces this with a tiered efficacy model. Fixed lighting outlets are still counted, but the assessor now records the predominant lamp type across the dwelling and, where identifiable, assigns an efficacy band. The three bands currently defined in the RdSAP 10 specification are:
+The rules are short:
+- Consider all lamps (bulbs or tubes) in permanent fittings within the dwelling (convention 7.01).
+- Include fixed under-cupboard kitchen lights (convention 7.01).
+- Count lamps, not fittings (convention 7.01; specification section 17, Table 31 item 12-1). A five-arm ceiling fitting is five lamps.
+- The test is a permanent fitting, so free-standing plug-in lamps are not counted (convention 7.01).
 
-- **Standard LED (≥80 lm/W to <120 lm/W):** The default assumption for most modern retrofit and new-build LED fittings.
-- **High-efficacy LED (≥120 lm/W):** Premium-grade LED panels, integrated downlights from major manufacturers with documented efficacy data, and certain smart bulb systems operating in white mode.
-- **Sub-LED / legacy low-energy (<80 lm/W):** Compact fluorescent lamps (CFLs), older T8/T5 fluorescent tubes, and early-generation LED lamps that fall below the 80 lm/W threshold but above the halogen/incandescent baseline.
+The convention says "within the dwelling" and nothing further about lights on outside walls or in outbuildings, so ask your accreditation scheme if you are unsure about a fitting.
 
-Incandescent and halogen fittings remain in the calculation as the baseline case, though in practice you will encounter these increasingly rarely.
+### The three categories
 
-**Lighting controls** are the genuinely new element. RdSAP 10 allows an adjustment factor where the dwelling has hardwired occupancy-sensing or daylight-sensing controls installed on fixed lighting circuits. Note the critical distinction: smart bulbs controlled via an app or voice assistant do **not** qualify unless the control function is integrated into the fixed wiring or a hardwired sensor. A Philips Hue bulb on a standard bayonet fitting is not a qualifying control. A PIR sensor hardwired into a bathroom lighting circuit is.
+Every counted lamp goes into one of three categories (convention 7.01):
+- LED: only LED lamps are recorded as LED.
+- CFL: any fluorescent tubes and compact fluorescent lamps are recorded as CFL.
+- Incandescent: tungsten and halogen lamps are recorded as incandescent, which means they are not low energy.
 
-The practical evidence requirement has tightened accordingly. You must be able to justify the efficacy band claimed. Where integrated LED downlights are installed and no product data is accessible, the convention is to default to the Standard LED band. Only claim high-efficacy where you have visible labelling, manufacturer documentation, or the homeowner can provide product specifications. Photograph everything. Auditors are specifically targeting lighting claims in the early phase of RdSAP 10 lodgements — this has been confirmed in Scheme communications from both Elmhurst and Stroma.
+LED strips are counted as one lamp per running metre, rounded to the nearest metre (convention 7.01). A 2.4 m strip is two lamps, and so is a 1.6 m strip. The convention does not say what to do with a strip shorter than half a metre, or one exactly half way between two whole metres; ask your scheme.
+
+### Missing lamps and lamps you cannot identify
+
+There are two rules, and they work at different scales:
+- If an individual lamp is missing, or its type cannot be identified, record it as CFL (convention 7.01).
+- If more than 50% of the lamps which are not incandescent cannot be identified or are not present, record all the non-incandescent lamps as LEL (convention 7.01).
+
+LEL is the specification's label for low energy lights, and it includes both LED and CFL bulbs (specification section 20, Table 33 item E). The specification says only that the LEL total is entered where the exact number of LEDs and CFLs cannot be determined (specification section 17, Table 31 item 12-1). The convention is more precise, so follow it.
+
+The convention does not set out the arithmetic of the 50% test. The reading used here is that the lamps "which are not incandescent" are every lamp position not identified as tungsten or halogen, including missing and unidentified ones. If your count sits close to half, check with your scheme.
+
+### What the calculation does with your counts
+
+The assessor enters counts. The efficacy figures are defaults built into the method, listed against the lighting data item (specification section 17, Table 31 item 12-1):
+- LED: 100 lumens per watt (9 W)
+- CFL: 55 lumens per watt (19 W)
+- Incandescent: 11.2 lumens per watt (60 W)
+- LEL, used where the number of LEDs and CFLs is not known: 80 lumens per watt (15 W)
+
+The data item asks for the total number of bulbs and the numbers of LED, CFL and incandescent bulbs, or the LEL total. It has no entry for lamp wattage, an efficacy band, or lighting controls such as dimmers and sensors, and convention 7.01 mentions none of them. A lamp recorded as CFL because you could not identify it is given the CFL default, not the LED one, so identify lamps wherever you safely can.
+
+Low energy lights are recommended when LEL is less than 100% of fixed outlets, but only if the measure raises the SAP rating by at least half a point, a threshold that may be overridden by amended values in the PCDB (specification section 20, Table 33 item E).
+
+### Worked example
+
+You survey a three-bedroom house. Each room is listed with its treatment under convention 7.01:
+- Kitchen: one ceiling fitting with six LED spot lamps, and a single fixed under-cupboard LED strip 2.4 m long. Six LED, plus two for the strip (2.4 m rounds to 2).
+- Living room: one five-arm fitting with five halogen lamps, plus two plug-in table lamps. Five incandescent. The table lamps are not counted.
+- Utility room: one fluorescent tube. One CFL.
+- Bedrooms: three pendants. Two hold LED lamps and the third lamp holder is empty. Two LED, and the missing lamp is recorded as CFL.
+- Bathroom: an enclosed fitting with two lamps whose type you cannot establish. Two CFL.
+- Hall and landing: two pendants, each with an LED lamp. Two LED.
+
+Now the 50% test. Lamps that are not incandescent: 12 LED, 1 tube, 1 missing and 2 unidentified, which is 16. Missing or unidentified: 3. Three out of 16 is well under 50%, so the LEL rule is not triggered.
+
+Result: 21 lamps in total, made up of 12 LED, 4 CFL and 5 incandescent.
+
+Change one thing. Suppose the six kitchen spots and the four LED pendants could not be identified either. Missing or unidentified would then be 13 out of 16, which is more than 50%. All 16 non-incandescent lamps are recorded as LEL, including the strip and the tube that you did identify, and the five halogen lamps stay incandescent (convention 7.01).
 
 ---
 
-## Section 2: Solar PV in RdSAP 10 — Battery Storage, Diverters, and Self-Consumption
+## Section 2: Photovoltaics in summary, wind turbines and hydro
 
-The PV methodology in RdSAP 10 represents a significant departure from 9.94. The core generation calculation — based on peak kilowatt capacity (kWp), orientation, tilt, and overshading — remains structurally similar, using regional irradiance data from the SAP 10.2 climate dataset. However, what happens to that generated electricity within the dwelling energy balance has been substantially reworked.
+### Photovoltaics: the short version
 
-**Self-consumption assumptions** have been updated. RdSAP 9.94 applied a flat assumption that approximately 50% of PV generation was used on-site for systems without battery storage or diverter. RdSAP 10 uses a more sophisticated algorithm that scales the self-consumption fraction based on the PV array size relative to estimated electrical demand, the presence of battery storage, and whether a hot water diverter is installed. For a typical 4 kWp system on a three-bedroom semi-detached dwelling with no storage, the self-consumption fraction under RdSAP 10 will typically fall in the range of 25–35%, reflecting real-world monitoring data more accurately. This is lower than the old 50% assumption and will in some cases produce a marginally less favourable EPC rating for PV-only installations than the same dwelling would have received under 9.94.
+These are the main points of convention 9.05:
+- The peak power (kWp) of the array is required. If it cannot be found, the declared net capacity (DNC) on the MCS certificate may be used.
+- If neither can be established, the PV is not allocated, except where it is connected to a meter serving a single dwelling. In that case you record the percentage of the total roof area occupied by PV.
+- Panels on different planes of the roof are entered as separate systems.
+- Connection to the dwelling's meter must be verified by a PV generation meter or by documentary evidence.
+- Without evidence of a battery's usable capacity, a default of 5 kWh per battery is used. A PV diverter cannot be entered without written evidence of its manufacturer and model.
 
-**Battery storage** is now an explicit input. You record the usable capacity in kWh. The software uses this to adjust the self-consumption fraction upward according to the SAP 10.2 battery model. A typical 5 kWh domestic battery paired with a 4 kWp array will push self-consumption toward 55–65%, recovering and exceeding the benefit that was previously over-estimated for PV-only systems. You must verify the battery is installed and operational — a battery that is on order or physically present but not commissioned does not qualify.
+That is an outline only; course MER-DEA-011 covers the detail.
 
-**Hot water diverters** (solar PV diverters / immersion optimisers) are also now a defined input. Where a diverter is installed and connected to the domestic hot water immersion heater, RdSAP 10 applies a separate credit to the water heating energy calculation rather than simply inflating the electrical self-consumption fraction. This is methodologically cleaner and avoids the double-counting issues that some assessors were inadvertently creating under 9.94 workarounds.
+### Wind turbines
 
-**Evidence requirements** are critical. Record the kWp from the MCS certificate or inverter nameplate. Record battery usable capacity from the product label or commissioning documentation. Note the diverter make and model. Photograph the generation meter, inverter, battery unit, and diverter. If the homeowner cannot evidence the kWp and no nameplate is accessible, the convention is to count panels, measure dimensions, and use the RdSAP 10 default assumption of 0.35 kWp per panel for crystalline silicon — but document your reasoning.
+The convention is one sentence: documentary evidence is required to overwrite default values (convention 9.07a).
+
+The details that can be entered are the number of turbines, the rotor diameter and the height above the ridge (specification section 17, Table 31 item 11-5). If a turbine is present and those details are not provided, the calculation is done for one turbine with a 2 m rotor diameter and a 2 m hub height (specification section 11.3).
+
+So a turbine you cannot document is still recorded as present, on the defaults; you do not estimate the rotor diameter by eye. Any document you rely on must relate to the property being assessed (convention 9.02).
+
+Terrain is a separate data item with three options: dense urban, low rise urban or suburban, and rural. It is needed for the wind turbine calculation and also to generate a wind turbine recommendation where appropriate (specification section 17, Table 31 item 11-8). That recommendation is considered for a house or bungalow in a rural location with no wind turbine (specification section 20, Table 33 item V2), so the entry matters even where there is no turbine.
+
+Base the terrain type on the abundance of obstacles in the curtilage of the dwelling, not necessarily on the surrounding area. A site containing a number of dwellings but away from a village or town should be classed as suburban (specification section 11.8).
+
+### Small-scale hydro
+
+Hydro can be recorded as a simple yes or no, with basic documentary evidence confirming its presence. No usage information is required (convention 9.07b). The specification agrees that the entry is made only if documentary evidence is available (specification section 17, Table 31 item 11-6).
+
+The specification also lists a data item for the kWh supplied per year by hydro (specification section 17, Table 31 item 11-7), and the sources do not say what is used when that figure is not entered. The convention takes precedence, so you need not obtain a generation figure; if you hold one, ask your accreditation scheme whether to enter it.
+
+If small-scale hydro is specified through Appendix Q, the Appendix 5 procedure in Section 4 does not apply; refer to BRE Technical Note 08 instead (conventions Appendix 5).
+
+### Meter entries linked to generation
+
+The data set asks whether the dwelling is export-capable, because the savings from generated electricity depend on whether it is used in the dwelling or exported (specification section 17, Table 31 item 1-16). Neither document says how to establish export capability, so follow your scheme's guidance.
+
+The presence of a smart meter, and of a smart meter for gas, is also recorded, but neither affects the calculation (specification section 17, Table 31 items 1-17 and 1-18). Convention 9.13 sets out the evidence needed.
 
 ---
 
-## Section 3: Solar Thermal, Wind, and Micro-CHP — Updated Input Conventions
+## Section 3: Solar water heating and heat recovery
 
-**Solar thermal** systems retain their dedicated input pathway in RdSAP 10, but the calculation methodology now aligns fully with BS EN ISO 9806 test data where available. You continue to record collector type (flat plate or evacuated tube), aperture area, orientation, tilt, and overshading. The change is in the default performance parameters: where the assessor cannot obtain the specific collector performance data (zero-loss efficiency, heat loss coefficients), RdSAP 10 applies revised default values that are less generous than those used in 9.94 for flat plate systems and slightly more favourable for evacuated tubes. This reflects updated test evidence from the Solar Keymark database.
+### Solar water heating
 
-The critical convention change concerns **combined PV and solar thermal systems** (PV-T). RdSAP 10 now includes a specific input pathway for PV-T panels, which were previously not handled within the reduced data methodology. If you encounter a PV-T installation, you record the electrical kWp and the thermal aperture area separately, and the software applies appropriate generation and contribution factors for each function. Do not double-enter PV-T as both a PV system and a separate solar thermal system — this is explicitly flagged as an error in the RdSAP 10 conventions document.
+Start with whether a solar panel is present. After that the data set works in three layers, each available only once the one before is known (specification section 17, Table 31 items 8-1 to 8-4):
+- Solar water heating details: tilt, orientation, overshading, how the solar pump is powered, and the type of showers in the property.
+- Solar collector details: aperture area, collector type, and efficiency and heat loss values.
+- Solar store details: whether the store is combined, the total store volume and the dedicated solar volume.
 
-**Wind turbines** remain relatively rare in domestic settings, but the input methodology has been updated. RdSAP 9.94 used a simplified wind speed correction that was widely acknowledged to over-estimate generation in urban and suburban contexts. RdSAP 10 applies a more conservative terrain roughness factor and requires the assessor to categorise the site environment as rural open, rural sheltered, suburban, or urban. For a typical building-mounted 1.5 kW micro-wind turbine in a suburban location, the estimated annual generation under RdSAP 10 will be substantially lower than the same system would have produced under 9.94. Mast-mounted systems on rural properties will see less change. Record the rated power output from the manufacturer's nameplate and the hub height or mounting position. Photograph the installation and any MCS documentation.
+The evidence rules are in convention 9.09:
+- Documentary evidence is required to overwrite collector or solar store values.
+- Orientation, tilt and overshading can be overwritten.
+- If the collector details are available but the solar store information is not, the default values can be used for the solar store.
+- If the solar store is combined and details are being recorded, the volume of the combined cylinder must also be recorded.
+- Shower type is required when solar water heating details are known.
 
-**Micro-CHP** (micro combined heat and power) is treated as both a heating system and an electricity generator in SAP. RdSAP 10 updates the Appendix N product database entries and adjusts the electrical efficiency credits based on current Stirling engine and fuel cell product test data. In practice, domestic micro-CHP installations are uncommon and concentrated in specific new-build developments and trial schemes. If you encounter one, the product index number from the PCDB (Product Characteristics Database) drives the calculation. Your role is to correctly identify the unit, record its index number, and confirm it is operational. Do not attempt to manually input performance data — the PCDB entry contains all required parameters.
+An electric shower here means one where the water is heated by electricity as the shower runs. A shower supplied from a hot water cylinder is non-electric, even where the cylinder is electrically heated (convention 9.09; specification section 17, Table 31 item 8-2).
+
+Where details are not known, the calculation uses defaults, including a flat panel with 3 square metres of aperture area, facing south at a 30 degree pitch with modest overshading (specification section 10.11, Table 29).
+
+### Flue gas heat recovery
+
+A flue gas heat recovery system (FGHRS) is included only if it is found in the PCDB, identified in the same way as a heating system. If the model cannot be found there is no default option. The device is left out of the assessment, but its presence should be recorded in site notes (convention 9.06). Where it is found, the entry is the PCDB product index number (specification section 17, Table 31 item 8-5).
+
+### Waste water heat recovery
+
+The same principle applies. A waste water heat recovery system (WWHRS) is included only if its brand name and model are found in the PCDB. If not, there is no default, the device is not included, and its presence is recorded in site notes (convention 9.08).
+
+For instantaneous types only mixer showers count, meaning showers where the hot water comes from a boiler, heat pump or immersion heater. The shower must be permanent, and one that is integral with the bath taps counts only if there is a shower bracket at least 1.5 m above the plughole and a shower curtain or screen (convention 9.08).
+
+The sources conflict on storage types. Convention 9.08 gives recording rules for them, while the specification says a storage type WWHRS should be disregarded because the details needed cannot be identified at the time of survey (specification section 17, Table 31 item 9-2). The convention takes precedence, but confirm the treatment of a storage system with your accreditation scheme before lodging.
 
 ---
 
-## Section 4: Practical Application — Evidence, Audit Defence, and Common Errors
+## Section 4: New technologies, Technical Notes and cooling
 
-The Accreditation Schemes have signalled clearly that the transition to RdSAP 10 will be accompanied by increased audit sampling rates, particularly during the first 12 months of mandatory adoption. Lighting and renewables are among the areas specifically identified as high-risk for input errors. Your audit defence strategy should be built around three principles: **photograph comprehensively, record model numbers, and default conservatively where evidence is ambiguous.**
+### Technologies recognised through SAP Appendix Q
 
-**Common lighting errors to avoid:**
-- Claiming high-efficacy LED without product evidence. Default to Standard LED if uncertain.
-- Recording smart bulbs as qualifying lighting controls. Only hardwired controls qualify.
-- Miscounting fixed outlets. Remember: a fixed outlet is a ceiling rose, wall-mounted fitting, or recessed downlight connected to the fixed wiring. A plug-in floor lamp is not a fixed outlet, regardless of bulb type.
+Appendix Q of the SAP specification is the mechanism for recognising technologies that are not in the published SAP and RdSAP methodology. Convention 9.15 refers you to Appendix 5 of the conventions.
 
-**Common renewable errors to avoid:**
-- Entering PV kWp from the panel nameplate total rather than the system kWp. A system with 10 × 400W panels is 4.0 kWp, not 0.4 kWp per panel entered ten times. Confirm how your software expects the input.
-- Failing to record battery storage when present, or recording total capacity rather than usable capacity. Most lithium batteries advertise total capacity; usable capacity is typically 90–95% of this figure, and the product datasheet will specify.
-- Recording a hot water diverter when one is present but not connected — physically trace the connection to the immersion heater or confirm with the occupier.
-- Entering solar thermal for a system that has been decommissioned or drained down. If the system is not functioning, it should not be recorded.
+Recognised technologies are listed on the web page named in Appendix 5, under RdSAP 2012 and RdSAP10 headings. The page holds spreadsheets that calculate the energy savings and consumption for each technology, and a spreadsheet must be used with the version of RdSAP it was designed for (conventions Appendix 5). Only Appendix Q items marked for use in RdSAP should be used (specification section 11.6).
 
-**PAS 2035:2023 interface:** Where you are producing an EPC that will serve as a baseline for a publicly funded retrofit scheme (ECO4, Great British Insulation Scheme, Warm Homes Plan), accuracy in renewable inputs directly affects the projected improvement. A retrofit coordinator relying on your EPC to model post-improvement performance needs the baseline to be correct. Over-stating existing renewable contribution means the improvement uplift will be under-estimated, potentially disqualifying the property from funding thresholds.
+Manufacturers must display an NCM (SAP) identifier label so that assessors can identify the product. The steps are these (conventions Appendix 5):
+- Photograph the NCM (SAP) identifier label. The convention carries a temporary note that the label is still being developed.
+- If the label and, where applicable, a commissioning certificate cannot be found, disregard the technology.
+- Download the Appendix Q calculation spreadsheet for that technology.
+- If no RdSAP spreadsheet is available for the technology, disregard it.
+- Provisionally complete the RdSAP assessment as normal.
+- Follow the data entry instructions in the spreadsheet, entering the NCM (SAP) identifier and, if necessary, data from the RdSAP worksheet.
+- Enter the calculated energy savings, and energy consumption if applicable, into your RdSAP software.
+- Suppress EPC recommendations when the spreadsheet instructs you to.
+- Save and retain the spreadsheet containing the calculation.
+
+Two things are unclear in the sources. The step list refers to technologies recognised under the "RdSAP 2012 heading", although the paragraph before it mentions both headings; if you are unsure which spreadsheet applies, ask your accreditation scheme. And the specification describes the identification label with the words "if present" (specification section 17, Table 31 item 12-3), while the convention says to disregard the technology if the label and, where applicable, a commissioning certificate cannot be found. The convention takes precedence.
+
+### BRE Technical Notes
+
+BRE produces Technical Notes so that certain technologies can be recognised in SAP or RdSAP assessments where the specifications cannot easily handle them. They are normally temporary, and each contains instructions for assessors (convention 9.16).
+
+If you find a technology that might be the subject of a Technical Note, you must check BRE's list to see whether it is included and whether the note applies to RdSAP. If so, download the note and follow it (convention 9.16; specification section 11.7).
+
+### Cooling
+
+Include fixed systems only. Do not include reversible heat pumps (convention 9.04). The entry is a yes or no for whether a space cooling system is present (specification section 17, Table 31 item 7-16). The sources give no further definition of a fixed cooling system; for anything unusual, ask your scheme.
 
 ---
 
 ## Key Takeaways
-
-- RdSAP 10 replaces the binary low-energy lighting classification with a tiered efficacy band system — know the thresholds (sub-LED, Standard LED, High-efficacy LED) and default conservatively.
-- Lighting controls are now a defined input, but only hardwired occupancy or daylight sensors qualify — not smart bulbs or app-controlled systems.
-- PV self-consumption assumptions are lower in RdSAP 10 for systems without storage; battery and diverter inputs are now explicit and must be evidenced separately.
-- Battery storage is recorded as usable capacity, not total capacity — check the product datasheet, not the marketing material.
-- Solar thermal defaults have been revised, and PV-T panels now have a dedicated input pathway — do not double-enter as separate PV and solar thermal systems.
-- Wind turbine generation estimates are significantly lower in suburban and urban contexts under the revised terrain roughness methodology.
-- Photograph all renewable installations, nameplates, MCS certificates, and battery/diverter units — your audit file should tell the full story without requiring additional explanation.
+- Count lamps, not fittings, in permanent fittings within the dwelling. Fluorescent tubes are CFL, halogen is incandescent, and an LED strip is one lamp per running metre (convention 7.01).
+- A single missing or unidentifiable lamp is CFL. Only when more than 50% of the non-incandescent lamps are missing or unidentifiable do all of them become LEL (convention 7.01).
+- Efficacy figures are method defaults. The assessor does not enter efficacy, wattage or lighting controls (specification section 17, Table 31 item 12-1).
+- Wind turbine defaults stay unless you hold documentary evidence (convention 9.07a).
+- Hydro is a yes or no entry with basic documentary evidence. No usage information is required (convention 9.07b).
+- FGHRS and WWHRS are included only if found in the PCDB. If not, leave them out and note their presence (conventions 9.06 and 9.08).
+- Disregard an Appendix Q technology if the label and, where applicable, a commissioning certificate cannot be found, or if there is no RdSAP spreadsheet (conventions Appendix 5).
+- For cooling, record fixed systems only, never a reversible heat pump (convention 9.04).
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** Under RdSAP 10, what is the minimum efficacy threshold for the "High-efficacy LED" lighting band?
+**Q1.** A kitchen has one ceiling fitting holding four LED lamps and a single fixed under-cupboard LED strip 3.2 m long. How many lamps are counted?
 
-A) 80 lm/W
-B) 100 lm/W
-C) 120 lm/W
-D) 150 lm/W
+A) 2, because there are two fittings
+B) 7, all recorded as LED
+C) 5, because a strip counts as one lamp
+D) 4, because under-cupboard lighting is excluded
 
-**Correct answer: C**
-*The High-efficacy LED band in RdSAP 10 is defined as ≥120 lm/W. The Standard LED band covers ≥80 lm/W to <120 lm/W.*
-
----
-
-**Q2.** A dwelling has a 4 kWp PV array with no battery storage and no hot water diverter. Under RdSAP 10, what is the approximate self-consumption fraction the methodology is likely to calculate for a typical three-bedroom semi-detached house?
-
-A) 50%
-B) 70–80%
-C) 25–35%
-D) 10–15%
-
-**Correct answer: C**
-*RdSAP 10 uses a dynamic self-consumption algorithm that typically produces 25–35% for a PV-only system of this size on a dwelling of this type, lower than the flat 50% assumption used in RdSAP 9.94.*
+**Correct answer: B.** Lamps are counted, not fittings, fixed under-cupboard lights are included, and an LED strip is one lamp per running metre rounded to the nearest metre, so 3.2 m is three (convention 7.01).
 
 ---
 
-**Q3.** An assessor encounters a Philips Hue smart lighting system controlled via a smartphone app, installed on standard bayonet fittings throughout a dwelling. Should this be recorded as a qualifying lighting control in RdSAP 10?
+**Q2.** In a house where every other lamp has been identified, one bedroom pendant has an empty lamp holder. How is that lamp recorded?
 
-A) Yes — smart lighting systems always qualify as lighting controls.
-B) Yes — but only if the system includes a dimming function.
-C) No — only hardwired occupancy or daylight sensors on fixed wiring qualify.
-D) No — lighting controls are not part of the RdSAP 10 methodology.
+A) It is left out of the count
+B) As incandescent
+C) As LED, to match the rest of the house
+D) As CFL
 
-**Correct answer: C**
-*RdSAP 10 requires lighting controls to be hardwired into the fixed lighting circuit. App-controlled smart bulbs on standard fittings do not meet this requirement.*
-
----
-
-**Q4.** When recording battery storage capacity for a PV system in RdSAP 10, which figure should the assessor input?
-
-A) The total (gross) battery capacity from the marketing literature.
-B) The usable (net) battery capacity from the product datasheet.
-C) The inverter AC output rating.
-D) The PV array kWp multiplied by a storage factor.
-
-**Correct answer: B**
-*RdSAP 10 requires the usable (net) capacity in kWh. This is typically 90–95% of the total capacity and is specified on the product technical datasheet.*
+**Correct answer: D.** An individual lamp that is missing, or whose type cannot be identified, is recorded as CFL; the LEL rule applies only above 50% (convention 7.01).
 
 ---
 
-**Q5.** A dwelling has a PV-T (photovoltaic-thermal) panel installation. What is the correct input approach under RdSAP 10?
+**Q3.** A wind turbine is present at a bungalow, but there is no documentary evidence of its details. What goes into the assessment?
 
-A) Record the system as PV only — the thermal contribution is not recognised in RdSAP.
-B) Record the system as solar thermal only — PV-T is not in the PCDB.
-C) Record separately as a PV system and a solar thermal system using two distinct inputs.
-D) Use the dedicated PV-T input pathway, recording electrical kWp and thermal aperture area separately within a single system entry.
+A) The turbine is recorded as present and the default values are used
+B) The turbine is left out of the assessment
+C) A rotor diameter estimated by eye from the ground
+D) The rated output read from the manufacturer's plate
 
-**Correct answer: D**
-*RdSAP 10 introduces a specific PV-T input pathway. Entering the system as two separate technologies (option C) is explicitly identified as an error in the conventions document.*
+**Correct answer: A.** Documentary evidence is required to overwrite default values (convention 9.07a); without details the calculation is for one turbine with a 2 m rotor diameter and 2 m hub height (specification section 11.3).
+
+---
+
+**Q4.** You find a product that may be recognised through SAP Appendix Q, but neither the NCM (SAP) identifier label nor a commissioning certificate can be found. What do you do?
+
+A) Enter it using the savings quoted in the manufacturer's brochure
+B) Complete the spreadsheet using an identifier the occupier recalls from memory
+C) Disregard the technology
+D) Record it as a PV array of equivalent output
+
+**Correct answer: C.** If the label and, where applicable, a commissioning certificate cannot be found, the technology is disregarded (conventions 9.15 and Appendix 5).
+
+---
+
+**Q5.** A flue gas heat recovery unit is fitted above the boiler, but the model cannot be found in the PCDB. What is the correct treatment?
+
+A) Enter a default flue gas heat recovery system
+B) Leave it out of the assessment and record its presence in site notes
+C) Select the closest similar model in the PCDB
+D) Enter it as an Appendix Q special feature
+
+**Correct answer: B.** Flue gas heat recovery is included only if found in the PCDB; otherwise there is no default, the device is not included, and its presence is recorded in site notes (convention 9.06).
 
 ---
 
 ## Further Reading
-
-- **BRE.** *SAP 10.2: The Government's Standard Assessment Procedure for Energy Rating of Dwellings (2022 edition).* Available from: https://www.bregroup.com/sap/standard-assessment-procedure-sap-2012/ — primary source for the full SAP methodology underpinning RdSAP 10.
-
-- **BRE.** *RdSAP 10: Reduced Data Standard Assessment Procedure — Conventions and Specifications.* Available from the BRE SAP website — the definitive reference for all input conventions, default assumptions, and evidence requirements discussed in this course.
-
-- **BSI.** *PAS 2035:2023 — Retrofitting dwellings for improved energy efficiency. Specification and guidance.* Available from: https://knowledge.bsigroup.com/ — essential reading for assessors whose EPCs inform retrofit programmes.
-
-- **MHCLG.** *Domestic Energy Performance Certificate: Reform and Methodology Update — Consultation Response and Policy Summary.* Available from: https://www.gov.uk/government/consultations — sets out the policy rationale for the transition to SAP 10.2 / RdSAP 10 and the revised EPC framework.
+- **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Read conventions 7.01, 9.04 to 9.09, 9.13, 9.15, 9.16 and Appendix 5.
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). See section 11, Table 29, Table 31 (items 7-16, 8-1 to 9-2 and 11-1 to 12-3) and Table 33.
+- **BRE Technical Notes.** BRE, https://www.bregroup.com/sap/bre-technical-notes/. The list shows which notes apply to RdSAP.
 
 ---
 
