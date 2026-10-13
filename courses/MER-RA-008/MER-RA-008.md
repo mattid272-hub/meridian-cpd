@@ -1,190 +1,238 @@
-
-
 # Ventilation Assessment in Retrofit: Background Ventilation to MVHR
-**Course ID:** MER-RA-008 | **CPD Hours:** 1.0 | **Published:** March 2026
+**Course ID:** MER-RA-008 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
 
-- Identify and record the existing ventilation strategy for a dwelling assessed under PAS 2035:2023, using the classification categories from Building Regulations Part F and CIBSE guidance.
-- Assess the adequacy of the existing ventilation provision for the current occupancy and fabric condition, and identify indicators of inadequate ventilation.
-- Determine how proposed retrofit measures will affect the ventilation dynamics of the dwelling, and identify the conditions that require a ventilation strategy change.
-- Record the mandatory ventilation data fields specified in PAS 2035:2023 Annex A and understand their role in the downstream design process.
-- Explain the conditions under which MVHR, MEV, or other enhanced ventilation systems may be required, and the data the designer needs from the assessment to make this determination.
+By the end of this course you should be able to:
+- List what PAS 2035:2023 clause 7.3.2 requires you to record about existing ventilation, and explain the problem with its "Table C.1" reference.
+- Name the three system types in Approved Document F Volume 1 (2021 edition), the wet room extract rates and the rule for a WC without a fan.
+- Use Approved Document F Table 3.1 and Diagram 3.1 with PAS 2035:2023 clause 8.2.13 to say when the Retrofit Designer must confirm ventilation adequacy.
+- Describe what PAS 2035:2023 Annex C accepts as an adequate system, and the minimum system when ventilation is upgraded.
+- Record open and blocked chimneys under RdSAP convention 9.01.
 
 ---
 
 ## Introduction
 
-Ventilation is the retrofit measure most frequently undervalued, misunderstood, and misrecorded. It is also the one that, when inadequate, creates the most insidious consequences — not dramatic failures visible at handover, but slow-developing moisture problems, mould growth, indoor air quality deterioration, and condensation that manifests months or years after the insulation is in the walls.
+This course is for Retrofit Assessors working under PAS 2035:2023 in England. It covers what you record about existing ventilation, how the Retrofit Designer uses that record to decide on any upgrade, and the related RdSAP entries.
 
-PAS 2035:2023 is explicit: any retrofit measure that affects the airtightness of the dwelling — including loft insulation with draught-stripping, cavity wall insulation, and any work to windows or doors — requires an assessment of the impact on the ventilation strategy. The 2023 revision has tightened this requirement compared with 2019, making ventilation data mandatory in all assessments and tying the Path A/B/C assignment directly to ventilation implications.
+Requirement F1(1) of Schedule 1 to the Building Regulations 2010 is law in England: "There shall be adequate means of ventilation provided for people in the building" (Approved Document F, Requirement F1(1)). Approved Document F Volume 1: Dwellings is guidance approved by the Secretary of State giving one way to comply (Approved Document F, introduction). PAS 2035:2023 is a BSI specification, second edition September 2023, superseding PAS 2035:2019+A1:2022, which was to be withdrawn on 30 March 2025 (PAS 2035:2023, publication history and Foreword). Its "shall" binds you where your scheme, contract or funding rules adopt it.
 
-This course covers how to assess and record the existing ventilation strategy, how to identify its adequacy, how retrofit measures change ventilation dynamics, and what data the designer needs to make ventilation strategy decisions.
+"Approved Document F" here means Volume 1, 2021 edition, for use in England, in effect since 15 June 2022 (Approved Document F, front page) and cited by PAS 2035:2023 (clause 2, reference N3). A 2026 edition is published and takes effect on 24 March 2027, or 24 September 2027 for work connected with higher-risk building work; its transitional arrangements are in Circular Letter 01/2026, not reviewed here (Approved Document F 2026 edition, front page). Today the 2021 edition is the one in use. A spot check of the 2026 text found the same three system types, WC note and Category A, B and C wording; its Diagram 3.1 was not compared. Annex C points to separate documents for Wales, Scotland and Northern Ireland (PAS 2035:2023, commentary on Annex C); this course has not reviewed them, so if you work there ask your scheme and building control.
 
----
+This edition replaces the March 2026 edition. That edition built the ventilation decision on risk "Path A, B and C", which are not in PAS 2035:2023; put "mandatory ventilation fields" in Annex A, which is Qualifications; taught a "System 1 to 4" list with passive stack that is not in the 2021 Approved Document F; said any airtightness effect triggers the upgrade review; gave RdSAP chimney values as a "20 to 80 m3/h" range; and treated a WC without a fan as a defect.
 
-## Section 1: Existing Ventilation Strategy — Classification and Recording
-
-Building Regulations Part F classifies ventilation into four systems for dwellings:
-
-- **System 1 (Background/intermittent extract):** Natural infiltration through the fabric, background ventilation through trickle vents, with intermittent extract fans in wet rooms (kitchen, bathroom, WC). This is the most common strategy in existing UK housing stock.
-- **System 2 (Passive stack ventilation):** Natural ventilation driven by pressure difference and the stack effect, with purpose-designed passive stack ducts. Common in some social housing built in the 1990s.
-- **System 3 (Mechanical extract ventilation — MEV):** Continuous low-rate extract from wet rooms, driven mechanically. Background ventilation through trickle vents. Less common in existing housing; increasingly specified as a retrofit upgrade.
-- **System 4 (Mechanical ventilation with heat recovery — MVHR):** Balanced mechanical supply and extract with heat recovery. Most common in new construction; increasingly proposed for deep retrofit.
-
-Most existing housing the Retrofit Assessor will encounter has System 1 ventilation in varying states of functionality. The task is to characterise what is actually present and how well it is working, not to classify it theoretically.
-
-**What must be recorded (Annex A mandatory fields):**
-- Trickle vent presence: in windows (which rooms, approximate size/type), in door panels, or absent
-- Extract fan presence and type in each wet room: bathroom, en-suite, kitchen, WC. Continuous run or intermittent (switched or humidity-controlled). Condition and apparent function (was it running? Is it blocked?).
-- Passive stack vents if present (location, apparent function)
-- Any evidence of controlled or intentional draught-proofing already installed (draught-excluding strips on doors, sealed letterboxes, covered chimneys)
-- Open fireplaces and their status (open, blocked, or capped) — open fireplaces provide significant uncontrolled infiltration and their status directly affects the ventilation calculation
-
-**Observable inadequacy indicators.** These must be recorded where present:
-- Black mould at corners, on north-facing walls, behind furniture
-- Condensation streaming on cold surfaces in cold weather
-- Persistent musty or damp odour in the dwelling
-- Blocked or non-functional extract fans (fan grilles obscured by paint, fan running slowly or not at all)
-- No trickle vents in windows (particularly in replacement double glazing where original draught infiltration has been substantially reduced)
+This course is correct to 12 October 2026.
 
 ---
 
-## Section 2: How Retrofit Measures Change Ventilation Dynamics
+## Section 1: What the Retrofit Assessor Records
 
-Every retrofit measure that reduces the air permeability of the dwelling — the rate at which air moves through the fabric uncontrollably — changes the ventilation equation. In a leaky house, background ventilation through the fabric compensates for inadequate purpose-provided ventilation. In a well-insulated, air-sealed house, it does not.
+### The clause 7.3.2 items
 
-**Loft insulation and draught-stripping.** Even without explicit air-sealing work, loft insulation typically involves draught-stripping of the loft hatch and sometimes the blocking of air pathways at ceiling level. This can reduce infiltration meaningfully. If the dwelling's ventilation is already marginal — inadequate trickle vents, non-functional extract fans — reducing infiltration tips it into inadequate.
+Clause 7.3.2 a) to l) of PAS 2035:2023 sets the content of the assessment. The ventilation items are:
+- b) an appraisal of the installed building services, ventilation included.
+- d) the location and severity of any condensation or mould. NOTE 2 says a little condensation around bathroom sinks and showers, or at window edges in extreme weather, is normal.
+- e) any energy efficiency measure (EEM) already installed or proposed.
+- f) "an inspection and review of the existing ventilation": the position and type of any fans (for example intermittent, centralised or decentralised continuous mechanical extract, MVHR, single room heat recovery, positive input ventilation) with make and model where possible, or the reasons why not; and the size and location of all background ventilators.
+- j) for installed services, "confirmation that the systems are working correctly (or otherwise)".
+- k) occupancy, including any vulnerable people.
 
-**Cavity wall insulation.** CWI does not typically change the air permeability of the wall significantly on its own. However, if CWI is installed alongside other draught-proofing (as is common in funded retrofit packages), the combined effect on air permeability can be substantial.
+Any functional testing shall follow the nation's ventilation standard using BSRIA procedures, and flows below the minimum shall be reported (clause 7.3.2 f) 3); NOTE 5 says extract fans should be checked to BSRIA Guide 46/2022. The whole assessment, ventilation included, goes to the Retrofit Designer with the RdSAP, SAP or PHPP file and photographs of recorded features and defects (clause 7.4.1).
 
-**Windows and doors.** Replacement windows — particularly when replacing single glazing with trickle-ventilated double glazing — can either improve or worsen ventilation depending on whether trickle vents are specified in the replacement units. Replacement windows without trickle vents in a property that previously relied on single-glazing infiltration significantly reduce background ventilation.
+### The missing Table C.1
 
-**The threshold under PAS 2035:2023.** The 2023 standard narrowed the Path A eligibility criteria specifically to address this. Projects that involve any measure affecting the ventilation strategy — including indirect effects of draught-proofing or window replacement — are likely to require at least Path B. The key assessment question is: will the proposed package of measures change the ventilation dynamics sufficiently to require a change in the ventilation strategy? Recording the existing strategy accurately is the prerequisite for answering this question at design stage.
+Clause 7.3.2 f) says the inspection follows "the checklist provided in Table C.1". The September 2023 text has no Table C.1: its list of tables names only Tables E.1 and E.2, and Annex C has no Table C.1. Do not accept anyone's "Table C.1 fields" as part of the standard; what it fixes is the f) list above. Annex C sets out the background (C.1), when the designer confirms adequacy and what counts as an acceptable system (C.2), and how to upgrade (C.3).
 
----
+The one existing ventilation checklist PAS 2035:2023 points to is Approved Document F Table D1, "Checklist for ventilation provision in existing dwellings", which clause C.3.1 uses as its adequacy test. It has yes or no questions for natural ventilation, continuous extract and MVHR. For natural ventilation it asks for the total equivalent area of background ventilators, and whether each habitable room meets Table 1.7, ventilators are left open, working fans serve all wet rooms in line with Table 1.1, rooms have purge ventilation and doors are undercut (Approved Document F, Table D1). The PAS does not say Table D1 is what 7.3.2 f) meant, but a sensible habit is to record enough that the designer could answer every Table D1 question from your report.
 
-## Section 3: MVHR, MEV, and Ventilation Upgrade Triggers
+### What you do not decide
 
-The designer determines whether the ventilation strategy must change and, if so, how. The assessor's role is to record the data that informs this determination. However, understanding the conditions that typically trigger a ventilation strategy upgrade helps the assessor collect the right data and flag the issue appropriately.
-
-**MVHR (Mechanical Ventilation with Heat Recovery).** MVHR is typically specified for deep retrofit projects — properties where air permeability has been reduced significantly (approaching Passivhaus or EnerPHit levels), or where a new-build level of airtightness is being achieved through a whole-house fabric treatment. MVHR requires: a central plant location (typically loft or utility room), ductwork to all habitable and wet rooms, and a building airtightness that justifies the significant installation cost. For most retrofit projects in existing housing stock, MVHR is not specified — the airtightness levels achievable in retrofit rarely reach the threshold where MVHR is the appropriate strategy.
-
-**MEV (Mechanical Extract Ventilation).** MEV — continuous low-rate mechanical extract from wet rooms — is increasingly specified for mid-depth retrofits where the existing intermittent extract strategy is inadequate but full MVHR is not justified. MEV systems are relatively straightforward to install retrospectively (no supply ductwork required, extract from existing or new extract points) and can be added to a retrofit package without major structural work.
-
-**Ventilation upgrade triggers in the assessment.** The assessor should flag potential ventilation strategy change requirements where:
-- The existing strategy is clearly inadequate (multiple blocked or absent extract fans, no trickle vents in new replacement windows, evidence of moisture-related problems attributable to ventilation failure)
-- The proposed measures include significant draught-proofing or airtightness improvement
-- The proposed measures include replacement windows without trickle vents
-- The property has high occupancy relative to dwelling size, amplifying moisture loads
-
-These flags alert the Retrofit Coordinator that ventilation strategy must be addressed in the design, not assumed to be unchanged.
+Whether the ventilation is adequate for the package, and what replaces it, is the Retrofit Designer's decision (clauses 8.2.13 and C.2.1). Your role, as the commentary on C.2 puts it, is to identify and assess the existing systems and confirm whether they are working correctly. If the designer finds your record insufficient, it comes back to you through the Retrofit Coordinator (clause 8.2.5).
 
 ---
 
-## Section 4: Recording Ventilation Data for the Design Team
+## Section 2: System Types, Wet Rooms and the WC Rule
 
-The designer working from the Retrofit Assessment needs specific, actionable data — not a narrative statement that "ventilation is adequate" or "ventilation needs improving." The following data format provides what designers need:
+### Three system types, not four
 
-**For each wet room (kitchen, bathroom, en-suite, WC):**
-- Extract fan: present/absent, type (intermittent switch, humidity-controlled, continuous-rate), approximate age, operational condition, duct route (external wall, ceiling void, roof void)
-- Trickle vents in any windows in the room: present/absent, size (standard/large equivalent), functional (open, blocked, painted over)
+Approved Document F Table 1.6 lists three types:
+- Natural ventilation with background ventilators and intermittent extract fans (paragraphs 1.47 to 1.59), for less airtight dwellings only.
+- Continuous mechanical extract ventilation (paragraphs 1.60 to 1.66), for all dwellings.
+- Mechanical ventilation with heat recovery (paragraphs 1.67 to 1.73), for all dwellings.
 
-**For habitable rooms:**
-- Trickle vents: present/absent in each window, approximate size, condition
-- Any other background ventilation provisions (background ventilators in walls, passive stack inlets)
+There is no "System 1 to 4" and no passive stack system in it. A highly airtight dwelling has a design air permeability below 5 m3/(h.m2) at 50 Pa or an as-built figure below 3 (Approved Document F, Appendix A); if a naturally ventilated dwelling tests that tight, seek expert advice or install continuous extract (paragraph 1.46). RdSAP enters vents other than air bricks as passive stack where mechanical ventilation cannot be confirmed (convention 7.03a), but that is an RdSAP data rule, not an Approved Document F system.
 
-**For the dwelling overall:**
-- Background infiltration level: high (pre-1980s, no draught-proofing, open fireplaces), medium (mixed age, some draught-proofing), low (post-1990s or significant draught-proofing work)
-- Open chimney flues: number, location, and status (open, blocked, capped) — an open chimney flue provides 20–80 m³/h of uncontrolled ventilation depending on conditions
+### Wet rooms
 
-This level of detail allows the designer to run a ventilation calculation, assess the adequacy of the existing strategy under the post-retrofit conditions, and determine whether strategy change or enhancement is required.
+Approved Document F's examples of wet rooms are kitchens, utility rooms and bathrooms, and sanitary accommodation also counts (Appendix A). PAS 2035:2023 lists kitchens, bathrooms, shower rooms, utility rooms "and WCs without openable windows" (clause C.2.2, NOTE 1). Do not skip the utility room (paragraph 1.17).
+
+### Extract rates and the WC rule
+
+Table 1.1 gives minimum intermittent extract rates:
+- Kitchen 30 l/s with a cooker hood extracting outside, otherwise 60 l/s.
+- Utility room 30 l/s; bathroom 15 l/s; sanitary accommodation 6 l/s.
+
+Note 3 says "as an alternative for sanitary accommodation, the purge ventilation guidance may be used", and paragraph 1.49 lets a WC meet its rate with windows following paragraphs 1.26 to 1.31. Table 1.4 sizes purge openings at 1/10 of floor area for hinged or pivot windows opening 15 to 30 degrees and 1/20 at 30 degrees or more; below 15 degrees they do not count (paragraph 1.31). A WC without a fan is therefore not automatically deficient. Record the window's type, opening angle and size, and leave adequacy to the designer. Humidity controls should not be used in WCs (paragraph 1.36).
+
+### Background ventilators and doors
+
+For natural ventilation, Table 1.7 sets 8000 mm2 for habitable rooms and kitchens in dwellings of more than one floor (10,000 mm2 single-storey) and 4000 mm2 for bathrooms. Ventilators should have their equivalent area marked (paragraph 1.16), and a night-latch position does not count (note to paragraph 1.52). Internal doors need the equivalent of a 10 mm undercut on a 760 mm door (paragraph 1.25). Annex C leaves ventilator sizes to each nation's rules (clause C.2.2, NOTE 1), so in England these are the sizes to check against. Record marked sizes and door gaps.
+
+---
+
+## Section 3: The Trigger: Table 3.1, Diagram 3.1 and Clause 8.2.13
+
+### What Approved Document F asks
+
+When work such as window replacement or energy efficiency work affects ventilation, the result should meet the approved document or be no less satisfactory than before, and infiltration counts as part of the ventilation (Approved Document F, paragraph 3.2 and note). Paragraph 3.7 asks for an assessment of any extra ventilation needed and notes that following PAS 2035 is "an adequate means" of showing compliance with paragraph 3.6.
+
+### Counting measures in Table 3.1
+
+Count major and minor measures from Table 3.1, including those fitted since the dwelling was built as well as those planned (paragraph 3.8). Minor measures are:
+- Renewing loft insulation with edge sealing, or a loft conversion or cold to warm loft change.
+- Cavity wall insulation, or external or internal wall insulation to 50% or less of the external wall area.
+- Replacing 30% or less of windows or door units.
+- A sealed, insulated loft hatch, or sealing around service penetrations.
+
+Major measures are:
+- External or internal wall insulation to more than 50% of the external wall area.
+- Replacing more than 30% of windows or door units.
+- Sealing or insulating a suspended ground floor.
+- Removing a chimney or sealing over it.
+
+Diagram 3.1 turns the counts into Category A, B or C (paragraph 3.9). Its grid was not legible in the text available for this course, so read it in the document itself. Category A means ventilation is unlikely to have been reduced below requirement F1(1) and no further provision is needed; B means likely reduced below it; C means likely reduced significantly (paragraphs 3.10 to 3.12).
+
+These are not risk paths. PAS 2035:2023 has none; its Foreword says "the risk assessment process has been simplified".
+
+### Clause 8.2.13
+
+If the package of specified and existing EEMs falls into Category B or C, or the assessment shows condensation or mould growth, the Retrofit Designer shall confirm the adequacy of the existing ventilation "as revealed by the dwelling assessment report" and, if necessary, specify an upgrade under Annex C (clause 8.2.13; clause C.2.1). Existing EEMs are any fitted since the dwelling was built (clause 8.2.13, NOTE 2). Where fabric insulation, replacement windows or external doors are included, airtightness measures are deemed applied (clause 8.2.11).
+
+So record measures already done, such as cavity fill, replacement windows, a sealed hatch or a capped chimney (clause 7.3.2 e), and record condensation and mould precisely (clause 7.3.2 d), because either can trigger the designer's check. Your 7.3.2 f) inspection happens in every assessment; clause 8.2.13 governs the designer.
+
+### Window replacement
+
+Replacement windows should keep background ventilators where the old ones had them, no smaller and controllable (Approved Document F, paragraph 3.14). Where they had none and ventilation is not by MVHR, the new ones should include them (8000 mm2 in habitable rooms and kitchens, 4000 mm2 in bathrooms), or 4000 mm2 per habitable room with continuous extract, or another provision shown to building control (paragraph 3.15). Your record of existing ventilators sets that baseline.
+
+---
+
+## Section 4: Annex C and the Chimney Entries
+
+### Adequate existing systems
+
+Annex C warns that "the existence of a ventilation system is not proof that a building is adequately ventilated" (clause C.1). It defines acceptable complete systems:
+- Category C: continuous mechanical extract (MEV) from all wet rooms with correctly sized background ventilators in living spaces and bedrooms but not wet rooms, properly commissioned; whole-dwelling MVHR, commissioned and balanced; or another system of equal performance extracting moisture at source, on expert advice (clause C.2.2).
+- Category B: any of those, or an existing intermittent extract (IEV) system with correctly sized fans in all wet rooms and correctly sized background ventilators in all rooms (clause C.2.3).
+
+MEV background ventilators should be at least 4000 mm2, and none go with MVHR or in MEV wet rooms (clause C.2.2, NOTE 1). If the measures will or might take air permeability below 5 m3/(h.m2) at 50 Pa, IEV may need upgrading to continuous mechanical ventilation, or expert advice (clause C.2.3, NOTE 1).
+
+### When and how ventilation is upgraded
+
+Clause C.3 covers three cases:
+- Condensation or mould with no insulation or airtightness measures: if the ventilation fails Approved Document F Table D1 it shall be upgraded, and the Retrofit Coordinator advises the client on condensation, damp and mould either way (clause C.3.1).
+- An approved airtightness test shows post-works air permeability not less than 5 m3/(h.m2) at 50 Pa: a C.2.2 system, or IEV as described in C.2.3 tested to BS EN 13141-4 (clause C.3.2).
+- All other upgrades: at minimum continuous MEV from all wet spaces with background ventilators in living spaces and bedrooms, continuous whole-dwelling MVHR, or another continuous system on expert advice (clause C.3.3).
+
+Every upgrade also needs purge ventilation in each habitable room and verified cross-ventilation (clause C.3.4), system calculations (C.3.11), installers in a competent persons scheme (C.3.12) and commissioning (C.3.13). A C.3.3 continuous system shall be controlled automatically, not by light or manual switches alone (C.3.6). Several single room heat recovery units must not serve as a whole-dwelling system (C.3.7). The design must provide ventilation for combustion appliances (clause 8.2.21 a), and fans can cause spillage from open-flued appliances (Approved Document F, paragraph 0.17). Where the design includes a measure that could reduce background infiltration, the installer checks that it covers ventilation and refers gaps to the Retrofit Coordinator (PAS 2030:2023, clause 5.2.4).
+
+An air test therefore matters; the designer or coordinator sets the testing strategy for fabric measures (clause 8.2.35). In RdSAP a result is entered only from a pressure test certificate by a competent tester, such as an ATTMA or EAS member (convention 10.01).
+
+### Chimneys in RdSAP
+
+Convention 9.01, amended 13 July 2026, sets the rules:
+- An open chimney is a combustion duct of 200 mm diameter or more, or a rectangular duct of 125,000 mm2, counted only when unrestricted and suitable for use. It is modelled at 80 m3/hr.
+- A decommissioned chimney with air bricks under 30,000 mm2 is treated as blocked, modelled at 20 m3/hr. At 30,000 mm2 or more it is open, as are chimneys with a decorative gas fire or a damper.
+- A completely sealed chimney with no air bricks is not counted.
+- A duct under 200 mm, including a chimney with a sealed flexible gas liner, is a flue.
+
+These are fixed inputs to the RdSAP infiltration calculation (RdSAP10 Specification v4.0, section 4.1 and Table 5), not measured flows or a range. The chimney also matters to the designer: sealing or removing one is a major Table 3.1 measure, and past work counts (Approved Document F, paragraph 3.8). Record each chimney's location, treatment and any air brick area.
 
 ---
 
 ## Key Takeaways
 
-- Ventilation data is mandatory in every PAS 2035:2023 Retrofit Assessment — recording "System 1" without detail is insufficient.
-- Any retrofit measure that affects airtightness (including indirect effects of draught-stripping and window replacement) triggers a ventilation adequacy review at design stage; the assessment data must support this review.
-- Observable inadequacy indicators — mould, condensation, blocked fans, absent trickle vents in replacement windows — must be recorded explicitly, not implied or omitted.
-- Open chimneys provide significant uncontrolled ventilation; their status (open/blocked/capped) must be recorded as a mandatory data field.
-- MVHR is not appropriate for most existing housing retrofit — MEV is the more common upgrade for inadequate intermittent extract systems; the designer determines which is specified from the assessment data.
-- The Path A/B/C boundary under PAS 2035:2023 is directly linked to ventilation implications — projects affecting the ventilation strategy are unlikely to be Path A.
+The points to carry away:
+- Clause 7.3.2 f) requires fan position, type, make and model (or why not) and the size and location of background ventilators.
+- Clause 7.3.2 f) cites a "Table C.1" that the September 2023 text does not contain. Do not invent one.
+- The 2021 Approved Document F has three system types: natural with intermittent extract (less airtight dwellings only), continuous MEV, and MVHR.
+- A WC can comply with a window sized for purge ventilation instead of a fan (Table 1.1, note 3; paragraph 1.49).
+- The designer's check is triggered by a Category B or C package under Table 3.1 and Diagram 3.1, counting past measures, or by recorded condensation or mould (clause 8.2.13). There are no risk paths.
+- In an upgrade, intermittent extract is acceptable only where a test shows at least 5 m3/(h.m2) at 50 Pa after the works; otherwise the minimum is a continuous system (clauses C.3.2 and C.3.3).
+- RdSAP models an open chimney at 80 m3/hr and a blocked one at 20 m3/hr (convention 9.01).
+- The 2021 Approved Document F is in use in England today; the 2026 edition takes effect on 24 March 2027 (24 September 2027 for higher-risk building work).
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** An assessor surveys a 1995 semi-detached property. All windows are original PVC-U with trickle vents. The kitchen has an extract fan (switched, functional). The bathroom has a fan that has been painted over and is no longer operational. There is no WC fan. What ventilation inadequacy indicators must be recorded?
+**Q1.** A house has a ground-floor WC with no extract fan and a hinged window that opens to 35 degrees. Under Approved Document F (2021 edition), how should you treat it?
 
-A) None — the system is broadly functional; one inoperative fan is acceptable
-B) The non-functional bathroom fan (painted over, inoperative), the absence of a WC extract fan, and the consequent ventilation strategy inadequacy in two wet rooms — these must be recorded as specific findings, not as a general note
-C) A general note that "ventilation requires improvement" is sufficient
-D) Only the bathroom fan needs recording — WC fans are not mandatory
+A) Record a defect: every WC needs an extract fan of at least 15 l/s
+B) Record the absent fan and the window's type, opening angle and size: purge ventilation is an allowed alternative for sanitary accommodation, so adequacy is for the designer
+C) Ignore it: sanitary accommodation is not a wet room under Part F
+D) Record a defect: the WC needs a humidity-controlled fan
 
-**Correct answer: B**
-*Specific, location-referenced deficiencies (inoperative bathroom fan, absent WC fan) must be recorded as specific findings. The assessor cannot write "ventilation requires improvement" without the detail that tells the designer which rooms are affected and why. Each wet room's ventilation provision must be individually recorded.*
-
----
-
-**Q2.** A 1975 semi-detached house is proposed for full cavity wall insulation, loft insulation to 300 mm, and window replacement with new A-rated PVC-U windows. The occupant has confirmed that draught-proofing of external doors was carried out two years ago. Under PAS 2035:2023, what ventilation assessment action is triggered?
-
-A) None — ventilation assessment is only required for projects including EWI or IWI
-B) A ventilation adequacy assessment is required because the proposed package affects the dwelling's airtightness and ventilation dynamics; the risk pathway for this project is unlikely to be Path A
-C) A ventilation assessment is recommended but not mandatory for this project type
-D) The ventilation assessment is the Retrofit Coordinator's responsibility, not the assessor's
-
-**Correct answer: B**
-*The combined effect of CWI, loft insulation with draught-stripping, window replacement, and existing door draught-proofing represents a significant reduction in uncontrolled infiltration. PAS 2035:2023 requires ventilation adequacy assessment for any project affecting airtightness. The assessor records the current strategy and condition; the design stage addresses whether the strategy must change. Path A is unlikely given the ventilation implications.*
+**Correct answer: B.** Table 1.1 note 3 and paragraph 1.49 let sanitary accommodation meet its extract rate by purge ventilation through windows; 15 l/s is the bathroom rate, sanitary accommodation is a wet room (Appendix A), and humidity controls should not be used in WCs (paragraph 1.36).
 
 ---
 
-**Q3.** A 1910 solid-walled terrace has two open chimney flues (one in the living room, one in the first-floor bedroom) that are currently open and functional. The property is proposed for internal wall insulation and floor draught-stripping. What ventilation data must the assessor record regarding the chimneys?
+**Q2.** Under PAS 2035:2023, when must the Retrofit Designer confirm the adequacy of the existing ventilation?
 
-A) The chimneys are irrelevant to the ventilation assessment
-B) The number, location, and current status of both chimney flues must be recorded, as open chimneys provide significant uncontrolled ventilation — if IWI and draught-stripping substantially reduce other infiltration pathways, the chimneys may become the primary ventilation pathway, with implications for design
-C) Only blocked or capped chimneys need recording — open chimneys are not a risk
-D) The assessor should recommend capping the chimneys before IWI proceeds
+A) When the project is assigned to risk Path B or C
+B) Only when MVHR is being proposed
+C) Only when the Retrofit Assessor has judged the ventilation inadequate
+D) When the specified and existing measures fall into Category B or C under Approved Document F Table 3.1 and Diagram 3.1, or the assessment shows condensation or mould growth
 
-**Correct answer: B**
-*Open chimney flues provide 20–80 m³/h of uncontrolled ventilation each and are mandatory data fields. In a deep retrofit context, their role in the post-retrofit ventilation strategy is design-critical. The assessor records their presence, location, and status — open, capped, or blocked.*
-
----
-
-**Q4.** A property is assessed for a deep retrofit package expected to reduce air permeability to approximately 3 m³/h·m² at 50 Pa (approaching EnerPHit standard). The existing ventilation is System 1 (trickle vents and intermittent extract). What ventilation upgrade trigger does this create for the designer?
-
-A) No upgrade needed — System 1 is sufficient for all airtightness levels
-B) At very low airtightness levels, System 1 cannot provide adequate ventilation — MVHR or MEV will likely be required; the assessor should record the existing strategy and flag the airtightness target as a driver for ventilation strategy review
-C) The assessor should specify MVHR in the assessment report
-D) MEV is always required for properties with air permeability below 5 m³/h·m²
-
-**Correct answer: B**
-*At very low airtightness levels, background infiltration through the fabric is insufficient to provide adequate background ventilation for System 1 to function. MVHR or MEV is typically required. The assessor records the existing strategy and flags the airtightness implication — the designer determines the appropriate strategy upgrade.*
+**Correct answer: D.** This is clause 8.2.13, repeated in C.2.1; PAS 2035:2023 has no risk paths, and the trigger depends neither on the system proposed nor on an adequacy judgement by the assessor.
 
 ---
 
-**Q5.** An assessor notes that all replacement windows in a 2010 renovation are installed without trickle vents. The property has no extract fans in kitchen or bathroom. What is the likely cause of the black mould observed on the bathroom ceiling and behind bedroom furniture?
+**Q3.** Which of these does PAS 2035:2023 clause 7.3.2 f) require the Retrofit Assessor to record?
 
-A) Rising damp — common in properties renovated in 2010
-B) Penetrating damp from roof defects
-C) Surface condensation caused by inadequate ventilation — the replacement of original windows without trickle vents removed significant background ventilation, and the absence of extract fans in wet rooms allows moisture to accumulate and condense on cold surfaces
-D) Interstitial condensation within the wall fabric
+A) The position and type of any fans, with make and model where possible or the reasons why not, and the size and location of all background ventilators
+B) A recommendation on whether to fit MVHR or MEV
+C) The ventilation data fields listed in Annex A
+D) A whole-dwelling air permeability test result
 
-**Correct answer: C**
-*The combination of replacement windows without trickle vents (removing the background ventilation previously provided by draught infiltration through original windows) and absent extract fans in wet rooms creates a ventilation failure that leads to moisture accumulation and surface condensation. This is a textbook inadequate ventilation scenario and must be recorded as such in the assessment.*
+**Correct answer: A.** Clause 7.3.2 f) 1) and 2) set these out; choosing a system is the designer's job (clause 8.2.13 and Annex C), Annex A is Qualifications, and the air testing strategy belongs to the design (clause 8.2.35).
+
+---
+
+**Q4.** The designer is upgrading ventilation in a house with intermittent extract fans. No airtightness test has been done. What does Annex C accept as the minimum?
+
+A) The existing intermittent extract fans, provided they work
+B) Background ventilators in every room and no extract
+C) Continuous MEV from all wet spaces with background ventilators in living spaces and bedrooms, or continuous whole-dwelling MVHR, or another continuous system on expert advice
+D) Single room heat recovery ventilators in each room as the whole-dwelling system
+
+**Correct answer: C.** Intermittent extract is acceptable in an upgrade only where an approved test shows at least 5 m3/(h.m2) at 50 Pa after the works (clause C.3.2); otherwise clause C.3.3 sets the minimum, which always extracts moisture, and clause C.3.7 bars several single room units as a whole-dwelling system.
+
+---
+
+**Q5.** A bedroom fireplace has been decommissioned: the opening is filled and an air brick with 10,000 mm2 of ventilation area serves the chimney. How does convention 9.01 treat it?
+
+A) As an open chimney, modelled at 80 m3/hr
+B) As a blocked chimney, modelled at 20 m3/hr
+C) It is not counted at all
+D) As a flue, because it is decommissioned
+
+**Correct answer: B.** Convention 9.01 treats a decommissioned chimney with less than 30,000 mm2 of ventilation area as blocked at 20 m3/hr; it would be open at 30,000 mm2 or more, only a completely sealed chimney is left out, and a flue is a duct under 200 mm.
 
 ---
 
 ## Further Reading
 
-- **PAS 2035:2023 — Retrofitting Dwellings for Improved Energy Efficiency** — BSI. Available at: https://www.bsigroup.com/
-- **Building Regulations Approved Document F: Ventilation (2021 edition)** — MHCLG. Available at: https://www.gov.uk/government/publications/ventilation-approved-document-f
-- **CIBSE — Guide A: Environmental Design (Ventilation section).** Available at: https://www.cibse.org/
-- **NHBC — Domestic Ventilation Compliance Guide.** Available at: https://www.nhbc.co.uk/
-- **TrustMark — PAS 2035 Ventilation Assessment Guidance.** Available at: https://www.trustmark.org.uk/
+Sources used for this course:
+- **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, September 2023. Clauses 7.3.2, 7.4 and 8.2.8 to 8.2.13, and Annex C.
+- **Approved Document F: Ventilation, Volume 1: Dwellings, 2021 edition.** HM Government, in effect in England from 15 June 2022. Tables 1.1, 1.6 and 1.7, Section 3, Appendix A and Appendix D.
+- **Approved Document F: Ventilation, Volume 1: Dwellings, 2026 edition.** HM Government, takes effect 24 March 2027. Front page dates; compare Section 3.
+- **PAS 2030:2023 Installation of energy efficiency measures in existing dwellings. Specification.** BSI, September 2023. Clause 5.2.4.
+- **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Conventions 7.03a, 9.01 and 10.01.
+- **RdSAP10 Specification.** BRE, version 4.0 (7 June 2026). Section 4.1, Table 5 and section 4.2.
 
 ---
 

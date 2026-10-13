@@ -78,8 +78,8 @@ COURSES = {
     "MER-DEA-014": {"course_id": "MER-DEA-014", "title": "EPC Audit Preparation: Building an Evidence File That Stands Up", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-DEA-021": {"course_id": "MER-DEA-021", "title": "Airtightness Testing in RdSAP 10", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-001":  {"course_id": "MER-RA-001",  "title": "PAS 2035:2023 Overview for Retrofit Assessors", "cpd_hours": 2.0, "published": "2026-03-01"},
-    "MER-RA-002":  {"course_id": "MER-RA-002",  "title": "Moisture Risk Assessment in PAS 2035:2023: The Updated Framework", "cpd_hours": 1.0, "published": "2026-03-01"},
-    "MER-RA-003":  {"course_id": "MER-RA-003",  "title": "Dwelling Data Collection: PAS 2035:2023 Annex A Requirements", "cpd_hours": 1.0, "published": "2026-03-01"},
+    "MER-RA-002":  {"course_id": "MER-RA-002",  "title": "Moisture and PAS 2035:2023: What the Retrofit Assessor Records and Reports", "cpd_hours": 1.0, "published": "2026-03-01"},
+    "MER-RA-003":  {"course_id": "MER-RA-003",  "title": "Retrofit Assessment: What PAS 2035:2023 Clause 7 Requires You to Record and Report", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-004":  {"course_id": "MER-RA-004",  "title": "Cavity Wall Insulation: Risk Factors and the Retrofit Assessor's Role", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-005":  {"course_id": "MER-RA-005",  "title": "Solid Wall Insulation: IWI vs EWI — Risks, Evidence and Assessment", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-006":  {"course_id": "MER-RA-006",  "title": "EPR Variation: The RdSAP 10 Transition in ECO4 and GBIS Projects", "cpd_hours": 1.0, "published": "2026-03-01"},
@@ -114,9 +114,9 @@ COURSES = {
 # course, publish its corrected PDF and delete its ID from this set (and from the same
 # list in landing-page/courses.html). Certificates already issued are not affected.
 UNDER_REVIEW = {
-    "MER-RA-002", "MER-RA-003", "MER-RA-004", "MER-RA-005", 
-    "MER-RA-007", "MER-RA-008", "MER-RA-010", "MER-RA-011", "MER-RA-012",
-    "MER-ALL-004", "MER-ALL-005", "MER-ALL-008", "MER-ALL-009",
+    "MER-RA-004", "MER-RA-005", 
+    "MER-RA-007", "MER-RA-010", "MER-RA-011", "MER-RA-012",
+    "MER-ALL-005", "MER-ALL-008", "MER-ALL-009",
     "MER-ALL-010", "MER-ALL-012", "MER-ALL-013", "MER-ALL-014",
     "MER-ALL-015", "MER-ALL-016", "MER-ALL-017",
 }

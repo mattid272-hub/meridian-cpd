@@ -1,173 +1,229 @@
-
-
-# Moisture Risk Assessment in PAS 2035:2023: The Updated Framework
-**Course ID:** MER-RA-002 | **CPD Hours:** 1.0 | **Published:** March 2026
+# Moisture and PAS 2035:2023: What the Retrofit Assessor Records and Reports
+**Course ID:** MER-RA-002 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Apply the revised moisture risk assessment framework in PAS 2035:2023, distinguishing the mandatory moisture-risk indicators from recommended observations.
-- Correctly identify and differentiate rising damp, penetrating damp, and condensation as causes of moisture problems, and record them using the PAS 2035:2023 terminology.
-- Apply the external exposure zone classification (BREDEM/BS 8104) to determine wind-driven rain exposure for a given dwelling location and record this correctly in the Retrofit Assessment report.
-- Assess rainwater goods condition and its relevance to moisture risk categorisation and pathway determination.
-- Understand how moisture-risk findings influence the retrofit risk pathway (Path A, B, or C) and what downstream design actions they trigger.
+- State what PAS 2035:2023 changed about moisture, and recognise unsourced claims about it.
+- Identify the items of clause 7.3.2 that bear on moisture, including the notes to item d).
+- Report defects, leaks, condensation and mould in the two categories of clause 7.4.2, with the photographic record of clause 7.4.1.
+- Describe the types of damp as the government's damp and mould guidance for England describes them, and the limits of a visual diagnosis.
+- Explain what the Retrofit Designer, Retrofit Coordinator and installer must do with your moisture findings.
 
 ---
 
 ## Introduction
 
-Moisture is the single most consequential risk in domestic retrofit. A well-intentioned energy efficiency measure installed in a dwelling with unresolved or inadequately assessed moisture problems can cause rapid deterioration of structure, mould growth harmful to occupant health, and failure of the measure itself — often within two to three heating seasons. Post-installation moisture-related failures have driven some of the most significant revisions in PAS 2035:2023 compared with the 2019 edition.
+PAS 2035:2023 divides moisture between the roles. The assessment identifies defects, leaks, condensation and mould, and describes the ventilation, construction and site (PAS 2035:2023, clause 7.3.2); the retrofit design manages moisture in line with BS 5250 (clause 8.2.10).
 
-The 2023 revision has moved moisture risk from a largely qualitative assessment exercise to a structured, mandatory data-collection requirement. Where the 2019 standard gave assessors significant discretion in how moisture risk was characterised, the 2023 document specifies mandatory indicators that must be recorded, minimum evidence requirements, and a clearer link between moisture findings and risk pathway assignment. If your moisture assessment practice was formed under the 2019 edition, there are gaps.
+PAS 2035:2023, "Retrofitting dwellings for improved energy efficiency: Specification and guidance", is the second edition, published by BSI in September 2023. Its Foreword gives 30 March 2025 as the date it came into effect and PAS 2035:2019+A1:2022 was withdrawn; BSI's catalogue lists it as current. It is a Publicly Available Specification, not law: its "shall" statements bind you where a scheme, contract or funding rule adopts it. The government's damp and mould guidance for England, for example, says landlords carrying out retrofit under a government energy efficiency scheme "must be compliant with PAS 2035". The PAS is used across the UK and cites the ventilation guidance of all four nations (clause 2, [N3] to [N6]). The government guidance and Approved Documents quoted here apply to England; elsewhere, ask your scheme or building control.
 
-This course covers the 2023 moisture risk framework, the classification of moisture types, exposure zone assessment, rainwater goods, and the pathway implications of moisture findings. It is written for qualified Retrofit Assessors operating under PAS 2035:2023 in TrustMark-registered organisations.
+Clauses 4 and 5 of the PAS are headed "Guidance about" and use "should"; clauses 6 to 13 are headed "Requirements for". This course is correct to 12 October 2026.
 
----
-
-## Section 1: The PAS 2035:2023 Moisture Risk Framework — What Changed
-
-The 2019 edition of PAS 2035 required assessors to identify "significant moisture problems" and consider their interaction with proposed retrofit measures. The language was general, and practice across the sector varied enormously — from thorough moisture surveys with damp meter readings and exposure zone calculations, to a single checkbox and a brief narrative comment.
-
-PAS 2035:2023 tightens this. The standard now specifies mandatory moisture-risk indicators that must be recorded for every dwelling assessed under the standard, regardless of the proposed measures. These indicators are:
-
-1. **Evidence of rising damp** — including visual evidence (tide marks, salt crystallisation, plaster deterioration at low level) and any available historical information from the owner.
-2. **Evidence of penetrating damp** — including water staining, plaster staining or blooming, efflorescence on internal faces corresponding to external exposure, evidence of roof or chimney leakage.
-3. **Evidence of condensation** — including black mould growth (typically *Cladosporium* or *Aspergillus niger*), water staining on cold surfaces (north-facing external walls, window reveals), streaming on windows.
-4. **Ventilation adequacy** — presence, type, and condition of purpose-provided ventilation (extract fans, trickle vents, passive stack vents) and evidence of its adequacy for the current occupancy.
-5. **External exposure** — the wind-driven rain exposure zone (see Section 2).
-6. **Rainwater goods condition** — gutters, downpipes, flashings, and valley gutters (see Section 3).
-
-These six indicators are now mandatory data fields in the Retrofit Assessment. Omitting any of them is non-compliant with PAS 2035:2023 and will result in lodgement rejection by TrustMark.
-
-**The key change from 2019.** Under PAS 2035:2019, a Retrofit Assessor could record "no moisture issues identified" and proceed. Under PAS 2035:2023, the assessor must demonstrate that they looked for each indicator specifically and recorded what they found — including a negative finding ("no evidence of rising damp observed; DPC present and intact at survey date"). A blank field is not a negative finding. It is missing data.
+This edition replaces the March 2026 edition. That edition taught six mandatory moisture-risk indicators, risk paths A, B and C set by damp and exposure, a specialist moisture survey for "Path C", a "BREDEM wind-driven rain map" searchable by postcode, a PAS 2035:2023 reference to BS 8104 and TrustMark lodgement rejection for missing fields. None of these is in PAS 2035:2023 or in any source we could find, and every project needs a Retrofit Coordinator, not only some. It never mentioned BS 5250, the standard the PAS actually relies on for moisture. Please unlearn all of it.
 
 ---
 
-## Section 2: Rising Damp, Penetrating Damp, and Condensation — Classification and Recording
+## Section 1: What PAS 2035:2023 says about moisture
 
-Distinguishing between moisture types is essential because the retrofit design response differs, and misidentification leads to measures that do not address the actual problem.
+### What changed in 2023
 
-**Rising damp.** True rising damp is capillary movement of ground moisture up through porous masonry. It is characterised by: a tide mark at low level (typically not exceeding 1 m from floor level), salt crystallisation on the wall surface (hygroscopic salts deposited as moisture evaporates), and deterioration concentrated at the base of the wall that reduces with height. Rising damp requires an intact pathway from the ground — it cannot occur where a functioning damp-proof course exists. Visual evidence of a DPC (engineering brick course, slate course, or injected DPC visible at pointing level) should be recorded. Where no DPC is identifiable, rising damp is a credible risk. Where a DPC is present and appears intact, alleged "rising damp" above DPC level is almost always condensation or penetrating damp, not capillary rise.
+The Foreword lists the principal changes from the 2019 edition. Moisture appears once: "Requirements and guidance around moisture in buildings has been brought in line with language in BS 5250" (PAS 2035:2023, Foreword). The same list says "The risk assessment process has been simplified to avoid unintended complexities". Risk paths A, B and C appear nowhere in the 2023 text, and TrustMark's transition note says "Risk Pathways have been removed in PAS2035:2023" (TrustMark, Retrofit Assessment Transition V1.0, 4 March 2025). The phrase "retrofit risk assessment" survives once, in clause 13.1 b), with no grading procedure.
 
-**Penetrating damp.** Penetrating damp is moisture entering through the building fabric from the exterior. In solid-wall properties, this is direct permeation through the wall (common in exposed locations with high-absorption masonry and defective pointing). In all property types, it also includes: roof defects, chimney stack defects, failed flashings, defective rainwater goods, cracked or failed render, and blocked weep holes in cavity walls. The distinction from rising damp is that penetrating damp typically appears on wall areas corresponding to an external defect — above DPC level, associated with a specific feature (chimney, dormer, parapet) or an exposure direction (consistently on the south-west or west face in high-exposure zones). Recording should identify the location, the likely source, and any visible external defect.
+You may still meet "Path C" in Ofgem's ECO4 guidance, which says projects that include data light measures or innovation measures not listed in PAS 2035:2023 "will need to follow the Path C domestic retrofit process" (Ofgem, ECO4 Guidance: Delivery v4.0, 26 March 2026, paragraph 4.22). That is Ofgem's wording, not the PAS's; ask the Coordinator what it means for you.
 
-**Condensation.** Condensation occurs when warm, moist internal air contacts a surface below the dew point temperature. Surface condensation produces mould growth at cold bridges (wall-floor junctions, reveals, behind furniture on external walls) and on cold surfaces (north-facing external walls, window glass). Interstitial condensation — moisture condensing within the fabric — is not directly visible during a survey but is inferred from construction type and the proposed retrofit measures. Recording condensation evidence should include the location, the pattern (widespread or localised), the affected construction element, and any relationship to ventilation adequacy or occupant behaviour (drying laundry indoors, no working extract in kitchen/bathroom).
+"Every domestic retrofit project shall be coordinated by a Retrofit Coordinator" (clause 6.1.1), who is qualified "to identify, assess and manage the technical and process risks" (clause 6.1.2, NOTE). Nothing in clause 7 asks the assessor to grade moisture risk.
+
+### BS 5250 is the moisture reference
+
+BS 5250 (Management of moisture in buildings, code of practice) is a normative reference, cited without a date, so "the latest edition of the referenced document (including any amendments) applies" (clause 2). It matters in three places:
+- the retrofit design "shall include provision for the management of moisture within the construction, in line with BS 5250" (clause 8.2.10);
+- guidance for diagnosing dampness problems in existing buildings "is given in BS 5250:2021, Annex C" (clause 7.3.2 d), NOTE 4);
+- to conform to BS 5250, an interstitial condensation assessment to BS EN ISO 13788 "might not be sufficient as the basis for a moisture risk assessment" for some walls, for example solid walls with internal wall insulation proposed in exposed locations (clause 4.3.3, NOTE 1).
+
+We do not have the text of BS 5250, so we do not teach its content.
+
+### The building physics guidance
+
+Everyone in the process should have a working knowledge of building physics "with emphasis on the movement of heat, moisture and air through dwellings" (clause 4.1.1). Work that reduces heat loss or air leakage "might have unintended consequences" for indoor air quality and moisture movement, particularly in traditionally built homes and non-traditional homes of the 1960s and 1970s (clause 4.2.6).
+
+Energy models such as SAP and PHPP mostly "do not deal with moisture" (clause 4.3.1), so your energy model is not a moisture assessment. The PAS treats interstitial condensation risk as something assessed by calculation (clause 4.3.3), with techniques for measuring and monitoring moisture in the fabric (clauses 4.3.4 e) and 4.3.5 e); assessors should be familiar with the calculation techniques (clause 4.3.6). Nothing in clause 7.3.2 asks the assessor to assess interstitial condensation.
+
+Fabric first starts with repair: "Deal with water penetration and damp (so that the building fabric is properly dried out)" before the insulation stage (clause 5.5.1 a).
 
 ---
 
-## Section 3: External Exposure Zone and Rainwater Goods
+## Section 2: What the assessment must include
 
-**Wind-driven rain exposure.** The wind-driven rain exposure zone for the dwelling location determines the intensity of moisture loading on the external fabric. PAS 2035:2023 references the exposure classification from BS 8104 and the BREDEM exposure dataset. The UK is divided into four exposure zones: Sheltered, Moderate, Severe, and Very Severe. Most of England and the Midlands is Moderate. Western and northern coastal areas of England, Wales, and Scotland range from Severe to Very Severe.
+Clause 7.3.2 lists what "The assessment shall include", items a) to l). These bear on moisture:
+- b) an appraisal of construction and condition "in sufficient detail to establish the suitability of the dwelling for improvement";
+- d) "identification of the location and severity of any existing construction defects or structural defects or leaks, and of any condensation and/or mould growth in the dwelling";
+- f) an inspection and review of the existing ventilation, recording fans and background ventilators and reporting measured air flows below the minimum in the relevant nation's standards;
+- g) the main materials, U-values "and moisture properties of the main building elements";
+- i) site constraints, "e.g. elevation and exposure (to sun, wind and rain, major roads and industrial activity)";
+- l) environmental and climate change risks, including "extreme weather conditions, overheating and increased relative humidity".
 
-The exposure zone is a mandatory input in the Retrofit Assessment. It is not determined by visual inspection of the dwelling — it is derived from the dwelling location. The tool for this is the BREDEM wind-driven rain map, which is accessible online and can be queried by postcode. Assessors must record the zone assigned, the source used, and the date of the check.
+### The notes to item d)
 
-The exposure zone directly affects:
-- Whether solid wall insulation (particularly IWI) requires additional measures to manage moisture
-- Whether the project is likely to fall into Path B or Path C for moisture-risk-related reasons
-- The specification of the external wall element — a Very Severe zone may require an additional vapour-open finish on EWI or a specific render specification
+Four notes follow item d) (clause 7.3.2 d), NOTES 1 to 4):
+- identifying defects "might require the use of test equipment or invasive assessments, including opening up of the building fabric";
+- "A small amount of condensation in bathrooms around sinks or showers, or around the edge of windows in extreme weather conditions, is normal";
+- guidance for assessing traditional buildings is the RICS, Historic England and Property Care Association joint position statement (see Section 3);
+- guidance for diagnosing dampness is BS 5250:2021, Annex C.
 
-**Rainwater goods.** The condition of gutters, downpipes, flashings, valley gutters, and chimney pointing is a mandatory observation. Defective rainwater goods are the most common proximate cause of penetrating damp in UK housing, and a retrofit measure installed without correcting defective rainwater goods is at high risk of moisture-related failure. The standard requires that the assessor records: type of rainwater goods (cast iron, UPVC, aluminium), observed condition (intact and functional, minor defects, significant defects), and any defects noted by location (e.g., "blocked gutter on north elevation, evidence of overflow staining on wall below").
+The requirement is location and severity. The PAS does not use the terms "rising damp" or "penetrating damp", and does not require a moisture meter, a list of indicators or a record of rainwater goods; a blocked gutter or failed flashing is simply a defect or leak under item d). A sensible habit is to record what you checked and found sound as well as what was wrong, so the designer can tell "no defect" from "not looked at"; the PAS does not require it.
 
-Where significant defects are identified, the Retrofit Assessment must flag these as pre-conditions for retrofit — the defects must be remedied before moisture-sensitive measures (IWI, EWI, loft insulation where roof is defective) proceed.
+### The ventilation checklist that is not there
+
+Item f) says the ventilation review follows "the checklist provided in Table C.1". The PAS contains no Table C.1; its only tables are E.1 and E.2. Annex C does refer to Approved Document F Table D1 (C.3.1), which in the 2021 edition of Approved Document F Volume 1 (England) is a "Checklist for ventilation provision in existing dwellings". Ask your scheme or Coordinator which checklist they expect; do not invent one.
+
+### Exposure to wind and rain
+
+Exposure appears in item i) only as an example of a site constraint; the PAS gives no method and no zone field. What we can source:
+- RdSAP convention 9.10 (hard to treat cavity walls) says "Possible high exposure should be recorded for any dwelling in exposure zones 3 or 4" from the map at the end of the conventions, and "If in doubt record as possible high exposure" (RdSAP 10 Conventions v12.2, convention 9.10, applicable from 6 August 2026). That is an RdSAP rule, not a PAS 2035 requirement, but the map is a reasonable starting point for item i);
+- Approved Document C (England) says "A method of describing the exposure to wind-driven rain is given in BS 8104:1992", and its Diagram 12 is titled "UK zones for exposure to driving rain" (Approved Document C, 2004 edition incorporating 2010 and 2013 amendments, the edition gov.uk listed on 13 October 2026; paragraph 5.8 and list of diagrams). We do not have BS 8104, so we do not teach its method.
+
+Your description feeds the designer, who must provide for "resilience against rainwater ingress" and for "increased future rainfall" (clause 8.2.21 b) and d). A sensible habit is to record which elevations are affected and what you could and could not see from the ground.
+
+### Traditional buildings
+
+Traditional construction means solid walls "constructed with moisture-permeable materials and usually built prior to 1919", or pre-1919 timber frame (clause 3.39). For these dwellings a significance assessment to BS 7913 is also required (clause 7.3.4), the assessor must hold one of the traditional buildings qualifications in Annex A (A.1.2), and RdSAP default U-values might not be appropriate (clause 7.3.2, NOTE 8).
 
 ---
 
-## Section 4: Moisture Findings and Pathway Determination
+## Section 3: Diagnosing damp: what the sources let us say
 
-The moisture risk indicators you record feed directly into the pathway determination (Path A, B, or C) that governs the project's complexity and the required professional oversight.
+We could not read BS 5250:2021 Annex C, so this section uses two sources we could read; neither is a PAS requirement.
 
-**Path A.** Applies to projects where moisture risk is assessed as low. Path A is appropriate where: no moisture issues are identified at survey; the exposure zone is Sheltered or Moderate; rainwater goods are in good condition; and the proposed measures do not fundamentally alter the moisture dynamics of the fabric (e.g., loft insulation only, with no draught-stripping that would reduce background ventilation significantly). Path A projects have the least onerous oversight requirements.
+### The government's damp and mould guidance
 
-**Path B.** Applies where moderate moisture risk is identified. This includes: properties in Severe or Very Severe exposure zones; properties with evidence of minor or historic damp (resolved but evidenced by historical staining); properties where the proposed measures include any IWI or EWI on a solid wall; properties where any draught-stripping or air-permeability improvement is proposed alongside insulation. Path B requires the involvement of a Retrofit Coordinator and a formal moisture risk review as part of the design stage.
+"Understanding and addressing the health risks of damp and mould in the home" is published by the Ministry of Housing, Communities and Local Government with the Department of Health and Social Care and the UK Health Security Agency (first published 7 September 2023, updated 1 April 2026). It is written for rented housing providers in England. It names four types of damp:
+- condensation damp, which "happens when moisture generated inside the home cools and condenses onto colder parts of the buildings", and is "the most common form of damp";
+- penetrating damp, "water that gets into the building from outside due to defects in the walls, roofs, windows or floors";
+- rising damp, "moisture from the ground that rises up through parts of the buildings in contact with the ground", "usually found in older properties and is often misdiagnosed"; it "can be identified through visual inspection; however chemical testing is the most appropriate way of confirming it", and "Often it is due to defective damp proof courses and membranes";
+- traumatic damp, from leaking pipes, overflowing baths or sinks, burst pipes or defective water storage vessels, or from outside, such as another building or flooding.
 
-**Path C.** Applies where high moisture risk is identified. This includes: active rising damp; active penetrating damp from an unresolved source; properties in Very Severe exposure zones where significant fabric treatment is proposed; traditional construction (pre-1919 solid masonry) in any exposure zone where breathable wall treatment is at issue. Path C requires a specialist moisture survey as a pre-condition of retrofit design, over and above the assessment data.
+Its external checks include "damaged or blocked pipes, gutters or downpipes", "cracks in render or the foundation, missing or broken roof finishes" and a "bridged (compromised) damp proof course", so a damp proof course can be present but bridged. It says an inspection is "preferred over an assessment based on photos", and that the smell of mould without visible mould "may indicate that there is mould behind a surface".
 
-**The assessor's duty.** Your role is to record the moisture indicators accurately and consistently, and to flag the risk pathway implications in the Retrofit Assessment report. You do not specify the remediation. You do not determine the retrofit measures. You record what is present, what the exposure is, and what the risk classification is — and you do so in sufficient detail that the Retrofit Coordinator and Retrofit Designer can make design decisions from your data without having to revisit the site.
+### The joint position statement
+
+PAS 2035:2023 cites "Investigation of moisture and its effects in traditional buildings" (clause 7.3.2 d), NOTE 3; Bibliography [6]). The document, from RICS, Historic England and the Property Care Association (1st edition, September 2022), whose own title reads "on traditional buildings", describes itself as a framework usable "for moisture investigations in buildings of all types and ages". It says:
+- it "assumes that a non-invasive inspection will be undertaken initially, with an invasive inspection to follow if it is deemed necessary";
+- surveyors should "Provide a holistic diagnosis that identifies and deals with causes, rather than focusing on symptoms";
+- "dealing with damp is often a staged process": deal with obvious defects first, including ventilation, ground levels and lifestyle, then "allow a period for monitoring and natural evaporation, and reassess";
+- salts in the fabric can influence a resistance meter;
+- "Traditional construction absorbs moisture but allows it to evaporate when conditions become drier".
+
+### Where that leaves the assessor
+
+Your PAS duty is location and severity (clause 7.3.2 d), and neither source treats a visual diagnosis as final. A sensible habit is to describe what you saw and where, give a likely cause only where the evidence supports it, and say plainly where the cause could not be established without testing or opening up. Specifying treatment is not your job.
+
+---
+
+## Section 4: Reporting, and who decides
+
+### What your report must contain
+
+The assessment, including the ventilation assessment, "shall be recorded and reported to the Retrofit Designer", with any RdSAP, SAP or PHPP data file and "a photographic record of all the recorded features of the building and of any identified defects" (clause 7.4.1). Where it has found construction or structural defects, leaks, or condensation or mould, the report must place them in two categories (clause 7.4.2):
+- a) "defects that need to be repaired before any retrofit work can proceed";
+- b) "defects that are recommended but not an essential prerequisite to retrofit".
+
+Category a) is not limited to moisture-sensitive measures: the wording is "any retrofit work". If the report is not enough to design from, the designer identifies what is missing and the Coordinator arranges for you to add it (clauses 7.4.3 and 7.4.4). We found no rule rejecting reports for missing moisture fields.
+
+### What the Retrofit Designer must do
+
+The designer takes account of the existing condition, "including the need to repair any structural defects and address causes of damp or water ingress into building fabric prior to the installation of retrofit measures" (clause 8.2.8 a). The design must provide for managing moisture in line with BS 5250 (clause 8.2.10); a NOTE to that clause, which is informative, says the materials "should match the moisture strategy of the existing building". If the package falls into Approved Document F category B or C, or "there is evidence of condensation and/or mould growth in the dwelling in the retrofit assessment", the designer must confirm the adequacy of the existing ventilation and, if necessary, specify an upgrade under Annex C (clause 8.2.13). Your record of condensation or mould is, on its own, a trigger for that check. The design documentation, which the Retrofit Coordinator provides to the Main Contractor or Retrofit Installer, must identify "any repairs or maintenance required prior to implementation of the EEMs" (clause 8.2.25 c).
+
+### What the Retrofit Coordinator must do
+
+Where there is evidence of surface condensation or mould, no insulation or airtightness measures are proposed, and the ventilation does not comply with Approved Document F Table D1, the ventilation "shall be upgraded" (the clause does not say by whom); adequate or not, the Coordinator "shall provide advice to the client on managing condensation, damp and mould in their home" (Annex C, C.3.1).
+
+### What the installer and evaluator do
+
+The installer's pre-installation building inspection must give "Particular attention" to "potential moisture build up as a result of the installation", and the installer confirms to the Coordinator that the identified repair works have been done (PAS 2030:2023, clause 7.2.1). Moisture-related defects found during the works and missing from your report go to the Coordinator (PAS 2030:2023, clause 7.4.4). Basic evaluation findings, including unintended consequences, go to the Retrofit Assessor among others (PAS 2035:2023, clauses 13.4.1 b) and 13.4.2).
+
+### BS 40104:2025
+
+BSI published BS 40104:2025, "Retrofit assessment for domestic dwellings. Code of practice", on 24 September 2025; it covers "Condition assessment", but we do not have its text and do not teach it. ecmk's December 2025 bulletin said it would not audit to it until it is implemented as the required standard for retrofit assessments; ask your scheme whether that has changed.
 
 ---
 
 ## Key Takeaways
-
-- PAS 2035:2023 makes six moisture-risk indicators mandatory for every assessment — rising damp, penetrating damp, condensation, ventilation adequacy, exposure zone, and rainwater goods. Omitting any is non-compliant.
-- A negative finding ("no evidence of rising damp observed") must be recorded explicitly — a blank field is missing data, not a clean bill of health.
-- Rising damp is confined to below DPC level; moisture above DPC in a property with an intact DPC is almost certainly condensation or penetrating damp, not capillary rise.
-- The wind-driven rain exposure zone is derived from the dwelling location (postcode via BREDEM/BS 8104 tool), not from visual inspection — and it is a mandatory input.
-- Defective rainwater goods must be flagged as pre-conditions for moisture-sensitive measures; the retrofit cannot proceed safely until defects are resolved.
-- Moisture findings drive pathway assignment: active moisture issues or high-exposure-zone assessments typically trigger Path B or Path C, with corresponding oversight requirements.
+- PAS 2035:2023 does not ask the assessor to grade moisture risk, sets no mandatory moisture indicators and has no risk paths; its Foreword's only moisture change is alignment with the language of BS 5250.
+- BS 5250 is the PAS's moisture reference, for the design (clause 8.2.10) and, through its 2021 Annex C, for guidance on diagnosing dampness (clause 7.3.2 d), NOTE 4).
+- Your core moisture duty is clause 7.3.2 d): the location and severity of defects, leaks, condensation and mould, with the photographic record of clause 7.4.1.
+- Report defects in the two categories of clause 7.4.2: repair before any retrofit work, or recommended but not a prerequisite.
+- Exposure to wind and rain is a site constraint under clause 7.3.2 i); the PAS sets no zone field and no method.
+- Recorded condensation or mould obliges the designer to confirm ventilation adequacy (clause 8.2.13).
+- The government's guidance for England says rising damp is often misdiagnosed and best confirmed by chemical testing.
+- Every project has a Retrofit Coordinator; you record and report, and the designer decides how causes of damp are addressed.
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** Under PAS 2035:2023, which of the following is a mandatory moisture-risk indicator that must be recorded for every Retrofit Assessment?
+**Q1.** What does the PAS 2035:2023 Foreword list as its principal change on moisture?
 
-A) The estimated cost of resolving any moisture issues
-B) The wind-driven rain exposure zone for the dwelling location
-C) A recommendation for which damp-proof treatment to apply
-D) The occupant's subjective assessment of dampness
+A) Six mandatory moisture-risk indicators must be recorded for every dwelling
+B) Damp findings and exposure zone now set the project's risk path
+C) Requirements and guidance on moisture have been brought in line with the language of BS 5250
+D) The assessor must record an exposure zone from a BREDEM wind-driven rain map
 
-**Correct answer: B**
-*The external exposure zone (from BS 8104 / BREDEM) is one of six mandatory moisture-risk indicators in PAS 2035:2023. The Retrofit Assessor records it but does not specify treatments (which is the Retrofit Designer's role). Occupant statements may inform the assessment but are not a mandatory input field.*
-
----
-
-**Q2.** An assessor surveys a 1905 solid-brick terrace. The occupant reports that the walls are "always damp in winter." The assessor observes mould growth behind furniture on the north-facing external wall and streaming condensation on the windows in cold weather. No tide mark or salt crystallisation is visible. What is the most likely moisture type?
-
-A) Rising damp — the property is pre-1919 and likely has no DPC
-B) Penetrating damp — the solid wall is permeable in winter
-C) Surface condensation — pattern consistent with cold bridges and inadequate ventilation
-D) Interstitial condensation — identifiable from wall surface observations
-
-**Correct answer: C**
-*Mould growth behind furniture on cold walls and window condensation are classic surface condensation indicators, associated with cold bridges and inadequate ventilation. Rising damp would present with a tide mark and salt crystallisation at low level. Interstitial condensation is not directly observable during a survey.*
+**Correct answer: C.** The Foreword says moisture requirements and guidance have been "brought in line with language in BS 5250"; the 2023 text has no indicator list, no risk paths and no exposure zone field (PAS 2035:2023, Foreword; clause 7.3.2).
 
 ---
 
-**Q3.** A property is located on the Pembrokeshire coast in west Wales. What wind-driven rain exposure zone should the assessor expect, and what is the primary tool for determining this?
+**Q2.** On a house proposed for internal wall insulation, you find staining on a bedroom wall below a failed chimney flashing. What does PAS 2035:2023 require of your assessment report?
 
-A) Moderate — determined by visual inspection of the external wall condition
-B) Severe or Very Severe — determined from the BREDEM wind-driven rain map or BS 8104 data for the postcode
-C) Sheltered — coastal locations are protected by prevailing sea breezes
-D) Severe — determined by asking the occupant about weather conditions
+A) Record the location and severity of the leak, photograph it, and report it in one of the two defect categories of clause 7.4.2
+B) Assign the project to Path C and commission a specialist moisture survey before design
+C) Specify the damp treatment and the replacement flashing detail
+D) Nothing, because roof defects are outside the scope of a retrofit assessment
 
-**Correct answer: B**
-*West-facing coastal locations in west Wales are typically in the Severe or Very Severe exposure zone. The exposure zone is determined from the BREDEM wind-driven rain map or BS 8104 data queried by postcode — not from visual inspection or occupant information.*
-
----
-
-**Q4.** An assessor identifies a blocked gutter on the north elevation of a property proposed for EWI. What action is required under PAS 2035:2023?
-
-A) Note the defect in the Retrofit Assessment and proceed — the EWI will protect the wall anyway
-B) Flag the blocked gutter as a pre-condition for retrofit — it must be remedied before EWI is installed
-C) Recommend that the client self-reports the defect to the installer
-D) No action required — rainwater goods condition is not a mandatory PAS 2035:2023 input
-
-**Correct answer: B**
-*Defective rainwater goods are a mandatory observation and must be flagged as pre-conditions for moisture-sensitive retrofit measures. EWI installed over a wall with unresolved rainwater management defects is at high risk of moisture ingress and measure failure. Rainwater goods must be remedied first.*
+**Correct answer: A.** Clauses 7.3.2 d), 7.4.1 and 7.4.2 require location and severity, a photographic record and the two categories; there are no risk paths, and addressing causes of water ingress is the designer's duty (clause 8.2.8 a).
 
 ---
 
-**Q5.** A Retrofit Assessment identifies active penetrating damp from a chimney stack defect on a 1930s semi-detached house proposed for solid wall IWI. What risk pathway should be assigned?
+**Q3.** Which document does PAS 2035:2023 cite as guidance for diagnosing dampness problems in existing buildings?
 
-A) Path A — the chimney defect is minor and easily resolved
-B) Path B — moderate moisture risk, requiring Retrofit Coordinator involvement and a design-stage moisture review
-C) Path C — active penetrating damp from an unresolved source requires a specialist moisture survey before retrofit design proceeds
-D) No pathway assignment is required — the defect must be resolved before any assessment is valid
+A) The BREDEM wind-driven rain map
+B) BS 8104, listed as a normative reference
+C) PAS 2030:2023, clause 7.2
+D) BS 5250:2021, Annex C
 
-**Correct answer: C**
-*Active penetrating damp from an unresolved source triggers Path C under PAS 2035:2023, requiring a specialist moisture survey as a pre-condition of retrofit design. The penetrating damp must be resolved, and the specialist survey must confirm resolution, before IWI design can proceed. Path A or B would be inappropriate where active moisture ingress is identified.*
+**Correct answer: D.** Clause 7.3.2 d), NOTE 4 names BS 5250:2021, Annex C; BS 8104 is not among the normative references (clause 2), BREDEM is not mentioned, and PAS 2030 clause 7.2 is the installer's inspection.
+
+---
+
+**Q4.** Under clause 8.2.13 of PAS 2035:2023, when must the Retrofit Designer confirm the adequacy of the existing ventilation?
+
+A) Only when MVHR is proposed
+B) When the package falls into Approved Document F category B or C, or the retrofit assessment records evidence of condensation and/or mould growth
+C) Only when the dwelling is of traditional construction
+D) Never, because ventilation adequacy is decided by the Retrofit Assessor
+
+**Correct answer: B.** Clause 8.2.13 sets those two triggers and requires any upgrade to follow Annex C; the assessor inspects and reports the ventilation under clause 7.3.2 f), but confirming adequacy is the designer's duty.
+
+---
+
+**Q5.** What does the government's damp and mould guidance for England say about rising damp?
+
+A) It is the most common form of damp in homes
+B) A resistance moisture meter reading is enough to confirm it
+C) It is often misdiagnosed, and chemical testing is the most appropriate way of confirming it
+D) It cannot occur where a damp proof course is present
+
+**Correct answer: C.** The guidance says rising damp "is often misdiagnosed" and "chemical testing is the most appropriate way of confirming it"; it names condensation as the most common form and lists a "bridged (compromised) damp proof course" among its external checks.
 
 ---
 
 ## Further Reading
-
-- **PAS 2035:2023 — Retrofitting Dwellings for Improved Energy Efficiency: Specification and Guidance** — BSI. Available at: https://www.bsigroup.com/
-- **BS 8104:1992 — Code of Practice for Assessing Exposure of Walls to Wind-Driven Rain** — BSI.
-- **BREDEM — Wind-Driven Rain Exposure Map Tool.** Available via BRE: https://www.bregroup.com/
-- **TrustMark — PAS 2035 Assessment Guidance and Data Requirements.** Available at: https://www.trustmark.org.uk/
-- **Historic England — Damp in Historic Buildings: Causes, Assessment and Treatment.** Available at: https://historicengland.org.uk/
+- **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency: Specification and guidance.** BSI, September 2023. Clauses 7.3.2, 7.4, 8.2.8 to 8.2.13 and Annex C.
+- **PAS 2030:2023 Installation of energy efficiency measures in existing dwellings: Specification.** BSI, September 2023. Clauses 7.2.1 and 7.4.4, the installer's moisture duties.
+- **Understanding and addressing the health risks of damp and mould in the home.** MHCLG, DHSC and UKHSA, 7 September 2023, updated 1 April 2026. Types of damp and investigation (England).
+- **Investigation of moisture and its effects on traditional buildings: joint position statement.** RICS, Historic England and Property Care Association, 1st edition, September 2022. Staged, cause-first investigation.
+- **Approved Document F Volume 1: Dwellings, 2021 edition.** HM Government, in effect from 15 June 2022 (England). Appendix D, Table D1. A 2026 edition has been published and takes effect on 24 March 2027 (24 September 2027 for work connected with higher-risk building work), so the 2021 edition is the one in use today.
 
 ---
 

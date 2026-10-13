@@ -820,9 +820,9 @@ const STRIPE_SUB    = 'https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01';
 // shown or sold. To restore one, publish its corrected PDF and delete its ID here and
 // in UNDER_REVIEW in webhook/main.py.
 const UNDER_REVIEW = new Set([
-  'MER-RA-002','MER-RA-003','MER-RA-004','MER-RA-005',
-  'MER-RA-007','MER-RA-008','MER-RA-010','MER-RA-011','MER-RA-012',
-  'MER-ALL-004','MER-ALL-005','MER-ALL-008','MER-ALL-009','MER-ALL-010',
+  'MER-RA-004','MER-RA-005',
+  'MER-RA-007','MER-RA-010','MER-RA-011','MER-RA-012',
+  'MER-ALL-005','MER-ALL-008','MER-ALL-009','MER-ALL-010',
   'MER-ALL-012','MER-ALL-013','MER-ALL-014','MER-ALL-015','MER-ALL-016',
   'MER-ALL-017',
 ]);
@@ -974,24 +974,24 @@ const ALL_COURSES = [
   },
   {
     id: 'MER-RA-002', strand: 'RA', hours: 1.0,
-    title: 'Moisture Risk Assessment in PAS 2035:2023: The Updated Framework',
-    desc: 'The moisture risk assessment methodology was restructured in PAS 2035:2023. This course covers the updated risk matrix, the new categorisation thresholds, and how moisture risk determinations affect the retrofit pathway and installer obligations.',
+    title: 'Moisture and PAS 2035:2023: What the Retrofit Assessor Records and Reports',
+    desc: 'What PAS 2035:2023 asks the retrofit assessor to record and report about moisture: the clause 7.3.2 items that bear on damp, condensation and mould, the two defect categories, the standard\'s reliance on BS 5250, and what the designer and coordinator must then do.',
     objectives: [
-      'Apply the PAS 2035:2023 moisture risk matrix to dwellings across common construction archetypes',
-      'Classify moisture risk correctly using the 2023 categorisation criteria',
-      'Determine when specialist investigation or elevated risk conditions apply',
-      'Document moisture risk assessment outputs to the standard required for TrustMark lodgement'
+      'State what PAS 2035:2023 changed about moisture, and recognise unsourced claims about it',
+      'Identify the items of clause 7.3.2 that bear on moisture, including the notes to item d)',
+      'Report defects, leaks, condensation and mould in the two categories of clause 7.4.2, with the photographic record of clause 7.4.1',
+      'Describe the types of damp as the government\'s damp and mould guidance for England describes them, and the limits of a visual diagnosis'
     ]
   },
   {
     id: 'MER-RA-003', strand: 'RA', hours: 1.0,
-    title: 'Dwelling Data Collection: PAS 2035:2023 Annex A Requirements',
-    desc: 'Annex A of PAS 2035:2023 specifies the data that must be collected during the retrofit assessment. This course covers what changed from the 2019 requirements, mandatory versus recommended fields, and the on-site evidence standard.',
+    title: 'Retrofit Assessment: What PAS 2035:2023 Clause 7 Requires You to Record and Report',
+    desc: 'Clause 7 of PAS 2035:2023 item by item: who may assess, what the whole-dwelling assessment shall include from a) to l), the energy model, the significance survey for traditional buildings, and what the assessment report must contain.',
     objectives: [
-      'Identify the mandatory and recommended data fields in PAS 2035:2023 Annex A',
-      'Distinguish the 2023 data requirements from the 2019 edition',
-      'Apply the evidence and documentation standard for each data category on site',
-      'Produce an Annex A data set that satisfies TrustMark audit requirements'
+      'State who may carry out a PAS 2035:2023 retrofit assessment under Annex A, and when it happens',
+      'Work through clause 7.3.2, items a) to l), and say what each asks of you on site',
+      'Record existing ventilation under item f), and handle the missing Table C.1 honestly',
+      'Explain the energy model in clause 7.3.3, how it differs from an EPC, and where the RdSAP 10 Conventions govern your data'
     ]
   },
   {
@@ -1041,12 +1041,12 @@ const ALL_COURSES = [
   {
     id: 'MER-RA-008', strand: 'RA', hours: 1.0,
     title: 'Ventilation Assessment in Retrofit: Background Ventilation to MVHR',
-    desc: 'Ventilation is a critical risk area in retrofit. This course covers the PAS 2035:2023 ventilation assessment requirements, from background ventilation adequacy through to MVHR suitability, and the risk triggers that affect the retrofit pathway.',
+    desc: 'How PAS 2035:2023 and Approved Document F treat ventilation in retrofit: what the assessor records, when the designer must review ventilation, what counts as an adequate existing system under Annex C, and the upgrade options from intermittent extract to MVHR.',
     objectives: [
-      'Assess background ventilation adequacy using the PAS 2035:2023 methodology',
-      'Identify the ventilation risk triggers that elevate moisture and indoor air quality risk',
-      'Evaluate MVHR suitability criteria and the evidence required to support recommendation',
-      'Document ventilation assessment outputs to TrustMark lodgement standard'
+      'List what PAS 2035:2023 clause 7.3.2 requires you to record about existing ventilation, and explain the problem with its "Table C.1" reference',
+      'Name the three system types in Approved Document F Volume 1 (2021 edition), the wet room extract rates and the rule for a WC without a fan',
+      'Use Approved Document F Table 3.1 and Diagram 3.1 with PAS 2035:2023 clause 8.2.13 to say when the Retrofit Designer must confirm ventilation adequacy',
+      'Describe what PAS 2035:2023 Annex C accepts as an adequate system, and the minimum system when ventilation is upgraded'
     ]
   },
   {
@@ -1107,12 +1107,12 @@ const ALL_COURSES = [
   {
     id: 'MER-ALL-004', strand: 'ALL', hours: 1.0,
     title: 'Fire Safety in Retrofit: What Every Assessor Must Know',
-    desc: 'Fire safety obligations in retrofit have tightened significantly since the Grenfell inquiry. This course covers what every DEA and Retrofit Assessor must know about Annex B, cladding risk, combustible insulation materials, and the documentation standard now required.',
+    desc: 'Fire safety across retrofit measures in England: regulation 7 and the 18 m rule, Approved Document B on cavities, cavity barriers and external walls, what PAS 2035 and PAS 2030 require of the designer and installer, and what an assessor records and reports.',
     objectives: [
-      'Apply the Annex B fire risk assessment obligations under PAS 2035:2023',
-      'Identify combustible insulation materials and their permitted use under current regulations',
-      'Assess cladding and EWI fire risk in multi-occupancy dwellings',
-      'Document fire safety considerations to the standard required by TrustMark and scheme auditors'
+      'Tell the Building Regulations 2010 (England) from the statutory guidance in Approved Document B Volume 1, and what is in force from what changes in 2029',
+      'Explain how retrofit measures can affect compartmentation, cavities, fire-stopping and means of escape',
+      'Apply the 18 m threshold in regulation 7(4) and the 11 m guidance in Section 10 correctly, and read a reaction to fire class',
+      'Record what PAS 2035:2023 clause 7.3.2 asks, note existing fire precautions, and report defects'
     ]
   },
   {
