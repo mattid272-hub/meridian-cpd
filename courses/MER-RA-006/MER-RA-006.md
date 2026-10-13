@@ -64,13 +64,11 @@ Conventions 6.01 and 6.02 carry an issue date of 10 November 2025, and TrustMark
 
 DESNZ wrote on 12 June 2025 that RdSAP10 was "scheduled to be released on 15 June 2025". From that date Ofgem, as ECO and GBIS administrator, would accept RdSAP10 assessments "even where RdSAP2012 is still required by the ECO regulations". A project evidenced through RdSAP10 needs a pre-assessment dated "on or after the 15 June 2025", because the amendments "are not retrospective" (DESNZ letter, 12 June 2025).
 
-ecmk's June 2025 bulletin told its members that a 9.94 EPC not lodged before its Assessor Hub went offline (planned for 14 June) could not then be lodged in 9.94, but "EPRs will still be able to be created in RdSAP 9.94 for retrofit projects". That is one scheme's account.
-
 ### SI 2025/802
 
 The law is the Electricity and Gas (Energy Company Obligation) (Amendment, Saving and Transitional Provisions) Order 2025 (SI 2025/802), made on 3 July 2025 and in force on 29 July 2025 (article 1(2)). It amends the Electricity and Gas (Energy Company Obligation) Order 2022, which governs ECO4, and the 2023 Order of the same name, which established GBIS (Ofgem, GBIS Delivery Guidance v1.0, cover).
 
-The "transition period" is "the period of six months beginning with the date on which this Order comes into force", 29 July 2025 (article 11(8)(h)). Neither the Order nor its Explanatory Memorandum gives a calendar end date. It ended in late January 2026; if an assessment falls in the last days of that month, have the obligated supplier confirm the end date before relying on article 11. "RdSAP2012" means version 9.94 of the 2012 edition (article 11(8)(g) and footnote). Article 11 provides as follows:
+The "transition period" is "the period of six months beginning with the date on which this Order comes into force", 29 July 2025 (article 11(8)(h)). The Order gives no calendar end date; Ofgem's guidance, set out below, gives the dates it applies. "RdSAP2012" means version 9.94 of the 2012 edition (article 11(8)(g) and footnote). Article 11 provides as follows:
 - ECO4: during the transition period, the pre-project assessment may use RdSAP2012 instead of RdSAP10 (article 11(1)). If it does, RdSAP2012 "must also be used" for the post-project RdSAP assessment under article 49(3)(b) of the 2022 Order (article 11(2)).
 - Those two rules do not apply to an ECO4 project referred to in article 12(2)(b) of the 2022 Order with respect to novel data light measures (article 11(3)).
 - GBIS: the same applies to the pre-installation and post-installation assessments under article 22(1) of the 2023 Order (article 11(4) and (5)).
@@ -79,9 +77,21 @@ The "transition period" is "the period of six months beginning with the date on 
 
 Separately, article 5 requires the post-project full SAP assessment on a project consisting only of a district heating connection (with or without novel data light measures) to use "the same version of the Standard Assessment Procedure" as the pre-project assessment (2022 Order, article 49(3)(a)(i), as amended).
 
+### Ofgem's guidance for ECO4
+
+Ofgem administers ECO4. Version 4.0 of its Delivery Guidance, published on 26 March 2026, sets out how it applies the version rules (paragraphs 4.25 to 4.31):
+- Before 15 June 2025, RdSAP 2012 must be used for all RdSAP retrofit assessments (paragraph 4.26).
+- From 15 June 2025 to 29 January 2026, either RdSAP 2012 or RdSAP 10 may be used for pre-retrofit and post-retrofit assessments (paragraph 4.27).
+- New pre-retrofit assessments performed on or after 29 January 2026 must use RdSAP 10 (paragraph 4.28).
+- A post-retrofit assessment "must always use the same RdSAP version as the pre-retrofit assessment". Where the pre-retrofit assessment used RdSAP 2012, the post-retrofit assessment must use RdSAP 2012 "regardless of when" it is completed, including where it has to be performed again for compliance reasons (paragraph 4.29).
+- If a pre-retrofit assessment completed in RdSAP 2012 has to be performed again on or after 29 January 2026, it must be redone in RdSAP 10, and any post-retrofit assessment must use RdSAP 10 to match (paragraph 4.30).
+- These rules do not apply to an RdSAP assessment lodged as an EPC, which is how a project consisting only of novel data light measures evidences its starting SAP rating. Those projects must use RdSAP 10 from 15 June 2025 (paragraphs 4.21 and 4.31).
+
+Paragraphs 4.27 and 4.28 both name 29 January 2026, so for an assessment dated that day ask the obligated supplier which applies. This is the administrator's guidance for ECO4, not law, and it is the working answer to questions the Order leaves open.
+
 ### The policy behind it
 
-Government's March 2024 response said retrofits straddling the go-live date "will be able to use a RdSAP2012 post-retrofit assessment" where the pre-retrofit assessment was completed in RdSAP2012 before go-live (Government Response, March 2024, paragraph 33). It kept the existing SAP2012 based scores for ECO4 and GBIS "given fuel prices will remain stable in RdSAP10" (executive summary and paragraph 41). The DESNZ letter says the arrangements allow both versions "for six months after the regulations come into force, and until the end of the schemes' respective final determination periods for retrofits where compliance issues arise", and that software providers will keep allowing RdSAP2012 post-retrofit assessments so that retrofits started in RdSAP2012 can be completed in it, "only where the pre-retrofit assessment took place before the 'go-live' date of RdSAP10". The letter predates the Order; where they differ, the Order is the law.
+Government's March 2024 response said retrofits straddling the go-live date "will be able to use a RdSAP2012 post-retrofit assessment" where the pre-retrofit assessment was completed in RdSAP2012 before go-live (Government Response, March 2024, paragraph 33). It kept the existing SAP2012 based scores for ECO4 and GBIS "given fuel prices will remain stable in RdSAP10" (executive summary and paragraph 41). The response and the DESNZ letter of 12 June 2025 are policy and predate the Order; where they differ from it, the Order is the law.
 
 ---
 
@@ -113,7 +123,7 @@ The default thermal bridging factor y comes from Table 21 by the age band of the
 
 ### Eligibility
 
-Government accepted that RdSAP10 "may in some cases affect the eligibility of properties for ECO4 and the GB Insulation Scheme" (Government Response, March 2024, executive summary). The ECO4 minimum requirement is band based: band D and E homes to at least band C, and band F and G homes to at least band D (Ofgem ECO4 Delivery Guidance v4.0, paragraph 1.9). Ofgem's summary of updates (March 2026) says paragraph 5.164 now covers "differences in eligibility and scoring between RdSAP versions", and paragraphs 4.25 to 4.31 ("RdSAP 10 Update") cover version requirements and the transitional period. I could not read those paragraphs; read them in the guidance before advising on a version-specific eligibility question.
+Government accepted that RdSAP10 "may in some cases affect the eligibility of properties for ECO4 and the GB Insulation Scheme" (Government Response, March 2024, executive summary). The ECO4 minimum requirement is band based: band D and E homes to at least band C, and band F and G homes to at least band D (Ofgem ECO4 Delivery Guidance v4.0, paragraph 1.9). Scoring can depend on the version too: whether a product can claim a smart thermostat score "depends on the version of RdSAP used in the pre-retrofit assessment" (Ofgem ECO4 Delivery Guidance v4.0, paragraph 5.164). Read the scoring rules for the version your pre-retrofit assessment used before advising on eligibility.
 
 ---
 
@@ -129,11 +139,11 @@ The EPR Variation Conventions are for ECO4 and GBIS only; nothing was found from
 
 Work it out from the pre-installation EPR:
 - Pre-installation EPR in RdSAP 10: article 11 allows RdSAP2012 for a post-installation assessment only where the pre-installation assessment used it (article 11(2), (5) and (6)), so the post-installation EPR is RdSAP 10.
-- Pre-installation EPR in RdSAP 9.94 done during the transition period: the post-installation EPR uses RdSAP 2012 as well (article 11(2) for ECO4, 11(5) for GBIS); see below if it is made after the window. None of the sources read for this course requires or provides for re-running the project in RdSAP 10.
-- Pre-installation EPR in RdSAP 9.94 done before 29 July 2025: article 11(7) protects that assessment, and government policy was that a retrofit whose pre-retrofit assessment was in RdSAP2012 before RdSAP10 went live could be completed in RdSAP2012 (Government Response, paragraph 33; DESNZ letter). But article 11 has no express rule for its post-installation assessment: paragraphs (2) and (5) apply only where RdSAP2012 was used under paragraph (1) or (4), in the transition period. The version is unsettled; see below.
+- Pre-installation EPR in RdSAP 9.94, whether done before 15 June 2025 or in the period to 29 January 2026: for ECO4 the post-installation EPR uses RdSAP 2012 as well, whenever it is completed (Ofgem ECO4 Delivery Guidance v4.0, paragraph 4.29; SI 2025/802, article 11(2)). Nothing requires the project to be re-run in RdSAP 10.
+- Pre-installation EPR in RdSAP 9.94 that has to be performed again on or after 29 January 2026: it is redone in RdSAP 10, and the post-installation EPR is then RdSAP 10 to match (paragraph 4.30).
 - District heating or novel data light measure projects: read article 11(3) and article 49(3)(a) of the 2022 Order, which treat them separately.
 
-Article 11(2) carries no end date in its wording, and article 11(6) covers re-determinations after the transition period. But DESNZ's Explanatory Memorandum to the Order describes either version being allowed "for a period of six months after the instrument comes into force, and RdSAP10 thereafter" (paragraph 6.1), with retrofits reassessed for compliance reasons keeping their original methodology until the end of the scheme's final determination period (paragraph 7.3). So it is also unsettled whether a first post-installation assessment made after the window, where the 9.94 pre-installation assessment was within it, must use RdSAP 2012. In either case, get the version confirmed in writing by the obligated supplier, who can put it to Ofgem, before you lodge.
+The Order alone is less explicit than this. Article 11(2) applies where RdSAP 2012 was used under article 11(1), which is about the transition period, and the Order has no express rule for the post-installation assessment that follows a 9.94 assessment made before 29 July 2025 (article 11(7) only protects that earlier assessment). Ofgem's paragraph 4.29 settles both cases for ECO4: same version as the pre-retrofit assessment, "regardless of when". GBIS, covered by article 11(4) and (5), closed on 31 March 2026 and had its own guidance, which this course does not cover. On anything unusual, get the version confirmed in writing by the obligated supplier before you lodge.
 
 ### Your part under PAS 2035:2023
 
@@ -150,7 +160,7 @@ As practice rather than requirement, state the RdSAP version on every assessment
 The points to keep are these:
 - An EPR is the ECO4 or GBIS RdSAP assessment lodged on TrustMark's Retrofit Portal, and an EPC is separate (convention 5.01); the EPR Variation Conventions v1.4 are TrustMark's rules for EPRs, not a project variation procedure.
 - An ECO project evidenced in RdSAP 10 needs a pre-assessment dated on or after 15 June 2025 (DESNZ letter, 12 June 2025).
-- Under SI 2025/802, in force 29 July 2025, where a pre-installation assessment used RdSAP 2012 in the transition period, the post-installation assessment must too (article 11(1), (2), (4) and (5)).
+- Under SI 2025/802, in force 29 July 2025, where a pre-installation assessment used RdSAP 2012 in the transition period, the post-installation assessment must too (article 11(1), (2), (4) and (5)). Ofgem applies the same-version rule to ECO4 "regardless of when" the post-retrofit assessment is completed (Delivery Guidance v4.0, paragraph 4.29).
 - RdSAP 10 kept the SAP 2012 fuel prices for the SAP rating, uses SAP 10.2 emission factors, and needs data a 9.94 survey does not hold (RdSAP10 Specification v4.0, sections 19.1 and 19.2).
 - New projects with retrofit assessments from 10 November 2025 carry the revised ventilation and airtightness conventions (6.01 and 6.02).
 - GBIS closed on 31 March 2026; ECO4 runs to 31 December 2026 with no successor supplier obligation.
@@ -222,7 +232,7 @@ Sources used for this course:
 - **Energy Performance Report (EPR) Variation Conventions, version 1.4.** TrustMark, 22 September 2025. The introduction and conventions 1.01, 5.01, 6.01 and 6.02.
 - **ECO Schemes: SAP10.2 and RdSAP10 transitional arrangements (letter).** DESNZ, published by TrustMark, 12 June 2025. The 15 June 2025 date and RdSAP2012 post-retrofit assessments.
 - **RdSAP10 Specification, version 4.0.** BRE, 7 June 2026. The list of changes, Table 21, section 19 and Table 32.
-- **ECO4 Delivery Guidance, version 4.0.** Ofgem, 26 March 2026. Paragraph 1.4, and paragraphs 4.25 to 4.31 and 5.164 on RdSAP versions, which this course could not check.
+- **ECO4 Delivery Guidance, version 4.0.** Ofgem, 26 March 2026. Paragraph 1.4 on the obligation period, paragraphs 4.25 to 4.31 on RdSAP versions, and paragraphs 5.164 and 5.165 on smart thermostat scoring by version.
 - **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, 2023. Clauses 6.1, 7.3, 7.4, 8.1 and 11.1.
 
 ---
