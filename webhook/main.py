@@ -17,7 +17,7 @@ import uuid
 import hmac
 import hashlib
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 import stripe
 from fastapi import FastAPI, HTTPException, Request, Response, Depends, Cookie
@@ -304,11 +304,133 @@ async def stripe_webhook(request: Request):
     except stripe.error.SignatureVerificationError:
         raise HTTPException(status_code=400, detail="Invalid signature")
 
-    if event["type"] == "checkout.session.completed":
-        session = event["data"]["object"]
-        await handle_checkout(session)
+    etype = event["type"]
+    obj = event["data"]["object"]
+    if etype == "checkout.session.completed":
+        await handle_checkout(obj)
+    elif etype in ("customer.subscription.created", "customer.subscription.updated",
+                   "customer.subscription.deleted"):
+        sync_subscription(obj)
+    elif etype in ("invoice.paid", "invoice.payment_succeeded"):
+        sub_id = _invoice_subscription_id(obj)
+        if sub_id:
+            sync_subscription(stripe.Subscription.retrieve(sub_id))
+    elif etype == "invoice.payment_failed":
+        sub_id = _invoice_subscription_id(obj)
+        print(f"ACTION NEEDED: renewal payment failed for customer {_g(obj, 'customer')} "
+              f"(subscription {sub_id}, invoice {_g(obj, 'id')}). Stripe will retry; "
+              f"access continues until Stripe cancels the subscription.")
 
     return {"status": "ok"}
+
+
+# ── Subscription lifecycle ─────────────────────────────────────────────────────
+# Access for subscribers follows Stripe: members.subscription_expires_at is set from the
+# subscription's current period end (plus a short grace period, in case an event is late)
+# and is set to the end date when Stripe ends the subscription. A subscriber with no
+# expiry recorded yet keeps access, so a paying customer is never locked out because the
+# record has not been synced; use Admin → Members → "Sync from Stripe" to fill it in.
+
+SUB_GRACE_DAYS = 7
+_LIVE_STATUSES = {"active", "trialing", "past_due"}
+
+
+def _g(obj, key, default=None):
+    """Read a field from a Stripe object or a plain dict."""
+    if obj is None:
+        return default
+    try:
+        v = obj.get(key, default)
+    except AttributeError:
+        v = getattr(obj, key, default)
+    return default if v is None else v
+
+
+def _period_end(sub):
+    """Current period end as a Unix timestamp. Newer Stripe API versions keep it on the
+    subscription items rather than the subscription itself."""
+    end = _g(sub, "current_period_end")
+    if end:
+        return end
+    items = _g(_g(sub, "items", {}), "data", []) or []
+    ends = [_g(i, "current_period_end") for i in items if _g(i, "current_period_end")]
+    return max(ends) if ends else None
+
+
+def _invoice_subscription_id(invoice):
+    sub = _g(invoice, "subscription")
+    if not sub:  # newer API versions
+        sub = _g(_g(_g(invoice, "parent", {}), "subscription_details", {}), "subscription")
+    if sub and not isinstance(sub, str):
+        sub = _g(sub, "id")
+    return sub or None
+
+
+def subscription_active(member: dict) -> bool:
+    """True if this member currently has subscriber access."""
+    if (member or {}).get("plan") != "subscription":
+        return False
+    exp = member.get("subscription_expires_at")
+    if not exp:
+        return True
+    try:
+        when = datetime.fromisoformat(str(exp).replace("Z", "+00:00"))
+    except ValueError:
+        return True
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=timezone.utc)
+    return when > datetime.now(timezone.utc)
+
+
+def _member_for_customer(customer_id: str):
+    if not customer_id:
+        return None
+    res = supabase.table("members").select("*").eq("stripe_customer_id", customer_id).execute()
+    if res.data:
+        return res.data[0]
+    try:
+        email = (_g(stripe.Customer.retrieve(customer_id), "email", "") or "").strip().lower()
+    except stripe.error.StripeError as e:
+        print(f"Could not look up Stripe customer {customer_id}: {e}")
+        return None
+    if not email:
+        return None
+    res = supabase.table("members").select("*").eq("email", email).execute()
+    return res.data[0] if res.data else None
+
+
+def sync_subscription(sub) -> dict | None:
+    """Bring one member's subscriber access into line with a Stripe subscription."""
+    customer_id = _g(sub, "customer", "")
+    if customer_id and not isinstance(customer_id, str):
+        customer_id = _g(customer_id, "id", "")
+    status = _g(sub, "status", "")
+    if status in _LIVE_STATUSES:
+        end = _period_end(sub)
+        expires = (datetime.fromtimestamp(end, timezone.utc) + timedelta(days=SUB_GRACE_DAYS)) if end else None
+    elif status == "incomplete":
+        print(f"Subscription {_g(sub, 'id')} for {customer_id} is incomplete (first payment not made); no change.")
+        return None
+    else:  # canceled, unpaid, incomplete_expired, paused
+        ended = _g(sub, "ended_at") or _g(sub, "canceled_at")
+        expires = datetime.fromtimestamp(ended, timezone.utc) if ended else datetime.now(timezone.utc)
+
+    member = _member_for_customer(customer_id)
+    if not member:
+        print(f"ACTION NEEDED: Stripe subscription {_g(sub, 'id')} ({status}) for customer "
+              f"{customer_id} matches no member. Check the customer's email in Stripe.")
+        return None
+
+    update = {"stripe_customer_id": customer_id,
+              "subscription_expires_at": expires.isoformat() if expires else None}
+    if status in _LIVE_STATUSES:
+        update["plan"] = "subscription"
+    elif member.get("plan") != "subscription":
+        update.pop("subscription_expires_at")  # a single-course buyer's record is left alone
+    supabase.table("members").update(update).eq("id", member["id"]).execute()
+    print(f"Subscription {_g(sub, 'id')} for member {member['id']}: {status}, "
+          f"access until {update.get('subscription_expires_at') or 'unchanged'}")
+    return update
 
 
 async def handle_checkout(session):
@@ -389,6 +511,16 @@ async def handle_checkout(session):
                 is_subscription=False,
             )
             log_purchase(member_id, cid, session_id, amount)
+
+    if plan == "subscription":
+        sub_id = _g(session, "subscription")
+        if sub_id and not isinstance(sub_id, str):
+            sub_id = _g(sub_id, "id")
+        if sub_id:
+            try:
+                sync_subscription(stripe.Subscription.retrieve(sub_id))
+            except Exception as e:  # the welcome email has gone; the subscription events will catch up
+                print(f"Could not sync subscription {sub_id} at checkout: {e}")
 
     print(f"Handled checkout for {email}: {course_keys}")
 
@@ -1162,6 +1294,44 @@ async def dashboard_magic_login(encoded_token: str):
     return response
 
 
+def _billing_help_page() -> HTMLResponse:
+    return HTMLResponse("""<!DOCTYPE html>
+<html><head><title>Manage your subscription — Meridian CPD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="font-family:Arial,sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1e293b">
+<h2 style="color:#0f2547">Manage your subscription</h2>
+<p style="line-height:1.6">We could not open the subscription page just now. To cancel or change
+your subscription, email <a style="color:#0891b2" href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a>
+from the address you subscribed with and we will action it.</p>
+<p><a style="color:#0891b2" href="/my-cpd/dashboard">Back to my courses</a></p>
+</body></html>""")
+
+
+@app.get("/my-cpd/billing")
+async def billing_portal(request: Request):
+    """Sends a signed-in member to Stripe's customer portal to cancel or manage their subscription."""
+    session_token = request.cookies.get("session_token")
+    email = _verify_session_token(session_token) if session_token else None
+    if not email:
+        return RedirectResponse("/my-cpd", status_code=302)
+    res = supabase.table("members").select("*").eq("email", email).execute()
+    member = res.data[0] if res.data else None
+    customer_id = (member or {}).get("stripe_customer_id") or ""
+    try:
+        if not customer_id:
+            found = stripe.Customer.list(email=email, limit=1)
+            data = _g(found, "data", []) or []
+            customer_id = _g(data[0], "id", "") if data else ""
+        if not customer_id:
+            return _billing_help_page()
+        portal = stripe.billing_portal.Session.create(
+            customer=customer_id, return_url=f"{BASE_URL}/my-cpd/dashboard")
+        return RedirectResponse(_g(portal, "url"), status_code=303)
+    except stripe.error.StripeError as e:
+        print(f"ACTION NEEDED: customer portal failed for {email}: {e}")
+        return _billing_help_page()
+
+
 @app.get("/my-cpd/logout")
 async def dashboard_logout():
     response = RedirectResponse("/my-cpd", status_code=302)
@@ -1183,7 +1353,8 @@ async def subscriber_dashboard(request: Request):
     member = member_res.data[0]
     member_id = member["id"]
     member_name = member["name"] or email.split("@")[0].title()
-    is_sub = member["plan"] == "subscription"
+    is_sub = subscription_active(member)
+    sub_ended = member.get("plan") == "subscription" and not is_sub
     refresh_catalogue()
 
     # Fetch purchases
@@ -1194,7 +1365,7 @@ async def subscriber_dashboard(request: Request):
 
     # Fetch completions
     completions_res = supabase.table("completions").select(
-        "course_id, completed_at, completion_token"
+        "course_id, completed_at, completion_token, downloaded_at"
     ).eq("member_id", member_id).execute()
     completed = {c["course_id"]: c for c in (completions_res.data or []) if c.get("completed_at")}
     pending_tokens = {c["course_id"]: c["completion_token"] for c in (completions_res.data or []) if not c.get("completed_at")}
@@ -1224,7 +1395,12 @@ async def subscriber_dashboard(request: Request):
     if is_sub:
         show_courses = {k: v for k, v in COURSES.items() if k != "SUBSCRIPTION"}
     else:
-        show_courses = {k: COURSES[k] for k in purchased_ids if k in COURSES and k != "SUBSCRIPTION"}
+        keep = set(purchased_ids)
+        if sub_ended:
+            # "PDFs and certs are yours to keep": courses downloaded or completed while subscribed stay listed.
+            keep |= {c["course_id"] for c in (completions_res.data or [])
+                     if c.get("completed_at") or c.get("downloaded_at")}
+        show_courses = {k: COURSES[k] for k in keep if k in COURSES and k != "SUBSCRIPTION"}
 
     # Build course rows
     course_rows = ""
@@ -1313,7 +1489,10 @@ async def subscriber_dashboard(request: Request):
     target = 25 if is_sub and "RC" in str(purchased_ids) else 10
     pct = min(int((total_hours / target) * 100), 100)
 
-    plan_badge = "Annual Subscription" if is_sub else "Pay Per Course"
+    plan_badge = ("Annual Subscription" if is_sub else
+                  "Subscription ended" if sub_ended else "Pay Per Course")
+    manage_link = (' &nbsp;·&nbsp; <a href="/my-cpd/billing" style="color:#0891b2;text-decoration:none">'
+                   'Manage or cancel subscription</a>') if member.get("plan") == "subscription" else ""
 
     return HTMLResponse(f"""<!DOCTYPE html>
 <html><head>
@@ -1327,7 +1506,7 @@ async def subscriber_dashboard(request: Request):
 
   <div class="hero">
     <h1>Welcome back, {member_name}</h1>
-    <p>{email} &nbsp;·&nbsp; {plan_badge} &nbsp;·&nbsp;
+    <p>{email} &nbsp;·&nbsp; {plan_badge}{manage_link} &nbsp;·&nbsp;
        <a href="https://meridiancpd.co.uk" style="color:#0891b2;text-decoration:none">Browse all courses →</a></p>
   </div>
 
@@ -1647,12 +1826,16 @@ async def admin_members(credentials=Depends(_check_admin)):
         plan = m.get("plan", "single")
         badge = "badge-sub" if plan == "subscription" else "badge-single"
         label = "Annual Sub" if plan == "subscription" else "Single"
+        if plan == "subscription" and not subscription_active(m):
+            label = "Sub ended"
         joined = (m.get("joined_at") or "")[:10]
         courses = ", ".join(m.get("courses_purchased") or []) or "—"
+        access = ((m.get("subscription_expires_at") or "")[:10] or "not synced") if plan == "subscription" else "—"
         rows += f"""<tr>
             <td>{m.get('name','—')}</td>
             <td>{m.get('email','—')}</td>
             <td><span class="badge {badge}">{label}</span></td>
+            <td>{access}</td>
             <td>{joined}</td>
             <td>{courses}</td>
         </tr>"""
@@ -1660,12 +1843,42 @@ async def admin_members(credentials=Depends(_check_admin)):
     body = f"""
     <div class="card">
       <h2>All Members ({len(res.data or [])})</h2>
+      <form method="post" action="/admin/sync-subscriptions" style="margin:8px 0 16px">
+        <button type="submit">Sync subscriptions from Stripe</button>
+        <span style="font-size:12px;color:#64748b;margin-left:8px">Reads every subscription in Stripe and
+        updates each subscriber's access date. Changes nothing in Stripe.</span>
+      </form>
       <table>
-        <tr><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th><th>Courses</th></tr>
-        {rows or '<tr><td colspan="5" class="empty">No members yet</td></tr>'}
+        <tr><th>Name</th><th>Email</th><th>Plan</th><th>Access until</th><th>Joined</th><th>Courses</th></tr>
+        {rows or '<tr><td colspan="6" class="empty">No members yet</td></tr>'}
       </table>
     </div>"""
     return _page("Members", "members", body)
+
+
+@app.post("/admin/sync-subscriptions", response_class=HTMLResponse)
+async def admin_sync_subscriptions(credentials=Depends(_check_admin)):
+    """Backfill and re-check every subscriber's access date from Stripe. Read-only on Stripe."""
+    synced, unmatched, errors = 0, 0, []
+    try:
+        for sub in stripe.Subscription.list(status="all", limit=100).auto_paging_iter():
+            try:
+                if sync_subscription(sub):
+                    synced += 1
+                elif _g(sub, "status") != "incomplete":
+                    unmatched += 1
+            except Exception as e:
+                errors.append(f"{_g(sub, 'id')}: {e}")
+    except stripe.error.StripeError as e:
+        errors.append(f"Stripe: {e}")
+    body = f"""
+    <div class="card">
+      <h2>Subscription sync</h2>
+      <p>Updated {synced} member(s). {unmatched} subscription(s) matched no member (see the app log for their IDs).</p>
+      {"<p>Errors:<br>" + "<br>".join(errors[:20]) + "</p>" if errors else ""}
+      <p><a href="/admin/members">Back to members</a></p>
+    </div>"""
+    return _page("Subscription sync", "members", body)
 
 
 @app.get("/admin/contacts", response_class=HTMLResponse)
