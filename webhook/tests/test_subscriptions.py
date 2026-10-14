@@ -146,7 +146,8 @@ r = c.post("/admin/sync-subscriptions"); assert r.status_code == 401
 r = c.post("/admin/sync-subscriptions", auth=("admin", "test-admin")); assert r.status_code == 200, r.status_code
 assert "Updated 1 member" in r.text and "1 subscription(s) matched no member" in r.text
 assert abs((exp("m1") - datetime.fromtimestamp(future, timezone.utc)).total_seconds() - 7 * 86400) < 2
-r = c.get("/admin/members", auth=("admin", "test-admin")); assert "Access until" in r.text and "Sub ended" in r.text
+# example.com addresses count as test accounts in the back office, so they sit under the Tests filter
+r = c.get("/admin/members?show=test", auth=("admin", "test-admin")); assert "Access until" in r.text and "leaver@example.com" in r.text
 print("10 admin sync and members page")
 
 # 11. Checkout for the annual plan records the access date straight away
