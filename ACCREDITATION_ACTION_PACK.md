@@ -92,7 +92,7 @@ A **UKPRN number** — displayed on the Meridian CPD website and certificates as
 **What to prepare for the consultation call:**
 - Number of courses to accredit (we can start with 2–3 flagship courses)
 - Each course has: clear title, learning objectives, structured content, and a duration (e.g. 1 hour)
-- Format: online, self-paced, video + quiz
+- Format: online, self-paced, downloadable PDF with five self-assessment questions
 
 **Assessment timeline:** 10–14 working days per course
 **Pass/fail:** They provide guidance rather than a hard fail — collaborative process
@@ -137,7 +137,7 @@ A **UKPRN number** — displayed on the Meridian CPD website and certificates as
 
 When speaking to CPD Certification Service and CPD Standards Office, use this description:
 
-> *"Meridian CPD is an online subscription platform providing structured CPD for UK Domestic Energy Assessors (DEAs) and Retrofit Assessors. Courses cover RdSAP 10 updates, EPC methodology, PAS 2035 retrofit coordination, compliance changes, and industry standards. Each course is approximately 1 hour in duration, delivered via video and written content with an assessed quiz. Courses are created with input from qualified practitioners holding MCIOB, RPSA, and PAS 2035 qualifications."*
+> *"Meridian CPD is an online subscription platform providing structured CPD for UK Domestic Energy Assessors (DEAs) and Retrofit Assessors. Courses cover RdSAP 10 updates, EPC methodology, PAS 2035 retrofit coordination, compliance changes, and industry standards. Each course is one or two CPD hours, delivered as a downloadable PDF with self-assessment questions. Courses are created with input from qualified practitioners holding MCIOB, RPSA, and PAS 2035 qualifications."*
 
 ---
 
