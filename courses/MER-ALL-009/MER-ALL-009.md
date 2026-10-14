@@ -1,200 +1,232 @@
-
-
-# Heat Loss Assessments: The DEA's Role in Heat Pump Readiness
-**Course ID:** MER-ALL-009 | **CPD Hours:** 1 | **Published:** June 2026
+# Heat Loss Calculations for Heat Pumps: Where the EPC and the Assessor Fit
+**Course ID:** MER-ALL-009 | **CPD Hours:** 1 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
 
-- Explain the purpose, methodology, and key outputs of a room-by-room heat loss assessment and how it differs fundamentally from an EPC or retrofit assessment
-- Identify the market drivers — regulatory, financial, and technical — behind the surge in demand for qualified heat loss assessors in the UK
-- Evaluate how existing DEA and Retrofit Assessor competencies transfer to heat loss assessment work and where the skills gaps lie
-- Describe the practical steps, training pathways, and certification requirements needed to add heat loss assessment to an existing practice
-- Apply knowledge of heat loss principles to recognise when a property is — or is not — heat pump ready, and communicate this effectively to clients and installers
+By the end of this course you should be able to:
+- Explain what a design heat load calculation to BS EN 12831-1:2017 produces, and why EPC figures cannot stand in for it.
+- State what MIS 3005-D and MCS 031 a) require of an MCS Contractor designing a heat pump system.
+- Summarise the Boiler Upgrade Scheme rules in force on 14 October 2026, including the 2024 and 2026 changes.
+- Describe what PAS 2035:2023 requires where a retrofit includes a heat pump, and who is the Retrofit Designer where the heat pump is the only measure.
+- Record a heat pump correctly in RdSAP 10 and describe the energy assessor's real link to heat pump work.
 
 ---
 
 ## Introduction
 
-You already know more about building fabric than most people in the construction sector. You walk into properties every week, assess wall constructions, note insulation depths, record glazing types, and make judgements about thermal performance. That puts you closer to competent heat loss assessment than you might think — but "closer" is not "there."
+Householders and installers ask energy assessors about heat pumps. This course covers what a heat pump design heat load calculation is, what the Microgeneration Certification Scheme (MCS) standards and the Boiler Upgrade Scheme (BUS) require, how PAS 2035:2023 handles a heat pump in a retrofit, and what an energy assessor actually records and produces.
 
-The demand picture has shifted dramatically. Elmhurst's April 2026 reporting highlighted what many of us have been observing on the ground: the Warm Homes Plan, the accelerating heat pump rollout driven by the Clean Heat Market Mechanism, and the growth of heat pump grant uptake through the Boiler Upgrade Scheme have collectively created a bottleneck. Installers need heat loss assessments before they can design and commission heat pump systems. There aren't enough people doing them. The queue is growing.
+The BUS regulations "extend to England and Wales only" (SI 2022/565, regulation 1(2)); funding schemes in Scotland and Northern Ireland are outside this course. RdSAP is "the UK approved methodology" for EPCs on existing dwellings (RdSAP10 Specification v4.0, Introduction), and the MCS design standard gives outside design temperatures for UK locations including Belfast, Edinburgh and Glasgow (MIS 3005-D Issue 3.0, Table 2).
 
-This matters to you for two reasons. First, every EPC you lodge on a property that subsequently goes for a heat pump installation generates a downstream need for a heat loss calculation. You are, in many cases, the first professional through the door. Second, this is a genuine and well-paid adjacent service. Heat loss assessments command fees significantly above a standard EPC, the work is technically satisfying, and it leverages your existing knowledge base.
+This edition replaces the June 2026 edition (listed in the Meridian catalogue as July 2026), which cited "MIS 3005" instead of MIS 3005-D, said MCS calculations use actual rather than default U-values, and built a market case on a report, a shortage and fee levels that could not be traced. It also missed the EPC's use in the MCS performance estimate and the April 2026 removal of the BUS EPC requirement.
 
-But let's be clear about what this course is and isn't. This is not a heat loss calculation training course — you cannot complete this module and start producing MCS-compliant heat loss reports tomorrow. What this course does is give you a thorough understanding of what heat loss assessment involves, how it maps against what you already do, where the critical differences lie, and exactly what you need to do next if you want to add this to your service offering. It also equips you to have informed conversations with heat pump installers, householders, and retrofit coordinators about heat pump readiness — conversations that many assessors are already being drawn into without the underpinning knowledge.
+The rules and document issues described here are correct to 14 October 2026.
 
-The opportunity is real. The gap between your current competency and the required competency is narrower than you think. But it is a gap, and it needs to be closed properly.
-
----
-
-## Section 1: What a Heat Loss Assessment Actually Is — And What It Isn't
-
-A heat loss assessment — more precisely, a room-by-room heat loss calculation — determines the rate at which each room in a dwelling loses thermal energy to the outside environment under design conditions. The output is a set of figures, expressed in watts, that tell a heat pump installer exactly how much heat each room needs, and therefore what size heat pump and what emitter configuration the property requires.
-
-This is fundamentally different from what an EPC does. An EPC uses SAP (or RdSAP for existing dwellings) to model annual energy consumption and CO₂ emissions across the whole dwelling. It produces a rating. It does not tell you what's happening in the back bedroom versus the kitchen extension. It uses standardised assumptions about occupancy, heating patterns, and internal temperatures. It is a regulatory compliance tool and a blunt comparative instrument. It was never designed to size a heating system.
-
-A heat loss calculation, by contrast, uses standards such as BS EN 12831 to model conductive, convective, and ventilation heat losses at the individual room level, using external design temperatures specific to the property's geographic location. It accounts for the orientation of each external wall, the actual U-values of the building elements as constructed (not RdSAP defaults), infiltration rates, intermittent versus continuous heating regimes, and internal heat gains. The result is a design heat load — the maximum rate of heat delivery the system must be capable of providing to maintain comfort temperatures on the coldest days.
-
-The critical point: an EPC can suggest a property might be suitable for a heat pump. A heat loss assessment determines whether it actually is, and specifies what's needed to make it work. An EPC might show a property at Band C with cavity wall insulation and double glazing. The heat loss calculation might reveal that the conservatory extension has a design heat loss that exceeds what a reasonably sized heat pump can deliver through the existing radiators without fabric improvements.
-
-Most heat pump installers in the MCS scheme are required to conduct or commission a heat loss calculation as part of system design. MCS MIS 3005 (the heat pump installation standard) mandates that heat pump systems are designed using room-by-room heat loss calculations. This is not optional. It is a compliance requirement for MCS-certified installations, and MCS certification is in turn required for installations receiving Boiler Upgrade Scheme funding.
-
-Software tools commonly used include those based on BS EN 12831 methodology — packages such as those from the Heat Pump Association's design tools, or established HVAC design software. The assessor must input accurate fabric data, room dimensions, ventilation characteristics, and local design conditions. Garbage in, garbage out applies here with particular force: an undersized heat pump will not heat the property; an oversized one will short-cycle and fail prematurely.
+No source in this course gives a domestic energy assessor, as such, any part in sizing a heat pump. Your EPC can feed an MCS performance estimate, but it is not a design.
 
 ---
 
-## Section 2: Market Drivers — Why Demand Is Surging and What It Means for Your Practice
+## Section 1: Two Different Numbers
 
-The numbers tell the story. Heat pump installations in the UK have been on a steep upward trajectory, driven by a convergence of policy mechanisms that are unlikely to reverse. Understanding these drivers isn't academic — it directly determines the size and longevity of the market opportunity you're evaluating.
+### The design heat load
 
-**The Clean Heat Market Mechanism (CHMM):** Introduced to place obligations on boiler manufacturers to deliver a rising proportion of heat pump sales relative to fossil fuel boiler sales, the CHMM creates sustained, manufacturer-driven demand for heat pump installations. Manufacturers who fail to meet their obligations face financial penalties. This means the push for heat pump uptake is not solely dependent on consumer pull — it is being driven from the supply side as well. More installations mean more heat loss assessments.
+BSI describes BS EN 12831-1:2017 as covering the calculation of "the design heat load for single rooms, building entities, and buildings": the heat supply needed "to maintain the required internal design temperature under design external conditions", usually worked out "prior to the dimensioning of components of a heating system" (BSI catalogue entry). It is a paid standard; this course teaches only what the MCS documents say about it.
 
-**The Boiler Upgrade Scheme (BUS):** The BUS provides capital grants to homeowners switching from fossil fuel heating to heat pumps. Uptake has accelerated as grant values and consumer awareness have increased. Every BUS-funded installation must be MCS-certified, and every MCS-certified heat pump installation requires a heat loss calculation. This is a direct, non-negotiable pipeline from grant funding to assessment demand.
+The result is a heat load for each room. Before installation the customer shall be given in writing "All specific room heat losses (in W/m2)", the emitter types and dimensions, and "The design emitter temperature based on the worst performing room" (MIS 3005-D Issue 3.0, clause 5.9.2). For an air-to-air heat pump, the capacity of each indoor unit "shall be selected to provide at least 100% of the heat load of the habitable room in which it is located" (clause 5.5.3 g)). The design works room by room because the emitters do.
 
-**The Warm Homes Plan:** The government's broader programme for improving energy efficiency in homes — particularly targeting fuel-poor and lower-EPC-rated properties — is generating a wave of retrofit activity. Many of these properties will ultimately receive heat pumps as part of a fabric-first-then-low-carbon-heat pathway. The retrofit assessment identifies the measures; the heat loss assessment sizes the heating system. Both are needed. Often sequentially on the same property.
+### The EPC figures
 
-**The installer bottleneck:** Elmhurst's April 2026 reporting specifically identified that the shortage of qualified heat loss assessors is becoming a constraint on heat pump deployment. Installers are reporting delays because they cannot get heat loss assessments completed in reasonable timeframes. Some MCS-certified installers conduct their own calculations in-house, but many — particularly smaller firms — prefer or need to outsource this to a competent third party. That third party could be you.
+RdSAP produces an "asset rating" based on the "standardised use of building" (RdSAP10 Specification v4.0, Introduction), and the EPC rating uses "'standard occupancy' assumptions" (DCLG, A guide to energy performance certificates for the marketing, sale and let of dwellings, December 2017, chapter 1). Four features make its numbers unsuitable for sizing:
+- Geometry is whole-dwelling: gross wall area is heat loss perimeter times storey height, "summed over all storeys" (specification section 3.6).
+- U-values are RdSAP defaults, which "must not be overwritten" without specific documentary evidence, tied to BR 443 (convention 3.08).
+- Ventilation is counted for the dwelling: open fireplaces, flues and extract fans, plus a pressure test result if one exists (specification section 4.1, Table 5).
+- Ratings use UK average climate data; costs and energy demand use postcode district data (specification section 14). Neither is a cold design day.
 
-**Fee levels and workflow compatibility:** Heat loss assessments typically command higher fees per property than standard EPCs. The time on site is longer — you need full room dimensions, accurate fabric identification at the element level, and ventilation data — but this is work you're already partially doing. Critically, the assessment can often be combined with an EPC visit or a retrofit assessment visit, creating efficiency gains and a stronger service proposition for clients who need multiple outputs from a single property access event.
+RdSAP does hold a design heat loss figure. For recommendations Z1 and Z2 (air or ground source heat pump, houses and bungalows only) the software picks an illustrative heat pump "on a basis of Design Heat Loss (DHL), calculated as dwelling's heat loss coefficient multiplied by a temperature difference of 24.2K" (specification Table 33, Note 9). That is one whole-dwelling number used to model a recommendation, not a room-by-room design.
 
-The trajectory here is clear. This is not a short-term spike driven by a single policy announcement. It is a structural shift in how the UK heats its homes, backed by multiple overlapping policy mechanisms, manufacturer obligations, and grant funding streams. The demand for heat loss assessors will grow for years.
-
----
-
-## Section 3: Skills Overlap and Skills Gaps — An Honest Assessment of Where You Stand
-
-Let's be direct about what transfers from your existing competency and what doesn't. Overselling the overlap does you no favours; underestimating it does you an injustice.
-
-**What you already bring:**
-
-Your RdSAP training and field experience gives you strong fabric identification skills. You can distinguish solid wall from cavity wall, identify insulation types, assess glazing specifications, and recognise construction ages and their associated thermal characteristics. You understand the concept of U-values, even if you typically work with RdSAP defaults rather than calculated values. You are experienced at accessing properties, managing householder interactions, and working efficiently on site. You understand building orientation, exposure, and the general principles of thermal performance. If you're a Retrofit Assessor, you additionally understand whole-house approaches, ventilation strategies, and the interaction between fabric improvements and heating system performance.
-
-This is a substantial foundation. Many people entering heat loss assessment training from other backgrounds — plumbers retraining, electricians diversifying — do not have this. You do.
-
-**What you need to add:**
-
-The critical gap is in design-level calculation methodology. RdSAP gives you a whole-dwelling energy model using standardised assumptions. Heat loss calculation requires you to work at the room level using BS EN 12831 (or equivalent) methodology, applying calculated or measured U-values rather than defaults, determining ventilation heat losses using infiltration rates rather than standardised ventilation assumptions, and applying external design temperatures specific to the property location.
-
-You need to become proficient with heat loss calculation software. The interface will feel somewhat familiar — you're inputting building data into a structured tool — but the data requirements are more granular. You need full room dimensions (length, width, height), identification of every thermal element in each room (which wall faces outside, which faces an unheated space, which is a party wall), window and door dimensions per room, and accurate floor and ceiling/roof constructions.
-
-You also need to understand emitter sizing — how the calculated heat loss per room translates into radiator output requirements (or underfloor heating loop design), accounting for the lower flow temperatures at which heat pumps operate compared to gas boilers. This is where many assessors initially feel least confident, because it crosses into heating system design territory. You don't need to become a heating engineer, but you do need to understand mean water temperature, delta-T corrections, and radiator output derating at low flow temperatures to produce a useful report.
-
-**What you need to understand but not necessarily do:**
-
-Full system hydraulic design, refrigerant circuit specification, and commissioning are the installer's domain. Your role as a heat loss assessor is to deliver accurate room-by-room heat loss figures and, depending on the scope of service, emitter schedules. The installer takes those figures and specifies the heat pump unit, designs the pipework, and commissions the system. Understanding where your scope ends is as important as understanding where it begins.
+MCS is explicit: "Neither the annual heat demand of the building nor the annual energy performance of the system are appropriate for sizing the system" (MIS 3005-D Issue 3.0, Note to clause 4.1.1; MCS 031 a) Issue 5.0, Note to clause 2.1). The illustrative heat pump behind an EPC recommendation is a modelling device, not a specification of the heat pump or emitters the house needs.
 
 ---
 
-## Section 4: Getting Qualified — Practical Steps to Adding Heat Loss Assessment to Your Practice
+## Section 2: What MCS Requires
 
-If you've read this far and decided this is worth pursuing, here is what you need to do.
+### Which documents
 
-**Step 1: Choose a training provider and qualification route.** Several organisations offer heat loss assessment training. Elmhurst Energy, NHER, and other accreditation bodies have developed courses specifically aimed at energy assessors looking to add this competency. The training typically covers BS EN 12831 methodology, software proficiency, on-site measurement techniques, and report output requirements. Course durations vary but expect a minimum of several days of structured learning plus supervised practice assessments. Check that any course you select is recognised by MCS or aligned with MCS MIS 3005 requirements, since this is the standard installers must comply with.
+In 2022 MCS split MIS 3005 into a design standard, MIS 3005-D, and an installation standard, MIS 3005-I (MCS news item, 26 January 2022). The heat load rules are in the design standard, which has two current issues, both dated 5 December 2025:
+- MIS 3005-D Issue 3.0, "The Heat Pump Standard (Design)", mandatory from that date for MCS Contractors certified to MIS 3005-D. Its change from Issue 2.0 was to "include air to air heat pumps".
+- MIS 3005-D:2025 Issue 2.0, "Heat Pump: Design Standard", mandatory "for MCS Contractors certified to MCS: 2025", the redeveloped scheme.
 
-**Step 2: Select your software.** Familiarise yourself with the main heat loss calculation packages used in the UK market. Some are standalone tools; others integrate with broader HVAC design platforms. Your training provider will likely train you on a specific package, but understanding the market landscape helps you make an informed choice. Key criteria: BS EN 12831 compliance, MCS-compatible output reports, ease of use for residential properties, and ongoing support and updates.
+MCS says all certified installers must be on the redeveloped scheme by 31 March 2027 (MCS news item, 18 June 2026). Both issues use "shall" for a requirement to be met "in full and without deviation" and "should" for one to be met "unless reasonable justification can be given" (Foreword).
 
-**Step 3: Build your on-site measurement competence.** You will need a laser measure (you almost certainly already own one), and you may want to invest in a thermal imaging camera and a blower door test kit, depending on the level of service you intend to offer. At a minimum, you need to be able to take accurate room dimensions, identify and measure every thermal element, and assess ventilation provisions. Practice on your own property or on properties of willing friends and family before going commercial.
+### The heat load calculation
 
-**Step 4: Establish your commercial model.** Decide whether you will offer heat loss assessments as a standalone service, as an add-on to EPC or retrofit work, or both. Consider your relationship with local heat pump installers — they are your primary referral source and your primary client. Approach MCS-certified installers in your area, explain your credentials and your new competency, and establish referral arrangements. Some assessors find that partnering with two or three local installers provides a steady pipeline of work.
+Clause 5.5.1 of Issue 3.0 (clause 3.4.1 in MIS 3005-D:2025) sets out the method:
+- A heat load calculation "should be performed on the building" using internal temperatures "not less than" those in Table 1 and external temperatures from Table 2, column A or B, "according to the MCS Contractor's assessment of the building location" (the same wording in both issues).
+- "If column B is selected, no uplift factor for intermittent heating is required."
+- In other respects the calculation shall comply with BS EN 12831-1:2017.
+- "A heat pump shall be selected that will provide at least 100% of the heat load as per the calculation in a)", without any supplementary electric heater (clause 5.5.1 e); MIS 3005-D:2025 clause 3.4.1 e)).
 
-**Step 5: Understand your liability position.** A heat loss assessment directly informs heating system sizing. If your figures are wrong, the system may be incorrectly specified. Ensure your professional indemnity insurance covers heat loss assessment work. Speak to your insurer before you take on your first commercial job. This is not an area where you want to discover a coverage gap after a complaint.
+Table 1 gives internal design temperatures by room, which the standard says come from CIBSE guidance. Table 2 gives outside design temperatures for eight UK locations "taken from CIBSE Guide A Table 2.5": the hourly temperature equalled or exceeded for 99% (column A) or 99.6% (column B) of hours in a year. The calculation is a "should", but selection is a "shall" that refers to "the calculation in a)", so selection depends on that calculation.
 
-**Step 6: Keep developing.** The heat pump market and associated standards are evolving rapidly. MCS standards are updated periodically. Building Regulations Part L continues to tighten. New heat pump technologies (such as high-temperature models and hybrid systems) change the calculation context. Treat this as a competency that requires ongoing CPD, not a one-time qualification.
+### Who does it
+
+Neither issue names a job title for whoever does the calculation. All personnel in design and installation, "either employed by, or subcontracted to" the MCS Contractor, "shall be competent or instructed for the activities they undertake" (MIS 3005-D Issue 3.0, clause 9). The MCS contractor standard allows "any work within the scope of the Scheme" not done by the contractor's employees or contract personnel to be subcontracted for domestic customers if there is "a formal written subcontract agreement", the MCS Contractor ensures the subcontractor "has the necessary capacity and competency", and the subcontractor holds appropriate insurances, for example professional indemnity (MCS 001-1 Issue 4.2, clause 4.11.1). Clause 4.11.1 does not mention design. Reading it as covering design is an inference: that standard's scope (clause 2) and its definition of subcontracting both list design. The MCS Contractor still assumes responsibility at handover (clause 4.11.3 c)). The redeveloped scheme's own contractor rules are not covered here.
+
+### The MCS Heat Load Calculator
+
+MCS publishes a Heat Load Calculator which it says "Complies with the BS EN 12831-1:2017 standard" and generates calculations "compliant with the MCS standard for designing heat pump systems (MIS 3005-D)". In it "A room must be created for each heated space", and extract fans, chimneys and flues "should be listed against the room". It "Determines the U-values of building elements automatically based on their construction type and year of installation", with a "Known U-Value" option for "a measured or design U-value" (MCS Heat Load Calculator help documentation). So defaults are the normal starting point in MCS's own tool too; what differs from RdSAP is room-level working at design temperatures.
+
+---
+
+## Section 3: The Boiler Upgrade Scheme and PAS 2035
+
+### BUS on 14 October 2026
+
+The scheme rests on SI 2022/565, "amended in 2024, and further amended on 28 April 2026", and Ofgem administers it (Ofgem, BUS Installer Guidance V5.1, 2 July 2026, paragraph 1.03). Ofgem's guidance page still named V5.1 as "the current version" when checked. Grant values are (paragraph 1.02):
+- £7,500 for air-to-water and ground source heat pumps.
+- £2,500 for air-to-air heat pumps, residential properties only.
+- £5,000 for biomass boilers, "in limited circumstances".
+- £9,000 for air-to-water or ground source heat pumps in off-gas grid properties replacing oil or LPG heating, from 21 July 2026 until 31 March 2027.
+
+An "installer" is a person "certified by the Microgeneration Certification Scheme" or an approved later version of it (SI 2022/565, regulation 2(1)), and the installation must meet the relevant MCS standards (paragraph 3.17). The heat pump needs "sufficient kilowatt thermal capacity to provide 100% of the space heating needs" (paragraph 3.80). The system replaced must be fossil fuelled, or electric without a heat pump (paragraph 3.37), and "Fossil fuel hybrids are not eligible" (paragraph 3.95).
+
+### What changed in 2024 and 2026
+
+As made, the regulations required a valid EPC that did not recommend "loft insulation or cavity wall insulation", unless an exception applied (SI 2022/565, regulation 6(1)). That insulation condition was omitted from 8 May 2024 (SI 2024/524, regulation 6), but the same instrument inserted a plain requirement that there be a valid EPC (regulation 5(1)(c)(v) of the 2022 Regulations), which stayed until 28 April 2026.
+
+SI 2026/390, in force 28 April 2026, removed "the requirement for a property to have a valid energy performance certificate", added air-to-air heat pumps and extended the scheme "through to 2030" (Explanatory Note). Ofgem's guidance now says:
+- An EPC is no longer required, but "where there is a valid EPC for the property, the certificate number must be provided" (paragraph 3.40); valid means the most recent and "no more than 10 years old" (paragraph 3.41).
+- Without one, the installer provides where available a utility bill from the last three months or a recent fuel receipt, photographs of the existing heating system, and any expired EPC number (paragraph 3.43).
+- Installers "must continue to ensure that they meet the relevant MCS standards", including on system design and pre-sale information (paragraph 3.40).
+
+Under the amended regulations the Authority must refuse to issue a voucher "after 31st December 2029", and a ground source voucher expires no later than 31 March 2030 (SI 2022/565, regulation 15(7)(c) and 15(2)(b)(ii)).
+
+### Heat pumps in a PAS 2035:2023 project
+
+PAS 2035:2023 has no sizing method of its own; it points to MCS. Where LZC technologies covered by MCS are in the design, "the retrofit design shall specify that those systems comply with the relevant MCS standards" (clause 8.2.22), and they are installed to MCS standards "instead of with PAS 2030" (clause 9.1). Where the design includes measures that interact (the "orange" combinations on the Measures Interaction Matrix), the specifications "shall take account of the interaction", for example "the capacity of any new heating system (appliances or emitters) shall take account of the heat loss of the dwelling as affected by any improvements" to insulation, windows, doors and airtightness (clause 8.2.19); clause 8.3.1 applies 8.2.19 to distressed heating replacements too.
+
+Where the single measure is a system covered by MCS, the Retrofit Designer "shall be a specialist designer or specifier of the system who is MCS certified or a chartered building services engineer" (Annex A, A.3.4), and design responsibility rests with that designer "and not with the Retrofit Coordinator" (A.3.6, Note). The Retrofit Assessor appraises the installed services (clause 7.3.2 b) and j)) and surveys the heat loss envelope (clause 7.3.2 h)); the data are used to estimate annual fuel use with "a recognized domestic energy model, such as RdSAP, SAP or PHPP" (clause 7.3.3). Clause 7 asks for no design heat load.
+
+---
+
+## Section 4: Where the Energy Assessor Fits
+
+### What you record about a heat pump
+
+For a dwelling with a heat pump, the specification and conventions set what you enter:
+- The product from the Product Characteristics Database "whenever possible" (specification Table 31, item 7-3), otherwise the default (convention 4.07).
+- The emitter type, with fan coil units "only for heat pumps" (Table 31, item 7-4).
+- "MCS installation (yes/no)", yes "only if documentary evidence available" (Table 31, item 7-4).
+- Design flow temperature: unknown "unless there is documentary evidence that the system has been designed and commissioned as a low temperature one" (convention 4.01b). The band 45°C or below and over 35°C is not available for heat pumps from the SAP tables (Table 31, item 7-4).
+- A reversible heat pump is not entered as a cooling system (convention 9.04).
+
+You must be able to show that any documentation relates to the actual property being assessed and/or that the work has been carried out (convention 9.02); the MCS certificate and commissioning records are the obvious places to look.
+
+### Where your EPC is used
+
+This is the formal link. MCS 031 a), the pre-sale information and performance estimate standard for hydronic heat pumps, begins: "Using a valid Energy Performance Certificate (EPC) identify: (a) The property space heating demand (kWh/year)" (MCS 031 a) Issue 5.0 and MCS 031 a):2025 Issue 2.0, both 5 December 2025, clause 2.1). Where there is no valid EPC on the register but one can be obtained through "a domestic energy assessment, then an EPC should be obtained and lodged" (clause 2.1, Note; also MIS 3005-D Issue 3.0, clause 4.1.1). MCS 031 a) adds that the EPC "relies on the accuracy of the information input" (section 5).
+
+So your space heating demand may appear in a customer's performance estimate. It is not for sizing: the capacity estimate in MCS 031 a) "is indicative only" and may change "following the detailed heat loss assessment and system design" (MCS 031 a):2025, clause 2.2). BUS no longer needs an EPC, but MCS 031 a) still uses one.
+
+### Doing the design yourself
+
+None of the sources in this course gives an energy assessor, as such, any part in heat pump sizing, and none of the MCS documents read names a qualification for whoever does the calculation. The tests are the MCS Contractor's: competence (MIS 3005-D clause 9) and, if the work is subcontracted, a written subcontract and insurance (MCS 001-1 clause 4.11.1, read as covering design: see Section 2). MIS 3005-D clause 1 adds that where customers contract separately for design and installation, "the arrangement is not compliant and an MCS certificate cannot be issued", so ask the MCS Contractor how your work would be contracted. If you want to offer heat load calculations, treat it as a separate service: train in the method, agree the scope in writing with the contractor, and ask your insurer whether your professional indemnity cover extends to design work.
+
+### Habits that help the next person
+
+These are sensible habits, not requirements:
+- Keep any room-by-room measurements you take, and say whether they are internal or external, as convention 2.01 already requires.
+- When asked whether a heat pump would suit the house, explain that the EPC recommendation is a modelled measure and that sizing needs a room-level calculation by or for an MCS certified contractor.
 
 ---
 
 ## Key Takeaways
 
-- A heat loss assessment is a room-by-room design calculation under BS EN 12831, fundamentally different from an EPC's whole-dwelling energy rating — it sizes the heating system, not the building's energy label
-- MCS MIS 3005 mandates room-by-room heat loss calculations for certified heat pump installations, and MCS certification is required for Boiler Upgrade Scheme funding — this is a non-optional step in the installation chain
-- The convergence of the CHMM, BUS, and Warm Homes Plan is driving structural, long-term growth in heat pump installations and, therefore, in demand for heat loss assessors
-- Your existing DEA and Retrofit Assessor skills in fabric identification, U-value understanding, and on-site data collection provide a strong foundation — you are closer to competent than a cold entrant
-- The critical skills gaps are in room-level calculation methodology, software proficiency, emitter sizing at low flow temperatures, and understanding ventilation heat losses at design conditions
-- Your commercial route to market runs through MCS-certified heat pump installers — build those relationships early and position yourself as a reliable, technically competent partner
-- Check your professional indemnity insurance covers heat loss assessment work before taking on any commercial instructions
+The points to carry away:
+- A design heat load to BS EN 12831-1:2017 is the power each room needs at design conditions; a heat pump shall be selected to provide at least 100% of the calculated heat load (MIS 3005-D Issue 3.0 clause 5.5.1 e)).
+- EPC figures are whole-dwelling and standard occupancy, and MCS says annual heat demand is not appropriate for sizing.
+- The design rules are in MIS 3005-D Issue 3.0, or MIS 3005-D:2025 Issue 2.0 on the redeveloped scheme.
+- MCS's own calculator also starts from default U-values; the difference is room-level working at design temperatures.
+- BUS, England and Wales: MCS certified installer; £7,500 air-to-water or ground source; insulation condition removed 8 May 2024; EPC requirement removed 28 April 2026.
+- Under PAS 2035:2023, where an MCS-covered heat pump is the only measure, the Retrofit Designer shall be an MCS certified specialist designer or a chartered building services engineer.
+- Your formal link is the EPC, whose space heating demand feeds the MCS 031 a) performance estimate.
+- No source read gives a DEA, as such, a role in sizing; design is a separate competence.
 
 ---
 
 ## Self-Assessment Questions
 
-**Question 1:** What is the primary output of a room-by-room heat loss calculation?
+**Q1.** What do the MCS standards say about using the annual space heating demand from an EPC to size a heat pump?
 
-A) An energy efficiency rating from A to G for the whole dwelling
-B) A design heat load in watts for each room, used to size the heating system and emitters
-C) An estimated annual energy consumption figure in kWh/m²/year
-D) A list of recommended energy efficiency improvements ranked by cost-effectiveness
+A) It may be used for sizing if the EPC is no more than 10 years old
+B) It may be used for sizing air-to-air heat pumps only
+C) Neither the building's annual heat demand nor the system's annual energy performance is appropriate for sizing
+D) It must be used for sizing wherever no heat load calculation has been done
 
-**Correct answer: B** — The heat loss calculation produces a design heat load per room (in watts), which directly informs heat pump sizing and emitter specification. This is distinct from an EPC rating (A), SAP energy consumption outputs (C), or a retrofit recommendations list (D).
-
----
-
-**Question 2:** Which standard is most commonly referenced for room-by-room heat loss calculations in the UK?
-
-A) SAP 10.2
-B) BS EN 12831
-C) Building Regulations Approved Document Part F
-D) PAS 2035
-
-**Correct answer: B** — BS EN 12831 is the standard for calculating design heat loads in buildings. SAP 10.2 is the methodology behind EPCs. Part F addresses ventilation. PAS 2035 governs domestic retrofit.
+**Correct answer: C.** The Note to MIS 3005-D Issue 3.0 clause 4.1.1, repeated in MCS 031 a) clause 2.1, says so; the 10-year test is the BUS definition of a valid EPC (Installer Guidance V5.1, paragraph 3.41), not a sizing rule.
 
 ---
 
-**Question 3:** Why do heat pumps require more accurate heat loss data than conventional gas boilers?
+**Q2.** Under MIS 3005-D, the heat load calculation shall in other respects comply with which standard?
 
-A) Heat pumps are significantly cheaper to install, so errors matter less financially
-B) Heat pumps operate at lower flow temperatures, leaving less margin for error in system sizing and emitter specification
-C) Gas boilers do not require any form of heat loss assessment
-D) Heat pumps are only installed in new-build properties with known thermal characteristics
+A) BS EN 12831-1:2017
+B) SAP 10.2
+C) BR 443
+D) PAS 2030:2023
 
-**Correct answer: B** — Heat pumps typically deliver heat at lower flow temperatures than gas boilers. This means radiators and other emitters must be correctly sized to deliver sufficient heat output at those lower temperatures. An undersized system will fail to heat the property; an oversized system will short-cycle. The margin for error is narrower, making accurate heat loss calculation critical.
-
----
-
-**Question 4:** Which of the following is NOT typically within the scope of a heat loss assessor's role?
-
-A) Measuring room dimensions and identifying thermal elements
-B) Calculating ventilation heat losses per room
-C) Specifying the refrigerant circuit and commissioning the heat pump unit
-D) Producing emitter schedules showing required radiator outputs per room
-
-**Correct answer: C** — Refrigerant circuit specification and system commissioning are the installer's responsibility. The heat loss assessor's scope covers building fabric data collection, heat loss calculation, and (depending on service scope) emitter sizing — not system installation or commissioning.
+**Correct answer: A.** MIS 3005-D Issue 3.0 clause 5.5.1 a) and MIS 3005-D:2025 clause 3.4.1 a) name BS EN 12831-1:2017; BR 443 is cited by RdSAP convention 3.08 for U-values, and SAP 10.2 underlies RdSAP.
 
 ---
 
-**Question 5:** What is the most important first step before offering heat loss assessments commercially?
+**Q3.** Since 28 April 2026, what is the Boiler Upgrade Scheme's position on EPCs?
 
-A) Purchasing a thermal imaging camera
-B) Completing recognised training in heat loss calculation methodology and confirming your professional indemnity insurance covers the work
-C) Registering with a letting agent for referrals
-D) Memorising the external design temperatures for all UK regions
+A) A valid EPC with no recommendation for loft or cavity wall insulation is required
+B) An EPC lodged within the last three months is required
+C) EPCs are no longer accepted as evidence of any kind
+D) A valid EPC is not required, but if one exists its certificate number must be provided
 
-**Correct answer: B** — Formal training provides the technical competence and credibility needed, and confirming PI insurance coverage protects you against professional liability. While other steps (equipment, referral networks, technical knowledge) are important, training and insurance are the essential prerequisites before any commercial work.
+**Correct answer: D.** Ofgem's Installer Guidance V5.1 paragraph 3.40; the insulation condition was omitted from 8 May 2024 (SI 2024/524), and three months is the limit for a utility bill (paragraph 3.43).
+
+---
+
+**Q4.** You assess a house with an air source heat pump and there is no design or commissioning paperwork. How do you enter the design flow temperature in RdSAP 10?
+
+A) 35°C or below, because heat pumps are low temperature systems
+B) Unknown
+C) Over 45°C
+D) 45°C or below and over 35°C
+
+**Correct answer: B.** Convention 4.01b requires unknown without documentary evidence of low temperature design and commissioning; specification Table 31 item 7-4 rules out the middle band for heat pumps from the SAP tables.
+
+---
+
+**Q5.** In a PAS 2035:2023 project where the only measure is an air source heat pump covered by MCS, who may act as the Retrofit Designer?
+
+A) Any Retrofit Assessor, by virtue of that role
+B) Any domestic energy assessor, by virtue of scheme registration
+C) A specialist designer or specifier of the system who is MCS certified, or a chartered building services engineer
+D) The Retrofit Coordinator, who then carries design responsibility
+
+**Correct answer: C.** PAS 2035:2023 Annex A, A.3.4; the Note to A.3.6 says design responsibility rests with the specialist designer "and not with the Retrofit Coordinator".
 
 ---
 
 ## Further Reading
 
-- **BS EN 12831-1:2017** — *Energy performance of buildings. Method for calculation of the design heat load. Space heating load.* Available via the British Standards Institution (BSI). The foundational standard for heat loss calculation methodology.
-  [https://www.bsigroup.com](https://www.bsigroup.com)
-
-- **MCS MIS 3005** — *Requirements for MCS contractors undertaking the supply, design, installation, set to work, commissioning and handover of heat pump systems.* The MCS installation standard mandating room-by-room heat loss calculations for certified heat pump installations.
-  [https://mcscertified.com/standards-tools-library/](https://mcscertified.com/standards-tools-library/)
-
-- **Elmhurst Energy** — Reporting on surging demand for heat loss assessors (April 2026), linked to the Warm Homes Plan and heat pump rollout acceleration. Elmhurst also offers training and certification for heat loss assessment.
-  [https://www.elmhurstenergy.co.uk](https://www.elmhurstenergy.co.uk)
-
-- **The Boiler Upgrade Scheme (BUS)** — Ofgem-administered grant scheme for heat pump installations. Scheme guidance sets out MCS certification requirements for eligible installations.
-  [https://www.ofgem.gov.uk/environmental-and-social-schemes/boiler-upgrade-scheme-bus](https://www.ofgem.gov.uk/environmental-and-social-schemes/boiler-upgrade-scheme-bus)
-
-- **Clean Heat Market Mechanism (CHMM)** — DESNZ policy framework placing obligations on fossil fuel boiler manufacturers to deliver heat pump sales. Regulatory details and manufacturer obligations.
-  [https://www.gov.uk/government/consultations/clean-heat-market-mechanism](https://www.gov.uk/government/consultations/clean-heat-market-mechanism)
-
-- **Heat Pump Association** — Industry body providing technical resources, design guides, and installer support for heat pump deployment in the UK.
-  [https://www.heatpumps.org.uk](https://www.heatpumps.org.uk)
+Sources used for this course:
+- **MIS 3005-D The Heat Pump Standard (Design), Issue 3.0.** MCS, 5 December 2025. Clauses 1, 4.1.1, 5.5.1, 5.5.3, 5.9.2 and 9, and Tables 1 and 2; use MIS 3005-D:2025 Issue 2.0 for the redeveloped scheme.
+- **MCS 031 a) Hydronic Heat Pump: Pre-sale information and performance calculation, Issue 5.0.** MCS, 5 December 2025. Clauses 2.1 and 2.2 and their notes on the EPC.
+- **Boiler Upgrade Scheme: Installer Guidance V5.1.** Ofgem, 2 July 2026. Paragraphs 1.02 to 1.06, 3.37 to 3.44 and 3.80 to 3.95.
+- **The MCS Contractor Standard, Part 1: Requirements for MCS Contractors, MCS 001-1 Issue 4.2.** MCS, 20 October 2020. Clauses 2 and 4.11.
+- **Boiler Upgrade Scheme (England and Wales) Regulations 2022 (SI 2022/565), as amended by SI 2024/524 and SI 2026/390.** legislation.gov.uk. Regulations 1, 2, 5, 6 and 15.
+- **RdSAP10 Specification, version 4.0.** BRE, 7 June 2026. Sections 3.6, 4.1 and 14, Table 31 item 7-4 and Table 33 Note 9.
+- **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Conventions 2.01, 3.08, 4.01b and 9.02.
+- **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, 2023. Clauses 7.3, 8.2.19, 8.2.22 and 9.1, and Annex A.3.
 
 ---
+
 *© Meridian CPD 2026. All rights reserved. Unauthorised reproduction prohibited.*
 *This course material is licensed to individual subscribers only.*
