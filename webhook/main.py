@@ -87,8 +87,8 @@ COURSES = {
     "MER-RA-008":  {"course_id": "MER-RA-008",  "title": "Ventilation Assessment in Retrofit: Background Ventilation to MVHR", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-009":  {"course_id": "MER-RA-009",  "title": "External Wall Insulation: Planning Permission and Fire Risk", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-010":  {"course_id": "MER-RA-010",  "title": "Thermal Bridging in Retrofit Assessment: What Assessors Must Record", "cpd_hours": 1.0, "published": "2026-03-01"},
-    "MER-RA-011":  {"course_id": "MER-RA-011",  "title": "Occupancy Assessment: Health Conditions, Vulnerability and Overheating Risk", "cpd_hours": 1.0, "published": "2026-03-01"},
-    "MER-RA-012":  {"course_id": "MER-RA-012",  "title": "TrustMark Data Requirements: What Retrofit Assessors Must Submit", "cpd_hours": 1.0, "published": "2026-03-01"},
+    "MER-RA-011":  {"course_id": "MER-RA-011",  "title": "Occupancy Assessment: Vulnerable Occupants and Overheating Under PAS 2035:2023", "cpd_hours": 1.0, "published": "2026-03-01"},
+    "MER-RA-012":  {"course_id": "MER-RA-012",  "title": "TrustMark Lodgement: What the Retrofit Assessment Must Contain and Who Lodges It", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-ALL-001": {"course_id": "MER-ALL-001", "title": "UK Energy Policy 2026: What Assessors Need to Know", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-ALL-004": {"course_id": "MER-ALL-004", "title": "Fire Safety in Retrofit: What Every Assessor Must Know", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-ALL-005": {"course_id": "MER-ALL-005", "title": "Future Homes Standard 2025: What Energy Assessors Need to Know", "cpd_hours": 1.0, "published": "2026-04-15"},
@@ -114,11 +114,9 @@ COURSES = {
 # course, publish its corrected PDF and delete its ID from this set (and from the same
 # list in landing-page/courses.html). Certificates already issued are not affected.
 UNDER_REVIEW = {
-    
-    "MER-RA-011", "MER-RA-012",
-    "MER-ALL-005", "MER-ALL-008", "MER-ALL-009",
+    "MER-ALL-005", "MER-ALL-009",
     "MER-ALL-010", "MER-ALL-012", "MER-ALL-013", "MER-ALL-014",
-    "MER-ALL-015", "MER-ALL-016", "MER-ALL-017",
+    "MER-ALL-015", "MER-ALL-016", 
 }
 
 

@@ -821,10 +821,10 @@ const STRIPE_SUB    = 'https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01';
 // in UNDER_REVIEW in webhook/main.py.
 const UNDER_REVIEW = new Set([
   
-  'MER-RA-011','MER-RA-012',
-  'MER-ALL-005','MER-ALL-008','MER-ALL-009','MER-ALL-010',
+  
+  'MER-ALL-005','MER-ALL-009','MER-ALL-010',
   'MER-ALL-012','MER-ALL-013','MER-ALL-014','MER-ALL-015','MER-ALL-016',
-  'MER-ALL-017',
+  
 ]);
 
 const ALL_COURSES = [
@@ -1073,24 +1073,24 @@ const ALL_COURSES = [
   },
   {
     id: 'MER-RA-011', strand: 'RA', hours: 1.0,
-    title: 'Occupancy Assessment: Health Conditions, Vulnerability and Overheating Risk',
-    desc: 'Occupancy assessment under PAS 2035:2023 requires the Retrofit Assessor to evaluate health conditions, vulnerability indicators, and overheating risk. This course covers the methodology, the data to be recorded, and the triggers that affect the retrofit pathway.',
+    title: 'Occupancy Assessment: Vulnerable Occupants and Overheating Under PAS 2035:2023',
+    desc: 'What PAS 2035:2023 clause 7.3.2 k) actually asks the assessor to record about occupants, which other clauses concern occupants\' comfort and vulnerability and whose job each is, why the overheating risk assessment sits with the Retrofit Designer, how to handle health information under the UK GDPR, and where Approved Document O, BS 40104:2025 and the ECO4 medical route fit.',
     objectives: [
-      'Apply the PAS 2035:2023 occupancy assessment methodology including health and vulnerability evaluation',
-      'Identify the occupancy factors that trigger elevated risk designations or pathway changes',
-      'Assess overheating risk in the context of proposed insulation measures',
-      'Document occupancy assessment outputs correctly for TrustMark lodgement'
+      'State what PAS 2035:2023 clause 7.3.2 k) requires in the appraisal of occupancy, and what it does not require',
+      'Tell the requirements in PAS 2035:2023 that concern occupants\' health, comfort and vulnerability from its guidance, and say which role each requirement falls on',
+      'Explain what the retrofit assessment records that bears on overheating, and why the overheating risk assessment is the Retrofit Designer\'s job at design stage',
+      'Handle health information in line with what the standard asks and the UK GDPR rules on data concerning health, and pass concerns to the Retrofit Coordinator'
     ]
   },
   {
     id: 'MER-RA-012', strand: 'RA', hours: 1.0,
-    title: 'TrustMark Data Requirements: What Retrofit Assessors Must Submit',
-    desc: 'TrustMark data submission failures are among the most common causes of project hold-ups. This course covers the current data requirements for Retrofit Assessors, common lodgement errors, and the format and evidence standards required for compliant submission.',
+    title: 'TrustMark Lodgement: What the Retrofit Assessment Must Contain and Who Lodges It',
+    desc: 'What PAS 2035:2023 requires a retrofit assessment and its report to contain and who receives it, what the standard does and does not say about TrustMark\'s data warehouse, who lodges which records under ECO4 and Warm Homes: Local Grant, how the pre-retrofit RdSAP assessment drives ECO4 scores and exemptions, and where record retention periods come from.',
     objectives: [
-      'Identify the data fields the Retrofit Assessor must submit to TrustMark for each project',
-      'Apply the current format and evidence requirements for compliant lodgement',
-      'Recognise the most common data submission errors and how to avoid them',
-      'Understand the consequences of incomplete or non-compliant TrustMark submissions'
+      'State what PAS 2035:2023 requires a retrofit assessment and its report to contain, and who receives the report',
+      'Separate what PAS 2035:2023 says about TrustMark\'s data warehouse from what the ECO4 and Warm Homes: Local Grant guidance expect',
+      'Identify who lodges which records in ECO4 and Warm Homes: Local Grant projects, as Ofgem and DESNZ describe it',
+      'Explain how the pre-retrofit RdSAP assessment and the assessment report decide scores, repair funding and exemptions under ECO4'
     ]
   },
   {
@@ -1124,6 +1124,28 @@ const ALL_COURSES = [
       'Explain the seven-year payback test and the registered exemptions',
       'Distinguish what the government said on 18 June 2026 about larger buildings from 2031 from what has been legislated',
       'Identify what that announcement leaves undecided and where the answers will come from'
+    ]
+  },
+  {
+    id: 'MER-ALL-017', strand: 'ALL', hours: 1.0,
+    title: 'Awaab\'s Law Phase 2: What Energy Assessors Must Know',
+    desc: 'Awaab\'s Law as it stands in October 2026: the statutory basis, the hazards and timescales that have bound social landlords in England since 27 October 2025, the status of the draft Phase 2 Regulations due from 30 November 2026, what is planned for Phase 3 and private renting, and what an EPC, a retrofit assessment and a ventilation assessment do and do not establish about damp, mould and cold.',
+    objectives: [
+      'State the legal basis of Awaab\'s Law, who it binds, how it is enforced and which nation it covers',
+      'List the hazards and timescales that have applied to social landlords in England since 27 October 2025',
+      'Explain the status of the draft Phase 2 Regulations, what they would change from 30 November 2026, and what is planned for Phase 3 and private renting',
+      'Distinguish what an EPC, a PAS 2035 retrofit assessment and a ventilation assessment do and do not establish about damp, mould and excess cold'
+    ]
+  },
+  {
+    id: 'MER-ALL-008', strand: 'ALL', hours: 1.0,
+    title: 'Renters\' Rights Act 2025: Impact on EPCs and Energy Assessors',
+    desc: 'The Renters\' Rights Act 2025 as it stands in October 2026: Royal Assent, which parts are in force and from when, the draft Private Rented Sector Database regulations and the EPC information they would require, the Decent Homes and Awaab\'s Law powers still awaiting regulations, the domestic MEES rules in force under separate legislation, and the status of the EPC C by 2030 decision.',
+    objectives: [
+      'State when the Renters\' Rights Act 2025 received Royal Assent, where its reforms apply, and which parts were in force on 14 October 2026',
+      'Describe the Private Rented Sector Database and the EPC information the draft database regulations would require from landlords',
+      'Distinguish the Act\'s Decent Homes and Awaab\'s Law powers from the regulations and consultation still needed to bring them into effect',
+      'Explain the domestic minimum energy efficiency standard (MEES) in force under separate legislation, and the status of the decision on EPC C by 1 October 2030'
     ]
   }
 ];

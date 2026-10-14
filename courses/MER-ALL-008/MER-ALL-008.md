@@ -1,216 +1,235 @@
-
-
 # Renters' Rights Act 2025: Impact on EPCs and Energy Assessors
-**Course ID:** MER-ALL-008 | **CPD Hours:** 1 | **Published:** May 2026
+**Course ID:** MER-ALL-008 | **CPD Hours:** 1 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Identify the key provisions of the Renters' Rights Act 2025 that directly affect EPC demand, timing, and the regulatory context in which domestic energy assessments are commissioned.
-- Explain how the abolition of Section 21 "no-fault" evictions and the introduction of the Decent Homes Standard for the private rented sector alter landlord compliance behaviour and EPC commissioning patterns.
-- Evaluate the interaction between the Renters' Rights Act 2025 and the Minimum Energy Efficiency Standards (MEES) regulations, including how enhanced enforcement mechanisms may change the practical significance of EPC ratings for rental properties.
-- Apply an understanding of the new regulatory framework to advisory conversations with landlord clients, including accurate signposting to obligations around property standards, energy performance, and glazing upgrades referencing relevant standards such as BS 6262-2 [L38].
-- Anticipate shifts in workload composition, client expectations, and professional liability exposure arising from the changed legal landscape for private rented sector properties.
+- State when the Renters' Rights Act 2025 received Royal Assent, where its reforms apply, and which parts were in force on 14 October 2026
+- Describe the Private Rented Sector Database and the EPC information the draft database regulations would require from landlords
+- Distinguish the Act's Decent Homes and Awaab's Law powers from the regulations and consultation still needed to bring them into effect
+- Explain the domestic minimum energy efficiency standard (MEES) in force under separate legislation, and the status of the decision on EPC C by 1 October 2030
+- Apply the rules on valid EPCs, recommendations and documentary evidence to landlord conversations without giving legal advice
 
 ---
 
 ## Introduction
 
-The Renters' Rights Act 2025 received Royal Assent in May 2025 and represents the most substantial reform of private rented sector (PRS) law in England in over three decades. Its provisions are being implemented in phases, and by the time you read this, several of its core mechanisms are either live or imminent. This is not background legislation — it directly reshapes the context in which you lodge EPCs, advise landlord clients, and assess rental properties.
+The Renters' Rights Act 2025 (2025 c. 26) received Royal Assent on 27 October 2025 (the Act, introductory text). Its long title describes an Act "changing the law about rented homes". It is tenancy and housing standards law, not energy law. In the provisions covered here it sets no EPC requirement itself: EPC information reaches it through regulations made under it, and the minimum EPC rating for a letting is set by separate legislation, the Energy Efficiency (Private Rented Property) (England and Wales) Regulations 2015 (SI 2015/962), covered in Section 4.
 
-The headline measure — abolition of Section 21 no-fault evictions — has dominated public discourse, but for energy assessors the more consequential provisions sit elsewhere. The Act extends the Decent Homes Standard to the PRS for the first time, establishes a new Private Rented Sector Landlord Ombudsman, mandates landlord registration through a Property Portal, and strengthens local authority enforcement powers. Each of these mechanisms either directly references energy performance or creates compliance triggers that funnel landlords toward EPC commissioning and energy improvement works.
+This course covers England. The government's guide to the Act and its implementation roadmap are both marked "Applies to England", although most of the Act legally extends to England and Wales (section 144). Wales has its own regime: since 1 December 2022 the Renting Homes (Wales) Act 2016 has replaced tenancy agreements with "occupation contracts" (Welsh Government, Renting Homes guidance), with a landlord's obligation of fitness for human habitation (section 91), and Welsh landlords must register under the Housing (Wales) Act 2014 (section 4). The 2015 MEES Regulations apply in England and Wales. Scotland and Northern Ireland are not covered.
 
-This matters now because the Act lands on top of the existing MEES framework and the long-anticipated (and repeatedly delayed) tightening of minimum EPC thresholds for rental properties. Whether or not the government proceeds with raising the MEES minimum to EPC Band C — a policy consulted on but not yet confirmed at time of publication — the Renters' Rights Act independently raises the compliance stakes. A landlord who previously might have tolerated a borderline EPC rating now faces a regulatory environment where property standards are actively policed, where tenants have stronger mechanisms to escalate complaints, and where a poor EPC is no longer just a certificate filed in a drawer but a potential trigger for enforcement action.
+This edition replaces the May 2026 edition. That edition gave the wrong Royal Assent date (May 2025), called EPC C for private lettings "not yet confirmed" when the government had set a 1 October 2030 date in January 2026, taught the old four-criterion Decent Homes Standard as a current test, described a "Property Portal" and an ombudsman as already operating, and named trading standards as the domestic MEES enforcer. Do not repeat any of those to a client.
 
-For DEAs and Retrofit Assessors, the professional implication is twofold. First, demand patterns shift: more EPCs commissioned proactively, more requests for pre-improvement assessments, more landlords asking what you can and cannot advise on. Second, your advisory role intensifies. You are, for many landlords, the first professional they speak to about property standards. Understanding what the Act requires — and critically, where the boundaries of your competence sit — is no longer optional context. It is core professional knowledge.
-
----
-
-## Section 1: Core Provisions of the Renters' Rights Act 2025 Relevant to Energy Assessors
-
-The Renters' Rights Act 2025 is a large piece of legislation and not all of it concerns you directly. What follows isolates the provisions with direct or near-direct relevance to energy assessment practice.
-
-**Abolition of Section 21 and Tenancy Security**
-
-The removal of Section 21 no-fault evictions means that assured shorthold tenancies, as a distinct category, cease to exist. All tenancies become periodic assured tenancies. Landlords can only recover possession on specific statutory grounds. The practical consequence for energy assessors: tenants stay longer. Longer tenancies mean properties must sustain compliance over time, not merely at the point of re-letting. An EPC lodged at the start of a tenancy that was expected to last 12 months now underpins a tenancy of potentially indefinite duration. This changes how landlords think about the validity window of their EPC and the urgency of borderline ratings.
-
-**The Decent Homes Standard Extended to PRS**
-
-Previously applying only to social housing, the Decent Homes Standard is now being extended to privately rented properties. The Standard has four criteria: the property must meet the current statutory minimum standard for housing (the Housing Health and Safety Rating System — HHSRS), be in a reasonable state of repair, have reasonably modern facilities and services, and provide a reasonable degree of thermal comfort. The thermal comfort criterion is where energy assessors intersect most directly. Thermal comfort under the Decent Homes Standard has historically been assessed by reference to effective insulation and efficient heating — both elements that feed directly into SAP calculations and EPC outputs. While the precise enforcement methodology for PRS application is subject to secondary legislation, energy assessors should anticipate that EPC data and recommendations will be referenced in Decent Homes compliance assessments.
-
-**The Property Portal and Landlord Registration**
-
-The Act establishes a new digital Property Portal through which all private landlords must register themselves and their properties. The Portal is expected to hold — or link to — the property's current EPC. This creates a visible, searchable compliance record. For assessors, this means the EPC is no longer a document that sits passively on the EPC Register; it becomes part of an active enforcement dataset. Accuracy matters more. Errors are more visible. The Portal also functions as a mechanism through which tenants and local authorities can identify non-compliant properties, which increases the likelihood that a sub-standard EPC rating triggers follow-up action.
-
-**The PRS Ombudsman**
-
-All private landlords must join the new Ombudsman scheme. Tenants can escalate complaints about property conditions, including thermal comfort and energy efficiency, without needing to pursue court action. This creates a low-friction route from tenant dissatisfaction to formal investigation — and in many cases, the EPC and its recommendations will be among the first documents examined.
+The course is correct to 14 October 2026, and much of it is time-sensitive. On that date:
+- In force: the tenancy reforms for private assured tenancies from 1 May 2026 (SI 2026/421), and the domestic MEES minimum of band E (SI 2015/962)
+- Draft regulations before Parliament: the Private Rented Sector Database Regulations 2026, laid 9 September 2026
+- Government decisions, not yet law: EPC C or equivalent by 1 October 2030 (DESNZ, 21 January 2026) and a new Decent Homes Standard from 2035 (MHCLG, 28 January 2026)
+- Open consultation: Awaab's Law for private renters, closing 18 December 2026
 
 ---
 
-## Section 2: Interaction with MEES and the Compliance Landscape
+## Section 1: What the Act does and what is in force
 
-The Renters' Rights Act does not amend the Energy Efficiency (Private Rented Property) (England and Wales) Regulations 2015 — the MEES regulations — directly. But it fundamentally changes the enforcement environment in which MEES operates, and this distinction matters.
+### Commencement
 
-**Current MEES Position**
+Section 145 brings most of the Act into force on days appointed by regulations; a few provisions, including Part 4 Chapter 3 (councils' investigatory powers), came in two months after Royal Assent (section 145(5)). The Secretary of State had made three sets of commencement regulations:
+- SI 2025/1354 (made 18 December 2025): from 27 December 2025, definitions supporting the investigatory powers and guidance on new hazard penalties (regulation 2)
+- SI 2026/421 (made 16 April 2026): from 1 May 2026, Part 1 Chapter 1 (assured tenancies) for tenancies that are not social housing, with Schedules 1 and 2, plus councils' enforcement duty and new financial penalties (regulations 2 and 3)
+- SI 2026/638 (made 16 June 2026): from 22 June 2026, councils' power to fine for category 1 hazards (regulation 2)
 
-At the time of publication, the MEES minimum for domestic PRS properties in England and Wales remains EPC Band E. It is unlawful to grant a new tenancy or renew an existing tenancy of a property with an EPC rating below Band E, unless a valid exemption is registered. The government consulted in 2020–21 on raising this minimum to Band C, with a proposed implementation date that has been repeatedly deferred. No confirmed timeline for a Band C requirement has been legislated. Assessors should monitor the position but must not advise clients that a Band C minimum is currently in force — it is not.
+### What changed on 1 May 2026
 
-**How the Renters' Rights Act Changes MEES Enforcement Dynamics**
+The Explanatory Note to SI 2026/421 describes "the abolition of fixed term and shorthold assured tenancies, so that all tenancies under that Act will now be assured periodic tenancies". Schedule 1, which changes the grounds for possession, commenced with it. Tenants can leave on two months' notice, and councils can impose civil penalties of up to £7,000, or up to £40,000 for serious, persistent or repeat non-compliance (gov.uk, Guide to the Renters' Rights Act).
 
-The MEES regulations have historically suffered from weak enforcement. Local authorities are the designated enforcement bodies, but trading standards teams have been under-resourced and PRS energy efficiency has rarely been prioritised. The Renters' Rights Act changes this calculus in several ways.
+None of this changes how an EPC is produced or when one is needed. Existing buildings need an EPC when sold or rented out, and an EPC "is valid for 10 years or until a newer EPC is produced for the same building" (DCLG, A guide to energy performance certificates for the marketing, sale and let of dwellings, December 2017). That duty comes from the Energy Performance of Buildings (England and Wales) Regulations 2012. The required content of a private landlord's written statement of terms (SI 2026/324, Schedule) covers fitness for habitation, repairs, and electrical and gas safety, but not EPCs.
 
-First, the Property Portal creates a centralised dataset linking landlord registration to property records, potentially including EPC ratings. This makes it significantly easier for local authorities to identify properties that may breach MEES — they no longer need to cross-reference the EPC Register manually.
+### What is not yet in force
 
-Second, the strengthened local authority enforcement powers under the Act, including higher civil penalties for housing standard breaches, create institutional incentives to pursue energy efficiency non-compliance alongside other property standard failures. An investigation triggered by a Decent Homes complaint may surface a MEES breach as a secondary finding.
-
-Third, the extension of the Decent Homes Standard introduces a parallel compliance pathway. Even where a property technically meets the MEES minimum (Band E), it may fail the thermal comfort criterion of the Decent Homes Standard if insulation or heating is inadequate. This creates a scenario where a "MEES-compliant" EPC rating does not guarantee overall regulatory compliance — a subtlety that landlords frequently misunderstand and that assessors are increasingly asked to explain.
-
-**Practical Implications for Assessment**
-
-When assessing PRS properties, assessors should be alert to the layered nature of compliance. A landlord presenting a property at Band E and asking whether they are "compliant" is asking a question that now has a more complex answer than it did before. MEES compliance is necessary but may not be sufficient. The Decent Homes thermal comfort criterion, HHSRS hazards related to excess cold, and the new enforcement mechanisms all bear on the landlord's overall legal position. Assessors should note relevant improvement recommendations accurately and avoid understating the significance of energy efficiency measures in the recommendations report, as these documents may now be scrutinised in enforcement and ombudsman proceedings.
-
----
-
-## Section 3: Shifting Demand Patterns and the Assessor's Evolving Advisory Role
-
-The Renters' Rights Act is already altering the profile of EPC work coming through the pipeline. Understanding these shifts allows you to manage workload, price appropriately, and maintain professional boundaries.
-
-**Proactive Commissioning**
-
-Historically, a significant proportion of PRS EPCs were commissioned reactively — at the point of re-letting or when a letting agent flagged an expired certificate. The new regulatory environment incentivises proactive commissioning. Landlords registering on the Property Portal need a valid EPC. Landlords concerned about Decent Homes compliance want to understand their current rating before a complaint forces the issue. Retrofit Assessors are seeing increased demand for pre-improvement assessments from landlords seeking to future-proof properties against anticipated MEES tightening. This shift toward proactive commissioning generally means better client engagement and more scope for meaningful advisory interaction, but it also means clients arrive with more questions and higher expectations.
-
-**The Advisory Boundary**
-
-This is where professional discipline becomes critical. The Renters' Rights Act increases the frequency with which landlords ask energy assessors for guidance that sits outside the assessor's competence. Typical boundary-crossing requests include: asking whether a property "passes" the Decent Homes Standard (this is not an EPC function), asking for legal advice on MEES exemptions (assessors can describe the exemption framework but should not advise on individual applications), and asking whether specific improvements will definitively achieve a target EPC band before the work is done (assessors can model indicative improvements through SAP but cannot guarantee post-improvement ratings).
-
-The correct professional position is to provide accurate energy assessment data, clearly explain EPC recommendations, and signpost landlords to appropriate sources for legal, building control, and retrofit coordination advice. Retrofit Assessors operating under PAS 2035 have a somewhat broader advisory scope regarding improvement measures, but the legal compliance question remains outside that scope.
-
-**Glazing and Fenestration — A Practical Example**
-
-A common landlord query in the context of energy improvements concerns window upgrades. Assessors frequently encounter PRS properties with single-glazed or early double-glazed units where replacement would improve the EPC rating. When discussing glazing options, assessors should be aware of BS 6262-2: Glazing for Buildings — Energy, light and sound [L38], which provides guidance on the energy performance characteristics of glazing systems, including thermal transmittance (U-values) and solar energy transmittance (g-values). While SAP uses default or manufacturer-declared window U-values, understanding the principles in BS 6262-2 helps assessors contextualise landlord questions about glazing specifications and avoid endorsing inappropriate products. Assessors should note that Building Regulations Part L governs the replacement window standards that apply at the point of installation, and that any glazing recommendations in the EPC should align with these requirements.
-
-**Increased Scrutiny of EPC Quality**
-
-The Ombudsman route and Property Portal together mean that EPC data faces more scrutiny than ever. A tenant who disputes their landlord's claim that the property meets energy standards can escalate through the Ombudsman, and the EPC — including its recommendations — becomes an evidential document. Assessors should ensure that site data collection is thorough, that photographs and notes support lodged data, and that convention choices are defensible. An EPC that understates heat loss or incorrectly records insulation levels is no longer just a quality assurance issue; it is a potential factor in a regulatory enforcement outcome.
+Four parts that matter to assessors were not in force on 14 October 2026:
+- The Private Rented Sector Database (Part 2 Chapter 3): legislation.gov.uk marks section 75 "prospective", and section 82 is in force only "for specified purposes, see s. 145(2)", the regulation-making power.
+- The landlord redress scheme: the Secretary of State "may make regulations requiring a residential landlord to be a member" (section 64(1)); the roadmap expects PRS Landlord Ombudsman membership "to be in 2028".
+- Awaab's Law for private tenancies (section 60): "prospective".
+- Decent homes requirements (section 100): commenced only for limited purposes (Section 3).
 
 ---
 
-## Section 4: Practical Application — Navigating Client Conversations and Compliance Triggers
+## Section 2: The Private Rented Sector Database and EPC information
 
-This section translates the regulatory framework into the day-to-day interactions you are likely to encounter.
+### What the Act provides
 
-**Scenario 1: The Landlord Preparing for Portal Registration**
+The database operator "must establish and operate a database" with entries for residential landlords and for dwellings let, or intended to be let, under residential tenancies (section 75). Once in force, nobody may market or let a dwelling without active landlord and dwelling entries (section 82), and the gov.uk guide says a landlord in breach "will not be able to get a possession order", except on the anti-social behaviour grounds 7A and 14. The government's service is called "Register your rental property".
 
-A landlord contacts you because they are registering their property on the Property Portal and need a valid EPC. The property was last assessed six years ago and rated Band D. The landlord asks whether they should "just get it renewed" or whether improvements should be done first.
+### The draft regulations and timetable
 
-Your role: Conduct the assessment accurately based on current property condition. If the property's rating has changed (positively or negatively) due to alterations, degradation, or updated SAP conventions, the new certificate reflects reality. You can explain that if the landlord is considering improvements, a pre-improvement EPC establishes the baseline and a post-improvement EPC demonstrates the uplift — but you should not delay or manipulate the assessment to achieve a preferred outcome. If the landlord asks about Decent Homes compliance, explain that the EPC contributes relevant data (particularly around thermal comfort) but is not itself a Decent Homes assessment.
+The Private Rented Sector Database Regulations 2026 were laid in draft on 9 September 2026 under the draft affirmative procedure (UK Parliament statutory instrument record). When checked on 14 October 2026, the record showed the government's motion to approve but no approval, and legislation.gov.uk said the draft "has not yet been made". As drafted, they commence region by region on the 15th of each month, from the West Midlands on 15 December 2026 to the South West on 15 August 2027, with London on 15 July 2027 (draft regulation 1(3)).
 
-**Scenario 2: The Tenant Complaint Pathway**
+MHCLG's news release of 9 September 2026 says the service "will launch on 15 December 2026", that registration "will be a legal requirement", and that landlords actively letting "will need to have registered by 14 November 2027". Its Housing Hub site allows three months from each region's start. All of this depends on Parliament approving the draft.
 
-A local authority contacts your accreditation scheme regarding an EPC you lodged 18 months ago on a Band E property. A tenant has complained through the Ombudsman about cold conditions, and the local authority is investigating whether the property meets the Decent Homes Standard and MEES. Your EPC and its recommendations are under review.
+### What landlords would provide about the EPC
 
-Your role: Ensure your records — including site notes, photographs, and any convention decisions — support the data you lodged. If you recorded cavity wall insulation as present, you should have evidence for that determination. If you used an assumption or convention (e.g., for an inaccessible loft), the basis should be documented. This scenario underlines the importance of contemporaneous record-keeping at every PRS assessment.
+Schedule 3 Part 2 of the draft lists the tenancy and safety information for each let dwelling, including the gas safety record and the electrical installation condition report or certificate (paragraphs 11 and 12). The energy paragraphs are:
+- paragraph 13: whether the landlord was required to give a valid EPC to the current tenant and, if so, a copy of the most recent EPC "if one exists"
+- paragraph 14: if the most recent EPC is no longer valid, the date the current tenancy started
+- paragraph 15: if the most recent EPC rating is below the minimum level of energy efficiency, whether a MEES exemption is registered and of what type
 
-**Scenario 3: The Retrofit Conversation**
+"Valid" and the minimum level take their meanings from the 2012 EPC Regulations and the 2015 MEES Regulations (draft Schedule 3, Part 3). This information may follow up to 28 days after the entry is made (draft regulation 6(2)), and an entry must be updated within 28 days of anything in it going out of date (draft regulation 9(4)).
 
-A landlord with a Band E property asks you, as a Retrofit Assessor, to specify a package of measures to reach Band C "in case the law changes." They want to know cost, timescale, and guaranteed outcome.
+### What this means for assessors
 
-Your role: You can conduct a retrofit assessment, identify appropriate measures under PAS 2035 methodology, and provide indicative SAP modelling showing likely rating improvement. You cannot guarantee a specific post-improvement EPC band — this depends on accurate installation, updated assessment data, and the SAP version in force at the time of re-assessment. You should not provide cost estimates outside your competence (refer to a Retrofit Coordinator or installer) and should be explicit that your assessment is based on current data and conventions.
+As drafted, the database records the EPC position; it sets no new rating standard. Nothing in the draft text read for this course obliges a landlord to commission a new EPC to register, so do not tell a client that registration needs one. The roadmap says EPCs are collected "so tenants are assured about the safety and energy efficiency of the property" and that public access will follow landlord registration; what becomes public is for regulations under section 86(1), none yet made.
 
-In each scenario, the common thread is the same: the Renters' Rights Act raises the stakes around accuracy, documentation, and professional boundaries. The assessor who maintains disciplined practice is protected. The assessor who overreaches or under-documents is exposed.
+A sensible habit is to check the EPC register for a valid EPC before booking a reassessment, and to explain beforehand that a new EPC replaces the old one (Section 4).
+
+---
+
+## Section 3: Decent Homes, Awaab's Law and hazards
+
+### The Decent Homes power
+
+Section 100 inserts section 2A into the Housing Act 2004: the Secretary of State "may by regulations specify requirements to be met by qualifying residential premises", covering matters such as repair and "the means of keeping the premises at a suitable temperature" (section 2A(1) and (2)). No requirements have been set. The Explanatory Note to SI 2026/638 states the provisions "are not commenced so far as they relate to type 1 requirements".
+
+### The new standard: a decision for 2035
+
+The New Decent Homes Standard: policy statement (MHCLG, 28 January 2026) says it "will apply from 2035" to social and private rented homes (paragraph 7), with five criteria:
+- A: free of the most dangerous hazards
+- B: a reasonable state of repair
+- C: core facilities and services
+- D: thermal comfort
+- E: free of damp and mould
+
+For Criterion D, a minimum energy efficiency standard is "the most substantial part" (paragraph 35); for private lettings that is EPC C or equivalent by 1 October 2030, or a registered exemption (paragraph 45), and MEES "will remain under a separate legislative framework" (paragraph 39). The primary heating should heat the whole home and "must be programmable by tenants" (paragraph 32). The November 2025 roadmap still shows the date as "TBC", subject to consultation; the later policy statement gives 2035.
+
+### What applies now: the HHSRS
+
+Part 1 of the Housing Act 2004 "already requires PRS properties to meet Criterion A" by being free of category 1 hazards (policy statement, paragraph 69). The hazards include damp and mould growth, and "Excess cold", described as "Exposure to low temperatures" (Housing Health and Safety Rating System (England) Regulations 2005, Schedule 1). Since 22 June 2026 a council taking enforcement action on a category 1 hazard may also impose a penalty of up to £7,000 where it was reasonably practicable for the responsible person to deal with it (Housing Act 2004, section 6A; SI 2026/638).
+
+### Awaab's Law
+
+Section 10A of the Landlord and Tenant Act 1985, inserted for social housing by the Social Housing (Regulation) Act 2023, implies a covenant to comply with prescribed requirements on acting against prescribed hazards within set periods (section 10A(2) and (3)). Section 60 of the Act extends it to leases of dwelling-houses in England under seven years and certain others, but is not in force. MHCLG's consultation on extending it (published 9 October 2026, closing 18 December 2026) asks whether it should cover all HHSRS hazards except overcrowding, suggests 10 working days to investigate, and leaves the start date open.
+
+### Where the EPC fits
+
+RdSAP produces an "asset rating" of energy cost for "standardised use of building" (RdSAP10 Specification v4.0, Introduction); hazards, repair, facilities and damp (criteria A, B, C and E) are not what an EPC assesses. If a landlord asks whether a property "passes Decent Homes", the accurate answer is that no private sector standard applies yet, that the EPC bears only on the energy part of the proposed Criterion D, and that hazards are for the local housing authority.
+
+---
+
+## Section 4: MEES, separate legislation and the 2030 decision
+
+### The law in force
+
+The domestic minimum comes from SI 2015/962, not the Act:
+- a property is "sub-standard" if its valid EPC is below band E (regulation 22(a) and (b))
+- an EPC is "valid" if entered on the register no more than 10 years before it is relied on and "no other energy performance certificate for the property has since been entered on that register" (regulation 22(c))
+- a sub-standard property must not be let unless an exemption applies: new and renewed tenancies since 1 April 2018, continuing lettings since 1 April 2020 (regulation 23)
+- domestic enforcement is by "a local authority"; the local weights and measures authority enforces for non-domestic property (regulation 34(1))
+- the current spending cap is £3,500 including VAT and the maximum fine £5,000 per property (gov.uk landlord guidance, updated 5 May 2026)
+
+The Act did not raise the minimum. The one related change is minor: from 1 May 2026, SI 2026/325, regulation 9, omitted words from regulation 9(1)(c)(i), which concerns notices ending a tenancy. On legislation.gov.uk the newest draft amending the 2015 Regulations dates from 2018, and regulations 22 and 23 show no outstanding effects.
+
+### The January 2026 decision
+
+The government response to the 2025 consultation (DESNZ, 21 January 2026) decided, for England and Wales:
+- all private tenancies to meet the higher standard by 1 October 2030, with no earlier date for new tenancies
+- a primary fabric performance standard, then a secondary standard on the smart readiness or heating system metric of new EPCs
+- homes rated EER C or above on EPCs before 1 October 2029 to count as compliant until that EPC expires or is replaced
+- a cost cap of £10,000, or 10% of value below £100,000, counting measures installed since 1 October 2025; the cost cap, property value and negative impacts exemptions to last 10 years, others typically 5
+- a maximum penalty of £30,000 per breach per property
+
+The government "will seek new powers by Act of Parliament", then a statutory instrument "with the aim of it coming into force in 2027", and the changes "will be subject to Parliamentary approval". On 14 October 2026 it is a decision, not law. Landlords can plan for it; nobody can be fined under it yet.
+
+### Reformed EPCs are delayed
+
+The decision relies on reformed EPCs: before acting, landlords will need "a new EPC" that displays "these new metrics". The response aimed at new EPCs from October 2026, but the reform consultation page was updated on 9 March 2026: "we have decided to move the launch of the reforms to the second half of 2027". The new metrics are not on any EPC yet, and the government will later "confirm how the exact target of C will look on new EPCs". Anyone modelling a route to 2030 for a landlord can only work against today's EER, and should say so in writing.
+
+### Practice points
+- Check for a valid EPC before reassessing. Under regulation 22(c) the newest lodged EPC counts, so a reassessment that rates lower replaces a better certificate.
+- Recommendations come from the specification's standard list (RdSAP10 Specification v4.0, sections 16 and 20). Suppress one only with documentary evidence, recorded in site notes; listed or conservation area status alone is not enough (convention 8.01).
+- "Evidence of intent to install does not on its own qualify" as documentary evidence (convention 9.02), so planned works cannot be lodged as done.
+- Leave exemptions, tenancy law, hazards and Decent Homes to the landlord's adviser or the local housing authority.
+
+### What to watch
+- Parliament's decision on the draft database regulations
+- the Act and statutory instrument for the 2030 standard, and a launch date for reformed EPCs
+- the Awaab's Law consultation outcome and the 2035 Decent Homes regulations
 
 ---
 
 ## Key Takeaways
-
-- The Renters' Rights Act 2025 extends the Decent Homes Standard to the PRS, creating a thermal comfort compliance criterion that directly intersects with EPC data and recommendations.
-- The Property Portal creates a centralised, searchable record linking landlord registration to property data including EPCs, increasing the visibility and scrutiny of lodged assessments.
-- Abolition of Section 21 means longer tenancies and sustained compliance obligations, shifting landlord behaviour from reactive to proactive EPC commissioning.
-- MEES enforcement is strengthened indirectly: the Act's enforcement infrastructure makes it easier for local authorities to identify and act on energy efficiency breaches even though the MEES regulations themselves are unchanged.
-- A "MEES-compliant" Band E rating does not guarantee overall regulatory compliance — the Decent Homes thermal comfort criterion and HHSRS excess cold hazard create parallel requirements.
-- Assessors must maintain clear professional boundaries: provide accurate energy data and signpost appropriately, but do not offer legal advice, guarantee post-improvement ratings, or conduct Decent Homes assessments through the EPC.
-- Contemporaneous documentation — site notes, photographs, convention justifications — is now a professional necessity, not a best-practice aspiration, given the increased likelihood of EPC data being scrutinised in enforcement and ombudsman proceedings.
+- The Act received Royal Assent on 27 October 2025; its tenancy reforms apply in England and took effect for private assured tenancies on 1 May 2026 (SI 2026/421).
+- The Act sets no EPC rating. The domestic minimum is still band E under SI 2015/962, enforced by local authorities.
+- EPC C or equivalent by 1 October 2030 is a January 2026 government decision that still needs an Act and regulations.
+- The database is not in force. Draft regulations laid on 9 September 2026 would ask for the most recent EPC "if one exists" and any MEES exemption, region by region from 15 December 2026, if approved.
+- The new Decent Homes Standard is planned for 2035, with the 2030 MEES standard as the main part of thermal comfort. The HHSRS, including excess cold, applies now.
+- Awaab's Law for private tenancies is in the Act but not in force; the consultation closes on 18 December 2026.
+- The newest lodged EPC is the valid one for MEES, so check before reassessing; follow conventions 8.01 and 9.02 on suppressions and evidence.
 
 ---
 
 ## Self-Assessment Questions
 
-**1. What is the current MEES minimum EPC rating for domestic privately rented properties in England and Wales?**
+**Q1.** When did the Renters' Rights Act 2025 receive Royal Assent?
 
-A) Band D
-B) Band C
-C) Band E
-D) Band F
+A) May 2025
+B) 27 October 2025
+C) 1 May 2026
+D) 15 December 2026
 
-**Correct answer: C**
-The MEES minimum remains Band E. A Band C minimum has been consulted on but has not been legislated or implemented at the time of publication. Assessors must not advise clients that a Band C requirement is currently in force.
-
----
-
-**2. Which of the following is a NEW obligation introduced by the Renters' Rights Act 2025 that directly affects PRS property data visibility?**
-
-A) Landlords must display the EPC in the property at all times
-B) Landlords must register on a Property Portal that links to property records including EPCs
-C) Landlords must submit EPCs directly to their local authority annually
-D) Tenants must be given a hard copy of the EPC before signing a tenancy agreement
-
-**Correct answer: B**
-The Property Portal is a new digital registration system established by the Act. It creates a centralised record linking landlords to their properties and associated compliance data, increasing the discoverability and scrutiny of EPC information.
+**Correct answer: B.** The Act is dated 27 October 2025; 1 May 2026 is when the tenancy reforms commenced (SI 2026/421) and 15 December 2026 the draft database start.
 
 ---
 
-**3. A landlord asks you whether their Band E property "passes" the Decent Homes Standard. What is the most appropriate response?**
+**Q2.** A landlord in England asks whether EPC C is now the legal minimum for letting a home. Which answer is accurate on 14 October 2026?
 
-A) Confirm that Band E meets MEES and is therefore Decent Homes compliant
-B) Explain that the EPC provides data relevant to the thermal comfort criterion but is not itself a Decent Homes assessment, and signpost the landlord to appropriate guidance
-C) Decline to discuss the matter entirely as it falls outside the scope of energy assessment
-D) Advise the landlord to upgrade to Band C to ensure Decent Homes compliance
+A) Yes, the Renters' Rights Act 2025 raised the minimum to band C from 1 May 2026
+B) No, and the government has abandoned any plan to raise it
+C) Yes, for new tenancies granted since 1 October 2025
+D) No, the minimum is band E under SI 2015/962; EPC C or equivalent by 1 October 2030 has been decided but needs an Act and regulations first
 
-**Correct answer: B**
-The EPC contributes relevant data — particularly regarding insulation and heating efficiency — to the Decent Homes thermal comfort criterion, but it is not a substitute for a full Decent Homes assessment. Assessors should explain this distinction clearly and signpost landlords to appropriate sources. Option A is incorrect because MEES compliance does not guarantee Decent Homes compliance. Option D speculates about a threshold that has not been confirmed.
-
----
-
-**4. BS 6262-2 [L38] provides guidance on which aspect relevant to domestic energy assessment?**
-
-A) Minimum ventilation rates for habitable rooms
-B) Energy, light, and sound performance characteristics of glazing systems
-C) U-value calculation methodology for solid walls
-D) Airtightness testing procedures for dwellings
-
-**Correct answer: B**
-BS 6262-2: Glazing for Buildings — Energy, light and sound [L38] addresses the energy performance characteristics of glazing, including thermal transmittance (U-values) and solar energy transmittance (g-values). It is relevant when contextualising landlord questions about window upgrade specifications.
+**Correct answer: D.** Regulation 22(b) of SI 2015/962 sets band E; the DESNZ response of 21 January 2026 sets 1 October 2030 for all tenancies, with no earlier date for new ones, subject to new powers and Parliamentary approval.
 
 ---
 
-**5. Under the Renters' Rights Act framework, which route allows tenants to escalate complaints about property conditions — including energy efficiency — without pursuing court action?**
+**Q3.** Under the draft Private Rented Sector Database Regulations 2026, what would a dwelling entry contain about the EPC?
 
-A) Direct appeal to the EPC accreditation scheme
-B) Complaint to the First-tier Tribunal (Property Chamber) only
-C) Referral to the new Private Rented Sector Landlord Ombudsman
-D) Application to the Energy Ombudsman
+A) Whether the landlord was required to give a valid EPC to the current tenant and, if so, a copy of the most recent EPC if one exists
+B) A new EPC lodged within 28 days of registering
+C) Proof that the dwelling is rated C or above
+D) Nothing, because the database holds no energy information
 
-**Correct answer: C**
-The Act requires all private landlords to join the new PRS Landlord Ombudsman scheme. This provides tenants with a low-friction, non-court route to escalate complaints about property conditions, including those related to thermal comfort and energy performance. The EPC and its recommendations may be examined as part of any investigation.
+**Correct answer: A.** Draft Schedule 3, Part 2, paragraph 13 says exactly this; paragraph 14 asks for the tenancy start date if the EPC is no longer valid and paragraph 15 asks about registered MEES exemptions.
+
+---
+
+**Q4.** Which statement about the Decent Homes Standard for privately rented homes in England is correct on 14 October 2026?
+
+A) It has applied since 1 May 2026, with four criteria including thermal comfort
+B) Trading standards enforce it using the EPC rating
+C) The government's policy statement says a new five-criterion standard will apply from 2035; regulations under section 2A of the Housing Act 2004 have not been made
+D) It was dropped when the Act received Royal Assent
+
+**Correct answer: C.** The New Decent Homes Standard: policy statement (28 January 2026, paragraph 7) gives 2035 and criteria A to E, and SI 2026/638 notes the provisions are not commenced for type 1 requirements.
+
+---
+
+**Q5.** A landlord's 2019 EPC shows band E. You reassess in October 2026 and lodge an EPC showing band F. Which is the valid EPC under the MEES Regulations?
+
+A) The 2019 EPC, because it is less than 10 years old
+B) The new EPC, because a valid EPC is one with no later EPC entered on the register since
+C) Whichever the landlord uploads to the database
+D) Neither, until the database opens in the landlord's region
+
+**Correct answer: B.** Regulation 22(c) of SI 2015/962 treats an EPC as valid only if no other EPC for the property has since been entered on the register, so the F certificate replaces the E.
 
 ---
 
 ## Further Reading
-
-1. **Renters' Rights Act 2025** — Primary legislation. Available at: legislation.gov.uk. The Act in full, including provisions on the Decent Homes Standard extension, Property Portal, and Ombudsman scheme.
-
-2. **The Energy Efficiency (Private Rented Property) (England and Wales) Regulations 2015** (as amended) — The MEES regulations. Available at: legislation.gov.uk. Primary source for current minimum EPC rating requirements and exemption framework for domestic PRS properties.
-
-3. **A Decent Home: Definition and Guidance for Implementation** — Department for Levelling Up, Housing and Communities (updated guidance anticipated to reflect PRS extension). The definitive guidance on the four Decent Homes criteria including the thermal comfort standard.
-
-4. **[L38] BS 6262-2: Glazing for Buildings — Energy, light and sound** — British Standards Institution. Provides technical guidance on the energy performance characteristics of glazing systems relevant to window upgrade recommendations and SAP input data.
-
-5. **Domestic Building Services Compliance Guide** — HM Government. Supports understanding of replacement window performance standards under Building Regulations Part L, relevant when contextualising EPC glazing recommendations for landlord clients.
-
-6. **PAS 2035:2019 — Retrofitting Dwellings for Improved Energy Efficiency: Specification and Guidance** — BSI. Framework for whole-house retrofit assessment and improvement planning, relevant to Retrofit Assessors advising PRS landlords on improvement pathways.
+- **Renters' Rights Act 2025 (2025 c. 26).** legislation.gov.uk, 27 October 2025. Sections 60, 100 and 145 and Part 2 Chapter 3, with each in-force note.
+- **The Private Rented Sector Database Regulations 2026 (draft).** legislation.gov.uk, laid 9 September 2026. Regulation 1 and Schedule 3 paragraphs 13 to 15; check whether it has been made.
+- **The Energy Efficiency (Private Rented Property) (England and Wales) Regulations 2015, SI 2015/962.** legislation.gov.uk, revised text. Regulations 22, 23 and 34.
+- **Improving the energy performance of privately rented homes: government response.** Department for Energy Security and Net Zero, 21 January 2026. The executive summary for the 2030 decisions and their legislative route.
+- **The New Decent Homes Standard: policy statement.** Ministry of Housing, Communities and Local Government, 28 January 2026. Paragraphs 7, 32 to 48 and 69.
+- **Extending Awaab's Law to private rented tenancies and to licences.** Ministry of Housing, Communities and Local Government, 9 October 2026, closing 18 December 2026. The scope and timescale questions.
 
 ---
 
