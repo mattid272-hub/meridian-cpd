@@ -96,11 +96,11 @@ COURSES = {
     "MER-ALL-009": {"course_id": "MER-ALL-009", "title": "Heat Loss Calculations for Heat Pumps: Where the EPC and the Assessor Fit", "cpd_hours": 1.0, "published": "2026-07-15"},
     "MER-ALL-010": {"course_id": "MER-ALL-010", "title": "Damp and Mould Investigations: Scotland's 2026 Duties and the Assessor's Role", "cpd_hours": 1.0, "published": "2026-08-01"},
     "MER-ALL-011": {"course_id": "MER-ALL-011", "title": "Non-Domestic MEES: The EPC E Minimum in Force and the Proposed EPC B Standard for 2031", "cpd_hours": 1.0, "published": "2026-08-01"},
-    "MER-ALL-012": {"course_id": "MER-ALL-012", "title": "Whole Life Carbon for Energy Assessors: What It Means and Why Now", "cpd_hours": 1.0, "published": "2026-08-15"},
-    "MER-ALL-013": {"course_id": "MER-ALL-013", "title": "Overheating Assessment in Existing Homes: TM59 2026 Update", "cpd_hours": 1.0, "published": "2026-08-01"},
+    "MER-ALL-012": {"course_id": "MER-ALL-012", "title": "Whole Life Carbon for Energy Assessors: What It Means and Where It Stands in 2026", "cpd_hours": 1.0, "published": "2026-08-15"},
+    "MER-ALL-013": {"course_id": "MER-ALL-013", "title": "Overheating in Existing Homes: PAS 2035 Roles, Part O and TM59 (2026)", "cpd_hours": 1.0, "published": "2026-08-01"},
     "MER-ALL-014": {"course_id": "MER-ALL-014", "title": "SMETER Technology: Measured Building Performance for Energy Assessors", "cpd_hours": 1.0, "published": "2026-08-15"},
     "MER-ALL-015": {"course_id": "MER-ALL-015", "title": "EPC Reform and the Future Home Buying Process: What Assessors Must Know", "cpd_hours": 1.0, "published": "2026-09-01"},
-    "MER-ALL-016": {"course_id": "MER-ALL-016", "title": "Scheme Operating Requirements 2026: What's Changed for Energy Assessors", "cpd_hours": 1.0, "published": "2026-09-15"},
+    "MER-ALL-016": {"course_id": "MER-ALL-016", "title": "Scheme Operating Requirements: How They Work and What Changed in 2026", "cpd_hours": 1.0, "published": "2026-09-15"},
     "MER-ALL-017": {"course_id": "MER-ALL-017", "title": "Awaab's Law Phase 2: What Energy Assessors Must Know", "cpd_hours": 1.0, "published": "2026-10-01"},
     # Subscription — welcome email only; library access granted via plan field
     "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0, "published": "2026-03-01"},
@@ -113,10 +113,7 @@ COURSES = {
 # been written from the source documents and independently checked. To restore a
 # course, publish its corrected PDF and delete its ID from this set (and from the same
 # list in landing-page/courses.html). Certificates already issued are not affected.
-UNDER_REVIEW = {
-    "MER-ALL-012", "MER-ALL-013", "MER-ALL-014",
-    "MER-ALL-016",
-}
+UNDER_REVIEW: set = set()  # nothing withdrawn; add course ids here, or list them in under-review.json
 
 
 def is_available(course_id: str) -> bool:
