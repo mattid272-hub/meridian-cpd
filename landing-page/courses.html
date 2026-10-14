@@ -183,12 +183,13 @@
       border: 1.5px solid rgba(212,255,0,.35);
       border-radius: 8px;
       padding: 1.1rem 1.8rem;
-      margin: 0 6vw 0;
+      /* Sits fully below the hero. It used to be pulled up by half its own height,
+         which covered the stats on phones where the box wraps onto several lines. */
+      margin: 2rem 6vw 2.2rem;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-      transform: translateY(-50%);
     }
     .promo-banner-text {
       flex: 1;
@@ -682,6 +683,7 @@
       .nav-links { display: none; }
       .course-grid { grid-template-columns: 1fr; }
       .controls-bar { flex-direction: column; align-items: flex-start; }
+      .promo-banner { margin: 1.6rem 6vw 1.8rem; padding: 1.1rem 1.2rem; }
       .search-input { width: 100%; }
       .sub-strip { flex-direction: column; }
       .modal { padding: 1.6rem; }
