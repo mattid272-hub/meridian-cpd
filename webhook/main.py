@@ -17,7 +17,7 @@ import uuid
 import hmac
 import hashlib
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 import stripe
 from fastapi import FastAPI, HTTPException, Request, Response, Depends, Cookie
@@ -304,11 +304,133 @@ async def stripe_webhook(request: Request):
     except stripe.error.SignatureVerificationError:
         raise HTTPException(status_code=400, detail="Invalid signature")
 
-    if event["type"] == "checkout.session.completed":
-        session = event["data"]["object"]
-        await handle_checkout(session)
+    etype = event["type"]
+    obj = event["data"]["object"]
+    if etype == "checkout.session.completed":
+        await handle_checkout(obj)
+    elif etype in ("customer.subscription.created", "customer.subscription.updated",
+                   "customer.subscription.deleted"):
+        sync_subscription(obj)
+    elif etype in ("invoice.paid", "invoice.payment_succeeded"):
+        sub_id = _invoice_subscription_id(obj)
+        if sub_id:
+            sync_subscription(stripe.Subscription.retrieve(sub_id))
+    elif etype == "invoice.payment_failed":
+        sub_id = _invoice_subscription_id(obj)
+        print(f"ACTION NEEDED: renewal payment failed for customer {_g(obj, 'customer')} "
+              f"(subscription {sub_id}, invoice {_g(obj, 'id')}). Stripe will retry; "
+              f"access continues until Stripe cancels the subscription.")
 
     return {"status": "ok"}
+
+
+# ── Subscription lifecycle ─────────────────────────────────────────────────────
+# Access for subscribers follows Stripe: members.subscription_expires_at is set from the
+# subscription's current period end (plus a short grace period, in case an event is late)
+# and is set to the end date when Stripe ends the subscription. A subscriber with no
+# expiry recorded yet keeps access, so a paying customer is never locked out because the
+# record has not been synced; use Admin → Members → "Sync from Stripe" to fill it in.
+
+SUB_GRACE_DAYS = 7
+_LIVE_STATUSES = {"active", "trialing", "past_due"}
+
+
+def _g(obj, key, default=None):
+    """Read a field from a Stripe object or a plain dict."""
+    if obj is None:
+        return default
+    try:
+        v = obj.get(key, default)
+    except AttributeError:
+        v = getattr(obj, key, default)
+    return default if v is None else v
+
+
+def _period_end(sub):
+    """Current period end as a Unix timestamp. Newer Stripe API versions keep it on the
+    subscription items rather than the subscription itself."""
+    end = _g(sub, "current_period_end")
+    if end:
+        return end
+    items = _g(_g(sub, "items", {}), "data", []) or []
+    ends = [_g(i, "current_period_end") for i in items if _g(i, "current_period_end")]
+    return max(ends) if ends else None
+
+
+def _invoice_subscription_id(invoice):
+    sub = _g(invoice, "subscription")
+    if not sub:  # newer API versions
+        sub = _g(_g(_g(invoice, "parent", {}), "subscription_details", {}), "subscription")
+    if sub and not isinstance(sub, str):
+        sub = _g(sub, "id")
+    return sub or None
+
+
+def subscription_active(member: dict) -> bool:
+    """True if this member currently has subscriber access."""
+    if (member or {}).get("plan") != "subscription":
+        return False
+    exp = member.get("subscription_expires_at")
+    if not exp:
+        return True
+    try:
+        when = datetime.fromisoformat(str(exp).replace("Z", "+00:00"))
+    except ValueError:
+        return True
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=timezone.utc)
+    return when > datetime.now(timezone.utc)
+
+
+def _member_for_customer(customer_id: str):
+    if not customer_id:
+        return None
+    res = supabase.table("members").select("*").eq("stripe_customer_id", customer_id).execute()
+    if res.data:
+        return res.data[0]
+    try:
+        email = (_g(stripe.Customer.retrieve(customer_id), "email", "") or "").strip().lower()
+    except stripe.error.StripeError as e:
+        print(f"Could not look up Stripe customer {customer_id}: {e}")
+        return None
+    if not email:
+        return None
+    res = supabase.table("members").select("*").eq("email", email).execute()
+    return res.data[0] if res.data else None
+
+
+def sync_subscription(sub) -> dict | None:
+    """Bring one member's subscriber access into line with a Stripe subscription."""
+    customer_id = _g(sub, "customer", "")
+    if customer_id and not isinstance(customer_id, str):
+        customer_id = _g(customer_id, "id", "")
+    status = _g(sub, "status", "")
+    if status in _LIVE_STATUSES:
+        end = _period_end(sub)
+        expires = (datetime.fromtimestamp(end, timezone.utc) + timedelta(days=SUB_GRACE_DAYS)) if end else None
+    elif status == "incomplete":
+        print(f"Subscription {_g(sub, 'id')} for {customer_id} is incomplete (first payment not made); no change.")
+        return None
+    else:  # canceled, unpaid, incomplete_expired, paused
+        ended = _g(sub, "ended_at") or _g(sub, "canceled_at")
+        expires = datetime.fromtimestamp(ended, timezone.utc) if ended else datetime.now(timezone.utc)
+
+    member = _member_for_customer(customer_id)
+    if not member:
+        print(f"ACTION NEEDED: Stripe subscription {_g(sub, 'id')} ({status}) for customer "
+              f"{customer_id} matches no member. Check the customer's email in Stripe.")
+        return None
+
+    update = {"stripe_customer_id": customer_id,
+              "subscription_expires_at": expires.isoformat() if expires else None}
+    if status in _LIVE_STATUSES:
+        update["plan"] = "subscription"
+    elif member.get("plan") != "subscription":
+        update.pop("subscription_expires_at")  # a single-course buyer's record is left alone
+    supabase.table("members").update(update).eq("id", member["id"]).execute()
+    print(f"Subscription {_g(sub, 'id')} for member {member['id']}: {status}, "
+          f"access until {update.get('subscription_expires_at') or 'unchanged'}")
+    return update
 
 
 async def handle_checkout(session):
@@ -389,6 +511,16 @@ async def handle_checkout(session):
                 is_subscription=False,
             )
             log_purchase(member_id, cid, session_id, amount)
+
+    if plan == "subscription":
+        sub_id = _g(session, "subscription")
+        if sub_id and not isinstance(sub_id, str):
+            sub_id = _g(sub_id, "id")
+        if sub_id:
+            try:
+                sync_subscription(stripe.Subscription.retrieve(sub_id))
+            except Exception as e:  # the welcome email has gone; the subscription events will catch up
+                print(f"Could not sync subscription {sub_id} at checkout: {e}")
 
     print(f"Handled checkout for {email}: {course_keys}")
 
@@ -1162,6 +1294,44 @@ async def dashboard_magic_login(encoded_token: str):
     return response
 
 
+def _billing_help_page() -> HTMLResponse:
+    return HTMLResponse("""<!DOCTYPE html>
+<html><head><title>Manage your subscription — Meridian CPD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="font-family:Arial,sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1e293b">
+<h2 style="color:#0f2547">Manage your subscription</h2>
+<p style="line-height:1.6">We could not open the subscription page just now. To cancel or change
+your subscription, email <a style="color:#0891b2" href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a>
+from the address you subscribed with and we will action it.</p>
+<p><a style="color:#0891b2" href="/my-cpd/dashboard">Back to my courses</a></p>
+</body></html>""")
+
+
+@app.get("/my-cpd/billing")
+async def billing_portal(request: Request):
+    """Sends a signed-in member to Stripe's customer portal to cancel or manage their subscription."""
+    session_token = request.cookies.get("session_token")
+    email = _verify_session_token(session_token) if session_token else None
+    if not email:
+        return RedirectResponse("/my-cpd", status_code=302)
+    res = supabase.table("members").select("*").eq("email", email).execute()
+    member = res.data[0] if res.data else None
+    customer_id = (member or {}).get("stripe_customer_id") or ""
+    try:
+        if not customer_id:
+            found = stripe.Customer.list(email=email, limit=1)
+            data = _g(found, "data", []) or []
+            customer_id = _g(data[0], "id", "") if data else ""
+        if not customer_id:
+            return _billing_help_page()
+        portal = stripe.billing_portal.Session.create(
+            customer=customer_id, return_url=f"{BASE_URL}/my-cpd/dashboard")
+        return RedirectResponse(_g(portal, "url"), status_code=303)
+    except stripe.error.StripeError as e:
+        print(f"ACTION NEEDED: customer portal failed for {email}: {e}")
+        return _billing_help_page()
+
+
 @app.get("/my-cpd/logout")
 async def dashboard_logout():
     response = RedirectResponse("/my-cpd", status_code=302)
@@ -1183,7 +1353,8 @@ async def subscriber_dashboard(request: Request):
     member = member_res.data[0]
     member_id = member["id"]
     member_name = member["name"] or email.split("@")[0].title()
-    is_sub = member["plan"] == "subscription"
+    is_sub = subscription_active(member)
+    sub_ended = member.get("plan") == "subscription" and not is_sub
     refresh_catalogue()
 
     # Fetch purchases
@@ -1194,7 +1365,7 @@ async def subscriber_dashboard(request: Request):
 
     # Fetch completions
     completions_res = supabase.table("completions").select(
-        "course_id, completed_at, completion_token"
+        "course_id, completed_at, completion_token, downloaded_at"
     ).eq("member_id", member_id).execute()
     completed = {c["course_id"]: c for c in (completions_res.data or []) if c.get("completed_at")}
     pending_tokens = {c["course_id"]: c["completion_token"] for c in (completions_res.data or []) if not c.get("completed_at")}
@@ -1224,7 +1395,12 @@ async def subscriber_dashboard(request: Request):
     if is_sub:
         show_courses = {k: v for k, v in COURSES.items() if k != "SUBSCRIPTION"}
     else:
-        show_courses = {k: COURSES[k] for k in purchased_ids if k in COURSES and k != "SUBSCRIPTION"}
+        keep = set(purchased_ids)
+        if sub_ended:
+            # "PDFs and certs are yours to keep": courses downloaded or completed while subscribed stay listed.
+            keep |= {c["course_id"] for c in (completions_res.data or [])
+                     if c.get("completed_at") or c.get("downloaded_at")}
+        show_courses = {k: COURSES[k] for k in keep if k in COURSES and k != "SUBSCRIPTION"}
 
     # Build course rows
     course_rows = ""
@@ -1313,7 +1489,10 @@ async def subscriber_dashboard(request: Request):
     target = 25 if is_sub and "RC" in str(purchased_ids) else 10
     pct = min(int((total_hours / target) * 100), 100)
 
-    plan_badge = "Annual Subscription" if is_sub else "Pay Per Course"
+    plan_badge = ("Annual Subscription" if is_sub else
+                  "Subscription ended" if sub_ended else "Pay Per Course")
+    manage_link = (' &nbsp;·&nbsp; <a href="/my-cpd/billing" style="color:#0891b2;text-decoration:none">'
+                   'Manage or cancel subscription</a>') if member.get("plan") == "subscription" else ""
 
     return HTMLResponse(f"""<!DOCTYPE html>
 <html><head>
@@ -1327,7 +1506,7 @@ async def subscriber_dashboard(request: Request):
 
   <div class="hero">
     <h1>Welcome back, {member_name}</h1>
-    <p>{email} &nbsp;·&nbsp; {plan_badge} &nbsp;·&nbsp;
+    <p>{email} &nbsp;·&nbsp; {plan_badge}{manage_link} &nbsp;·&nbsp;
        <a href="https://meridiancpd.co.uk" style="color:#0891b2;text-decoration:none">Browse all courses →</a></p>
   </div>
 
@@ -1427,7 +1606,10 @@ td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middl
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: #f8fafc; }
 .badge { display: inline-block; padding: 2px 8px; border-radius: 10px;
-         font-size: 11px; font-weight: 600; }
+         font-size: 11px; font-weight: 600; white-space: nowrap; }
+button { background: #0f2547; color: white; border: none; border-radius: 6px; padding: 7px 14px;
+         font-size: 12px; font-weight: 600; cursor: pointer; }
+button:hover { background: #0891b2; }
 .badge-sub { background: #dcfce7; color: #15803d; }
 .badge-single { background: #dbeafe; color: #1d4ed8; }
 .badge-ok { background: #dcfce7; color: #15803d; }
@@ -1442,6 +1624,15 @@ tr:hover td { background: #f8fafc; }
 .course-card .ctitle { font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
 .course-card .cmeta { font-size: 11px; color: #64748b; }
 .revenue { color: #15803d; font-weight: 700; }
+.badge-test { background: #f1f5f9; color: #64748b; }
+.badge-free { background: #ede9fe; color: #6d28d9; }
+.badge-end { background: #f1f5f9; color: #475569; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin: -4px 0 16px; }
+.filters a { font-size: 12px; padding: 4px 10px; border-radius: 14px; background: #f1f5f9;
+             color: #334155; text-decoration: none; }
+.filters a.on { background: #0f2547; color: white; }
+.note { color: #64748b; font-size: 12px; margin: -6px 0 14px; line-height: 1.5; }
+@media (max-width: 900px) { .stats { grid-template-columns: repeat(2, 1fr); } .main { padding: 16px; } }
 a.vlink { color: #0891b2; text-decoration: none; font-size: 12px; }
 a.vlink:hover { text-decoration: underline; }
 """
@@ -1514,7 +1705,7 @@ async def test_purchase(request: Request, credentials=Depends(_check_admin)):
     fake_session_id = f"cs_test_{secrets.token_hex(8)}"
     member = get_or_create_member(email, name, "cus_test", "single")
     member_id = member["id"]
-    log_purchase(member_id, course_id, fake_session_id, int(course.get("cpd_hours", 1) * 100))
+    log_purchase(member_id, course_id, fake_session_id, 0)  # tests are never revenue
     token = create_completion_token(member_id, course_id)
     completion_link = f"{BASE_URL}/complete/{token}"
 
@@ -1575,97 +1766,248 @@ def _page(title: str, nav_active: str, body: str) -> HTMLResponse:
 </body></html>""")
 
 
+# ── Back-office classification ─────────────────────────────────────────────────
+# Test purchases (Admin → Test Purchase) use session ids starting "cs_test_" and the
+# customer id "cus_test". Addresses on our own domain or example domains, and any listed
+# in ADMIN_TEST_EMAILS (comma-separated, set in Railway), are also treated as tests.
+# Tests are left out of every count and total, and can be shown with the Tests filter.
+_TEST_DOMAINS = {"meridiancpd.co.uk", "example.com", "example.org"}
+
+_MEMBER_STATUS = {  # key: (label, badge class, what it means)
+    "subscriber":  ("Subscriber", "badge-sub", "Active subscription confirmed by Stripe"),
+    "unconfirmed": ("Subscriber, unconfirmed", "badge-warn",
+                    "Marked as a subscriber here but not yet matched to a Stripe subscription. "
+                    "Run Sync from Stripe; any still listed have no subscription in Stripe"),
+    "ended":       ("Subscription ended", "badge-end", "Stripe subscription has ended"),
+    "buyer":       ("Course buyer", "badge-single", "Paid for one or more single courses"),
+    "free":        ("Free course", "badge-free", "Took a free course (promo code), paid nothing"),
+    "none":        ("No purchase", "badge-end", "Signed up but no purchase recorded"),
+    "test":        ("Test", "badge-test", "Test account or test purchase"),
+}
+
+
+def _test_emails() -> set:
+    return {e.strip().lower() for e in os.environ.get("ADMIN_TEST_EMAILS", "").split(",") if e.strip()}
+
+
+def _is_test_purchase(p: dict) -> bool:
+    return str(p.get("stripe_session_id") or "").startswith("cs_test_")
+
+
+def _purchases_by_member() -> dict:
+    res = supabase.table("purchases").select(
+        "member_id, course_id, amount_gbp, stripe_session_id, purchased_at").execute()
+    out: dict = {}
+    for p in (res.data or []):
+        out.setdefault(p.get("member_id"), []).append(p)
+    return out
+
+
+def classify_member(m: dict, purchases: list, test_emails: set | None = None) -> tuple[str, float]:
+    """(status key, total paid in £ excluding tests) for one member."""
+    test_emails = _test_emails() if test_emails is None else test_emails
+    email = (m.get("email") or "").strip().lower()
+    real = [p for p in purchases if not _is_test_purchase(p)]
+    paid = round(sum(float(p.get("amount_gbp") or 0) for p in real), 2)
+    if (m.get("stripe_customer_id") == "cus_test" or email in test_emails
+            or email.split("@")[-1] in _TEST_DOMAINS or (purchases and not real)):
+        return "test", paid
+    if m.get("plan") == "subscription":
+        if not subscription_active(m):
+            return "ended", paid
+        return ("subscriber" if m.get("subscription_expires_at") else "unconfirmed"), paid
+    if paid > 0:
+        return "buyer", paid
+    return ("free" if real else "none"), paid
+
+
+def _n(count: int, word: str, plural: str | None = None) -> str:
+    return f"{count} {word if count == 1 else (plural or word + 's')}"
+
+
+def _course_label(cid: str) -> str:
+    if cid == "SUBSCRIPTION":
+        return "Annual subscription"
+    title = str(COURSES.get(cid, {}).get("title", ""))
+    return f"{cid} · {title}" if title else (cid or "—")
+
+
+def _status_badge(key: str) -> str:
+    label, cls, meaning = _MEMBER_STATUS[key]
+    return f'<span class="badge {cls}" title="{meaning}">{label}</span>'
+
+
+def _classified_members():
+    members = supabase.table("members").select("*").order("joined_at", desc=True).execute().data or []
+    by_member = _purchases_by_member()
+    tests = _test_emails()
+    rows = []
+    for m in members:
+        key, paid = classify_member(m, by_member.get(m.get("id"), []), tests)
+        rows.append((m, key, paid, by_member.get(m.get("id"), [])))
+    return rows
+
+
 @app.get("/admin", response_class=HTMLResponse)
 @app.get("/admin/dashboard", response_class=HTMLResponse)
 async def admin_dashboard(credentials=Depends(_check_admin)):
-    # Fetch counts
-    members_res = supabase.table("members").select("id, plan, joined_at", count="exact").execute()
-    purchases_res = supabase.table("purchases").select("id, amount_gbp, purchased_at", count="exact").execute()
-    completions_res = supabase.table("completions").select("id", count="exact").not_.is_("completed_at", "null").execute()
-    certs_res = supabase.table("certificates").select("id", count="exact").execute()
+    rows = _classified_members()
+    real = [r for r in rows if r[1] != "test"]
+    count = lambda k: sum(1 for r in real if r[1] == k)
+    test_ids = {r[0].get("id") for r in rows if r[1] == "test"}
+    n_tests = len(test_ids)
 
-    total_members = members_res.count or 0
-    total_purchases = purchases_res.count or 0
-    total_completions = completions_res.count or 0
-    total_certs = certs_res.count or 0
+    paid_purchases = [p for r in real for p in r[3] if not _is_test_purchase(p) and float(p.get("amount_gbp") or 0) > 0]
+    revenue = sum(float(p.get("amount_gbp") or 0) for p in paid_purchases)
 
-    sub_count = sum(1 for m in (members_res.data or []) if m.get("plan") == "subscription")
-    revenue = sum(float(p.get("amount_gbp") or 0) for p in (purchases_res.data or []))
+    certs = supabase.table("certificates").select("id, member_id").execute().data or []
+    comps = supabase.table("completions").select("id, member_id").not_.is_("completed_at", "null").execute().data or []
+    n_certs = sum(1 for c in certs if c.get("member_id") not in test_ids)
+    n_comps = sum(1 for c in comps if c.get("member_id") not in test_ids)
 
-    # Recent purchases
-    recent_p = supabase.table("purchases").select(
-        "*, members(name, email)"
-    ).order("purchased_at", desc=True).limit(8).execute()
+    # Renewals coming up: promises (discounts, extra months) must be applied in Stripe before these dates
+    now = datetime.now(timezone.utc)
+    upcoming = []
+    for m, key, paid, _ in real:
+        if key != "subscriber":
+            continue
+        try:
+            exp = datetime.fromisoformat(str(m["subscription_expires_at"]).replace("Z", "+00:00"))
+        except (KeyError, ValueError):
+            continue
+        renew = exp - timedelta(days=SUB_GRACE_DAYS)
+        if renew - now <= timedelta(days=60):
+            upcoming.append((renew, m))
+    upcoming.sort(key=lambda x: x[0])
+    renew_rows = "".join(
+        f"<tr><td>{d.strftime('%d %b %Y')}</td><td>{m.get('name') or '—'}</td><td>{m.get('email') or '—'}</td></tr>"
+        for d, m in upcoming)
 
-    rows = ""
-    for p in (recent_p.data or []):
-        m = p.get("members") or {}
-        date = (p.get("purchased_at") or "")[:10]
-        amt = f"£{float(p.get('amount_gbp') or 0):.2f}"
-        rows += f"""<tr>
-            <td>{date}</td>
-            <td>{m.get('name','—')}</td>
-            <td>{m.get('email','—')}</td>
-            <td>{p.get('course_id','—')}</td>
-            <td class="revenue">{amt}</td>
-        </tr>"""
+    # Recent purchases, tests left out
+    recent = sorted(((p, r[0]) for r in real for p in r[3] if not _is_test_purchase(p)),
+                    key=lambda x: x[0].get("purchased_at") or "", reverse=True)[:10]
+    prow = ""
+    for p, m in recent:
+        amt = float(p.get("amount_gbp") or 0)
+        amount = f'<span class="revenue">£{amt:.2f}</span>' if amt > 0 else _status_badge("free")
+        course = _course_label(p.get("course_id") or "")
+        prow += f"""<tr><td>{(p.get('purchased_at') or '')[:10]}</td><td>{m.get('name') or '—'}</td>
+            <td>{m.get('email') or '—'}</td><td>{course}</td><td>{amount}</td></tr>"""
 
-    recent_table = f"""
-    <table>
-      <tr><th>Date</th><th>Name</th><th>Email</th><th>Course</th><th>Amount</th></tr>
-      {rows or '<tr><td colspan="5" class="empty">No purchases yet — campaigns not fired yet</td></tr>'}
-    </table>"""
-
+    unconf = count("unconfirmed")
     body = f"""
     <div class="stats">
-      <div class="stat"><div class="val">{total_members}</div>
-        <div class="lbl">Total Members</div>
-        <div class="sub">{sub_count} on annual subscription</div></div>
-      <div class="stat"><div class="val">£{revenue:.0f}</div>
-        <div class="lbl">Total Revenue</div>
-        <div class="sub">{total_purchases} purchases</div></div>
-      <div class="stat"><div class="val">{total_completions}</div>
-        <div class="lbl">Completions</div>
-        <div class="sub">Courses confirmed read</div></div>
-      <div class="stat"><div class="val">{total_certs}</div>
-        <div class="lbl">Certificates Issued</div>
-        <div class="sub">All time</div></div>
+      <div class="stat"><div class="val">{count("subscriber")}</div>
+        <div class="lbl">Active subscribers</div>
+        <div class="sub">{f"{unconf} more not yet confirmed in Stripe" if unconf else "All confirmed by Stripe"}</div></div>
+      <div class="stat"><div class="val">{count("buyer")}</div>
+        <div class="lbl">Course buyers</div>
+        <div class="sub">{_n(count("free"), "took a free course only", "took a free course only")} · {_n(count("ended"), "subscription")} ended</div></div>
+      <div class="stat"><div class="val">£{revenue:,.0f}</div>
+        <div class="lbl">Revenue recorded</div>
+        <div class="sub">{_n(len(paid_purchases), "paid purchase")}</div></div>
+      <div class="stat"><div class="val">{n_certs}</div>
+        <div class="lbl">Certificates issued</div>
+        <div class="sub">{_n(n_comps, "course")} completed</div></div>
+    </div>
+    <p class="note">Test accounts and test purchases are left out of every figure on this page ({_n(n_tests, "test account")};
+    see Members → Tests). Revenue is what the app recorded at checkout;
+    Stripe is the record for money received and refunds.</p>
+    {"" if not unconf else f'<div class="card"><h2>Needs attention</h2><p>{_n(unconf, "member is", "members are")} marked as {"a subscriber" if unconf == 1 else "subscribers"} but not yet matched to a subscription in Stripe. Go to <a class="vlink" href="/admin/members?show=unconfirmed">Members</a> and run <strong>Sync subscriptions from Stripe</strong>. Anyone still listed afterwards has no subscription in Stripe: check whether they paid.</p></div>'}
+    <div class="card">
+      <h2>Renewals in the next 60 days</h2>
+      <p class="note">Any discount or extra time promised to these members must be set up in Stripe before the date shown.</p>
+      <table><tr><th>Renews</th><th>Name</th><th>Email</th></tr>
+      {renew_rows or '<tr><td colspan="3" class="empty">No renewals in the next 60 days</td></tr>'}</table>
     </div>
     <div class="card">
-      <h2>Recent Purchases</h2>
-      {recent_table}
+      <h2>Recent purchases</h2>
+      <table><tr><th>Date</th><th>Name</th><th>Email</th><th>Course</th><th>Amount</th></tr>
+      {prow or '<tr><td colspan="5" class="empty">No purchases yet</td></tr>'}</table>
     </div>"""
-
     return _page("Dashboard", "dashboard", body)
 
 
 @app.get("/admin/members", response_class=HTMLResponse)
-async def admin_members(credentials=Depends(_check_admin)):
-    res = supabase.table("members").select("*").order("joined_at", desc=True).execute()
-    rows = ""
-    for m in (res.data or []):
-        plan = m.get("plan", "single")
-        badge = "badge-sub" if plan == "subscription" else "badge-single"
-        label = "Annual Sub" if plan == "subscription" else "Single"
-        joined = (m.get("joined_at") or "")[:10]
-        courses = ", ".join(m.get("courses_purchased") or []) or "—"
-        rows += f"""<tr>
-            <td>{m.get('name','—')}</td>
-            <td>{m.get('email','—')}</td>
-            <td><span class="badge {badge}">{label}</span></td>
-            <td>{joined}</td>
-            <td>{courses}</td>
+async def admin_members(request: Request, credentials=Depends(_check_admin)):
+    show = request.query_params.get("show", "real")
+    rows = _classified_members()
+    groups = {
+        "real": ("All members", lambda k: k != "test"),
+        "subscriber": ("Subscribers", lambda k: k == "subscriber"),
+        "unconfirmed": ("Unconfirmed", lambda k: k == "unconfirmed"),
+        "buyer": ("Course buyers", lambda k: k == "buyer"),
+        "free": ("Free course", lambda k: k == "free"),
+        "ended": ("Ended", lambda k: k == "ended"),
+        "none": ("No purchase", lambda k: k == "none"),
+        "test": ("Tests", lambda k: k == "test"),
+    }
+    if show not in groups:
+        show = "real"
+    tabs = "".join(
+        f'<a class="{"on" if g == show else ""}" href="/admin/members?show={g}">'
+        f'{label} ({sum(1 for r in rows if fn(r[1]))})</a>'
+        for g, (label, fn) in groups.items())
+    shown = [r for r in rows if groups[show][1](r[1])]
+    trs = ""
+    for m, key, paid, purchases in shown:
+        courses = sorted({p.get("course_id") for p in purchases
+                          if p.get("course_id") and p.get("course_id") != "SUBSCRIPTION"})
+        access = ((m.get("subscription_expires_at") or "")[:10] or "—") if m.get("plan") == "subscription" else "—"
+        trs += f"""<tr>
+            <td>{m.get('name') or '—'}</td>
+            <td>{m.get('email') or '—'}</td>
+            <td>{_status_badge(key)}</td>
+            <td>{access}</td>
+            <td>{f"£{paid:.2f}" if paid else "—"}</td>
+            <td>{", ".join(courses) or "—"}</td>
+            <td>{(m.get('joined_at') or '')[:10]}</td>
         </tr>"""
-
     body = f"""
     <div class="card">
-      <h2>All Members ({len(res.data or [])})</h2>
+      <h2>Members</h2>
+      <div class="filters">{tabs}</div>
+      <p class="note">Hover over a status for what it means. "Paid" is what the app recorded at checkout,
+      tests excluded. "Access until" includes a 7-day grace period after the renewal date.</p>
+      <form method="post" action="/admin/sync-subscriptions" style="margin:0 0 16px">
+        <button type="submit">Sync subscriptions from Stripe</button>
+        <span style="font-size:12px;color:#64748b;margin-left:8px">Reads every subscription in Stripe and
+        updates each subscriber's access date. Changes nothing in Stripe.</span>
+      </form>
       <table>
-        <tr><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th><th>Courses</th></tr>
-        {rows or '<tr><td colspan="5" class="empty">No members yet</td></tr>'}
+        <tr><th>Name</th><th>Email</th><th>Status</th><th>Access until</th><th>Paid</th><th>Courses</th><th>Joined</th></tr>
+        {trs or '<tr><td colspan="7" class="empty">Nobody in this group</td></tr>'}
       </table>
     </div>"""
     return _page("Members", "members", body)
+
+
+@app.post("/admin/sync-subscriptions", response_class=HTMLResponse)
+async def admin_sync_subscriptions(credentials=Depends(_check_admin)):
+    """Backfill and re-check every subscriber's access date from Stripe. Read-only on Stripe."""
+    synced, unmatched, errors = 0, 0, []
+    try:
+        for sub in stripe.Subscription.list(status="all", limit=100).auto_paging_iter():
+            try:
+                if sync_subscription(sub):
+                    synced += 1
+                elif _g(sub, "status") != "incomplete":
+                    unmatched += 1
+            except Exception as e:
+                errors.append(f"{_g(sub, 'id')}: {e}")
+    except stripe.error.StripeError as e:
+        errors.append(f"Stripe: {e}")
+    still = [r[0] for r in _classified_members() if r[1] == "unconfirmed"]
+    still_html = "".join(f"<li>{m.get('name') or '—'} ({m.get('email') or '—'})</li>" for m in still)
+    body = f"""
+    <div class="card">
+      <h2>Subscription sync</h2>
+      <p>Updated {synced} member(s). {unmatched} subscription(s) matched no member (see the app log for their IDs).</p>
+      {f"<p style='margin-top:12px'><strong>Marked as subscribers here but with no subscription in Stripe:</strong></p><ul style='margin:6px 0 0 18px'>{still_html}</ul><p class='note' style='margin-top:6px'>Check whether each of these paid. If they did not, they are not subscribers.</p>" if still else "<p>Every subscriber here matches a subscription in Stripe.</p>"}
+      {"<p>Errors:<br>" + "<br>".join(errors[:20]) + "</p>" if errors else ""}
+      <p><a href="/admin/members">Back to members</a></p>
+    </div>"""
+    return _page("Subscription sync", "members", body)
 
 
 @app.get("/admin/contacts", response_class=HTMLResponse)
@@ -1911,10 +2253,14 @@ async def admin_certificates(credentials=Depends(_check_admin)):
         "*, members(name, email)"
     ).order("issued_at", desc=True).limit(100).execute()
 
+    test_ids = {r[0].get("id") for r in _classified_members() if r[1] == "test"}
+    n_test = sum(1 for c in (res.data or []) if c.get("member_id") in test_ids)
     rows = ""
     for cert in (res.data or []):
         m = cert.get("members") or {}
         issued = (cert.get("issued_at") or "")[:10]
+        if cert.get("member_id") in test_ids:
+            m = dict(m, name=f"{m.get('name') or '—'} {_status_badge('test')}")
         verify_link = f'<a class="vlink" href="/verify/{cert["cert_number"]}" target="_blank">{cert["cert_number"]}</a>'
         rows += f"""<tr>
             <td>{verify_link}</td>
@@ -1926,7 +2272,7 @@ async def admin_certificates(credentials=Depends(_check_admin)):
 
     body = f"""
     <div class="card">
-      <h2>Certificates Issued ({len(res.data or [])})</h2>
+      <h2>Certificates issued ({len(res.data or []) - n_test} to members{f", {n_test} test" if n_test else ""})</h2>
       <table>
         <tr><th>Certificate #</th><th>Member</th><th>Course</th><th>CPD</th><th>Issued</th></tr>
         {rows or '<tr><td colspan="5" class="empty">No certificates issued yet</td></tr>'}
@@ -1937,71 +2283,83 @@ async def admin_certificates(credentials=Depends(_check_admin)):
 
 @app.get("/admin/system", response_class=HTMLResponse)
 async def admin_system(credentials=Depends(_check_admin)):
-    # Check which env vars are set vs placeholder
-    def var_status(key: str) -> str:
+    def var_status(key: str, required: bool = True) -> str:
         val = os.environ.get(key, "")
-        if not val or val.startswith("placeholder"):
-            return '<span class="badge badge-off">Not Set</span>'
-        return '<span class="badge badge-ok">Configured</span>'
+        if val and not val.startswith("placeholder"):
+            return '<span class="badge badge-ok">Set</span>'
+        return '<span class="badge badge-off">Not set</span>' if required else '<span class="badge badge-warn">Not set</span>'
 
-    vars_rows = ""
     check_vars = [
-        ("STRIPE_SECRET_KEY", "Stripe Secret Key"),
-        ("STRIPE_WEBHOOK_SECRET", "Stripe Webhook Secret"),
-        ("STRIPE_PRICE_SINGLE", "Stripe Price — Single Course"),
-        ("STRIPE_PRICE_SUBSCRIPTION", "Stripe Price — Subscription"),
-        ("RESEND_API_KEY", "Resend API Key (email)"),
-        ("SUPABASE_URL", "Supabase URL"),
-        ("SUPABASE_SERVICE_ROLE_KEY", "Supabase Service Role Key"),
-        ("BASE_URL", "Base URL"),
+        ("STRIPE_SECRET_KEY", "Stripe secret key", True, ""),
+        ("STRIPE_WEBHOOK_SECRET", "Stripe webhook signing secret", True, ""),
+        ("STRIPE_PRICE_SINGLE", "Stripe price, single course", True, ""),
+        ("STRIPE_PRICE_SUBSCRIPTION", "Stripe price, annual subscription", True, ""),
+        ("RESEND_API_KEY", "Resend (sends course and certificate emails)", True, ""),
+        ("SUPABASE_URL", "Supabase project", True, ""),
+        ("SUPABASE_SERVICE_ROLE_KEY", "Supabase service key", True, ""),
+        ("ADMIN_PASSWORD", "This admin area", True, ""),
+        ("DASHBOARD_SECRET", "Member login sessions", True,
+         "If not set, every member is signed out whenever the app restarts or redeploys."),
+        ("UNSUBSCRIBE_SECRET", "Unsubscribe links", True,
+         "If not set, unsubscribe links in emails cannot be verified."),
+        ("APP_URL", "This app's public address", False, "Defaults to app.meridiancpd.co.uk."),
+        ("ADMIN_TEST_EMAILS", "Addresses treated as test accounts", False,
+         "Optional, comma-separated. Our own domain and example.com are always treated as tests."),
     ]
-    for key, label in check_vars:
-        vars_rows += f"<tr><td>{label}</td><td><code>{key}</code></td><td>{var_status(key)}</td></tr>"
+    vars_rows = "".join(
+        f"<tr><td>{label}</td><td><code>{key}</code></td><td>{var_status(key, req)}</td>"
+        f"<td style='font-size:12px;color:#64748b'>{note}</td></tr>"
+        for key, label, req, note in check_vars)
 
-    # Course PDF status
-    pdf_rows = ""
-    for cid, course in COURSES.items():
-        if cid == "SUBSCRIPTION":
-            continue
-        env_key = f"PDF_{cid.replace('-', '_')}"
-        val = os.environ.get(env_key, "")
-        status = '<span class="badge badge-ok">Set</span>' if val and not val.startswith("placeholder") else '<span class="badge badge-warn">Missing</span>'
-        pdf_rows += f"<tr><td>{cid}</td><td><code>{env_key}</code></td><td>{status}</td></tr>"
+    # Course PDFs: check each one on sale can actually be downloaded
+    live = [k for k in COURSES if k != "SUBSCRIPTION" and is_available(k)]
+    async def _check(cid):
+        try:
+            async with httpx.AsyncClient(timeout=6) as client:
+                r = await client.head(_pdf_url(cid))
+            return cid, r.status_code
+        except Exception:
+            return cid, None
+    import asyncio
+    results = dict(await asyncio.gather(*[_check(c) for c in live]))
+    missing = [c for c in live if results.get(c) != 200]
+    pdf_rows = "".join(
+        f"<tr><td>{c}</td><td>{COURSES[c]['title']}</td><td>"
+        + ('<span class="badge badge-ok">Downloadable</span>' if results.get(c) == 200
+           else f'<span class="badge badge-off">Problem ({results.get(c) or "no response"})</span>')
+        + "</td></tr>" for c in live)
 
-    # Email optimizer status
-    optimizer_status = '<span class="badge badge-warn">Schedule disabled — manual trigger only</span>'
+    try:
+        suppressed = supabase.table("outreach_suppressed").select("email", count="exact").execute().count or 0
+    except Exception:
+        suppressed = "unknown"
 
     body = f"""
     <div class="card section">
-      <h2>Environment Variables</h2>
-      <table>
-        <tr><th>Service</th><th>Variable</th><th>Status</th></tr>
-        {vars_rows}
-      </table>
+      <h2>Settings</h2>
+      <table><tr><th>What it's for</th><th>Setting</th><th>Status</th><th></th></tr>{vars_rows}</table>
     </div>
     <div class="card section">
-      <h2>Course PDF Storage URLs</h2>
-      <table>
-        <tr><th>Course</th><th>Env Var</th><th>Status</th></tr>
-        {pdf_rows}
-      </table>
+      <h2>Course PDFs on sale ({len(live) - len(missing)} of {len(live)} downloadable)</h2>
+      <table><tr><th>Course</th><th>Title</th><th>PDF</th></tr>{pdf_rows}</table>
     </div>
     <div class="card section">
-      <h2>Email Optimizer</h2>
+      <h2>Outreach</h2>
       <table>
-        <tr><th>Component</th><th>Status</th></tr>
-        <tr><td>GitHub Actions Schedule</td><td>{optimizer_status}</td></tr>
-        <tr><td>Warm-up Score Required</td><td>≥ 80 before enabling</td></tr>
-        <tr><td>Repo</td><td><code>mattid272-hub/meridian-email-optimizer</code></td></tr>
+        <tr><td>Marketing emails</td><td><span class="badge badge-warn">Paused</span></td></tr>
+        <tr><td>Addresses on the permanent do-not-email list</td><td>{suppressed}</td></tr>
       </table>
+      <p class="note" style="margin-top:10px">Outreach stays paused until it has a lawful contact list,
+      per-contact and daily limits, and working unsubscribe links.</p>
     </div>
     <div class="card section">
-      <h2>Webhook Health</h2>
+      <h2>App</h2>
       <table>
-        <tr><th>Endpoint</th><th>URL</th></tr>
-        <tr><td>Health</td><td><a class="vlink" href="/health">/health</a></td></tr>
-        <tr><td>Stripe Webhook</td><td><code>/stripe-webhook</code></td></tr>
-        <tr><td>Railway URL</td><td><code>https://laudable-eagerness-production-4f04.up.railway.app</code></td></tr>
+        <tr><td>Health check</td><td><a class="vlink" href="/health">/health</a></td></tr>
+        <tr><td>Stripe webhook address</td><td><code>{BASE_URL}/stripe-webhook</code></td></tr>
+        <tr><td>Stripe events it needs</td><td style="font-size:12px">checkout.session.completed,
+          customer.subscription.created, customer.subscription.updated, customer.subscription.deleted,
+          invoice.paid, invoice.payment_failed</td></tr>
       </table>
     </div>"""
     return _page("System", "system", body)
