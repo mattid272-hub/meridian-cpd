@@ -707,7 +707,7 @@
   <div class="page-hero-inner">
     <span class="page-label">Course Library</span>
     <h1 class="page-title">Browse &amp; Enrol</h1>
-    <p class="page-sub">Courses for DEAs and Retrofit Assessors, written from the source documents with every rule referenced. Download the PDF, read it, claim your CPD. Our Retrofit Assessor and cross-strand courses are being updated to the latest standards and return as each one is completed.</p>
+    <p class="page-sub">Courses for DEAs and Retrofit Assessors, written from the source documents with every rule referenced. Download the PDF, read it, claim your CPD.</p>
     <div class="hero-stats">
       <div class="hero-stat-item">
         <span class="hero-stat-num" id="statTotal">26</span>
@@ -819,13 +819,7 @@ const STRIPE_SUB    = 'https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01';
 // Courses withdrawn while they are revised against the current standards. They are not
 // shown or sold. To restore one, publish its corrected PDF and delete its ID here and
 // in UNDER_REVIEW in webhook/main.py.
-const UNDER_REVIEW = new Set([
-  
-  
-  
-  'MER-ALL-012','MER-ALL-013','MER-ALL-014','MER-ALL-016',
-  
-]);
+const UNDER_REVIEW = new Set([]);
 
 const ALL_COURSES = [
   {
@@ -1190,6 +1184,50 @@ const ALL_COURSES = [
       'State what MIS 3005-D and MCS 031 a) require of an MCS Contractor designing a heat pump system',
       'Summarise the Boiler Upgrade Scheme rules in force on 14 October 2026, including the 2024 and 2026 changes',
       'Describe what PAS 2035:2023 requires where a retrofit includes a heat pump, and who is the Retrofit Designer where the heat pump is the only measure'
+    ]
+  },
+  {
+    id: 'MER-ALL-012', strand: 'ALL', hours: 1.0,
+    title: 'Whole Life Carbon for Energy Assessors: What It Means and Where It Stands in 2026',
+    desc: 'Whole life carbon for energy assessors: operational and embodied carbon as the RICS professional standard (2nd edition) defines them, the life-cycle modules, what an RdSAP emissions figure does and does not cover, and where regulation stands in October 2026: nothing in the Building Regulations for England, and the London Plan policy for referable schemes.',
+    objectives: [
+      'Define whole life carbon, embodied carbon, upfront carbon and operational carbon as the RICS professional standard defines them',
+      'Describe the life cycle modules A to D and place an RdSAP calculation within them',
+      'State the status at October 2026 of the RICS standard, BS EN 15978 and whole life carbon in building regulation and London planning policy in England',
+      'Explain what PAS 2035:2023 and the RdSAP 10 specification ask of you on carbon, and what they leave out'
+    ]
+  },
+  {
+    id: 'MER-ALL-013', strand: 'ALL', hours: 1.0,
+    title: 'Overheating in Existing Homes: PAS 2035 Roles, Part O and TM59 (2026)',
+    desc: 'Overheating in existing homes: what PAS 2035:2023 asks of the Retrofit Assessor and the Retrofit Designer, why Approved Document O applies only to new residential buildings, which edition of CIBSE TM59 applies to what, what CIBSE says changed in TM59 (2026), and the Scottish standard.',
+    objectives: [
+      'State what CIBSE says is new in TM59 (2026), and which edition of TM59 is still cited by Approved Document O and PAS 2035:2023',
+      'Explain what Approved Document O applies to in England, what it does not apply to, and how Wales and Scotland differ',
+      'Set out who does what on overheating under PAS 2035:2023, from the Retrofit Assessor\'s notes to the Retrofit Designer\'s measures',
+      'Record the information about an existing home that a Retrofit Designer needs in order to deal with overheating'
+    ]
+  },
+  {
+    id: 'MER-ALL-014', strand: 'ALL', hours: 1.0,
+    title: 'SMETER Technology: Measured Building Performance for Energy Assessors',
+    desc: 'Smart meter enabled thermal efficiency ratings (SMETERs): what a measured heat transfer coefficient is, what the government trials and studies found about accuracy against RdSAP, the DESNZ strategic guide of July 2026, the Home Energy Model proposal, and why a SMETER result is not an EPC.',
+    objectives: [
+      'Explain what a heat transfer coefficient (HTC) is and how SMETER technologies estimate it',
+      'Summarise what the government\'s SMETER field trial found about accuracy, including against RdSAP',
+      'State the status of SMETER at October 2026: outside the RdSAP 10 EPC method and proposed only as a voluntary supplement to reformed EPCs',
+      'Recognise the conditions that make a SMETER result less reliable'
+    ]
+  },
+  {
+    id: 'MER-ALL-016', strand: 'ALL', hours: 1.0,
+    title: 'Scheme Operating Requirements: How They Work and What Changed in 2026',
+    desc: 'The Scheme Operating Requirements for energy assessors: who writes and approves them, how Level 1 and Level 2 work, what changed in the 2026 Level 2 edition (assessor declaration, minimum evidence requirements, minimum age), the CPD rule, and how errors on a lodged EPC are put right.',
+    objectives: [
+      'Explain how the Energy Performance of Buildings (England and Wales) Regulations 2012 link you, your accreditation scheme and the Scheme Operating Requirements (SORs)',
+      'Describe the two levels of the SORs, who owns each, and the part played by the Energy Assessor Scheme Operating Board (EASOB)',
+      'Summarise the standing SOR rules on audit, evidence, defective certificates, CPD, complaints and discipline',
+      'State what version 1.14 of the Level 2 SORs, dated 4 September 2026, changed, including the pre-lodgement declaration and the minimum evidence requirements'
     ]
   }
 ];

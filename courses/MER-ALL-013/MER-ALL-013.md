@@ -1,186 +1,238 @@
-
-
-# Overheating Assessment in Existing Homes: TM59 2026 Update
-**Course ID:** MER-ALL-013 | **CPD Hours:** 1 | **Published:** August 2026
+# Overheating in Existing Homes: PAS 2035 Roles, Part O and TM59 (2026)
+**Course ID:** MER-ALL-013 | **CPD Hours:** 1 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Identify the key changes introduced in the CIBSE TM59 2026 update and explain how they differ from the original 2017 methodology
-- Apply the revised TM59 overheating assessment criteria to existing dwellings undergoing retrofit or energy assessment
-- Recognise dwelling characteristics, construction types, and occupancy profiles that elevate overheating risk in the existing housing stock
-- Explain the relationship between overheating risk assessment and the retrofit process as set out in [EX01B] PAS 2035:2023
-- Record and communicate overheating risk findings appropriately within EPC lodgements, retrofit assessments, and homeowner advisory contexts
+- State what CIBSE says is new in TM59 (2026), and which edition of TM59 is still cited by Approved Document O and PAS 2035:2023
+- Explain what Approved Document O applies to in England, what it does not apply to, and how Wales and Scotland differ
+- Set out who does what on overheating under PAS 2035:2023, from the Retrofit Assessor's notes to the Retrofit Designer's measures
+- Record the information about an existing home that a Retrofit Designer needs in order to deal with overheating
+- Give occupants overheating advice grounded in PAS 2035:2023 and UKHSA guidance, without stepping into the Designer's role
 
 ---
 
 ## Introduction
 
-Overheating in UK homes has moved from a niche design concern to a frontline regulatory and public health issue. The summers of 2022, 2023, and 2025 each delivered extended periods where indoor temperatures in poorly adapted dwellings exceeded thresholds associated with sleep disruption, cardiovascular stress, and excess mortality — particularly among older and clinically vulnerable occupants. Heat Ready London's sustained campaign work and Elmhurst Energy's coverage of summer comfort risks have brought the issue squarely into the domain of domestic energy assessors, not just mechanical engineers and new-build designers.
+Overheating has moved closer to an assessor's work. PAS 2035:2023 names it in the retrofit assessment, the intended outcomes, the design, the handover and the advice to occupants. And CIBSE published a new edition of its overheating methodology for homes, TM59 (2026), in July 2026 (CIBSE Knowledge Portal, TM59 (2026) page).
 
-CIBSE's publication of the updated TM59 methodology in July 2026 is the most significant revision since the original 2017 document. The update reflects evolved climate data — including the use of updated Design Summer Year (DSY) datasets — tightened pass/fail criteria, and a much more explicit framework for applying overheating assessment to existing dwellings and retrofit projects, not only new-build. For assessors, this changes the landscape. Overheating is no longer something you note in passing on an EPC improvement recommendation or mention as a footnote in a retrofit design. It is increasingly a formal assessment obligation with defined criteria and recording requirements.
+This course is for the people on a retrofit project who do not run thermal models: the Retrofit Assessor, usually a domestic energy assessor by background, and the Retrofit Coordinator. It covers whose job each part is, where TM59 comes in, what Approved Document O does and does not apply to, and what CIBSE says changed in 2026.
 
-The connection to retrofit is direct. [EX01B] PAS 2035:2023 already requires that retrofit designs consider unintended consequences, and overheating risk from increased airtightness, added insulation, or reduced ventilation provision is one of the most commonly encountered. The TM59 2026 update provides the assessment methodology that PAS 2035's risk management framework has long pointed towards but never fully specified for existing homes.
+A plain statement about sources. We have not read the text of TM59 (2026). CIBSE offers it free, but behind a CIBSE login, and this course uses only what CIBSE publishes openly about it: its Knowledge Portal page, its weather data pages and an interview in the CIBSE Journal. Nothing here describes TM59's criteria, thresholds or modelling rules beyond what those pages say. If you need the method itself, obtain the document from CIBSE and read it.
 
-This course walks through what has changed in TM59, how the revised criteria apply to dwellings you are already assessing, what you need to record, and how you advise homeowners and retrofit coordinators when overheating risk is identified. It assumes you are already familiar with the basics of SAP/RdSAP, PAS 2035 roles, and dwelling assessment. The focus is on what is new, what is different, and what you need to do about it.
+The Building Regulations material is for England unless stated; Section 2 notes Wales and Scotland, and we did not check Northern Ireland. PAS 2035:2023 is a BSI specification, not law. Ofgem describes it as the over-arching retrofit standard with which users of the TrustMark Government-endorsed quality scheme are required to comply (Ofgem ECO4 Guidance: Delivery v4.0, paragraph 4.11). Where this course says PAS 2035:2023 "requires" something, it reaches you through your scheme, funding rules or contract. The course is correct to 14 October 2026.
 
----
-
-## Section 1: What Has Changed — The TM59 2026 Revision in Context
-
-The original CIBSE TM59 (2017) established a methodology for assessing overheating risk in new residential buildings using dynamic thermal simulation. It set two primary criteria: one based on hours of exceedance above a variable temperature threshold derived from CIBSE Guide A adaptive comfort methodology (Criterion A), and one based on bedroom temperatures exceeding a fixed threshold during sleeping hours (Criterion B). A dwelling failed if it breached either criterion in any assessed room. The methodology was designed primarily for new-build and was referenced in Part O of the Building Regulations (England) when that was introduced in 2022, though Part O also offered a simplified method as an alternative to full dynamic simulation.
-
-The TM59 2026 update retains this dual-criterion structure but introduces several material changes that assessors must understand.
-
-**Updated climate files.** The revision adopts the latest CIBSE/Met Office probabilistic climate datasets, which incorporate observed warming trends. The Design Summer Year files used for compliance testing now represent more severe — and more realistic — summer conditions than those available in 2017. This means dwellings that previously passed may no longer do so when reassessed against updated weather data. Assessors should verify which DSY file version is specified for their region when reviewing or commissioning any dynamic simulation work.
-
-**Existing dwellings brought into scope.** The 2017 methodology was framed around new-build design. The 2026 revision explicitly extends guidance to cover existing dwellings, particularly those undergoing significant retrofit. This aligns with the direction set by [EX01B] PAS 2035:2023, which requires identification of overheating risk as part of the medium-term retrofit assessment process. TM59 2026 provides the technical methodology that sits behind that PAS 2035 requirement.
-
-**Revised threshold parameters.** The update revisits the fixed temperature thresholds used in Criterion B (the bedroom overheating criterion) and provides more granular guidance on how to handle mixed-mode ventilation strategies — reflecting the reality that many retrofitted homes rely on a combination of openable windows and mechanical ventilation rather than full air conditioning.
-
-**Occupancy and vulnerability weighting.** TM59 2026 introduces more explicit guidance on adjusting assessments for vulnerable occupancy — recognising that care homes, sheltered housing, and dwellings occupied by elderly or mobility-impaired residents require tighter thresholds because those occupants cannot easily adapt their behaviour or environment.
-
-These are not cosmetic changes. They redefine what "passes" and what triggers further design work or mitigation.
+This edition replaces the August 2026 edition. That edition was written without the text of TM59 (2026), named none of the changes CIBSE lists, and presented the 2026 edition as the method for Part O and PAS 2035 work, when CIBSE says TM59 (2017) is still required for Part O and PAS 2035:2023 cites the 2017 edition. It also said Part O covers material change of use and some retrofit work (it covers new residential buildings only), gave the overheating duty to the Retrofit Coordinator (PAS 2035:2023 gives it to the Retrofit Designer), and said SAP 10 had introduced an overheating flag, which we could not trace to any source.
 
 ---
 
-## Section 2: Overheating Risk Factors in the Existing Housing Stock
+## Section 1: TM59 (2026): What CIBSE Says Has Changed
 
-As a working assessor, you already know that the UK's existing housing stock presents a radically different set of thermal characteristics from new-build. Understanding which dwelling features drive overheating risk is essential for identifying at-risk properties without commissioning a full dynamic simulation on every job.
+### What TM59 is
 
-**Glazing ratio and orientation.** Excessive south- and west-facing glazing is the single largest driver of solar gain-induced overheating. Victorian and Edwardian bay windows, large 1960s–70s picture windows, and modern conservatory additions all create high solar gain surfaces. Where these have been replaced with double or triple glazing without solar control coatings (low g-value glass), the thermal retention that improves winter performance simultaneously traps summer heat. Assessors should note glazing orientation, area, and whether any solar control glass or external shading is present.
+TM59 is a CIBSE Technical Memorandum: guidance from a professional body, not a regulation. The 2017 edition, "Design methodology for the assessment of overheating risk in homes", is still marked Active (CIBSE Knowledge Portal, TM59 (2017) page).
 
-**Insulation and airtightness improvements.** This is the core retrofit paradox. Adding internal wall insulation, loft insulation, or draught-proofing reduces heat loss in winter but also reduces the dwelling's ability to shed heat in summer. A draughty Victorian terrace has poor energy performance but may paradoxically have lower overheating risk than the same property after a deep retrofit that achieves high airtightness without a corresponding ventilation strategy. [EX01B] PAS 2035:2023 explicitly identifies this as an unintended consequence that must be assessed — TM59 2026 now provides the quantified methodology for doing so.
+The new edition is titled "TM59 Overheating risk in dwellings - a design stage methodology (2026)". CIBSE describes it as a methodology for assessing overheating risk "in new dwellings and major refurbishments using dynamic thermal models", applicable to houses, apartments, care homes, student accommodation and other building types it lists (CIBSE Knowledge Portal, TM59 (2026) page). "Design stage" and "dynamic thermal models" tell you this is a tool for whoever designs the work, run in modelling software, not a site survey method.
 
-**Ventilation provision.** Single-aspect dwellings — particularly single-aspect flats — have severely limited cross-ventilation potential. Top-floor flats beneath uninsulated or poorly insulated flat roofs are especially vulnerable. Where mechanical ventilation with heat recovery (MVHR) has been installed as part of retrofit, assessors should confirm whether the system includes a summer bypass mode. Without bypass, MVHR can actively worsen overheating by recovering heat that should be rejected.
+The published contents include a section 1.4 headed "Existing dwellings and retrofit". We have not read it and cannot tell you what it says.
 
-**Thermal mass.** Heavyweight construction (solid brick, concrete frame) absorbs and re-radiates heat with a time lag. In well-ventilated dwellings, this can buffer peak temperatures. In poorly ventilated ones, it stores daytime gains and releases them during sleeping hours — precisely the mechanism that Criterion B is designed to catch.
+### What CIBSE lists
 
-**Urban heat island effect.** Dwellings in dense urban locations experience ambient temperatures several degrees above rural baselines. TM59 2026's updated climate files capture this more accurately, but assessors conducting initial risk screening should treat urban location as an independent risk factor, particularly for London, Birmingham, Manchester, and other major conurbations.
+CIBSE's Knowledge Portal page names the first two items below as the "key elements" of the update and describes the next two; its weather data page adds the last:
+- "a new bedroom overheating criterion", which CIBSE says is backed by recent Loughborough University research
+- "updated ceiling fan modelling", presenting ceiling fans as an effective passive comfort measure
+- testing all homes "under unconstrained conditions using 2050s weather data", which the updated guidance mandates to stress passive design from the outset
+- a "three-stage overheating assessment strategy", described without being called new
+- new weather data: "TM59 (2026) requires the 2025 weather files" (CIBSE Weather Data page)
 
-The practical skill here is triage: identifying which dwellings on your caseload warrant detailed overheating assessment and which present lower risk.
+CIBSE's page does not describe the three stages. The CIBSE Journal, interviewing the lead author in August 2026, reports that Stage 1 tests the building under ideal conditions, Stage 2 applies real-world restrictions such as windows closed for noise or security, and Stage 3 allows active cooling "as a last resort if the design fails" (CIBSE Journal, August 2026). Treat that as a journalist's summary, not the document.
+
+The 2025 weather files cover 28 climatic zones, up from 16 locations, and rest on Met Office data from 1994 to 2023; CIBSE reports that, for the locations it investigated, they make it "more challenging to meet TM59 (2017)" (CIBSE Weather Data page; CIBSE Weather Data 2025 Technical Briefing v1.1, 21 May 2026).
+
+### Which edition applies where
+
+This is the point the old edition missed. CIBSE states that "TM59 (2017) is still required for compliance with Part O", with the 2016 weather files, while recommending TM59 (2026) "to align with industry best practice" (CIBSE Knowledge Portal, TM59 (2026) page; CIBSE Weather Data page). CIBSE says it is discussing with the Building Safety Regulator how to bring the new weather files and TM59 into Approved Documents. That has not happened yet: gov.uk, read on 14 October 2026, still offers only the 2021 edition of Approved Document O, which cites TM59 (2017) (Approved Document O, Appendix F).
+
+PAS 2035:2023 is in the same position. Its overheating clause cites TM59 as reference [N9], listed as the CIBSE 2017 edition, and clause 2 says that for dated references "only the edition cited applies" (PAS 2035:2023, clauses 2 and 8.2.31 a). So under PAS 2035:2023 as published, the edition cited is TM59 (2017). The PAS does not say whether a Designer may also run the 2026 method, and we have seen no scheme or TrustMark statement on it; if it matters, ask them.
 
 ---
 
-## Section 3: The Regulatory and Process Interface — TM59, PAS 2035, and EPC Work
+## Section 2: Approved Document O: What It Covers and What It Does Not
 
-Understanding where TM59 overheating assessment fits within the regulatory and process frameworks you already operate in is critical. This is not a standalone exercise — it intersects with retrofit coordination, EPC production, and Building Regulations compliance.
+### The requirement and its status
 
-**PAS 2035 integration.** [EX01B] PAS 2035:2023 requires that a retrofit assessment identifies risks of unintended consequences, including overheating. Section 8 of PAS 2035 sets out the requirement for a risk assessment prior to design, and Annex A includes overheating as a named risk. The retrofit coordinator is responsible for ensuring that overheating risk is assessed and, where identified, that mitigation measures are incorporated into the retrofit design. TM59 2026 provides the technical assessment methodology that fulfils this PAS 2035 obligation. Where you are operating as a retrofit assessor or advisor feeding into a PAS 2035 process, your dwelling data collection — orientation, glazing, ventilation type, occupancy profile — directly informs whether a full TM59-compliant dynamic simulation is needed or whether the risk can be managed through simplified screening and design precautions.
+Part O was inserted into Schedule 1 to the Building Regulations 2010 by the Building Regulations etc. (Amendment) (England) Regulations 2021, in force on 15 June 2022 for building work in England (SI 2021/1391, regulations 1 and 11). Requirement O1 says reasonable provision must be made for residential buildings, other than hotel rooms, to "limit unwanted solar gains in summer" and to "provide an adequate means to remove heat from the indoor environment", with mechanical cooling used only where not enough heat can be removed without it (Approved Document O, requirement O1). Approved Document O, 2021 edition, is the statutory guidance on meeting it, taking effect on 15 June 2022.
 
-**EPC and RdSAP context.** The current RdSAP methodology does not include a formal overheating risk output in the way that SAP 10 does for new-build (where an overheating risk flag was introduced). However, assessors producing EPCs on existing dwellings are increasingly expected to consider overheating in their improvement recommendations. Recommending additional insulation or high-performance glazing without noting potential overheating consequences is a professional gap. While EPC software may not currently generate an automated overheating flag for existing dwellings, the assessor's professional judgement and advisory commentary should address it — particularly for dwellings with obvious risk factors. Expect future RdSAP iterations to incorporate overheating screening more formally; the direction of travel is clear.
+### Scope: new residential buildings only
 
-**Building Regulations — Part O.** Part O (England) currently applies to new residential buildings and those created through material change of use. It does not directly apply to retrofit of existing dwellings that remain in the same use class. However, where retrofit work triggers Building Regulations approval — for example, through the installation of new windows, addition of a conservatory, or a change of use — Part O compliance may be required, and TM59 is a referenced methodology for demonstrating compliance. Assessors should be aware of when their retrofit recommendations might cross the threshold into Building Regulations territory and trigger Part O obligations.
+Approved Document O states that its guidance "applies to new residential buildings only" (Approved Document O, paragraph 0.3). The government's FAQ adds that Part O does not apply to extensions or conservatories added after a home is built, nor to "buildings undergoing a change of use" (Approved Document O FAQ, question 1).
 
-**Recording and reporting.** When overheating risk is identified, it must be recorded. For PAS 2035 projects, this means inclusion in the risk assessment documentation and, where applicable, the medium-term improvement plan. For EPC work, it means clear advisory notes. TM59 2026 provides a structured framework for reporting outcomes — pass, fail, and the specific criteria breached — which gives assessors a consistent language for communicating findings to retrofit coordinators, building control, and homeowners.
+So for retrofit of existing homes in England, Part O does not apply: not to insulation, replacement windows or a new conservatory on an existing house, nor to a change of use such as converting an office into flats. If someone says otherwise, ask which provision they rely on; where there is genuine doubt, ask building control.
+
+### The two compliance routes
+
+For new residential buildings, Approved Document O gives a simplified method and a dynamic thermal modelling method (Approved Document O, paragraphs 1.1 and 2.1). The modelling route follows "CIBSE's TM59 methodology" (Approved Document O, paragraph 2.3), listed in Appendix F as the 2017 edition.
+
+You need this in case a client or contractor cites Part O about an existing home. Its cooling rule also matches PAS 2035:2023, which puts active cooling last, "as a last resort" (PAS 2035:2023, clause 8.2.32).
+
+### Wales and Scotland
+
+Wales has its own Approved Document O, which the Welsh Government describes as setting standards for reducing overheating risk "in new residential buildings" (Welsh Government, Approved Document O (Wales) FAQ, May 2024). We did not confirm its in-force date or how it treats change of use; check gov.wales or local authority building control.
+
+Scotland's standard 3.28, in force since 1 February 2023, requires homes and shared multi-occupancy residential buildings to be designed and constructed so that the risk to occupants' health "from overheating is reduced" (SSI 2022/136, regulations 1(3) and 9(a), the date as amended by SSI 2022/340). Conversions must meet it "in so far as is reasonably practicable" (Building (Scotland) Regulations 2004, schedule 6, paragraph 2). So Scotland reaches conversions; England's Part O does not. For Northern Ireland, ask Building Control NI.
 
 ---
 
-## Section 4: Practical Application — What to Record, What to Advise, What to Escalate
+## Section 3: Whose Job Is It Under PAS 2035:2023?
 
-This section addresses the practical workflow: what you do differently on site and at the reporting stage as a result of TM59 2026.
+PAS 2035:2023 lists minimising the risks associated with overheating among the aims of the measures it covers (PAS 2035:2023, clause 1), then splits the work between roles.
 
-**On-site data collection.** Your existing survey protocol captures much of what is needed for an initial overheating risk screening. Key additional observations to record systematically include: glazing orientation and approximate area for each elevation; presence or absence of external shading (overhangs, brise-soleil, external shutters, mature trees); ventilation type and whether cross-ventilation is achievable; MVHR summer bypass capability (check the unit label or commissioning sheet); roof construction and insulation level for top-floor dwellings; and whether the occupant profile includes vulnerability factors (elderly, very young, or mobility-impaired occupants who cannot readily open windows or relocate within the dwelling).
+### Retrofit Assessor
 
-**Risk screening.** Not every dwelling requires a full TM59 dynamic simulation. Use a risk-based approach. Dwellings with multiple risk factors — south/west-facing single-aspect flats, top floor, post-retrofit high airtightness, vulnerable occupants, urban location — should be flagged for detailed assessment. Dwellings with effective cross-ventilation, external shading, lower glazing ratios, and no vulnerable occupancy may be recorded as lower risk with a proportionate justification note.
+The Retrofit Assessor, typically a certified and registered domestic energy assessor or a RICS registered surveyor (PAS 2035:2023, Annex A, A.1.1), carries out the assessment in clause 7.3.2. Overheating is named once, in item l): the assessment shall include information that might affect the project now and in the future, including climate change-induced environmental risks, among which the PAS names "overheating" (PAS 2035:2023, clause 7.3.2 l).
 
-**Advising homeowners.** When overheating risk is identified, communicate it plainly. Explain that energy efficiency improvements can, if not designed carefully, make summer comfort worse. Recommend practical low-cost measures: external shading (even temporary), reflective window films, purge ventilation strategies (opening windows at night when external temperatures drop), and checking that any MVHR system has a functional summer bypass. Where significant risk is identified, recommend professional overheating assessment before proceeding with further insulation or airtightness work.
+Other items in the same list collect information the Designer will need on overheating, although the PAS does not label them that way:
+- location and orientation of the dwelling (clause 7.3.2 a)
+- site constraints, including exposure "to sun, wind and rain" (clause 7.3.2 i)
+- installed building services, including ventilation, and whether they work correctly (clause 7.3.2 j)
+- occupancy, including vulnerable persons such as children, elderly people or people with disabilities (clause 7.3.2 k)
 
-**Escalation within retrofit projects.** Where you are feeding into a PAS 2035 project, flag overheating risk to the retrofit coordinator in writing. Reference TM59 2026 as the appropriate assessment methodology. If the project proceeds without addressing the risk, record your concern — this is both good practice and professional protection.
+The assessment goes to the Retrofit Designer with the data file and a photographic record (PAS 2035:2023, clause 7.4.1). Nothing in clause 7 asks the Assessor to model overheating, apply TM59 or reach a pass or fail.
 
-**Staying current.** TM59 2026 is likely not the final word. Climate projections continue to worsen, and future regulatory updates may impose overheating assessment obligations on a wider range of existing dwelling work. Build overheating awareness into your standard practice now.
+### Retrofit Coordinator
+
+The Retrofit Coordinator oversees the project from inception to completion, including the assessment and the design (PAS 2035:2023, clause 6.1.3). At the outset the Coordinator agrees and records the intended outcomes with the client, and "reducing the risk of overheating" is one of the listed outcomes (PAS 2035:2023, clause 6.2.1 g). The Coordinator confirms with the Designer that the assessment is sufficient, arranging for the Assessor to fill any gaps (PAS 2035:2023, clauses 7.4.3 and 7.4.4), and verifies that the measures are in a design prepared by a Retrofit Designer (PAS 2035:2023, clause 8.2.1). Annex A notes that responsibility for design rests with the specialist designer, not the Coordinator (PAS 2035:2023, Annex A, A.3.6 NOTE).
+
+### Retrofit Designer
+
+The overheating duty sits here. The retrofit design "shall include measures to inhibit overheating" over the installed life of the measures, and the Retrofit Designer identifies and records them in accordance with TM59 [N9] "to assess overheating risk", the UK Climate Impacts Programme's guidance and tools on future climate vulnerability and adaptation, and the British Blind and Shutter Association's Guide to low energy shading (PAS 2035:2023, clause 8.2.31). A note in Annex A says Clause 8 makes the Designer responsible for ventilation and overheating in the retrofit design (PAS 2035:2023, Annex A, A.3.5 NOTE 2).
+
+Clause 8.2.32 lists the measures the Designer must consider, and says the list is not exhaustive:
+- reducing internal heat loads with efficient lighting, appliances and building services (8.2.32 a)
+- separating spaces with high heat gains, such as kitchens, from spaces with solar gains (8.2.32 b)
+- external shading of south-facing and west-facing glazing, or shutters (8.2.32 c)
+- secure ventilation at night in warm weather (8.2.32 d)
+- exposing high thermal capacity fabric inside the insulated envelope (8.2.32 e)
+- smaller glazing areas, or glazing or retrofitted coatings with relatively low transmissivity (8.2.32 f)
+- sufficient purge ventilation and cross-ventilation where noise, security and privacy allow (8.2.32 g)
+- and finally, "as a last resort", active cooling, preferably low or zero carbon
+
+### Installer, handover and advice
+
+PAS 2030:2023 requires the Retrofit Installer to check that the design provides for "mitigation of the risk of summer overheating", and to consult the Retrofit Coordinator if it does not (PAS 2030:2023, clause 5.2.3). The handover requirements in the design must include information on ventilation's role in "controlling overheating in the summer" (PAS 2035:2023, clause 11.1.2 g). Advice to occupants must cover "minimization of overheating" at inception and how to minimise overheating at handover (PAS 2035:2023, clauses 12.1.5 a) and 12.1.8 b). Advice may come from a qualified Assessor, Coordinator, Designer, Main Contractor or Installer (PAS 2035:2023, clause 5.7.1), so it may be you.
+
+---
+
+## Section 4: Where TM59 Comes In, and What to Do on an Existing Home
+
+### When TM59 or other methods come in
+
+Put the sources together and the picture is this:
+- On a PAS 2035 project, the Retrofit Designer assesses overheating risk in accordance with TM59, which under PAS 2035:2023 as published means the 2017 edition, alongside the UKCIP tools and the shading guide (PAS 2035:2023, clauses 2 and 8.2.31).
+- On a new residential building in England, Part O applies, by the simplified method or by dynamic thermal modelling to TM59 (2017) (Approved Document O, paragraphs 1.1, 2.1 and 2.3, Appendix F).
+- For new dwellings and major refurbishments generally, CIBSE recommends TM59 (2026) as best practice (CIBSE Knowledge Portal, TM59 (2026) page).
+- For an EPC, there is no overheating method: neither the RdSAP10 Specification (version 4.0, 7 June 2026) nor the RdSAP 10 Conventions (v12.2) mentions overheating.
+
+PAS 2035:2023 does not say how far TM59 has to be applied on a small project, and offers no separate screening method. If you are asked whether a job "needs a TM59", the honest answer is that the Designer decides how to meet clause 8.2.31, and the scheme or TrustMark can say what evidence they expect.
+
+### What to record on site
+
+UKHSA's public checklist lists the kinds of home that "can sometimes overheat during warmer weather" (UKHSA, Beat the heat: keep cool at home checklist, updated 21 July 2026):
+- flats on the top floor
+- homes with opening windows on one side only, so less ventilation through the home
+- homes with large east, west or south-facing windows not shaded from the sun
+- homes with little external shading, such as no shutters or shades
+- homes in densely built-up urban areas with little green space nearby
+- some highly insulated or energy-efficient homes, which "may trap heat inside"
+- homes with low efficiency appliances that release excess heat, such as poorly insulated hot water systems
+- homes where window opening is restricted, for example by a safety catch
+
+A sensible habit is to make sure your clause 7.3.2 notes and photographs show the Designer each of these without a second visit: which way the main glazing faces and what shades it, which rooms have windows on more than one side, whether restrictors are fitted, where the dwelling sits in the block, and who lives there. Clause 7.3.2 l) is the place to say plainly that you have seen features that may raise overheating risk. That is a note for the Designer, not a verdict: you are not assessing overheating risk under TM59, and your report should not read as if you were.
+
+### Advising occupants
+
+The same checklist is a sound source for occupant advice, and much of it matches clause 8.2.32. It advises shading or covering windows, calling external shutters, roller blinds or awnings "very effective"; opening windows, when safe, while the air feels cooler outside, for example at night; turning off lights and electrical equipment not in use; and using electric fans if the air temperature is below 35°C. It also tells householders who are insulating or refurbishing to ask installers for advice about reducing overheating (UKHSA, Beat the heat: keep cool at home checklist).
+
+Pointing occupants to that checklist is a reasonable way to cover the overheating topics in clauses 12.1.5 and 12.1.8. Leave design changes to the Designer, and promise no result.
 
 ---
 
 ## Key Takeaways
-
-- The CIBSE TM59 2026 update extends the overheating assessment methodology explicitly to existing dwellings and retrofit projects, not just new-build
-- Updated climate files mean overheating risk is assessed against more severe — and more realistic — summer conditions than the 2017 methodology assumed
-- Retrofit measures that improve winter thermal performance (insulation, airtightness, high-performance glazing) can directly increase summer overheating risk if ventilation and solar control are not addressed simultaneously
-- [EX01B] PAS 2035:2023 already requires overheating risk assessment as part of the unintended consequences review — TM59 2026 provides the technical methodology to fulfil that obligation
-- Single-aspect flats, top-floor dwellings, properties with high south/west glazing ratios, and homes occupied by vulnerable residents are the highest-priority categories for overheating risk screening
-- Assessors should systematically record glazing orientation, ventilation type, shading provision, MVHR bypass status, and occupant vulnerability as part of standard survey practice
-- When overheating risk is identified, escalate it in writing to the retrofit coordinator and advise the homeowner on practical mitigation — do not leave it as an undocumented observation
+- CIBSE published TM59 (2026), a design stage methodology using dynamic thermal models, in July 2026; we have not read its text, so get it from CIBSE before relying on any criterion or method
+- CIBSE names a new bedroom overheating criterion and updated ceiling fan modelling as key elements, and also describes unconstrained testing on 2050s weather, a three-stage strategy and the 2025 weather files
+- CIBSE says TM59 (2017), with the 2016 weather files, is still required for Part O, and PAS 2035:2023 cites the 2017 edition as a dated reference
+- Approved Document O applies to new residential buildings in England only: not to extensions or conservatories added later, change of use or work on existing homes
+- Under PAS 2035:2023 the Retrofit Designer includes measures to inhibit overheating and assesses the risk using TM59 (clause 8.2.31); the Coordinator oversees and verifies
+- The Retrofit Assessor's named duty is to include overheating among climate change-induced risks (clause 7.3.2 l), backed by good records of orientation, exposure, ventilation and occupancy
+- RdSAP 10 has no overheating output; occupant advice on overheating is due at inception and handover (clauses 12.1.5 and 12.1.8), and UKHSA's checklist supports it
 
 ---
 
 ## Self-Assessment Questions
 
-**1. Which of the following is NOT a key change introduced in the TM59 2026 update?**
+**Q1.** Under PAS 2035:2023, who must include measures to inhibit overheating in the retrofit design and assess overheating risk in accordance with TM59?
 
-A) Updated Design Summer Year climate files reflecting observed warming trends
-B) Explicit extension of scope to existing dwellings undergoing retrofit
-C) Removal of the bedroom-specific fixed temperature threshold (Criterion B)
-D) More detailed guidance on assessing dwellings with vulnerable occupants
+A) The Retrofit Assessor
+B) The Retrofit Designer
+C) The Retrofit Installer
+D) The client
 
-**Correct answer: C**
-*Explanation: TM59 2026 retains the dual-criterion structure, including Criterion B (the bedroom overheating criterion based on fixed temperature thresholds during sleeping hours). The revision updates the thresholds and guidance but does not remove this criterion.*
-
----
-
-**2. Under [EX01B] PAS 2035:2023, who is responsible for ensuring that overheating risk is assessed and mitigated in a retrofit project?**
-
-A) The domestic energy assessor
-B) The homeowner
-C) The retrofit coordinator
-D) The installation contractor
-
-**Correct answer: C**
-*Explanation: PAS 2035:2023 assigns responsibility for risk assessment, including overheating risk as an unintended consequence, to the retrofit coordinator. Assessors and other roles feed data into this process, but the coordinator holds overall responsibility for ensuring risks are identified and addressed in the design.*
+**Correct answer: B.** PAS 2035:2023, clause 8.2.31, places this on the Retrofit Designer; the Assessor records climate risks (7.3.2 l) and the Installer checks the design (PAS 2030:2023, clause 5.2.3).
 
 ---
 
-**3. A 1960s top-floor flat with a flat roof, south-facing picture windows, and recently installed internal wall insulation and draught-proofing is being assessed. Which combination of factors most significantly elevates overheating risk?**
+**Q2.** What does the guidance in Approved Document O apply to?
 
-A) The age of the property and the flat roof construction alone
-B) The south-facing glazing, increased airtightness from draught-proofing, top-floor location beneath a flat roof, and reduced ability to shed heat through the insulated walls
-C) The internal wall insulation reducing usable floor area
-D) The 1960s construction being inherently more prone to overheating than other eras
+A) Any existing home receiving insulation or new windows
+B) Existing buildings undergoing a change of use to residential
+C) Extensions and conservatories added to existing homes
+D) New residential buildings only
 
-**Correct answer: B**
-*Explanation: Overheating risk is driven by the interaction of solar gain (south-facing glazing), heat retention (increased airtightness and insulation reducing heat loss pathways), and heat accumulation (top floor beneath a flat roof absorbing solar radiation). These factors compound each other.*
-
----
-
-**4. An existing dwelling has MVHR installed as part of a retrofit. What specific feature should the assessor check to determine whether the MVHR system may contribute to summer overheating?**
-
-A) The brand and model number of the unit
-B) Whether the system has a functional summer bypass mode
-C) The diameter of the ductwork
-D) Whether the filters have been recently changed
-
-**Correct answer: B**
-*Explanation: MVHR systems recover heat from outgoing air to preheat incoming air — beneficial in winter but potentially harmful in summer if the system continues to recover heat when it should be rejected. A summer bypass mode allows incoming air to bypass the heat exchanger when external temperatures are lower than internal temperatures, enabling the system to assist with cooling rather than contributing to overheating.*
+**Correct answer: D.** Approved Document O, paragraph 0.3, applies to new residential buildings only; the FAQ (question 1) excludes extensions or conservatories added later and change of use.
 
 ---
 
-**5. Part O of the Building Regulations (England) currently applies to which of the following scenarios?**
+**Q3.** Which edition of TM59 does CIBSE say is still required for compliance with Part O?
 
-A) All existing dwellings undergoing any form of energy efficiency retrofit
-B) New residential buildings and existing buildings undergoing material change of use
-C) Only dwellings in London boroughs designated by Heat Ready London
-D) Any dwelling where an EPC is produced showing an overheating risk flag
+A) TM59 (2017), with the 2016 weather files
+B) TM59 (2026), with the 2025 weather files
+C) Neither, because Approved Document O does not refer to TM59
+D) TM59 (2026), with the 2016 weather files
 
-**Correct answer: B**
-*Explanation: Part O currently applies to new residential buildings and to existing buildings undergoing a material change of use (e.g., commercial to residential conversion). It does not currently apply broadly to all retrofit work on existing dwellings, though specific retrofit interventions that trigger Building Regulations approval may bring Part O into scope.*
+**Correct answer: A.** CIBSE states TM59 (2017) and the 2016 weather files are still required for Part O, and Approved Document O (paragraph 2.3, Appendix F) cites the 2017 edition.
+
+---
+
+**Q4.** Which of the following does CIBSE list as a key element of TM59 (2026)?
+
+A) Removing the use of dynamic thermal models
+B) Continued use of the CIBSE 2016 weather files
+C) A new bedroom overheating criterion
+D) Testing homes only on present-day weather data
+
+**Correct answer: C.** CIBSE lists a new bedroom overheating criterion, describes the method as using dynamic thermal models, tests all homes on 2050s weather and requires the 2025 weather files.
+
+---
+
+**Q5.** As Retrofit Assessor under PAS 2035:2023, what does clause 7.3.2 l) require your assessment to include?
+
+A) A dynamic thermal model of the dwelling to TM59 (2026)
+B) Information that might affect the project now and in future, including climate change-induced risks such as overheating
+C) A statement of compliance with Approved Document O
+D) The overheating rating produced by the RdSAP 10 calculation
+
+**Correct answer: B.** Clause 7.3.2 l) names overheating among climate change-induced risks; TM59 is the Designer's tool (8.2.31), Part O covers new residential buildings only, and RdSAP 10 has no overheating rating.
 
 ---
 
 ## Further Reading
-
-- **CIBSE TM59 (2026):** *Design methodology for the assessment of overheating risk in homes.* Chartered Institution of Building Services Engineers. Available from: [https://www.cibse.org/knowledge-research/knowledge-portal/tm59-design-methodology-for-the-assessment-of-overheating-risk-in-homes](https://www.cibse.org/knowledge-research/knowledge-portal/tm59-design-methodology-for-the-assessment-of-overheating-risk-in-homes) *(verify URL for the 2026 edition upon publication)*
-
-- **[EX01B] PAS 2035:2023:** *Retrofitting dwellings for improved energy efficiency — Specification and guidance.* British Standards Institution (BSI), 2023. Available from: [https://knowledge.bsigroup.com/products/retrofitting-dwellings-for-improved-energy-efficiency-specification-and-guidance](https://knowledge.bsigroup.com/products/retrofitting-dwellings-for-improved-energy-efficiency-specification-and-guidance)
-
-- **Approved Document O — Overheating (2022, as amended):** *The Building Regulations 2010: Overheating.* HM Government / Ministry of Housing, Communities and Local Government. Available from: [https://www.gov.uk/government/publications/overheating-approved-document-o](https://www.gov.uk/government/publications/overheating-approved-document-o)
-
-- **CIBSE Guide A (2015, as updated):** *Environmental Design.* Chartered Institution of Building Services Engineers. *(Primary source for adaptive thermal comfort criteria and indoor temperature thresholds referenced by TM59.)*
-
-- **Heat Ready London — Overheating in Homes resources.** Greater London Authority / London Climate Resilience Partnership. Available from: [https://www.london.gov.uk](https://www.london.gov.uk) *(search "Heat Ready London" for current guidance and case studies)*
-
-- **Elmhurst Energy — Summer Comfort and Overheating Risk guidance articles.** Available from: [https://www.elmhurstenergy.co.uk](https://www.elmhurstenergy.co.uk) *(secondary commentary; useful for assessor-oriented interpretation of regulatory requirements)*
+- **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, September 2023. Clauses 7.3.2 l), 8.2.31, 8.2.32, 11.1.2 g), 12.1.5 and 12.1.8, and Annex A.
+- **CIBSE Knowledge Portal page: TM59 Overheating risk in dwellings - a design stage methodology (2026).** CIBSE, July 2026. What changed and which edition Part O still needs; the document itself needs a CIBSE login.
+- **CIBSE Weather Data [2025 Release] Technical Briefing, version 1.1.** CIBSE, 21 May 2026. How the 2025 files compare with the 2016 files.
+- **Approved Document O: Overheating, 2021 edition.** HM Government, taking effect 15 June 2022. Paragraph 0.3 on scope, requirement O1, paragraph 2.3 on TM59.
+- **Approved Document O: Overheating, frequently asked questions.** HM Government (gov.uk), 15 June 2022. Question 1 on extensions, conservatories and change of use.
+- **Beat the heat: keep cool at home checklist.** UK Health Security Agency, updated 21 July 2026. Homes most likely to overheat and plain advice for occupants.
 
 ---
 

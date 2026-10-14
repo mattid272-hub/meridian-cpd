@@ -1,234 +1,231 @@
-
-
 # SMETER Technology: Measured Building Performance for Energy Assessors
-**Course ID:** MER-ALL-014 | **CPD Hours:** 1 | **Published:** August 2026
+**Course ID:** MER-ALL-014 | **CPD Hours:** 1 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
 
-- Explain the SMETER methodology and how smart meter data is used to derive measured thermal performance metrics for buildings, distinguishing these from modelled SAP/RdSAP outputs.
-- Identify the key input variables, normalisation processes, and quality assurance criteria that underpin a valid SMETER assessment.
-- Evaluate how SMETER-derived Heat Transfer Coefficients (HTCs) can complement existing EPC and retrofit assessment workflows to improve recommendation accuracy.
-- Apply SMETER principles to verify post-retrofit energy savings by comparing pre- and post-intervention measured thermal performance data.
-- Recognise the limitations, uncertainty bounds, and practical constraints of measured performance approaches, including occupant behaviour variables and data sufficiency requirements.
+By the end of this course you should be able to:
+- Explain what a heat transfer coefficient (HTC) is and how SMETER technologies estimate it.
+- Summarise what the government's SMETER field trial found about accuracy, including against RdSAP.
+- State the status of SMETER at October 2026: outside the RdSAP 10 EPC method and proposed only as a voluntary supplement to reformed EPCs.
+- Recognise the conditions that make a SMETER result less reliable.
+- Place measured performance within PAS 2035:2023 monitoring and evaluation, and explain a SMETER result to a client without overstating it.
 
 ---
 
 ## Introduction
 
-For the entirety of the EPC regime, we have assessed buildings using modelled energy performance. SAP and RdSAP calculate what a dwelling *should* do based on standardised assumptions about construction, heating systems, and occupancy. Every working assessor knows the gap this creates: the model says one thing, the meter says another. That gap — the "performance gap" — has been a persistent credibility problem for the sector and a material barrier to confident retrofit investment.
+SMETER stands for Smart Meter Enabled Thermal Efficiency Ratings. The Department for Energy Security and Net Zero (DESNZ) uses it as "an umbrella term" for technologies that measure the overall thermal performance of buildings while they are occupied (SMETER strategic guide, DESNZ, July 2026). The main output is the heat transfer coefficient (HTC). You may meet SMETER results through social landlords, heat pump designers and funded retrofit schemes, and clients will ask how a "measured" figure relates to your EPC.
 
-SMETER (Smart Meter Enabled Thermal Efficiency Ratings) addresses this directly. The technology framework, developed through BEIS-funded research trials and now formalised in guidance published August 2026, uses half-hourly smart meter consumption data, external temperature records, and statistical modelling to calculate a building's actual Heat Transfer Coefficient (HTC). The HTC — measured in watts per kelvin (W/K) — represents the real rate at which a building loses heat. It is an empirical measurement, not a prediction.
+The short answer is that it is a separate thing. RdSAP 10 has no route for a measured HTC, and government has proposed, not decided, that a validated SMETER HTC could be recorded voluntarily alongside a reformed EPC.
 
-The significance for assessors is substantial. SMETER outputs do not replace EPCs or RdSAP, but they provide a measured performance layer that can sit alongside modelled ratings. For retrofit assessors working under PAS 2035, measured HTCs offer a route to genuine before-and-after verification: did the fabric intervention actually reduce heat loss by the amount the design predicted? For EPC assessors, familiarity with SMETER methodology will be increasingly expected as the framework matures and integration with lodgement systems develops.
+The EPC reform proposals discussed here cover England and Wales; energy certificates are devolved in Scotland and transferred in Northern Ireland (EPB consultation, "Geographical scope"), so readers there should ask their own government or accreditation scheme. The funding scheme in Section 3 covers England.
 
-This course is not about operating SMETER software. It is about understanding the methodology well enough to interpret outputs, explain them to clients and contractors, and integrate measured performance thinking into your existing assessment practice. The framework draws on established building physics — steady-state heat loss, degree-day normalisation, co-heating test principles — applied at scale through smart meter infrastructure that now covers the majority of the housing stock.
+This edition replaces the August 2026 edition. That edition said SMETER had been formalised in guidance published in August 2026 that set minimum data quality thresholds, and that a SMETER typically needs 6 to 12 weeks of data below about 15°C. We found no such guidance and no source for those figures: what DESNZ published, on 3 July 2026, is an introductory guide for social housing providers that sets no thresholds. The old edition also called SMETER a significant advance over modelled ratings, when in the government trial RdSAP predicted HTC about as well as most SMETERs, and it tied SMETER to PAS 2035, which does not mention it.
 
-You need to understand what SMETER measures, how it measures it, where it is reliable, and where it is not. That is what follows.
-
----
-
-## Section 1: The SMETER Methodology — From Smart Meter Data to Measured Thermal Performance
-
-### What SMETER Actually Calculates
-
-At its core, SMETER calculates the whole-building Heat Transfer Coefficient (HTC). The HTC quantifies total heat loss from a heated building to its external environment, encompassing fabric losses (walls, roof, floor, glazing), ventilation losses, and thermal bridging. It is expressed in W/K — the watts of heating power required to maintain each degree kelvin of temperature difference between inside and outside.
-
-In a controlled co-heating test, you would heat a building to a steady internal temperature, measure energy input, and measure the temperature differential. SMETER achieves an analogous result using operational data from occupied buildings — which is both its power and its primary source of complexity.
-
-### Data Inputs
-
-A SMETER assessment requires three core data streams:
-
-1. **Smart meter consumption data** — half-hourly gas and/or electricity readings over a heating season, typically a minimum of 6–12 weeks of cold-weather data (external temperatures consistently below approximately 15°C). Gas data is primary for gas-heated dwellings; electricity data is used for heat pump or direct electric heating systems.
-
-2. **External temperature data** — sourced from local weather stations, matched to the property's postcode. This provides the ΔT (temperature difference) that drives heat loss.
-
-3. **Internal temperature data** — either assumed (using standardised heating patterns) or, in more refined approaches, measured via internal temperature sensors. The accuracy of the HTC output is significantly affected by which approach is used.
-
-### The Statistical Model
-
-SMETER methods use regression analysis to correlate energy consumption with the inside-to-outside temperature difference. The slope of this regression line — energy input per degree of temperature difference — yields the HTC. Multiple SMETER methods were trialled during the BEIS research programme, ranging from simple steady-state regression to dynamic models that account for thermal mass, solar gains, and metabolic gains.
-
-The critical point: all methods require sufficient heating-season data at meaningful temperature differentials. Summer data is essentially useless. Short monitoring windows or mild winters introduce substantial uncertainty. The guidance specifies minimum data quality thresholds — assessors reviewing SMETER outputs should confirm these have been met before relying on the result.
+The policy statements in this course are correct to 14 October 2026.
 
 ---
 
-## Section 2: Normalisation, Uncertainty, and the Limits of Measured Data
+## Section 1: What a SMETER Measures and How
 
-### Why Normalisation Matters
+### The heat transfer coefficient
 
-Raw smart meter consumption tells you how much energy was used. It does not tell you how thermally efficient the building is, because consumption is entangled with occupant behaviour: thermostat settings, window-opening habits, hours of occupancy, use of secondary heating, and internal heat gains from cooking, appliances, and people.
+The government's technical evaluation defines the HTC as "the rate at which heat is lost per degree Celsius air temperature difference" between inside and outside, "in units of W/K" (TEST executive summary, BEIS, January 2022). Heat is lost by transmission through the fabric and by ventilation, both intended and unintended (strategic guide), so an HTC covers fabric and ventilation losses together. It is a heat loss rate, not an energy rating, a cost or a carbon figure.
 
-SMETER methods attempt to disentangle building performance from occupant behaviour through normalisation. The regression approach inherently normalises for external temperature variation — colder weeks require more energy, and the HTC captures the rate, not the total. However, other behavioural variables are harder to strip out.
+Before SMETER, DESNZ says, an HTC could be measured by an "expensive and intrusive" co-heating test in an unoccupied home, or calculated from survey data and simplified assumptions (strategic guide). RdSAP takes the second route, and PAS 2035:2023 notes that it "makes default assumptions about some aspects of existing dwellings" (clause 4.3.2).
 
-Internal temperature is the most significant confounder. A household that heats to 23°C will consume more energy than one heating to 18°C, but the building's thermal envelope is identical. Without measured internal temperature, SMETER methods must assume a heating regime, introducing uncertainty. The BEIS trials demonstrated that methods using internal temperature monitoring produced materially more accurate HTCs than those relying on assumed profiles.
+### How a SMETER estimates it
 
-### Quantifying Uncertainty
+SMETERs "typically estimate heat losses by analysing the relationship between metered gas and electricity consumption in the home and indoor/outdoor temperature differences" (HEM EPC consultation, DESNZ, January 2026, SMETER section). The physics is an energy balance: averaged over days or weeks, the rate of heat loss equals the rate at which heat is added, most of which smart meters can measure, and methods also account for solar heat using weather station data (SMETER case studies and evidence base annex, DESNZ, 2026, section 3).
 
-SMETER outputs should always be accompanied by uncertainty bounds. During the BEIS validation trials, where SMETER-derived HTCs were compared against co-heating test results (the reference standard), the better-performing methods achieved accuracy within approximately ±10–20% of the co-heating HTC. Some methods performed less well, particularly on dwellings with complex heating arrangements or highly intermittent occupancy.
+Most technologies use energy consumption and weather data, internal temperature sensors ("important for accuracy at dwelling level") and some basic details about the home, over a period that "may be a week or much longer" (strategic guide). The government trial's types ran from T1a (smart meter data only) to T4 (a heating controller with sensors, plus a survey) (TEST executive summary). A later DESNZ project split them into Type A, using only remote data "(e.g. smart meter plus weather data)", and Type B, adding internal temperature data (GHG SMETER project summary, DESNZ, August 2025).
 
-Assessors should treat SMETER HTCs as indicative measurements with known uncertainty, not as exact values. This is still a significant advance over modelled estimates, where the performance gap can exceed 50% in some building typologies — but it is not a laboratory measurement.
+### The reference test
 
-### Known Limitations
+In the trial, every home's HTC was first measured by a co-heating test before occupation. In that test "electric heaters and fans maintain a constant elevated indoor air temperature" in the empty home; the tests lasted on average 12 days after pre-heating (range 6 to 19), and fan pressurisation results were used "to account for ventilation in the measured HTC" (TEST full report). That figure was the benchmark for every SMETER.
 
-Several scenarios reduce SMETER reliability:
+### Where RdSAP 10 stands
 
-- **Multi-fuel heating** — wood burners, coal, or other unmetered fuels add heat that the smart meter does not capture, leading to underestimation of the true HTC.
-- **Communal or shared heating systems** — individual consumption attribution is often unreliable.
-- **Very low occupancy or vacancy** — insufficient internal heat input produces weak regression signals.
-- **Significant solar gain** — south-facing, highly glazed properties may require dynamic methods to avoid overestimating thermal efficiency. Glazing thermal performance itself is characterised under standards such as [L38] BS 6262-2 — *Glazing for Buildings: Energy, light and sound*, which provides the framework for understanding solar energy transmittance and thermal performance of glazing units, relevant when interpreting why certain building geometries produce anomalous SMETER results.
-- **Post-intervention changes** — if monitoring spans a period where retrofit works occur, the data must be cleanly segmented into pre- and post-intervention windows.
+RdSAP 10 calculates heat loss from your survey; where a pressure test result "at 50Pa or 4Pa" is available, it is used for the effective air change rate (RdSAP10 Specification v4.0, section 4.1, Table 5). Neither the Specification v4.0 (7 June 2026) nor Conventions v12.2 contains the words SMETER or heat transfer coefficient, and we found no provision in either for entering metered consumption. The conventions' only smart meter item is recording the meter type (convention 9.13).
 
 ---
 
-## Section 3: SMETER in the Context of EPCs, Retrofit Assessments, and PAS 2035
+## Section 2: What the Government Trial Found
 
-### Complementing, Not Replacing, Modelled Assessments
+### The programme
 
-The August 2026 guidance positions SMETER as a complementary framework. RdSAP remains the statutory basis for EPC production. SMETER does not generate an Energy Efficiency Rating or Environmental Impact Rating. What it provides is a measured HTC that can be compared to the modelled HTC implicit in the SAP/RdSAP calculation.
+BEIS set up the SMETER Innovation Programme "to develop, test and demonstrate technologies that measure the thermal performance of homes" (programme page, gov.uk, published 1 September 2018).
 
-This comparison is where the value lies. Where the measured HTC significantly exceeds the modelled HTC (indicating worse-than-expected performance), it flags potential issues: unrecorded thermal bridging, insulation defects, higher-than-assumed infiltration rates, or degraded building fabric. Where the measured HTC is substantially lower than modelled, it may indicate conservative assumptions in the model — or unrecorded insulation measures.
+The results were published on 27 January 2022 as the "Technical Evaluation of SMETER Technologies (TEST) project": nine competition partners, 30 occupied homes (gov.uk publication page). The homes belonged to Halton Housing in north-west England: two-storey houses and bungalows of 38 m² to 83 m², in EPC bands C or D, all with the same or very similar gas combi boilers. Occupants moved in between October 2019 and February 2020, and monitoring ran to 6 August 2020, then over a second winter to 25 February 2021 (TEST executive summary).
 
-For assessors, this creates a feedback loop. If you lodge an EPC for a property where a SMETER assessment has also been completed, the comparison between modelled and measured performance can inform the quality and accuracy of your input data. It can highlight where default assumptions have been applied where specific data should have been gathered.
+### Accuracy
 
-### Application in Retrofit Assessment
+NMBE measures average bias and "would ideally be zero"; CVRMSE measures precision, and "A lower CVRMSE is better" (TEST executive summary). The results were:
+- SMETERs: NMBE from -0.7% (best) to -26.9% (worst); CVRMSE from 13.4% to 38.9%.
+- RdSAP by the TEST team's experts: NMBE -2.8%, CVRMSE 18.2%.
+- RdSAP by a commercial domestic energy assessor, for 22 of the homes: NMBE -1.1%, CVRMSE 19.6%.
 
-Under PAS 2035, the Retrofit Coordinator is responsible for the whole-house approach and the medium-term improvement plan. SMETER data offers the Coordinator a measured baseline against which to design interventions and, critically, to verify outcomes.
+The two best SMETERs beat the expert RdSAP, but against the commercial RdSAP "only SMETER H" was more accurate on both measures. Participants' confidence intervals averaged between 12% and 33%. Products with nothing installed in the home (T1a and T1b) "did not always perform as well" as those with sensors, suggesting that measuring internal temperature "is likely to lead to more accurate SMETER-calculated HTCs" (TEST executive summary).
 
-Consider a solid-wall property where external wall insulation is proposed. The RdSAP model predicts a reduction in fabric heat loss based on the specified U-value of the insulation system. Post-installation, a second SMETER monitoring window — again requiring sufficient heating-season data — can measure whether the actual HTC reduction matches the prediction. If it does not, the Coordinator has evidence to investigate installation quality, thermal bridging at junctions, or increased ventilation losses arising from altered moisture dynamics.
+Three cautions. The RdSAP used was the version of the time (the report names "RdSAPv12" software, and the commercial platform was version 9.94), not RdSAP 10, whose specification was first published on 3 November 2023 (RdSAP10 Specification v4.0, version history). The report says the commercial assessor "was very experienced", the homes were "relatively simple to assess", and "the average commercial RdSAP HTC would not be as accurate as observed here" (TEST executive summary). And government's own summary is cautious: SMETERs "can sometimes be more accurate than the current SAP approach", and their accuracy "can however vary" (HEM EPC consultation).
 
-This verification function is particularly relevant where retrofit funding requires evidence of energy savings. Measured data is harder to dispute than modelled projections.
+### What the trial could not tell us
 
-### Ventilation Interactions
+There were "no flats, new-build homes, or larger homes", and it was not yet possible to comment on homes rated A and B or with heat pumps. In well-insulated homes, solar and occupant gains "may lead to systematic errors". The ability of SMETERs "to calculate changes in HTC should also be assessed". The report called for protocols defining where each SMETER can be reliably applied and dealing with unmetered heat such as wood burners, appliances outside the heated envelope such as electric vehicles, and ill-defined envelopes such as conservatories (TEST executive summary).
 
-One area where assessors should exercise particular caution is ventilation. SMETER measures *total* heat loss — fabric plus ventilation. If a fabric retrofit reduces conductive losses but the ventilation regime changes (either through increased airtightness requiring mechanical ventilation, or through the installation of trickle vents or air transfer devices), the measured HTC change reflects both effects. Assessors should be aware that ventilation component performance — including air transfer devices tested to standards such as [L67] BS EN 13141-1:2019 — *Ventilation performance testing: Air transfer devices* — influences the ventilation component of the HTC. Interpreting post-retrofit SMETER data without accounting for ventilation changes can lead to incorrect conclusions about fabric performance.
+### Later evidence on before-and-after measurement
+
+DESNZ's Green Homes Grant SMETER project, published on 4 September 2025, studied 2,455 homes from the voucher scheme and 105 from Local Authority Delivery. Remote-only (Type A) SMETERs estimated an average HTC reduction of about 20 W/K from a baseline of about 250 W/K, while a model based on EPC data predicted about 60 W/K, "likely overestimated". The study "suggests that Type A SMETERs are suitable for analysis of a cohort of homes receiving retrofit", with error "reduced significantly" at 50 homes and above, but they are "not sufficiently accurate to identify the performance of works in individual homes"; SMETERs were less accurate "for underheated homes or those with unmetered heating". With no reference HTCs, accuracy "was unable to be explored" (GHG SMETER project summary).
 
 ---
 
-## Section 4: Practical Integration — Using SMETER Outputs in Your Assessment Workflow
+## Section 3: Where SMETER Stands in Policy, October 2026
 
-### When You Will Encounter SMETER Data
+### Not part of the EPC
 
-As the framework scales, assessors will encounter SMETER data in several contexts:
+Existing-home EPCs are produced with RdSAP 10, under Conventions v12.2, "Applicable from 06/08/2026". The Home Energy Model (HEM) is intended in future to "replace the current approved methodology for assessing homes", SAP and RdSAP (HEM EPC consultation, Chapter 1). We found no provision for lodging a SMETER result as, or within, an EPC today in the RdSAP10 Specification v4.0 or Conventions v12.2, and the HEM proposal below is for a future option. That is our inference, not a stated rule. No source read for this course makes SMETER mandatory for anyone.
 
-- **Retrofit projects** where the client or funder requires measured performance verification.
-- **Social housing stock** assessments where landlords are deploying SMETER across portfolios to prioritise intervention.
-- **Green finance applications** where lenders require measured evidence of efficiency improvement.
-- **Disputes or quality assurance** cases where post-works energy savings are contested.
+### The EPB consultation and response
 
-You will not typically be generating SMETER assessments yourself — the analysis requires specialist software and data processing. Your role is to interpret the outputs, integrate them with your lodged assessment data, and communicate findings.
+The consultation "Reforms to the Energy Performance of Buildings regime" (MHCLG and DESNZ, December 2024) said government was "moving to piloting applications for net zero priority areas" while developing quality assurance, and asked about SMETER in question 11 (EPB consultation, Chapter 2). The partial response of 21 January 2026 reported that most concerns related to "barriers to a universal or mandatory metric based on SMETERs" (paragraph 23). Government recognised the value of "real world data on the in-use performance of homes" and took the question to the HEM consultation (paragraph 31). The domestic headline metrics it decided are energy cost, fabric performance, heating system and smart readiness (paragraph 25); SMETER is not among them.
 
-### Reading a SMETER Output
+### The January 2026 HEM proposal
 
-A SMETER report will typically present:
+DESNZ's consultation "Home Energy Model: Energy Performance Certificates" (21 January to 18 March 2026) proposes "an option to voluntarily record appropriately validated and quality assured" SMETER HTC estimates "alongside an HTC calculated by the Home Energy Model", supplementary to the headline fabric metric, with presentation "to be determined" (questions 7 and 8). Because HEM "necessarily assumes that buildings are well built and maintained", a comparison could "help reveal hidden defects, assess retrofit quality and help validate" EPC assessments. SMETER providers "must comply with the Data Protection Act 2018" and the smart meter Data Access and Privacy Framework (HEM EPC consultation, SMETER section). On 14 October 2026 the page still read "We are analysing your feedback". It is a proposal, not a decision.
 
-- **Measured HTC (W/K)** with confidence intervals.
-- **Monitoring period** and data completeness metrics.
-- **Comparison to modelled HTC** (where available from an EPC or SAP calculation).
-- **Data quality flags** — identifying periods of incomplete data, sensor issues, or anomalous consumption patterns.
+The October 2025 response on HEM itself said "direct incorporation of SMETER outputs as HEM inputs is neither straightforward nor appropriate in many cases" (HEM consultation response, "Fabric Heat Loss"). So the measured HTC would sit beside the calculated one, not feed the rating.
 
-Your first check should be data sufficiency. Was the monitoring period long enough? Was external temperature low enough to produce meaningful ΔT? Were there periods of missing data, and if so, how were they handled? If the confidence intervals are wide, the result is indicative but not definitive.
+### Timing
 
-### Communicating to Clients
+The January 2026 response aimed "to deliver new EPCs from October 2026" (paragraph 74). On 9 March 2026 government "decided to move the launch of the reforms to the second half of 2027", with a launch date and plan to be agreed "by the summer of this year" (EPB consultation page, outcome update). That page showed no later update on 14 October 2026.
 
-Clients — homeowners, landlords, housing associations — will increasingly ask what their "real" energy rating is. Be precise in your response. A SMETER HTC is not an energy rating. It is a thermal performance metric. It tells you how fast the building loses heat, not how much energy it will consume (which also depends on heating system efficiency, thermostat settings, and occupant behaviour). Frame it correctly: "This building's measured heat loss rate is X W/K, meaning for every degree difference between inside and outside temperature, it loses X watts of heating power."
+### DESNZ guidance and validation work
 
-### Professional Development Trajectory
+On 3 July 2026 DESNZ published "Smart meter enabled thermal efficiency ratings (SMETER): strategic guide", aimed at social housing providers, with an evidence base annex. It describes uses such as stock prioritisation, heat pump sizing and before-and-after monitoring, and says "DESNZ is developing SMETER validation and quality assurance systems" (strategic guide). The annex says process controls are "currently being designed in SMETER QA work" (evidence annex, section 3). Neither sets thresholds or requirements, though the annex states a "guiding principle for validation": SMETER measurement uncertainty "should be less than the error in the current calculation methods used for EPCs".
 
-SMETER is still maturing. The methodology will be refined, integration with lodgement platforms will develop, and the role of the assessor may expand to include quality assurance of SMETER monitoring installations. Staying current with the guidance updates and understanding the building physics underpinning the method positions you for that evolution.
+### Funding schemes and standards
+
+The Warm Homes: Social Housing Fund Wave 3 guidance (England; the wave is now closed to applications) treats "SAP-eligible technologies which would enable" SMETER, such as smart thermostats, as an eligible measure, "only if they are part of a technology or measure that can be modelled in RdSAP/SAP", and encourages installing them first "so that the effect of changes to the home can be recorded" (WH:SHF Wave 3 scheme guidance, updated July 2026, section 2.9 and June 2026 addendum). Eligible, not required.
+
+No British Standard or PAS specific to SMETER was found. Related documents, not read for or taught in this course, are BS EN 17887-1:2024, "Thermal performance of buildings. In situ testing of completed buildings. Data collection for aggregate heat loss test", BS EN 17887-2:2024, "Thermal performance of buildings. In situ testing of completed buildings. Steady-state data analysis for aggregate heat loss test" (both 31 May 2024, BSI Knowledge), and CIBSE TM71 "Measuring heat transfer coefficients in buildings" (June 2026, CIBSE Knowledge Portal).
+
+---
+
+## Section 4: Measured Performance in Your Practice
+
+### What PAS 2035:2023 says
+
+PAS 2035:2023 does not mention SMETER, heat transfer coefficients or co-heating, but it does set out monitoring and evaluation:
+- The Retrofit Coordinator shall evaluate every project (clause 13.1) and prepare a monitoring and evaluation plan (clause 8.1.6).
+- Monitoring and evaluation "shall be carried out by a Retrofit Evaluator" (clause 13.2.1), a Retrofit Coordinator qualified in accordance with A.2 (A.4.1).
+- For further monitoring and evaluation the Retrofit Evaluator "shall not be the same person as the Retrofit Coordinator" and independent of the Retrofit Assessor, Retrofit Designer and installer; for basic evaluation they can be the same person (A.5.1 and its note).
+- Basic evaluation, a client and occupant questionnaire, applies to every project and is reported within three months after handover (clauses 13.3.1 a), 13.4.1, 13.4.3).
+- Further monitoring and evaluation applies where, among other triggers, outcomes differ significantly or someone requests "more detailed performance measurement" (clause 13.3.1 b)). It is designed in accordance with BS 40101, with client and occupant consent (clauses 13.5.1, 13.3.2).
+
+The PAS lists techniques for "measuring heat loss through the whole building envelope", monitoring energy use "from utility meters" and "monitoring internal temperatures, using sensors and loggers", and says coordinators and evaluators should keep updated "about new and emerging monitoring techniques" (clauses 4.3.4 b), 4.3.5 a) and c), 4.3.6). A SMETER draws on these kinds of data, so it is one technique an evaluator could choose; nothing in the PAS requires it. These requirements bind where a scheme or contract adopts PAS 2035, as the WH:SHF guidance does ("Measures installed must adhere to requirements within PAS 2035"). BS 40101:2022, "Building performance evaluation of occupied and operational buildings (using data gathered from tests, measurements, observation and user experience). Specification", was published on 31 January 2022 and is current (BSI Knowledge).
+
+### Reading a SMETER result
+
+None of these is a requirement; they are sensible questions drawn from the limits the sources describe:
+- What type of method? In the GHG project remote-only methods were not accurate enough to show the effect of works in single homes.
+- What period and season? In TEST the homes occupied last had shorter winter data, which "may have disadvantaged some SMETER technologies" (TEST executive summary).
+- How wide is the confidence interval?
+- Was all the heat metered? Wood burners, unmetered PV or EV charging can affect the result (TEST executive summary; evidence annex). Because the method equates heat lost with heat supplied, unseen heat would make the home look better than it is (our reasoning, not a finding in the sources).
+- Was the home heated normally, with a clear heated envelope?
+- Who validated the method? DESNZ describes its validation and quality assurance systems as still being developed (strategic guide; evidence annex).
+
+### Comparing it with your EPC
+
+A marked difference between a credible measured HTC and your calculated one is information, not proof of error on either side. DESNZ's annex attributes the gap to causes including construction defects and modelling assumptions, some "correctable with administrative data, such as correctly identifying energy efficiency measures present in the home" (evidence annex, section 3). A sensible habit is to recheck your own evidence first. "The HTC on its own cannot identify the best package of building fabric measures"; infra-red surveys or U-value measurement can follow (strategic guide). And the HTC "may be influenced by the occupants' use of mechanical and natural ventilation" (evidence annex).
+
+### Talking to clients
+
+Be plain: a measured HTC is a heat loss rate with an uncertainty attached, not an energy efficiency rating, and the government proposal is for it to sit alongside an EPC, not replace one.
 
 ---
 
 ## Key Takeaways
 
-- SMETER uses smart meter data and external temperature records to calculate a building's measured Heat Transfer Coefficient (HTC) in W/K, providing an empirical counterpart to modelled SAP/RdSAP performance estimates.
-- The methodology requires a minimum heating-season monitoring window with sufficient temperature differential; summer data and short monitoring periods produce unreliable results.
-- Internal temperature measurement significantly improves HTC accuracy; methods relying on assumed heating patterns carry greater uncertainty, typically in the range of ±10–20% against co-heating reference tests.
-- SMETER outputs complement but do not replace EPCs — they provide a measured performance layer that can validate or challenge modelled assumptions.
-- Pre- and post-retrofit SMETER monitoring offers a credible route to verifying actual energy savings, which is increasingly required by funding bodies and green finance providers.
-- Assessors must account for ventilation changes when interpreting post-retrofit HTC data — fabric and ventilation losses are combined in the measured HTC and cannot be separated without additional analysis.
-- Unmetered heat sources, complex heating arrangements, and very low occupancy are known limitations that should trigger caution when reviewing SMETER outputs.
+The points to keep:
+- An HTC is heat loss per degree Celsius of inside-outside temperature difference, in W/K, covering fabric and ventilation.
+- SMETERs estimate it from metered energy, temperature and weather data; measuring internal temperature is likely to improve accuracy.
+- In the government trial of 30 band C and D homes, RdSAP predicted HTC about as well as most SMETERs, though the report warns that average commercial RdSAP would be less accurate than observed.
+- The GHG study suggested remote-only SMETERs suit cohorts of retrofitted homes but are not accurate enough to show the effect of works in individual homes.
+- SMETER is not part of RdSAP 10 or the EPC, and no source we read makes it mandatory.
+- The January 2026 HEM consultation proposes voluntary recording of a validated SMETER HTC; responses are still being analysed, and EPC reform has moved to the second half of 2027.
+- PAS 2035:2023 does not mention SMETER; monitoring and evaluation is by a Retrofit Evaluator, with further monitoring designed in accordance with BS 40101.
 
 ---
 
 ## Self-Assessment Questions
 
-**Question 1:** What does the SMETER methodology primarily calculate?
+**Q1.** What does a heat transfer coefficient (HTC) express?
 
-A) The building's annual energy consumption in kWh/m²/year
-B) The building's Energy Efficiency Rating as displayed on an EPC
-C) The building's whole-building Heat Transfer Coefficient (HTC) in W/K
-D) The building's carbon dioxide emissions rate in kg CO₂/m²/year
+A) Annual space heating demand per square metre of floor area
+B) The Energy Efficiency Rating band shown on an EPC
+C) The rate of heat loss per degree Celsius of inside-outside air temperature difference, in W/K
+D) Annual carbon dioxide emissions in kilograms
 
-**Correct answer: C**
-*SMETER calculates the whole-building HTC, which quantifies the total rate of heat loss from the building per degree of temperature difference between inside and outside. It does not generate an EPC rating or a direct consumption figure.*
-
----
-
-**Question 2:** Which factor most significantly improves the accuracy of a SMETER-derived HTC compared to using assumed occupancy profiles?
-
-A) Using a longer monitoring period of 12 months rather than 6 weeks
-B) Measuring actual internal temperatures with sensors during the monitoring period
-C) Using electricity data instead of gas data for all dwelling types
-D) Applying a fixed correction factor for building orientation
-
-**Correct answer: B**
-*The BEIS trials demonstrated that methods incorporating measured internal temperature data produced materially more accurate HTCs. Internal temperature is the most significant behavioural variable affecting the regression analysis, and assuming it introduces substantial uncertainty.*
+**Correct answer: C.** The TEST evaluation defines the HTC as heat lost per degree Celsius air temperature difference, in W/K; it is not a rating, demand or emissions figure (Section 1).
 
 ---
 
-**Question 3:** An assessor reviews a SMETER output for a dwelling that has recently had external wall insulation installed. The measured HTC has reduced, but by less than the RdSAP model predicted. What is the MOST likely explanation to investigate first?
+**Q2.** In the government's TEST field trial, how did the SMETERs compare with the commercial RdSAP prediction of HTC?
 
-A) The smart meter is recording incorrectly
-B) The external temperature data source has changed
-C) Ventilation losses have changed or thermal bridging at junctions has not been addressed
-D) The occupants have changed their cooking habits
+A) Only one SMETER was more accurate than the commercial RdSAP on both bias (NMBE) and precision (CVRMSE)
+B) Every SMETER was more accurate than the commercial RdSAP on both measures
+C) No comparison with RdSAP was made because the homes had no EPCs
+D) The worst SMETER bias was under 5%
 
-**Correct answer: C**
-*A lower-than-expected HTC reduction post-fabric-retrofit is commonly attributable to thermal bridging at junctions that the model did not fully account for, or to changes in ventilation regime (e.g., increased airtightness altering infiltration patterns, or new ventilation provisions). SMETER measures total heat loss — fabric and ventilation combined — so ventilation changes can mask fabric improvements.*
-
----
-
-**Question 4:** Which of the following scenarios would MOST compromise the reliability of a SMETER assessment?
-
-A) The dwelling has a condensing gas boiler with a seasonal efficiency of 89%
-B) The dwelling uses a wood-burning stove as a significant secondary heat source
-C) The dwelling is located in a region with average winter temperatures of 4°C
-D) The dwelling has cavity wall insulation installed 10 years ago
-
-**Correct answer: B**
-*Unmetered heat sources — such as wood-burning stoves — add thermal energy that the smart meter does not capture. This causes the regression analysis to underestimate the actual heating energy input, leading to a falsely low (i.e., optimistic) measured HTC.*
+**Correct answer: A.** Against the commercial RdSAP "only SMETER H" was more accurate on both measures, and SMETER bias ranged to -26.9% (TEST executive summary; Section 2).
 
 ---
 
-**Question 5:** A client asks whether their SMETER result can replace their EPC. What is the correct response?
+**Q3.** What did DESNZ's Green Homes Grant SMETER project conclude about remote-only (Type A) SMETERs?
 
-A) Yes, a SMETER result can be lodged as an alternative to a standard EPC
-B) No, SMETER provides a measured HTC but does not generate a statutory Energy Efficiency Rating or Environmental Impact Rating
-C) Yes, but only for properties built after 2010
-D) No, because SMETER is only valid for social housing stock
+A) They verified the savings in each individual home to within 1 W/K
+B) They accounted for changes in internal temperature better than methods measuring it
+C) They showed a larger HTC reduction than the EPC-data model predicted
+D) They were suitable for cohorts but not sufficiently accurate for individual homes
 
-**Correct answer: B**
-*SMETER does not replace the statutory EPC. RdSAP remains the regulatory basis for EPC production. SMETER provides a complementary measured thermal performance metric (HTC) that can sit alongside and inform modelled assessments, but it does not produce an Energy Efficiency Rating.*
+**Correct answer: D.** The study suggested Type A methods suit cohorts but were "not sufficiently accurate" for individual homes, and estimated about 20 W/K against the model's 60 W/K (GHG SMETER project summary; Section 2).
+
+---
+
+**Q4.** What was the status of SMETER in the EPC system on 14 October 2026?
+
+A) SMETER results have been mandatory on EPCs since August 2026
+B) Government had proposed an option to record a validated SMETER HTC voluntarily, and was still analysing feedback
+C) Conventions v12.2 allow a SMETER HTC to replace the RdSAP heat loss calculation
+D) SMETER has replaced the proposed fabric performance metric
+
+**Correct answer: B.** The HEM EPC consultation proposes a voluntary, supplementary entry and was still marked "We are analysing your feedback" (Sections 1 and 3).
+
+---
+
+**Q5.** Under PAS 2035:2023, who carries out monitoring and evaluation of a retrofit project?
+
+A) The Retrofit Assessor
+B) The Retrofit Installer
+C) A Retrofit Evaluator, who is a Retrofit Coordinator qualified in accordance with Annex A
+D) TrustMark
+
+**Correct answer: C.** Clause 13.2.1 says monitoring and evaluation shall be carried out by a Retrofit Evaluator, and A.4.1 says that person is a Retrofit Coordinator qualified in accordance with A.2 (PAS 2035:2023; Section 4).
 
 ---
 
 ## Further Reading
 
-1. **BEIS SMETER Technologies Project** — Final reports and methodology documentation from the Government-funded research trials validating SMETER approaches. Available at: https://www.gov.uk/government/publications/smart-meter-enabled-thermal-efficiency-ratings-smeter-technologies (verify URL for current availability; site may have migrated to DESNZ).
-
-2. **[L38] BS 6262-2 — *Glazing for Buildings: Energy, light and sound*** — Relevant for understanding glazing thermal performance characteristics and solar energy transmittance, which influence building heat loss profiles and SMETER outputs for highly glazed properties.
-
-3. **[L67] BS EN 13141-1:2019 — *Ventilation performance testing: Air transfer devices*** — Provides the testing framework for ventilation components whose performance directly affects the ventilation heat loss component of a measured HTC. Essential reference when interpreting post-retrofit SMETER data where ventilation provisions have changed.
-
-4. **PAS 2035:2023 — *Retrofitting dwellings for improved energy efficiency — Specification and guidance*** — The overarching retrofit framework under which SMETER-based performance verification is increasingly being applied, particularly for medium-term plan monitoring and post-works evaluation.
-
-5. **BRE Report: Co-heating test methodology** — The reference standard against which SMETER methods were validated during trials. Understanding co-heating principles provides the conceptual foundation for interpreting SMETER HTCs.
-
-6. **SAP 10.2 / RdSAP documentation** — Current Government-published methodology for modelled energy performance calculation, against which SMETER measured HTCs can be compared. Available at: https://www.bregroup.com/sap/
+Sources used for this course:
+- **Technical Evaluation of SMETER Technologies (TEST) project: executive summary.** BEIS, January 2022. The accuracy results and what was not tested.
+- **Smart meter enabled thermal efficiency ratings (SMETER): strategic guide, with its evidence base annex.** DESNZ, July 2026. The annex's section on accuracy.
+- **Home Energy Model (HEM) methodology for assessing existing dwellings and producing new Energy Performance Certificates metrics.** DESNZ consultation, January 2026. The SMETER section; check for an outcome.
+- **Green Homes Grant (GHG) SMETER project: summary.** DESNZ, August 2025. Cohorts versus individual homes.
+- **Reforms to the Energy Performance of Buildings regime: partial government response.** MHCLG and DESNZ, January 2026. Paragraphs 23, 25 and 31.
+- **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, 2023. Clauses 4.3 and 13.
 
 ---
 
