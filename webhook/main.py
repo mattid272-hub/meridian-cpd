@@ -81,20 +81,20 @@ COURSES = {
     "MER-RA-002":  {"course_id": "MER-RA-002",  "title": "Moisture and PAS 2035:2023: What the Retrofit Assessor Records and Reports", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-003":  {"course_id": "MER-RA-003",  "title": "Retrofit Assessment: What PAS 2035:2023 Clause 7 Requires You to Record and Report", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-004":  {"course_id": "MER-RA-004",  "title": "Cavity Wall Insulation: Risk Factors and the Retrofit Assessor's Role", "cpd_hours": 1.0, "published": "2026-03-01"},
-    "MER-RA-005":  {"course_id": "MER-RA-005",  "title": "Solid Wall Insulation: IWI vs EWI — Risks, Evidence and Assessment", "cpd_hours": 1.0, "published": "2026-03-01"},
+    "MER-RA-005":  {"course_id": "MER-RA-005",  "title": "Solid Wall Insulation: IWI vs EWI, Risks, Evidence and Assessment", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-006":  {"course_id": "MER-RA-006",  "title": "EPR Variation: The RdSAP 10 Transition in ECO4 and GBIS Projects", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-007":  {"course_id": "MER-RA-007",  "title": "Heating System Assessment for Retrofit: What the Retrofit Assessor Must Record", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-008":  {"course_id": "MER-RA-008",  "title": "Ventilation Assessment in Retrofit: Background Ventilation to MVHR", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-009":  {"course_id": "MER-RA-009",  "title": "External Wall Insulation: Planning Permission and Fire Risk", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-RA-010":  {"course_id": "MER-RA-010",  "title": "Thermal Bridging in Retrofit Assessment: What Assessors Must Record", "cpd_hours": 1.0, "published": "2026-03-01"},
-    "MER-RA-011":  {"course_id": "MER-RA-011",  "title": "Occupancy Assessment: Health Conditions, Vulnerability and Overheating Risk", "cpd_hours": 1.0, "published": "2026-03-01"},
-    "MER-RA-012":  {"course_id": "MER-RA-012",  "title": "TrustMark Data Requirements: What Retrofit Assessors Must Submit", "cpd_hours": 1.0, "published": "2026-03-01"},
+    "MER-RA-011":  {"course_id": "MER-RA-011",  "title": "Occupancy Assessment: Vulnerable Occupants and Overheating Under PAS 2035:2023", "cpd_hours": 1.0, "published": "2026-03-01"},
+    "MER-RA-012":  {"course_id": "MER-RA-012",  "title": "TrustMark Lodgement: What the Retrofit Assessment Must Contain and Who Lodges It", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-ALL-001": {"course_id": "MER-ALL-001", "title": "UK Energy Policy 2026: What Assessors Need to Know", "cpd_hours": 1.0, "published": "2026-03-01"},
     "MER-ALL-004": {"course_id": "MER-ALL-004", "title": "Fire Safety in Retrofit: What Every Assessor Must Know", "cpd_hours": 1.0, "published": "2026-03-01"},
-    "MER-ALL-005": {"course_id": "MER-ALL-005", "title": "Future Homes Standard 2025: What Energy Assessors Need to Know", "cpd_hours": 1.0, "published": "2026-04-15"},
+    "MER-ALL-005": {"course_id": "MER-ALL-005", "title": "Future Homes Standard 2026: What Energy Assessors Need to Know", "cpd_hours": 1.0, "published": "2026-04-15"},
     "MER-ALL-008": {"course_id": "MER-ALL-008", "title": "Renters' Rights Act 2025: Impact on EPCs and Energy Assessors", "cpd_hours": 1.0, "published": "2026-07-01"},
-    "MER-ALL-009": {"course_id": "MER-ALL-009", "title": "Heat Loss Assessments: The DEA's Role in Heat Pump Readiness", "cpd_hours": 1.0, "published": "2026-07-15"},
-    "MER-ALL-010": {"course_id": "MER-ALL-010", "title": "Damp and Mould Assessments: Scotland's New Framework and UK Implications", "cpd_hours": 1.0, "published": "2026-08-01"},
+    "MER-ALL-009": {"course_id": "MER-ALL-009", "title": "Heat Loss Calculations for Heat Pumps: Where the EPC and the Assessor Fit", "cpd_hours": 1.0, "published": "2026-07-15"},
+    "MER-ALL-010": {"course_id": "MER-ALL-010", "title": "Damp and Mould Investigations: Scotland's 2026 Duties and the Assessor's Role", "cpd_hours": 1.0, "published": "2026-08-01"},
     "MER-ALL-011": {"course_id": "MER-ALL-011", "title": "Non-Domestic MEES: The EPC E Minimum in Force and the Proposed EPC B Standard for 2031", "cpd_hours": 1.0, "published": "2026-08-01"},
     "MER-ALL-012": {"course_id": "MER-ALL-012", "title": "Whole Life Carbon for Energy Assessors: What It Means and Why Now", "cpd_hours": 1.0, "published": "2026-08-15"},
     "MER-ALL-013": {"course_id": "MER-ALL-013", "title": "Overheating Assessment in Existing Homes: TM59 2026 Update", "cpd_hours": 1.0, "published": "2026-08-01"},
@@ -114,11 +114,8 @@ COURSES = {
 # course, publish its corrected PDF and delete its ID from this set (and from the same
 # list in landing-page/courses.html). Certificates already issued are not affected.
 UNDER_REVIEW = {
-    "MER-RA-004", "MER-RA-005", 
-    "MER-RA-007", "MER-RA-010", "MER-RA-011", "MER-RA-012",
-    "MER-ALL-005", "MER-ALL-008", "MER-ALL-009",
-    "MER-ALL-010", "MER-ALL-012", "MER-ALL-013", "MER-ALL-014",
-    "MER-ALL-015", "MER-ALL-016", "MER-ALL-017",
+    "MER-ALL-012", "MER-ALL-013", "MER-ALL-014",
+    "MER-ALL-016",
 }
 
 
@@ -764,6 +761,9 @@ async def verify_certificate(cert_number: str):
 
 @app.get("/health")
 def health():
+    # Re-read the catalogue and the withdrawn list on the same ten-minute cycle as the
+    # member routes, so the counts here reflect what members can actually download.
+    refresh_catalogue()
     listed = [k for k in COURSES if k != "SUBSCRIPTION"]
     return {
         "status": "ok",

@@ -1,173 +1,226 @@
-
-
-# Occupancy Assessment: Health Conditions, Vulnerability and Overheating Risk
-**Course ID:** MER-RA-011 | **CPD Hours:** 1.0 | **Published:** March 2026
+# Occupancy Assessment: Vulnerable Occupants and Overheating Under PAS 2035:2023
+**Course ID:** MER-RA-011 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Record all mandatory occupancy data fields required by PAS 2035:2023 Annex A, including household composition, health conditions, and vulnerability indicators.
-- Apply the vulnerability categorisation framework to identify occupants who require additional consideration in the retrofit design process.
-- Assess overheating risk for the dwelling and its occupants, using the CIBSE TM59 triggers and PAS 2035:2023 overheating assessment requirements.
-- Conduct the occupancy assessment in a way that is sensitive, non-intrusive, and compliant with data protection requirements.
-- Explain how occupancy data influences pathway determination, measure selection, and the content of the Retrofit Coordinator's improvement pathway.
+- State what PAS 2035:2023 clause 7.3.2 k) requires in the appraisal of occupancy, and what it does not require.
+- Tell the requirements in PAS 2035:2023 that concern occupants' health, comfort and vulnerability from its guidance, and say which role each requirement falls on.
+- Explain what the retrofit assessment records that bears on overheating, and why the overheating risk assessment is the Retrofit Designer's job at design stage.
+- Handle health information in line with what the standard asks and the UK GDPR rules on data concerning health, and pass concerns to the Retrofit Coordinator.
+- Place Approved Document O, BS 40104:2025 and the ECO4 medical referral route correctly beside the PAS 2035:2023 occupancy appraisal.
 
 ---
 
 ## Introduction
 
-Retrofit is not just about buildings — it is about the people who live in them. The measures we install interact with occupant behaviour, health, and vulnerability in ways that can determine whether a retrofit delivers its intended benefits or creates new problems. An energy-efficient dwelling that overheats in summer creates life-threatening risk for elderly occupants. An IWI installation that reduces background ventilation for an occupant with severe asthma may worsen their respiratory health. A draught-proofing package that increases indoor humidity causes problems for someone with dust-mite allergies.
+This course covers what PAS 2035:2023 requires the Retrofit Assessor to record about the people who live in a dwelling, where that record goes next, and how overheating is dealt with across the process. It gives no medical advice: on health, it stays with what the standard asks you to record and who you pass it to.
 
-PAS 2035:2023 makes occupancy data mandatory precisely because these interactions are real and their consequences are serious. The Retrofit Assessor's role in this is to collect the data accurately, sensitively, and in a format that is useful to the Retrofit Coordinator and Retrofit Designer. This course covers what data must be collected, how to collect it appropriately, how vulnerability categorisation works, and how overheating risk must be assessed.
+PAS 2035:2023, "Retrofitting dwellings for improved energy efficiency: Specification and guidance", is the second edition, published by BSI in September 2023. Its Foreword says it came into effect on 30 March 2025 and supersedes PAS 2035:2019+A1:2022. BSI's catalogue listed it as "Current" when checked on 14 October 2026. It is a Publicly Available Specification, not law. Its requirements use "shall"; commentary and explanation are not normative (Foreword). It binds you where your scheme, contract or funding rule adopts it; for example, Ofgem's ECO4 guidance says ECO4 projects involving measures referred to in PAS 2035:2023 "should follow" its retrofit process (ECO4 Guidance: Delivery v4.0, paragraph 4.15). Clauses 4 and 5 are headed "Guidance about" and use "should"; clauses 6 to 13 are headed "Requirements for".
 
----
+PAS 2035:2023 is not written for one nation: its normative references include the ventilation guidance of all four UK nations (clause 2, [N3] to [N6]). The UK GDPR applies to organisations established anywhere in the UK (UK GDPR, Article 3(1)). Approved Document O is for use in England only. ECO4 is a Great Britain scheme: local authorities in England, Wales or Scotland can refer households through it (ECO4 Guidance: Delivery v4.0, paragraph 3.173). This course is correct to 14 October 2026.
 
-## Section 1: Mandatory Occupancy Data Fields — PAS 2035:2023 Annex A
-
-**Household composition.** The mandatory minimum is: total number of occupants, and the count within the following age categories: under 5 years, 5–16 years, 17–60 years, 61–74 years, 75 years and over. Age distribution matters because both very young children and elderly occupants are more vulnerable to overheating, cold, and poor air quality than working-age adults. It also affects the moisture load produced by the household (occupant breathing, cooking, bathing) and therefore the ventilation adequacy assessment.
-
-**Health conditions.** PAS 2035:2023 requires the assessor to record any health conditions that are relevant to retrofit decision-making. The standard categorises these broadly as:
-- Respiratory conditions (asthma, COPD, bronchiectasis, pulmonary fibrosis) — relevant to ventilation strategy, humidity, and dust disturbance during works
-- Cardiovascular conditions (heart disease, hypertension) — relevant to temperature management and overheating risk
-- Mobility or physical disability — relevant to access, disruption during installation, and specific measure selection (e.g., floor insulation with raised floor levels)
-- Immune compromise — relevant to mould risk and dust during works
-- Mental health conditions — relevant to the disruption of installation works and the occupant's ability to manage the process
-
-The assessor is not conducting a medical assessment. The purpose of recording health conditions is to ensure the Retrofit Coordinator is aware of factors that should influence the design, the installation management, and the post-installation support.
-
-**How to obtain health information.** Health is personal information. The assessor must explain to the occupant why this information is being collected (to ensure the retrofit is appropriate for the household), how it will be stored and who will see it, and that providing it is voluntary. The information must be handled in accordance with UK GDPR — it is special category personal data and must be collected, stored, and shared under appropriate legal basis (typically explicit consent). Where an occupant declines to share health information, record "not provided — occupant declined" and proceed with appropriate caution in downstream assessment notes.
-
-**Fuel poverty indicators.** PAS 2035:2023 and TrustMark data requirements include a fuel poverty assessment. The key indicators: whether the household is in receipt of means-tested benefits, whether the occupant reports that they cannot afford to heat the home adequately, and whether evidence of under-heating is observed (indoor temperatures below 18°C in heated rooms during cold weather, occupants wearing outdoor clothing indoors). These indicators inform prioritisation decisions at the programme level and may affect the scope of funded measures available to the household.
+This edition replaces the March 2026 edition. That edition said PAS 2035:2023 Annex A sets mandatory occupancy data fields (five age bands, five categories of health condition and a fuel poverty assessment) and that the assessor must assess overheating risk as part of the occupancy assessment. Annex A is "Qualifications"; the only requirement to appraise occupancy is the short item at clause 7.3.2 k); and the overheating risk assessment belongs to the Retrofit Designer (clause 8.2.31). Its "vulnerability categorisation framework", "pathway determination" and over-75 age threshold are not in the standard either, and one Further Reading title could not be traced. Please unlearn those points.
 
 ---
 
-## Section 2: Vulnerability Categorisation
+## Section 1: The appraisal of occupancy, clause 7.3.2 k)
 
-PAS 2035:2023 does not define a single rigid vulnerability score but requires the assessor to characterise the occupant vulnerability profile in a way that informs the retrofit risk assessment. The following categories cover the primary vulnerability factors:
+### What the clause says
 
-**Temperature vulnerability.** Occupants who are at increased risk from cold or heat extremes: those over 75, those with cardiovascular or respiratory conditions, infants under one year. Temperature-vulnerable occupants require measures that do not inadvertently create overheating risk (particularly relevant in south-facing dwellings with increased insulation and reduced ventilation) and that reliably maintain adequate heating.
+Clause 7.3.2 lists what "The assessment shall include", as items a) to l). Occupancy is item k): "an appraisal of occupancy", including the number of occupants and "any special considerations", such as "the presence of vulnerable persons". The examples it gives are "children, elderly people or people with disabilities" (PAS 2035:2023, clause 7.3.2 k)). That is the whole of the requirement.
 
-**Ventilation sensitivity.** Occupants for whom indoor air quality changes are clinically significant: those with asthma, COPD, or other respiratory conditions; those with dust mite allergies; infants and young children (whose exposure to indoor pollutants is proportionally higher due to lower height and higher respiratory rate). Ventilation-sensitive occupants require careful management of ventilation strategy changes and installation dust and disturbance.
+The definitions say what it is for. A dwelling assessment covers the dwelling's characteristics, including its fabric, services, condition, ventilation, energy efficiency "and occupancy", to provide information for a retrofit design (clause 3.8); a retrofit assessment exists "to collate information for a retrofit design" (clause 3.27). So the appraisal is written for the Retrofit Designer: it should tell them what about the household could affect the design and the works.
 
-**Mobility and access.** Occupants with limited mobility, wheelchair users, or those dependent on home medical equipment (oxygen concentrators, nebulisers) have specific needs regarding installation access, floor level changes, and operational continuity during works. These must be recorded and flagged for the Retrofit Coordinator to address in project planning.
+### What it does not say
 
-**Occupant resilience.** The capacity of the occupant to manage the disruption of retrofit installation works, to understand and operate new systems, and to communicate problems after installation. Elderly occupants living alone, occupants with cognitive impairment, or households with language barriers may require additional support — both during installation and in the post-installation commissioning and handover process.
+Item k) sets a minimum and gives examples, not a form. It contains:
+- no age bands, and no age at which a person counts as "elderly";
+- no list of health conditions, and no requirement to record a diagnosis;
+- no fuel poverty assessment and no indoor temperature reading;
+- no requirement to record heating patterns or occupants' comfort.
 
----
+"Such as" and "e.g." mean the examples are not a closed list. A search of the whole text finds "vulnerable" only here, and "vulnerability" only in clause 8.2.31 b), where it is about future climate vulnerability, and clause 3 defines no vulnerable person. There is no separate vulnerable occupants provision in PAS 2035:2023 to apply: clause 7.3.2 k) is it.
 
-## Section 3: Overheating Risk Assessment
+### Occupancy and the energy calculation
 
-PAS 2035:2023 requires the assessor to assess and record overheating risk as part of the occupancy assessment. This is not a full CIBSE TM59 analysis (which is a dynamic thermal modelling exercise for design-stage use), but it is an assessment of the risk factors that might make the dwelling and its occupants vulnerable to overheating post-retrofit.
+The 7.3.2 data must be used to estimate annual fuel use, fuel costs and carbon dioxide emissions "under actual occupancy (where data is available) or standard occupancy", with a recognised model such as RdSAP, SAP or PHPP (clause 7.3.3). For the improvement options evaluation, the Retrofit Coordinator must allow for "the pattern(s) of occupancy", for example by entering actual occupancy data, and assume SAP standard occupancy where the pattern is unknown (clause 8.1.3 d)).
 
-**Why retrofit increases overheating risk.** Insulation reduces heat loss in winter — but it also reduces heat dissipation in summer. An airtight, well-insulated dwelling retains solar and internal heat gains more effectively than a draughty one. If the dwelling has south or west-facing glazing and limited ventilation capacity (small openable windows, no through-ventilation), it can become uncomfortably or dangerously hot in warm weather.
-
-**Overheating risk indicators the assessor must record:**
-- Orientation and area of south-facing glazing (large south-facing windows in insulated rooms create high solar gain in summer)
-- Presence or absence of solar shading (external blinds, overhangs, trees providing shade to south-facing glazing)
-- Window opening capacity: can the occupant achieve cross-ventilation? Are there openable windows on both sides of the dwelling (essential for effective summer purge ventilation)?
-- Internal heat gains: does the dwelling have significant heat-generating equipment (server rooms, dense electrical equipment, large cooking ranges in open-plan layouts)?
-- Occupant temperature vulnerability: as described in Section 2 — elderly occupants, infants, those with cardiovascular conditions are at elevated heat-related risk
-
-**CIBSE TM59 triggers.** The assessor does not run a TM59 analysis, but should be aware of the conditions that TM59 targets: dwellings in highly urban (high urban heat island) locations, south-facing flats above ground floor, highly glazed new-build or converted dwellings, and dwellings occupied by temperature-vulnerable occupants in combination with significant south-facing glazing. Where multiple risk factors are present, the assessment should flag that overheating risk requires design-stage analysis.
-
-**Recording.** The assessor records: the observable risk factors (glazing orientation and area, shading presence/absence, cross-ventilation availability), the occupant vulnerability profile relevant to overheating, and a flag where multiple risk factors make design-stage overheating analysis necessary.
+PAS 2035:2023 never uses the phrase "heating pattern"; occupancy pattern is the nearest it comes. A sensible habit is to ask how the home is used (when it is occupied, which rooms are heated and when) and note what the householder tells you, so the Retrofit Coordinator has actual occupancy information for the adjustment clause 8.1.3 d) requires where the pattern is known. That is practice, not a 7.3.2 requirement. In clause 7 a survey of residents appears only in notes: one about pre-retrofit monitoring under BS 40101, which the Retrofit Coordinator may choose to add (clause 7.3.2, NOTE 13), and one about comparing occupant survey results after further monitoring with those obtained during the assessment (NOTE 14).
 
 ---
 
-## Section 4: Informed Consent and the Occupant Relationship
+## Section 2: Health, comfort and vulnerability: who does what
 
-The occupancy assessment is not just a data-collection exercise — it is also the primary opportunity to establish informed consent for the assessment process and for the retrofit project itself.
+### What the guidance clauses say
 
-**Informed consent for the assessment.** Before collecting personal data (particularly health and financial information), the assessor must explain: what data is being collected, why, how it will be stored, who will have access to it, and the occupant's right to refuse or withdraw consent. This explanation should be provided verbally and supplemented by a written privacy notice or consent form that the occupant signs or acknowledges.
+Clause 4 is guidance. It says occupants' comfort, health and safety depend on controlling the flows of heat, moisture and air through their homes (clause 4.1.2), and treats the occupants as part of the system because they need certain conditions for comfort, give off heat and produce moisture (clauses 4.2.3 and 4.2.4). Clause 5.2.2 says occupants' health, well-being and comfort "should be prioritized". Annex C links poor indoor air quality to "serious health risks for occupants" (C.1); the ventilation assessment is its own item (clause 7.3.2 f)). These passages explain why item k) exists. They add nothing the assessor must record.
 
-**Consent for the retrofit project.** For owner-occupiers, consent is typically implicit in their engagement with the programme. For tenants, the situation is more complex — particularly in social housing where the landlord is commissioning the retrofit and the tenant may feel they have limited choice. PAS 2035:2023 requires that the occupant is informed about what works are proposed, how they will be managed, what disruption will occur, and what operational changes (new heating controls, ventilation system requirements) they will need to adapt to. The assessor records whether this information has been provided and whether the occupant has raised any concerns.
+### Where the requirements fall
 
-**Recorded occupant concerns.** Where the occupant expresses concerns about the proposed measures — about disruption, about specific health impacts, about aesthetics — these must be recorded. They are not grounds for the assessor to determine that measures should not proceed, but they are data that the Retrofit Coordinator must consider in project management. An occupant who has expressed concern that draught-proofing will worsen their asthma needs a follow-up from the Coordinator to address that concern before installation proceeds.
+The requirements that concern occupants fall mostly on other roles:
+- The Retrofit Coordinator must consult the client at the outset and agree and record the intended outcomes, which can include alleviation of fuel poverty, improvement in internal comfort, improvement of indoor air quality and "reducing the risk of overheating" (clause 6.2.1 b), d), e) and g)).
+- The medium-term improvement plan, prepared by the Retrofit Coordinator, must identify measures that do not compromise "the comfort and health and safety of the occupants" (clause 8.1.7 b)).
+- The Retrofit Coordinator must verify that retrofit advice is delivered on every project and oversee all of it (clause 12.1.1). Advice goes to the occupants whatever their tenure, and is also offered to the landlord where the occupants are tenants (clause 12.1.2).
+- Advice must be in a form the occupants can understand, taking account of language, age, and any hearing or sight difficulties (clause 12.1.3).
+- Advice at inception must be customised to the householders' needs and cover minimising overheating and the health and safety risks of "fuel poverty, damp and mould, cold and hypothermia" (clause 12.1.5 a)).
+- Under PAS 2030:2023, the Retrofit Installer must operate a procedure telling operatives who have direct contact with clients or occupants how to act when approached, especially in respect of "vulnerable occupants (e.g. elderly or disabled persons or children)" (PAS 2030:2023, clause 8.3).
+- The Retrofit Evaluator sends a basic evaluation questionnaire to the client and occupants (clause 13.4.1), and must obtain their consent before any further monitoring and evaluation (clause 13.3.2).
+
+### How your record reaches them
+
+The assessment must be recorded and reported to the Retrofit Designer (clause 7.4.1). If it is not sufficient for a design, the designer identifies what is missing and the Retrofit Coordinator arranges for you to collate it into an updated report (clauses 7.4.3, 7.4.4 and 8.2.5). The Retrofit Coordinator must also give the installer copies of the retrofit assessment (clause 8.2.26). So a special consideration you record under item k) can reach the designer, the coordinator and the installer.
+
+Clause 5.7.1 (guidance) lists the Retrofit Assessor among those who may deliver retrofit advice, but clause 12.1.1 puts all advice under the Retrofit Coordinator's oversight. A sensible habit: when an occupant raises a worry about how the works might affect their health, write it down in their words and pass it to the Retrofit Coordinator rather than answering it yourself.
+
+---
+
+## Section 3: Overheating: what you record and who decides
+
+### In the assessment
+
+Overheating appears in item 7.3.2 l), which asks for "additional information that might have an impact on the retrofit project now and in the future". It names climate change-induced risks: increased flooding, extreme weather conditions, "overheating and increased relative humidity". It is a separate item from the occupancy appraisal in k).
+
+Other items capture what the designer needs to judge overheating risk:
+- location and orientation (clause 7.3.2 a));
+- a measured survey that includes the dimensions of all window and door openings (clause 7.3.2 h));
+- site constraints, including elevation and exposure "to sun, wind and rain, major roads and industrial activity" (clause 7.3.2 i));
+- who lives there, through the appraisal of occupancy (clause 7.3.2 k)).
+
+Clause 7.3.2 asks the assessor for no overheating calculation and no overheating risk rating.
+
+### In the design
+
+The retrofit design "shall include measures to inhibit overheating" during the installed life of the measures. The Retrofit Designer identifies and records them in accordance with CIBSE TM59 (2017) "to assess overheating risk", UK Climate Impacts Programme guidance on future climate vulnerability and adaptation, and the British Blind and Shutter Association's Guide to low energy shading (clause 8.2.31; clause 2, [N9] to [N11]). A note in Annex A says the Retrofit Designer "should be responsible for ventilation and overheating as part of the retrofit design" (Annex A, A.3, NOTE 2). The overheating risk assessment is therefore the Retrofit Designer's, at design stage. This course does not teach TM59's content.
+
+The measures the designer must consider include, but are not limited to (clause 8.2.32):
+- reducing internal heat loads with efficient lighting, appliances and building services, particularly hot water (a));
+- separating spaces with high heat gains, such as kitchens, from spaces with solar gains (b));
+- external shading of south-facing and west-facing glazing, or shutters (c));
+- facilities for secure ventilation of the dwelling at night in warm weather (d));
+- exposing high thermal capacity fabric to the internal air, inside the insulated envelope (e));
+- reducing glazing area, or using glazing or coatings of lower transmissivity;
+- purge ventilation and cross-ventilation "where noise, security and privacy allow";
+- active cooling only "as a last resort", preferring low or zero carbon cooling.
+
+### What helps the designer
+
+Several measures depend on how the household uses the home. A sensible habit is to note which windows open, whether the occupants say they cannot leave windows open at night because of noise or security, and which rooms are in use during the day. None of this is listed in clause 7.3.2, but the designer needs it to judge night ventilation and cross-ventilation.
+
+### At handover
+
+The handover requirements in the design must include information on the importance of ventilation in maintaining indoor air quality and "controlling overheating in the summer", and on the consequences of switching off or disabling ventilation (clause 11.1.2 g)). Advice at handover must cover how to minimise overheating (clause 12.1.8 b)).
+
+### Approved Document O is not a retrofit requirement
+
+Approved Document O, Overheating, is guidance: the approved document supporting Part O of Schedule 1 to the Building Regulations 2010: the 2021 edition, for use in England, in effect from 15 June 2022. Its guidance "applies to new residential buildings only" (Approved Document O, paragraph 0.3), and the gov.uk page showed no later edition on 14 October 2026. It is not a requirement for the energy retrofit of an existing home. PAS 2030:2023 points installers of solar blinds, shutters and shading devices to it only as guidance on overheating mitigation (PAS 2030:2023, Annex B.11, NOTE 3). This course has not checked the overheating rules in Wales, Scotland or Northern Ireland; ask building control there.
+
+---
+
+## Section 4: Handling health information, and what has changed
+
+### Health information is special category data
+
+The UK GDPR defines "data concerning health" as personal data related to a person's physical or mental health (UK GDPR, Article 4(15)). Processing it "shall be prohibited" (Article 9(1)) unless one of the conditions in Article 9(2) applies and there is also a lawful basis under Article 6(1). The data subject's explicit consent for specified purposes is one of those conditions (Article 9(2)(a)). Personal data must also be "limited to what is necessary" for the purpose (Article 5(1)(c), data minimisation) and "accurate" (Article 5(1)(d)).
+
+Which lawful basis and condition apply to your assessments is for your organisation's data protection policy to settle, not this course; ask your employer or the Retrofit Coordinator.
+
+### On site
+
+Clause 7.3.2 k) asks for special considerations, not diagnoses, and the UK GDPR for no more data than needed. As practice:
+- tell the occupant why you are asking: so the design and the works can take account of the household;
+- record the consideration that matters to the works, such as young children in the home or a wheelchair user on the ground floor, rather than a medical history;
+- if the occupant declines, record that the information was declined, never "none", which would not be accurate;
+- give no medical advice, and pass any health concern about the works to the Retrofit Coordinator.
+
+### A similar list belongs to ECO4, not PAS 2035
+
+Ofgem's ECO4 Guidance: Delivery, version 4.0 (26 March 2026), is the administrator's guidance for the scheme set up by the Electricity and Gas (Energy Company Obligation) Order 2022, as amended; suppliers must meet their obligations by 31 December 2026 (paragraph 1.7). Under Flex Route 3, "Medical Referrals", a household with a person who has a severe or long-term health condition adversely affected by living in a cold home is eligible (paragraph 3.193), and the condition must be due to a cardiovascular condition, a respiratory disease, limited mobility or immunosuppression (paragraph 3.194). Flex lets local authorities identify and refer households (paragraph 3.170) and is for private tenure homes only (paragraph 3.172). That is a funding eligibility route, not a PAS 2035:2023 recording requirement, and the retrofit assessment does not decide it.
+
+### BS 40104:2025
+
+BSI has published BS 40104:2025, "Retrofit assessment for domestic dwellings. Code of practice". Its catalogue entry gives the publication date as 24 September 2025 and the status as "Current", lists "Occupancy assessment" among its topics, and says it "builds on the foundation set by PAS 2035 and PAS 2030". PAS 2035:2023 does not refer to it (whole-text search). We have not read its text and do not teach its content. Whether your scheme or TrustMark requires you to follow it could not be confirmed for this edition; ask your scheme.
+
+Lodgement is also for your scheme: PAS 2035:2023 says only that, if the certification body requires it, the assessor can upload the report, data file and photographs to the TrustMark data warehouse (clause 7.4.4, NOTE).
 
 ---
 
 ## Key Takeaways
-
-- Occupancy data (household composition, age distribution, health conditions, fuel poverty indicators) is mandatory in every PAS 2035:2023 Retrofit Assessment — not optional or supplementary.
-- Health data is special category personal data under UK GDPR — it must be collected with explicit consent, stored securely, and shared only with those who have a legitimate need.
-- Vulnerability categorisation should cover temperature sensitivity, ventilation sensitivity, mobility and access, and occupant resilience — not just age.
-- Overheating risk assessment requires recording observable risk factors (south-facing glazing area, shading, cross-ventilation capacity) and flagging where design-stage analysis (CIBSE TM59) is warranted.
-- Occupant concerns recorded during the assessment must be passed to the Retrofit Coordinator — they are design and project management inputs, not assessment barriers.
-- Fuel poverty indicators influence the scope of funded measures available — missing them may deprive the household of support they are entitled to.
+- PAS 2035:2023's requirement to appraise occupancy is clause 7.3.2 k): the number of occupants and any special considerations, such as vulnerable persons (children, elderly people or people with disabilities).
+- Annex A is "Qualifications". PAS 2035:2023 sets the assessor no age bands, health-condition categories, fuel poverty assessment or heating-pattern survey.
+- Comfort, health and fuel poverty appear in guidance (clauses 4 and 5) and in the Retrofit Coordinator's duties (6.2.1, 8.1.7 b) and 12.1).
+- You record overheating as a climate risk (7.3.2 l)) with orientation, openings and exposure to sun; the TM59 overheating risk assessment is the Retrofit Designer's (8.2.31).
+- Approved Document O "applies to new residential buildings only" (paragraph 0.3); it is not a retrofit requirement.
+- Health data is special category data (UK GDPR Article 9): collect only what is needed, record a refusal as a refusal, refer health concerns to the Retrofit Coordinator.
+- The cardiovascular, respiratory, limited mobility and immunosuppression list is ECO4's Flex Route 3 eligibility test (paragraph 3.194), not a PAS 2035:2023 requirement.
+- BS 40104:2025 exists and covers occupancy assessment; ask your scheme before treating it as required.
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** An assessor asks an occupant about health conditions. The occupant declines to share this information. What should the assessor do?
+**Q1.** What does PAS 2035:2023 clause 7.3.2 k) require the retrofit assessment to include?
 
-A) Refuse to proceed with the assessment until health information is provided
-B) Record "health information not provided — occupant declined" and proceed, noting in the assessment that the occupant's vulnerability profile is unknown and should be considered at Retrofit Coordinator level
-C) Estimate the health risk from the occupant's visible condition
-D) Record "no health issues" — a refusal implies no health concerns
+A) Counts of occupants in five age bands, from under 5 to 75 and over
+B) A record of each occupant's health conditions under five clinical categories
+C) An appraisal of occupancy, including the number of occupants and any special considerations such as the presence of vulnerable persons
+D) A fuel poverty assessment, including an indoor temperature reading
 
-**Correct answer: B**
-*Health information is voluntary — the occupant cannot be compelled to share it. The assessor records that it was not provided and the reason, and flags for the Retrofit Coordinator that the vulnerability profile is incomplete. The Coordinator can follow up directly. Recording "no health issues" when the occupant declined is falsifying the record.*
-
----
-
-**Q2.** A 75-year-old occupant lives alone in a south-facing ground floor flat proposed for full insulation and draught-proofing. The flat has large south-facing patio doors with no external shading. What must the assessor record regarding overheating risk?
-
-A) No overheating risk — the ground floor is not at risk
-B) The observable overheating risk factors: the occupant's age (temperature-vulnerable), the south-facing orientation and area of glazing, the absence of external shading, and the impact of increased insulation on summer heat retention — flagging that design-stage overheating analysis is warranted
-C) A recommendation to install solar shading as part of the retrofit
-D) The overheating risk assessment is the Retrofit Coordinator's responsibility, not the assessor's
-
-**Correct answer: B**
-*Multiple overheating risk factors are present: a temperature-vulnerable occupant (age 75, living alone), large south-facing unshaded glazing, and a deep retrofit package that will increase summer heat retention. The assessor records these factors and flags the need for design-stage analysis. Specifying solar shading is a design decision, not an assessment output.*
+**Correct answer: C.** That is the wording of clause 7.3.2 k); the clause sets no age bands, health categories, fuel poverty assessment or temperature reading, and Annex A is "Qualifications".
 
 ---
 
-**Q3.** A household consists of two adults (ages 42 and 38) and three children (ages 2, 5, and 8). The 2-year-old has a confirmed diagnosis of asthma. How does this affect the mandatory occupancy data recording?
+**Q2.** Under PAS 2035:2023, who assesses overheating risk using CIBSE TM59, and at what stage?
 
-A) Children's health conditions are not relevant to the Retrofit Assessment
-B) The 2-year-old's asthma must be recorded as a health condition under the respiratory category, with explicit consent from the parent/guardian; this flags ventilation sensitivity as a vulnerability indicator requiring careful ventilation strategy management in the retrofit design
-C) Only the household composition (5 persons) needs recording — specific health conditions are not mandatory
-D) The condition should be recorded as "minor health concern — no impact on retrofit"
+A) The Retrofit Designer, as part of the retrofit design
+B) The Retrofit Assessor, as part of the appraisal of occupancy
+C) The Retrofit Coordinator, at handover
+D) The Retrofit Installer, during the pre-installation building inspection
 
-**Correct answer: B**
-*Asthma in an occupant — including a young child — is a mandatory health condition recording. Parental consent is required for the child's data. The respiratory condition flags ventilation sensitivity, which directly affects ventilation strategy decisions in the retrofit design and installation dust management.*
-
----
-
-**Q4.** During a Retrofit Assessment, the occupant mentions that they keep the heating off in winter because "it costs too much." The assessor observes the occupant wearing a heavy coat indoors. Internal temperature at the time of survey is 14°C in the living room. What should the assessor record?
-
-A) The temperature observation and the occupant's statement, as fuel poverty indicators; these may affect the scope of funded measures available and should be flagged for the Retrofit Coordinator's consideration
-B) Nothing — the occupant's heating behaviour is a lifestyle choice
-C) That the heating system is faulty — a functional system would maintain 21°C
-D) That the property is unsuitable for retrofit until the heating is operational
-
-**Correct answer: A**
-*Occupant statements about inability to afford heating, combined with a measured indoor temperature below 18°C (the minimum for healthy conditions), are classic fuel poverty indicators. These are mandatory data points — they may expand the scope of funded measures available and should be passed to the Retrofit Coordinator.*
+**Correct answer: A.** Clause 8.2.31 requires the retrofit design to include measures to inhibit overheating, identified by the Retrofit Designer using TM59 "to assess overheating risk"; the assessor records overheating as a risk under 7.3.2 l), with no calculation.
 
 ---
 
-**Q5.** An occupant expresses concern during the assessment that the proposed loft insulation and draught-proofing will make the bedroom "stuffy" because they already struggle to sleep in warm conditions. What is the correct assessment action?
+**Q3.** A client asks whether Approved Document O applies to the energy retrofit of her 1930s semi-detached house in England. Which answer matches the sources?
 
-A) Reassure the occupant that modern loft insulation does not affect indoor air quality
-B) Record the occupant's concern with specific detail, and note it as an occupant input for the Retrofit Coordinator to address — particularly regarding ventilation strategy adequacy in the bedroom after draught-proofing
-C) Remove loft insulation from the proposed measures in the assessment report
-D) Advise the occupant that their concern is unfounded
+A) Yes, Approved Document O applies to every dwelling receiving energy efficiency measures in England
+B) Yes, and it applies in all four UK nations
+C) Yes, it requires the Retrofit Assessor to carry out a TM59 assessment
+D) No, its guidance applies to new residential buildings only
 
-**Correct answer: B**
-*Occupant concerns must be recorded in detail and passed to the Retrofit Coordinator as design and project management inputs. The concern about stuffiness after draught-proofing is directly relevant to ventilation adequacy assessment — the Coordinator must ensure the ventilation strategy is reviewed and the occupant's concern is addressed before installation proceeds.*
+**Correct answer: D.** Approved Document O, 2021 edition for use in England, says its guidance "applies to new residential buildings only" (paragraph 0.3); TM59 under PAS 2035:2023 is the Retrofit Designer's tool (clause 8.2.31).
+
+---
+
+**Q4.** During the occupancy appraisal, an occupant declines to say whether anyone in the household has a health condition. What should you do?
+
+A) Record "no health conditions", since nothing was disclosed
+B) Record that the information was declined, and complete the appraisal with what the occupant chose to tell you
+C) Stop the assessment, because clause 7.3.2 k) requires health conditions to be recorded
+D) Record your own estimate of their health from what you saw
+
+**Correct answer: B.** Clause 7.3.2 k) does not require health conditions; UK GDPR Article 5(1)(d) requires personal data to be accurate, which rules out recording "none" or a guess, and Article 9 treats data concerning health as special category data.
+
+---
+
+**Q5.** A colleague says PAS 2035:2023 requires the assessor to record whether any occupant has a cardiovascular condition, a respiratory disease, limited mobility or immunosuppression. Where does that list of four conditions appear in the sources for this course?
+
+A) PAS 2035:2023 Annex A
+B) PAS 2035:2023 clause 7.3.2 k)
+C) Ofgem's ECO4 Guidance: Delivery, as the conditions for the Flex Route 3 medical referral route
+D) Approved Document O, Table 0.1
+
+**Correct answer: C.** Paragraph 3.194 of the ECO4 guidance sets that list for Flex Route 3 eligibility; PAS 2035:2023 Annex A is "Qualifications", clause 7.3.2 k) names no conditions, and Table 0.1 of Approved Document O lists residential buildings in its scope.
 
 ---
 
 ## Further Reading
-
-- **PAS 2035:2023 — Retrofitting Dwellings for Improved Energy Efficiency** — BSI. Available at: https://www.bsigroup.com/
-- **CIBSE TM59 — Design Methodology for the Assessment of Overheating Risk in Homes.** Available at: https://www.cibse.org/
-- **ICO — UK GDPR Guidance on Special Category Personal Data.** Available at: https://ico.org.uk/
-- **TrustMark — Occupant Data and Vulnerability Assessment Guidance.** Available at: https://www.trustmark.org.uk/
-- **Public Health England — Cold Weather Plan for England and Heatwave Plan for England.** Available at: https://www.gov.uk/
+- **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency: Specification and guidance.** BSI, September 2023. Clauses 3.8, 6.2.1, 7.3.2 k) and l), 7.4, 8.2.31, 8.2.32, 11.1.2 g) and 12.1.
+- **PAS 2030:2023 Installation of energy efficiency measures in existing dwellings: Specification.** BSI, September 2023. Clause 8.3 on operatives and vulnerable occupants.
+- **Approved Document O: Overheating.** Crown copyright, 2021 edition for use in England, in effect from 15 June 2022. Paragraph 0.3 on application to new residential buildings only.
+- **ECO4 Guidance: Delivery, version 4.0.** Ofgem, 26 March 2026. Paragraphs 3.170 to 3.195 on Flex routes and 4.15 on following PAS 2035:2023.
+- **UK General Data Protection Regulation, Articles 4, 5 and 9.** The National Archives, revised text viewed October 2026. Article 4(15) definition of data concerning health and Article 9 on special category data.
 
 ---
 

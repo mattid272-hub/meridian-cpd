@@ -820,11 +820,11 @@ const STRIPE_SUB    = 'https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01';
 // shown or sold. To restore one, publish its corrected PDF and delete its ID here and
 // in UNDER_REVIEW in webhook/main.py.
 const UNDER_REVIEW = new Set([
-  'MER-RA-004','MER-RA-005',
-  'MER-RA-007','MER-RA-010','MER-RA-011','MER-RA-012',
-  'MER-ALL-005','MER-ALL-008','MER-ALL-009','MER-ALL-010',
-  'MER-ALL-012','MER-ALL-013','MER-ALL-014','MER-ALL-015','MER-ALL-016',
-  'MER-ALL-017',
+  
+  
+  
+  'MER-ALL-012','MER-ALL-013','MER-ALL-014','MER-ALL-016',
+  
 ]);
 
 const ALL_COURSES = [
@@ -997,23 +997,23 @@ const ALL_COURSES = [
   {
     id: 'MER-RA-004', strand: 'RA', hours: 1.0,
     title: 'Cavity Wall Insulation: Risk Factors and the Retrofit Assessor\'s Role',
-    desc: 'CWI remains the highest-volume retrofit measure and one of the highest-risk. This course covers the risk factors the Retrofit Assessor must evaluate, the evidence standard required, and the documentation that protects the assessor and the householder.',
+    desc: 'Cavity wall insulation under PAS 2035:2023 and PAS 2030:2023: what the assessment establishes about suitability and condition, what the installer\'s pre-installation inspection covers, how exposure is recorded under RdSAP convention 9.10 and Approved Document C, and what a product certificate does and does not settle.',
     objectives: [
-      'Identify the CWI risk factors that must be assessed under PAS 2035:2023',
-      'Apply the cavity wall suitability assessment methodology correctly',
-      'Determine when specialist pre-installation investigation is required',
-      'Document CWI risk assessment to the standard required for ECO4 and GBIS compliance'
+      'Say what PAS 2035:2023 clause 7.3.2 asks a retrofit assessment to cover for a cavity-walled dwelling, and how clause 7.4 has you report it',
+      'Record a cavity wall in RdSAP 10, including existing fill and the hard to treat cavity entries in convention 9.10',
+      'Name the risk factors the sources link to cavity fill and the documents that deal with each',
+      'Explain why conditions of use come from each product\'s certificate, using one certificate as an example rather than a general rule'
     ]
   },
   {
     id: 'MER-RA-005', strand: 'RA', hours: 1.0,
-    title: 'Solid Wall Insulation: IWI vs EWI — Risks, Evidence and Assessment',
-    desc: 'The choice between internal and external wall insulation has significant risk, planning, and performance implications. This course covers the assessment criteria, the evidence that informs the recommendation, and the risk documentation obligations under PAS 2035:2023.',
+    title: 'Solid Wall Insulation: IWI vs EWI, Risks, Evidence and Assessment',
+    desc: 'Internal or external solid wall insulation: who decides under PAS 2035:2023, what the assessor records about a solid wall (construction, condition, moisture, exposure, heritage significance), the RdSAP conventions for solid walls and added insulation, and the installer\'s checks under PAS 2030:2023.',
     objectives: [
-      'Compare IWI and EWI risk profiles using the PAS 2035:2023 assessment framework',
-      'Apply the evidence standard for solid wall construction and existing finishes',
-      'Assess interstitial condensation risk for both insulation pathways',
-      'Document solid wall insulation recommendations to TrustMark audit standard'
+      'Explain who chooses between internal wall insulation (IWI) and external wall insulation (EWI) after the assessment, and what in the assessment informs the choice',
+      'Record a solid wall under PAS 2035:2023 clause 7.3.2, including heritage significance under Annex E for traditional buildings',
+      'Describe how PAS 2035:2023 handles interstitial condensation, through BS 5250, and thermal bridging at junctions',
+      'Recognise the installer\'s pre-installation checks for EWI and IWI in PAS 2030:2023'
     ]
   },
   {
@@ -1030,12 +1030,12 @@ const ALL_COURSES = [
   {
     id: 'MER-RA-007', strand: 'RA', hours: 1.0,
     title: 'Heating System Assessment for Retrofit: What the Retrofit Assessor Must Record',
-    desc: 'Heating system data captured by the Retrofit Assessor feeds directly into the design stage. This course covers the PAS 2035:2023 requirements for heating system assessment, including the data fields, performance evidence, and the interface with the Retrofit Designer.',
+    desc: 'What clause 7.3.2 j) of PAS 2035:2023 asks the assessor to record about heating, hot water and controls, how that differs from what RdSAP needs, the RdSAP heating conventions that trip assessors up, distressed replacement, and where heat pump design sits.',
     objectives: [
-      'Record heating system type, age, and performance data to PAS 2035:2023 requirements',
-      'Apply the evidence standard for heat generator efficiency and controls documentation',
-      'Identify the assessment data that informs heat pump and low-carbon heating feasibility',
-      'Produce a heating system assessment output that satisfies Retrofit Designer requirements'
+      'State what PAS 2035:2023 clause 7.3.2 j) requires the assessment to record about heating, hot water and controls, and what it does not ask for',
+      'Record age, service history, locations, areas served, working condition, fuel, tariff and the cylinder in a form the coordinator and designer can use',
+      'Tell what the RdSAP 10 data set needs from what the PAS 2035 record needs, and apply the conventions where they differ',
+      'Explain the PAS 2035:2023 process for the distressed replacement of a heating appliance and the assessor\'s part in it'
     ]
   },
   {
@@ -1063,34 +1063,34 @@ const ALL_COURSES = [
   {
     id: 'MER-RA-010', strand: 'RA', hours: 1.0,
     title: 'Thermal Bridging in Retrofit Assessment: What Assessors Must Record',
-    desc: 'Thermal bridging can significantly affect as-built performance and is an increasing focus in PAS 2035 projects. This course covers what the Retrofit Assessor must record, the default and calculated options, and the audit exposure that under-recorded thermal bridging creates.',
+    desc: 'Thermal bridges in retrofit assessment: what PAS 2035:2023 requires you to record at junctions, openings and mould locations, what the designer must then do under clause 8 and Annex D, and how RdSAP 10\'s y-value works by age band and what it leaves out.',
     objectives: [
-      'Identify the thermal bridging data that the Retrofit Assessor must record under PAS 2035:2023',
-      'Apply the default Y-value and linear thermal transmittance options correctly',
-      'Evaluate when calculated thermal bridging is required versus where defaults apply',
-      'Document thermal bridging assessment to the standard required for TrustMark audit'
+      'Define a thermal bridge in the terms PAS 2035:2023 uses, and tell its guidance clauses from its requirements',
+      'State what clause 7.3.2 requires the assessment to capture at corners, junctions and openings, and separate that from good practice',
+      'Record condensation and mould at cold spots by location and severity, and report them under clause 7.4.2 without overstating the cause',
+      'Explain what clause 8 requires of the Retrofit Designer at junctions, and why that depends on your record'
     ]
   },
   {
     id: 'MER-RA-011', strand: 'RA', hours: 1.0,
-    title: 'Occupancy Assessment: Health Conditions, Vulnerability and Overheating Risk',
-    desc: 'Occupancy assessment under PAS 2035:2023 requires the Retrofit Assessor to evaluate health conditions, vulnerability indicators, and overheating risk. This course covers the methodology, the data to be recorded, and the triggers that affect the retrofit pathway.',
+    title: 'Occupancy Assessment: Vulnerable Occupants and Overheating Under PAS 2035:2023',
+    desc: 'What PAS 2035:2023 clause 7.3.2 k) actually asks the assessor to record about occupants, which other clauses concern occupants\' comfort and vulnerability and whose job each is, why the overheating risk assessment sits with the Retrofit Designer, how to handle health information under the UK GDPR, and where Approved Document O, BS 40104:2025 and the ECO4 medical route fit.',
     objectives: [
-      'Apply the PAS 2035:2023 occupancy assessment methodology including health and vulnerability evaluation',
-      'Identify the occupancy factors that trigger elevated risk designations or pathway changes',
-      'Assess overheating risk in the context of proposed insulation measures',
-      'Document occupancy assessment outputs correctly for TrustMark lodgement'
+      'State what PAS 2035:2023 clause 7.3.2 k) requires in the appraisal of occupancy, and what it does not require',
+      'Tell the requirements in PAS 2035:2023 that concern occupants\' health, comfort and vulnerability from its guidance, and say which role each requirement falls on',
+      'Explain what the retrofit assessment records that bears on overheating, and why the overheating risk assessment is the Retrofit Designer\'s job at design stage',
+      'Handle health information in line with what the standard asks and the UK GDPR rules on data concerning health, and pass concerns to the Retrofit Coordinator'
     ]
   },
   {
     id: 'MER-RA-012', strand: 'RA', hours: 1.0,
-    title: 'TrustMark Data Requirements: What Retrofit Assessors Must Submit',
-    desc: 'TrustMark data submission failures are among the most common causes of project hold-ups. This course covers the current data requirements for Retrofit Assessors, common lodgement errors, and the format and evidence standards required for compliant submission.',
+    title: 'TrustMark Lodgement: What the Retrofit Assessment Must Contain and Who Lodges It',
+    desc: 'What PAS 2035:2023 requires a retrofit assessment and its report to contain and who receives it, what the standard does and does not say about TrustMark\'s data warehouse, who lodges which records under ECO4 and Warm Homes: Local Grant, how the pre-retrofit RdSAP assessment drives ECO4 scores and exemptions, and where record retention periods come from.',
     objectives: [
-      'Identify the data fields the Retrofit Assessor must submit to TrustMark for each project',
-      'Apply the current format and evidence requirements for compliant lodgement',
-      'Recognise the most common data submission errors and how to avoid them',
-      'Understand the consequences of incomplete or non-compliant TrustMark submissions'
+      'State what PAS 2035:2023 requires a retrofit assessment and its report to contain, and who receives the report',
+      'Separate what PAS 2035:2023 says about TrustMark\'s data warehouse from what the ECO4 and Warm Homes: Local Grant guidance expect',
+      'Identify who lodges which records in ECO4 and Warm Homes: Local Grant projects, as Ofgem and DESNZ describe it',
+      'Explain how the pre-retrofit RdSAP assessment and the assessment report decide scores, repair funding and exemptions under ECO4'
     ]
   },
   {
@@ -1124,6 +1124,72 @@ const ALL_COURSES = [
       'Explain the seven-year payback test and the registered exemptions',
       'Distinguish what the government said on 18 June 2026 about larger buildings from 2031 from what has been legislated',
       'Identify what that announcement leaves undecided and where the answers will come from'
+    ]
+  },
+  {
+    id: 'MER-ALL-017', strand: 'ALL', hours: 1.0,
+    title: 'Awaab\'s Law Phase 2: What Energy Assessors Must Know',
+    desc: 'Awaab\'s Law as it stands in October 2026: the statutory basis, the hazards and timescales that have bound social landlords in England since 27 October 2025, the status of the draft Phase 2 Regulations due from 30 November 2026, what is planned for Phase 3 and private renting, and what an EPC, a retrofit assessment and a ventilation assessment do and do not establish about damp, mould and cold.',
+    objectives: [
+      'State the legal basis of Awaab\'s Law, who it binds, how it is enforced and which nation it covers',
+      'List the hazards and timescales that have applied to social landlords in England since 27 October 2025',
+      'Explain the status of the draft Phase 2 Regulations, what they would change from 30 November 2026, and what is planned for Phase 3 and private renting',
+      'Distinguish what an EPC, a PAS 2035 retrofit assessment and a ventilation assessment do and do not establish about damp, mould and excess cold'
+    ]
+  },
+  {
+    id: 'MER-ALL-008', strand: 'ALL', hours: 1.0,
+    title: 'Renters\' Rights Act 2025: Impact on EPCs and Energy Assessors',
+    desc: 'The Renters\' Rights Act 2025 as it stands in October 2026: Royal Assent, which parts are in force and from when, the draft Private Rented Sector Database regulations and the EPC information they would require, the Decent Homes and Awaab\'s Law powers still awaiting regulations, the domestic MEES rules in force under separate legislation, and the status of the EPC C by 2030 decision.',
+    objectives: [
+      'State when the Renters\' Rights Act 2025 received Royal Assent, where its reforms apply, and which parts were in force on 14 October 2026',
+      'Describe the Private Rented Sector Database and the EPC information the draft database regulations would require from landlords',
+      'Distinguish the Act\'s Decent Homes and Awaab\'s Law powers from the regulations and consultation still needed to bring them into effect',
+      'Explain the domestic minimum energy efficiency standard (MEES) in force under separate legislation, and the status of the decision on EPC C by 1 October 2030'
+    ]
+  },
+  {
+    id: 'MER-ALL-005', strand: 'ALL', hours: 1.0,
+    title: 'Future Homes Standard 2026: What Energy Assessors Need to Know',
+    desc: 'The Future Homes Standard as made: SI 2026/335 and the 2026 editions of Approved Documents L and F, the in-force and transitional dates from 24 March 2027, the new requirement on on-site renewable electricity, what the package does and does not say about heating fuels, SAP 10.3 as the approved methodology with the Home Energy Model to follow, which parts reach existing homes, and what it means for RdSAP assessors.',
+    objectives: [
+      'Name the documents in the Future Homes Standard package for England, the dates it takes effect and the transitional rule that decides which standard a building is built to',
+      'Describe what the 2026 standards ask of a new home: requirement L3, the three target rates, the unchanged limiting fabric values and the heating fuel guidance',
+      'Explain the current status of SAP 10.3 and the Home Energy Model, and what that means for on-construction EPCs',
+      'Identify which parts of the package touch work on existing homes, including extensions, replacement heating and ventilation after retrofit'
+    ]
+  },
+  {
+    id: 'MER-ALL-015', strand: 'ALL', hours: 1.0,
+    title: 'EPC Reform and the Future Home Buying Process: What Assessors Must Know',
+    desc: 'EPC reform and home buying reform as they stand in October 2026: what the EPB Regulations 2012 require now about EPCs for sale and letting, what the government has decided on validity periods, metrics and timing, what the June 2026 home buying and selling roadmap commits to and when, the material information position after the 2008 Regulations were revoked, and how to tell a decision from a proposal.',
+    objectives: [
+      'State when an EPC must be commissioned, obtained and given to a buyer or tenant, and when its rating must appear in adverts, under the 2012 Regulations as they stand today',
+      'Explain what the January 2026 partial government response on the Energy Performance of Buildings regime decided on metrics, validity and the marketing trigger, and why none of it is yet law',
+      'Describe what the June 2026 home buying and selling reform roadmap commits to on sales packs, its legislative route, and where the EPC appears in it',
+      'Identify the current legal basis for estate agents\' material information duties, and why the old Trading Standards Parts A, B and C guidance should not be relied on'
+    ]
+  },
+  {
+    id: 'MER-ALL-010', strand: 'ALL', hours: 1.0,
+    title: 'Damp and Mould Investigations: Scotland\'s 2026 Duties and the Assessor\'s Role',
+    desc: 'Damp and mould duties in Scotland from 6 October 2026 under SSI 2026/173 and the Housing (Scotland) Act 2025: the investigation, summary and start-of-work timescales, the amended repairing standard, the tolerable standard, the Scottish Government guidance, a short comparison with England and Wales, and what an RdSAP assessment and a PAS 2035 retrofit assessment do and do not record about damp.',
+    objectives: [
+      'State what the Housing (Scotland) Act 2025 and SSI 2026/173 changed, and when',
+      'Quote the damp limbs of Scotland\'s tolerable standard and repairing standard, and explain how they differ',
+      'Set out the Scottish timescales for private and social landlords, and how England and Wales differ',
+      'Identify what an RdSAP 10 assessment and a PAS 2035:2023 retrofit assessment record that bears on damp and mould'
+    ]
+  },
+  {
+    id: 'MER-ALL-009', strand: 'ALL', hours: 1.0,
+    title: 'Heat Loss Calculations for Heat Pumps: Where the EPC and the Assessor Fit',
+    desc: 'Heat loss calculation for heat pumps: what MIS 3005-D requires of the MCS installer, how the EPC\'s space heating demand is used in the MCS performance estimate but not for sizing, the Boiler Upgrade Scheme rules as they stand in October 2026, what PAS 2035:2023 gives the Retrofit Designer, what RdSAP\'s heat loss figures are and are not, and what an assessor can usefully observe and record.',
+    objectives: [
+      'Explain what a design heat load calculation to BS EN 12831-1:2017 produces, and why EPC figures cannot stand in for it',
+      'State what MIS 3005-D and MCS 031 a) require of an MCS Contractor designing a heat pump system',
+      'Summarise the Boiler Upgrade Scheme rules in force on 14 October 2026, including the 2024 and 2026 changes',
+      'Describe what PAS 2035:2023 requires where a retrofit includes a heat pump, and who is the Retrofit Designer where the heat pump is the only measure'
     ]
   }
 ];

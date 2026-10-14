@@ -1,190 +1,229 @@
-
-
 # Cavity Wall Insulation: Risk Factors and the Retrofit Assessor's Role
-**Course ID:** MER-RA-004 | **CPD Hours:** 1.0 | **Published:** March 2026
+**Course ID:** MER-RA-004 | **CPD Hours:** 1.0 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
 
-- Apply the cavity suitability assessment criteria from BS 8208 and BBA guidance to determine whether a cavity wall is suitable for insulation under PAS 2035:2023.
-- Identify the construction and exposure risk factors that modify CWI suitability, including partial fill, exposure zone, wall condition, and DPC configuration.
-- Record the mandatory CWI-related data fields required by PAS 2035:2023 Annex A accurately and completely.
-- Recognise the signs of historic CWI failure during site survey and understand the assessment implications.
-- Explain the Retrofit Assessor's role relative to the Retrofit Designer's and Retrofit Coordinator's roles in CWI decision-making.
+By the end of this course you should be able to:
+- Say what PAS 2035:2023 clause 7.3.2 asks a retrofit assessment to cover for a cavity-walled dwelling, and how clause 7.4 has you report it.
+- Record a cavity wall in RdSAP 10, including existing fill and the hard to treat cavity entries in convention 9.10.
+- Name the risk factors the sources link to cavity fill and the documents that deal with each.
+- Explain why conditions of use come from each product's certificate, using one certificate as an example rather than a general rule.
+- Separate what the assessor records, what the Retrofit Coordinator and Retrofit Designer decide, and what the installer checks under PAS 2030:2023.
 
 ---
 
 ## Introduction
 
-Cavity wall insulation remains the most widely installed single retrofit measure in the UK — hundreds of thousands of installations are funded annually through ECO, GBIS, and local authority programmes. It is also one of the most frequently problematic when poorly assessed. CWI failures — moisture penetration through a previously dry cavity, mould growth, and structural damage — are disproportionately represented in post-installation complaint data, and a significant proportion of them are traceable to inadequate pre-installation assessment.
+This course is for Retrofit Assessors surveying masonry cavity walls where cavity wall insulation (CWI) is present or may be proposed.
 
-The Retrofit Assessor's role in a CWI project is not to approve or reject the installation — that is the Retrofit Designer's determination. But the quality of the Retrofit Assessor's data is the foundation on which that determination is made. Incomplete, inaccurate, or insufficiently detailed assessment data routinely results in CWI being installed in cavities that are not suitable, or in the design failing to specify necessary ancillary measures (additional DPC treatment, drainage to cavity trays, alternative product selection for exposure zone).
+PAS 2035:2023 and PAS 2030:2023 are BSI specifications that bind where your scheme, contract or funding adopts them. Under ECO4, TrustMark registered businesses must be certified to PAS 2030:2023 and deliver measures within the scope of both documents (Ofgem, ECO4 Delivery Guidance v4.0, paragraph 5.259). Approved Documents B and C, the Building Regulations guidance used here, are for use in England (cover pages); PAS 2030:2023 points to the Building Regulations of whichever UK country the work is in (Table B.1, B1-l1, note 2). For Wales, Scotland and Northern Ireland, ask building control.
 
-This course covers the suitability assessment criteria, the risk factors that must be recorded, the signs of historic failure, and the boundary between assessment and design in CWI projects.
+The Great British Insulation Scheme closed on 31 March 2026, and the ECO4 obligation period runs to 31 December 2026 (ECO4 Delivery Guidance v4.0, paragraphs 1.4, 1.5 and 3.177). MER-RA-006 covers the scheme position.
 
----
+This edition replaces the March 2026 edition. That edition cited "mandatory CWI data fields" in PAS 2035:2023 Annex A, which is the qualifications annex, and a "BS 8208:2022", when BSI lists BS 8208-1:1985, withdrawn in 2009. Its exposure limit for blown mineral fibre and its rule that fill must never bridge the DPC are contradicted by the certificate read for this edition, and it stated product rules as general when each certificate sets its own. It cited BREDEM for exposure zones, said only the Retrofit Designer decides suitability, left out the installer's pre-installation inspection, described funding that has closed or is closing, and omitted the RdSAP hard to treat cavity entries.
 
-## Section 1: Cavity Suitability Assessment — The BS 8208 Framework
-
-BS 8208 is the British Standard guide for assessing the suitability of external cavity walls for filling with thermal insulants. While PAS 2035:2023 does not mandate BS 8208 as the exclusive assessment tool, it is the principal reference for CWI suitability assessment in UK practice and is referenced in BBA certificate conditions for CWI products.
-
-**The four primary suitability criteria:**
-
-1. **Wall construction type and condition.** The cavity must be of adequate width for the proposed insulant (the minimum width varies by product — EPS beads typically require 50 mm minimum; blown mineral fibre typically requires 50 mm or more for adequate fill). The wall must be structurally sound with no significant cracking, deterioration, or failed pointing that would create preferential pathways for moisture. Mortar joints must be in good condition — open or spalled joints are a rejection criterion or a pre-condition requiring remediation.
-
-2. **Exposure zone suitability.** Not all cavity walls are suitable for insulation in all exposure zones. BS 8208 and BBA certificate conditions specify the maximum exposure zone for each CWI product type. In Very Severe exposure zones, unfilled cavities provide an important drainage pathway for wind-driven rain — filling the cavity in these zones requires a product specifically certified for the exposure level, and in some cases is simply not appropriate. The assessor must determine the exposure zone (BREDEM/BS 8104) and record it explicitly.
-
-3. **DPC and drainage continuity.** The cavity insulation must not bridge the DPC. Assessors must identify the DPC position and type (engineering brick course, slate course, injected) and confirm that the insulation can be installed without compromising DPC continuity. Where cavity trays are present (at window heads, at step-and-offset in split-level properties), the installation must not block their drainage outlets. Missing or inadequate cavity trays above openings are a risk factor for moisture penetration at lintel level after CWI installation.
-
-4. **Existing wall ties and obstructions.** Wall ties must be present in adequate number and condition to maintain cavity wall structural performance after insulation. Severely corroded ties (most commonly identified in 1920s–1960s steel tie properties) are a structural risk independent of CWI but are an assessment finding that must be recorded. Major obstructions (service pipes, substantial debris) may make full-fill installation impossible or require alternative products.
+This course is correct to 12 October 2026.
 
 ---
 
-## Section 2: Exposure Risk and Product Selection Data
+## Section 1: What the Assessment Covers
 
-The exposure zone determination is mandatory data from the Retrofit Assessment — it directly governs which CWI products are available to the designer. An assessment that does not record the exposure zone leaves the designer without a key design parameter.
+### Annex A is not a data list
 
-**Exposure zone and product compatibility.** BBA (British Board of Agrément) certificates for CWI products specify the maximum exposure zone for which each product is certified. The three main CWI product types have different exposure zone limits:
+Every dwelling is first assessed by a Retrofit Assessor "to provide information about the dwelling for use by a Retrofit Designer" (PAS 2035:2023, clause 7.1.1). The assessor is trained and qualified in accordance with Annex A (clause 7.3.1), and Annex A is titled "Qualifications"; it lists no cavity wall data fields. The assessment content is clause 7.3.2, items a) to l). None of them names the exposure zone, the damp-proof course or wall ties, but they are broad enough to take them in.
 
-- **Blown mineral fibre:** Generally certified to Severe exposure as a maximum, with some products certified only to Moderate. Not suitable for Very Severe exposure without additional measures.
-- **EPS (expanded polystyrene) beads:** Generally certified to Severe as a maximum; hydrophobic-treated beads extend suitability in some cases.
-- **Polyurethane foam:** Performance characteristics vary significantly by product; BBA certificate specific. Generally higher moisture resistance than mineral fibre.
+### The items that bear on a cavity wall
 
-The assessor does not select the product — that is the designer's role. But the exposure zone data from the assessment directly constrains the product options, and an incorrect exposure zone recording can result in an inappropriate product being specified.
+The relevant parts of clause 7.3.2 are:
+- a) location, orientation and attachment to other dwellings or buildings;
+- b) an appraisal of structure, construction and condition "in sufficient detail to establish the suitability of the dwelling for improvement";
+- d) the location and severity of defects, leaks, condensation and mould, which "might require" test equipment or opening up (note 1);
+- e) any energy efficiency measure already installed or proposed, which is where existing fill belongs;
+- g) main materials, U-values and moisture properties of the main elements, again with the dwelling's suitability for improvement;
+- i) site constraints, such as elevation and exposure "to sun, wind and rain", access and adjoining properties.
 
-**Partial fill cavities.** Many properties (particularly post-1982 construction) were built with partial fill insulation boards installed in the cavity at construction. Where partial fill boards are present, the remaining cavity space may be too narrow for blown or bead insulants. The assessor must identify whether partial fill is present. Indicators include: Building Regulations completion certificates from the relevant period specifying partial fill; visible inspection at any accessible cavity reveal showing a board in the outer cavity face; and the construction date (post-1982 properties in England were increasingly required by Part L to include partial fill).
+So suitability for improvement is part of the appraisal's purpose, and the old edition's ban on assessors commenting on suitability is not a PAS 2035 rule. Choosing measures and products belongs to others (Section 4); your contribution is evidence.
 
-Where partial fill is confirmed, the residual cavity width is the key data point. This typically requires investigation — often by probing at a mortar joint — and should be recorded with the method used to determine it.
+### Reporting
 
----
+The assessment goes to the Retrofit Designer with any RdSAP data file and "a photographic record of all the recorded features of the building and of any identified defects" (clause 7.4.1). Defects are split into those to repair before retrofit can proceed and those recommended but not essential (clause 7.4.2). If information is missing, the Coordinator arranges for you to collect it (clause 7.4.4).
 
-## Section 3: Signs of Historic CWI Failure and Assessment Implications
+As practice, photograph every elevation, the DPC line or its absence, pointing and cracking, any visible signs of earlier injection, and internal damp. One scheme's Retrofit Assessments Standard Guide (version 2.4, March 2022) asks for a clear photograph of the damp-proof course, or evidence if none is present; check your own scheme.
 
-A significant proportion of UK properties that received CWI under pre-PAS installation programmes (particularly 1990s–2000s government-funded schemes) have since experienced problems. The Retrofit Assessor will encounter properties where CWI is nominally present but is causing issues, and must be able to identify this.
-
-**Signs of CWI failure:**
-- **Moisture penetration on exposed elevations.** Damp patches on internal walls corresponding to external wall areas, particularly on south-west and west-facing elevations in moderate to high exposure areas. The pattern is typically diffuse rather than associated with a specific localised defect.
-- **Slumping or voiding.** In some mineral fibre installations, the material has settled over time, leaving an uninsulated zone in the upper cavity. This can sometimes be identified by thermal imaging but is not visible to the naked eye during a standard survey.
-- **Installation records inconsistent with observed performance.** A guarantee certificate records CWI as installed, but the occupant reports persistent cold spots or damp on the insulated elevation.
-- **Hollow sound at mortar joints.** Where fill material has compressed away from the mortar line, tapping the external wall produces a more hollow sound than would be expected. This is an indicative test only.
-
-**Assessment implications.** Where signs of CWI failure are identified, the Retrofit Assessment must record: the evidence observed, the location and pattern, and a flag that specialist investigation of the existing fill condition may be required before further retrofit work proceeds. The Retrofit Assessor does not determine whether the existing CWI is fit for purpose — that requires specialist investigation — but they must not miss the signs.
-
-**Extraction and replacement.** Where CWI failure is suspected, extraction and replacement (or extraction without replacement in high-exposure zones) is a possible retrofit outcome. This requires specialist assessment beyond the RA scope but must be flagged in the assessment data as a potential issue for the Retrofit Coordinator to address.
+BSI lists BS 40104:2025, "Retrofit assessment for domestic dwellings. Code of practice", published 24 September 2025. Its text was not reviewed for this course.
 
 ---
 
-## Section 4: Assessor vs Designer vs Coordinator — Role Boundaries in CWI Projects
+## Section 2: Recording the Cavity Wall in RdSAP 10
 
-A persistent source of confusion in CWI projects under PAS 2035:2023 is the boundary between what the Retrofit Assessor records, what the Retrofit Coordinator determines, and what the Retrofit Designer specifies.
+### Wall type, thickness and lining
 
-**The Retrofit Assessor records:**
-- Wall construction type, cavity width (measured or estimated with basis stated), fill status (empty, partially filled, filled)
-- Exposure zone (from BREDEM/BS 8104)
-- DPC position and type
-- Presence and apparent condition of cavity trays above openings
-- Wall condition (pointing, cracking, render condition)
-- Moisture risk indicators (see MER-RA-002)
-- Any signs of historic CWI failure
-- Occupancy and health factors relevant to retrofit decisions
+Enter a cavity wall "irrespective of the width of the cavity", and record insulation level, presence of dry-lining and wall thickness (convention 3.01; RdSAP10 Specification v4.0, section 5.2.1). Measure each external wall's thickness; Table 3 defaults are only for when it could not be measured (specification, section 3.5). Dry lining "alone does not confirm the presence of insulation" (convention 3.06, for age bands A to E).
 
-The assessor does not write "CWI suitable" or "CWI not suitable" in the assessment. That determination is made at design stage by the Retrofit Designer, using the assessment data.
+### Existing fill
 
-**The Retrofit Coordinator** uses the assessment data to determine the improvement pathway and to commission the retrofit design. In complex cases (high exposure zone, signs of failure, properties with structural wall tie concerns), the Coordinator may commission specialist investigation as a pre-condition of design.
+Assume "as built" where there is no evidence of retro-fitted insulation (convention 3.03a). "Unknown" is for exceptional cases such as unresolved conflicting evidence; it suppresses insulation recommendations and needs explaining in site notes (convention 3.03b). Certificates, warranties and guarantees can be documentary evidence if you can show they relate to the property and nothing contradicts them (convention 9.02, England, Wales and Northern Ireland; Scotland has its own version).
 
-**The Retrofit Designer** specifies whether CWI is appropriate, which product, and what ancillary measures are required (DPC treatment, additional cavity tray installation, remedial pointing). The designer works from the assessment data — which means that incomplete or inaccurate assessment data directly degrades the designer's output.
+The Cavity Insulation Guarantee Agency (CIGA) says it provides "independent 25 year guarantees for Cavity Wall Insulation fitted by registered installers in the UK and Channel islands" (CIGA website). For ECO4, TrustMark mandates guarantee requirements and lists appropriate 25-year guarantees on its website (ECO4 Delivery Guidance v4.0, paragraphs 5.264 and 5.265).
 
-**The most common boundary error by assessors** is writing indicative measure recommendations in the assessment report: "CWI appears suitable for this property" or "recommend cavity wall insulation." This is outside the assessor's scope and introduces liability risk. Record what you observe. Let the design process make the determination.
+### Hard to treat cavity entries
+
+Convention 9.10 defines three entries:
+- Access issue: any façade where a 5 metre ladder cannot be pitched "considering health and safety requirements", such as a narrow passageway or an attached conservatory.
+- Narrow cavity: "indicated by a stretcher bond brick pattern with wall thickness 220 to 250 mm".
+- Possible high exposure: any dwelling in exposure zones 3 or 4 on the map in Appendix 1 of the conventions. "If in doubt record as possible high exposure."
+
+For a cavity-walled flat on the third storey or above, select "Access issues" (convention 3.14).
+
+Measure B, cavity wall insulation, is considered for an unfilled cavity wall assessed "as built" and not "unknown" where the "Wall is suitable for cavity insulation" (RdSAP10 Specification v4.0, Table 33); the specification does not say how that is decided. When it is recommended and there might be issues of a cavity under 50 mm, high exposure or access, an EPC addendum says these "should be investigated to establish the best treatment for the walls" (Table 33, Note 3). The entries prompt investigation. A flag is not a finding that the wall is unsuitable, and no flag is not a finding that it is suitable.
+
+---
+
+## Section 3: Risk Factors and Where the Rules Sit
+
+### Exposure to wind-driven rain
+
+PAS 2035:2023 asks you to identify exposure to wind and rain (clause 7.3.2 i), and RdSAP asks for the possible high exposure entry (convention 9.10). Approved Document C names BS 8104:1992 as giving a method of describing exposure to wind-driven rain (paragraph 5.8, under solid walls). For cavity insulation, it has suitability determined by the map in its Diagram 12 and Table 4, or by the procedure in current British or CEN standards (paragraph 5.15 a). The map and table were not available as text for this course, so they are not described here. No source read uses BREDEM for rain exposure.
+
+### What Approved Document C says
+
+In Approved Document C (England; 2004 edition incorporating 2010 and 2013 amendments), a cavity wall meets the requirement if the outer leaf is separated from the inner "by a drained air space", or otherwise kept from carrying precipitation inward (paragraph 5.12). The cavity could be at least 50 mm wide, bridged only by wall ties, cavity trays, cavity barriers, firestops and closures, with insulation covered by paragraph 5.15 (paragraph 5.13). A partially filled cavity should keep a residual cavity of at least 50 mm (paragraphs 5.13, 5.15 a).
+
+For material inserted after the wall is built, "The suitability of the wall for filling is to be assessed before the work is carried out", and the person doing the work should operate under an Approved Installer Scheme; alternatively, the work follows the material's certification (paragraph 5.15 c). In an existing house, "special attention" goes to the external leaf, "e.g. its state of repair and type of pointing"; where a fill material with a low risk of carrying moisture to the inner leaf has a third party assessment containing a method for assessing the walls and exposure risk, that method may be used instead (paragraph 5.15 e).
+
+### BS 8208
+
+Paragraph 5.15 e) gives BS 8208-1:1985 as guidance. BSI lists it, "Guide to assessment of suitability of external cavity walls for filling with thermal insulants. Existing traditional cavity construction", as published 31 July 1985 and withdrawn 1 July 2009, with no replacement named. Its text was not available for this course, and nothing here is drawn from it.
+
+### What product certificates say
+
+Conditions of use come from each product's certificate, and they differ between certificates. One was read as an example, BBA Agrément Certificate 11/4857, Product Sheet 2, issue 4 (12 December 2023), Supafil 34 (Retrofit), granulated glass mineral wool "injected in loose form". It sets:
+- Use "in any exposure zone", subject to a site survey, a minimum cavity width of 50 mm, walls in good repair with no frost damage, a DPC, and mortar joints with no more than hairline cracking (section 9.1.2).
+- In existing buildings, no installation where the inner face shows dampness other than condensation (section 9.1.13).
+- Buildings up to and including 12 m high, or higher where the certificate holder has issued a height restriction waiver (section 9.1.14).
+- The product may bridge the DPC, provided the wall is detailed to the national Building Regulations (section 3.2.2).
+
+It was read from the holder's website, and whether it is the latest issue was not checked on the BBA website, as the certificate tells readers to do; check before relying on it. One certificate is an example, not a rule for every product; what carries across is the kind of thing certificates check, which your survey should record.
+
+### Wall ties and structural defects
+
+No source read sets a rule on wall tie condition for cavity fill. Record any cracking, bulging or other structural defect with location, severity and a photograph (PAS 2035:2023, clauses 7.3.2 d and 7.4.1), and categorise it (clause 7.4.2).
+
+### Fire
+
+Approved Document B Volume 1 (England) excludes masonry cavity walls meeting Diagram 5.3, two leaves of brick or concrete each at least 75 mm thick, closed at the top (unless totally filled with insulation) and around openings, from the cavity barrier provisions of paragraph 5.18; its notes say materials of class B-s3, d2 or worse "may be placed within the cavity" (Diagram 8.2 and paragraph 8.3 for flats). The insulation recommendations of paragraphs 10.6 and 10.7 do not apply to masonry cavity walls complying with Diagram 8.2. In a relevant building, such as one containing dwellings with a storey at least 18 m above ground, regulation 7(2) of the Building Regulations 2010 prevails: external wall materials are to be A2-s1, d0 or A1, with exemptions including cavity trays between two leaves of masonry, but for insulation only below ground or up to 300 mm above it (regulation 7(2) to (4), as set out in Approved Document B Volume 1). Fire safety verification belongs to the retrofit design (PAS 2035:2023, clause 8.2.21 e), and PAS 2030:2023 requires the installer to determine whether the CWI work results in non-compliance on fire safety (Table B.1, B1-l2). MER-ALL-004 has the detail.
+
+---
+
+## Section 4: Who Decides What
+
+### The assessor and the Coordinator
+
+You record and report the wall, its condition, existing fill, defects, damp and exposure (PAS 2035:2023, clauses 7.3.2 and 7.4). Under ECO4, the building fabric repair increase applies only to issues identified under clause 7.3.2 and reported under clause 7.4.2 as defects to repair before retrofit (ECO4 Delivery Guidance v4.0, paragraph 4.79).
+
+The Retrofit Coordinator oversees the project from inception to completion (clause 6.1.3), carries out the improvement options evaluation "to identify an appropriate package of EEMs" from your data (clause 8.1.1), and recommends a package (clause 8.1.4).
+
+### The Retrofit Designer
+
+PAS 2035:2023 requires the Designer to hold an assessment conforming to clause 7 and confirm it is sufficient (clauses 8.2.3, 8.2.4). The design specifies materials and products, taking account of the building's condition, including repairing structural defects and addressing causes of damp or water ingress first (clause 8.2.8 a); confirms the products are compatible with the building and each other (clause 8.2.9); and provides for resilience against rainwater ingress and verifies fire safety (clause 8.2.21 b and e).
+
+### The installer
+
+Before installing, PAS 2030:2023 requires the Retrofit Installer to confirm through its pre-installation building inspection that the design is complete and suitable for the dwelling; installation does not proceed until installer and Coordinator are both satisfied, and final responsibility for the design's suitability stays with the Coordinator (clause 5.2.1 and note 2). The inspection is to be detailed enough to confirm the measure "can be safely and effectively installed", with particular attention to moisture build-up, and confirms that identified repairs are done (clause 7.2.1).
+
+For CWI, the installer also investigates whether the work results in non-compliance with the Building Regulations, for example on structural stability or resistance to moisture, and identifies "if the type and condition of the dwelling structure is suitable for the works to commence" and "the extent of the cavity to be filled" (clause B.1.2; Table B.1, B1-l2). The installer then verifies either that the inspection was independently checked, with a random 1 in 10 of checks including a physical inspection, or that a recognised pre-notification process under an industry quality assurance scheme was undertaken (B1-l2). If problems emerge, installation waits for an agreed solution (clause 7.2.8). The certificate read is to the same effect: for Supafil 34, "an assessment must be carried out by a trained assessor, who may also be the installing technician" (BBA 11/4857, Annex A.1).
+
+### Your wording
+
+A sensible habit is to write what you saw and how you established it: thickness, bond pattern, the DPC, pointing by elevation, damp, and the documents behind any fill entry. "CWI appears suitable" adds little and reads as the verdict the installer's inspection exists to reach. If a wall raises a question, flag it to the Coordinator.
+
+### Questionable existing fill
+
+Where filled walls show damp or other concerns, record the evidence, its location and pattern, and the documents you were given, and categorise any defect (clauses 7.3.2 d and e, 7.4.2). For ECO4, Ofgem counts extraction of defective cavity insulation as a building fabric repair cost only where no guarantee exists for it (paragraph 4.82), reads "defective" as "complete and total failure" (paragraph 4.88), and requires a chartered surveyor's reasoning after an in-person inspection (paragraphs 4.89, 4.90). These are Ofgem's ECO4 rules, not law.
 
 ---
 
 ## Key Takeaways
 
-- CWI suitability assessment is governed by BS 8208 and BBA certificate conditions — the four primary criteria are wall construction and condition, exposure zone, DPC and drainage continuity, and wall tie condition.
-- The exposure zone is a mandatory Annex A data field that directly constrains which CWI products are available to the designer — an incorrect exposure zone recording has design consequences.
-- Partial fill cavities require investigation to determine residual cavity width — construction date alone is not sufficient evidence.
-- Signs of historic CWI failure (moisture on exposed elevations, occupant-reported cold spots, fill pattern inconsistencies) must be recorded and flagged for specialist investigation — not dismissed.
-- The assessor records observable data; the assessor does not determine CWI suitability, select products, or write measure recommendations — these are designer-stage decisions.
-- Recording "no signs of historic failure" requires that you actively looked — the evidence of looking must be in the site notes.
+The points to keep are these:
+- PAS 2035:2023 Annex A is "Qualifications"; the assessment is clause 7.3.2, which covers construction, condition, existing measures and exposure to wind and rain.
+- Enter a cavity wall whatever its width (convention 3.01), change fill status only on evidence (conventions 3.03a, 9.02), and use convention 9.10 for access, narrow cavities and possible high exposure.
+- In England, Approved Document C has the wall's suitability for filling assessed before the work, which is done under an Approved Installer Scheme or to the material's certification (paragraph 5.15 c).
+- BSI lists BS 8208-1:1985 as withdrawn on 1 July 2009; "BS 8208:2022" is not its reference.
+- Conditions of use differ by certificate; the one read (BBA 11/4857) allows any exposure zone subject to conditions, including a 50 mm minimum cavity, and allows bridging the DPC where the wall is correctly detailed.
+- The installer's pre-installation inspection identifies whether the structure is suitable and the extent of cavity to fill (PAS 2030:2023, Table B.1, B1-l2); you supply the evidence it and the design rely on.
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1.** A 1968 semi-detached property is in a wind-driven rain Severe exposure zone. The assessor records the cavity as 65 mm wide, with mortar joints in good condition. What additional data field is essential for the designer to determine CWI product suitability?
+**Q1.** You survey a house with stretcher bond brickwork, a measured wall thickness of 240 mm and no evidence of cavity fill. How should the wall be handled in RdSAP 10?
 
-A) The boiler fuel type
-B) The floor construction
-C) The property's orientation
-D) Whether the exposure zone is Severe or Very Severe, and the BBA certificate conditions of available products for that zone
+A) Record it as system build, because the cavity is too narrow to count
+B) Enter it as a cavity wall and record a narrow cavity in the hard to treat cavity wall entries
+C) Leave it out of the cavity wall options until the cavity width has been drilled and measured
+D) Record the insulation as "unknown" so that no cavity fill recommendation appears
 
-**Correct answer: D**
-
-*The exposure zone is the key constraint on CWI product selection. In a Severe exposure zone, not all CWI products are certified — the designer must check BBA certificate conditions against the recorded exposure zone. The assessor's duty is to record the exposure zone accurately; the designer determines product suitability from that data.*
+**Correct answer: B.** A cavity wall is entered whatever its cavity width (convention 3.01), this bond and thickness indicate a narrow cavity (convention 9.10), and "unknown" is for exceptional cases (convention 3.03b).
 
 ---
 
-**Q2.** During a survey, an assessor notices diffuse damp staining on the internal face of the south-west elevation of a 1975 semi-detached property. The occupant confirms that CWI was installed approximately 15 years ago. What should the assessor do?
+**Q2.** Where does PAS 2035:2023 set out what a retrofit assessment covers for a cavity-walled dwelling?
 
-A) Record the moisture evidence, its location and pattern, flag the possibility of CWI failure, and note that specialist investigation of the fill condition may be required
-B) Record the moisture as rising damp — the DPC level proximity indicates this
-C) Record the CWI as present and in good condition — it was professionally installed
-D) Remove the CWI from the records and treat the wall as unfilled
+A) In Annex A, which lists mandatory cavity wall insulation data fields
+B) In Annex C, which sets exposure zone limits for cavity fill
+C) In clause 8.2, where the Retrofit Assessor specifies the insulation product
+D) In clause 7.3.2, which covers construction and condition, existing measures and exposure to wind and rain
 
-**Correct answer: A**
-
-*Diffuse damp on an insulated elevation with a history of CWI installation is a potential indicator of CWI failure. The assessor records the moisture evidence and flags it for specialist investigation — they do not determine whether failure has occurred, and they do not reclassify the fill status without evidence.*
+**Correct answer: D.** The assessment content is clause 7.3.2, items b), e), g) and i) among them; Annex A is "Qualifications", Annex C concerns ventilation, and clause 8.2 is the Retrofit Designer's (PAS 2035:2023).
 
 ---
 
-**Q3.** A Retrofit Assessment for a 1983 property records "partial fill boards present, residual cavity approximately 30 mm." A designer proposes blown mineral fibre CWI. What is the likely design issue?
+**Q3.** Under PAS 2030:2023, who identifies, before installation, whether the dwelling structure is suitable for CWI and the extent of the cavity to be filled?
 
-A) The designer should have made this assessment, not the Retrofit Assessor
-B) No issue — blown mineral fibre is suitable for all residual cavity widths
-C) Partial fill boards must be extracted before any CWI product is installed
-D) 30 mm is likely too narrow for blown mineral fibre installation, which typically requires 50 mm minimum residual cavity
+A) The Retrofit Installer, in its pre-installation building inspection
+B) The Retrofit Assessor, as part of the RdSAP assessment
+C) The building control body, after installation
+D) Nobody, because the RdSAP hard to treat addendum settles suitability
 
-**Correct answer: D**
-
-*Most blown mineral fibre CWI products require a minimum residual cavity of approximately 50 mm for adequate fill. A 30 mm residual cavity would prevent proper installation. The designer would need to consider alternative products or determine that CWI is not viable for this property.*
+**Correct answer: A.** The installer does this in its pre-installation building inspection (PAS 2030:2023, clause B.1.2 and Table B.1, B1-l2); the RdSAP addendum only says issues "should be investigated" (RdSAP10 Specification v4.0, Table 33, Note 3).
 
 ---
 
-**Q4.** An assessor writes the following in the Retrofit Assessment: "Based on the wall construction and condition, CWI appears suitable for this property, subject to mortar joint repair." What is wrong with this statement?
+**Q4.** What does the product certificate read for this course, BBA 11/4857 for an injected glass mineral wool, say about the damp-proof course?
 
-A) The assessor has made a design-stage determination (CWI suitability) that is outside the assessor's scope. The assessor should record the wall construction, condition (including the mortar joint defects), and let the Retrofit Designer make the suitability determination.
-B) Nothing — the assessor is providing helpful guidance for the design stage
-C) The assessor should have stated "CWI is suitable" more definitively
-D) The statement is acceptable only if the assessor also holds a Retrofit Designer qualification
+A) Fill must always stop above the DPC, because bridging it draws ground moisture into the inner leaf
+B) The DPC has no bearing on cavity fill and need not be recorded
+C) The product may bridge the DPC provided the wall is detailed to the Building Regulations, and the walls must include a DPC
+D) Bridging the DPC is allowed only in the less exposed zones
 
-**Correct answer: A**
-
-*Determining whether CWI is "suitable" is a design-stage function, not an assessment function. The assessor records observable facts: construction type, cavity width, wall condition, exposure zone, DPC position, and defects observed. The suitability determination is made by the Retrofit Designer based on this data.*
+**Correct answer: C.** Section 3.2.2 allows the product to bridge the DPC where the wall is detailed to the national Building Regulations, with no exposure condition, and section 9.1.2, which covers any exposure zone, says "walls must include a DPC" (BBA 11/4857).
 
 ---
 
-**Q5.** What does the DPC position affect in the context of CWI installation?
+**Q5.** Using the Appendix 1 map in the RdSAP 10 conventions, you cannot tell whether a dwelling is in exposure zone 2 or zone 3. What do the sources ask of you?
 
-A) The exposure zone classification
-B) Whether the CWI can be installed without bridging the DPC, which would compromise its function and create a pathway for moisture from the ground
-C) The required cavity width for the product
-D) The efficiency of the CWI product once installed
+A) Record nothing, because exposure is a design matter only
+B) Record possible high exposure, and identify the site's exposure to wind and rain in the assessment
+C) Record the exposure limit printed on the likely product's certificate
+D) Record the wall insulation as "unknown" until exposure is confirmed
 
-**Correct answer: B**
-
-*The DPC (damp-proof course) prevents moisture from rising from the ground into the wall above. CWI must not bridge the DPC. If the fill material extends below the DPC level, it creates a capillary pathway that bypasses the DPC, allowing moisture to rise into the insulated fabric. The DPC position must be recorded so the installer can ensure the fill terminates correctly.*
+**Correct answer: B.** Convention 9.10 says "If in doubt record as possible high exposure", and PAS 2035:2023 clause 7.3.2 i) asks for exposure to wind and rain; products are specified in the design (clause 8.2.8), and "unknown" concerns insulation evidence (convention 3.03b).
 
 ---
 
 ## Further Reading
 
-- **BS 8208:2022 — Guide to Assessment of Suitability of External Cavity Walls for Filling with Thermal Insulants** — BSI. Available at: https://www.bsigroup.com/
-- **PAS 2035:2023 — Retrofitting Dwellings for Improved Energy Efficiency** — BSI. Available at: https://www.bsigroup.com/
-- **CIGA (Cavity Insulation Guarantee Agency) — Installation and Guarantee Standards.** Available at: https://www.ciga.co.uk/
-- **BBA (British Board of Agrément) — CWI Product Certificates and Exposure Zone Conditions.** Available at: https://www.bbacerts.co.uk/
-- **TrustMark — Retrofit Assessment Guidance Notes.** Available at: https://www.trustmark.org.uk/
+Sources used for this course:
+- **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, September 2023. Clauses 7.1 to 7.4 on the assessment and clause 8 on evaluation and design.
+- **PAS 2030:2023 Installation of energy efficiency measures in existing dwellings. Specification.** BSI, September 2023. Clauses 5.2 and 7.2, and Annex B.1 with Table B.1 on cavity wall insulation.
+- **Conventions (v12.2) for RdSAP 10.** Applicable from 6 August 2026. Conventions 3.01, 3.03a, 3.03b, 3.06, 3.14, 9.02 and 9.10, with the Appendix 1 map.
+- **RdSAP10 Specification, version 4.0.** BRE, 7 June 2026. Section 5.2.1, and Table 33 measure B with Note 3.
+- **Approved Document C: Site preparation and resistance to contaminants and moisture, 2004 edition incorporating 2010 and 2013 amendments.** gov.uk, published 3 September 2013. Section 5, paragraphs 5.8 and 5.12 to 5.15.
+- **BBA Agrément Certificate 11/4857, Product Sheet 2, Supafil 34 (Retrofit).** BBA, issue 4, 12 December 2023. Sections 3.2 and 9.1 and Annex A, as an example of a certificate's conditions of use; check the BBA website for the latest issue.
 
 ---
 

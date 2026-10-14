@@ -1,228 +1,233 @@
-
-
-# Future Homes Standard 2025: What Energy Assessors Need to Know
-**Course ID:** MER-ALL-005 | **CPD Hours:** 1 | **Published:** April 2026
+# Future Homes Standard 2026: What Energy Assessors Need to Know
+**Course ID:** MER-ALL-005 | **CPD Hours:** 1 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
-
-- Identify the key technical requirements introduced by the Future Homes Standard (FHS) and the updated Approved Document L Volume 1 (ADL1), including the headline carbon reduction targets and fabric performance standards for new dwellings in England.
-- Explain how the FHS changes the role of low-carbon heating systems, fabric-first design, and on-site energy generation in achieving compliance for new-build housing.
-- Assess the direct and indirect implications of the FHS for domestic energy assessment methodologies, including the transition from SAP 10 to the Home Energy Model (HEM).
-- Evaluate how the FHS will affect EPC production workflows, retrofit assessment considerations for transitional dwellings, and the interaction between new-build standards and the existing housing stock.
-- Identify specific actions required to update professional practice, software tools, and technical knowledge ahead of the 2027 implementation date.
+- Name the documents in the Future Homes Standard package for England, the dates it takes effect and the transitional rule that decides which standard a building is built to.
+- Describe what the 2026 standards ask of a new home: requirement L3, the three target rates, the unchanged limiting fabric values and the heating fuel guidance.
+- Explain the current status of SAP 10.3 and the Home Energy Model, and what that means for on-construction EPCs.
+- Identify which parts of the package touch work on existing homes, including extensions, replacement heating and ventilation after retrofit.
+- Distinguish what a domestic energy assessor working in RdSAP needs to know from what an on-construction assessor needs to do.
 
 ---
 
 ## Introduction
 
-The Future Homes Standard is the most consequential change to domestic building energy regulations in England since Part L was first introduced. Following years of consultation — the initial 2019 proposal, the 2023 consultation, and the interim 2021 uplift — the government published the definitive FHS technical specification in March 2026, with mandatory compliance for all new dwelling building regulation applications from 2027.
+"Future Homes Standard" is the government's name for the new energy and ventilation standards for new homes in England. The amending regulations say they make the changes "needed to implement the Future Homes and Buildings Standards" (SI 2026/335, Explanatory Note). The package was published on 24 March 2026 and takes effect on 24 March 2027 (Building Circular 01/2026, paragraph 15).
 
-This is not an incremental tightening. The FHS establishes a regulatory expectation that new homes will produce substantially lower carbon emissions than those built to the 2021 Part L standards — the government's stated target is a 75–80% reduction in carbon emissions compared to the 2013 baseline. It effectively ends the routine installation of fossil fuel heating in new dwellings. It mandates fabric performance levels that go well beyond current practice for many volume housebuilders. And it introduces the Home Energy Model as the replacement for SAP, fundamentally changing the calculation methodology that underpins energy performance assessment.
+This course covers England: the 2026 Regulations "apply to buildings and building work in England" (SI 2026/335, regulation 1(4)). Wales is noted briefly in Section 1; Scotland and Northern Ireland are not covered. "ADL1 2026" below means Approved Document L, Volume 1: Dwellings, 2026 edition, and "ADF1 2026" the matching Approved Document F volume.
 
-For working assessors, the practical significance is threefold. First, the calculation engine you use is changing. HEM is not a cosmetic update to SAP — it is a different model with different inputs, outputs, and conventions. Second, the performance benchmarks against which you assess dwellings are moving substantially. U-values, air permeability limits, and thermal bridging assumptions are all tightening. Third, the FHS creates a widening performance gap between the new-build stock entering the market from 2027 and the existing stock you assess for EPCs and retrofit — which changes the context in which your assessments are read and used.
+The title's year follows the final documents: the approved documents are the "2026 edition" and ADL1 2026 refers to "The Future Homes Standard 2026: dwelling notional buildings" (paragraph 1.3). "2025" was the earlier plan; in March 2024 the government still expected to implement the Home Energy Model "alongside the Future Homes Standard in 2025" (gov.uk, Home Energy Model: Future Homes Standard assessment, update of 1 March 2024).
 
-This course breaks down what has actually been published, separates confirmed requirements from residual uncertainty, and focuses on what you need to do differently. It does not rehearse the political history of the standard or speculate on enforcement culture. It assumes you are familiar with current Part L compliance and SAP 10 workflows and need to understand the concrete changes ahead.
+This edition replaces the April 2026 edition. That edition taught that the Home Energy Model replaces SAP for this work and that fabric limits tighten well beyond 2021; at the latest statements found, SAP 10.3 is the only approved methodology and the limiting U-values and air permeability are unchanged. It also gave no dates, called the standard "2025", and said nothing limits heating fuels in new homes, when ADL1 2026 paragraph 4.4 does.
 
----
-
-## Section 1: The FHS Technical Specification — What Is Actually Required
-
-The FHS establishes a package of requirements that work together: a carbon emissions target, minimum fabric performance standards, and constraints on heating system selection. Understanding the architecture of these requirements matters because they interact — you cannot trade poor fabric for a larger heat pump, for example, in the way that earlier Part L iterations sometimes permitted.
-
-**The Carbon Target**
-
-The headline metric is a 75–80% reduction in regulated carbon emissions compared to a dwelling built to the 2013 Part L standard. This is expressed through the Target Emission Rate (TER) and Target Primary Energy Rate (TPER) generated by the Home Energy Model for each specific dwelling design. The notional dwelling specification — effectively the reference case against which compliance is assessed — has been set to deliver this level of performance when modelled in HEM.
-
-**Fabric Performance**
-
-The FHS sets ambitious minimum fabric energy efficiency standards. The notional dwelling specification includes values for key building elements that represent a significant step change. While assessors should verify exact values against the published Approved Document L Volume 1 and the HEM notional dwelling specification, the direction is clear: external wall U-values, floor U-values, roof U-values, and window U-values are all tightening materially beyond 2021 interim uplift levels. Air permeability targets are also substantially reduced. Critically, the FHS introduces a strengthened approach to thermal bridging — the use of default y-values will become increasingly punitive, effectively requiring assessed or accredited construction details for most projects seeking compliance.
-
-**Heating Systems**
-
-The FHS notional dwelling assumes a low-carbon heating system — in practice, a heat pump. While the regulations do not explicitly ban gas boilers through a single prohibition clause, the carbon targets are calibrated such that a dwelling relying on a natural gas boiler for space heating and hot water cannot realistically achieve the required emission rate. This is a de facto prohibition. Direct electric heating may achieve compliance in some limited configurations, but the primary energy metric makes this challenging for most dwelling types.
-
-**Overheating**
-
-The FHS is paired with strengthened overheating requirements. Approved Document O, introduced in 2022, continues to apply, but the improved fabric standards and airtightness levels of FHS-compliant dwellings make overheating risk assessment more critical during the design stage.
-
-**Transitional Arrangements**
-
-The government has confirmed transitional provisions for projects with building regulation applications submitted before the 2027 implementation date. Assessors working on developments in the pipeline should check whether projects fall under the 2021 Part L standards or the new FHS requirements, as this directly affects which calculation methodology and compliance targets apply.
+This subject is still moving; the course is correct to 14 October 2026.
 
 ---
 
-## Section 2: From SAP to the Home Energy Model — What Changes for Assessors
+## Section 1: What Was Published and When It Applies
 
-The replacement of the Standard Assessment Procedure with the Home Energy Model is not a version update. It is a new calculation methodology built on different principles, and it affects how you collect data, what inputs matter most, and how results are expressed.
+### The package
 
-**Why HEM Replaces SAP**
+The Ministry of Housing, Communities and Local Government (MHCLG) published the package on 24 March 2026 (gov.uk, Future Homes and Buildings Standards: 2023 consultation). The parts an assessor needs are:
+- The Building Regulations etc. (Amendment) (England) Regulations 2026, SI 2026/335, made 23 March 2026 and laid on 24 March 2026: regulations made but not yet in force.
+- Approved Document L Volumes 1 and 2 and Approved Document F Volume 1, 2026 editions (Circular 01/2026, paragraph 13): statutory guidance, revised on 8 September 2026 "to correct minor errors" (Circular 04/2026).
+- The government response to the 2023 consultation, the final stage impact assessment and Building Circular 01/2026 on dates and transitional arrangements.
+- SAP 10.3 and two notices of approval dated 24 March 2026, covered in Section 3.
+- The Department for Energy Security and Net Zero (DESNZ) response on using the Home Energy Model for the standard (gov.uk, updated 24 March 2026).
 
-SAP has been the statutory calculation method for domestic energy performance since 1995. Despite iterative updates (SAP 2005, SAP 2009, SAP 2012, SAP 10), the underlying model architecture has remained largely unchanged — a steady-state monthly calculation with limited treatment of thermal mass, system dynamics, and occupant-driven variables. HEM moves to a more granular calculation approach. It uses sub-hourly or hourly time steps for some calculations, models heat pump performance more realistically (including the interaction between flow temperature, heat demand, and coefficient of performance), and handles thermal mass and solar gains with greater resolution.
+The 2019 consultation "primarily relates to the 2021 uplift" (gov.uk consultation page), which took effect on 15 June 2022 (2021 edition of Approved Document L Volume 1, cover).
 
-**Practical Differences for Assessors**
+### When it applies
 
-For on-construction energy assessors, several input categories become more consequential under HEM:
+The general date is 24 March 2027 (SI 2026/335, regulation 1(2)). For higher-risk building (HRB) work and work to an existing HRB the main changes come into force on 24 September 2027 (regulation 1(3)).
 
-- **Heating system specification detail increases.** HEM requires more precise characterisation of heat pump systems, including performance data across a range of operating conditions, not just a single seasonal efficiency figure. This means assessors need better data from manufacturers and installers.
-- **Thermal mass is modelled more accurately.** The construction type and material thermal properties carry more weight in the calculation, particularly for overheating risk and heating demand profiles.
-- **Hot water demand and system losses are handled differently.** Cylinder specifications, pipework losses, and waste water heat recovery systems are modelled with greater granularity.
-- **Ventilation strategy matters more.** The interaction between airtightness, mechanical ventilation with heat recovery (MVHR), and heat demand is more sensitively modelled.
+Transitional protection works building by building. The changes do not apply where a building notice, initial notice or full plans application was given "in respect of that building" before 24 March 2027, provided the work is "commenced in relation to that building before 24th March 2028" (regulation 5(1)). Commencement is judged under regulation 46A(2) to (5) of the Building Regulations 2010 (regulation 5(5)). HRB work is protected by a valid application to the regulator before 24 September 2027 that is not rejected (Circular 01/2026, paragraph 17). The old route for building to 2010 energy standards survives only where it applied immediately before 24 March 2027 and work starts before 24 March 2028 (Circular 01/2026, paragraph 21).
 
-**EPC Production**
+So homes built to the 2021 standard will still be completing well after March 2027.
 
-The government has confirmed that HEM will underpin EPC production for new dwellings assessed under FHS requirements. The EPC rating scale itself is expected to remain (A–G), but the underlying scores will be generated by HEM rather than SAP. For existing dwellings, the transition timeline is less certain — at the time of writing, SAP-based RdSAP (or its successor, RdSAP 2) remains the methodology for existing dwelling EPCs, but assessors should monitor announcements from DLUHC and the scheme operators regarding a potential future transition to a reduced-data version of HEM.
+### Wales
 
-**Software and Accreditation**
-
-BRE has been developing HEM with input from the sector, and approved software vendors will need to implement the HEM calculation engine. Elmhurst, Quidos, and other scheme operators have all indicated that assessor accreditation requirements will be updated to reflect HEM competency. Expect updated training modules and potentially a formal competency assessment before you can lodge FHS-compliant assessments. If you have not already reviewed the published HEM technical documentation, now is the time to start — the learning curve is not trivial, and waiting until 2027 will leave inadequate preparation time.
-
----
-
-## Section 3: Implications for Existing Dwelling EPCs and Retrofit Assessment
-
-The FHS applies directly only to new dwellings. But its indirect effects on existing dwelling assessment and retrofit work are substantial, and ignoring them would be a professional mistake.
-
-**The Widening Performance Gap**
-
-From 2027, every new dwelling entering the English housing market will be built to a standard that makes the existing stock look dramatically worse by comparison. A typical gas-heated Victorian terrace with a SAP rating in the low 40s (EPC band E) will sit in a market alongside new homes achieving ratings well into the 90s. This widening gap has policy consequences. It strengthens the case for minimum EPC requirements in the private rented sector, accelerates the narrative around mortgage lender interest in energy performance, and creates public expectations about what a "good" rating looks like. As assessors producing EPCs for existing dwellings, you are at the interface of this tension.
-
-**Retrofit Assessment Context**
-
-For retrofit assessors — particularly those working within PAS 2035 frameworks or producing retrofit assessments for local authority and social housing programmes — the FHS reshapes the target ambition. While retrofit projects are not required to achieve FHS-equivalent performance, funding schemes and commissioning bodies increasingly reference new-build standards as the aspirational benchmark. Understanding the FHS fabric and heating specifications gives you a clearer picture of where the policy direction is heading and allows you to advise clients more accurately about future-proofing.
-
-**Heat Pump Readiness**
-
-The FHS confirmation that heat pumps are the default heating technology for new homes accelerates the existing policy trajectory around heat pump deployment in existing dwellings. The Boiler Upgrade Scheme, the Clean Heat Market Mechanism (or its successor arrangements), and the broader heat decarbonisation strategy all point in the same direction. Assessors working on existing dwelling EPCs will increasingly be asked to comment on heat pump suitability — radiator sizing, insulation adequacy, electrical supply capacity — even though these fall outside the formal scope of an EPC. Having a solid understanding of FHS heat pump assumptions equips you to respond credibly to these queries.
-
-**Interaction with the Minimum Energy Efficiency Standard (MEES)**
-
-The government has indicated its intention to raise the MEES threshold for the private rented sector, though the specific timeline and target band remain under consultation at the time of writing. The FHS amplifies the political pressure to act. For assessors producing EPCs for rental properties, the practical consequence is straightforward: demand for accurate, defensible EPCs in the D–E band range will increase, and the consequences of assessment errors (for landlords facing compliance obligations) grow correspondingly. Accuracy and rigour in existing dwelling assessment are not optional extras — they are professional necessities.
+Wales has its own instrument, the Building etc. (Amendment) (Wales) Regulations 2026 (WSI 2026/60), made 3 March 2026, whose energy changes come into force on 4 March 2027 (regulation 1). Its Explanatory Note says it adds a renewable electricity requirement for new dwellings and replaces "energy efficiency rating" with "energy use intensity rating". For Welsh guidance, check gov.wales.
 
 ---
 
-## Section 4: Preparing Your Practice — What to Do Before 2027
+## Section 2: What the 2026 Standards Ask of a New Home
 
-This section is deliberately practical. The regulatory and technical analysis above translates into a concrete set of actions you can take now.
+### What the Regulations change
 
-**1. Engage with HEM Technical Documentation**
+Within Schedule 1, SI 2026/335 amends only Part L (regulation 3(9)); it also amends several other regulations of the 2010 Regulations. For assessors the changes are:
+- Requirement L1 is replaced. It now covers "the minimisation of greenhouse gas emissions" as well as conservation of fuel and power, and adds that fixed building services should "minimise greenhouse gas emissions" (regulation 3(9)(b)). The L1 in force today has neither phrase (Building Regulations 2010, Schedule 1, legislation.gov.uk).
+- New requirement L3: when a building that "is or contains one or more dwellings" is erected, a system for on-site renewable electricity generation must be installed on the building or within its curtilage, available to residents and capable of "a reasonable output" (regulation 3(9)(c)). Among its exemptions are buildings where such a system is not possible because of design and surroundings, and buildings served by equivalent output from another system available to residents.
+- New regulation 40C: information owed to the owner of a new dwelling must be given "in an appropriate format" (regulation 3(6)).
 
-The Home Energy Model specification has been published. Read it. You do not need to understand every line of code, but you need to understand the input categories, the key differences from SAP, and the areas where your current data collection habits will need to change. BRE's published documentation is the primary source. Start with the methodology overview before diving into the detailed conventions.
+The instrument does not amend regulations 24 to 27 (methodology and targets) or mention gas, boilers, SAP, the Home Energy Model or EPCs.
 
-**2. Update Your Software Expectations**
+For L3, government guidance uses a reference array of panels with an efficiency of 0.22 kWp per m2 over an area equal to 40% of the dwelling-house's ground floor area, with output calculated under SAP 10.3 Appendix M1 (gov.uk, Approved Document L frequently asked questions, 8 September 2026). The full guidance, ADL1 2026 paragraphs 5.69 to 5.78, was beyond what I could read; read it before advising on a specific roof.
 
-Contact your approved software provider and ask about their HEM implementation timeline. Understand when beta versions will be available for testing and whether your current licence covers the transition. If you use multiple tools, establish which will be FHS-ready first. Budget for potential software costs.
+### Targets and metrics
 
-**3. Review Your Scheme Operator's Transition Plan**
+A new dwelling is tested against three targets calculated with the same approved methodology (ADL1 2026, paragraphs 1.4 and 2.1):
+- Target primary energy rate (kWhPE/m2 per year), influenced by fabric and fuel.
+- Target emission rate (kgCO2/m2 per year), influenced by fabric and fuel.
+- Target fabric energy efficiency rate (kWh/m2 per year), influenced by the fabric only.
 
-Elmhurst, Quidos, ECMK, and other scheme operators are each developing their own transition guidance and assessor competency requirements. Check your scheme operator's communications — many have published position statements or roadmap documents in response to the March 2026 FHS publication. Understand what additional training or assessment will be required to maintain your accreditation for new-build work.
+The dwelling's rates are calculated at design stage and as built and must not exceed the targets (ADL1 2026, paragraphs 2.2 and 2.3). Delivered energy is only "a voluntary reporting metric" (consultation response, paragraph 4.7). The as-built BREL report "should be provided together with photographic evidence of compliance" for each dwelling (ADL1 2026, paragraph 2.5 and note after 2.7).
 
-**4. Strengthen Your Fabric and Services Knowledge**
+The notional dwelling was set "as presented in Option 1 at consultation", with a different approach to solar (consultation response, paragraph 3.8): a heat pump, wastewater heat recovery, improved airtightness and decentralised mechanical extract ventilation (impact assessment, paragraph 4.1). Option 1 kept the 2021 notional wall, roof, floor and window U-values and tightened air permeability from 5 to 4 m3/(h.m2) at 50 Pa (2023 consultation, Table 4.1; 2021 edition, Table 1.1). The final values are in SAP 10.3 Appendix R (ADL1 2026, paragraph 1.3), which I could not read; take them from your software.
 
-The FHS places a premium on accurate specification of fabric performance and heating system characteristics. If your current practice involves defaulting to conservative assumptions for U-values, thermal bridging, or system efficiencies, the margin for this approach narrows substantially under FHS. Invest time in understanding accredited construction details, manufacturer product data, and heat pump performance characteristics.
+The policy objective is to cut energy use and emissions from new dwellings "by at least 75% compared to 2013 standards" (impact assessment, paragraph 3.4). No individual dwelling is tested against that figure.
 
-**5. Communicate with Builder and Developer Clients**
+### Fabric limits
 
-If you work with housebuilders or developers, initiate conversations now about their FHS readiness. Many smaller developers are still underestimating the scale of change. Positioning yourself as a knowledgeable resource on FHS requirements strengthens your professional relationships and secures future work.
+The limiting fabric values are unchanged from 2021: roof 0.16, wall 0.26, floor 0.18, party wall 0.20, window 1.6, rooflight 2.2 and doors 1.6 W/(m2.K), and air permeability no worse than 8.0 m3/(h.m2) at 50 Pa (ADL1 2026, Table 3.1; 2021 edition, Table 4.1).
 
-**6. Monitor the Existing Dwelling Assessment Trajectory**
+Thermal bridging has changed. ADL1 2026 paragraph 3.19 allows calculated details (BR 497 and IP 1/06), a reputable non-government database, or SAP 10.3 Table K1 values, where "a mixture of known and default values may be used". The 2021 option of a default y-value of 0.20 W/(m2.K) has gone (2021 edition, paragraph 4.18).
 
-Keep a close watch on government consultations regarding RdSAP replacement, MEES uplifts, and any extension of HEM methodology to existing dwellings. The pace of change in the existing dwelling assessment space is accelerating, and the FHS is a significant driver of that acceleration.
+### Are gas boilers banned?
+
+Not by law: the Regulations contain no fuel or boiler provision. The limit is in guidance. For heating and hot water in new dwellings, ADL1 2026 paragraph 4.4 says every service should either use fuels with a CO2 emission factor no higher than 0.086 kgCO2/kWh and a primary energy factor no higher than 1.969 kWhPE/kWh, as listed in SAP 10.3 Table 12, or be served by a district heat network. A multi-fuel system is checked on its highest-emission fuel.
+
+Approved documents contain "guidance (which you may or may not choose to follow)" (ADL1 2026, introduction), so paragraph 4.4 is not a ban, but departing from it means showing building control that the requirements are met another way. At consultation the government said gas boilers, "including hybrid and hydrogen-ready boilers", would not meet the standards (2023 consultation, section 4.1.2). I could not read SAP 10.3 Table 12, so this course does not give each fuel's factors.
+
+Part O was not revised: the Circular lists only the L and F volumes (paragraph 13), and the government "will proceed with a full technical review of Approved Document O" (consultation response, executive summary).
+
+---
+
+## Section 3: SAP 10.3, the Home Energy Model and EPCs
+
+### SAP 10.3 is the method in use
+
+ADL1 2026 names two methodologies "developed for this purpose", the Home Energy Model (HEM) and SAP, each with its own notional dwelling, and leaves the dates each is approved to the notice of approval (regulation 24 intention and paragraph 1.3). At the last statement found, only SAP was available. On 8 June 2026 DESNZ said HEM's launch had been delayed and SAP 10.3 "is currently available as the sole approved methodology", with HEM to follow "in the coming months" (gov.uk, Standard Assessment Procedure guidance).
+
+The stated plan is that HEM becomes approved "no earlier than 3 months" after the March 2026 response, that either may then be used, and that dual running "should last for no less than 24 months from when HEM becomes available for use" (consultation response, executive summary, chapter 12). I found no notice approving HEM up to 14 October 2026, but could not search gov.uk exhaustively; confirm with your scheme.
+
+HEM is DESNZ's model, developed "by a number of organisations", BRE and Quidos among them (HEM-TP-01, October 2025). For the standard it uses a half-hourly timestep (HEM Future Homes Standard assessment response, Questions 1 to 2). Its calculation engine is hosted on GOV.UK and "accessible only to energy assessor accreditation schemes", with software providers building the interfaces (HEM consultation response, October 2025, Questions 6 to 7).
+
+### On-construction EPCs
+
+The EPC notice of approval of 24 March 2026 records that SAP, "the approved methodology for expressing the energy performance of new domestic buildings in England", has been updated "from version 10.2 to version 10.3" (gov.uk notice page). I could not open the full notice, so ask your scheme which version applies to homes still being built to the 2021 standard.
+
+How an EPC will be produced from a HEM assessment is not settled in what I read: the DESNZ response "does not address EPC reform" (HEM Future Homes Standard assessment response, page 5). Building control may accept a certificate from "an energy assessor who is accredited to produce energy performance certificates" for that category of building as evidence that regulation 26 is met (Building Regulations 2010, regulation 27(4)).
+
+### EPC reform
+
+EPC reform is a separate programme for England and Wales. The partial government response on the Energy Performance of Buildings regime (MHCLG and DESNZ, 21 January 2026) confirms plans for four new headline metrics on domestic EPCs: energy cost, fabric performance, heating system and smart readiness (paragraph 25). On 9 March 2026 the government said "we have decided to move the launch of the reforms to the second half of 2027" (consultation page, outcome update). A further response was promised in 2026; I found neither it nor a confirmed launch date.
+
+DESNZ's consultation on producing EPCs with HEM closed on 18 March 2026 and is marked "We are analysing your feedback". It proposes showing today's headline rating as a legacy rating "until at least the end of 2029" (methodology, chapter 3). These are proposals.
+
+---
+
+## Section 4: Existing Homes, Retrofit and Your Practice
+
+### Work on existing homes
+
+The Future Homes Standard is a new-build standard. L3 applies when a building is erected, regulation 40C to new dwellings, and paragraph 4.4 to new dwellings; ADL1 2026 Sections 1 to 9 are the new dwelling guidance (paragraph 0.6).
+
+Some of the package reaches existing homes. The new L1 is not limited to new dwellings, and ADL1 2026 gives existing-dwelling guidance in Sections 3, 4, 5, 10 and 11, including extensions and material change of use (paragraph 0.8), taking effect on 24 March 2027 subject to the transitional rules.
+
+Replacement heating guidance reads as before: a same-fuel replacement no less efficient than the old system; a fuel switch producing no more CO2 and needing no more primary energy per kWh of heat. In a very low heat loss home a higher primary energy demand may be acceptable, for example direct electric heating in a deep retrofit below 25 kWh/m2 per year (ADL1 2026, paragraphs 4.5 and 4.6; 2021 edition, paragraphs 5.4 and 5.5).
+
+I could not read ADL1 2026 Sections 10 to 12, so cannot say whether limiting values for extensions or thermal elements changed; check those tables or ask building control. Current limiting standards were kept for material change of use, with a further consultation planned (consultation response, paragraphs 6.53 and 6.55).
+
+### Ventilation after retrofit
+
+ADF1 2026 also takes effect on 24 March 2027 (cover). Its Section 3 keeps the 2021 approach: work should not reduce ventilation unless F1(1) is still met (ADF1 2026, paragraph 3.6), following PAS 2035 is "an adequate means" of showing compliance with paragraph 3.6 (note to paragraph 3.7), and Table 3.1 lists the same eleven measures with the same minor and major categories as the 2021 edition (Table 3.1 in both). I did not compare Diagram 3.1.
+
+PAS 2035:2023 clauses 8.2.13 and C.2.1 use "Diagram 3.1 and Table 3.1 in Approved Document F", and its reference [N3] is the 2021 edition. For dated references "only the edition cited applies" (PAS 2035, clause 2), so PAS 2035 still points to the 2021 edition after the 2026 one takes effect. Table 3.1 is the same in both; ask your scheme or TrustMark how they will treat the change.
+
+### If you do RdSAP assessments
+
+Nothing in the package changes your RdSAP work now. RdSAP "is for existing dwellings only", and a new dwelling "must be assessed using SAP specification and software" (RdSAP 10 Specification v4.0, Introduction; convention 1.01). The current specification, version 4.0 of 7 June 2026, still "forms part of SAP 10.2 specification" (Introduction), so SAP 10.3 does not touch your calculation. What will change your work is EPC reform; watch for the further EPB response and the HEM EPC outcome.
+
+### If you do on-construction work
+
+A sensible checklist before March 2027:
+- Record, plot by plot, which standard applies, from the notice date and the commencement date.
+- Confirm your software covers SAP 10.3, and learn the fabric target, the L3 reference array and the paragraph 4.4 fuel guidance.
+- Build photographs and the as-built BREL report into your site process.
+- Ask your scheme what HEM training it will require.
 
 ---
 
 ## Key Takeaways
-
-- The Future Homes Standard requires a 75–80% reduction in carbon emissions compared to the 2013 Part L baseline, effectively mandating low-carbon heating and substantially improved fabric performance for all new dwellings in England from 2027.
-- Natural gas boilers will not achieve FHS compliance in standard configurations — heat pumps are the de facto default heating system under the new carbon targets.
-- The Home Energy Model replaces SAP as the statutory calculation methodology for new dwellings, with significant differences in how heating systems, thermal mass, and ventilation are modelled.
-- Assessors need to actively engage with HEM documentation now — the methodology is not a minor update and requires genuine study to use competently.
-- The FHS widens the performance gap between new and existing stock, increasing the policy and commercial significance of accurate EPCs for existing dwellings.
-- Scheme operators (Elmhurst, Quidos, ECMK, and others) are updating accreditation requirements — check your scheme's published transition plan and budget for any additional training or assessment.
-- The FHS is not an isolated change — it connects directly to MEES policy, retrofit funding programme targets, and the broader heat decarbonisation strategy, all of which affect your day-to-day work.
+- The package for England was published on 24 March 2026 and takes effect on 24 March 2027, or 24 September 2027 for higher-risk building work (SI 2026/335, regulation 1).
+- Transitional protection is per building: notice or application before 24 March 2027 and work commenced on that building before 24 March 2028 (regulation 5).
+- SAP 10.3 was the sole approved methodology at the last statement found (8 June 2026); HEM is to follow, with at least 24 months of dual running planned.
+- The three targets remain: primary energy, emissions and fabric energy efficiency.
+- Limiting U-values and the 8.0 m3/(h.m2) air permeability limit are unchanged from 2021; the default y-value route has gone.
+- L3 requires on-site renewable electricity for new dwellings, with exemptions; ADL1 2026 paragraph 4.4 limits heating fuels by guidance, not by a legal ban.
+- RdSAP 10 is unchanged by the package; EPC reform is separate, with launch moved to the second half of 2027.
+- Work on existing homes follows the 2026 editions of ADL1 and ADF1 from 24 March 2027, but L3, paragraph 4.4 and regulation 40C do not apply to it.
 
 ---
 
 ## Self-Assessment Questions
 
-**Q1. What is the headline carbon emission reduction target for new dwellings under the Future Homes Standard, compared to the 2013 Part L baseline?**
+**Q1.** A full plans application for one house in England (not higher-risk building work) was deposited on 1 February 2027. What must happen for the 2026 changes not to apply to that house?
 
-A) 30–40% reduction
-B) 50–55% reduction
-C) 75–80% reduction
-D) 100% (net zero regulated emissions)
+A) Nothing more: the application date alone is enough
+B) Work on that house must be commenced before 24 March 2028
+C) The house must be completed before 24 March 2027
+D) The developer must apply to the Secretary of State for an exemption
 
-**Correct answer: C**
-The FHS targets a 75–80% reduction in regulated carbon emissions compared to a dwelling built to the 2013 Approved Document L standard. This is the figure stated in the government's published specification.
-
----
-
-**Q2. Which calculation methodology replaces SAP for new dwelling energy assessments under the FHS?**
-
-A) RdSAP 3.0
-B) PHPP (Passive House Planning Package)
-C) The Home Energy Model (HEM)
-D) SBEM Domestic
-
-**Correct answer: C**
-The Home Energy Model is the government's replacement for SAP, developed by BRE, and will be the statutory calculation methodology for new dwellings assessed under the FHS.
+**Correct answer: B.** Protection needs the application before 24 March 2027 and work commenced in relation to that building before 24 March 2028 (SI 2026/335, regulation 5(1)).
 
 ---
 
-**Q3. Why is it effectively impossible for a new dwelling with a gas boiler to achieve FHS compliance?**
+**Q2.** At the latest government statement found for this course, which methodology could show a new dwelling in England meets the 2026 standards?
 
-A) Gas boilers are explicitly banned by a specific clause in the Building Regulations
-B) The carbon emission targets are calibrated to levels that cannot realistically be achieved with natural gas as the primary heating fuel
-C) Gas connections are no longer permitted under planning law
-D) SAP 10 cannot model gas boilers
+A) The Home Energy Model only
+B) RdSAP 10
+C) SAP 10.2
+D) SAP 10.3, as the sole approved methodology
 
-**Correct answer: B**
-The FHS does not contain a single explicit prohibition on gas boilers, but the carbon emission and primary energy targets are set at levels that a gas-heated dwelling cannot realistically meet. This constitutes a de facto prohibition.
-
----
-
-**Q4. Under HEM, which of the following input categories requires more detailed specification compared to SAP?**
-
-A) Postcode and address
-B) Heat pump performance data across a range of operating conditions
-C) The number of habitable rooms
-D) Council tax band
-
-**Correct answer: B**
-HEM models heat pump performance more realistically than SAP, requiring performance data across multiple operating conditions rather than a single seasonal efficiency figure. This is one of the key practical differences assessors need to prepare for.
+**Correct answer: D.** On 8 June 2026 DESNZ said SAP 10.3 "is currently available as the sole approved methodology" (gov.uk SAP guidance); RdSAP is for existing dwellings only.
 
 ---
 
-**Q5. Which of the following is a direct action assessors should take before the 2027 FHS implementation date?**
+**Q3.** Which statement about gas boilers in new dwellings under the 2026 standards is correct?
 
-A) Stop producing EPCs for existing dwellings
-B) Wait for their scheme operator to provide all necessary training before reviewing any technical documentation
-C) Review the published HEM technical documentation and contact their software provider about HEM implementation timelines
-D) Assume that current SAP-based workflows will remain unchanged
+A) The Regulations contain no fuel ban, but ADL1 2026 guidance limits heating fuels by CO2 and primary energy factors, or a heat network
+B) SI 2026/335 inserts a requirement prohibiting gas boilers in new dwellings
+C) ADL1 2026 sets no limit on heating fuels in new dwellings
+D) The paragraph 4.4 fuel limit applies whenever a boiler is replaced in an existing home
 
-**Correct answer: C**
-Proactive engagement with HEM documentation and software transition planning is essential. Waiting passively for scheme operators to deliver training risks inadequate preparation, and assuming no change to current workflows is professionally negligent given the scale of the transition.
+**Correct answer: A.** SI 2026/335 has no fuel provision; ADL1 2026 paragraph 4.4 sets the 0.086 kgCO2/kWh and 1.969 kWhPE/kWh limits or a heat network for new dwellings, while replacements follow paragraph 4.5.
+
+---
+
+**Q4.** How do the limiting U-values for a new dwelling's walls and roofs in ADL1 2026 compare with the 2021 edition?
+
+A) Tightened to wall 0.18 and roof 0.11 W/(m2.K)
+B) Tightened to wall 0.13 W/(m2.K)
+C) Unchanged at wall 0.26 and roof 0.16 W/(m2.K)
+D) Relaxed to allow for the cost of solar panels
+
+**Correct answer: C.** ADL1 2026 Table 3.1 and the 2021 edition Table 4.1 give the same values; 0.18 and 0.11 are 2021 notional dwelling values, not limits (2021 edition, Table 1.1).
+
+---
+
+**Q5.** You produce RdSAP EPCs for existing homes in England. What does the Future Homes Standard package change in that work today?
+
+A) RdSAP 10 calculations must now be run on SAP 10.3
+B) Nothing directly: RdSAP 10 is for existing dwellings and its current specification still forms part of SAP 10.2
+C) RdSAP EPCs must be produced with the Home Energy Model from 24 March 2027
+D) Existing homes must meet requirement L3 at their next EPC
+
+**Correct answer: B.** The RdSAP 10 Specification v4.0 Introduction says RdSAP is for existing dwellings only and forms part of SAP 10.2; EPC reform's launch moved to the second half of 2027, and L3 applies only when a building is erected.
 
 ---
 
 ## Further Reading
-
-1. **Ministry of Housing, Communities and Local Government (now DLUHC) — The Future Homes Standard: 2025 Consultation and Government Response.**
-Available at: https://www.gov.uk/government/consultations/the-future-homes-standard-changes-to-part-l-and-part-f-of-the-building-regulations-for-new-dwellings
-*(Check for the March 2026 final publication and updated Approved Document L Volume 1.)*
-
-2. **BRE — Home Energy Model: Technical Documentation and Methodology.**
-Available at: https://bregroup.com/sap/home-energy-model/
-*(Primary source for understanding the HEM calculation methodology, input conventions, and notional dwelling specification.)*
-
-3. **HM Government — Approved Document L, Volume 1: Dwellings (2025 edition).**
-Available via the Planning Portal: https://www.planningportal.co.uk/building-regulations/approved-documents
-*(The statutory guidance document that sets out compliance requirements for new dwellings under the FHS.)*
-
-4. **Elmhurst Energy / Quidos / ECMK — Scheme Operator Guidance on FHS Transition.**
-*(Check your individual scheme operator's website for published position statements, assessor transition plans, and updated competency requirements. These have been published progressively since March 2026.)*
+- **The Building Regulations etc. (Amendment) (England) Regulations 2026 (SI 2026/335).** legislation.gov.uk, made 23 March 2026. Regulations 1, 3 and 5.
+- **Approved Document L, Volume 1: Dwellings, 2026 edition.** MHCLG, 24 March 2026, revised 8 September 2026. Paragraphs 1.3 to 2.5, Table 3.1, 3.19 and 4.4 to 4.6.
+- **The Future Homes and Buildings Standards: Building Circular 01/2026.** MHCLG, 24 March 2026. Paragraphs 15 to 22 on transitional arrangements.
+- **Future Homes and Buildings Standards: consultation response.** MHCLG, 24 March 2026. Executive summary and chapters 3 and 4.
+- **Standard Assessment Procedure (guidance page).** DESNZ, last updated 8 June 2026. The status of SAP 10.3 and HEM.
+- **Reforms to the Energy Performance of Buildings regime: partial government response.** MHCLG and DESNZ, 21 January 2026, updated 9 March 2026. New EPC metrics and the delayed launch.
 
 ---
 

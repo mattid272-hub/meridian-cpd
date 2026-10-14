@@ -1,180 +1,214 @@
-
-
-# Damp and Mould Assessments: Scotland's New Framework and UK Implications
-**Course ID:** MER-ALL-010 | **CPD Hours:** 1 | **Published:** June 2026
+# Damp and Mould Investigations: Scotland's 2026 Duties and the Assessor's Role
+**Course ID:** MER-ALL-010 | **CPD Hours:** 1 | **Published:** October 2026
 *© Meridian CPD 2026. All rights reserved.*
 
 ---
 
 ## Learning Objectives
 
-- Explain the key provisions of Scotland's strengthened legislative framework for damp and mould in rented housing and identify how these differ from existing obligations under the Repairing Standard.
-- Distinguish between the principal moisture transport mechanisms — rising damp, penetrating damp, interstitial condensation, and surface condensation — and select appropriate diagnostic methods for each.
-- Apply a structured damp and mould assessment methodology that goes beyond PAS 2035 moisture risk assessment to deliver a standalone, defensible diagnostic report.
-- Evaluate the interaction between building fabric performance, ventilation provision, and occupant behaviour when determining the root cause of moisture-related pathology.
-- Identify the professional development, insurance, and competency requirements necessary to position an existing DEA or Retrofit Assessor practice to deliver formal damp and mould assessments across UK jurisdictions.
+By the end of this course you should be able to:
+- State what the Housing (Scotland) Act 2025 and SSI 2026/173 changed, and when.
+- Quote the damp limbs of Scotland's tolerable standard and repairing standard, and explain how they differ.
+- Set out the Scottish timescales for private and social landlords, and how England and Wales differ.
+- Identify what an RdSAP 10 assessment and a PAS 2035:2023 retrofit assessment record that bears on damp and mould.
+- Explain what neither assessment establishes, and who decides whether an assessor is a "competent person".
 
 ---
 
 ## Introduction
 
-The death of Awaab Ishak in Rochdale in 2020 catalysed a regulatory reckoning with damp and mould in UK housing that is still accelerating. England responded with Awaab's Law amendments to the Social Housing (Regulation) Act 2023, imposing time-bound duties on social landlords to investigate and remedy damp and mould hazards. Scotland, legislating in parallel but through its own devolved housing framework, has been tightening the Repairing Standard under the Housing (Scotland) Act 2006 and developing supplementary guidance that moves towards mandating formal damp and mould assessments as part of landlord compliance. The Scottish Government's consultation on further strengthening tenant protections — with specific focus on indoor air quality, moisture, and mould — signals that a structured assessment methodology is becoming a regulatory expectation rather than a discretionary good practice measure.
+Since 6 October 2026, landlords in Scotland have had fixed timescales for damp and mould. Once a landlord is told about, or otherwise becomes aware of, possible damp or mould, a "competent person" must investigate within 10 working days, the tenant must get a written summary within 3 working days of the investigation, and any work needed must start within 5 working days of it (SSI 2026/173, regulations 3 and 4). The Scottish Government calls this Awaab's Law, in memory of Awaab Ishak, the two-year-old who died of a severe respiratory condition caused by prolonged exposure to mould in his home in England ("Awaab's Law: guidance for landlords in Scotland", paragraph 1.3; "the Scottish guidance" below).
 
-For working assessors, this matters for two reasons. First, the existing moisture risk assessment embedded within PAS 2035 retrofit processes is a screening tool. It identifies properties where moisture problems may exist or where retrofit interventions could alter moisture dynamics. It was never designed as a standalone diagnostic instrument, and it does not produce the kind of root-cause analysis that a landlord needs to discharge a statutory repair obligation or that a tribunal will accept as evidence. The gap between what PAS 2035 asks of you and what this emerging regulatory landscape demands is significant.
+The duties fall on landlords, not assessors. But assessors see damp and mould in rented homes, and a landlord may use anyone it reasonably judges competent (Housing (Scotland) Act 2006, section 14(11)). This course covers the law, what your RdSAP and PAS 2035 work records, and where it stops. It is mainly about Scotland; Section 3 compares England and Wales briefly, and Northern Ireland is not covered. The legal position is correct to 14 October 2026.
 
-Second, there is a market forming. Social landlords, local authorities, and increasingly private landlords need competent professionals who can conduct rigorous damp and mould assessments, produce defensible reports, and — critically — distinguish between fabric failures, ventilation deficiencies, and occupancy factors without defaulting to the lazy "lifestyle" attribution that regulators and courts are now actively rejecting. DEAs and Retrofit Assessors already possess a substantial portion of the building physics knowledge required. This course addresses what else you need.
-
-We will cover the Scottish legislative context and its UK-wide implications, the technical fundamentals of moisture diagnostics at a level beyond the PAS 2035 moisture risk framework, a structured assessment methodology you can adopt, and the practical steps to add this capability to your practice.
+This edition replaces the June 2026 edition. That edition described a Scottish damp and mould "framework" still at consultation stage, when the Regulations had already been made on 24 March 2026; they are now in force. It also said the repairing standard covers ventilation installations, which section 13 of the 2006 Act does not say, applied it to social tenancies, although section 12 excludes Scottish secure tenancies, and named a PAS 2035 "moisture risk assessment" that the 2023 standard does not ask the Retrofit Assessor to carry out. Its unsourced survey methods and mould species advice have been removed.
 
 ---
 
-## Section 1: Scotland's Evolving Framework and the Wider UK Regulatory Direction
+## Section 1: Scotland's Standards: Tolerable, Repairing and SHQS
 
-Scotland's approach to damp and mould in housing is rooted in the Repairing Standard, the statutory minimum condition standard for rented properties set out in Part 1, Chapter 4 of the Housing (Scotland) Act 2006. The Repairing Standard requires that a house be wind and watertight, that the structure and exterior be in reasonable repair, and that installations for ventilation are in reasonable repair and proper working order. Critically, the Housing (Scotland) Act 2014 amended these provisions to explicitly bring the tolerable standard and repairing standard closer together, and subsequent amendments have progressively tightened what "reasonable repair" means in practice.
+### The tolerable standard
 
-The Scottish Government's more recent policy direction — driven in part by the same post-Awaab political momentum that shaped Awaab's Law in England — has focused on three areas directly relevant to assessors. First, there is a push to define damp and mould as a category of hazard requiring proactive identification, not merely reactive response to tenant complaints. Second, the Scottish Housing Regulator has increased scrutiny of social landlords' data on damp and mould prevalence, repair response timescales, and root-cause analysis quality. Third, consultation proposals have explored whether a standardised assessment framework should be prescribed, ensuring consistency in how damp and mould complaints are investigated and reported.
+The tolerable standard is in section 86 of the Housing (Scotland) Act 1987. The limbs a house must meet include that it:
+- "is structurally stable" (section 86(1)(a));
+- "is substantially free from rising or penetrating damp" (section 86(1)(b));
+- "has satisfactory provision for natural and artificial lighting, for ventilation and for heating" (section 86(1)(c));
+- "has satisfactory thermal insulation" (section 86(1)(ca)).
 
-For assessors working outside Scotland, the read-across is direct. Awaab's Law in England imposes investigation, repair, and communication timescales on registered providers of social housing. The Decent Homes Standard review has proposed that damp and mould constitute a Category 1 hazard trigger under the Housing Health and Safety Rating System (HHSRS). Wales continues to develop its own Renting Homes (Wales) Act framework with fitness for habitation requirements that capture moisture and mould. The direction of travel across all UK jurisdictions is convergent: landlords will increasingly need documented, technically competent assessments to demonstrate compliance.
+Limb (b) names rising and penetrating damp only; it says nothing about condensation or mould. Regard is to be had to Scottish Ministers' guidance in applying the standard (section 86(1A)), and section 47 of the Housing (Scotland) Act 2025, in force since 6 December 2025 (SSI 2025/355), added section 86(1D) so that guidance may "further specify the circumstances" in which a house is substantially free from rising or penetrating damp. This course could not establish whether guidance has yet been issued under that power. As an example from "existing guidance", the Scottish guidance says a house "will normally be below tolerable standard" if an assessor finds persistent visible penetrating damp over more than approximately 10% of the wallspace or 10% of the ceiling in one apartment, or 20% of the wallspace or ceiling in other spaces (paragraph 3.24).
 
-The Housing Ombudsman's 2021 report, *Spotlight on: Damp and Mould*, was blunt in its criticism of landlords who attributed mould to "lifestyle" without adequate investigation. That report, while focused on England, has influenced regulatory expectations across the UK. The emerging standard — whether it arrives through Scottish regulation, English statutory instruments, or evolving case law — is that a defensible damp and mould assessment must identify the moisture source, quantify the severity, attribute causation on the balance of evidence, and recommend remediation proportionate to the diagnosis. This is the assessment you need to be capable of delivering.
+### The repairing standard
 
----
+The repairing standard is in Part 1, Chapter 4 of the Housing (Scotland) Act 2006. The Chapter applies to tenancies of houses let for human habitation except those listed in section 12(1), the first of which is a Scottish secure tenancy or short Scottish secure tenancy (section 12(1)(a)). Those social tenants are covered by the right to repair scheme instead (Scottish guidance, chapter 2). The landlord must ensure the house meets the standard at the start of the tenancy and at all times during it (section 14(1)). The limbs of section 13(1) that bear most directly on damp and mould are:
+- (a) "wind and water tight and in all other respects reasonably fit for human habitation";
+- (b) the structure and exterior, "including drains, gutters and external pipes", in a reasonable state of repair and in proper working order;
+- (h) the house "meets the tolerable standard", added from 1 March 2019 (SSI 2019/61);
+- (ha) the house "is substantially free from damp and mould", added from 6 October 2026 (SSI 2026/173, regulation 3(2)(a)).
 
-## Section 2: Moisture Diagnostics Beyond PAS 2035 — Understanding the Physics
+Limb (c) covers installations for water, gas, electricity, other fuel, sanitation and heating. The word ventilation does not appear in section 13(1); the express ventilation requirement arrives through limb (h), because the tolerable standard requires satisfactory provision for ventilation.
 
-PAS 2035's moisture risk assessment asks you to identify whether a property has existing moisture problems and whether proposed retrofit measures might create or worsen them. It is a risk flag. What it does not ask you to do is diagnose the mechanism, quantify the moisture load, or produce a root-cause analysis. Delivering a standalone damp and mould assessment requires you to operate at a deeper level of building physics than the retrofit pathway demands.
+Limb (ha) is wider than the tolerable standard's damp limb. The Scottish guidance says Awaab's Law "applies to all types of damp and mould" (paragraph 3.4), including condensation and traumatic damp (chapter 3).
 
-There are four principal moisture transport mechanisms in buildings, and your assessment must be capable of differentiating between them.
+### The Scottish Housing Quality Standard
 
-**Rising damp** involves moisture from the ground migrating upward through masonry by capillary action. It is frequently over-diagnosed. Genuine rising damp typically presents as a tide mark no higher than approximately 1.0–1.5 metres, with associated salt deposits (hygroscopic salts drawn from masonry or soil). It requires a failed or absent damp-proof course. BS 8102:2009 [L64] provides the framework for protecting below-ground structures against groundwater ingress, and its principles — defining the waterproofing grade required for the intended use of the space — are directly applicable when assessing basements and semi-basements where ground moisture interaction is a factor.
-
-**Penetrating damp** results from rainwater or other external moisture breaching the building envelope. It is driven by exposure, defects in the weathering envelope (pointing, render, flashings, guttering, downpipes), and in solid-wall construction by wind-driven rain absorption. Approved Document Part C [EX05] sets out the regulatory expectations for resistance to moisture, including wall construction requirements to resist the passage of moisture to the inner surface. Your assessment must identify the point of entry, the pathway, and the specific defect.
-
-**Surface condensation** occurs when water vapour in indoor air meets a surface at or below dewpoint temperature. It is the most common mechanism behind mould growth in occupied dwellings. It is governed by three interacting variables: moisture generation rate (occupancy), ventilation rate (extraction and background), and surface temperature (insulation and thermal bridging). BS 5250:2021 [L54] provides the authoritative framework for understanding and managing moisture in buildings, including detailed guidance on condensation risk and the relationship between vapour pressure, temperature, and dewpoint.
-
-**Interstitial condensation** occurs within the building fabric, at a plane where the temperature drops below the dewpoint of the air or vapour diffusing through the construction. It is invisible until it manifests as decay, corrosion, or secondary effects. BS 5250:2021 [L54] addresses interstitial condensation risk analysis, including the principles of vapour pressure profiling through construction build-ups — a technique every assessor delivering retrofit or damp assessments should understand conceptually, even if detailed calculations are undertaken using software tools.
-
-Your diagnostic toolkit must match the mechanism. Surface-level moisture meters (pin-type and capacitance-type), thermal imaging, hygrometer readings (ambient relative humidity and temperature), surface temperature probes, and — where rising damp is suspected — gravimetric analysis or carbide meter testing of masonry samples all have their place. Knowing which instrument to deploy, and crucially, what its limitations are, separates a competent assessment from a superficial one.
-
----
-
-## Section 3: A Structured Assessment Methodology for Damp and Mould
-
-A defensible damp and mould assessment follows a structured, repeatable methodology. What follows is a framework that draws on the principles embedded in BS 5250:2021 [L54], Approved Document Part C [EX05], and established diagnostic practice. It is not a proprietary protocol — it is the logical sequence that any competent moisture investigation should follow.
-
-**Stage 1: Pre-Assessment Information Gathering.** Before attending site, obtain the property construction type, age, tenure, any known alteration history, previous damp or mould reports, and the tenant's or occupier's description of the problem including its location, duration, and seasonality. Review the EPC if available — it gives you the construction and heating data you already know how to interpret. Obtain floor plans where possible. For retrofit properties, review any existing PAS 2035 documentation, particularly the pre-retrofit moisture risk assessment and the medium-term plan.
-
-**Stage 2: External Survey.** Inspect the building envelope systematically. Roof coverings, flashings, valleys, verges, chimney stacks, guttering, downpipes, gully connections, external wall surfaces (pointing condition, render integrity, crack mapping), window and door seals, ground levels relative to DPC, and sub-floor ventilation provision. Photograph defects. The purpose is to identify or exclude penetrating damp pathways before entering the building.
-
-**Stage 3: Internal Survey.** Room-by-room assessment. Record ambient temperature and relative humidity in each affected and unaffected room. Use a surface temperature probe on cold spots and suspected thermal bridges. Deploy a thermal imaging camera if available — it is invaluable for identifying thermal bridging, missing insulation, and concealed moisture pathways. Use a moisture meter on affected surfaces, but understand its limitations: capacitance meters respond to anything that conducts, including foil-backed plasterboard and embedded services. Pin meters measure resistance between the pins at the depth of insertion — they do not tell you what is happening deeper in the wall. Map mould distribution. Record mould species if identifiable (black mould on cold surfaces is typically Aspergillus or Cladosporium; extensive Stachybotrys warrants particular attention). Record ventilation provision: are extract fans present, operational, and ducted to outside? Are trickle vents present and open? Is there a mechanical ventilation system, and is it functioning?
-
-**Stage 4: Occupancy and Use Assessment.** This is the step most frequently botched. You are not there to blame the tenant. You are there to quantify the moisture generation and ventilation balance. Establish the number of occupants, drying practice (internal drying of laundry is the single largest discretionary moisture source in most dwellings), cooking and bathing ventilation use, and heating pattern. Record this data objectively and non-judgementally. It is a factor in the diagnosis, not the default diagnosis.
-
-**Stage 5: Analysis and Root-Cause Determination.** Synthesise the external survey, internal survey, environmental data, and occupancy data. Apply the building physics: is the moisture load consistent with the ventilation provision and surface temperatures present? Is there a fabric defect admitting external moisture? Is there a thermal bridge creating a persistent cold spot below dewpoint? In most cases, the answer is multifactorial — the assessment must apportion contribution, not pick a single cause.
-
-**Stage 6: Reporting.** The report must state the findings, the diagnosed mechanism(s), the evidence base for the diagnosis, and proportionate remediation recommendations. It should be written to a standard that would withstand scrutiny by a First-tier Tribunal (Housing) in Scotland, or equivalent bodies elsewhere in the UK.
+For social housing the Scottish Government calls the SHQS, introduced in February 2004, "the main way we measure housing quality in Scotland" (gov.scot, "Social housing: improving standards"). It has 55 elements in five broader criteria, one of them a "below tolerable standard criterion" (Scottish House Condition Survey: Local Authority Tables 2022 to 2024, May 2026). The element detail is in technical guidance for social landlords (1 June 2016) that could not be opened for this course, so no SHQS element is quoted here; ask the landlord which guidance it works to.
 
 ---
 
-## Section 4: Positioning Your Practice — Competency, Insurance, and Market Access
+## Section 2: The 2026 Duties to Investigate and Start Repairs
 
-If you are a working DEA or Retrofit Assessor, you already hold core competencies that are directly transferable to damp and mould assessment: building fabric knowledge, thermal performance understanding, ventilation system familiarity, and experience conducting systematic property inspections. The additional competency you need sits in three areas: moisture-specific diagnostic technique, reporting to evidential standard, and understanding of the health and legal context.
+### How the law was made
 
-**Diagnostic skills.** Invest in proper equipment and learn to use it rigorously. At minimum, a calibrated pin-type moisture meter, a capacitance meter, a thermo-hygrometer capable of recording ambient temperature, relative humidity, and calculating dewpoint, and a surface temperature probe. A thermal imaging camera with adequate resolution is strongly recommended — entry-level units are now available at accessible price points, but understand that interpretation requires training. Misread thermograms are worse than no thermograms. Consider accredited training in thermographic survey for building diagnostics.
+The Housing (Scotland) Act 2025 (asp 13), Royal Assent 6 November 2025, sets no damp or mould timescale itself. Section 46 amended section 27 of the Housing (Scotland) Act 2001 so that right to repair regulations can set "the period within which an inspection of the house is to take place" and "the period within which a qualifying repair is to be commenced"; it has been in force since 6 December 2025 (SSI 2025/355). The duties are in the Investigation and Commencement of Repair (Scotland) Regulations 2026 (SSI 2026/173), made on 24 March 2026 under section 27(2) of the 2001 Act and section 20A of the 2006 Act, and in force from 6 October 2026 (regulation 1). Its policy note ties it to the commitment to "an equivalent of Awaab's Law in the rented sector".
 
-**Reporting.** Your report is the product. A tribunal, an Ombudsman, a landlord's legal team, or a regulator may read it. It must be clear, evidenced, and methodologically sound. Avoid definitive statements where the evidence supports only a balance-of-probability conclusion. Photograph everything. Reference the applicable standards — BS 5250:2021 [L54] for condensation-related diagnoses, Approved Document Part C [EX05] for penetrating moisture, BS 8102:2009 [L64] for below-ground water — and explain your reasoning. A good damp report reads like a diagnostic narrative, not a tick-box exercise.
+### Private landlords: the repairing standard
 
-**Insurance and liability.** Check your existing Professional Indemnity Insurance. Damp and mould assessments may fall outside the scope of cover designed for EPC production or PAS 2035 retrofit assessment. Speak to your insurer explicitly. If you are providing reports that may be used in legal or regulatory proceedings, your PI cover must reflect that exposure. Some insurers now offer specific extensions for damp and mould diagnostic work.
+Regulation 3 inserts subsections (5) to (11) into section 14 of the 2006 Act:
+- When the landlord is "notified by the tenant, or otherwise becomes aware," that the house "is or may be affected by damp or mould", a competent person must investigate whether it is substantially free from damp and mould and, if not, whether "relevant safety work" is required (section 14(5)).
+- The investigation must be completed within 10 working days, counting from the day after the landlord was notified or became aware (section 14(6)).
+- The tenant gets a written summary within 3 working days of completion (section 14(7)), and relevant safety work must be commenced within 5 working days of completion (section 14(8)).
+- If circumstances beyond the landlord's control prevent the 10 or 5 day duty being met, the landlord must tell the tenant why and when, and take reasonable steps where practicable to limit the damp or mould meanwhile (section 14(9)).
+- The landlord must have regard to Scottish Ministers' guidance (section 14(10)).
 
-**Market access.** Social landlords — housing associations and local authority housing departments — are the most immediate market. Many are actively seeking competent assessors to deliver damp and mould inspections at scale. Private sector letting agents and landlords represent a growing secondary market as regulatory pressure tightens. Building a reputation in this space requires consistency, defensible methodology, and willingness to give honest diagnoses — including when the fabric failure is the landlord's responsibility.
+Relevant safety work is work to make the house substantially free from damp and mould and, so far as reasonably practicable, keep it so; working days exclude weekends and Scottish bank holidays (section 14(11)). There is no new completion deadline for private landlords: the existing duty is to complete work within a reasonable time (section 14(4); Scottish guidance, paragraph 6.4). In deciding whether a landlord has met the repairing standard duty, the First-tier Tribunal must now have regard to compliance with subsections (5), (6), (8) and (9) (section 24(1A)).
 
-The assessors who establish credibility in this space now, while the regulatory framework is still crystallising, will be best positioned as formal accreditation and competency requirements inevitably follow.
+### Social landlords: the right to repair
+
+Regulation 4 inserts regulation 8A into the Scottish Secure Tenants (Right to Repair) Regulations 2002. The trigger and the 10, 3 and 5 working day periods are the same, with the investigation deciding whether a qualifying repair is required and the primary contractor commencing it (regulation 8A(3) to (5)). After the repair the house must be substantially free from damp and mould and, so far as reasonably practicable, stay so (8A(6)). "Substantial damp or mould" becomes a qualifying repair with a maximum period of 20 working days, running from the date the repair is commenced (SSI 2026/173, regulation 4; Scottish guidance, paragraph 6.3). Here too the competent person is whoever the landlord reasonably judges to have the necessary skills and experience (2002 Regulations, regulation 2, as amended).
+
+### The Scottish guidance
+
+"Awaab's Law: guidance for landlords in Scotland" was first published on 4 September 2026 and updated on 9 September 2026. Private landlords must have regard to it; social landlords have no statutory requirement to do so under the right to repair scheme, but the Scottish Housing Regulator "will have due regard" to it (paragraph 1.7). The points that matter most to an investigator are these:
+- Awareness is "not solely dependent on a tenant making a report" and can arise during a routine inspection or visit (paragraph 3.16); sensor readings alone do not amount to awareness (paragraph 3.17).
+- Landlords must not dismiss or fail to investigate a report on the assumption that the tenant caused it; cooking, bathing, washing and drying laundry are "unavoidable" (paragraph 3.19).
+- Its framework of exposure, persistence and occupants' vulnerability "should not be used in a prescriptive way" (paragraphs 3.22 and 3.23).
+- No specific qualifications are required; landlords may consider experience with damp or mould, a background in fields such as building surveying, housing maintenance or environmental health, and knowledge of Scotland's housing standards (paragraph 4.1).
+- Investigations should be in person unless another method is justified (paragraph 4.3) and should establish the root cause (paragraphs 4.5 and 4.11).
+- The written summary should name the investigators and give "explicit confirmation" of whether the house is substantially free from damp and mould, with the work required and a target start, or the reasons if substantial damp or mould was not found (paragraph 5.5).
+- A mould wash on its own "is unlikely to be considered a suitable repair" (paragraph 6.5).
+
+---
+
+## Section 3: England and Wales in Brief
+
+### England
+
+England's Awaab's Law is section 10A of the Landlord and Tenant Act 1985, inserted by the Social Housing (Regulation) Act 2023, which implies into relevant social housing leases of dwellings in England a covenant to comply with prescribed requirements (section 10A(1) and (2)). The requirements are in SI 2025/1042, in force since 27 October 2025, which "apply to lessors of social homes in England" (regulation 1(4)). For significant hazards, currently those associated with exposure to damp, mould or fungal growth (regulation 3(2)), the lessor must investigate within 10 working days (regulation 6(4)), give a written summary within 3 working days (regulation 9(4)) and complete relevant safety work within 5 working days of the investigation (regulation 11(2)). MER-ALL-017 covers England in full.
+
+Two differences from Scotland stand out. The English Regulations apply to social landlords only; Scotland's apply to private and social landlords. And England's 5 working day limit is for completing relevant safety work; Scotland's is for commencing it.
+
+### Wales
+
+In Wales, landlords under secure contracts, periodic standard contracts and fixed term standard contracts of under seven years must ensure the dwelling is fit for human habitation (Renting Homes (Wales) Act 2016, section 91(1), in force since 1 December 2022). Fitness is judged having regard to the matters in the Schedule to the Renting Homes (Fitness for Human Habitation) (Wales) Regulations 2022 (regulation 3), the first headed "Damp, mites and mould or fungal growth". For social landlords, a new element 1c of the Welsh Housing Quality Standard, with effect from 1 April 2026, requires hazards under the Housing Health and Safety Rating System (except overcrowding) that may present a significant risk, with no assessed likelihood of imminent harm, to be "investigated within 10 working days and remedied within a further 5 working day period" (Welsh Government, WHQS addendum on responding to hazards). The Welsh Government's statement of 19 December 2025 announcing it set no timescales for private landlords.
+
+---
+
+## Section 4: What Your Assessments Record, and What They Do Not
+
+### RdSAP 10
+
+RdSAP produces EPCs for existing dwellings (convention 1.01) from a reduced data set plus defaults (RdSAP10 Specification v4.0, introduction). What it records that touches damp and mould is ventilation and air leakage, collected for heat loss:
+- The ventilation system type, from natural through positive input and mechanical extract to whole-house mechanical ventilation with or without heat recovery; if the type cannot be identified, assume natural (specification section 4.2; Table 31, item 10-1).
+- Intermittent kitchen and bathroom fans are not a mechanical ventilation system for the calculation, but continuously running extract fans in wet rooms count as mechanical extract (Table 31, item 10-1).
+- The number of extract fans if known, otherwise a Table 5 default, and counts of open fireplaces, blocked chimneys, open flues, passive stack vents and flueless gas fires (Table 5; Table 31, item 7-1). Convention 9.01 notes that a chimney may need air bricks "to manage moisture".
+- Draught proofing of each window (Table 31, item 6-8), and air permeability only where a pressure test certificate is available (convention 10.01).
+
+A word search of the v4.0 specification and the v12.2 conventions finds no data item for damp, mould or condensation; condensation appears only in an EPC addendum warning about insulating one side of a party wall (specification Table 30, addendum 18). Nothing asks you to check that a fan works or to measure its flow.
+
+### PAS 2035:2023 retrofit assessment
+
+The retrofit assessment goes further. Clause 7.3.2 requires it to include, among other things:
+- an appraisal of construction, condition and installed building services, including ventilation (7.3.2 b));
+- "identification of the location and severity" of any defects or leaks, and of any condensation and/or mould growth (7.3.2 d));
+- an inspection of the existing ventilation, recording the position and type of fans, with make and model where possible, and the size and location of background ventilators (7.3.2 f));
+- the moisture properties of the main elements (7.3.2 g)), exposure to sun, wind and rain (7.3.2 i)), whether building services are working correctly (7.3.2 j)), and occupancy, including vulnerable persons (7.3.2 k)).
+
+The notes say this "might require the use of test equipment or invasive assessments" (NOTE 1), and that guidance on diagnosing dampness is in BS 5250:2021, Annex C (NOTE 4). Annex C adds that a little condensation around sinks, showers or window edges in extreme weather is normal (C.3.1, NOTE 1). Clause 7.3.2 f) refers to a checklist in Table C.1, which the published text does not contain; ask your scheme. The report goes to the Retrofit Designer with photographs of identified defects (7.4.1), splitting defects, condensation and mould into those to repair before retrofit and those recommended but not essential (7.4.2).
+
+Annex C warns that "the existence of a ventilation system is not proof that a building is adequately ventilated" (C.1). Where the assessment finds condensation or mould, PAS 2035 requires the Retrofit Designer to confirm the adequacy of existing ventilation and, if necessary, specify an upgrade (C.2.1; 8.2.13), and requires the Retrofit Coordinator to advise the client on managing condensation, damp and mould, whether or not ventilation is adequate (C.3.1).
+
+### What neither establishes
+
+Neither assessment is an investigation under section 14(5) or regulation 8A, and neither answers the statutory questions: whether the house is substantially free from damp and mould, and what work is needed. RdSAP records ventilation for an energy calculation, not condition. The PAS 2035 retrofit assessment asks for location and severity (7.3.2 d)), not the root cause that the Scottish guidance expects an investigation to establish (paragraphs 4.5 and 4.11); this course has not reviewed BS 5250. No qualification makes you a competent person; that is the landlord's reasonable opinion (section 14(11)).
+
+### Working practice
+
+None of this is a legal requirement on assessors; it is sensible practice in the light of the sources above:
+- When working for a Scottish landlord, agree at instruction how you will report any damp or mould you see, and to whom, since awareness can arise during a visit (Scottish guidance, paragraph 3.16).
+- Record what you saw, where and when, with photographs; describe rather than diagnose, and avoid assuming the occupants caused it (paragraph 3.19).
+- If asked to investigate, check that your contract and insurance cover the work and that you can deliver what paragraphs 4.5 and 5.5 expect.
 
 ---
 
 ## Key Takeaways
-
-- Scotland's strengthening of tenant protections around damp and mould is part of a UK-wide regulatory convergence — all four nations are tightening expectations on landlords to investigate, diagnose, and remediate moisture-related hazards.
-- The PAS 2035 moisture risk assessment is a screening tool, not a diagnostic methodology; standalone damp and mould assessments require deeper investigation, root-cause analysis, and evidential reporting.
-- Differentiating between rising damp, penetrating damp, surface condensation, and interstitial condensation is the foundational diagnostic skill — each mechanism has distinct presentation, diagnostic indicators, and remediation pathways.
-- Environmental data (ambient temperature, relative humidity, surface temperature, dewpoint calculation) is essential for any condensation-related diagnosis and must be recorded systematically, not estimated.
-- Occupancy and use factors must be assessed objectively as one input to the moisture balance equation, not deployed as a default attribution of fault.
-- Reports must be written to evidential standard, referencing applicable standards including BS 5250:2021 [L54] and Approved Document Part C [EX05], and structured to withstand regulatory or tribunal scrutiny.
-- Professional Indemnity Insurance must be reviewed and confirmed as adequate for the scope and liability profile of damp and mould diagnostic work before accepting instructions.
+- Scotland's duties are in SSI 2026/173, in force from 6 October 2026, for private and social landlords.
+- The periods are 10 working days to investigate, 3 for the written summary and 5 to commence work.
+- The tolerable standard's damp limb covers "rising or penetrating damp" only; the repairing standard's new limb (ha) covers damp and mould generally.
+- The repairing standard does not apply to Scottish secure tenancies; those tenants are covered by the right to repair scheme.
+- The competent person is whoever the landlord reasonably judges competent; no qualification is specified.
+- England's SI 2025/1042 applies to social landlords only and requires relevant safety work to be completed within 5 working days.
+- RdSAP records ventilation but not damp, mould or condensation; the PAS 2035 retrofit assessment records their location and severity, not root cause.
 
 ---
 
 ## Self-Assessment Questions
 
-**Question 1:** A first-floor flat exhibits black mould concentrated on the external wall behind a wardrobe, with no mould elsewhere. Ambient RH is 72%, ambient temperature is 16°C, and the surface temperature of the affected wall is 10°C. What is the most likely primary mechanism?
+**Q1.** Under the Scottish duties in force from 6 October 2026, what must happen within 5 working days after a damp or mould investigation is completed in a private let?
 
-A) Rising damp
-B) Penetrating damp through a failed external render
-C) Surface condensation on a thermal bridge or poorly insulated wall
-D) Interstitial condensation within the wall build-up
+A) The tenant must receive the written summary
+B) Any relevant safety work must be commenced
+C) Any relevant safety work must be completed
+D) The landlord must apply to the First-tier Tribunal
 
-**Correct answer: C.** The surface temperature of 10°C is below the dewpoint for air at 16°C and 72% RH (approximately 10.8°C). The localised presentation on a first-floor external wall behind furniture restricting air circulation is characteristic of surface condensation on a cold surface. Rising damp does not reach first-floor level. Penetrating damp cannot be excluded entirely without an external survey, but the presentation pattern and environmental data point strongly to condensation.
+**Correct answer: B.** Section 14(8) of the Housing (Scotland) Act 2006 requires relevant safety work to be commenced within 5 working days; the summary is due within 3 (section 14(7)), and completion within 5 is the English rule (SI 2025/1042, regulation 11(2)).
 
----
+**Q2.** Which wording did SSI 2026/173 add to the repairing standard as section 13(1)(ha)?
 
-**Question 2:** Under the Housing (Scotland) Act 2006, which of the following does the Repairing Standard require of a rented property?
+A) "is substantially free from rising or penetrating damp"
+B) "has satisfactory provision for natural and artificial lighting, for ventilation and for heating"
+C) "is free from any category 1 hazard"
+D) "is substantially free from damp and mould"
 
-A) That the property achieves an EPC rating of C or above
-B) That the property is wind and watertight, with structure and exterior in reasonable repair and ventilation installations in reasonable repair and proper working order
-C) That the property has mechanical ventilation with heat recovery installed
-D) That the landlord commissions an annual damp and mould assessment
+**Correct answer: D.** Section 13(1)(ha) reads "the house is substantially free from damp and mould"; A and B are limbs (b) and (c) of the tolerable standard (Housing (Scotland) Act 1987, section 86(1)), and C is in neither standard.
 
-**Correct answer: B.** The Repairing Standard requires that the house is wind and watertight, that the structure and exterior are in reasonable repair, and that installations for ventilation are in reasonable repair and proper working order. There is currently no mandatory EPC threshold within the Repairing Standard (though separate energy efficiency regulations apply), no requirement for MVHR, and no statutory requirement for annual damp assessments — though the direction of policy travel is towards more proactive assessment obligations.
+**Q3.** Who decides whether a person is a "competent person" to investigate damp and mould in Scotland?
 
----
+A) The landlord, in its reasonable opinion of the person's skills and experience
+B) The Scottish Housing Regulator, by approving individual investigators
+C) RICS, by admitting the person to membership
+D) The Scottish Government, by accrediting energy assessors
 
-**Question 3:** A surveyor uses a capacitance (non-invasive) moisture meter on an internal wall and obtains elevated readings across a wide area. What is the most important limitation to consider before diagnosing damp?
+**Correct answer: A.** Section 14(11) of the 2006 Act and regulation 2 of the 2002 Regulations, as amended, rest on the landlord's reasonable opinion, and the Scottish guidance says no specific qualifications are required (paragraph 4.1).
 
-A) Capacitance meters cannot detect moisture at all — they only measure temperature
-B) Capacitance meters respond to any material that alters the dielectric properties of the substrate, including foil-backed plasterboard, embedded services, and salts, not exclusively to moisture
-C) Capacitance meters are only calibrated for timber and cannot be used on masonry
-D) Capacitance meters will always under-read on damp surfaces
+**Q4.** Which of these does an RdSAP 10 assessment record?
 
-**Correct answer: B.** Capacitance meters measure changes in the dielectric properties of the material beneath the sensor. They respond to moisture but also to metallic objects (pipes, wiring, foil backing), hygroscopic salts, and dense substrates. Elevated readings must be corroborated with other methods (pin meter at depth, gravimetric analysis, thermal imaging) before a moisture diagnosis is confirmed.
+A) Whether mould is present and its extent
+B) Moisture meter readings from external walls
+C) The ventilation system type and the number of extract fans
+D) The measured extract rate of each fan
 
----
+**Correct answer: C.** Table 31 item 10-1 and Table 5 of the RdSAP10 Specification v4.0 cover ventilation type and extract fan numbers; neither the specification nor the conventions has an item for mould, moisture readings or fan flow.
 
-**Question 4:** BS 5250:2021 [L54] primarily provides guidance on which aspect of building performance?
+**Q5.** What does clause 7.3.2 d) of PAS 2035:2023 require a retrofit assessment to include about condensation and mould?
 
-A) Structural load calculations for timber frame buildings
-B) Management of moisture in buildings, including condensation risk analysis and control strategies
-C) Fire resistance ratings for external wall systems
-D) Acoustic performance standards for party walls
+A) Identification of its location and severity
+B) A determination of whether the house is substantially free from damp and mould
+C) A root cause diagnosis using BS 5250 calculations
+D) Moisture meter readings in every room
 
-**Correct answer: B.** BS 5250:2021 — *Management of moisture in buildings* — is the principal British Standard addressing moisture control in the built environment. It covers condensation (surface and interstitial), moisture from precipitation, ground moisture, and construction moisture, and provides guidance on design, construction, and management strategies to control moisture risk.
-
----
-
-**Question 5:** When assessing occupant behaviour as a contributing factor to condensation and mould, which of the following approaches is consistent with current best practice and regulatory expectations?
-
-A) Attributing the mould to "lifestyle" in the report and recommending tenant education only
-B) Refusing to consider occupancy factors at all, as this constitutes victim-blaming
-C) Quantifying the moisture generation rate and ventilation balance objectively, recording occupancy data as one variable in the overall moisture equation alongside fabric performance and ventilation provision
-D) Advising the tenant verbally to open windows more frequently and closing the case
-
-**Correct answer: C.** Current regulatory and Ombudsman guidance is clear: attributing mould to "lifestyle" without rigorous investigation is unacceptable. Equally, ignoring the contribution of moisture generation to the moisture balance is technically incomplete. The correct approach is to record occupancy data objectively, quantify its contribution to the moisture load, and assess this alongside fabric thermal performance and ventilation provision to arrive at a balanced, evidence-based diagnosis.
+**Correct answer: A.** Clause 7.3.2 d) requires "identification of the location and severity"; the "substantially free" test is Scottish law, BS 5250 is cited only as guidance (NOTE 4), and test equipment "might" be needed (NOTE 1).
 
 ---
 
 ## Further Reading
-
-- **[EX05] Approved Document C — Site preparation and resistance to contaminants and moisture** (2013 edition incorporating 2013 amendments). HM Government. Available at: https://www.gov.uk/government/publications/site-preparation-and-resistance-to-contaminants-and-moisture-approved-document-c
-
-- **[L54] BS 5250:2021 — Management of moisture in buildings. Code of practice.** British Standards Institution, 2021. Available via BSI Knowledge: https://knowledge.bsigroup.com/
-
-- **[L64] BS 8102:2009 — Code of practice for protection of below ground structures against water from the ground.** British Standards Institution, 2009. Available via BSI Knowledge: https://knowledge.bsigroup.com/
-
-- **Housing Ombudsman Service, *Spotlight on: Damp and Mould — It's Not Lifestyle* (October 2021).** Available at: https://www.housing-ombudsman.org.uk/spotlight-on/damp-and-mould/
-
-- **Scottish Government, *The Repairing Standard: Statutory Guidance for Landlords* (as updated).** Guidance on landlord obligations under the Housing (Scotland) Act 2006, Part 1, Chapter 4. Available at: https://www.gov.scot/publications/repairing-standard/
-
-- **PAS 2035:2023 — Retrofitting dwellings for improved energy efficiency. Specification and guidance.** British Standards Institution. Relevant for understanding the scope and limitations of the PAS 2035 moisture risk assessment within the broader retrofit pathway.
+- **The Investigation and Commencement of Repair (Scotland) Regulations 2026 (SSI 2026/173).** legislation.gov.uk, made 24 March 2026. Regulations 3 and 4.
+- **Awaab's Law: guidance for landlords in Scotland.** Scottish Government, 4 September 2026, updated 9 September 2026. Chapters 3 to 5.
+- **Housing (Scotland) Act 2006, Part 1, Chapter 4.** legislation.gov.uk, revised text. Sections 12 to 14; on 14 October 2026 the revised section 14 did not yet show subsections (5) to (11), so read those in SSI 2026/173, regulation 3(3).
+- **PAS 2035:2023, Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, 2023. Clauses 7.3.2 and 7.4 and Annex C.
+- **RdSAP10 Specification, version 4.0.** BRE, 7 June 2026. Section 4, Table 5 and Table 31 items 7-1 and 10-1.
+- **RdSAP 10 Conventions, version 12.2.** BRE, applicable from 6 August 2026. Conventions 7.03a, 9.01 and 10.01.
 
 ---
+
 *© Meridian CPD 2026. All rights reserved. Unauthorised reproduction prohibited.*
 *This course material is licensed to individual subscribers only.*
