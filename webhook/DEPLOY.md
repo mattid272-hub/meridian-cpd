@@ -84,6 +84,22 @@ railway up            # deploys
 5. Copy the **Signing secret** (starts `whsec_...`)
 6. Add it to Railway Variables as `STRIPE_WEBHOOK_SECRET`
 
+### After payment: send buyers to the app's thanks page
+
+On **each** payment link (single course and annual subscription): Stripe Dashboard →
+Payment links → the link → Edit → **After payment** → **Don't show confirmation page** →
+redirect customers to:
+
+```
+https://app.meridiancpd.co.uk/thanks?session_id={CHECKOUT_SESSION_ID}
+```
+
+Type `{CHECKOUT_SESSION_ID}` exactly as shown; Stripe fills it in. The page shows the buyer
+the address their course was sent to and lets them correct a typo once, within 7 days, which
+sends everything again to the right address. For anyone who writes in instead, use
+Admin → Members → Fix email. Deploy the app before changing the links, or buyers land on a
+page that doesn't exist yet.
+
 ---
 
 ## Step 7 — Test it

@@ -18,6 +18,7 @@ import hmac
 import hashlib
 import time
 from datetime import datetime, timezone, timedelta
+from html import escape as _esc
 
 import stripe
 from fastapi import FastAPI, HTTPException, Request, Response, Depends, Cookie
@@ -520,6 +521,360 @@ async def handle_checkout(session):
                 print(f"Could not sync subscription {sub_id} at checkout: {e}")
 
     print(f"Handled checkout for {email}: {course_keys}")
+
+
+# ── Correcting the email address on an order ───────────────────────────────────
+# Stripe's checkout asks for the email address once, so a typo sends the course to an
+# address nobody reads and the buyer is left with nothing. There are two ways back:
+#   1. After paying, the payment links send buyers to /thanks (set in Stripe on each
+#      payment link: After payment → redirect to
+#      https://app.meridiancpd.co.uk/thanks?session_id={CHECKOUT_SESSION_ID}).
+#      The page shows the address the course went to and lets the buyer correct it once,
+#      within FIX_EMAIL_DAYS of buying. Everything is then sent again to the new address.
+#      The checkout session ID in that link is known only to the buyer's browser, which is
+#      what shows the order is theirs.
+#   2. Admin → Members → Fix email, for anyone who writes in instead.
+
+FIX_EMAIL_DAYS = 7
+_EMAIL_RE = re.compile(r"^[^@\s<>\"'(),;:\[\]\\]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$")
+_SESSION_RE = re.compile(r"^cs_(live|test)_[A-Za-z0-9]{10,200}$")
+
+
+def _clean_email(raw) -> str:
+    return str(raw or "").strip().lower()
+
+
+def _valid_email(email: str) -> bool:
+    return len(email) <= 254 and ".." not in email and bool(_EMAIL_RE.match(email))
+
+
+def _member(member_id: str):
+    res = supabase.table("members").select("*").eq("id", member_id).execute()
+    return res.data[0] if res.data else None
+
+
+def _member_by_email(email: str):
+    res = supabase.table("members").select("*").eq("email", email).execute()
+    return res.data[0] if res.data else None
+
+
+def _member_purchases(member_id: str) -> list:
+    return supabase.table("purchases").select("*").eq("member_id", member_id).execute().data or []
+
+
+def _order_purchases(session_id: str) -> list:
+    return supabase.table("purchases").select("*").eq("stripe_session_id", session_id).execute().data or []
+
+
+def _paid_session(session_id: str):
+    """The completed Stripe checkout session with this ID, or None."""
+    if not _SESSION_RE.match(session_id or ""):
+        return None
+    try:
+        s = stripe.checkout.Session.retrieve(session_id)
+    except stripe.error.StripeError as e:
+        print(f"Could not read checkout session {session_id}: {e}")
+        return None
+    return s if _g(s, "status") == "complete" else None
+
+
+def _session_email(s) -> str:
+    return _clean_email(_g(_g(s, "customer_details", {}), "email", ""))
+
+
+def _session_customer(s) -> str:
+    cus = _g(s, "customer", "")
+    if cus and not isinstance(cus, str):
+        cus = _g(cus, "id", "")
+    return cus or ""
+
+
+def _within_fix_window(s) -> bool:
+    return time.time() - float(_g(s, "created", 0) or 0) <= FIX_EMAIL_DAYS * 86400
+
+
+def _real_customer(customer_id: str) -> bool:
+    return bool(customer_id) and customer_id.startswith("cus_") and customer_id != "cus_test"
+
+
+def move_orders(member: dict, purchases: list, new_email: str, rename_ok: bool,
+                customer_id: str = "") -> dict:
+    """Put these purchases (all belonging to `member`) under `new_email` and return the
+    member record that now holds them.
+
+    If nobody has the new address yet and rename_ok is true, the member's address is
+    simply changed. Otherwise the purchases, any unused completion links for those
+    courses and any subscription move to the member with the new address (created if
+    needed); the old record keeps whatever else it had. Certificates already issued are
+    never moved."""
+    target = _member_by_email(new_email)
+    if target and target["id"] == member["id"]:
+        return member
+    if not target and rename_ok:
+        supabase.table("members").update({"email": new_email}).eq("id", member["id"]).execute()
+        return {**member, "email": new_email}
+
+    has_sub = any(p.get("course_id") == "SUBSCRIPTION" for p in purchases)
+    if not target:
+        target = supabase.table("members").insert({
+            "email": new_email,
+            "name": member.get("name") or "",
+            "plan": "subscription" if has_sub else "single",
+            "stripe_customer_id": customer_id or "",
+        }).execute().data[0]
+
+    for p in purchases:
+        q = supabase.table("purchases").update({"member_id": target["id"]})
+        q = q.eq("id", p["id"]) if p.get("id") else q.eq("stripe_session_id", p.get("stripe_session_id"))
+        q.execute()
+    for cid in {p.get("course_id") for p in purchases} - {"SUBSCRIPTION", None}:
+        supabase.table("completions").update({"member_id": target["id"]}).eq(
+            "member_id", member["id"]).eq("course_id", cid).is_("completed_at", "null").execute()
+
+    if has_sub:
+        upd = {"plan": "subscription"}
+        if customer_id:
+            upd["stripe_customer_id"] = customer_id
+        if member.get("subscription_expires_at") and not target.get("subscription_expires_at"):
+            upd["subscription_expires_at"] = member["subscription_expires_at"]
+        supabase.table("members").update(upd).eq("id", target["id"]).execute()
+        target = {**target, **upd}
+        left = _member_purchases(member["id"])
+        if not any(p.get("course_id") == "SUBSCRIPTION" for p in left):
+            # This order is what made the old record a subscriber: undo that.
+            undo = {"plan": "single", "subscription_expires_at": None}
+            if not customer_id or member.get("stripe_customer_id") == customer_id:
+                undo["stripe_customer_id"] = None
+            supabase.table("members").update(undo).eq("id", member["id"]).execute()
+    return target
+
+
+def _update_stripe_email(customer_id: str, new_email: str) -> None:
+    """Receipts, renewal notices and the billing portal follow the Stripe customer's email."""
+    if not _real_customer(customer_id):
+        return
+    try:
+        stripe.Customer.modify(customer_id, email=new_email)
+    except stripe.error.StripeError as e:
+        print(f"ACTION NEEDED: could not change the email on Stripe customer {customer_id}: {e}")
+
+
+def _resync_customer(customer_id: str) -> None:
+    if not _real_customer(customer_id):
+        return
+    try:
+        for sub in stripe.Subscription.list(customer=customer_id, status="all", limit=10).auto_paging_iter():
+            sync_subscription(sub)
+    except stripe.error.StripeError as e:
+        print(f"Could not re-sync subscriptions for {customer_id}: {e}")
+
+
+async def resend_order_emails(member: dict, purchases: list) -> int:
+    """Send the emails for these purchases again, to the member's current address.
+    Reuses the unused completion link where there is one; a course already completed is
+    sent without a completion link, so it cannot earn a second certificate."""
+    refresh_catalogue()
+    email = member["email"]
+    name = member.get("name") or email.split("@")[0].title()
+    sent = 0
+    for cid in dict.fromkeys(p.get("course_id") for p in purchases if p.get("course_id")):
+        course = COURSES.get(cid)
+        if not course or cid in UNDER_REVIEW:
+            continue
+        if cid == "SUBSCRIPTION":
+            await send_course_email(to_email=email, to_name=name, course_title="Your Meridian CPD Subscription",
+                                    course_id="SUBSCRIPTION", pdf_url=None, completion_link=None,
+                                    is_subscription=True)
+        else:
+            rows = supabase.table("completions").select("*").eq("member_id", member["id"]).eq(
+                "course_id", cid).execute().data or []
+            unused = [r for r in rows if not r.get("completed_at") and r.get("completion_token")]
+            if unused:
+                link = f"{BASE_URL}/complete/{unused[0]['completion_token']}"
+            elif rows:
+                link = None
+            else:
+                link = f"{BASE_URL}/complete/{create_completion_token(member['id'], cid)}"
+            await send_course_email(to_email=email, to_name=name, course_title=str(course["title"]),
+                                    course_id=cid, pdf_url=_pdf_url(cid), completion_link=link,
+                                    is_subscription=False)
+        sent += 1
+    return sent
+
+
+def _customer_page(title: str, inner: str, status_code: int = 200, refresh_url: str = "") -> HTMLResponse:
+    refresh = f'<meta http-equiv="refresh" content="3;url={_esc(refresh_url)}">' if refresh_url else ""
+    return HTMLResponse(f"""<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{_esc(title)} — Meridian CPD</title>{refresh}
+<style>
+* {{ box-sizing: border-box; margin: 0; padding: 0; }}
+body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc;
+       color: #1e293b; padding: 40px 16px; line-height: 1.55; }}
+.card {{ background: white; border-radius: 14px; padding: 32px 28px; max-width: 520px; margin: 0 auto;
+         box-shadow: 0 4px 24px rgba(0,0,0,0.08); }}
+h1 {{ font-size: 22px; color: #0f2547; margin-bottom: 12px; }}
+h2 {{ font-size: 16px; color: #0f2547; margin: 28px 0 8px; }}
+p {{ font-size: 15px; margin-bottom: 12px; }}
+.addr {{ font-size: 18px; font-weight: 700; color: #0f2547; background: #f0f9ff; border: 2px solid #0891b2;
+         border-radius: 8px; padding: 12px 14px; margin: 4px 0 14px; word-break: break-all; }}
+.small {{ font-size: 13px; color: #64748b; }}
+.ok {{ background: #f0fdf4; border: 1px solid #86efac; color: #15803d; padding: 12px 14px; border-radius: 8px;
+       font-size: 14px; margin-bottom: 16px; }}
+.err {{ background: #fef2f2; border: 1px solid #fca5a5; color: #b91c1c; padding: 12px 14px; border-radius: 8px;
+        font-size: 14px; margin-bottom: 16px; }}
+label {{ display: block; font-size: 13px; font-weight: 600; color: #374151; margin: 12px 0 6px; }}
+input[type=email] {{ width: 100%; padding: 12px 14px; font-size: 16px; border: 1.5px solid #d1d5db; border-radius: 8px; }}
+button {{ margin-top: 16px; width: 100%; padding: 13px; background: #0f2547; color: white; font-size: 15px;
+          font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }}
+button:hover {{ background: #0891b2; }}
+a {{ color: #0891b2; }}
+.foot {{ margin-top: 28px; border-top: 1px solid #f1f5f9; padding-top: 16px; }}
+</style></head><body><div class="card">{_logo()}{inner}
+<p class="small foot">Your courses and certificates are always in <a href="{BASE_URL}/my-cpd">My CPD</a>.
+Questions: <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a> ·
+<a href="{SITE_URL}">meridiancpd.co.uk</a></p></div></body></html>""", status_code=status_code)
+
+
+def _order_what(purchases: list) -> str:
+    ids = list(dict.fromkeys(p.get("course_id") for p in purchases if p.get("course_id")))
+    if "SUBSCRIPTION" in ids:
+        return "your subscription details"
+    titles = [str(COURSES.get(c, {}).get("title", c)) for c in ids]
+    return ("your course, <strong>" + _esc(titles[0]) + "</strong>,") if len(titles) == 1 else "your courses"
+
+
+def _thanks_page(s, purchases: list, member: dict, notice: str = "", status_code: int = 200) -> HTMLResponse:
+    email = member.get("email") or ""
+    corrected = email != _session_email(s)
+    note = f'<div class="err">{notice}</div>' if notice else ""
+    if corrected:
+        fix = ("<p class='small'>The address on this order has already been corrected once. If it is still "
+               "not right, email <a href='mailto:hello@meridiancpd.co.uk'>hello@meridiancpd.co.uk</a> and "
+               "we will put it right.</p>")
+    elif not _within_fix_window(s):
+        fix = ("<p class='small'>If that address is wrong, email "
+               "<a href='mailto:hello@meridiancpd.co.uk'>hello@meridiancpd.co.uk</a> and we will put it right.</p>")
+    else:
+        fix = f"""
+  <h2>Is that address wrong?</h2>
+  <p>If you mistyped it, enter the right address below and we will send everything again to that address
+  instead. You can do this once.</p>
+  <form method="post" action="/thanks/email">
+    <input type="hidden" name="session_id" value="{_esc(_g(s, 'id', ''))}">
+    <label for="email">Correct email address</label>
+    <input type="email" id="email" name="email" required autocomplete="email">
+    <label for="email2">Type it again</label>
+    <input type="email" id="email2" name="email2" required autocomplete="off">
+    <button type="submit">Send it to this address instead</button>
+  </form>"""
+    return _customer_page("Thank you", f"""
+  <h1>Thank you for your order</h1>
+  {note}
+  <p>We have emailed {_order_what(purchases)} to:</p>
+  <div class="addr">{_esc(email)}</div>
+  <p class="small">It should arrive within a few minutes. If you cannot see it, check your junk or spam folder.</p>
+  {fix}""", status_code=status_code)
+
+
+def _session_id_from(raw) -> str:
+    return str(raw or "").strip()
+
+
+@app.get("/thanks", response_class=HTMLResponse)
+async def order_thanks(request: Request):
+    """Where the payment links send buyers after paying."""
+    sid = _session_id_from(request.query_params.get("session_id"))
+    tries = request.query_params.get("n", "0")
+    tries = int(tries) if tries.isdigit() else 0
+    s = _paid_session(sid)
+    if not s:
+        return _customer_page("Thank you", """
+  <h1>Thank you</h1>
+  <p>We could not find the details of this order. If you have just paid, your course is on its way
+  by email.</p>
+  <p>If nothing arrives within 15 minutes (check your junk folder too), email
+  <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a> with your name and the time you
+  bought, and we will sort it out.</p>""", status_code=404)
+
+    purchases = _order_purchases(sid)
+    if not purchases:
+        # Stripe sends the buyer here and tells this app about the order separately, usually
+        # within seconds. Wait for it rather than show an empty page.
+        if tries < 20:
+            return _customer_page("Finishing your order", """
+  <h1>Finishing your order…</h1>
+  <p>Your payment has gone through. We are setting up your course now; this page will update in a moment.</p>""",
+                refresh_url=f"/thanks?session_id={sid}&n={tries + 1}")
+        print(f"ACTION NEEDED: buyer is waiting on /thanks but order {sid} has not been recorded.")
+        return _customer_page("Thank you", """
+  <h1>Thank you for your order</h1>
+  <p>Your payment has gone through, but setting up your course is taking longer than usual.
+  Your email will follow shortly.</p>
+  <p>If nothing arrives within 15 minutes, email
+  <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a> and we will send it straight away.</p>""")
+
+    member = _member(purchases[0]["member_id"]) or {}
+    return _thanks_page(s, purchases, member)
+
+
+@app.post("/thanks/email", response_class=HTMLResponse)
+async def order_fix_email(request: Request):
+    """The buyer corrects the email address they typed at checkout."""
+    form = await request.form()
+    sid = _session_id_from(form.get("session_id"))
+    new_email, again = _clean_email(form.get("email")), _clean_email(form.get("email2"))
+    s = _paid_session(sid)
+    purchases = _order_purchases(sid) if s else []
+    member = _member(purchases[0]["member_id"]) if purchases else None
+    if not s or not member:
+        return _customer_page("Order not found", """
+  <h1>We could not change the address</h1>
+  <p>We could not find this order. Please email
+  <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a> with the right address, your name and
+  the time you bought, and we will send your course there.</p>""", status_code=404)
+
+    old_email = member.get("email") or ""
+    problem = ""
+    if old_email != _session_email(s):
+        problem = "The address on this order has already been corrected once."
+    elif not _within_fix_window(s):
+        problem = (f"Addresses can only be changed here for {FIX_EMAIL_DAYS} days after buying. "
+                   "Email hello@meridiancpd.co.uk and we will put it right.")
+    elif not _valid_email(new_email):
+        problem = "That does not look like an email address. Please check it and try again."
+    elif new_email != again:
+        problem = "The two addresses do not match. Please type the same address in both boxes."
+    elif new_email == old_email:
+        problem = "That is the address we have already used. If it is right, your email is on its way."
+    if problem:
+        return _thanks_page(s, purchases, member, notice=_esc(problem), status_code=400)
+
+    others = [p for p in _member_purchases(member["id"]) if p.get("stripe_session_id") != sid]
+    certs = supabase.table("certificates").select("id").eq("member_id", member["id"]).execute().data or []
+    customer_id = _session_customer(s)
+    holder = move_orders(member, purchases, new_email, rename_ok=not others and not certs,
+                         customer_id=customer_id)
+    _update_stripe_email(customer_id, new_email)
+    if any(p.get("course_id") == "SUBSCRIPTION" for p in purchases):
+        _resync_customer(customer_id)
+    print(f"Order {sid}: buyer corrected the email from {old_email} to {new_email}")
+
+    try:
+        await resend_order_emails(holder, purchases)
+    except Exception as e:
+        print(f"ACTION NEEDED: email corrected on order {sid} but resending to {new_email} failed: {e}")
+        return _customer_page("Address changed", f"""
+  <h1>Address changed</h1>
+  <p>Your order is now under <strong>{_esc(new_email)}</strong>, but we could not send the email just now.
+  Please email <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a> and we will send it straight away.</p>""")
+
+    return _customer_page("Address changed", f"""
+  <h1>Done: sent to the right address</h1>
+  <div class="ok">We have sent {_order_what(purchases)} to <strong>{_esc(new_email)}</strong>.</div>
+  <p class="small">It should arrive within a few minutes. If you cannot see it, check your junk or spam folder.
+  Nothing more about this order will go to the old address.</p>""")
 
 
 # ── Download gate — marks course as downloaded before serving PDF ──────────────
@@ -1953,7 +2308,8 @@ async def admin_members(request: Request, credentials=Depends(_check_admin)):
         access = ((m.get("subscription_expires_at") or "")[:10] or "—") if m.get("plan") == "subscription" else "—"
         trs += f"""<tr>
             <td>{m.get('name') or '—'}</td>
-            <td>{m.get('email') or '—'}</td>
+            <td>{m.get('email') or '—'}<br><a class="vlink" style="font-size:11px"
+                href="/admin/members/{m.get('id')}/email">Fix email</a></td>
             <td>{_status_badge(key)}</td>
             <td>{access}</td>
             <td>{f"£{paid:.2f}" if paid else "—"}</td>
@@ -1977,6 +2333,88 @@ async def admin_members(request: Request, credentials=Depends(_check_admin)):
       </table>
     </div>"""
     return _page("Members", "members", body)
+
+
+def _admin_fix_email_form(member: dict, purchases: list, notice: str = "", status_code: int = 200) -> HTMLResponse:
+    orders = "".join(
+        f"<tr><td>{_esc((p.get('purchased_at') or '')[:10])}</td><td>{_esc(_course_label(p.get('course_id') or ''))}</td>"
+        f"<td>{'£%.2f' % float(p.get('amount_gbp') or 0)}</td></tr>"
+        for p in sorted(purchases, key=lambda p: p.get("purchased_at") or "", reverse=True))
+    n = len({p.get("course_id") for p in purchases if p.get("course_id")})
+    body = f"""
+    <div class="card">
+      <h2>Fix email: {_esc(member.get('name') or '—')}</h2>
+      {f'<p style="color:#b91c1c;margin-bottom:12px">{_esc(notice)}</p>' if notice else ''}
+      <p>Current address: <strong>{_esc(member.get('email') or '—')}</strong></p>
+      <table style="margin:12px 0"><tr><th>Bought</th><th>Course</th><th>Paid</th></tr>
+      {orders or '<tr><td colspan="3" class="empty">No purchases</td></tr>'}</table>
+      <form method="post" action="/admin/members/{_esc(str(member.get('id')))}/email">
+        <p><label>Correct email address<br><input type="email" name="email" required style="width:100%;max-width:360px;padding:8px"></label></p>
+        <p style="margin-top:8px"><label>Type it again<br><input type="email" name="email2" required style="width:100%;max-width:360px;padding:8px"></label></p>
+        <p style="margin-top:10px"><label><input type="checkbox" name="resend" value="1" checked>
+          Send the course emails again to the new address ({_n(n, "email")})</label></p>
+        <p style="margin-top:12px"><button type="submit">Change the address</button></p>
+      </form>
+      <p class="note" style="margin-top:12px">Also changes the email on their Stripe customer record, so receipts and
+      renewal notices go to the new address. If another member already has the new address, these purchases move to
+      that member. Certificates already issued stay as they are. A course they have already completed is sent
+      without a completion link, so it cannot earn a second certificate.</p>
+      <p style="margin-top:12px"><a class="vlink" href="/admin/members">Back to members</a></p>
+    </div>"""
+    resp = _page("Fix email", "members", body)
+    resp.status_code = status_code
+    return resp
+
+
+@app.get("/admin/members/{member_id}/email", response_class=HTMLResponse)
+async def admin_fix_email_form(member_id: str, credentials=Depends(_check_admin)):
+    member = _member(member_id)
+    if not member:
+        raise HTTPException(status_code=404, detail="Member not found")
+    return _admin_fix_email_form(member, _member_purchases(member_id))
+
+
+@app.post("/admin/members/{member_id}/email", response_class=HTMLResponse)
+async def admin_fix_email(member_id: str, request: Request, credentials=Depends(_check_admin)):
+    member = _member(member_id)
+    if not member:
+        raise HTTPException(status_code=404, detail="Member not found")
+    form = await request.form()
+    new_email, again = _clean_email(form.get("email")), _clean_email(form.get("email2"))
+    purchases = _member_purchases(member_id)
+    if not _valid_email(new_email):
+        return _admin_fix_email_form(member, purchases, "That is not a valid email address.", 400)
+    if new_email != again:
+        return _admin_fix_email_form(member, purchases, "The two addresses do not match.", 400)
+    old_email = member.get("email") or ""
+    if new_email == old_email:
+        return _admin_fix_email_form(member, purchases, "That is already their address.", 400)
+
+    customer_id = member.get("stripe_customer_id") or ""
+    holder = move_orders(member, purchases, new_email, rename_ok=True, customer_id=customer_id)
+    _update_stripe_email(customer_id, new_email)
+    if member.get("plan") == "subscription":
+        _resync_customer(customer_id)
+    print(f"Admin changed member {member_id}'s email from {old_email} to {new_email}")
+
+    sent, error = 0, ""
+    if form.get("resend") and purchases:
+        try:
+            sent = await resend_order_emails(holder, purchases)
+        except Exception as e:
+            error = str(e)
+            print(f"ACTION NEEDED: resending to {new_email} failed: {e}")
+    moved = holder.get("id") != member.get("id")
+    body = f"""
+    <div class="card">
+      <h2>Email changed</h2>
+      <p>{_esc(old_email)} → <strong>{_esc(new_email)}</strong>.
+      {"Their purchases were moved to the existing member with that address." if moved else ""}</p>
+      <p>{f"Sent {_n(sent, 'email')} to the new address." if sent else ("No emails sent." if not error else "")}
+      {f'<span style="color:#b91c1c">Sending failed: {_esc(error)}. Send the course by hand.</span>' if error else ""}</p>
+      <p style="margin-top:12px"><a class="vlink" href="/admin/members">Back to members</a></p>
+    </div>"""
+    return _page("Email changed", "members", body)
 
 
 @app.post("/admin/sync-subscriptions", response_class=HTMLResponse)
