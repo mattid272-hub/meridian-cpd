@@ -18,6 +18,7 @@ import hmac
 import hashlib
 import time
 from datetime import datetime, timezone, timedelta
+from html import escape as _esc
 
 import stripe
 from fastapi import FastAPI, HTTPException, Request, Response, Depends, Cookie
@@ -26,11 +27,43 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 import httpx
 from supabase import create_client
 
-from email_sender import send_course_email, send_certificate_email, send_unsubscribe_goodbye_email
+from email_sender import send_course_email, send_certificate_email, send_unsubscribe_goodbye_email, consent_token
 from certificate_generator import generate_certificate
 from settings import APP_URL, SITE_URL
 
 app = FastAPI()
+
+
+class _AnswerHeadRequests:
+    """FastAPI answers HEAD with 405 Method Not Allowed. Mail link checkers (Outlook Safe
+    Links and others) often check a link with HEAD before letting the reader open it, so
+    every link in our emails looked broken to them ("Unable to verify this link").
+    Answer HEAD with the GET response, without the body. Links that change something on
+    GET (unsubscribe) get an empty 200 instead, so a link checker can never trigger them."""
+
+    _NO_SIDE_EFFECTS_ON_HEAD = ("/unsubscribe",)
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope.get("type") != "http" or scope.get("method") != "HEAD":
+            return await self.app(scope, receive, send)
+        if scope.get("path", "").startswith(self._NO_SIDE_EFFECTS_ON_HEAD):
+            await send({"type": "http.response.start", "status": 200,
+                        "headers": [(b"content-type", b"text/html; charset=utf-8")]})
+            await send({"type": "http.response.body", "body": b""})
+            return
+
+        async def send_without_body(message):
+            if message["type"] == "http.response.body":
+                message = {**message, "body": b""}
+            await send(message)
+
+        await self.app({**scope, "method": "GET"}, receive, send_without_body)
+
+
+app.add_middleware(_AnswerHeadRequests)
 
 # ── Clients ───────────────────────────────────────────────────────────────────
 stripe.api_key = os.environ["STRIPE_SECRET_KEY"]
@@ -1001,8 +1034,62 @@ def _consent_not_saved_page() -> HTMLResponse:
     </body></html>""", status_code=200)
 
 
+def _consent_question_page(email: str, token: str, choice: str) -> HTMLResponse:
+    """Mail link checkers open links in emails by themselves, so opening a consent link
+    must never record a choice: the reader confirms with a button (a POST) instead."""
+    if not email or not hmac.compare_digest(consent_token(email), token or ""):
+        return HTMLResponse(f"""
+    <html><head><title>Meridian CPD</title><meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+    h2{{color:#0f2547}}p{{color:#64748b;line-height:1.6}}</style></head>
+    <body>
+      <h2>This link has expired</h2>
+      <p>To tell us whether you would like to hear about new courses and tools, reply to any
+      Meridian CPD email or write to <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a>.
+      Your subscription and course access are unaffected.</p>
+    </body></html>""", status_code=400)
+    yes_first = choice != "no"
+    btn = lambda value, label, primary: (
+        f'<form method="post" action="/my-cpd/consent/{value}" style="margin:12px 0">'
+        f'<input type="hidden" name="email" value="{_esc(email)}"><input type="hidden" name="token" value="{_esc(token)}">'
+        f'<button type="submit" style="width:100%;padding:13px;border-radius:8px;font-size:15px;font-weight:bold;'
+        f'cursor:pointer;border:2px solid #0f2547;background:{"#0f2547" if primary else "white"};'
+        f'color:{"white" if primary else "#0f2547"}">{label}</button></form>')
+    buttons = (btn("yes", "Yes, keep me in the loop", yes_first) + btn("no", "No thanks, CPD only", not yes_first))
+    return HTMLResponse(f"""
+    <html><head><title>Meridian CPD</title><meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+    h2{{color:#0f2547}}p{{color:#64748b;line-height:1.6}}</style></head>
+    <body>
+      <h2>Hear about new courses and tools?</h2>
+      <p>Now and then we develop new tools and resources for energy assessors and retrofit professionals.
+      Would you like us to email <strong>{_esc(email)}</strong> about them? You can change your mind at any time.</p>
+      {buttons}
+    </body></html>""")
+
+
 @app.get("/my-cpd/consent/yes", response_class=HTMLResponse)
-async def consent_yes(email: str):
+async def consent_yes_page(email: str = "", token: str = ""):
+    return _consent_question_page(email, token, "yes")
+
+
+@app.get("/my-cpd/consent/no", response_class=HTMLResponse)
+async def consent_no_page(email: str = "", token: str = ""):
+    return _consent_question_page(email, token, "no")
+
+
+async def _consent_form(request: Request):
+    form = await request.form()
+    email, token = str(form.get("email", "")), str(form.get("token", ""))
+    ok = bool(email) and hmac.compare_digest(consent_token(email), token)
+    return email, ok
+
+
+@app.post("/my-cpd/consent/yes", response_class=HTMLResponse)
+async def consent_yes(request: Request):
+    email, ok = await _consent_form(request)
+    if not ok:
+        return _consent_question_page("", "", "yes")
     if not _save_marketing_consent(email, True):
         return _consent_not_saved_page()
     return HTMLResponse(f"""
@@ -1019,8 +1106,11 @@ async def consent_yes(email: str):
     </body></html>""")
 
 
-@app.get("/my-cpd/consent/no", response_class=HTMLResponse)
-async def consent_no(email: str):
+@app.post("/my-cpd/consent/no", response_class=HTMLResponse)
+async def consent_no(request: Request):
+    email, ok = await _consent_form(request)
+    if not ok:
+        return _consent_question_page("", "", "no")
     if not _save_marketing_consent(email, False):
         return _consent_not_saved_page()
     return HTMLResponse(f"""
@@ -1220,15 +1310,10 @@ async def dashboard_send_link(request: Request):
     if not result.data:
         return RedirectResponse("/my-cpd?msg=notfound", status_code=302)
 
-    # Create a short-lived magic link token (1 hour)
-    exp = int(time.time()) + 3600
-    payload = f"{email}:{exp}"
-    sig = hmac.new(DASHBOARD_SECRET.encode(), payload.encode(), hashlib.sha256).hexdigest()
-    magic_token = f"{payload}:{sig}"
-    import base64
-    encoded = base64.urlsafe_b64encode(magic_token.encode()).decode()
-
-    login_url = f"{BASE_URL}/my-cpd/login/{encoded}"
+    # Short-lived sign-in link (1 hour). It carries the member's record ID, not their email
+    # address, so the link is short and does not expose the address to anything that
+    # handles the URL. Opening it twice is fine: mail link checkers open links too.
+    login_url = f"{BASE_URL}/my-cpd/login/{_login_token(result.data[0]['id'])}"
 
     # Send magic link email
     async with httpx.AsyncClient() as client:
@@ -1239,6 +1324,9 @@ async def dashboard_send_link(request: Request):
                 "from": "Meridian CPD <hello@meridiancpd.co.uk>",
                 "to": [email],
                 "subject": "Your Meridian CPD login link",
+                "text": (f"Your Meridian CPD login link\n\nOpen this link to sign in to My CPD. "
+                         f"It works for 1 hour.\n\n{login_url}\n\nIf you didn't ask for this, ignore this "
+                         f"email.\n\nMeridian CPD · meridiancpd.co.uk"),
                 "html": f"""
                 <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:32px 24px">
                   <div style="font-size:20px;font-weight:900;color:#0f2547;margin-bottom:8px">
@@ -1253,6 +1341,10 @@ async def dashboard_send_link(request: Request):
                             border-radius:8px;text-decoration:none;font-weight:700;font-size:15px">
                     Sign in to My CPD →
                   </a>
+                  <p style="color:#64748b;font-size:12px;margin-top:20px;line-height:1.5">
+                    If the button doesn't work, copy this link into your browser:<br>
+                    <a href="{login_url}" style="color:#0891b2;word-break:break-all">{login_url}</a>
+                  </p>
                   <p style="color:#94a3b8;font-size:12px;margin-top:32px;line-height:1.5">
                     If you didn't request this, ignore this email.<br>
                     Meridian CPD · meridiancpd.co.uk
@@ -1266,6 +1358,13 @@ async def dashboard_send_link(request: Request):
 
 @app.get("/my-cpd/login/{encoded_token}", response_class=HTMLResponse)
 async def dashboard_magic_login(encoded_token: str):
+    if "." in encoded_token:  # current format: member-id.expiry.signature
+        member_id = _check_login_token(encoded_token)
+        member = _login_member(member_id) if member_id else None
+        if not member:
+            return RedirectResponse("/my-cpd?msg=invalid", status_code=302)
+        return _signed_in(member["email"])
+    # Older links (sent before the change) carry the email address itself.
     try:
         import base64
         magic_token = base64.urlsafe_b64decode(encoded_token.encode()).decode()
@@ -1282,7 +1381,43 @@ async def dashboard_magic_login(encoded_token: str):
             return RedirectResponse("/my-cpd?msg=invalid", status_code=302)
     except Exception:
         return RedirectResponse("/my-cpd?msg=invalid", status_code=302)
+    return _signed_in(email)
 
+
+_LOGIN_LINK_SECONDS = 3600
+
+
+def _login_sig(member_id: str, exp: int) -> str:
+    return hmac.new(DASHBOARD_SECRET.encode(), f"login:{member_id}:{exp}".encode(),
+                    hashlib.sha256).hexdigest()[:32]
+
+
+def _login_token(member_id: str) -> str:
+    exp = int(time.time()) + _LOGIN_LINK_SECONDS
+    return f"{member_id}.{exp}.{_login_sig(member_id, exp)}"
+
+
+def _check_login_token(token: str):
+    """The member ID in a valid, unexpired sign-in token, else None."""
+    parts = token.split(".")
+    if len(parts) != 3 or not parts[1].isdigit():
+        return None
+    member_id, exp = parts[0], int(parts[1])
+    if time.time() > exp or not hmac.compare_digest(parts[2], _login_sig(member_id, exp)):
+        return None
+    return member_id
+
+
+def _login_member(member_id: str):
+    try:
+        res = supabase.table("members").select("id, email").eq("id", member_id).execute()
+    except Exception as e:
+        print(f"Sign-in lookup failed for member {member_id}: {e}")
+        return None
+    return res.data[0] if res.data else None
+
+
+def _signed_in(email: str) -> RedirectResponse:
     # Issue a 30-day session cookie
     session_token = _make_session_token(email)
     response = RedirectResponse("/my-cpd/dashboard", status_code=302)
