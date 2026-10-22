@@ -115,6 +115,7 @@ hello@meridiancpd.co.uk
         return
 
     subject = f"Your course is ready — {course_title}"
+    consent_query = f"email={quote(to_email)}&token={consent_token(to_email)}"
     completion_section = f"""
 ─────────────────────────────
 Once you've read the course:
@@ -136,6 +137,14 @@ Certificate details:
 • CPD Hours: see course cover page
 • Your certificate will be a PDF you can upload to your accreditation body
 • Accreditation bodies can verify any Meridian CPD certificate at {APP_HOST}/verify
+
+─────────────────────────────
+Would you like to hear about new courses and tools from Meridian CPD? Only if you say yes:
+
+Yes, keep me posted → {APP_URL}/my-cpd/consent/yes?{consent_query}
+
+No thanks, just this course → {APP_URL}/my-cpd/consent/no?{consent_query}
+─────────────────────────────
 
 Questions? Reply to this email.
 
