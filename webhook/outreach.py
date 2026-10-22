@@ -83,7 +83,7 @@ Start with the free one. "RdSAP 10: What's Changed and Why" is two CPD hours, ce
 
 If it works for you, the annual subscription is every course in the library, plus every new one we add, for £79 a year if you join before {OFFER_DEADLINE}.
 
-That's the only email you'll get from me unless you reply.
+If this isn't for you, the unsubscribe link below works, and that's the end of it.
 
 Matt Davies
 Meridian CPD (FistralAI Ltd)
@@ -99,7 +99,7 @@ Privacy: meridiancpd.co.uk/privacy.html
 <p style="{p}">I'm a practising assessor and I built Meridian CPD because I was that person. I wanted CPD I could actually use on the job, written by people who do the job, that I could get through in an evening and have the certificate in my hand the same night. It didn't exist, so I made it. I love doing it, and I'd like you to try it.</p>
 <p style="{p}"><strong>Start with the free one.</strong> &ldquo;RdSAP 10: What's Changed and Why&rdquo; is two CPD hours, certificate included, free with the code <strong>MERIDIAN10</strong> at <a href="{SITE_URL}" style="color:#0891b2">meridiancpd.co.uk</a>. Read it when it suits you, confirm you've completed it, and your certificate arrives straight away, with a number anyone, including your scheme, can check at <a href="{verify}" style="color:#0891b2">meridiancpd.co.uk/verify</a>.</p>
 <p style="{p}">If it works for you, the annual subscription is every course in the library, plus every new one we add, for <strong>£79 a year</strong> if you join before {OFFER_DEADLINE}.</p>
-<p style="{p}">That's the only email you'll get from me unless you reply.</p>
+<p style="{p}">If this isn't for you, the unsubscribe link below works, and that's the end of it.</p>
 <p style="{p}">Matt Davies<br>Meridian CPD (FistralAI Ltd)<br><a href="mailto:hello@meridiancpd.co.uk" style="color:#0891b2">hello@meridiancpd.co.uk</a></p>
 <p style="margin:28px 0 0;font-size:12px;color:#64748b;line-height:1.5">We found your work address on the public assessor register. If you'd rather not hear from us: <a href="{unsubscribe_url}" style="color:#64748b">unsubscribe</a>.<br>Privacy: <a href="{privacy}" style="color:#64748b">meridiancpd.co.uk/privacy.html</a></p>
 </body></html>"""
