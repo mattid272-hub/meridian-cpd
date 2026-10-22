@@ -9,10 +9,12 @@ Deployed on Railway. Handles:
   - GET /my-cpd                → subscriber login page
   - GET /my-cpd/dashboard      → subscriber CPD portal (session cookie auth)
 """
+import asyncio
 import json
 import os
 import re
 import secrets
+from contextlib import asynccontextmanager
 import uuid
 import hmac
 import hashlib
@@ -30,8 +32,22 @@ from supabase import create_client
 from email_sender import send_course_email, send_certificate_email, send_unsubscribe_goodbye_email, consent_token
 from certificate_generator import generate_certificate
 from settings import APP_URL, SITE_URL
+import outreach
 
-app = FastAPI()
+
+@asynccontextmanager
+async def _lifespan(app):
+    # The daily outreach batch runs inside this process (outreach.py). Set
+    # OUTREACH_SCHEDULER=off on the hosting service to stop it without a deploy.
+    task = None
+    if os.environ.get("OUTREACH_SCHEDULER", "on").strip().lower() != "off":
+        task = asyncio.create_task(outreach.scheduler_loop(lambda: supabase))
+    yield
+    if task:
+        task.cancel()
+
+
+app = FastAPI(lifespan=_lifespan)
 
 
 class _AnswerHeadRequests:
@@ -1304,6 +1320,13 @@ def _verify_unsubscribe_token(email: str, token: str) -> bool:
     return hmac.compare_digest(expected, token)
 
 
+@app.post("/unsubscribe", response_class=HTMLResponse)
+async def unsubscribe_one_click(email: str = "", token: str = ""):
+    """Mail providers (Gmail, Yahoo, Outlook) offer an Unsubscribe button that POSTs to the
+    List-Unsubscribe URL in the email's headers (RFC 8058). Same link, same check."""
+    return await unsubscribe(email=email, token=token)
+
+
 @app.get("/unsubscribe", response_class=HTMLResponse)
 async def unsubscribe(email: str = "", token: str = ""):
     if not email or not token or not _verify_unsubscribe_token(email, token):
@@ -2223,6 +2246,7 @@ def _nav(active: str) -> str:
         ("dashboard", "Dashboard"),
         ("members", "Members"),
         ("contacts", "Contacts"),
+        ("outreach", "Outreach"),
         ("courses", "Courses"),
         ("certificates", "Certificates"),
         ("system", "System"),
@@ -2758,6 +2782,120 @@ async def admin_contacts(request: Request, credentials=Depends(_check_admin)):
     return _page("Contacts", "contacts", body)
 
 
+# ── Admin → Outreach ──────────────────────────────────────────────────────────
+
+def _outreach_page(notice: str = "") -> HTMLResponse:
+    campaign = outreach.get_campaign(supabase)
+    notice_html = f'<div class="card" style="border-left:4px solid #0891b2">{notice}</div>' if notice else ""
+    if not campaign:
+        return _page("Outreach", "outreach", notice_html + """
+    <div class="card"><h2>Outreach</h2>
+      <p class="note">No campaign is set up yet. Run <code>webhook/migrations/2026-10-22_outreach_queue.sql</code>
+      in Supabase → SQL Editor to create the first one (it starts paused).</p></div>""")
+    s = outreach.summary(supabase, campaign)
+    now = outreach.uk_now()
+    paused = campaign["status"] != outreach.STATUS_ACTIVE
+    limit = outreach.daily_limit()
+    today = outreach.sent_today(supabase, campaign["id"], now)
+    nxt = ("in the next few minutes" if outreach.in_send_window(now) and not paused
+           else outreach.next_send_time(now).strftime("%a %d %b, %H:%M"))
+    every = max(1, round(outreach.window_minutes() / limit)) if limit else 0
+    status_badge = ('<span class="badge" style="background:#fef3c7;color:#b45309">Paused</span>' if paused
+                    else '<span class="badge badge-ok">Sending</span>')
+    toggle = (f'<form method="post" action="/admin/outreach/resume" style="display:inline"><button>Resume sending</button></form>'
+              if paused else
+              f'<form method="post" action="/admin/outreach/pause" style="display:inline"><button style="background:#b45309">Pause</button></form>')
+    run_rows = "".join(
+        f"<tr><td>{_esc(str(r.get('started_at') or '')[:16].replace('T', ' '))}</td><td>{_esc(r.get('trigger') or '')}</td>"
+        f"<td>{r.get('sent') or 0}</td><td>{r.get('skipped') or 0}</td><td>{r.get('failed') or 0}</td>"
+        f"<td>{r.get('bounced') or 0}</td><td>{r.get('complained') or 0}</td><td class=\"note\">{_esc(r.get('note') or '')}</td></tr>"
+        for r in s["runs"]
+    ) or '<tr><td colspan="8" class="empty">Nothing sent yet</td></tr>'
+    subject, text, _html = outreach.render("there", f"{BASE_URL}/unsubscribe?email=…&token=…")
+    body = f"""
+    {notice_html}
+    <div class="card">
+      <h2>{_esc(campaign['name'])} {status_badge}</h2>
+      <p class="note">One email per contact, never a second. Up to {limit} a day, sent one at a time between
+      {outreach.SEND_FROM[0]:02d}:{outreach.SEND_FROM[1]:02d} and {outreach.SEND_UNTIL[0]:02d}:{outreach.SEND_UNTIL[1]:02d} UK time,
+      Monday to Friday (about one every {every} minutes, so it never looks like a burst).
+      Sent today: {today} of {limit}. Next send: {nxt}.
+      Anyone who bounces, complains or unsubscribes goes on the do-not-email list before the next send.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        {toggle}
+        <form method="post" action="/admin/outreach/run" style="display:inline"
+              onsubmit="return confirm('Send the rest of today\\'s allowance now, in one go, instead of spread through the day?')">
+          <button style="background:#0891b2" {'disabled' if paused else ''}>Send the rest of today's batch now</button></form>
+        <form method="post" action="/admin/outreach/test" style="display:inline-flex;gap:6px;align-items:center">
+          <input name="email" type="email" required placeholder="your address"
+                 style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;width:220px">
+          <button style="background:#64748b">Send me a test copy</button></form>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="lbl">Waiting to send</div><div class="val">{s['queued']:,}</div></div>
+      <div class="stat"><div class="lbl">Sent</div><div class="val">{s['sent']:,}</div></div>
+      <div class="stat"><div class="lbl">Delivered</div><div class="val">{s['delivered']:,}</div></div>
+      <div class="stat"><div class="lbl">Bounced</div><div class="val">{s['bounced']:,}</div></div>
+      <div class="stat"><div class="lbl">Complaints</div><div class="val">{s['complained']:,}</div></div>
+      <div class="stat"><div class="lbl">Unsubscribed</div><div class="val">{s['unsubscribed']:,}</div></div>
+      <div class="stat"><div class="lbl">Skipped</div><div class="val">{s['skipped']:,}</div></div>
+      <div class="stat"><div class="lbl">Failed</div><div class="val">{s['failed']:,}</div></div>
+    </div>
+    <div class="card">
+      <h2>Runs</h2>
+      <table><tr><th>Started</th><th>By</th><th>Sent</th><th>Skipped</th><th>Failed</th><th>Bounced</th><th>Complaints</th><th>Note</th></tr>{run_rows}</table>
+    </div>
+    <div class="card">
+      <h2>The email</h2>
+      <p class="note">Subject: <strong>{_esc(subject)}</strong>. Wording lives in <code>webhook/outreach.py</code> (render).</p>
+      <pre style="white-space:pre-wrap;font-family:Arial,sans-serif;font-size:14px;line-height:1.5;background:#f8fafc;padding:16px;border-radius:8px">{_esc(text)}</pre>
+    </div>"""
+    return _page("Outreach", "outreach", body)
+
+
+@app.get("/admin/outreach", response_class=HTMLResponse)
+async def admin_outreach(credentials=Depends(_check_admin)):
+    return _outreach_page()
+
+
+@app.post("/admin/outreach/pause", response_class=HTMLResponse)
+async def admin_outreach_pause(credentials=Depends(_check_admin)):
+    campaign = outreach.get_campaign(supabase)
+    if campaign:
+        outreach.set_paused(supabase, campaign["id"], True)
+    return _outreach_page("Paused. Nothing will be sent until you resume.")
+
+
+@app.post("/admin/outreach/resume", response_class=HTMLResponse)
+async def admin_outreach_resume(credentials=Depends(_check_admin)):
+    campaign = outreach.get_campaign(supabase)
+    if campaign:
+        outreach.set_paused(supabase, campaign["id"], False)
+    return _outreach_page("Sending resumed. The next batch goes at the next scheduled time, or press Send now.")
+
+
+@app.post("/admin/outreach/run", response_class=HTMLResponse)
+async def admin_outreach_run(credentials=Depends(_check_admin)):
+    r = await outreach.run_batch(supabase, trigger="admin")
+    return _outreach_page(f"Batch finished: {r['sent']} sent, {r['skipped']} skipped, {r['failed']} failed"
+                          + (f" ({_esc(r['note'])})" if r.get("note") else "") + ".")
+
+
+@app.post("/admin/outreach/test", response_class=HTMLResponse)
+async def admin_outreach_test(request: Request, credentials=Depends(_check_admin)):
+    form = await request.form()
+    email = str(form.get("email", "")).strip()
+    if not outreach._EMAIL_RE.match(email):
+        return _outreach_page("That address does not look right.")
+    try:
+        await outreach.send_to(email, "Matt", "test")
+    except Exception as e:
+        return _outreach_page(f"Could not send: {_esc(str(e)[:200])}")
+    return _outreach_page(f"Test copy sent to {_esc(email)}. Its unsubscribe link is live: if you press it, "
+                          "that address goes on the do-not-email list (remove it in Supabase if you need to).")
+
+
 @app.get("/admin/courses", response_class=HTMLResponse)
 async def admin_courses(credentials=Depends(_check_admin)):
     from datetime import date, timedelta
@@ -2874,6 +3012,10 @@ async def admin_system(credentials=Depends(_check_admin)):
         ("APP_URL", "This app's public address", False, "Defaults to app.meridiancpd.co.uk."),
         ("ADMIN_TEST_EMAILS", "Addresses treated as test accounts", False,
          "Optional, comma-separated. Our own domain and example.com are always treated as tests."),
+        ("OUTREACH_DAILY_LIMIT", "Outreach emails a day", False,
+         f"Optional. Default {outreach.DEFAULT_LIMIT}, ceiling {outreach.HARD_CEILING}. See Admin → Outreach."),
+        ("OUTREACH_SCHEDULER", "Outreach scheduler", False,
+         "Optional. Set to off to stop the daily batch without a deploy (pausing in Admin → Outreach does the same)."),
     ]
     vars_rows = "".join(
         f"<tr><td>{label}</td><td><code>{key}</code></td><td>{var_status(key, req)}</td>"
