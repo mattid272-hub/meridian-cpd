@@ -103,6 +103,12 @@ check("email greets by first name", text.startswith("Hello Jo,"))
 check("email has the free code, the price, the deadline and the unsubscribe link",
       all(w in text for w in ("MERIDIAN10", "£79", outreach.OFFER_DEADLINE, "unsubscribe?email=x&token=y", "privacy.html")))
 check("html carries the same link", "unsubscribe?email=x&token=y" in html and "MERIDIAN10" in html)
+check("sign-off is the hello@ signature: no company name in the name lines, trading line and logo in the small print",
+      "Meridian CPD (FistralAI" not in text and "Meridian CPD (FistralAI" not in html
+      and outreach.TRADING_LINE in text and outreach.TRADING_LINE in html and outreach.LOGO_URL in html
+      and text.count("Matt Davies") == 1 and "meridiancpd.co.uk" in text.split("Matt Davies")[1])
+check("html uses the signature's palette, not the old navy/cyan", "#0891b2" not in html and "#0f2547" not in html and outreach.INK in html)
+check("email promises nothing about frequency, only a working opt-out", "only email" not in text and "that's the end of it" in text and "that's the end of it" in html)
 check("odd first names become 'there'", [outreach.greeting_name(n) for n in ("", None, "J", "A.", "Smith Surveying", "123", "x" * 25)] == ["there"] * 7)
 check("shouted names are calmed down", outreach.greeting_name("SAM") == "Sam" and outreach.greeting_name("McDonald") == "McDonald")
 

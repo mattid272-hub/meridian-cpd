@@ -59,6 +59,31 @@ SUBJECT = "Renewal's coming and the CPD hours aren't there yet?"
 OFFER_DEADLINE = "31 December"   # the £79 price holds until then; raise it in January
 
 
+# The hello@ signature Matt set up in Gmail (22 October): same fonts, colours and logo, so
+# an outreach email and a reply from the inbox look like the same sender.
+INK = "#0d1f0e"        # text
+MUTED = "#5b6660"      # tagline
+SMALL = "#8a918c"      # legal line and footer
+RULE = "#d9d5c9"       # hairline
+LOGO_URL = "https://serensurveying.co.uk/assets/img/email/meridian-cpd-lockup.png"
+TAGLINE = "Practitioner-written CPD for domestic energy assessors, retrofit assessors and retrofit coordinators. Stay sharp. Stay certified."
+TRADING_LINE = "Meridian CPD is a trading name of FistralAI Ltd, registered in England and Wales, company number 17091704."
+
+SIGNATURE_TEXT = f"""Matt Davies
+Meridian CPD
+hello@meridiancpd.co.uk  ·  meridiancpd.co.uk
+
+{TAGLINE}
+{TRADING_LINE}"""
+
+SIGNATURE_HTML = f"""<table cellpadding="0" cellspacing="0" border="0" style="font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:{INK};border-collapse:collapse">
+<tr><td style="padding:0 0 10px;line-height:20px"><strong>Matt Davies</strong><br>Meridian CPD<br><a href="mailto:hello@meridiancpd.co.uk" style="color:{INK};text-decoration:none">hello@meridiancpd.co.uk</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{SITE_URL}/" style="color:{INK};text-decoration:none">meridiancpd.co.uk</a></td></tr>
+<tr><td style="padding:12px 0 0;border-top:1px solid {RULE}"><a href="{SITE_URL}/" style="text-decoration:none"><img src="{LOGO_URL}" width="140" height="36" alt="Meridian CPD" style="max-width:100%;height:36px;display:block;border:0;width:140px"></a></td></tr>
+<tr><td style="padding:8px 0 0;font-size:12px;line-height:18px;color:{MUTED}">{TAGLINE}</td></tr>
+<tr><td style="padding:8px 0 0;font-size:11px;line-height:16px;color:{SMALL}">{TRADING_LINE}</td></tr>
+</table>"""
+
+
 def greeting_name(first_name: str | None) -> str:
     """The scraped first names are mostly fine, but some are initials, company names or
     shouted in capitals. Anything that does not look like a first name becomes 'there'."""
@@ -83,26 +108,26 @@ Start with the free one. "RdSAP 10: What's Changed and Why" is two CPD hours, ce
 
 If it works for you, the annual subscription is every course in the library, plus every new one we add, for £79 a year if you join before {OFFER_DEADLINE}.
 
-That's the only email you'll get from me unless you reply.
+If this isn't for you, the unsubscribe link below works, and that's the end of it.
 
-Matt Davies
-Meridian CPD (FistralAI Ltd)
-hello@meridiancpd.co.uk
+{SIGNATURE_TEXT}
 
 We found your work address on the public assessor register. If you'd rather not hear from us: {unsubscribe_url}
 Privacy: meridiancpd.co.uk/privacy.html
 """
     p = "margin:0 0 16px"
-    html = f"""<!DOCTYPE html><html><body style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a;max-width:600px;margin:0 auto;padding:24px">
+    link = f'style="color:{INK};text-decoration:underline"'
+    html = f"""<!DOCTYPE html><html><body style="margin:0;padding:0;background:#ffffff">
+<div style="font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:{INK};max-width:600px;margin:0 auto;padding:24px">
 <p style="{p}">Hello {escape(name)},</p>
 <p style="{p}">Every assessor knows the feeling. The renewal reminder lands, you open your CPD record, and the year that was meant to be full of webinars and reading has somehow got away from you. Six weeks left, or four, or two, and the hours still have to be real, evidenced and ready to show your scheme.</p>
 <p style="{p}">I'm a practising assessor and I built Meridian CPD because I was that person. I wanted CPD I could actually use on the job, written by people who do the job, that I could get through in an evening and have the certificate in my hand the same night. It didn't exist, so I made it. I love doing it, and I'd like you to try it.</p>
-<p style="{p}"><strong>Start with the free one.</strong> &ldquo;RdSAP 10: What's Changed and Why&rdquo; is two CPD hours, certificate included, free with the code <strong>MERIDIAN10</strong> at <a href="{SITE_URL}" style="color:#0891b2">meridiancpd.co.uk</a>. Read it when it suits you, confirm you've completed it, and your certificate arrives straight away, with a number anyone, including your scheme, can check at <a href="{verify}" style="color:#0891b2">meridiancpd.co.uk/verify</a>.</p>
+<p style="{p}"><strong>Start with the free one.</strong> &ldquo;RdSAP 10: What's Changed and Why&rdquo; is two CPD hours, certificate included, free with the code <strong>MERIDIAN10</strong> at <a href="{SITE_URL}" {link}>meridiancpd.co.uk</a>. Read it when it suits you, confirm you've completed it, and your certificate arrives straight away, with a number anyone, including your scheme, can check at <a href="{verify}" {link}>meridiancpd.co.uk/verify</a>.</p>
 <p style="{p}">If it works for you, the annual subscription is every course in the library, plus every new one we add, for <strong>£79 a year</strong> if you join before {OFFER_DEADLINE}.</p>
-<p style="{p}">That's the only email you'll get from me unless you reply.</p>
-<p style="{p}">Matt Davies<br>Meridian CPD (FistralAI Ltd)<br><a href="mailto:hello@meridiancpd.co.uk" style="color:#0891b2">hello@meridiancpd.co.uk</a></p>
-<p style="margin:28px 0 0;font-size:12px;color:#64748b;line-height:1.5">We found your work address on the public assessor register. If you'd rather not hear from us: <a href="{unsubscribe_url}" style="color:#64748b">unsubscribe</a>.<br>Privacy: <a href="{privacy}" style="color:#64748b">meridiancpd.co.uk/privacy.html</a></p>
-</body></html>"""
+<p style="margin:0 0 24px">If this isn't for you, the unsubscribe link below works, and that's the end of it.</p>
+{SIGNATURE_HTML}
+<p style="margin:24px 0 0;font-size:11px;line-height:16px;color:{SMALL}">We found your work address on the public assessor register. If you'd rather not hear from us: <a href="{unsubscribe_url}" style="color:{SMALL}">unsubscribe</a>. Privacy: <a href="{privacy}" style="color:{SMALL}">meridiancpd.co.uk/privacy.html</a></p>
+</div></body></html>"""
     return SUBJECT, text, html
 
 
