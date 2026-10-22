@@ -131,3 +131,23 @@ Expected flow:
 | `GMAIL_REFRESH_TOKEN` | OAuth Playground |
 | `BASE_URL` | `https://meridiancpd.co.uk` |
 | `PDF_MER_DEA_001` etc. | Supabase Storage → public URLs |
+
+## Outreach from the app (Admin → Outreach)
+
+The daily outreach email to the corporate contact list is sent by the app itself
+(`webhook/outreach.py`), not by the old Node service in `Meridian/meridian-outreach`
+(still deployed on Railway as `meridian-outreach`, idle; its campaign is `paused` and
+must stay that way, or be deleted).
+
+- One-off set-up: run `migrations/2026-10-22_outreach_queue.sql` in Supabase → SQL Editor.
+  It creates `outreach_queue` and `outreach_runs`, the campaign (paused) and the wave-one
+  queue. Safe to run again.
+- Sends one at a time between 08:00 and 18:00 UK, Monday to Friday, up to
+  `OUTREACH_DAILY_LIMIT` a day (default 50, ceiling 100), so it never looks like a burst.
+- Pause/Resume, "Send me a test copy" and "Send the rest of today's batch now" are on
+  Admin → Outreach. `OUTREACH_SCHEDULER=off` on Railway stops the timer without a deploy.
+- Every email carries the app's unsubscribe link (needs `UNSUBSCRIBE_SECRET`) and
+  one-click `List-Unsubscribe` headers. Bounces and complaints reported by Resend put the
+  address on `outreach_suppressed` before the next send.
+- Never set a row in `outreach_campaigns` to `active`: that is the old Node service's
+  trigger word. The app's campaign uses `app_active` / `app_paused`.
