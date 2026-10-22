@@ -1,5 +1,8 @@
 """Resend email sender for Meridian CPD."""
+import hashlib
+import hmac
 import os
+from urllib.parse import quote
 
 import httpx
 
@@ -10,6 +13,13 @@ FROM_EMAIL = "hello@meridiancpd.co.uk"
 FROM_NAME = "Meridian CPD"
 # Until domain is verified in Resend, use onboarding@resend.dev for testing
 # After domain verification, switch back to hello@meridiancpd.co.uk
+
+
+def consent_token(email: str) -> str:
+    """Signs the marketing-consent links in our emails, so a choice can only be made from
+    the link we sent to that address."""
+    key = os.environ.get("DASHBOARD_SECRET", "").encode()
+    return hmac.new(key, f"consent:{email.strip().lower()}".encode(), hashlib.sha256).hexdigest()[:24]
 
 
 async def _send(to_email: str, to_name: str, subject: str, body: str, attachments: list[dict] | None = None):
@@ -48,6 +58,7 @@ async def send_course_email(
     if is_subscription:
         subject = "Welcome to Meridian CPD — a few things worth knowing"
         base_url = APP_URL
+        consent_query = f"email={quote(to_email)}&token={consent_token(to_email)}"
         body = f"""Hi {to_name},
 
 ⚠ QUICK NOTE: This email may have landed in your junk or spam folder. If it did, please mark it as safe and add hello@meridiancpd.co.uk to your contacts — this ensures your CPD certificates reach you without any issues.
@@ -87,9 +98,9 @@ Your dashboard is always at:
 
 One last thing — we occasionally develop new tools, resources, and products for energy assessors and retrofit professionals. If you'd be happy to hear about those from time to time, just let us know with one click:
 
-Yes, keep me in the loop → {base_url}/my-cpd/consent/yes?email={to_email}
+Yes, keep me in the loop → {base_url}/my-cpd/consent/yes?{consent_query}
 
-No thanks, CPD only → {base_url}/my-cpd/consent/no?email={to_email}
+No thanks, CPD only → {base_url}/my-cpd/consent/no?{consent_query}
 
 No hard sell, ever. Just the occasional heads-up when something genuinely useful comes along.
 
