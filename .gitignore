@@ -17,3 +17,10 @@ Meridian/
 # Licensed standards and working files: never commit (this repository is public)
 reference/standards/
 reference/course-correction/
+
+# Working files that live in the Mac folder but do not belong in this public repo
+Email Optimizer Demo/
+*.pptx
+logo/Untitled design.png
+reference/rdsap-conventions/*.txt
+reference/rdsap-conventions/*Brief*.md
