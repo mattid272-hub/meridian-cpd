@@ -102,6 +102,11 @@ check("links sent before the change still work", r.headers["location"] == "/my-c
 
 # ── Marketing consent ──
 sent.clear()
+asyncio.run(email_sender.send_course_email(to_email="jo@firm.co.uk", to_name="Jo", course_title="RdSAP 10", course_id="MER-DEA-001",
+                                           pdf_url=None, completion_link="x", is_subscription=False))
+check("single-course email asks about news with signed links",
+      "/my-cpd/consent/yes?email=jo%40firm.co.uk&token=" in sent[-1]["text"] and "/my-cpd/consent/no?" in sent[-1]["text"])
+sent.clear()
 asyncio.run(email_sender.send_course_email(to_email="jo@firm.co.uk", to_name="Jo", course_title="x", course_id="SUBSCRIPTION",
                                            pdf_url=None, completion_link=None, is_subscription=True))
 body = sent[-1]["text"]

@@ -120,6 +120,8 @@ check("order not yet recorded: page waits and refreshes", "Finishing your order"
 r = c.get("/thanks?session_id=cs_live_pending1234&n=20")
 check("stops refreshing after a minute and says what to do", "refresh" not in r.text.split("<style>")[0] and "taking longer" in r.text)
 r = c.get("/thanks?session_id=cs_live_typo1234567")
+check("thanks page asks about news with buttons, not links", "Hear about new courses" in r.text
+      and 'action="/my-cpd/consent/yes"' in r.text and "/my-cpd/consent/yes?" not in r.text)
 check("shows the address the course went to", "jo@smithsurvaying.co.uk" in r.text and "What&#x27;s Changed" in r.text)
 check("offers the correction form", 'action="/thanks/email"' in r.text and 'name="email2"' in r.text)
 
@@ -171,7 +173,9 @@ check("welcome email resent to the right address", len(calls["sent"]) == 1 and c
       and calls["sent"][0]["to_email"] == "sue@firm.co.uk")
 
 # ── Too late for self-service ──
+next(m for m in db["members"] if m["id"] == "oldm")["marketing_consent"] = False
 r = c.get("/thanks?session_id=cs_live_oldorder123")
+check("someone who has already answered is not asked again", "Hear about new courses" not in r.text)
 check("after 7 days the page points to hello@ instead of offering the form",
       'action="/thanks/email"' not in r.text and "hello@meridiancpd.co.uk" in r.text)
 r = post("cs_live_oldorder123", "fixed@buyer.co.uk", "fixed@buyer.co.uk")

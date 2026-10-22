@@ -801,12 +801,26 @@ def _thanks_page(s, purchases: list, member: dict, notice: str = "", status_code
     <input type="email" id="email2" name="email2" required autocomplete="off">
     <button type="submit">Send it to this address instead</button>
   </form>"""
+    ask = ""
+    if member.get("marketing_consent") is None and email:
+        # Asked here as well as in the course email. Nothing is recorded until a button is pressed.
+        tok = consent_token(email)
+        btn = lambda value, label, primary: (
+            f'<form method="post" action="/my-cpd/consent/{value}" style="margin:0;flex:1">'
+            f'<input type="hidden" name="email" value="{_esc(email)}"><input type="hidden" name="token" value="{_esc(tok)}">'
+            f'<button type="submit" style="margin-top:0;{"" if primary else "background:white;color:#0f2547;border:2px solid #0f2547"}">{label}</button></form>')
+        ask = f"""
+  <h2>Hear about new courses?</h2>
+  <p class="small">Now and then we add courses and tools for assessors. Would you like an email when we do?
+  Only if you say yes, and you can change your mind at any time.</p>
+  <div style="display:flex;gap:10px">{btn("yes", "Yes, keep me posted", True)}{btn("no", "No thanks", False)}</div>"""
     return _customer_page("Thank you", f"""
   <h1>Thank you for your order</h1>
   {note}
   <p>We have emailed {_order_what(purchases)} to:</p>
   <div class="addr">{_esc(email)}</div>
   <p class="small">It should arrive within a few minutes. If you cannot see it, check your junk or spam folder.</p>
+  {ask}
   {fix}""", status_code=status_code)
 
 
