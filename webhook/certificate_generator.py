@@ -21,15 +21,20 @@ from reportlab.lib.utils import ImageReader
 
 
 # ── Brand palette ──────────────────────────────────────────────────────────────
-NAVY      = (15/255,  37/255,  71/255)   # #0f2547
-CYAN      = (8/255,  145/255, 178/255)   # #0891b2
-CYAN_DARK = (6/255,  110/255, 140/255)   # deeper cyan for shadow
+# Matches the site: dark green #0D1F0E and lime #D4FF00. Lime is used only on the dark
+# header (accent band, CPD badge); thin rules on the cream page use a deeper lime that
+# stays visible on a light background. The names NAVY and CYAN are kept so the drawing
+# code below reads as before.
+NAVY      = (13/255,  31/255,  14/255)   # #0D1F0E dark green
+LIME      = (212/255, 255/255, 0/255)    # #D4FF00
+CYAN      = (141/255, 182/255, 0/255)    # #8db600 deep lime, for rules on the cream page
+CYAN_DARK = (106/255, 140/255, 0/255)    # shadow behind the badge
 WHITE     = (1.0, 1.0, 1.0)
-CREAM     = (0.98, 0.985, 0.995)         # near-white background
-LIGHT_BG  = (0.94, 0.96, 0.98)          # detail-band fill
+CREAM     = (0.990, 0.990, 0.975)        # warm near-white background
+LIGHT_BG  = (0.961, 0.961, 0.941)        # detail-band fill, #F5F5F0
 MID_GREY  = (0.50, 0.50, 0.50)
-SOFT_GREY = (0.60, 0.62, 0.65)          # subtle text
-SHADOW    = (0.75, 0.78, 0.82)          # shadow colour
+SOFT_GREY = (0.36, 0.42, 0.37)           # subtle text, #5C6B5D
+SHADOW    = (0.78, 0.80, 0.76)           # shadow colour
 
 from settings import APP_URL, APP_HOST
 
@@ -58,7 +63,7 @@ def _draw_meridian_logo(c, x, y, icon_r: float, on_dark: bool = True):
     c.line(x, y + icon_r, x, y - icon_r)
 
     # Faint horizontal axis
-    c.setStrokeColorRGB(*(0.85, 0.90, 0.95) if on_dark else (0.55, 0.60, 0.68))
+    c.setStrokeColorRGB(*(0.85, 0.90, 0.85) if on_dark else (0.55, 0.62, 0.56))
     c.setLineWidth(0.9)
     c.line(x - icon_r, y, x + icon_r, y)
 
@@ -72,7 +77,7 @@ def _draw_meridian_logo(c, x, y, icon_r: float, on_dark: bool = True):
     c1y = p0y + 2/3 * (qy - p0y)
     c2x = endx + 2/3 * (qx - endx)
     c2y = endy + 2/3 * (qy - endy)
-    c.setStrokeColorRGB(*CYAN)
+    c.setStrokeColorRGB(*(LIME if on_dark else CYAN))
     c.setLineWidth(2.2)
     path = c.beginPath()
     path.moveTo(p0x, p0y)
@@ -84,8 +89,8 @@ def _draw_meridian_logo(c, x, y, icon_r: float, on_dark: bool = True):
     c.circle(x, y + icon_r, 2.5, fill=1, stroke=0)
     c.circle(x, y - icon_r, 2.5, fill=1, stroke=0)
 
-    # Centre dot (cyan)
-    c.setFillColorRGB(*CYAN)
+    # Centre dot (lime)
+    c.setFillColorRGB(*(LIME if on_dark else CYAN))
     c.circle(x, y, 3.5, fill=1, stroke=0)
 
     # ── Wordmark ────────────────────────────────────────────────────────────
@@ -106,9 +111,9 @@ def _draw_meridian_logo(c, x, y, icon_r: float, on_dark: bool = True):
     c.setFillColorRGB(*CYAN_DARK)
     c.roundRect(badge_x + 1.5, badge_y - 1.5, badge_w, badge_h, 2.5, fill=1, stroke=0)
 
-    c.setFillColorRGB(*CYAN)
+    c.setFillColorRGB(*LIME)
     c.roundRect(badge_x, badge_y, badge_w, badge_h, 2.5, fill=1, stroke=0)
-    c.setFillColorRGB(*WHITE)
+    c.setFillColorRGB(*NAVY)
     c.setFont("Helvetica-Bold", 10)
     c.drawCentredString(badge_x + badge_w / 2, badge_y + 3.5, "CPD")
 
@@ -118,7 +123,7 @@ def _draw_meridian_logo(c, x, y, icon_r: float, on_dark: bool = True):
 def _draw_watermark(c, width, height):
     c.saveState()
     c.setFont("Helvetica", 8)
-    c.setFillColorRGB(0.91, 0.935, 0.955)
+    c.setFillColorRGB(0.92, 0.93, 0.90)
     c.rotate(45)
     text = "MERIDIAN CPD  •  STAY SHARP. STAY CERTIFIED.  •  "
     for x in range(-int(height), int(width + height), 130):
@@ -146,7 +151,7 @@ def _generate_qr(cert_number: str) -> io.BytesIO:
                        error_correction=qrcode.constants.ERROR_CORRECT_H)
     qr.add_data(url)
     qr.make(fit=True)
-    img = qr.make_image(fill_color="#0f2547", back_color="white")
+    img = qr.make_image(fill_color="#0D1F0E", back_color="white")
     buf = io.BytesIO()
     img.save(buf, format="PNG")
     buf.seek(0)
@@ -193,7 +198,7 @@ def generate_certificate(
     HEADER_H = 62 * mm
 
     # Shadow strip behind header
-    c.setFillColorRGB(0.06, 0.12, 0.26)
+    c.setFillColorRGB(0.03, 0.08, 0.04)
     c.rect(0, height - HEADER_H - 2.5, width, HEADER_H + 2.5, fill=1, stroke=0)
 
     # Main header fill
@@ -204,8 +209,8 @@ def generate_certificate(
     c.setFillColorRGB(*WHITE)
     c.rect(0, height - 1, width, 1, fill=1, stroke=0)
 
-    # Cyan accent bar (bottom of header)
-    c.setFillColorRGB(*CYAN)
+    # Lime accent bar (bottom of header)
+    c.setFillColorRGB(*LIME)
     c.rect(0, height - HEADER_H - 2*mm, width, 2*mm, fill=1, stroke=0)
 
     # Draw logo — icon centred at 35mm from left, vertically centred in header
@@ -215,7 +220,7 @@ def generate_certificate(
     _draw_meridian_logo(c, icon_centre_x, icon_centre_y, icon_r, on_dark=True)
 
     # Tagline (right-aligned, italic-feel via spacing)
-    c.setFillColorRGB(0.75, 0.85, 0.93)
+    c.setFillColorRGB(0.80, 0.86, 0.80)
     c.setFont("Helvetica", 9.5)
     c.drawRightString(width - 18*mm, icon_centre_y - 3, "Stay Sharp. Stay Certified.")
 
@@ -295,13 +300,13 @@ def generate_certificate(
     pill_x = width/2 - pill_w/2
 
     # Shadow
-    c.setFillColorRGB(*CYAN_DARK)
+    c.setFillColorRGB(*SHADOW)
     c.roundRect(pill_x + 2, pill_y - 2, pill_w, pill_h, 3*mm, fill=1, stroke=0)
 
-    c.setFillColorRGB(*CYAN)
+    c.setFillColorRGB(*NAVY)
     c.roundRect(pill_x, pill_y, pill_w, pill_h, 3*mm, fill=1, stroke=0)
 
-    c.setFillColorRGB(*WHITE)
+    c.setFillColorRGB(*LIME)
     c.setFont("Helvetica-Bold", 16)
     hours_text = f"{cpd_hours:g} CPD Hour{'s' if cpd_hours != 1 else ''}"
     c.drawCentredString(width / 2, pill_y + 5*mm, hours_text)

@@ -110,7 +110,7 @@ def _logo() -> str:
     """Returns logo HTML — image if LOGO_URL is set, otherwise styled text fallback."""
     if LOGO_URL:
         return f'<img src="{LOGO_URL}" height="50" alt="Meridian CPD" style="margin-bottom:16px;display:block">'
-    return '<div style="font-size:22px;font-weight:900;color:#0f2547;letter-spacing:-0.5px;margin-bottom:16px">MERIDIAN <span style="color:#0891b2">CPD</span></div>'
+    return '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:32px;font-weight:400;color:#0D1F0E;letter-spacing:0.06em;line-height:1;margin-bottom:18px">MERIDIAN <span style="background:#D4FF00;color:#0D1F0E;padding:0 5px;border-radius:2px">CPD</span></div>'
 
 # ── Course catalogue ───────────────────────────────────────────────────────────
 # Each entry: course_id, title, cpd_hours, published (YYYY-MM-DD).
@@ -178,17 +178,17 @@ def is_available(course_id: str) -> bool:
 def _under_review_page(course_id: str) -> HTMLResponse:
     title = str(COURSES.get(course_id, {}).get("title", course_id))
     return HTMLResponse(f"""<!DOCTYPE html>
-<html><head><title>Course being updated — Meridian CPD</title>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Course being updated — Meridian CPD</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="font-family:Arial,sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1e293b">
-<h2 style="color:#0f2547">This course is being updated</h2>
+<body style="font-family: 'DM Sans', Arial, sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1f2a20">
+<h2 style="color:#0D1F0E">This course is being updated</h2>
 <p style="line-height:1.6"><strong>{title}</strong> ({course_id}) has been withdrawn while we
 revise it against the current standards and guidance. The updated edition will appear in
 your library as soon as it has been checked, and you will be able to download and complete
 it then.</p>
 <p style="line-height:1.6">Certificates you already hold are not affected.</p>
-<p><a style="color:#0891b2" href="/my-cpd/dashboard">Back to my courses</a> &nbsp;·&nbsp;
-<a style="color:#0891b2" href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a></p>
+<p><a style="color:#4d7c0f" href="/my-cpd/dashboard">Back to my courses</a> &nbsp;·&nbsp;
+<a style="color:#4d7c0f" href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a></p>
 </body></html>""")
 
 
@@ -758,32 +758,32 @@ async def resend_order_emails(member: dict, purchases: list) -> int:
 def _customer_page(title: str, inner: str, status_code: int = 200, refresh_url: str = "") -> HTMLResponse:
     refresh = f'<meta http-equiv="refresh" content="3;url={_esc(refresh_url)}">' if refresh_url else ""
     return HTMLResponse(f"""<!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en"><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{_esc(title)} — Meridian CPD</title>{refresh}
 <style>
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc;
-       color: #1e293b; padding: 40px 16px; line-height: 1.55; }}
+body {{ font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F5F0;
+       color: #1f2a20; padding: 40px 16px; line-height: 1.55; }}
 .card {{ background: white; border-radius: 14px; padding: 32px 28px; max-width: 520px; margin: 0 auto;
          box-shadow: 0 4px 24px rgba(0,0,0,0.08); }}
-h1 {{ font-size: 22px; color: #0f2547; margin-bottom: 12px; }}
-h2 {{ font-size: 16px; color: #0f2547; margin: 28px 0 8px; }}
+h1 {{ font-size: 22px; color: #0D1F0E; margin-bottom: 12px; }}
+h2 {{ font-size: 16px; color: #0D1F0E; margin: 28px 0 8px; }}
 p {{ font-size: 15px; margin-bottom: 12px; }}
-.addr {{ font-size: 18px; font-weight: 700; color: #0f2547; background: #f0f9ff; border: 2px solid #0891b2;
+.addr {{ font-size: 18px; font-weight: 700; color: #0D1F0E; background: #f7ffd6; border: 2px solid #8db600;
          border-radius: 8px; padding: 12px 14px; margin: 4px 0 14px; word-break: break-all; }}
-.small {{ font-size: 13px; color: #64748b; }}
+.small {{ font-size: 13px; color: #5C6B5D; }}
 .ok {{ background: #f0fdf4; border: 1px solid #86efac; color: #15803d; padding: 12px 14px; border-radius: 8px;
        font-size: 14px; margin-bottom: 16px; }}
 .err {{ background: #fef2f2; border: 1px solid #fca5a5; color: #b91c1c; padding: 12px 14px; border-radius: 8px;
         font-size: 14px; margin-bottom: 16px; }}
 label {{ display: block; font-size: 13px; font-weight: 600; color: #374151; margin: 12px 0 6px; }}
 input[type=email] {{ width: 100%; padding: 12px 14px; font-size: 16px; border: 1.5px solid #d1d5db; border-radius: 8px; }}
-button {{ margin-top: 16px; width: 100%; padding: 13px; background: #0f2547; color: white; font-size: 15px;
+button {{ margin-top: 16px; width: 100%; padding: 13px; background: #0D1F0E; color: white; font-size: 15px;
           font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }}
-button:hover {{ background: #0891b2; }}
-a {{ color: #0891b2; }}
-.foot {{ margin-top: 28px; border-top: 1px solid #f1f5f9; padding-top: 16px; }}
+button:hover {{ background: #D4FF00; color: #0D1F0E; }}
+a {{ color: #4d7c0f; }}
+.foot {{ margin-top: 28px; border-top: 1px solid #efefe8; padding-top: 16px; }}
 </style></head><body><div class="card">{_logo()}{inner}
 <p class="small foot">Your courses and certificates are always in <a href="{BASE_URL}/my-cpd">My CPD</a>.
 Questions: <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a> ·
@@ -829,7 +829,7 @@ def _thanks_page(s, purchases: list, member: dict, notice: str = "", status_code
         btn = lambda value, label, primary: (
             f'<form method="post" action="/my-cpd/consent/{value}" style="margin:0;flex:1">'
             f'<input type="hidden" name="email" value="{_esc(email)}"><input type="hidden" name="token" value="{_esc(tok)}">'
-            f'<button type="submit" style="margin-top:0;{"" if primary else "background:white;color:#0f2547;border:2px solid #0f2547"}">{label}</button></form>')
+            f'<button type="submit" style="margin-top:0;{"" if primary else "background:white;color:#0D1F0E;border:2px solid #0D1F0E"}">{label}</button></form>')
         ask = f"""
   <h2>Hear about new courses?</h2>
   <p class="small">Now and then we add courses and tools for assessors. Would you like an email when we do?
@@ -1010,14 +1010,14 @@ async def completion_page(token: str):
         course_title = course.get("title", course_id)
         return HTMLResponse(f"""
         <html>
-        <head>
+        <head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
           <title>Read Course First — Meridian CPD</title>
           <style>
-            body {{ font-family: Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }}
-            h1 {{ color: #0f2547; }}
+            body {{ font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }}
+            h1 {{ color: #0D1F0E; }}
             .box {{ background: #fff8e1; border: 1px solid #f59e0b; border-radius: 8px;
                     padding: 24px; margin: 24px 0; }}
-            .btn {{ display: inline-block; background: #0891b2; color: white; padding: 14px 28px;
+            .btn {{ display: inline-block; background: #D4FF00; color: #0D1F0E; padding: 14px 28px;
                     border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 16px;
                     margin-top: 16px; }}
             .small {{ color: #666; font-size: 13px; margin-top: 20px; }}
@@ -1041,17 +1041,17 @@ async def completion_page(token: str):
 
     return HTMLResponse(f"""
     <html>
-    <head>
+    <head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
       <title>Complete Your CPD — Meridian CPD</title>
       <style>
-        body {{ font-family: Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }}
-        h1 {{ color: #0f2547; }}
-        .btn {{ background: #0891b2; color: white; padding: 16px 32px; border: none;
+        body {{ font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }}
+        h1 {{ color: #0D1F0E; }}
+        .btn {{ background: #D4FF00; color: #0D1F0E; padding: 16px 32px; border: none;
                 font-size: 18px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 24px; }}
         .name-box {{ background: #fff8e1; border: 1px solid #f59e0b; border-radius: 6px;
                      padding: 16px 20px; margin: 24px 0; }}
         .name-box p {{ margin: 0 0 12px 0; font-size: 14px; color: #444; }}
-        .name-box strong {{ color: #0f2547; }}
+        .name-box strong {{ color: #0D1F0E; }}
         .name-box input {{ width: 100%; padding: 10px 12px; font-size: 16px; border: 1px solid #ccc;
                            border-radius: 4px; box-sizing: border-box; margin-top: 4px; }}
         .small {{ color: #666; font-size: 13px; margin-top: 20px; }}
@@ -1167,14 +1167,14 @@ async def confirm_completion(token: str, request: Request):
 
     return HTMLResponse(f"""
     <html>
-    <head>
+    <head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
       <title>Certificate Issued — Meridian CPD</title>
       <style>
-        body {{ font-family: Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }}
-        h1 {{ color: #0f2547; }}
-        .cert-num {{ background: #f0f9ff; border: 2px solid #0891b2; padding: 16px;
+        body {{ font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }}
+        h1 {{ color: #0D1F0E; }}
+        .cert-num {{ background: #f7ffd6; border: 2px solid #8db600; padding: 16px;
                      border-radius: 6px; font-size: 20px; font-weight: bold;
-                     text-align: center; color: #0891b2; margin: 24px 0; }}
+                     text-align: center; color: #4d7c0f; margin: 24px 0; }}
       </style>
     </head>
     <body>
@@ -1197,26 +1197,26 @@ async def confirm_completion(token: str, request: Request):
 async def verify_landing():
     return HTMLResponse("""
     <html>
-    <head>
+    <head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
       <title>Verify a Certificate — Meridian CPD</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <style>
-        body { font-family: Arial, sans-serif; background: #f8fafc; margin: 0; padding: 0; }
+        body { font-family: 'DM Sans', Arial, sans-serif; background: #F5F5F0; margin: 0; padding: 0; }
         .wrap { max-width: 520px; margin: 80px auto; padding: 0 24px; }
-        .logo { color: #0f2547; font-size: 22px; font-weight: 900; letter-spacing: -0.5px;
+        .logo { color: #0D1F0E; font-family: 'Bebas Neue', sans-serif; font-size: 30px; font-weight: 400; letter-spacing: 0.06em;
                 margin-bottom: 40px; display: block; text-decoration: none; }
-        .logo span { color: #0891b2; }
-        h1 { color: #0f2547; font-size: 26px; margin: 0 0 8px; }
+        .logo span { background: #D4FF00; color: #0D1F0E; padding: 0 5px; border-radius: 2px; }
+        h1 { color: #0D1F0E; font-size: 26px; margin: 0 0 8px; }
         p { color: #6b7280; font-size: 15px; margin: 0 0 28px; line-height: 1.5; }
         label { display: block; font-size: 13px; font-weight: bold; color: #374151; margin-bottom: 6px; }
         input { width: 100%; box-sizing: border-box; padding: 12px 14px; font-size: 15px;
                 border: 1.5px solid #d1d5db; border-radius: 8px; outline: none;
                 font-family: monospace; letter-spacing: 1px; }
-        input:focus { border-color: #0891b2; box-shadow: 0 0 0 3px rgba(8,145,178,0.15); }
-        button { margin-top: 14px; width: 100%; padding: 13px; background: #0f2547;
+        input:focus { border-color: #8db600; box-shadow: 0 0 0 3px rgba(141,182,0,0.15); }
+        button { margin-top: 14px; width: 100%; padding: 13px; background: #0D1F0E;
                  color: white; font-size: 15px; font-weight: bold; border: none;
                  border-radius: 8px; cursor: pointer; transition: background 0.15s; }
-        button:hover { background: #0891b2; }
+        button:hover { background: #D4FF00; color: #0D1F0E; }
         .hint { margin-top: 14px; font-size: 13px; color: #9ca3af; text-align: center; }
         .hint strong { color: #6b7280; }
       </style>
@@ -1268,11 +1268,11 @@ async def verify_certificate(cert_number: str):
 
     return HTMLResponse(f"""
     <html>
-    <head>
+    <head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
       <title>Certificate Verified — Meridian CPD</title>
       <style>
-        body {{ font-family: Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }}
-        h1 {{ color: #0f2547; }}
+        body {{ font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }}
+        h1 {{ color: #0D1F0E; }}
         .verified {{ background: #f0fdf4; border: 2px solid #22c55e; border-radius: 8px;
                      padding: 24px; margin: 24px 0; }}
         .row {{ display: flex; justify-content: space-between; padding: 8px 0;
@@ -1350,9 +1350,9 @@ async def unsubscribe_one_click(email: str = "", token: str = ""):
 async def unsubscribe(email: str = "", token: str = ""):
     if not email or not token or not _verify_unsubscribe_token(email, token):
         return HTMLResponse(f"""<!DOCTYPE html>
-<html><head><title>Unsubscribe — Meridian CPD</title>
-<style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
-h2{{color:#dc2626}}p{{color:#64748b;line-height:1.6}}</style></head>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Unsubscribe — Meridian CPD</title>
+<style>body{{font-family: 'DM Sans', Arial, sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+h2{{color:#dc2626}}p{{color:#5C6B5D;line-height:1.6}}</style></head>
 <body>
   <h2>Invalid link</h2>
   <p>This unsubscribe link is invalid or has already been used.<br>
@@ -1379,22 +1379,22 @@ h2{{color:#dc2626}}p{{color:#64748b;line-height:1.6}}</style></head>
         print(f"Goodbye email failed for {email}: {e}")
 
     return HTMLResponse(f"""<!DOCTYPE html>
-<html><head><title>Unsubscribed — Meridian CPD</title>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Unsubscribed — Meridian CPD</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
-.logo{{font-size:20px;font-weight:900;color:#0f2547;margin-bottom:40px;display:block;text-decoration:none}}
-.logo span{{color:#0891b2}}
-h2{{color:#0f2547;font-size:22px;margin-bottom:12px}}
-p{{color:#64748b;line-height:1.6;font-size:15px}}
+body{{font-family: 'DM Sans', Arial, sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+.logo{{font-family:'Bebas Neue',sans-serif;font-size:30px;font-weight:400;letter-spacing:0.06em;color:#0D1F0E;margin-bottom:40px;display:block;text-decoration:none}}
+.logo span{{background:#D4FF00;color:#0D1F0E;padding:0 5px;border-radius:2px}}
+h2{{color:#0D1F0E;font-size:22px;margin-bottom:12px}}
+p{{color:#5C6B5D;line-height:1.6;font-size:15px}}
 </style></head>
 <body>
   <a class="logo" href="https://meridiancpd.co.uk">MERIDIAN <span>CPD</span></a>
   <h2>You have been unsubscribed.</h2>
   <p>We have removed <strong>{email}</strong> from all future Meridian CPD marketing emails.<br>
   You will not hear from us again.</p>
-  <p style="margin-top:24px;font-size:13px;color:#94a3b8">
-  Changed your mind? Email <a href="mailto:hello@meridiancpd.co.uk" style="color:#0891b2">hello@meridiancpd.co.uk</a>
+  <p style="margin-top:24px;font-size:13px;color:#8A9E8B">
+  Changed your mind? Email <a href="mailto:hello@meridiancpd.co.uk" style="color:#4d7c0f">hello@meridiancpd.co.uk</a>
   and we will reinstate you.</p>
 </body></html>""")
 
@@ -1416,10 +1416,10 @@ def _save_marketing_consent(email: str, consent: bool) -> bool:
 
 def _consent_not_saved_page() -> HTMLResponse:
     return HTMLResponse(f"""
-    <html><head><title>Meridian CPD</title>
-    <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
-    h2{{color:#0f2547}}p{{color:#64748b;line-height:1.6}}
-    .btn{{display:inline-block;margin-top:24px;background:#0f2547;color:white;padding:12px 24px;
+    <html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Meridian CPD</title>
+    <style>body{{font-family: 'DM Sans', Arial, sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+    h2{{color:#0D1F0E}}p{{color:#5C6B5D;line-height:1.6}}
+    .btn{{display:inline-block;margin-top:24px;background:#0D1F0E;color:white;padding:12px 24px;
           border-radius:8px;text-decoration:none;font-weight:bold}}</style></head>
     <body>
       <h2>Sorry — we couldn't save that just now.</h2>
@@ -1435,9 +1435,9 @@ def _consent_question_page(email: str, token: str, choice: str) -> HTMLResponse:
     must never record a choice: the reader confirms with a button (a POST) instead."""
     if not email or not hmac.compare_digest(consent_token(email), token or ""):
         return HTMLResponse(f"""
-    <html><head><title>Meridian CPD</title><meta name="viewport" content="width=device-width,initial-scale=1">
-    <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
-    h2{{color:#0f2547}}p{{color:#64748b;line-height:1.6}}</style></head>
+    <html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Meridian CPD</title><meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>body{{font-family: 'DM Sans', Arial, sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+    h2{{color:#0D1F0E}}p{{color:#5C6B5D;line-height:1.6}}</style></head>
     <body>
       <h2>This link has expired</h2>
       <p>To tell us whether you would like to hear about new courses and tools, reply to any
@@ -1449,13 +1449,13 @@ def _consent_question_page(email: str, token: str, choice: str) -> HTMLResponse:
         f'<form method="post" action="/my-cpd/consent/{value}" style="margin:12px 0">'
         f'<input type="hidden" name="email" value="{_esc(email)}"><input type="hidden" name="token" value="{_esc(token)}">'
         f'<button type="submit" style="width:100%;padding:13px;border-radius:8px;font-size:15px;font-weight:bold;'
-        f'cursor:pointer;border:2px solid #0f2547;background:{"#0f2547" if primary else "white"};'
-        f'color:{"white" if primary else "#0f2547"}">{label}</button></form>')
+        f'cursor:pointer;border:2px solid #0D1F0E;background:{"#0D1F0E" if primary else "white"};'
+        f'color:{"white" if primary else "#0D1F0E"}">{label}</button></form>')
     buttons = (btn("yes", "Yes, keep me in the loop", yes_first) + btn("no", "No thanks, CPD only", not yes_first))
     return HTMLResponse(f"""
-    <html><head><title>Meridian CPD</title><meta name="viewport" content="width=device-width,initial-scale=1">
-    <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
-    h2{{color:#0f2547}}p{{color:#64748b;line-height:1.6}}</style></head>
+    <html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Meridian CPD</title><meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>body{{font-family: 'DM Sans', Arial, sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+    h2{{color:#0D1F0E}}p{{color:#5C6B5D;line-height:1.6}}</style></head>
     <body>
       <h2>Hear about new courses and tools?</h2>
       <p>Now and then we develop new tools and resources for energy assessors and retrofit professionals.
@@ -1489,10 +1489,10 @@ async def consent_yes(request: Request):
     if not _save_marketing_consent(email, True):
         return _consent_not_saved_page()
     return HTMLResponse(f"""
-    <html><head><title>Meridian CPD</title>
-    <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
-    h2{{color:#0f2547}}p{{color:#64748b;line-height:1.6}}
-    .btn{{display:inline-block;margin-top:24px;background:#0f2547;color:white;padding:12px 24px;
+    <html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Meridian CPD</title>
+    <style>body{{font-family: 'DM Sans', Arial, sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+    h2{{color:#0D1F0E}}p{{color:#5C6B5D;line-height:1.6}}
+    .btn{{display:inline-block;margin-top:24px;background:#0D1F0E;color:white;padding:12px 24px;
           border-radius:8px;text-decoration:none;font-weight:bold}}</style></head>
     <body>
       <h2>Thanks — you're in the loop.</h2>
@@ -1510,10 +1510,10 @@ async def consent_no(request: Request):
     if not _save_marketing_consent(email, False):
         return _consent_not_saved_page()
     return HTMLResponse(f"""
-    <html><head><title>Meridian CPD</title>
-    <style>body{{font-family:Arial,sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
-    h2{{color:#0f2547}}p{{color:#64748b;line-height:1.6}}
-    .btn{{display:inline-block;margin-top:24px;background:#0f2547;color:white;padding:12px 24px;
+    <html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Meridian CPD</title>
+    <style>body{{font-family: 'DM Sans', Arial, sans-serif;max-width:520px;margin:80px auto;padding:0 24px;text-align:center}}
+    h2{{color:#0D1F0E}}p{{color:#5C6B5D;line-height:1.6}}
+    .btn{{display:inline-block;margin-top:24px;background:#0D1F0E;color:white;padding:12px 24px;
           border-radius:8px;text-decoration:none;font-weight:bold}}</style></head>
     <body>
       <h2>No problem at all.</h2>
@@ -1529,65 +1529,65 @@ DASHBOARD_SECRET = os.environ.get("DASHBOARD_SECRET", secrets.token_hex(32))
 
 _DASH_CSS = """
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-       background: #f8fafc; color: #1e293b; font-size: 14px; min-height: 100vh; }
-.topbar { background: #0f2547; padding: 0 28px; display: flex; align-items: center;
+body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background: #F5F5F0; color: #1f2a20; font-size: 14px; min-height: 100vh; }
+.topbar { background: #0D1F0E; padding: 0 28px; display: flex; align-items: center;
           justify-content: space-between; height: 56px; }
-.topbar-brand { font-size: 18px; font-weight: 900; color: white; letter-spacing: -0.5px;
+.topbar-brand { font-family: 'Bebas Neue', sans-serif; font-size: 26px; font-weight: 400; color: white; letter-spacing: 0.06em;
                 text-decoration: none; }
-.topbar-brand span { color: #0891b2; }
+.topbar-brand span { color: #D4FF00; }
 .topbar-right { display: flex; align-items: center; gap: 16px; }
-.topbar-name { color: #94a3b8; font-size: 13px; }
-.topbar-logout { color: #caf0f8; font-size: 13px; text-decoration: none;
-                 border: 1px solid #1e3a5f; padding: 5px 12px; border-radius: 5px; }
-.topbar-logout:hover { background: #1e3a5f; }
+.topbar-name { color: #8A9E8B; font-size: 13px; }
+.topbar-logout { color: #D4FF00; font-size: 13px; text-decoration: none;
+                 border: 1px solid #162818; padding: 5px 12px; border-radius: 5px; }
+.topbar-logout:hover { background: #162818; }
 .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
 .hero { background: white; border-radius: 12px; padding: 28px 32px;
-        border-left: 4px solid #0891b2; margin-bottom: 28px;
+        border-left: 4px solid #8db600; margin-bottom: 28px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-.hero h1 { font-size: 22px; color: #0f2547; margin-bottom: 6px; }
-.hero p { color: #64748b; font-size: 14px; }
+.hero h1 { font-size: 22px; color: #0D1F0E; margin-bottom: 6px; }
+.hero p { color: #5C6B5D; font-size: 14px; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
 .stat { background: white; border-radius: 10px; padding: 20px 24px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-align: center; }
-.stat .val { font-size: 36px; font-weight: 800; color: #0f2547; line-height: 1.1; }
-.stat .lbl { color: #64748b; font-size: 12px; font-weight: 600;
+.stat .val { font-size: 36px; font-weight: 800; color: #0D1F0E; line-height: 1.1; }
+.stat .lbl { color: #5C6B5D; font-size: 12px; font-weight: 600;
              text-transform: uppercase; letter-spacing: 0.5px; margin-top: 6px; }
 .card { background: white; border-radius: 10px; padding: 24px 28px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 24px; }
-.card-title { font-size: 13px; font-weight: 700; color: #0f2547; margin-bottom: 18px;
-              text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #f1f5f9;
+.card-title { font-size: 13px; font-weight: 700; color: #0D1F0E; margin-bottom: 18px;
+              text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #efefe8;
               padding-bottom: 12px; }
 .course-row { display: flex; align-items: center; justify-content: space-between;
-              padding: 14px 0; border-bottom: 1px solid #f1f5f9; gap: 12px; }
+              padding: 14px 0; border-bottom: 1px solid #efefe8; gap: 12px; }
 .course-row:last-child { border-bottom: none; }
 .course-info { flex: 1; }
-.course-id { font-size: 11px; color: #0891b2; font-weight: 700;
+.course-id { font-size: 11px; color: #4d7c0f; font-weight: 700;
              letter-spacing: 0.5px; margin-bottom: 3px; }
-.course-title { font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 2px; }
-.course-meta { font-size: 12px; color: #94a3b8; }
+.course-title { font-size: 14px; font-weight: 600; color: #1f2a20; margin-bottom: 2px; }
+.course-meta { font-size: 12px; color: #8A9E8B; }
 .course-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .pill { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px;
         border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap; }
 .pill-complete { background: #dcfce7; color: #15803d; }
 .pill-pending { background: #fef9c3; color: #854d0e; }
-.pill-locked { background: #f1f5f9; color: #94a3b8; }
+.pill-locked { background: #efefe8; color: #8A9E8B; }
 .btn { display: inline-block; padding: 8px 16px; border-radius: 6px; font-size: 13px;
        font-weight: 600; text-decoration: none; cursor: pointer; border: none; }
-.btn-dl { background: #0891b2; color: white; }
-.btn-dl:hover { background: #0f2547; }
-.btn-read { background: #0f2547; color: white; }
-.btn-read:hover { background: #0891b2; }
-.empty { color: #94a3b8; text-align: center; padding: 32px; font-size: 14px; }
+.btn-dl { background: #D4FF00; color: #0D1F0E; }
+.btn-dl:hover { background: #0D1F0E; color: #D4FF00; }
+.btn-read { background: #0D1F0E; color: white; }
+.btn-read:hover { background: #D4FF00; color: #0D1F0E; }
+.empty { color: #8A9E8B; text-align: center; padding: 32px; font-size: 14px; }
 .cert-table { width: 100%; border-collapse: collapse; }
-.cert-table th { text-align: left; font-size: 11px; font-weight: 700; color: #64748b;
+.cert-table th { text-align: left; font-size: 11px; font-weight: 700; color: #5C6B5D;
                  text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px;
-                 border-bottom: 2px solid #e2e8f0; }
-.cert-table td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+                 border-bottom: 2px solid #e3e5dc; }
+.cert-table td { padding: 10px 12px; border-bottom: 1px solid #efefe8; font-size: 13px; }
 .cert-table tr:last-child td { border-bottom: none; }
-.cert-num { font-family: monospace; color: #0891b2; font-weight: 700; font-size: 12px; }
-.progress-bar { background: #e2e8f0; border-radius: 10px; height: 8px; margin-top: 8px; }
-.progress-fill { background: linear-gradient(90deg, #0891b2, #0f2547);
+.cert-num { font-family: monospace; color: #4d7c0f; font-weight: 700; font-size: 12px; }
+.progress-bar { background: #e3e5dc; border-radius: 10px; height: 8px; margin-top: 8px; }
+.progress-fill { background: linear-gradient(90deg, #D4FF00, #8db600);
                  border-radius: 10px; height: 8px; transition: width 0.3s; }
 @media (max-width: 640px) {
   .stats { grid-template-columns: 1fr; }
@@ -1652,27 +1652,27 @@ async def dashboard_login_page(request: Request):
     elif msg == "notfound":
         msg_html = '<div class="msg-err">No account found for that email. Have you purchased a course?</div>'
     return HTMLResponse(f"""<!DOCTYPE html>
-<html><head>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <title>My CPD — Meridian CPD</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-       background: #f8fafc; display: flex; align-items: center;
+body {{ font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background: #F5F5F0; display: flex; align-items: center;
        justify-content: center; min-height: 100vh; padding: 24px; }}
 .card {{ background: white; border-radius: 14px; padding: 40px 36px; width: 100%;
          max-width: 420px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }}
-.brand {{ font-size: 22px; font-weight: 900; color: #0f2547; letter-spacing: -0.5px;
+.brand {{ font-family: 'Bebas Neue', sans-serif; font-size: 30px; font-weight: 400; color: #0D1F0E; letter-spacing: 0.06em;
           margin-bottom: 8px; }}
-.brand span {{ color: #0891b2; }}
-.sub {{ color: #64748b; font-size: 14px; margin-bottom: 32px; line-height: 1.5; }}
+.brand span {{ background: #D4FF00; color: #0D1F0E; padding: 0 5px; border-radius: 2px; }}
+.sub {{ color: #5C6B5D; font-size: 14px; margin-bottom: 32px; line-height: 1.5; }}
 label {{ display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; }}
 input {{ width: 100%; padding: 12px 14px; font-size: 15px; border: 1.5px solid #d1d5db;
          border-radius: 8px; outline: none; }}
-input:focus {{ border-color: #0891b2; box-shadow: 0 0 0 3px rgba(8,145,178,0.12); }}
-.btn {{ margin-top: 18px; width: 100%; padding: 13px; background: #0f2547; color: white;
+input:focus {{ border-color: #8db600; box-shadow: 0 0 0 3px rgba(141,182,0,0.12); }}
+.btn {{ margin-top: 18px; width: 100%; padding: 13px; background: #0D1F0E; color: white;
         font-size: 15px; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }}
-.btn:hover {{ background: #0891b2; }}
+.btn:hover {{ background: #D4FF00; color: #0D1F0E; }}
 .hint {{ margin-top: 16px; font-size: 12px; color: #9ca3af; text-align: center; line-height: 1.5; }}
 .msg-ok {{ background: #f0fdf4; border: 1px solid #86efac; color: #15803d; padding: 12px 16px;
            border-radius: 8px; font-size: 14px; margin-bottom: 20px; }}
@@ -1724,24 +1724,24 @@ async def dashboard_send_link(request: Request):
                          f"It works for 1 hour.\n\n{login_url}\n\nIf you didn't ask for this, ignore this "
                          f"email.\n\nMeridian CPD · meridiancpd.co.uk"),
                 "html": f"""
-                <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:32px 24px">
-                  <div style="font-size:20px;font-weight:900;color:#0f2547;margin-bottom:8px">
-                    MERIDIAN <span style="color:#0891b2">CPD</span>
+                <div style="font-family: 'DM Sans', Arial, sans-serif;max-width:520px;margin:0 auto;padding:32px 24px">
+                  <div style="font-size:20px;font-weight:900;color:#0D1F0E;margin-bottom:8px">
+                    MERIDIAN <span style="background:#D4FF00;color:#0D1F0E;padding:0 5px;border-radius:2px">CPD</span>
                   </div>
-                  <h2 style="color:#0f2547;font-size:18px;margin:24px 0 8px">Your login link</h2>
-                  <p style="color:#64748b;font-size:14px;line-height:1.6;margin-bottom:24px">
+                  <h2 style="color:#0D1F0E;font-size:18px;margin:24px 0 8px">Your login link</h2>
+                  <p style="color:#5C6B5D;font-size:14px;line-height:1.6;margin-bottom:24px">
                     Click the button below to access your CPD dashboard. This link expires in 1 hour.
                   </p>
                   <a href="{login_url}"
-                     style="display:inline-block;background:#0f2547;color:white;padding:14px 28px;
+                     style="display:inline-block;background:#0D1F0E;color:white;padding:14px 28px;
                             border-radius:8px;text-decoration:none;font-weight:700;font-size:15px">
                     Sign in to My CPD →
                   </a>
-                  <p style="color:#64748b;font-size:12px;margin-top:20px;line-height:1.5">
+                  <p style="color:#5C6B5D;font-size:12px;margin-top:20px;line-height:1.5">
                     If the button doesn't work, copy this link into your browser:<br>
-                    <a href="{login_url}" style="color:#0891b2;word-break:break-all">{login_url}</a>
+                    <a href="{login_url}" style="color:#4d7c0f;word-break:break-all">{login_url}</a>
                   </p>
-                  <p style="color:#94a3b8;font-size:12px;margin-top:32px;line-height:1.5">
+                  <p style="color:#8A9E8B;font-size:12px;margin-top:32px;line-height:1.5">
                     If you didn't request this, ignore this email.<br>
                     Meridian CPD · meridiancpd.co.uk
                   </p>
@@ -1824,14 +1824,14 @@ def _signed_in(email: str) -> RedirectResponse:
 
 def _billing_help_page() -> HTMLResponse:
     return HTMLResponse("""<!DOCTYPE html>
-<html><head><title>Manage your subscription — Meridian CPD</title>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Manage your subscription — Meridian CPD</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="font-family:Arial,sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1e293b">
-<h2 style="color:#0f2547">Manage your subscription</h2>
+<body style="font-family: 'DM Sans', Arial, sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1f2a20">
+<h2 style="color:#0D1F0E">Manage your subscription</h2>
 <p style="line-height:1.6">We could not open the subscription page just now. To cancel or change
-your subscription, email <a style="color:#0891b2" href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a>
+your subscription, email <a style="color:#4d7c0f" href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a>
 from the address you subscribed with and we will action it.</p>
-<p><a style="color:#0891b2" href="/my-cpd/dashboard">Back to my courses</a></p>
+<p><a style="color:#4d7c0f" href="/my-cpd/dashboard">Back to my courses</a></p>
 </body></html>""")
 
 
@@ -1975,22 +1975,22 @@ async def subscriber_dashboard(request: Request):
     upsell_html = ""
     if not is_sub:
         upsell_html = f"""
-        <div style="background:linear-gradient(135deg,#0f2547,#0891b2);border-radius:12px;
+        <div style="background:linear-gradient(135deg,#0D1F0E,#1a2f1b);border-radius:12px;
                     padding:28px 32px;margin-bottom:28px;color:white;">
           <div style="font-size:11px;font-weight:700;letter-spacing:1px;
-                      text-transform:uppercase;color:#caf0f8;margin-bottom:8px">
+                      text-transform:uppercase;color:#D4FF00;margin-bottom:8px">
             Unlock the full library
           </div>
           <div style="font-size:20px;font-weight:800;margin-bottom:8px">
             You have access to {courses_owned} of {total_courses} courses.
           </div>
-          <p style="font-size:14px;color:#caf0f8;margin-bottom:20px;line-height:1.6">
+          <p style="font-size:14px;color:#D4FF00;margin-bottom:20px;line-height:1.6">
             An annual subscription gives you unlimited access to all {total_courses} courses —
             DEA, Retrofit Assessor, and cross-strand — plus every new course added throughout the year.
             At £79/year, it pays for itself after just 4 courses.
           </p>
           <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
-             style="display:inline-block;background:#d4ff00;color:#0f2547;padding:12px 24px;
+             style="display:inline-block;background:#d4ff00;color:#0D1F0E;padding:12px 24px;
                     border-radius:8px;text-decoration:none;font-weight:800;font-size:14px">
             Upgrade to Annual — £79/year →
           </a>
@@ -2007,11 +2007,11 @@ async def subscriber_dashboard(request: Request):
           <td>{cert["cpd_hours"]:g} hrs</td>
           <td>{issued}</td>
           <td><a href="{BASE_URL}/verify/{cert['cert_number']}" target="_blank"
-                 style="color:#0891b2;font-size:12px;text-decoration:none">Verify ↗</a></td>
+                 style="color:#4d7c0f;font-size:12px;text-decoration:none">Verify ↗</a></td>
         </tr>"""
 
     if not cert_rows:
-        cert_rows = '<tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:24px">No certificates yet — complete a course to earn your first one.</td></tr>'
+        cert_rows = '<tr><td colspan="5" style="text-align:center;color:#8A9E8B;padding:24px">No certificates yet — complete a course to earn your first one.</td></tr>'
 
     # Progress bar (DEA requirement = 10 hours/year)
     target = 25 if is_sub and "RC" in str(purchased_ids) else 10
@@ -2019,11 +2019,11 @@ async def subscriber_dashboard(request: Request):
 
     plan_badge = ("Annual Subscription" if is_sub else
                   "Subscription ended" if sub_ended else "Pay Per Course")
-    manage_link = (' &nbsp;·&nbsp; <a href="/my-cpd/billing" style="color:#0891b2;text-decoration:none">'
+    manage_link = (' &nbsp;·&nbsp; <a href="/my-cpd/billing" style="color:#4d7c0f;text-decoration:none">'
                    'Manage or cancel subscription</a>') if member.get("plan") == "subscription" else ""
 
     return HTMLResponse(f"""<!DOCTYPE html>
-<html><head>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <title>My CPD Dashboard — Meridian CPD</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>{_DASH_CSS}</style>
@@ -2035,7 +2035,7 @@ async def subscriber_dashboard(request: Request):
   <div class="hero">
     <h1>Welcome back, {member_name}</h1>
     <p>{email} &nbsp;·&nbsp; {plan_badge}{manage_link} &nbsp;·&nbsp;
-       <a href="https://meridiancpd.co.uk" style="color:#0891b2;text-decoration:none">Browse all courses →</a></p>
+       <a href="https://meridiancpd.co.uk" style="color:#4d7c0f;text-decoration:none">Browse all courses →</a></p>
   </div>
 
   <div class="stats">
@@ -2058,7 +2058,7 @@ async def subscriber_dashboard(request: Request):
     <div class="progress-bar">
       <div class="progress-fill" style="width:{pct}%"></div>
     </div>
-    <p style="font-size:12px;color:#94a3b8;margin-top:8px">
+    <p style="font-size:12px;color:#8A9E8B;margin-top:8px">
       Based on a {target}-hour annual CPD requirement. Check your accreditation body for your specific obligations.
     </p>
   </div>
@@ -2103,88 +2103,88 @@ security = HTTPBasic()
 
 _ADMIN_CSS = """
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-       background: #f1f5f9; color: #1e293b; font-size: 14px; }
-.topbar { background: #0f2547; color: white; padding: 14px 28px;
+body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background: #efefe8; color: #1f2a20; font-size: 14px; }
+.topbar { background: #0D1F0E; color: white; padding: 14px 28px;
           display: flex; align-items: center; gap: 16px; }
-.topbar h1 { font-size: 18px; font-weight: 700; letter-spacing: 0.3px; }
-.topbar span { background: #0891b2; padding: 2px 10px; border-radius: 20px;
+.topbar h1 { font-family: 'Bebas Neue', sans-serif; font-size: 26px; font-weight: 400; letter-spacing: 0.06em; }
+.topbar span { background: #D4FF00; color: #0D1F0E; padding: 2px 10px; border-radius: 20px;
                font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
-.nav { background: #1e3a5f; display: flex; gap: 2px; padding: 0 24px; }
-.nav a { color: #94a3b8; text-decoration: none; padding: 10px 16px;
+.nav { background: #162818; display: flex; gap: 2px; padding: 0 24px; }
+.nav a { color: #8A9E8B; text-decoration: none; padding: 10px 16px;
          font-size: 13px; font-weight: 500; border-bottom: 2px solid transparent; }
-.nav a:hover, .nav a.active { color: white; border-bottom-color: #0891b2; }
+.nav a:hover, .nav a.active { color: white; border-bottom-color: #D4FF00; }
 .main { padding: 28px; max-width: 1200px; }
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
 .stat { background: white; border-radius: 10px; padding: 20px 24px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-top: 3px solid #0891b2; }
-.stat .val { font-size: 32px; font-weight: 800; color: #0f2547; line-height: 1.1; }
-.stat .lbl { color: #64748b; font-size: 12px; font-weight: 600;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-top: 3px solid #8db600; }
+.stat .val { font-size: 32px; font-weight: 800; color: #0D1F0E; line-height: 1.1; }
+.stat .lbl { color: #5C6B5D; font-size: 12px; font-weight: 600;
              text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
-.stat .sub { color: #94a3b8; font-size: 11px; margin-top: 2px; }
+.stat .sub { color: #8A9E8B; font-size: 11px; margin-top: 2px; }
 .card { background: white; border-radius: 10px; padding: 20px 24px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 24px; }
-.card h2 { font-size: 14px; font-weight: 700; color: #0f2547; margin-bottom: 16px;
+.card h2 { font-size: 14px; font-weight: 700; color: #0D1F0E; margin-bottom: 16px;
            text-transform: uppercase; letter-spacing: 0.5px; }
 table { width: 100%; border-collapse: collapse; }
-th { text-align: left; font-size: 11px; font-weight: 700; color: #64748b;
+th { text-align: left; font-size: 11px; font-weight: 700; color: #5C6B5D;
      text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px;
-     border-bottom: 2px solid #e2e8f0; }
-td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+     border-bottom: 2px solid #e3e5dc; }
+td { padding: 10px 12px; border-bottom: 1px solid #efefe8; vertical-align: middle; }
 tr:last-child td { border-bottom: none; }
-tr:hover td { background: #f8fafc; }
+tr:hover td { background: #F5F5F0; }
 .badge { display: inline-block; padding: 2px 8px; border-radius: 10px;
          font-size: 11px; font-weight: 600; white-space: nowrap; }
-button { background: #0f2547; color: white; border: none; border-radius: 6px; padding: 7px 14px;
+button { background: #0D1F0E; color: white; border: none; border-radius: 6px; padding: 7px 14px;
          font-size: 12px; font-weight: 600; cursor: pointer; }
-button:hover { background: #0891b2; }
+button:hover { background: #D4FF00; color: #0D1F0E; }
 .badge-sub { background: #dcfce7; color: #15803d; }
 .badge-single { background: #dbeafe; color: #1d4ed8; }
 .badge-ok { background: #dcfce7; color: #15803d; }
 .badge-warn { background: #fef9c3; color: #854d0e; }
 .badge-off { background: #fee2e2; color: #dc2626; }
-.empty { color: #94a3b8; text-align: center; padding: 32px; font-size: 13px; }
+.empty { color: #8A9E8B; text-align: center; padding: 32px; font-size: 13px; }
 .section { margin-bottom: 32px; }
 .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-.course-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; }
+.course-card { border: 1px solid #e3e5dc; border-radius: 8px; padding: 14px 16px; }
 .layout { display: flex; align-items: flex-start; }
 .layout .main { flex: 1; min-width: 0; }
 .newsbar { width: 320px; flex-shrink: 0; padding: 28px 24px 28px 0; position: sticky; top: 0;
            max-height: 100vh; overflow-y: auto; }
-.newsbar h3 { font-size: 12px; font-weight: 700; color: #0f2547; text-transform: uppercase;
+.newsbar h3 { font-size: 12px; font-weight: 700; color: #0D1F0E; text-transform: uppercase;
               letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: baseline;
               margin-bottom: 10px; }
-.newsbar h3 a { font-size: 11px; color: #0891b2; text-decoration: none; text-transform: none; letter-spacing: 0; }
+.newsbar h3 a { font-size: 11px; color: #4d7c0f; text-decoration: none; text-transform: none; letter-spacing: 0; }
 .news-item { background: white; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;
-             box-shadow: 0 1px 2px rgba(0,0,0,0.06); border-left: 3px solid #0891b2; }
-.news-item.read { border-left-color: #e2e8f0; }
-.news-item.read .news-title { font-weight: 500; color: #475569; }
-.news-title { display: block; font-size: 13px; font-weight: 700; color: #0f2547; text-decoration: none;
+             box-shadow: 0 1px 2px rgba(0,0,0,0.06); border-left: 3px solid #8db600; }
+.news-item.read { border-left-color: #e3e5dc; }
+.news-item.read .news-title { font-weight: 500; color: #4a574b; }
+.news-title { display: block; font-size: 13px; font-weight: 700; color: #0D1F0E; text-decoration: none;
               line-height: 1.35; }
-.news-title:hover { color: #0891b2; }
-.news-meta { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+.news-title:hover { color: #4d7c0f; }
+.news-meta { font-size: 11px; color: #8A9E8B; margin-top: 4px; }
 .news-tags { margin-top: 5px; display: flex; gap: 4px; flex-wrap: wrap; }
-.news-tag { font-size: 10px; font-weight: 600; background: #e0f2fe; color: #0369a1; padding: 1px 6px; border-radius: 8px; }
+.news-tag { font-size: 10px; font-weight: 600; background: #f1fbc8; color: #3f6212; padding: 1px 6px; border-radius: 8px; }
 .news-actions { margin-top: 6px; display: flex; gap: 10px; }
-.news-actions a { font-size: 11px; color: #64748b; text-decoration: none; cursor: pointer; }
-.news-actions a:hover { color: #0891b2; }
-.news-summary { font-size: 12px; color: #475569; margin-top: 4px; line-height: 1.4; }
+.news-actions a { font-size: 11px; color: #5C6B5D; text-decoration: none; cursor: pointer; }
+.news-actions a:hover { color: #4d7c0f; }
+.news-summary { font-size: 12px; color: #4a574b; margin-top: 4px; line-height: 1.4; }
 @media (max-width: 1100px) { .layout { flex-direction: column; } .newsbar { width: auto; padding: 0 28px 28px; position: static; max-height: none; } }
-.course-card .cid { font-size: 11px; color: #0891b2; font-weight: 700;
+.course-card .cid { font-size: 11px; color: #4d7c0f; font-weight: 700;
                     letter-spacing: 0.5px; margin-bottom: 4px; }
-.course-card .ctitle { font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
-.course-card .cmeta { font-size: 11px; color: #64748b; }
+.course-card .ctitle { font-size: 13px; font-weight: 600; color: #1f2a20; margin-bottom: 6px; }
+.course-card .cmeta { font-size: 11px; color: #5C6B5D; }
 .revenue { color: #15803d; font-weight: 700; }
-.badge-test { background: #f1f5f9; color: #64748b; }
+.badge-test { background: #efefe8; color: #5C6B5D; }
 .badge-free { background: #ede9fe; color: #6d28d9; }
-.badge-end { background: #f1f5f9; color: #475569; }
+.badge-end { background: #efefe8; color: #4a574b; }
 .filters { display: flex; flex-wrap: wrap; gap: 6px; margin: -4px 0 16px; }
-.filters a { font-size: 12px; padding: 4px 10px; border-radius: 14px; background: #f1f5f9;
+.filters a { font-size: 12px; padding: 4px 10px; border-radius: 14px; background: #efefe8;
              color: #334155; text-decoration: none; }
-.filters a.on { background: #0f2547; color: white; }
-.note { color: #64748b; font-size: 12px; margin: -6px 0 14px; line-height: 1.5; }
+.filters a.on { background: #0D1F0E; color: white; }
+.note { color: #5C6B5D; font-size: 12px; margin: -6px 0 14px; line-height: 1.5; }
 @media (max-width: 900px) { .stats { grid-template-columns: repeat(2, 1fr); } .main { padding: 16px; } }
-a.vlink { color: #0891b2; text-decoration: none; font-size: 12px; }
+a.vlink { color: #4d7c0f; text-decoration: none; font-size: 12px; }
 a.vlink:hover { text-decoration: underline; }
 """
 
@@ -2213,12 +2213,12 @@ async def test_purchase_form(credentials=Depends(_check_admin)):
         for cid, c in COURSES.items() if cid != "SUBSCRIPTION"
     )
     return HTMLResponse(f"""
-    <html><head><title>Test Purchase — Meridian CPD Admin</title>
+    <html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Test Purchase — Meridian CPD Admin</title>
     <style>body{{font-family:Arial;max-width:500px;margin:60px auto;padding:0 20px}}
-    h2{{color:#0f2547}}label{{display:block;margin-top:16px;font-weight:bold;font-size:13px}}
+    h2{{color:#0D1F0E}}label{{display:block;margin-top:16px;font-weight:bold;font-size:13px}}
     input,select{{width:100%;box-sizing:border-box;padding:10px;margin-top:6px;border:1px solid #d1d5db;border-radius:6px;font-size:14px}}
-    button{{margin-top:24px;width:100%;padding:12px;background:#0f2547;color:white;font-size:15px;font-weight:bold;border:none;border-radius:6px;cursor:pointer}}
-    button:hover{{background:#0891b2}}
+    button{{margin-top:24px;width:100%;padding:12px;background:#0D1F0E;color:white;font-size:15px;font-weight:bold;border:none;border-radius:6px;cursor:pointer}}
+    button:hover{{background:#D4FF00;color:#0D1F0E}}
     .warn{{background:#fef9c3;border:1px solid #d97706;padding:12px;border-radius:6px;font-size:13px;margin-bottom:20px}}</style>
     </head><body>
     <h2>Test Purchase</h2>
@@ -2232,7 +2232,7 @@ async def test_purchase_form(credentials=Depends(_check_admin)):
       <select name="course_id">{course_options}</select>
       <button type="submit">Fire Test Purchase</button>
     </form>
-    <p style="margin-top:20px"><a style="color:#0891b2" href="/admin">← Back to admin</a></p>
+    <p style="margin-top:20px"><a style="color:#4d7c0f" href="/admin">← Back to admin</a></p>
     </body></html>
     """)
 
@@ -2267,11 +2267,11 @@ async def test_purchase(request: Request, credentials=Depends(_check_admin)):
     )
 
     return HTMLResponse(f"""
-    <html><head><title>Test Purchase Fired — Meridian CPD</title>
+    <html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Test Purchase Fired — Meridian CPD</title>
     <style>body{{font-family:Arial;max-width:600px;margin:60px auto;padding:0 20px}}
     .ok{{background:#f0fdf4;border:2px solid #22c55e;border-radius:8px;padding:20px;margin:20px 0}}
-    code{{background:#f1f5f9;padding:2px 6px;border-radius:4px}}a{{color:#0891b2}}</style></head>
-    <body><h2 style="color:#0f2547">Test Purchase Fired</h2>
+    code{{background:#efefe8;padding:2px 6px;border-radius:4px}}a{{color:#4d7c0f}}</style></head>
+    <body><h2 style="color:#0D1F0E">Test Purchase Fired</h2>
     <div class="ok">
       <p><strong>Email sent to:</strong> {email}</p>
       <p><strong>Course:</strong> {course['title']} ({course_id})</p>
@@ -2308,7 +2308,7 @@ def _nav(active: str) -> str:
 
 def _page(title: str, nav_active: str, body: str) -> HTMLResponse:
     return HTMLResponse(f"""<!DOCTYPE html>
-<html><head>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <title>{title} — Meridian CPD Admin</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>{_ADMIN_CSS}</style>
@@ -2584,7 +2584,7 @@ async def admin_members(request: Request, credentials=Depends(_check_admin)):
       tests excluded. "Access until" includes a 7-day grace period after the renewal date.</p>
       <form method="post" action="/admin/sync-subscriptions" style="margin:0 0 16px">
         <button type="submit">Sync subscriptions from Stripe</button>
-        <span style="font-size:12px;color:#64748b;margin-left:8px">Reads every subscription in Stripe and
+        <span style="font-size:12px;color:#5C6B5D;margin-left:8px">Reads every subscription in Stripe and
         updates each subscriber's access date. Changes nothing in Stripe.</span>
       </form>
       <table>
@@ -2816,7 +2816,7 @@ async def admin_contacts(request: Request, credentials=Depends(_check_admin)):
 
     # Region summary pills
     region_pills = "".join(
-        f'<a href="/admin/contacts?region={r.lower()}" style="display:inline-block;background:#e0f2fe;color:#0369a1;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;margin:3px;text-decoration:none">{r}: {n}</a>'
+        f'<a href="/admin/contacts?region={r.lower()}" style="display:inline-block;background:#f1fbc8;color:#3f6212;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;margin:3px;text-decoration:none">{r}: {n}</a>'
         for r, n in sorted(region_counts.items(), key=lambda x: -x[1])
     )
     scheme_pills = "".join(
@@ -2846,34 +2846,34 @@ async def admin_contacts(request: Request, credentials=Depends(_check_admin)):
     <div class="card">
       <h2>DEA Contact Database — {total_all:,} total contacts</h2>
       <div style="margin-bottom:16px">
-        <div style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">By Region (click to filter)</div>
+        <div style="font-size:12px;font-weight:700;color:#5C6B5D;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">By Region (click to filter)</div>
         {region_pills}
       </div>
       <div style="margin-bottom:20px">
-        <div style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">By Scheme (click to filter)</div>
+        <div style="font-size:12px;font-weight:700;color:#5C6B5D;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">By Scheme (click to filter)</div>
         {scheme_pills}
       </div>
     </div>
     <div class="card">
       <form method="GET" action="/admin/contacts" style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:20px">
         <div>
-          <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px">Search name / email</label>
-          <input name="search" value="{search}" placeholder="e.g. John Smith" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;width:200px">
+          <label style="display:block;font-size:11px;font-weight:700;color:#5C6B5D;text-transform:uppercase;margin-bottom:4px">Search name / email</label>
+          <input name="search" value="{search}" placeholder="e.g. John Smith" style="padding:8px 12px;border:1px solid #e3e5dc;border-radius:6px;font-size:13px;width:200px">
         </div>
         <div>
-          <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px">Postcode prefix</label>
-          <input name="postcode" value="{postcode_filter}" placeholder="e.g. TR, SW, EX" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;width:120px">
+          <label style="display:block;font-size:11px;font-weight:700;color:#5C6B5D;text-transform:uppercase;margin-bottom:4px">Postcode prefix</label>
+          <input name="postcode" value="{postcode_filter}" placeholder="e.g. TR, SW, EX" style="padding:8px 12px;border:1px solid #e3e5dc;border-radius:6px;font-size:13px;width:120px">
         </div>
         <div>
-          <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px">Region</label>
-          <select name="region" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px">{region_options}</select>
+          <label style="display:block;font-size:11px;font-weight:700;color:#5C6B5D;text-transform:uppercase;margin-bottom:4px">Region</label>
+          <select name="region" style="padding:8px 12px;border:1px solid #e3e5dc;border-radius:6px;font-size:13px">{region_options}</select>
         </div>
         <div>
-          <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px">Scheme</label>
-          <select name="scheme" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px">{scheme_options}</select>
+          <label style="display:block;font-size:11px;font-weight:700;color:#5C6B5D;text-transform:uppercase;margin-bottom:4px">Scheme</label>
+          <select name="scheme" style="padding:8px 12px;border:1px solid #e3e5dc;border-radius:6px;font-size:13px">{scheme_options}</select>
         </div>
-        <button type="submit" style="padding:8px 20px;background:#0f2547;color:white;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">Filter</button>
-        <a href="/admin/contacts" style="padding:8px 16px;background:#f1f5f9;color:#64748b;border-radius:6px;font-size:13px;text-decoration:none">Clear</a>
+        <button type="submit" style="padding:8px 20px;background:#0D1F0E;color:white;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">Filter</button>
+        <a href="/admin/contacts" style="padding:8px 16px;background:#efefe8;color:#5C6B5D;border-radius:6px;font-size:13px;text-decoration:none">Clear</a>
       </form>
       <h2>Contacts — {showing}</h2>
       <table>
@@ -2888,7 +2888,7 @@ async def admin_contacts(request: Request, credentials=Depends(_check_admin)):
 
 def _outreach_page(notice: str = "") -> HTMLResponse:
     campaign = outreach.get_campaign(supabase)
-    notice_html = f'<div class="card" style="border-left:4px solid #0891b2">{notice}</div>' if notice else ""
+    notice_html = f'<div class="card" style="border-left:4px solid #8db600">{notice}</div>' if notice else ""
     if not campaign:
         return _page("Outreach", "outreach", notice_html + """
     <div class="card"><h2>Outreach</h2>
@@ -2927,11 +2927,11 @@ def _outreach_page(notice: str = "") -> HTMLResponse:
         {toggle}
         <form method="post" action="/admin/outreach/run" style="display:inline"
               onsubmit="return confirm('Send the rest of today\\'s allowance now, in one go, instead of spread through the day?')">
-          <button style="background:#0891b2" {'disabled' if paused else ''}>Send the rest of today's batch now</button></form>
+          <button style="background:#4d7c0f" {'disabled' if paused else ''}>Send the rest of today's batch now</button></form>
         <form method="post" action="/admin/outreach/test" style="display:inline-flex;gap:6px;align-items:center">
           <input name="email" type="email" required placeholder="your address"
-                 style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;width:220px">
-          <button style="background:#64748b">Send me a test copy</button></form>
+                 style="padding:8px 12px;border:1px solid #e3e5dc;border-radius:6px;font-size:13px;width:220px">
+          <button style="background:#5C6B5D">Send me a test copy</button></form>
       </div>
     </div>
     <div class="stats">
@@ -2951,7 +2951,7 @@ def _outreach_page(notice: str = "") -> HTMLResponse:
     <div class="card">
       <h2>The email</h2>
       <p class="note">Subject: <strong>{_esc(subject)}</strong>. Wording lives in <code>webhook/outreach.py</code> (render).</p>
-      <pre style="white-space:pre-wrap;font-family:Arial,sans-serif;font-size:14px;line-height:1.5;background:#f8fafc;padding:16px;border-radius:8px">{_esc(text)}</pre>
+      <pre style="white-space:pre-wrap;font-family: 'DM Sans', Arial, sans-serif;font-size:14px;line-height:1.5;background:#F5F5F0;padding:16px;border-radius:8px">{_esc(text)}</pre>
     </div>"""
     return _page("Outreach", "outreach", body)
 
@@ -2987,7 +2987,7 @@ async def admin_news(tag: str = "", hidden: int = 0, notice: str = "", credentia
         items, status, error = [], [], str(e)
     chips = " ".join(
         f'<a href="/admin/news?tag={quote(name)}" class="news-tag" style="text-decoration:none'
-        f'{";background:#0891b2;color:white" if name == tag else ""}">{_esc(name)}</a>'
+        f'{";background:#0D1F0E;color:#D4FF00" if name == tag else ""}">{_esc(name)}</a>'
         for name, _ in news.TOPICS)
     cards = "".join(_news_card(i, with_summary=True) for i in items) or \
         '<div class="empty">Nothing here yet.</div>'
@@ -3003,7 +3003,7 @@ async def admin_news(tag: str = "", hidden: int = 0, notice: str = "", credentia
         Government feeds keep only items on assessment, retrofit, EPC, building regulations and related topics.
         Watched pages produce one "Page updated" item when their content changes.</p>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
-        <a href="/admin/news" class="news-tag" style="text-decoration:none{';background:#0891b2;color:white' if not tag else ''}">All</a> {chips}
+        <a href="/admin/news" class="news-tag" style="text-decoration:none{';background:#0D1F0E;color:#D4FF00' if not tag else ''}">All</a> {chips}
       </div>
       <div style="display:flex;gap:10px;margin-bottom:16px">
         <form method="post" action="/admin/news/check" style="display:inline"><button>Check now</button></form>
@@ -3198,7 +3198,7 @@ async def admin_system(credentials=Depends(_check_admin)):
     ]
     vars_rows = "".join(
         f"<tr><td>{label}</td><td><code>{key}</code></td><td>{var_status(key, req)}</td>"
-        f"<td style='font-size:12px;color:#64748b'>{note}</td></tr>"
+        f"<td style='font-size:12px;color:#5C6B5D'>{note}</td></tr>"
         for key, label, req, note in check_vars)
 
     # Course PDFs: check each one on sale can actually be downloaded
