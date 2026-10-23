@@ -235,6 +235,27 @@ def api_down(request):
         return httpx.Response(529, json={})
     return httpx.Response(200, text=ARTICLE, headers={"content-type": "text/html"})
 check(asyncio.run(news.make_brief(item, transport=httpx.MockTransport(api_down)))[1] == "extract", "an API error falls back to the paragraphs")
+# A model that refuses thinking "disabled" is asked again without it.
+seen = []
+def no_disable(request):
+    if request.url.host == "api.anthropic.com":
+        body = request.read().decode()
+        seen.append('"thinking"' in body)
+        if '"thinking"' in body:
+            return httpx.Response(400, json={"type": "error", "error": {"type": "invalid_request_error", "message": "thinking.type disabled is not supported for this model"}})
+        return httpx.Response(200, json={"content": [{"type": "text", "text": AI_REPLY}]})
+    return httpx.Response(200, text=ARTICLE, headers={"content-type": "text/html"})
+check(asyncio.run(news.make_brief(item, transport=httpx.MockTransport(no_disable)))[1] == "ai" and seen == [True, False],
+      "thinking is switched off, and if the model refuses that, asked again without it")
+# A reply with no text (all thinking, cut off) is an error with the reason kept.
+def thought_only(request):
+    if request.url.host == "api.anthropic.com":
+        return httpx.Response(200, json={"stop_reason": "max_tokens", "content": [{"type": "thinking", "thinking": "..."}]})
+    return httpx.Response(200, text=ARTICLE, headers={"content-type": "text/html"})
+st_ = {}
+check(asyncio.run(news.make_brief(item, transport=httpx.MockTransport(thought_only), state=st_))[1] == "extract"
+      and "stop_reason max_tokens, blocks thinking" in st_.get("model_error", ""),
+      "an empty reply falls back to the paragraphs and says why")
 def page_down(request):
     return httpx.Response(403, text="no")
 b, h = asyncio.run(news.make_brief(item, transport=httpx.MockTransport(page_down)))
