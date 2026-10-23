@@ -5,16 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
   <title>Meridian CPD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; background: #f8fafc; color: #1e293b; margin: 0;
+    body { font-family: 'DM Sans', Arial, sans-serif; background: #0D1F0E; color: #FFFFFF; margin: 0;
            display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
     .wrap { max-width: 480px; padding: 0 24px; }
-    .logo { font-size: 22px; font-weight: 900; color: #0f2547; letter-spacing: -0.5px; margin-bottom: 28px; }
-    .logo span { color: #0891b2; }
-    h1 { font-size: 22px; color: #0f2547; margin: 0 0 10px; }
-    p { color: #64748b; font-size: 15px; line-height: 1.6; margin: 0 0 22px; }
-    a.btn { display: inline-block; background: #0f2547; color: #fff; padding: 12px 24px;
-            border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; }
+    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 0.06em; color: #FFFFFF; margin-bottom: 28px; }
+    .logo span { color: #D4FF00; }
+    h1 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 44px; letter-spacing: 0.02em; color: #FFFFFF; margin: 0 0 10px; }
+    p { color: #8A9E8B; font-size: 15px; line-height: 1.6; margin: 0 0 24px; }
+    a.btn { display: inline-block; background: #D4FF00; color: #0D1F0E; padding: 12px 24px; margin: 4px;
+            border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px; }
+    a.btn:hover { background: #C0F000; }
+    a.btn.ghost { background: transparent; color: #D4FF00; border: 1.5px solid #D4FF00; }
+    a.btn.ghost:hover { background: #D4FF00; color: #0D1F0E; }
   </style>
   <script>
     // Certificates, emails and older links point at meridiancpd.co.uk/verify/..., but the
@@ -40,8 +45,7 @@
     <h1>Page not found</h1>
     <p>That page doesn't exist. If you're checking a certificate, enter its number on the verification page.</p>
     <a class="btn" href="https://app.meridiancpd.co.uk/verify">Verify a certificate</a>
-    &nbsp;
-    <a class="btn" href="https://meridiancpd.co.uk" style="background:#0891b2">Home</a>
+    <a class="btn ghost" href="https://meridiancpd.co.uk">Home</a>
   </div>
 </body>
 </html>
