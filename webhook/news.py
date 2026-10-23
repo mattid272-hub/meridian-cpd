@@ -328,13 +328,22 @@ async def ai_brief(title: str, source: str, text: str, http: httpx.AsyncClient, 
             title=title, source=source, text=text[:BRIEF_SOURCE_CHARS])}],
     })
     if r.status_code != 200:
-        raise RuntimeError(f"Anthropic API {r.status_code}")
+        # The API's own error type and message (never the key) say what is wrong: a bad or
+        # revoked key, a key scoped to the whole organisation, no credit, overloaded.
+        try:
+            err = r.json().get("error") or {}
+        except ValueError:
+            err = {}
+        detail = " ".join(x for x in (err.get("type"), err.get("message")) if x)
+        raise RuntimeError(f"Anthropic API {r.status_code}" + (f": {detail[:160]}" if detail else ""))
     out = "".join(b.get("text", "") for b in r.json().get("content", []) if b.get("type") == "text").strip()
     return None if not out or out.startswith("NO CONTENT") else out
 
 
-async def make_brief(item: dict, transport=None) -> tuple:
-    """(brief text, how it was made: 'ai' | 'extract' | 'feed' | 'none')."""
+async def make_brief(item: dict, transport=None, state: dict | None = None) -> tuple:
+    """(brief text, how it was made: 'ai' | 'extract' | 'feed' | 'none').
+    If state is given, it gets "model_ok" or "model_error" when the model was tried."""
+    state = state if state is not None else {}
     async with httpx.AsyncClient(timeout=TIMEOUT, follow_redirects=True, transport=transport,
                                  headers={"User-Agent": USER_AGENT}) as http:
         text, paras = "", []
@@ -348,10 +357,12 @@ async def make_brief(item: dict, transport=None) -> tuple:
         if key and len(text) > 200:
             try:
                 out = await ai_brief(item.get("title") or "", item.get("source") or "", text, http, key)
+                state["model_ok"] = True
                 if out:
                     return out, "ai"
             except Exception as e:
-                print(f"News brief model: {e}")
+                state["model_error"] = str(e) or type(e).__name__
+                print(f"News brief model: {state['model_error']}")
         if paras:
             return extract_brief(paras), "extract"
         if item.get("summary"):
@@ -364,9 +375,13 @@ async def get_brief(db, item_id: str, transport=None) -> dict:
     if not rows:
         return {}
     item = rows[0]
-    if item.get("brief"):
+    if item.get("brief") and not _worth_retrying(db, item):
         return item
-    brief, how = await make_brief(item, transport=transport)
+    state = {}
+    brief, how = await make_brief(item, transport=transport, state=state)
+    _record_model(db, state)
+    if item.get("brief") and how != "ai":
+        return item                     # the retry did no better: keep what was saved
     fields = {"brief": brief, "brief_kind": how, "brief_at": _iso(utcnow())}
     if brief:
         try:
@@ -374,6 +389,50 @@ async def get_brief(db, item_id: str, transport=None) -> dict:
         except Exception as e:          # brief columns not added yet: show it anyway, unsaved
             print(f"News brief not saved: {e}")
     return {**item, **fields}
+
+
+# How the model is doing, kept as a row in news_sources so Admin → News can say so (and
+# no brief has to). A brief made without the model is retried once the model works again,
+# but not more than every RETRY_AFTER while it keeps failing.
+BRIEF_STATE_ID = "briefs"
+RETRY_AFTER = timedelta(minutes=30)
+
+
+def _worth_retrying(db, item: dict) -> bool:
+    if item.get("brief_kind") == "ai" or not os.environ.get("ANTHROPIC_API_KEY", "").strip():
+        return False
+    try:
+        st = _state(db, BRIEF_STATE_ID) or {}
+    except Exception:
+        return False
+    failed_at = _parse_date(st.get("last_checked")) if st.get("last_error") else None
+    return not failed_at or utcnow() - failed_at >= RETRY_AFTER
+
+
+def _record_model(db, state: dict) -> None:
+    if not state:
+        return
+    now = _iso(utcnow())
+    fields = {"last_checked": now}
+    if state.get("model_error"):
+        fields["last_error"] = state["model_error"][:300]
+    else:
+        fields.update({"last_ok": now, "last_error": None})
+    try:
+        _save_state(db, BRIEF_STATE_ID, fields)
+    except Exception as e:
+        print(f"News brief state not saved: {e}")
+
+
+def brief_status(db) -> dict:
+    """For Admin → News: is the key set, and did the model last work or fail."""
+    try:
+        st = _state(db, BRIEF_STATE_ID) or {}
+    except Exception:
+        st = {}
+    return {"key_set": bool(os.environ.get("ANTHROPIC_API_KEY", "").strip()),
+            "last_ok": st.get("last_ok"), "last_error": st.get("last_error"),
+            "last_checked": st.get("last_checked")}
 
 
 # ── Reading, for Admin ────────────────────────────────────────────────────────
