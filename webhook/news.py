@@ -5,7 +5,7 @@ the news_items table:
 
 - feeds (RSS or Atom): each new entry becomes an item. Feeds from the assessment schemes
   are kept whole; government feeds are broad, so only entries that mention one of the
-  topics in TOPICS are kept.
+  subject topics in TOPICS are kept (a mention of Scotland or Ireland alone is not enough).
 - watched pages (no feed): the page's main text is hashed; when it changes, one
   "Page updated" item is stored, at most once a week per page so a page that changes on
   every load cannot flood the list.
@@ -67,13 +67,24 @@ TOPICS = [
     ("Retrofit", r"\bPAS ?2035\b|\bretrofit\b|\bTrustMark\b"),
     ("Schemes", r"\bECO4?\b|\bgreat british insulation\b|\bGBIS\b|\bwarm homes\b|\bboiler upgrade\b|\benergy company obligation\b"),
     ("Heat pumps", r"\bheat pumps?\b"),
-    ("Building regs", r"\bfuture homes standard\b|\bbuilding regulations\b|\bapproved document\b|\bpart [lfo]\b"),
+    # Only the energy parts of the building regulations (L, F, O and the Future Homes and
+    # Buildings Standards); a GOV.UK notice about fire safety or EV chargers is not ours.
+    ("Building regs", r"\bfuture (?:homes|buildings) standard\b|\bconservation of fuel and power\b"
+                      r"|\b(?:approved document|part) [lfo]\b"),
     ("Damp", r"\bdamp\b|\bmould\b|\bawaab"),
     ("Scotland", r"\bscotland\b|\bscottish\b"),
     ("Ireland", r"\bSEAI\b|\bDEAP\b|\bBER\b|\bireland\b|\birish\b"),
     ("Efficiency", r"\benergy efficien|\binsulation\b|\bfuel poverty\b"),
 ]
 _TOPIC_RES = [(name, re.compile(rx, re.I)) for name, rx in TOPICS]
+# Place tags say where an item applies, not what it is about. A GOV.UK notice that merely
+# mentions Scotland (a parking code that applies UK-wide, say) is not on topic, so a broad
+# feed's entry needs at least one subject tag besides these.
+PLACE_TAGS = {"Scotland", "Ireland"}
+
+
+def on_topic(tags: list) -> bool:
+    return any(t not in PLACE_TAGS for t in tags)
 
 
 def tags_for(*texts: str) -> list:
@@ -195,7 +206,7 @@ def ingest_feed(db, src: dict, body: str, now: datetime) -> int:
     added = 0
     for e in parse_feed(body):
         tags = tags_for(e["title"], e["summary"])
-        if src.get("filter") and not tags:
+        if src.get("filter") and not on_topic(tags):
             continue
         if _store(db, src, e["url"], e["title"], e["url"], e["published"], e["summary"], tags):
             added += 1

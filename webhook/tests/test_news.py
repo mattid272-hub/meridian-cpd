@@ -96,6 +96,28 @@ check(news.ingest_feed(client(db), desnz, ATOM, NOW) == 0, "the same entry is ne
 check(news.ingest_feed(client(db), ecmk, RSS, NOW) == 2, "a scheme feed keeps everything, on topic or not")
 check(len(db["news_items"]) == 3, "three items in all")
 
+# The two GOV.UK items that got through on 23 October: a parking code that mentions Scotland,
+# and an EV-charging change to the building regulations. Neither is ours.
+OFF_MARK = """<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title>MHCLG</title>
+<entry><title>Guidance: Private Parking Code of Practice</title><link rel="alternate" href="https://www.gov.uk/p"/>
+<updated>2026-10-22T09:00:00Z</updated><summary>Applies to private parking in England, Wales and Scotland.</summary></entry>
+<entry><title>Amending the building regulations: electric vehicle charging infrastructure</title>
+<link rel="alternate" href="https://www.gov.uk/ev"/><updated>2026-10-22T09:00:00Z</updated><summary>Changes to Part S.</summary></entry>
+<entry><title>Scottish EPC reform: draft regulations laid</title><link rel="alternate" href="https://www.gov.uk/s"/>
+<updated>2026-10-22T09:00:00Z</updated><summary>New EPC format for Scotland.</summary></entry>
+<entry><title>Future Homes Standard: Approved Document L 2025 published</title><link rel="alternate" href="https://www.gov.uk/l"/>
+<updated>2026-10-22T09:00:00Z</updated><summary>Conservation of fuel and power.</summary></entry>
+</feed>"""
+mhclg = next(s for s in news.SOURCES if s["id"] == "mhclg")
+db2 = {}
+check(news.ingest_feed(client(db2), mhclg, OFF_MARK, NOW) == 2, "a broad feed drops the parking code and EV chargers")
+check(sorted(i["url"] for i in db2["news_items"]) == ["https://www.gov.uk/l", "https://www.gov.uk/s"],
+      "and keeps Scottish EPC reform and Part L")
+check(news.on_topic(["Scotland"]) is False and news.on_topic(["Scotland", "EPC"]) is True,
+      "a place tag alone is not on topic")
+check(news.tags_for("Building regulations: fire safety, Part B") == [], "non-energy building regs are not tagged")
+check(news.ingest_feed(client(db2), ecmk, RSS, NOW) == 2, "scheme feeds are still kept whole")
+
 # ── Watched pages ──
 PAGE_A = "<html><title>Standard Assessment Procedure - GOV.UK</title><nav>menu 1</nav><main><p>SAP 10.3 is current. Last updated 8 June 2026</p></main></html>"
 PAGE_A_NAV = PAGE_A.replace("menu 1", "menu 2")
