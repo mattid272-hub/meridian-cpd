@@ -17,6 +17,7 @@ news_sources so a broken feed shows up in Admin rather than failing silently.
 import asyncio
 import hashlib
 import html
+import os
 import random
 import re
 from datetime import datetime, timedelta, timezone
@@ -255,6 +256,113 @@ async def scheduler_loop(get_db, interval_hours: float = DEFAULT_INTERVAL_HOURS,
         except Exception as e:
             print(f"News scheduler error: {e}")
         await asyncio.sleep(interval_hours * 3600 * random.uniform(0.9, 1.1))
+
+
+# ── Briefs: a few bullet points on what an item says ──────────────────────────
+# Written the first time an item is opened in Admin and saved on the item. With
+# ANTHROPIC_API_KEY set (Railway Variables), Claude summarises the article in plain
+# bullets from its own text; without it, the article's opening paragraphs are trimmed
+# into bullets instead. Either way the source link sits underneath.
+
+BRIEF_MODEL = "claude-haiku-5-5"
+BRIEF_SOURCE_CHARS = 9000          # how much of the article is sent for summarising
+BRIEF_PROMPT = """You write short news briefs for a working UK domestic energy assessor and retrofit assessor.
+
+Summarise the article below in 3 to 5 bullet points, then one line on why it matters to an energy or retrofit assessor.
+Rules:
+- Use only what the article says. Do not add facts, dates, figures or opinions that are not in it.
+- If the article is a page that lists updates, lead with the most recent update and its date.
+- Plain British English, no hype, no exclamation marks. Each bullet under 30 words.
+- If the text is empty, an error page or not an article, reply with exactly: NO CONTENT
+Format exactly:
+- first point
+- second point
+Why it matters: one sentence.
+
+Title: {title}
+Source: {source}
+
+Article text:
+{text}"""
+
+
+def article_text(html_text: str) -> tuple:
+    """(plain text of the article body, list of its paragraphs). Prefers <article>, then <main>."""
+    for tag in ("article", "main"):
+        m = re.search(rf"<{tag}\b.*?</{tag}>", html_text, re.S | re.I)
+        if m:
+            body = m.group(0)
+            break
+    else:
+        m = re.search(r"<body\b.*?</body>", html_text, re.S | re.I)
+        body = m.group(0) if m else html_text
+    body = re.sub(r"<(script|style|nav|header|footer|aside|form|noscript|svg|figure)\b.*?</\1>", " ", body, flags=re.S | re.I)
+    paras = [clean_text(p) for p in re.findall(r"<(?:p|li|h2|h3)\b[^>]*>(.*?)</(?:p|li|h2|h3)>", body, re.S | re.I)]
+    paras = [p for p in paras if len(p) >= 40 and not re.search(r"cookie|subscribe to|sign up|javascript", p, re.I)]
+    return clean_text(body), paras
+
+
+def extract_brief(paras: list, summary: str = "") -> str:
+    """No model available: the first few substantial paragraphs as bullets."""
+    picked = [clean_text(p, 220) for p in paras[:4]] or ([clean_text(summary, 220)] if summary else [])
+    return "\n".join(f"- {p}" for p in picked)
+
+
+async def ai_brief(title: str, source: str, text: str, http: httpx.AsyncClient, key: str) -> str | None:
+    r = await http.post("https://api.anthropic.com/v1/messages", headers={
+        "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json",
+    }, json={
+        "model": BRIEF_MODEL, "max_tokens": 450,
+        "messages": [{"role": "user", "content": BRIEF_PROMPT.format(
+            title=title, source=source, text=text[:BRIEF_SOURCE_CHARS])}],
+    })
+    if r.status_code != 200:
+        raise RuntimeError(f"Anthropic API {r.status_code}")
+    out = "".join(b.get("text", "") for b in r.json().get("content", []) if b.get("type") == "text").strip()
+    return None if not out or out.startswith("NO CONTENT") else out
+
+
+async def make_brief(item: dict, transport=None) -> tuple:
+    """(brief text, how it was made: 'ai' | 'extract' | 'feed' | 'none')."""
+    async with httpx.AsyncClient(timeout=TIMEOUT, follow_redirects=True, transport=transport,
+                                 headers={"User-Agent": USER_AGENT}) as http:
+        text, paras = "", []
+        try:
+            r = await http.get(item["url"])
+            if r.status_code == 200 and "html" in r.headers.get("content-type", "html"):
+                text, paras = article_text(r.text)
+        except Exception as e:
+            print(f"News brief fetch: {e}")
+        key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+        if key and len(text) > 200:
+            try:
+                out = await ai_brief(item.get("title") or "", item.get("source") or "", text, http, key)
+                if out:
+                    return out, "ai"
+            except Exception as e:
+                print(f"News brief model: {e}")
+        if paras:
+            return extract_brief(paras), "extract"
+        if item.get("summary"):
+            return extract_brief([], item["summary"]), "feed"
+        return "", "none"
+
+
+async def get_brief(db, item_id: str, transport=None) -> dict:
+    rows = db.table("news_items").select("*").eq("id", item_id).limit(1).execute().data or []
+    if not rows:
+        return {}
+    item = rows[0]
+    if item.get("brief"):
+        return item
+    brief, how = await make_brief(item, transport=transport)
+    fields = {"brief": brief, "brief_kind": how, "brief_at": _iso(utcnow())}
+    if brief:
+        try:
+            db.table("news_items").update(fields).eq("id", item_id).execute()
+        except Exception as e:          # brief columns not added yet: show it anyway, unsaved
+            print(f"News brief not saved: {e}")
+    return {**item, **fields}
 
 
 # ── Reading, for Admin ────────────────────────────────────────────────────────
