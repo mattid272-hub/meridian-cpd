@@ -258,7 +258,43 @@ check(c.get("/admin/news/missing/brief", headers=auth).status_code == 404, "unkn
 check(c.get("/admin/news/b1/brief").status_code == 401, "briefs need the admin login")
 t = c.get("/admin/dashboard", headers=auth).text
 check("newsOpen('b1', this)" in t and 'class="news-brief" hidden' in t and "Source ↗" in t, "cards open a brief in place, with the source link alongside")
+
+# ── Setup notes belong on Admin → News, not in a brief ──
+h = main._brief_html({"brief": "- One point here.", "brief_kind": "extract"})
+check("opening paragraphs" in h and "ANTHROPIC_API_KEY" not in h and "Railway" not in h, "a fallback brief carries no setup instruction")
+
+# A key the API rejects: the reason is kept, the paragraphs are shown, and the API is not
+# called again for half an hour.
+def key_rejected(request):
+    if request.url.host == "api.anthropic.com":
+        calls["anthropic"] += 1
+        return httpx.Response(401, json={"type": "error", "error": {"type": "authentication_error", "message": "invalid x-api-key"}})
+    calls["page"] += 1
+    return httpx.Response(200, text=ARTICLE, headers={"content-type": "text/html"})
+rdb = {"news_items": [{**item, "id": "r1", "key": "kr1", "dismissed": False, "published_at": "2026-10-23", "tags": []}]}
+calls["anthropic"] = calls["page"] = 0
+got = asyncio.run(news.get_brief(client(rdb), "r1", transport=httpx.MockTransport(key_rejected)))
+st = next(r for r in rdb["news_sources"] if r["source_id"] == "briefs")
+check(got["brief_kind"] == "extract" and "401: authentication_error invalid x-api-key" in st["last_error"],
+      "a rejected key: paragraphs shown, the API's reason recorded")
+asyncio.run(news.get_brief(client(rdb), "r1", transport=httpx.MockTransport(key_rejected)))
+check(calls["anthropic"] == 1, "a failing key is not tried again within half an hour")
+main.supabase = client(rdb)
+check("authentication_error invalid x-api-key" in c.get("/admin/news", headers=auth).text, "Admin → News says why Claude's briefs failed")
+
+# Half an hour later, with the key fixed: the saved paragraphs are replaced by Claude's brief.
+st["last_checked"] = (datetime.now(timezone.utc) - timedelta(minutes=31)).isoformat()
+calls["anthropic"] = 0
+got = asyncio.run(news.get_brief(client(rdb), "r1", transport=mock))
+check(got["brief_kind"] == "ai" and rdb["news_items"][0]["brief"] == AI_REPLY and calls["anthropic"] == 1,
+      "once the key works, an earlier fallback brief is rewritten by Claude")
+check(st["last_error"] is None and st["last_ok"], "and the failure is cleared")
+check("Briefs: written by Claude" in c.get("/admin/news", headers=auth).text, "Admin → News says briefs are written by Claude")
 os.environ.pop("ANTHROPIC_API_KEY", None)
+check("add ANTHROPIC_API_KEY" in c.get("/admin/news", headers=auth).text, "without a key, Admin → News (only) says how to add one")
+calls["anthropic"] = 0
+asyncio.run(news.get_brief(client(rdb), "r1", transport=mock))
+check(calls["anthropic"] == 0, "a saved brief is left alone when there is no key")
 
 # A broken news table must not break Admin
 main.supabase = types.SimpleNamespace(table=lambda t: (_ for _ in ()).throw(RuntimeError("relation news_items does not exist"))

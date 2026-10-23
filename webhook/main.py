@@ -2995,6 +2995,29 @@ def _news_source_row(src: dict) -> str:
             f'<td style="font-size:12px"><a href="{url}" target="_blank" rel="noopener">{_esc(src["url"][:60])}</a></td></tr>')
 
 
+def _brief_status_html(st: dict) -> str:
+    """One line on Admin → News saying how the briefs are being written (setup lives here,
+    not in each brief)."""
+    def when(v):
+        return _esc(str(v or "")[:16].replace("T", " "))
+    if not st.get("key_set"):
+        msg = ("Briefs: the opening paragraphs of each article. For summaries written by Claude, add "
+               "ANTHROPIC_API_KEY in Railway → laudable-eagerness → Variables and deploy.")
+        colour = "#8A9E8B"
+    elif st.get("last_error"):
+        msg = (f"Briefs: Claude's last attempt failed at {when(st.get('last_checked'))} UTC "
+               f"({_esc(st['last_error'])}). Opening paragraphs are used meanwhile, and Claude is tried "
+               "again on the next brief opened after half an hour.")
+        colour = "#dc2626"
+    elif st.get("last_ok"):
+        msg = f"Briefs: written by Claude (last at {when(st.get('last_ok'))} UTC)."
+        colour = "#4d7c0f"
+    else:
+        msg = "Briefs: written by Claude once an item is opened (key set, not used yet)."
+        colour = "#4d7c0f"
+    return f'<p class="note" style="margin:-4px 0 12px;border-left:3px solid {colour};padding-left:8px">{msg}</p>'
+
+
 @app.get("/admin/news", response_class=HTMLResponse)
 async def admin_news(tag: str = "", hidden: int = 0, notice: str = "", credentials=Depends(_check_admin)):
     tag = tag if tag in {name for name, _ in news.TOPICS} else ""
@@ -3004,6 +3027,7 @@ async def admin_news(tag: str = "", hidden: int = 0, notice: str = "", credentia
         error = ""
     except Exception as e:
         items, status, error = [], [], str(e)
+    briefs_html = _brief_status_html(news.brief_status(supabase))
     chips = " ".join(
         f'<a href="/admin/news?tag={quote(name)}" class="news-tag" style="text-decoration:none'
         f'{";background:#0D1F0E;color:#D4FF00" if name == tag else ""}">{_esc(name)}</a>'
@@ -3021,6 +3045,7 @@ async def admin_news(tag: str = "", hidden: int = 0, notice: str = "", credentia
       <p class="note" style="margin-bottom:12px">New items from the feeds and watched pages below, checked every few hours.
         Government feeds keep only items on assessment, retrofit, EPC, building regulations and related topics.
         Watched pages produce one "Page updated" item when their content changes.</p>
+      {briefs_html}
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
         <a href="/admin/news" class="news-tag" style="text-decoration:none{';background:#0D1F0E;color:#D4FF00' if not tag else ''}">All</a> {chips}
       </div>
@@ -3049,7 +3074,7 @@ async def admin_news_check(credentials=Depends(_check_admin)):
 
 _BRIEF_NOTE = {
     "ai": "Summary written by Claude from the source text. Check the source before relying on a detail.",
-    "extract": "The opening paragraphs of the source. Add ANTHROPIC_API_KEY in Railway for written summaries.",
+    "extract": "The opening paragraphs of the source.",
     "feed": "From the feed's own summary; the page itself could not be read.",
 }
 
