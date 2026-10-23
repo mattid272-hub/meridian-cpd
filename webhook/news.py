@@ -319,14 +319,24 @@ def extract_brief(paras: list, summary: str = "") -> str:
     return "\n".join(f"- {p}" for p in picked)
 
 
+BRIEF_MAX_TOKENS = 2000            # room for the bullets even if the model thinks first
+
+
 async def ai_brief(title: str, source: str, text: str, http: httpx.AsyncClient, key: str) -> str | None:
-    r = await http.post("https://api.anthropic.com/v1/messages", headers={
-        "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json",
-    }, json={
-        "model": BRIEF_MODEL, "max_tokens": 450,
+    """Claude's bullets, or None if the model says the page is not an article."""
+    headers = {"x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"}
+    payload = {
+        "model": BRIEF_MODEL, "max_tokens": BRIEF_MAX_TOKENS,
+        # A summary needs no extended thinking; left on, it can use up the output allowance
+        # before any text is written.
+        "thinking": {"type": "disabled"},
         "messages": [{"role": "user", "content": BRIEF_PROMPT.format(
             title=title, source=source, text=text[:BRIEF_SOURCE_CHARS])}],
-    })
+    }
+    r = await http.post("https://api.anthropic.com/v1/messages", headers=headers, json=payload)
+    if r.status_code == 400 and "thinking" in r.text.lower():
+        payload.pop("thinking")            # this model won't switch thinking off: ask without
+        r = await http.post("https://api.anthropic.com/v1/messages", headers=headers, json=payload)
     if r.status_code != 200:
         # The API's own error type and message (never the key) say what is wrong: a bad or
         # revoked key, a key scoped to the whole organisation, no credit, overloaded.
@@ -336,8 +346,13 @@ async def ai_brief(title: str, source: str, text: str, http: httpx.AsyncClient, 
             err = {}
         detail = " ".join(x for x in (err.get("type"), err.get("message")) if x)
         raise RuntimeError(f"Anthropic API {r.status_code}" + (f": {detail[:160]}" if detail else ""))
-    out = "".join(b.get("text", "") for b in r.json().get("content", []) if b.get("type") == "text").strip()
-    return None if not out or out.startswith("NO CONTENT") else out
+    data = r.json()
+    blocks = data.get("content") or []
+    out = "".join(b.get("text", "") for b in blocks if b.get("type") == "text").strip()
+    if not out:
+        kinds = ",".join(sorted({b.get("type", "?") for b in blocks})) or "none"
+        raise RuntimeError(f"Claude's reply had no text (stop_reason {data.get('stop_reason')}, blocks {kinds})")
+    return None if out.startswith("NO CONTENT") else out
 
 
 async def make_brief(item: dict, transport=None, state: dict | None = None) -> tuple:
