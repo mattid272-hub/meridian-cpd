@@ -151,3 +151,16 @@ must stay that way, or be deleted).
   address on `outreach_suppressed` before the next send.
 - Never set a row in `outreach_campaigns` to `active`: that is the old Node service's
   trigger word. The app's campaign uses `app_active` / `app_paused`.
+
+## News and insights (admin sidebar)
+
+`webhook/news.py` checks a short list of feeds and watched pages every three hours and lists anything new down the right-hand side of every admin page, with a full page at Admin → News (tag filter, hidden items, source status, Check now).
+
+To switch on after deploying:
+
+1. Run `webhook/migrations/2026-10-23_news.sql` in Supabase → SQL Editor (choose "Run and enable RLS"). It creates `news_items` and `news_sources`.
+2. Nothing else: the first check runs two minutes after the app starts. Admin → News → Check now runs one immediately.
+
+Sources are the `SOURCES` list in `news.py`: GOV.UK activity feeds for DESNZ, MHCLG and Ofgem (kept only when an entry mentions an assessment, retrofit, EPC, building regulations or related topic), the Elmhurst, ECMK and Quidos feeds (kept whole), and five watched pages with no feed (the GOV.UK SAP/Home Energy Model page, BRE's SAP 10 documents page, TrustMark news, gov.scot's EPC reform updates, SEAI's DEAP page), which each give one "Page updated" item when their content changes, at most once a week. A source that fails shows its error on the News page; the others carry on.
+
+`NEWS_SCHEDULER=off` in Railway stops the checks without a deploy.
