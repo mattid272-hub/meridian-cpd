@@ -334,7 +334,10 @@ async def run_batch(db, trigger: str, now: datetime | None = None, limit: int | 
                     except Exception as e:  # Resend refused or is down
                         failures_in_a_row += 1
                         result["failed"] += 1
-                        db.table("outreach_queue").update({"status": "failed", "note": str(e)[:200]}).eq("id", row["id"]).execute()
+                        # A timeout has no message of its own, so keep the error type: a timeout means
+                        # the email may still have gone, so a failed row is not simply re-sent.
+                        note = f"{type(e).__name__}: {e}" if str(e) else type(e).__name__
+                        db.table("outreach_queue").update({"status": "failed", "note": note[:200]}).eq("id", row["id"]).execute()
                         if failures_in_a_row >= 3:
                             result["note"] = "stopped: three failures in a row"
                             stopped = True
