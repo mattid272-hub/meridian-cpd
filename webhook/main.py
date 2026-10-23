@@ -21,6 +21,7 @@ import hashlib
 import time
 from datetime import datetime, timezone, timedelta
 from html import escape as _esc
+from urllib.parse import quote
 
 import stripe
 from fastapi import FastAPI, HTTPException, Request, Response, Depends, Cookie
@@ -33,17 +34,21 @@ from email_sender import send_course_email, send_certificate_email, send_unsubsc
 from certificate_generator import generate_certificate
 from settings import APP_URL, SITE_URL
 import outreach
+import news
 
 
 @asynccontextmanager
 async def _lifespan(app):
     # The daily outreach batch runs inside this process (outreach.py). Set
     # OUTREACH_SCHEDULER=off on the hosting service to stop it without a deploy.
-    task = None
+    # The news checks for the admin sidebar (news.py) run here too; NEWS_SCHEDULER=off stops them.
+    tasks = []
     if os.environ.get("OUTREACH_SCHEDULER", "on").strip().lower() != "off":
-        task = asyncio.create_task(outreach.scheduler_loop(lambda: supabase))
+        tasks.append(asyncio.create_task(outreach.scheduler_loop(lambda: supabase)))
+    if os.environ.get("NEWS_SCHEDULER", "on").strip().lower() != "off":
+        tasks.append(asyncio.create_task(news.scheduler_loop(lambda: supabase)))
     yield
-    if task:
+    for task in tasks:
         task.cancel()
 
 
@@ -2142,6 +2147,29 @@ button:hover { background: #0891b2; }
 .section { margin-bottom: 32px; }
 .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
 .course-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; }
+.layout { display: flex; align-items: flex-start; }
+.layout .main { flex: 1; min-width: 0; }
+.newsbar { width: 320px; flex-shrink: 0; padding: 28px 24px 28px 0; position: sticky; top: 0;
+           max-height: 100vh; overflow-y: auto; }
+.newsbar h3 { font-size: 12px; font-weight: 700; color: #0f2547; text-transform: uppercase;
+              letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: baseline;
+              margin-bottom: 10px; }
+.newsbar h3 a { font-size: 11px; color: #0891b2; text-decoration: none; text-transform: none; letter-spacing: 0; }
+.news-item { background: white; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;
+             box-shadow: 0 1px 2px rgba(0,0,0,0.06); border-left: 3px solid #0891b2; }
+.news-item.read { border-left-color: #e2e8f0; }
+.news-item.read .news-title { font-weight: 500; color: #475569; }
+.news-title { display: block; font-size: 13px; font-weight: 700; color: #0f2547; text-decoration: none;
+              line-height: 1.35; }
+.news-title:hover { color: #0891b2; }
+.news-meta { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+.news-tags { margin-top: 5px; display: flex; gap: 4px; flex-wrap: wrap; }
+.news-tag { font-size: 10px; font-weight: 600; background: #e0f2fe; color: #0369a1; padding: 1px 6px; border-radius: 8px; }
+.news-actions { margin-top: 6px; display: flex; gap: 10px; }
+.news-actions a { font-size: 11px; color: #64748b; text-decoration: none; cursor: pointer; }
+.news-actions a:hover { color: #0891b2; }
+.news-summary { font-size: 12px; color: #475569; margin-top: 4px; line-height: 1.4; }
+@media (max-width: 1100px) { .layout { flex-direction: column; } .newsbar { width: auto; padding: 0 28px 28px; position: static; max-height: none; } }
 .course-card .cid { font-size: 11px; color: #0891b2; font-weight: 700;
                     letter-spacing: 0.5px; margin-bottom: 4px; }
 .course-card .ctitle { font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
@@ -2261,6 +2289,7 @@ def _nav(active: str) -> str:
         ("members", "Members"),
         ("contacts", "Contacts"),
         ("outreach", "Outreach"),
+        ("news", "News"),
         ("courses", "Courses"),
         ("certificates", "Certificates"),
         ("system", "System"),
@@ -2286,8 +2315,67 @@ def _page(title: str, nav_active: str, body: str) -> HTMLResponse:
 </head>
 <body>
 {_nav(nav_active)}
-<div class="main">{body}</div>
+<div class="layout"><div class="main">{body}</div>{_news_sidebar() if nav_active != "news" else ""}</div>
+<script>{_NEWS_JS}</script>
 </body></html>""")
+
+
+# ── News sidebar (news.py) ─────────────────────────────────────────────────────
+
+_NEWS_JS = """
+function newsAct(id, action, el) {
+  fetch('/admin/news/' + id + '/' + action, {method: 'POST'}).then(function () {
+    var card = el.closest('.news-item');
+    if (action === 'dismiss') { card.remove(); } else { card.classList.add('read'); }
+  });
+  return false;
+}
+function newsCopy(btn) {
+  var t = btn.getAttribute('data-post');
+  if (navigator.clipboard) { navigator.clipboard.writeText(t); }
+  btn.textContent = 'Copied';
+  setTimeout(function () { btn.textContent = 'Copy as post'; }, 1500);
+  return false;
+}
+"""
+
+
+def _news_card(item: dict, with_summary: bool = False) -> str:
+    url = str(item.get("url") or "")
+    if not url.startswith(("http://", "https://")):
+        return ""
+    iid = _esc(str(item.get("id") or ""))
+    title = _esc(item.get("title") or "")
+    when = str(item.get("published_at") or "")[:10]
+    tags = "".join(f'<span class="news-tag">{_esc(t)}</span>' for t in (item.get("tags") or []))
+    post = f"{item.get('title') or ''} ({item.get('source') or ''}) {url}"
+    summary = (f'<div class="news-summary">{_esc(item.get("summary") or "")}</div>'
+               if with_summary and item.get("summary") else "")
+    return f"""
+    <div class="news-item{' read' if item.get('read_at') else ''}">
+      <a class="news-title" href="{_esc(url)}" target="_blank" rel="noopener"
+         onclick="newsAct('{iid}', 'read', this)">{title}</a>
+      <div class="news-meta">{_esc(item.get('source') or '')} · {_esc(when)}</div>
+      {summary}
+      {f'<div class="news-tags">{tags}</div>' if tags else ''}
+      <div class="news-actions">
+        <a onclick="return newsAct('{iid}', 'read', this)">Mark read</a>
+        <a onclick="return newsAct('{iid}', 'dismiss', this)">Hide</a>
+        <a data-post="{_esc(post)}" onclick="return newsCopy(this)">Copy as post</a>
+      </div>
+    </div>"""
+
+
+def _news_sidebar() -> str:
+    try:
+        items = news.latest(supabase, limit=12)
+    except Exception as e:
+        print(f"News sidebar: {e}")
+        return ""
+    cards = "".join(_news_card(i) for i in items) or (
+        '<div class="news-meta">Nothing yet. The first check runs a couple of minutes after the app starts, '
+        'then every few hours.</div>')
+    return f'<aside class="newsbar"><h3>News &amp; insights <a href="/admin/news">All news →</a></h3>{cards}</aside>'
 
 
 # ── Back-office classification ─────────────────────────────────────────────────
@@ -2873,6 +2961,81 @@ async def admin_outreach(credentials=Depends(_check_admin)):
     return _outreach_page()
 
 
+def _news_source_row(src: dict) -> str:
+    st = src.get("state") or {}
+    checked = _esc(str(st.get("last_checked") or "")[:16].replace("T", " ")) or "never"
+    if st.get("last_error"):
+        result = '<span class="badge badge-off">' + _esc(st["last_error"]) + "</span>"
+    elif st.get("last_ok"):
+        result = '<span class="badge badge-ok">OK</span>'
+    else:
+        result = "not checked yet"
+    kind = "feed" if src["kind"] == "feed" else "watched page"
+    url = _esc(src["url"])
+    return (f"<tr><td>{_esc(src['name'])}</td><td>{kind}</td><td>{checked}</td><td>{result}</td>"
+            f'<td style="font-size:12px"><a href="{url}" target="_blank" rel="noopener">{_esc(src["url"][:60])}</a></td></tr>')
+
+
+@app.get("/admin/news", response_class=HTMLResponse)
+async def admin_news(tag: str = "", hidden: int = 0, notice: str = "", credentials=Depends(_check_admin)):
+    tag = tag if tag in {name for name, _ in news.TOPICS} else ""
+    try:
+        items = news.latest(supabase, limit=100, include_dismissed=bool(hidden), tag=tag or None)
+        status = news.sources_status(supabase)
+        error = ""
+    except Exception as e:
+        items, status, error = [], [], str(e)
+    chips = " ".join(
+        f'<a href="/admin/news?tag={quote(name)}" class="news-tag" style="text-decoration:none'
+        f'{";background:#0891b2;color:white" if name == tag else ""}">{_esc(name)}</a>'
+        for name, _ in news.TOPICS)
+    cards = "".join(_news_card(i, with_summary=True) for i in items) or \
+        '<div class="empty">Nothing here yet.</div>'
+    rows = "".join(_news_source_row(src) for src in status)
+    notice_html = f'<div class="card" style="border-left:3px solid #15803d">{_esc(notice)}</div>' if notice else ""
+    error_html = (f'<div class="card" style="border-left:3px solid #dc2626">The news tables are not readable: {_esc(error)}. '
+                  'Run webhook/migrations/2026-10-23_news.sql in Supabase.</div>') if error else ""
+    body = f"""
+    {notice_html}{error_html}
+    <div class="card">
+      <h2>News &amp; insights</h2>
+      <p class="note" style="margin-bottom:12px">New items from the feeds and watched pages below, checked every few hours.
+        Government feeds keep only items on assessment, retrofit, EPC, building regulations and related topics.
+        Watched pages produce one "Page updated" item when their content changes.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+        <a href="/admin/news" class="news-tag" style="text-decoration:none{';background:#0891b2;color:white' if not tag else ''}">All</a> {chips}
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        <form method="post" action="/admin/news/check" style="display:inline"><button>Check now</button></form>
+        <a href="/admin/news?hidden={0 if hidden else 1}{'&tag=' + quote(tag) if tag else ''}" style="font-size:12px;align-self:center">
+          {'Hide hidden items' if hidden else 'Show hidden items'}</a>
+      </div>
+      <div style="max-width:760px">{cards}</div>
+    </div>
+    <div class="card">
+      <h2>Sources</h2>
+      <table><tr><th>Source</th><th>Type</th><th>Last checked (UTC)</th><th>Result</th><th>Address</th></tr>{rows}</table>
+      <p class="note" style="margin-top:10px">To add or remove a source, edit SOURCES in webhook/news.py.</p>
+    </div>"""
+    return _page("News", "news", body)
+
+
+@app.post("/admin/news/check", response_class=HTMLResponse)
+async def admin_news_check(credentials=Depends(_check_admin)):
+    added = await news.check_all(supabase)
+    total = sum(added.values())
+    msg = f"Checked every source: {total} new item{'' if total == 1 else 's'}."
+    return RedirectResponse("/admin/news?notice=" + quote(msg), status_code=303)
+
+
+@app.post("/admin/news/{item_id}/{action}")
+async def admin_news_mark(item_id: str, action: str, credentials=Depends(_check_admin)):
+    if action not in ("read", "dismiss"):
+        raise HTTPException(status_code=404)
+    news.mark(supabase, item_id, action)
+    return {"ok": True}
+
+
 @app.post("/admin/outreach/pause", response_class=HTMLResponse)
 async def admin_outreach_pause(credentials=Depends(_check_admin)):
     campaign = outreach.get_campaign(supabase)
@@ -3030,6 +3193,8 @@ async def admin_system(credentials=Depends(_check_admin)):
          f"Optional. Default {outreach.DEFAULT_LIMIT}, ceiling {outreach.HARD_CEILING}. See Admin → Outreach."),
         ("OUTREACH_SCHEDULER", "Outreach scheduler", False,
          "Optional. Set to off to stop the daily batch without a deploy (pausing in Admin → Outreach does the same)."),
+        ("NEWS_SCHEDULER", "News checks", False,
+         "Optional. Set to off to stop the news checks behind the admin sidebar. See Admin → News."),
     ]
     vars_rows = "".join(
         f"<tr><td>{label}</td><td><code>{key}</code></td><td>{var_status(key, req)}</td>"
