@@ -305,6 +305,55 @@
     .search-input::placeholder { color: var(--muted-d); }
     .search-input:focus { border-color: rgba(212,255,0,.4); }
 
+    /* ── WHERE YOU WORK ── */
+    .nation-bar {
+      padding: 0 6vw 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      flex-wrap: wrap;
+      font-size: .78rem;
+      color: var(--muted-d);
+      letter-spacing: .04em;
+    }
+    .nation-bar .nation-lbl { margin-right: .2rem; }
+    .nation-chip {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,.12);
+      border-radius: 30px;
+      padding: .3rem .9rem;
+      color: var(--muted-d);
+      font-family: var(--body);
+      font-size: .76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .nation-chip:hover { border-color: rgba(212,255,0,.4); color: var(--white); }
+    .nation-chip.active { border-color: var(--accent); color: var(--accent); }
+    .where-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .74rem;
+      color: rgba(255,255,255,.55);
+      letter-spacing: .03em;
+    }
+    .where-tag::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      opacity: .7;
+    }
+    .where-note {
+      padding: 0 6vw 1.2rem;
+      font-size: .84rem;
+      color: rgba(255,255,255,.62);
+      line-height: 1.55;
+      max-width: 820px;
+    }
+    .where-note strong { color: var(--white); }
+
     /* ── RESULTS COUNT ── */
     .results-meta {
       padding: 0 6vw .8rem;
@@ -753,6 +802,15 @@
   </div>
 </div>
 
+<div class="nation-bar" id="nationBar" aria-label="Where you work">
+  <span class="nation-lbl">Where you work:</span>
+  <button class="nation-chip active" data-nation="any">Anywhere</button>
+  <button class="nation-chip" data-nation="E">England</button>
+  <button class="nation-chip" data-nation="W">Wales</button>
+  <button class="nation-chip" data-nation="S">Scotland</button>
+</div>
+<p class="where-note" id="whereNote" style="display:none"></p>
+
 <p class="results-meta" id="resultsMeta"></p>
 
 <!-- ─── COURSE GRID ─── -->
@@ -790,6 +848,7 @@
     <div class="modal-meta">
       <span class="modal-hours" id="modalHours"></span>
       <span id="modalCode" style="color:var(--muted-d)"></span>
+      <span class="where-tag" id="modalWhere"></span>
     </div>
     <hr class="modal-divider">
     <p class="modal-section-lbl">About this course</p>
@@ -828,7 +887,7 @@ const UNDER_REVIEW = new Set([]);
 
 const ALL_COURSES = [
   {
-    id: 'MER-DEA-001', strand: 'DEA', hours: 2.0,
+    id: 'MER-DEA-001', strand: 'DEA', hours: 2.0, where: 'EWS',
     title: 'RdSAP 10: What\'s Changed and Why',
     desc: 'An overview of what an RdSAP 10 assessment requires, written from the RdSAP10 Specification and the Conventions v12.2: how the documents fit together, what was added for RdSAP 10, and what changed on 6 August 2026.',
     objectives: [
@@ -840,7 +899,7 @@ const ALL_COURSES = [
     free: true
   },
   {
-    id: 'MER-DEA-002', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-002', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'Measuring Windows in RdSAP 10',
     desc: 'How windows, glazed doors and roof windows are identified, measured and recorded under conventions 2.14 to 2.17 and 3.10 to 3.12b, with worked arithmetic for arched, circular and oval windows.',
     objectives: [
@@ -851,7 +910,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-DEA-003', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-003', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'Ventilation in RdSAP 10: PIV, MVHR and Natural Ventilation',
     desc: 'The ventilation entries in an RdSAP 10 assessment: chimneys and flues under convention 9.01, mechanical ventilation under 7.03a to 7.03e, draught lobbies and draught proofing.',
     objectives: [
@@ -862,7 +921,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-DEA-004', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-004', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'Room in Roof: Type 1 and Type 2 in RdSAP 10',
     desc: 'How to tell a Type 1 roof room from a Type 2 roof room or a separate storey using the common wall and the 1.8 m rule in convention 2.06, and what each assessment method needs you to measure.',
     objectives: [
@@ -873,7 +932,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-DEA-005', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-005', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'Heating Systems Primary: Boilers, Controls and Data Entry in RdSAP 10',
     desc: 'Main heating under conventions 4.01a to 4.22: emitters, two main systems, community heating and Heat as a Service, fuels, controls, and what to do when a product is not in the database.',
     objectives: [
@@ -884,7 +943,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-DEA-006', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-006', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'Heating Systems Secondary: Storage Heaters, Direct Electric and Room Heaters',
     desc: 'Storage heaters, direct electric heating, room heaters and secondary heating under conventions 4.02, 4.09, 4.20 and 5.01 to 5.03, including meters and tariffs.',
     objectives: [
@@ -895,7 +954,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-DEA-007', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-007', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'Hot Water Systems in RdSAP 10: Cylinders, Combis and Immersions',
     desc: 'Hot water under conventions 6.03 to 6.09: cylinders, immersions, instantaneous heaters and electric combis, plus waste water heat recovery and solar water heating.',
     objectives: [
@@ -906,7 +965,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-DEA-008', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-008', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'Insulation in RdSAP 10: Walls, Roofs, Floors and Common Errors',
     desc: 'Recording wall, roof and floor construction and insulation: as built or unknown, the thickness rules, when a U-value may be entered, and the documentary evidence convention 9.02 accepts.',
     objectives: [
@@ -917,7 +976,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-DEA-010', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-010', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'Lighting and Renewables in RdSAP 10',
     desc: 'Lamp counting under convention 7.01, then wind turbines, small-scale hydro, solar water heating and technologies recognised through SAP Appendix Q.',
     objectives: [
@@ -928,7 +987,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-DEA-011', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-011', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'Solar PV, Battery Storage and PV Diverters in RdSAP 10',
     desc: 'Convention 9.05 in full: kWp and declared net capacity, panels on different roof planes, the generation meter rules, shared arrays, and the evidence and defaults for batteries and diverters.',
     objectives: [
@@ -939,7 +998,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-DEA-014', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-014', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'EPC Audit Preparation: Building an Evidence File That Stands Up',
     desc: 'What the conventions require by way of photographs, site notes and documents for each part of an RdSAP 10 assessment, with a pre-lodgement check. Audit rules themselves are set by your scheme.',
     objectives: [
@@ -950,7 +1009,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-DEA-021', strand: 'DEA', hours: 1.0,
+    id: 'MER-DEA-021', strand: 'DEA', hours: 1.0, where: 'EWS',
     title: 'Airtightness Testing in RdSAP 10',
     desc: 'When a pressure test certificate can replace the RdSAP default under convention 10.01, and the chimney, flue, draught lobby and draught proofing entries that drive infiltration when there is no test.',
     objectives: [
@@ -961,7 +1020,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-001', strand: 'RA', hours: 2.0,
+    id: 'MER-RA-001', strand: 'RA', hours: 2.0, where: 'EWS',
     title: 'PAS 2035:2023 Overview for Retrofit Assessors',
     desc: 'A two-hour walk through PAS 2035:2023 as written: the roles and their qualifications, what a whole-dwelling assessment shall include and report, traditional buildings, design and ventilation, installation, handover, advice, and monitoring and evaluation. Every point carries its clause reference.',
     objectives: [
@@ -972,7 +1031,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-002', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-002', strand: 'RA', hours: 1.0, where: 'EWS',
     title: 'Moisture and PAS 2035:2023: What the Retrofit Assessor Records and Reports',
     desc: 'What PAS 2035:2023 asks the retrofit assessor to record and report about moisture: the clause 7.3.2 items that bear on damp, condensation and mould, the two defect categories, the standard\'s reliance on BS 5250, and what the designer and coordinator must then do.',
     objectives: [
@@ -983,7 +1042,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-003', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-003', strand: 'RA', hours: 1.0, where: 'EWS',
     title: 'Retrofit Assessment: What PAS 2035:2023 Clause 7 Requires You to Record and Report',
     desc: 'Clause 7 of PAS 2035:2023 item by item: who may assess, what the whole-dwelling assessment shall include from a) to l), the energy model, the significance survey for traditional buildings, and what the assessment report must contain.',
     objectives: [
@@ -994,7 +1053,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-004', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-004', strand: 'RA', hours: 1.0, where: 'EWS',
     title: 'Cavity Wall Insulation: Risk Factors and the Retrofit Assessor\'s Role',
     desc: 'Cavity wall insulation under PAS 2035:2023 and PAS 2030:2023: what the assessment establishes about suitability and condition, what the installer\'s pre-installation inspection covers, how exposure is recorded under RdSAP convention 9.10 and Approved Document C, and what a product certificate does and does not settle.',
     objectives: [
@@ -1005,7 +1064,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-005', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-005', strand: 'RA', hours: 1.0, where: 'EWS',
     title: 'Solid Wall Insulation: IWI vs EWI, Risks, Evidence and Assessment',
     desc: 'Internal or external solid wall insulation: who decides under PAS 2035:2023, what the assessor records about a solid wall (construction, condition, moisture, exposure, heritage significance), the RdSAP conventions for solid walls and added insulation, and the installer\'s checks under PAS 2030:2023.',
     objectives: [
@@ -1016,7 +1075,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-006', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-006', strand: 'RA', hours: 1.0, where: 'EWS',
     title: 'EPR Variation: The RdSAP 10 Transition in ECO4 and GBIS Projects',
     desc: 'Which RdSAP version an ECO4 or GBIS post-installation assessment must use, from the 2025 transitional Order and Ofgem\'s delivery guidance: the dates, the same-version rule, what TrustMark\'s EPR Variation Conventions contain, and what RdSAP 10 did and did not change.',
     objectives: [
@@ -1027,7 +1086,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-007', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-007', strand: 'RA', hours: 1.0, where: 'EWS',
     title: 'Heating System Assessment for Retrofit: What the Retrofit Assessor Must Record',
     desc: 'What clause 7.3.2 j) of PAS 2035:2023 asks the assessor to record about heating, hot water and controls, how that differs from what RdSAP needs, the RdSAP heating conventions that trip assessors up, distressed replacement, and where heat pump design sits.',
     objectives: [
@@ -1038,7 +1097,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-008', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-008', strand: 'RA', hours: 1.0, where: 'EWS',
     title: 'Ventilation Assessment in Retrofit: Background Ventilation to MVHR',
     desc: 'How PAS 2035:2023 and Approved Document F treat ventilation in retrofit: what the assessor records, when the designer must review ventilation, what counts as an adequate existing system under Annex C, and the upgrade options from intermittent extract to MVHR.',
     objectives: [
@@ -1049,7 +1108,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-009', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-009', strand: 'RA', hours: 1.0, where: 'E',
     title: 'External Wall Insulation: Planning Permission and Fire Risk',
     desc: 'What the law and the guidance say about external wall insulation in England: regulation 7, Approved Document B Section 10 applied to houses and flats, permitted development and conservation areas, and what the retrofit assessment records for the designer.',
     objectives: [
@@ -1060,7 +1119,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-010', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-010', strand: 'RA', hours: 1.0, where: 'EWS',
     title: 'Thermal Bridging in Retrofit Assessment: What Assessors Must Record',
     desc: 'Thermal bridges in retrofit assessment: what PAS 2035:2023 requires you to record at junctions, openings and mould locations, what the designer must then do under clause 8 and Annex D, and how RdSAP 10\'s y-value works by age band and what it leaves out.',
     objectives: [
@@ -1071,7 +1130,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-011', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-011', strand: 'RA', hours: 1.0, where: 'EWS',
     title: 'Occupancy Assessment: Vulnerable Occupants and Overheating Under PAS 2035:2023',
     desc: 'What PAS 2035:2023 clause 7.3.2 k) actually asks the assessor to record about occupants, which other clauses concern occupants\' comfort and vulnerability and whose job each is, why the overheating risk assessment sits with the Retrofit Designer, how to handle health information under the UK GDPR, and where Approved Document O, BS 40104:2025 and the ECO4 medical route fit.',
     objectives: [
@@ -1082,7 +1141,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-RA-012', strand: 'RA', hours: 1.0,
+    id: 'MER-RA-012', strand: 'RA', hours: 1.0, where: 'EWS',
     title: 'TrustMark Lodgement: What the Retrofit Assessment Must Contain and Who Lodges It',
     desc: 'What PAS 2035:2023 requires a retrofit assessment and its report to contain and who receives it, what the standard does and does not say about TrustMark\'s data warehouse, who lodges which records under ECO4 and Warm Homes: Local Grant, how the pre-retrofit RdSAP assessment drives ECO4 scores and exemptions, and where record retention periods come from.',
     objectives: [
@@ -1093,7 +1152,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-001', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-001', strand: 'ALL', hours: 1.0, where: 'EW',
     title: 'UK Energy Policy 2026: What Assessors Need to Know',
     desc: 'Where energy policy stands in October 2026: what is law today, the 2026 decisions on rented homes, EPC reform, the Future Homes Standard, and the Warm Homes Plan and its funding schemes. Each item is labelled as law, a decision or a proposal.',
     objectives: [
@@ -1104,7 +1163,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-004', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-004', strand: 'ALL', hours: 1.0, where: 'E',
     title: 'Fire Safety in Retrofit: What Every Assessor Must Know',
     desc: 'Fire safety across retrofit measures in England: regulation 7 and the 18 m rule, Approved Document B on cavities, cavity barriers and external walls, what PAS 2035 and PAS 2030 require of the designer and installer, and what an assessor records and reports.',
     objectives: [
@@ -1115,7 +1174,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-011', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-011', strand: 'ALL', hours: 1.0, where: 'EW',
     title: 'Non-Domestic MEES: The EPC E Minimum in Force and the Proposed EPC B Standard for 2031',
     desc: 'The legal minimum for non-domestic lettings is EPC E. This course sets out the regulations in force, the seven-year payback test and the exemptions, and exactly what the June 2026 interim response proposes for 2031, so that a proposal is never presented to a client as a requirement.',
     objectives: [
@@ -1126,7 +1185,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-017', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-017', strand: 'ALL', hours: 1.0, where: 'E',
     title: 'Awaab\'s Law Phase 2: What Energy Assessors Must Know',
     desc: 'Awaab\'s Law as it stands in October 2026: the statutory basis, the hazards and timescales that have bound social landlords in England since 27 October 2025, the status of the draft Phase 2 Regulations due from 30 November 2026, what is planned for Phase 3 and private renting, and what an EPC, a retrofit assessment and a ventilation assessment do and do not establish about damp, mould and cold.',
     objectives: [
@@ -1137,7 +1196,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-008', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-008', strand: 'ALL', hours: 1.0, where: 'E',
     title: 'Renters\' Rights Act 2025: Impact on EPCs and Energy Assessors',
     desc: 'The Renters\' Rights Act 2025 as it stands in October 2026: Royal Assent, which parts are in force and from when, the draft Private Rented Sector Database regulations and the EPC information they would require, the Decent Homes and Awaab\'s Law powers still awaiting regulations, the domestic MEES rules in force under separate legislation, and the status of the EPC C by 2030 decision.',
     objectives: [
@@ -1148,7 +1207,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-005', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-005', strand: 'ALL', hours: 1.0, where: 'E',
     title: 'Future Homes Standard 2026: What Energy Assessors Need to Know',
     desc: 'The Future Homes Standard as made: SI 2026/335 and the 2026 editions of Approved Documents L and F, the in-force and transitional dates from 24 March 2027, the new requirement on on-site renewable electricity, what the package does and does not say about heating fuels, SAP 10.3 as the approved methodology with the Home Energy Model to follow, which parts reach existing homes, and what it means for RdSAP assessors.',
     objectives: [
@@ -1159,7 +1218,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-015', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-015', strand: 'ALL', hours: 1.0, where: 'EW',
     title: 'EPC Reform and the Future Home Buying Process: What Assessors Must Know',
     desc: 'EPC reform and home buying reform as they stand in October 2026: what the EPB Regulations 2012 require now about EPCs for sale and letting, what the government has decided on validity periods, metrics and timing, what the June 2026 home buying and selling roadmap commits to and when, the material information position after the 2008 Regulations were revoked, and how to tell a decision from a proposal.',
     objectives: [
@@ -1170,7 +1229,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-010', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-010', strand: 'ALL', hours: 1.0, where: 'S',
     title: 'Damp and Mould Investigations: Scotland\'s 2026 Duties and the Assessor\'s Role',
     desc: 'Damp and mould duties in Scotland from 6 October 2026 under SSI 2026/173 and the Housing (Scotland) Act 2025: the investigation, summary and start-of-work timescales, the amended repairing standard, the tolerable standard, the Scottish Government guidance, a short comparison with England and Wales, and what an RdSAP assessment and a PAS 2035 retrofit assessment do and do not record about damp.',
     objectives: [
@@ -1181,7 +1240,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-009', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-009', strand: 'ALL', hours: 1.0, where: 'UK',
     title: 'Heat Loss Calculations for Heat Pumps: Where the EPC and the Assessor Fit',
     desc: 'Heat loss calculation for heat pumps: what MIS 3005-D requires of the MCS installer, how the EPC\'s space heating demand is used in the MCS performance estimate but not for sizing, the Boiler Upgrade Scheme rules as they stand in October 2026, what PAS 2035:2023 gives the Retrofit Designer, what RdSAP\'s heat loss figures are and are not, and what an assessor can usefully observe and record.',
     objectives: [
@@ -1192,7 +1251,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-012', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-012', strand: 'ALL', hours: 1.0, where: 'UK',
     title: 'Whole Life Carbon for Energy Assessors: What It Means and Where It Stands in 2026',
     desc: 'Whole life carbon for energy assessors: operational and embodied carbon as the RICS professional standard (2nd edition) defines them, the life-cycle modules, what an RdSAP emissions figure does and does not cover, and where regulation stands in October 2026: nothing in the Building Regulations for England, and the London Plan policy for referable schemes.',
     objectives: [
@@ -1203,7 +1262,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-013', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-013', strand: 'ALL', hours: 1.0, where: 'E',
     title: 'Overheating in Existing Homes: PAS 2035 Roles, Part O and TM59 (2026)',
     desc: 'Overheating in existing homes: what PAS 2035:2023 asks of the Retrofit Assessor and the Retrofit Designer, why Approved Document O applies only to new residential buildings, which edition of CIBSE TM59 applies to what, what CIBSE says changed in TM59 (2026), and the Scottish standard.',
     objectives: [
@@ -1214,7 +1273,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-014', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-014', strand: 'ALL', hours: 1.0, where: 'UK',
     title: 'SMETER Technology: Measured Building Performance for Energy Assessors',
     desc: 'Smart meter enabled thermal efficiency ratings (SMETERs): what a measured heat transfer coefficient is, what the government trials and studies found about accuracy against RdSAP, the DESNZ strategic guide of July 2026, the Home Energy Model proposal, and why a SMETER result is not an EPC.',
     objectives: [
@@ -1225,7 +1284,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-016', strand: 'ALL', hours: 1.0,
+    id: 'MER-ALL-016', strand: 'ALL', hours: 1.0, where: 'EW',
     title: 'Scheme Operating Requirements: How They Work and What Changed in 2026',
     desc: 'The Scheme Operating Requirements for energy assessors: who writes and approves them, how Level 1 and Level 2 work, what changed in the 2026 Level 2 edition (assessor declaration, minimum evidence requirements, minimum age), the CPD rule, and how errors on a lodged EPC are put right.',
     objectives: [
@@ -1242,7 +1301,32 @@ const HIDDEN_COUNT = ALL_COURSES.length - COURSES.length;
 
 // ── State ────────────────────────────────────────────────────────────────────
 let activeFilter = 'all';
+let activeNation = 'any';
 let searchQuery = '';
+
+// ── Where a course applies ───────────────────────────────────────────────────
+// Every course carries a `where` code. The label is shown on the card, in the
+// modal and (in the app) on the certificate, so an assessor can see before buying
+// whether the course is written for where they work.
+const WHERE_LABEL = {
+  EWS: 'England, Wales and Scotland',
+  EW:  'England and Wales',
+  E:   'England',
+  S:   'Scotland',
+  UK:  'UK-wide',
+};
+// Which codes count for each nation chip. Courses labelled for one nation are
+// left out of the others' lists rather than shown with a caveat.
+const NATION_CODES = {
+  E: new Set(['EWS', 'EW', 'E', 'UK']),
+  W: new Set(['EWS', 'EW', 'UK']),
+  S: new Set(['EWS', 'S', 'UK']),
+};
+const NATION_NAME = { E: 'England', W: 'Wales', S: 'Scotland' };
+function whereLabel(c) { return WHERE_LABEL[c.where] || 'UK-wide'; }
+function appliesIn(c, nation) {
+  return nation === 'any' || (NATION_CODES[nation] || new Set()).has(c.where);
+}
 let promoCode = '';
 
 // ── Promo code handling ──────────────────────────────────────────────────────
@@ -1268,17 +1352,20 @@ function getStripeLink(courseId) {
 function filteredCourses() {
   return COURSES.filter(c => {
     const strandMatch = activeFilter === 'all' || c.strand === activeFilter;
+    const nationMatch = appliesIn(c, activeNation);
     const q = searchQuery.toLowerCase();
-    const textMatch = !q || c.title.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q) || c.id.toLowerCase().includes(q);
-    return strandMatch && textMatch;
+    const textMatch = !q || c.title.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q) || c.id.toLowerCase().includes(q) || whereLabel(c).toLowerCase().includes(q);
+    return strandMatch && nationMatch && textMatch;
   });
 }
 
 function clearFilters() {
   activeFilter = 'all';
+  activeNation = 'any';
   searchQuery = '';
   document.getElementById('searchInput').value = '';
   document.querySelectorAll('.filter-tab').forEach(t => t.classList.toggle('active', t.dataset.filter === 'all'));
+  document.querySelectorAll('.nation-chip').forEach(t => t.classList.toggle('active', t.dataset.nation === 'any'));
   renderGrid();
 }
 
@@ -1324,6 +1411,24 @@ function renderGrid() {
   const showing = courses.length;
   meta.innerHTML = 'Showing <span>' + showing + '</span> of ' + COURSES.length + ' courses';
 
+  // Where note: what the chosen nation can use as it stands
+  const note = document.getElementById('whereNote');
+  if (activeNation === 'any') {
+    note.style.display = 'none';
+  } else {
+    const usable = COURSES.filter(c => appliesIn(c, activeNation));
+    const hrs = usable.reduce((t, c) => t + c.hours, 0);
+    const name = NATION_NAME[activeNation];
+    note.innerHTML = '<strong>' + usable.length + ' of ' + COURSES.length + ' courses (' + hrs + ' CPD hours) apply in ' + name + '</strong> as they stand. ' +
+      'Each course says where it applies, on its card and in its details. ' +
+      (activeNation === 'S'
+        ? 'RdSAP 10 and PAS 2035:2023 courses apply in Scotland; courses on English or England-and-Wales legislation are left out. Scotland-specific courses on the Scottish EPC Register, the 2028 reform and Section 6 are being written.'
+        : activeNation === 'W'
+          ? 'Courses written on English-only legislation (Approved Documents, the Future Homes Standard, the Renters\' Rights Act) are left out.'
+          : '');
+    note.style.display = '';
+  }
+
   // Build cards
   const fragment = document.createDocumentFragment();
 
@@ -1348,6 +1453,7 @@ function renderGrid() {
         <span class="card-hours">${hrsLabel(c.hours)}</span>
       </div>
       <p class="card-title">${c.title}${freeTag}</p>
+      <span class="where-tag">${whereLabel(c)}</span>
       <p class="card-desc">${c.desc.substring(0, 110)}…</p>
       <div class="card-footer">
         <div class="card-price">
@@ -1378,6 +1484,7 @@ function openModal(courseId) {
   document.getElementById('modalHours').textContent =
     c.hours + ' CPD ' + (c.hours === 1 ? 'hour' : 'hours');
   document.getElementById('modalCode').textContent = c.id;
+  document.getElementById('modalWhere').textContent = 'Applies in ' + whereLabel(c);
   document.getElementById('modalDesc').textContent = c.desc;
 
   const objList = document.getElementById('modalObjectives');
@@ -1423,6 +1530,14 @@ document.getElementById('filterTabs').addEventListener('click', e => {
   renderGrid();
 });
 
+document.getElementById('nationBar').addEventListener('click', e => {
+  const btn = e.target.closest('.nation-chip');
+  if (!btn) return;
+  activeNation = btn.dataset.nation;
+  document.querySelectorAll('.nation-chip').forEach(t => t.classList.toggle('active', t === btn));
+  renderGrid();
+});
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     document.getElementById('modalOverlay').classList.remove('open');
@@ -1432,6 +1547,13 @@ document.addEventListener('keydown', e => {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 renderGrid();
+
+// Deep-link: courses.html?where=S preselects a nation (E, W or S)
+const _whereParam = new URLSearchParams(window.location.search).get('where');
+if (_whereParam && NATION_CODES[_whereParam]) {
+  const chip = document.querySelector('.nation-chip[data-nation="' + _whereParam + '"]');
+  if (chip) chip.click();
+}
 
 // Deep-link: courses.html?open=MER-DEA-001 auto-opens that course modal
 const _openParam = new URLSearchParams(window.location.search).get('open');
