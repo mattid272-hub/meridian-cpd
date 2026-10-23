@@ -164,6 +164,8 @@ for i, r_ in enumerate(db["outreach_contacts"]):
     r_["email"] = f"p{i}@down.co.uk"
 res = asyncio.run(outreach.run_batch(client(db), trigger="admin", now=MON_10))
 check("three failures in a row stop the run", res["failed"] == 3 and res["note"].startswith("stopped") and res["sent"] == 0)
+check("a failed row records the error type",
+      [q["note"] for q in db["outreach_queue"] if q["status"] == "failed"][0] == "RuntimeError: Resend is down")
 
 # ── Bounces and complaints ──
 db = fresh_db(); sent.clear()
