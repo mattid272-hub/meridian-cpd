@@ -164,3 +164,7 @@ To switch on after deploying:
 Sources are the `SOURCES` list in `news.py`: GOV.UK activity feeds for DESNZ, MHCLG and Ofgem (kept only when an entry mentions an assessment, retrofit, EPC, building regulations or related topic), the Elmhurst, ECMK and Quidos feeds (kept whole), and five watched pages with no feed (the GOV.UK SAP/Home Energy Model page, BRE's SAP 10 documents page, TrustMark news, gov.scot's EPC reform updates, SEAI's DEAP page), which each give one "Page updated" item when their content changes, at most once a week. A source that fails shows its error on the News page; the others carry on.
 
 `NEWS_SCHEDULER=off` in Railway stops the checks without a deploy.
+
+### Briefs
+
+Clicking a news item opens a short brief in place: three to five bullet points and a "why it matters" line, written the first time the item is opened and saved on it. With `ANTHROPIC_API_KEY` set in Railway, Claude (claude-haiku-5-5) writes the brief from the article's own text; without it, the brief is the article's opening paragraphs. "Source ↗" opens the original. Run `webhook/migrations/2026-10-23_news_briefs.sql` once to add the brief columns (briefs still show without it, but are rewritten each time).

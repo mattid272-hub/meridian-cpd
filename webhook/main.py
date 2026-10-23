@@ -2168,6 +2168,11 @@ button:hover { background: #D4FF00; color: #0D1F0E; }
 .news-actions { margin-top: 6px; display: flex; gap: 10px; }
 .news-actions a { font-size: 11px; color: #5C6B5D; text-decoration: none; cursor: pointer; }
 .news-actions a:hover { color: #4d7c0f; }
+.news-brief { margin-top: 8px; padding: 10px 12px; background: #f7ffd6; border-radius: 6px; }
+.news-brief ul { margin: 0 0 0 16px; padding: 0; }
+.news-brief li { font-size: 12.5px; color: #1f2a20; line-height: 1.45; margin-bottom: 5px; }
+.news-brief .why { font-size: 12px; color: #0D1F0E; font-weight: 600; margin-top: 6px; }
+.news-brief .how { font-size: 10.5px; color: #8A9E8B; margin-top: 6px; }
 .news-summary { font-size: 12px; color: #4a574b; margin-top: 4px; line-height: 1.4; }
 @media (max-width: 1100px) { .layout { flex-direction: column; } .newsbar { width: auto; padding: 0 28px 28px; position: static; max-height: none; } }
 .course-card .cid { font-size: 11px; color: #4d7c0f; font-weight: 700;
@@ -2330,6 +2335,19 @@ function newsAct(id, action, el) {
   });
   return false;
 }
+function newsOpen(id, el) {
+  var card = el.closest('.news-item');
+  var box = card.querySelector('.news-brief');
+  if (!box.hidden) { box.hidden = true; return false; }
+  box.hidden = false;
+  card.classList.add('read');
+  if (box.getAttribute('data-loaded')) { return false; }
+  box.innerHTML = '<div class="news-meta">Preparing a brief…</div>';
+  fetch('/admin/news/' + id + '/brief').then(function (r) { return r.json(); }).then(function (d) {
+    box.innerHTML = d.html; box.setAttribute('data-loaded', '1');
+  }).catch(function () { box.innerHTML = '<div class="news-meta">Could not prepare a brief. Use the source link.</div>'; });
+  return false;
+}
 function newsCopy(btn) {
   var t = btn.getAttribute('data-post');
   if (navigator.clipboard) { navigator.clipboard.writeText(t); }
@@ -2353,12 +2371,13 @@ def _news_card(item: dict, with_summary: bool = False) -> str:
                if with_summary and item.get("summary") else "")
     return f"""
     <div class="news-item{' read' if item.get('read_at') else ''}">
-      <a class="news-title" href="{_esc(url)}" target="_blank" rel="noopener"
-         onclick="newsAct('{iid}', 'read', this)">{title}</a>
+      <a class="news-title" href="{_esc(url)}" onclick="return newsOpen('{iid}', this)">{title}</a>
       <div class="news-meta">{_esc(item.get('source') or '')} · {_esc(when)}</div>
       {summary}
       {f'<div class="news-tags">{tags}</div>' if tags else ''}
+      <div class="news-brief" hidden></div>
       <div class="news-actions">
+        <a href="{_esc(url)}" target="_blank" rel="noopener" onclick="newsAct('{iid}', 'read', this)">Source ↗</a>
         <a onclick="return newsAct('{iid}', 'read', this)">Mark read</a>
         <a onclick="return newsAct('{iid}', 'dismiss', this)">Hide</a>
         <a data-post="{_esc(post)}" onclick="return newsCopy(this)">Copy as post</a>
@@ -3028,6 +3047,47 @@ async def admin_news_check(credentials=Depends(_check_admin)):
     return RedirectResponse("/admin/news?notice=" + quote(msg), status_code=303)
 
 
+_BRIEF_NOTE = {
+    "ai": "Summary written by Claude from the source text. Check the source before relying on a detail.",
+    "extract": "The opening paragraphs of the source. Add ANTHROPIC_API_KEY in Railway for written summaries.",
+    "feed": "From the feed's own summary; the page itself could not be read.",
+}
+
+
+def _brief_html(item: dict) -> str:
+    brief = (item.get("brief") or "").strip()
+    if not brief:
+        return '<div class="news-meta">No summary available for this one. Use the source link.</div>'
+    bullets, why = [], ""
+    for line in brief.splitlines():
+        line = line.strip()
+        if line.lower().startswith("why it matters"):
+            why = line.split(":", 1)[-1].strip()
+        elif line.startswith(("- ", "• ", "* ")):
+            bullets.append(line[2:].strip())
+        elif line:
+            bullets.append(line)
+    out = "<ul>" + "".join(f"<li>{_esc(b)}</li>" for b in bullets[:6]) + "</ul>"
+    if why:
+        out += f'<div class="why">Why it matters: {_esc(why)}</div>'
+    note = _BRIEF_NOTE.get(item.get("brief_kind") or "")
+    if note:
+        out += f'<div class="how">{_esc(note)}</div>'
+    return out
+
+
+@app.get("/admin/news/{item_id}/brief")
+async def admin_news_brief(item_id: str, credentials=Depends(_check_admin)):
+    item = await news.get_brief(supabase, item_id)
+    if not item:
+        raise HTTPException(status_code=404)
+    try:
+        news.mark(supabase, item_id, "read")
+    except Exception:
+        pass
+    return {"html": _brief_html(item)}
+
+
 @app.post("/admin/news/{item_id}/{action}")
 async def admin_news_mark(item_id: str, action: str, credentials=Depends(_check_admin)):
     if action not in ("read", "dismiss"):
@@ -3193,6 +3253,8 @@ async def admin_system(credentials=Depends(_check_admin)):
          f"Optional. Default {outreach.DEFAULT_LIMIT}, ceiling {outreach.HARD_CEILING}. See Admin → Outreach."),
         ("OUTREACH_SCHEDULER", "Outreach scheduler", False,
          "Optional. Set to off to stop the daily batch without a deploy (pausing in Admin → Outreach does the same)."),
+        ("ANTHROPIC_API_KEY", "News briefs", False,
+         "Optional. Lets Claude write the short brief shown when a news item is opened. Without it, briefs use the article's opening paragraphs."),
         ("NEWS_SCHEDULER", "News checks", False,
          "Optional. Set to off to stop the news checks behind the admin sidebar. See Admin → News."),
     ]

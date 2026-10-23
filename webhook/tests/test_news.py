@@ -169,6 +169,75 @@ t = c.get("/admin/dashboard", headers=auth).text
 check("javascript:alert" not in t and "<script>x</script>" not in t, "non-http links are dropped")
 check("&lt;b&gt;bold&lt;/b&gt; &amp; co" in t and "a=1&amp;b=2" in t, "titles and links are escaped")
 
+# ── Briefs ──
+ARTICLE = """<html><head><title>x</title></head><body><nav><p>Menu menu menu menu menu menu menu menu menu</p></nav>
+<article><h1>Fee change</h1><p>The Scottish EPC Register lodgement fee for domestic EPCs rises from £2.60 to £6.00 on 31 October 2026.</p>
+<p>Non-domestic lodgements rise from £12.10 to £15.50 on the same date, the first change since 2017.</p>
+<p>Assessors lodging through an Approved Organisation will see the new fee on invoices from November.</p>
+<p>Accept cookies to continue reading this site and subscribe to our newsletter today.</p>
+<script>var x = "<p>not this</p>";</script></article><footer><p>Footer footer footer footer footer footer footer</p></footer></body></html>"""
+text, paras = news.article_text(ARTICLE)
+check(len(paras) == 3 and paras[0].startswith("The Scottish EPC Register"), "article paragraphs found, menus, footers, cookie lines and scripts left out")
+check("Menu menu" not in text and "not this" not in text, "the article text excludes navigation and script")
+eb = news.extract_brief(paras)
+check(eb.count("\n") == 2 and eb.startswith("- The Scottish EPC Register"), "fallback brief is the opening paragraphs as bullets")
+
+calls = {"anthropic": 0, "page": 0}
+AI_REPLY = "- Domestic lodgement fee rises from £2.60 to £6.00 on 31 October 2026.\n- Non-domestic rises to £15.50.\nWhy it matters: budget for the higher fee on Scottish jobs <b>now</b>."
+def brief_handler(request):
+    if request.url.host == "api.anthropic.com":
+        calls["anthropic"] += 1
+        body = request.read().decode()
+        assert '"model": "claude-haiku-5-5"' in body or '"model":"claude-haiku-5-5"' in body
+        assert request.headers["x-api-key"] == "test-key"
+        return httpx.Response(200, json={"content": [{"type": "text", "text": AI_REPLY}]})
+    calls["page"] += 1
+    return httpx.Response(200, text=ARTICLE, headers={"content-type": "text/html; charset=utf-8"})
+mock = httpx.MockTransport(brief_handler)
+item = {"id": "b1", "title": "Update: Changes to Scottish EPC Register Lodgement Fees", "source": "ECMK", "url": "https://www.ecmk.co.uk/a", "summary": "Fee rises."}
+
+os.environ.pop("ANTHROPIC_API_KEY", None)
+brief, how = asyncio.run(news.make_brief(item, transport=mock))
+check(how == "extract" and calls["anthropic"] == 0 and brief.startswith("- The Scottish"), "without a key: opening paragraphs, no model call")
+os.environ["ANTHROPIC_API_KEY"] = "test-key"
+brief, how = asyncio.run(news.make_brief(item, transport=mock))
+check(how == "ai" and calls["anthropic"] == 1 and brief == AI_REPLY, "with a key: Claude's bullets")
+
+def no_content(request):
+    if request.url.host == "api.anthropic.com":
+        return httpx.Response(200, json={"content": [{"type": "text", "text": "NO CONTENT"}]})
+    return httpx.Response(200, text=ARTICLE, headers={"content-type": "text/html"})
+check(asyncio.run(news.make_brief(item, transport=httpx.MockTransport(no_content)))[1] == "extract", "a NO CONTENT reply falls back to the paragraphs")
+def api_down(request):
+    if request.url.host == "api.anthropic.com":
+        return httpx.Response(529, json={})
+    return httpx.Response(200, text=ARTICLE, headers={"content-type": "text/html"})
+check(asyncio.run(news.make_brief(item, transport=httpx.MockTransport(api_down)))[1] == "extract", "an API error falls back to the paragraphs")
+def page_down(request):
+    return httpx.Response(403, text="no")
+b, h = asyncio.run(news.make_brief(item, transport=httpx.MockTransport(page_down)))
+check(h == "feed" and b == "- Fee rises.", "an unreadable page falls back to the feed summary")
+
+bdb = {"news_items": [{**item, "key": "kb1", "dismissed": False, "published_at": "2026-10-23", "tags": []}]}
+calls["anthropic"] = calls["page"] = 0
+got = asyncio.run(news.get_brief(client(bdb), "b1", transport=mock))
+check(got["brief"] == AI_REPLY and bdb["news_items"][0]["brief_kind"] == "ai", "the brief is saved on the item")
+got = asyncio.run(news.get_brief(client(bdb), "b1", transport=mock))
+check(calls["anthropic"] == 1 and calls["page"] == 1, "a saved brief is not written twice")
+check(asyncio.run(news.get_brief(client(bdb), "nope", transport=mock)) == {}, "unknown item gives nothing")
+
+main.supabase = client(bdb)
+r = c.get("/admin/news/b1/brief", headers=auth)
+h = r.json()["html"]
+check(r.status_code == 200 and "<li>Domestic lodgement fee rises" in h, "the brief endpoint returns bullets")
+check("Why it matters: budget for the higher fee on Scottish jobs &lt;b&gt;now&lt;/b&gt;." in h, "the why line is shown and escaped")
+check("Summary written by Claude" in h and bdb["news_items"][0].get("read_at"), "says how it was written, and marks the item read")
+check(c.get("/admin/news/missing/brief", headers=auth).status_code == 404, "unknown brief is a 404")
+check(c.get("/admin/news/b1/brief").status_code == 401, "briefs need the admin login")
+t = c.get("/admin/dashboard", headers=auth).text
+check("newsOpen('b1', this)" in t and 'class="news-brief" hidden' in t and "Source ↗" in t, "cards open a brief in place, with the source link alongside")
+os.environ.pop("ANTHROPIC_API_KEY", None)
+
 # A broken news table must not break Admin
 main.supabase = types.SimpleNamespace(table=lambda t: (_ for _ in ()).throw(RuntimeError("relation news_items does not exist"))
                                       if t.startswith("news") else Q({}, t))
