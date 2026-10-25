@@ -43,7 +43,7 @@ main._refresh_under_review = lambda: None
 # Nothing is withdrawn on the live site now; withdraw one course here so the mechanism stays tested.
 main.UNDER_REVIEW.clear(); main.UNDER_REVIEW.add("MER-ALL-016")
 c = TestClient(main.app, follow_redirects=False)
-h = c.get("/health").json(); print("health", h); N = h["available"]; W = h["under_review"]; assert N + W == 37 and W == len(main.UNDER_REVIEW)
+h = c.get("/health").json(); print("health", h); N = h["available"]; W = h["under_review"]; assert N + W == h["courses"] and W == len(main.UNDER_REVIEW)
 cookie = {"session_token": main._make_session_token("sub@example.com")}
 r = c.get("/download/MER-ALL-016", cookies=cookie); assert r.status_code == 200 and "being updated" in r.text, r.status_code
 r = c.get("/download/MER-DEA-002", cookies=cookie); assert r.status_code == 302 and "MER-DEA-002.pdf" in r.headers["location"], r.status_code

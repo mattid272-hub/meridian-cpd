@@ -25,7 +25,7 @@ It does not train you to carry out a damp survey. The government's damp and moul
 
 This course is written for England and Wales. Most of the building physics applies anywhere, but the regulatory sources differ by nation:
 - Approved Document C exists in an England edition (2004 edition incorporating 2010 and 2013 amendments, "For use in England") and a Wales edition (2004 edition incorporating 2010 amendments, "For use in Wales"). Both were opened for this course.
-- The editions of Approved Documents F and L cited here are the England editions. Wales publishes its own guidance on Parts F and L. This course did not open the Welsh editions; check gov.wales before relying on the England paragraph numbers for work in Wales.
+- The editions of Approved Documents F and L cited here are the England editions. Wales publishes its own. The Welsh Approved Document F Volume 1 (2022 edition, for use in Wales, in effect from 23 November 2022) was checked for this course: its Table 1.1 extract rates and its Tables B.2 and B.3 give the same values as the England edition, but the Appendix B paragraphs are numbered B.11 and B.12 rather than B10 and B11, and paragraph 3.15 is worded differently. The Welsh Approved Document L was not opened; check gov.wales before relying on the England paragraph numbers for work in Wales.
 - The damp and mould guidance for landlords is "primarily aimed at social and private rented housing providers in England".
 - The English Housing Survey covers England only.
 - Awaab's Law applies only to social landlords in England. MER-ALL-017 covers it in depth.
@@ -39,7 +39,7 @@ Every figure, threshold and quotation below comes from a document that was opene
 - BRE Information Paper IP1/06, which sets out the temperature factor method referred to by Approved Document L and PAS 2035, is sold by BRE (£9.00 for the download, published 7 March 2006, BRE bookshop listing). This course could not open it.
 - The Zero Carbon Hub thermal bridging guide hosted by LABC could not be retrieved.
 
-Two documents were read from copies hosted outside gov.uk because the gov.uk copies could not be retrieved by the tools used for this course. Approved Document F Volume 1 (2021 edition) was read from a copy of the HM Government PDF hosted on a ventilation firm's website; the cover, paragraph numbers and tables match the published edition's structure, but you should check any figure you rely on against the gov.uk copy. Paragraphs 5.34 to 6.12 of Approved Document C (England) were read from an online reproduction of the 2013 text, because the gov.uk PDF's text ended at paragraph 5.15; the floor paragraphs cross-checked word for word with the gov.uk PDF.
+Two documents were partly read from copies hosted outside gov.uk because the gov.uk copies could not be retrieved in full by the tools used for this course. Approved Document F Volume 1 (2021 edition, England) was first read from a copy hosted outside gov.uk; paragraphs 1.1, 3.6 and B2, Table 1.1, and Tables B2 and B3 (paragraphs B10 and B11) were then confirmed against the gov.uk copy. Paragraph 5.36 of Approved Document C (England) was read from an online reproduction of the 2013 text, because the gov.uk PDF's text ended at paragraph 5.15. The official text confirms that paragraph 5.36 is where the wall provision sits (paragraph 5.1(d) refers to it), and paragraph 4.22, which uses the same wording for floors, was confirmed word for word in the gov.uk PDF.
 
 Some worked numbers in Section 2 are calculated, not quoted. Each calculation shows its inputs and the published formula used, so you can repeat it.
 
@@ -87,23 +87,26 @@ You can see surface condensation. You usually cannot see interstitial condensati
 
 ### How common is damp?
 
-The English Housing Survey is the main source for England. Its 2022 to 2023 headline report says (Chapter 4, Dwelling condition, "Damp"):
-- "In 2022, 4% or 1 million dwellings had a problem with damp."
-- "Damp problems were more prevalent in private rented dwellings, with 9% reported to have a problem in 2022, compared to 5% of social renters and just 2% of owner occupiers."
-- "In 2022, 7% of local authority dwellings and 4% of housing association dwellings had damp."
-- After "a sizable reduction" between 1996 and 2011, "incidences of damp have increased since 2019 from 3%".
+The English Housing Survey is the main source for England. The latest headline findings on housing quality, for 2024 to 2025, were published on 29 January 2026 (Chapter 1, Housing quality, "Damp"):
+- "In 2024, 5% or 1.4 million dwellings had a problem with damp", an increase on the 4% recorded for 2021 and 2022.
+- "Damp problems were more prevalent in private rented dwellings, with 10% of dwellings having a problem in 2024", compared with 7% of social rented and 4% of owner occupied dwellings.
+- Local authority dwellings (8%) were more likely to have a damp problem than housing association dwellings (6%).
+- The rises from 2022 were statistically significant for owner occupied (2% to 4%) and social rented (5% to 7%) dwellings; the private rented rise (9% to 10%) was not.
+- By type, serious condensation (3%) was more common than penetrating damp (2%) and rising damp (1%).
 
-The survey's definition is narrower than everyday usage. A home "is considered to have damp or a problem with damp if the surveyor records damp which is significant enough to be taken into consideration when making their HHSRS assessments", so "minor issues of damp are not recorded". The report also warns that 2022 data combines measured and modelled data and that "comparisons with previous years should be considered with caution". It reports a single damp measure, not separate figures for each type.
+The survey's definition is narrower than everyday usage. A home "is considered to have damp, or a problem with damp, if the surveyor records damp" that is "significant enough to be taken into consideration when making their HHSRS assessments", so "minor issues of damp are not recorded". The report warns that comparisons with earlier years should be made with caution, because modelled data was used from 2020 to 2022. The "2024" physical survey figures draw on inspections made between March 2023 and March 2025.
 
-The government's Ethnicity facts and figures service, using the same survey, reports that "in the 2 years to March 2023, an average of 4% of households in England had damp in at least one room" (Housing with damp problems, published 30 April 2025). It defines a home with damp as having rising damp, penetrating damp, or "serious condensation or mould".
+The previous headline report (2022 to 2023, published 14 December 2023, Chapter 4) gave 4%, or 1 million dwellings, for 2022. You will still see that figure quoted; it has been superseded.
 
-The damp and mould guidance gives a wider range: "Estimates of the number of homes in England with damp and mould range from 4% to 27% of homes, or 962,000 to 6.5 million households", depending on how damp and mould is measured ("Introduction"). The lower end reflects surveyor-recorded damp of the kind the HHSRS takes into account; higher estimates use broader measures.
+The government's Ethnicity facts and figures service, using the same survey, reports that "in the 2 years to March 2023, an average of 4% of households in England had damp in at least one room" (Housing with damp problems, published 30 April 2025). It defines a home with damp as having rising damp, penetrating damp, or "serious condensation or mould". That is an earlier period than the 2024 figures above.
+
+The damp and mould guidance gives a wider range: "Estimates of the number of homes in England with damp and mould range from 4% to 27% of homes, or 962,000 to 6.5 million households", depending on how damp and mould is measured ("Introduction"). The lower end matches the survey's surveyor-recorded, HHSRS-significant damp; this course reads the higher estimates as using broader measures, though the guidance does not break the range down.
 
 This course did not find an equivalent current figure for Wales in a source it opened. Do not apply the English percentages to Welsh housing.
 
 ### Why this matters to assessors
 
-On a typical working week you will see more mould than the 4% figure suggests, because the survey counts only damp significant enough for an HHSRS assessment. Most of what you see will be minor surface mould around windows and in corners. Some of it will be serious. Recording both accurately, without inflating or dismissing either, is the skill this course builds.
+On a typical working week you will see more mould than the 5% figure suggests, because the survey counts only damp significant enough for an HHSRS assessment. Most of what you see will be minor surface mould around windows and in corners. Some of it will be serious. Recording both accurately, without inflating or dismissing either, is the skill this course builds.
 
 ---
 
@@ -233,7 +236,7 @@ Those are patterns, not conclusions. Section 4 shows how to use them.
 
 ### What a thermal bridge is
 
-PAS 2035:2023 defines a thermal bridge as an area where insulation is discontinuous, thinner or less effective, "leading to locally increased heat loss" and "locally reduced internal surface temperature" (clause 3.36). Approved Document L Volume 1 puts it the same way: "Thermal bridges occur when an area of a building has significantly higher heat transfer than the surrounding parts. Breaks in insulation, reduced insulation or more conductive materials can contribute to thermal bridge effects" (paragraph 4.16).
+PAS 2035:2023 defines a thermal bridge as an area where insulation is discontinuous, thinner or of higher conductivity than the adjacent insulation, or less effective because of the geometry, "leading to locally increased heat loss" and "locally reduced internal surface temperature" (clause 3.36). Approved Document L Volume 1 puts it the same way: "Thermal bridges occur when an area of a building has significantly higher heat transfer than the surrounding parts. Breaks in insulation, reduced insulation or more conductive materials can contribute to thermal bridge effects" (paragraph 4.16).
 
 PAS 2035:2023 also defines thermal by-pass: "unintended penetration or circulation of external air on the warm side of the insulation layer in a construction", which renders the insulation ineffective (clause 3.37). By-pass is not the same as bridging, but it has the same symptom: a surface colder than the design intended.
 
@@ -312,7 +315,9 @@ Approved Document C (England) requires that the walls, floors and roof "shall ad
 
 The guidance on how to meet this is in paragraph 4.22 (floors) and paragraph 5.36 (walls). Both say the requirement will be met if the thermal transmittance (U-value) "does not exceed 0.7W/m2K at any point" and the junctions between elements are designed to "Accredited Construction Details, or follow the guidance of BRE IP17/01". The Wales edition's paragraph 4.22 is worded the same way on the U-value but refers to "robust construction details" instead of Accredited Construction Details.
 
-Note what Approved Document C does and does not say. It sets a maximum U-value "at any point" of 0.7 W/m²K as a surface condensation safeguard. It does not, in the text read for this course, use the temperature factor or the figure 0.75. And it cites IP17/01, an earlier BRE information paper, where Approved Document L and PAS 2035 cite IP1/06. If you see a report or a training slide saying "Approved Document C requires fRsi of 0.75", that is not what the England 2013 text opened for this course says.
+For walls, paragraph 5.36 extends the junction provision to "details of openings, such as doors and windows".
+
+Note what Approved Document C does and does not say. It sets a maximum U-value "at any point" of 0.7 W/m²K as a surface condensation safeguard. It does not, in the text read for this course, use the temperature factor or the figure 0.75. And it cites IP17/01, an earlier BRE information paper, where Approved Document L and PAS 2035 cite IP1/06. BRE's bookshop listing for IP1/06 describes it as revising IP17/01, which it lists as withdrawn. If you see a report or a training slide saying "Approved Document C requires fRsi of 0.75", that is not what the England 2013 text opened for this course says.
 
 ---
 
@@ -345,7 +350,7 @@ If you remember only one thing per pair, use these. They are reasoning from the 
 
 - **Condensation versus penetrating damp:** Does it follow the weather outside or the life inside? Condensation follows cold surfaces and indoor moisture; it is usually worst in the coldest corners and behind furniture regardless of which wall faces the weather. Penetrating damp follows rain and a defect; it tends to sit below or beside the external problem and to change after wet weather.
 - **Condensation versus rising damp:** Is it confined to the bottom of the wall? Condensation at a floor perimeter often sits right at skirting level and in corners, and comes with mould. Rising damp, as the guidance defines it, rises from the ground through walls in contact with it. The guidance says chemical testing is the most appropriate way to confirm it. A band low on the wall that is not obviously linked to cold, furniture or moisture-producing rooms is a referral.
-- **Condensation versus a leak:** Is there a source point? A leak usually grows from somewhere: a pipe run, a joint, a wet room above. Condensation is usually diffuse across cold surfaces. A patch on an internal wall or a ceiling below a bathroom is a leak until shown otherwise.
+- **Condensation versus a leak:** Is there a source point? A leak usually grows from somewhere: a pipe run, a joint, a wet room above. Condensation is usually diffuse across cold surfaces. Record a patch on an internal wall or a ceiling below a bathroom as a possible leak until someone qualified has shown otherwise.
 - **Penetrating damp versus rising damp:** Height and outside evidence. Penetrating damp can appear at any height and usually has an external defect nearby. Rising damp, by definition, is confined to parts of the building in contact with the ground.
 
 ### Simple checks an assessor can make
@@ -390,7 +395,7 @@ On many visits someone will ask for, or expect, a moisture meter reading. The in
 
 Historic England Research Report 2/2022, "A Comparative Evaluation of Methods to Monitor Moisture in Historic Porous Masonry Materials", by Heather Viles, Hong Zhang and Scott Orr, tested resistance, capacitance and microwave handheld meters, along with invasive methods, on blocks of limestone, sandstone, brick and lime mortar under controlled wetting and drying, and compared each against weight measurements. The findings that matter for assessors:
 
-- **Calibrated for timber.** One of the resistance meters tested gives its scale as a "wood moisture equivalent", and the report's description of it notes that "readings above 30% are relative" (Table 1). The scale is set up for wood. On masonry the number is not the moisture content of the wall.
+- **Calibrated for timber.** One of the resistance meters tested gives its scale in WME, the "wood moisture equivalent" unit the report also uses for its wooden dowel method, and Table 1 notes for that meter that "readings above 30% are relative". The scale is set up for wood. On masonry the number is not the moisture content of the wall.
 - **Salts change the reading.** "All the measurement methods showed a strong effect of salinity" (section 1.4.7). Readings at the same moisture level "differed greatly depending on whether or not the water was saline". The conclusions call this "an important and predictable influence" on several methods, including the resistance meters (section 1.5).
 - **Materials cannot be compared.** "The clear conclusion is that it is not advisable to directly compare meter readings from different building materials" (section 1.5). A reading on brick and a reading on mortar are not on the same scale.
 - **Surface only.** The resistance meters "are only sensitive to moisture contents in Clipsham limestone near the surface (<5mm)" (section 2.4.3).
@@ -436,12 +441,12 @@ The government's guidance states: "Damp and mould primarily affect the airways a
 - "older people";
 - "people who are bedbound, housebound or have mobility problems" ("People at increased risk from damp and mould").
 
-This matters to your record because PAS 2035:2023 clause 7.3.2 k) requires "an appraisal of occupancy, including the number of occupants and any special considerations". Where a household includes people in those groups, and there is mould, record both facts in the same place in your report, factually, with consent where personal information is involved.
+This matters to your record because PAS 2035:2023 clause 7.3.2 k) requires "an appraisal of occupancy, including the number of occupants and any special considerations such as the presence of vulnerable persons, e.g. children, elderly people or people with disabilities". Where a household includes people in those groups, and there is mould, record both facts in the same place in your report, factually, with consent where personal information is involved.
 
 ### Landlord duties, briefly
 
 The legal duties fall on landlords, not on assessors. In outline, from the guidance and the legislation opened for this course:
-- The Homes (Fitness for Human Habitation) Act 2018 requires that rented properties "are free of hazards, including damp and mould", where the hazard is serious enough that "the dwelling is not reasonably suitable for occupation in that condition" (guidance, "Legal standards on damp and mould in rented homes").
+- In England, the Homes (Fitness for Human Habitation) Act 2018 requires that rented properties "are free of hazards, including damp and mould", where the hazard is serious enough that "the dwelling is not reasonably suitable for occupation in that condition" (guidance, "Legal standards on damp and mould in rented homes").
 - The HHSRS is "a risk-based evaluation tool" that covers "mould and all types of dampness" (same section).
 - In England, the Hazards in Social Housing (Prescribed Requirements) (England) Regulations 2025, SI 2025/1042, "apply to lessors of social homes in England" (regulation 1(4)) and came into force on 27 October 2025 (regulation 1(2)). The significant hazard category is limited to cases where "the risk of harm is associated with exposure to damp, mould or fungal growth" (regulation 3(2)(a)(i)). This is the government's Phase 1 of Awaab's Law.
 
@@ -471,7 +476,7 @@ Words to avoid in findings: "confirmed", "definitely", "caused by", "rising damp
 
 ### Photographs
 
-PAS 2035:2023 clause 7.4.1 says the whole-dwelling assessment, "including the ventilation assessment, shall be recorded and reported to the Retrofit Designer". MER-ALL-017 notes that the same clause asks for photographs of identified defects. Good practice for moisture:
+PAS 2035:2023 clause 7.4.1 says the whole-dwelling assessment, "including the ventilation assessment, shall be recorded and reported to the Retrofit Designer", and the report includes "a photographic record of all the recorded features of the building and of any identified defects". Good practice for moisture (this course's recommended practice):
 - A wide shot showing the room and where on the wall the problem sits.
 - A close-up showing the pattern.
 - A shot showing what is outside that wall, if visible: gutter, downpipe, render, sill.
@@ -517,16 +522,20 @@ These are situations where you stop describing and recommend professional advice
 
 ### Grant-funded insulation: the TrustMark route
 
-Some of the moisture you see will be in homes that have had insulation fitted under government schemes. If a householder tells you they had external wall insulation installed under ECO4 or the Great British Insulation Scheme (GBIS), there is a free route they should know about.
+Some of the moisture you see will be in homes that have had insulation fitted under government schemes. If a householder tells you they had solid wall insulation, external or internal, installed under ECO4 or the Great British Insulation Scheme (GBIS), there is a free route they should know about.
 
 TrustMark's leaflet says that for homes with "external wall insulation fitted under one of the Government's current Energy Company Obligation (ECO) schemes", TrustMark "will arrange a free audit of your home". At the audit "a qualified professional from TrustMark will inspect the installation and explain the findings to you", and "An audit will focus on safety and technical standards". If issues are found, "TrustMark will arrange for these issues to be put right at no cost to you". The leaflet gives the contact as "0333 555 1234 (Option 1)" and onsitebookings@trustmark.org.uk. TrustMark's web page for the offer is titled "Free Find & Fix Audit Offer" and says: "If you have had work done under ECO4 or GBIS, see the next steps to bring the work up to the required standards" (page updated 23 October 2026).
 
+The scope is wider than TrustMark's own leaflet suggests:
+- Citizens Advice, "Get help with faulty solid wall insulation", says the free check "is for wall insulation installed inside and outside your home", where the work was carried out between April 2022 and January 2025 and the household got help with the cost under ECO4 or GBIS. It says households will be "offered a free home check" and "You will not have to pay anything", and gives TrustMark's number as 0333 555 1234.
+- The National Audit Office report "Energy efficiency installations under the Energy Company Obligation" (14 October 2025) describes audits of both external and internal wall insulation, and says the government "is encouraging households contacted for an audit of external or internal wall insulation" to take part (summary, paragraph 12). It also says "no household with a faulty installation should have to pay to fix the issues" (paragraph 15).
+
 What the sources opened for this course do and do not say:
-- The free audit is described for external wall insulation under ECO4 or GBIS. The leaflet and page do not mention internal or cavity wall insulation.
+- The free audit covers solid wall insulation, external or internal, installed under ECO4 or GBIS. TrustMark's leaflet and web page mention only external wall insulation; Citizens Advice and the National Audit Office include internal wall insulation. No source opened for this course mentions cavity wall insulation. TrustMark decides eligibility, so the householder should contact TrustMark rather than rely on your reading.
 - For other complaints about TrustMark-registered businesses, TrustMark's general process has three stages, in order: raise it with the business; escalate to the business's Scheme Provider; then contact the Dispute Resolution Ombudsman, generally after a final response or 12 weeks, and within 12 months of the first complaint (TrustMark, "Complaints process"). That page does not say whether those stages are free.
 - TrustMark's own role page says "Our role is not to investigate specific consumer complaints", and that consumers "are not entitled to compensation specifically under the TrustMark Scheme" ("TrustMark roles and responsibilities").
 
-Your role is to signpost, not to judge the installation. "The householder reports external wall insulation installed under ECO4; mould observed at window reveals on insulated elevations; householder advised of TrustMark's free audit offer for ECO4 and GBIS external wall insulation" is a complete, safe record.
+Your role is to signpost, not to judge the installation. "The householder reports external wall insulation installed under ECO4; mould observed at window reveals on insulated elevations; householder advised of TrustMark's free audit for solid wall insulation installed under ECO4 or GBIS" is a complete, safe record.
 
 ### A worked record
 
@@ -542,13 +551,13 @@ Notice what it does not say. It does not say "condensation caused by drying clot
 
 The points to carry away:
 - The government's guidance names four kinds of damp: condensation, penetrating, rising and traumatic. Condensation is "the most common form of damp"; rising damp "is often misdiagnosed".
-- In England, 4% of dwellings (1 million) had a damp problem in 2022 on the English Housing Survey's HHSRS-based definition: 9% of private rented, 5% of social rented and 2% of owner-occupied homes.
+- In England, 5% of dwellings (1.4 million) had a damp problem in 2024 on the English Housing Survey's HHSRS-based definition: 10% of private rented, 7% of social rented and 4% of owner-occupied homes (headline findings published 29 January 2026).
 - Mould needs high surface humidity, not liquid water. A cold surface raises the humidity of the air touching it. At 20°C and 60% RH, a 15°C surface sits at about 82% RH.
 - Approved Document F expresses its mould criterion as surface water activity below 0.75 averaged over a month, 0.85 over a week and 0.95 over a day.
 - PAS 2035:2023 clause 8.2.16 requires any detail that is not a published good-practice detail to be shown, by calculation to IP1/06, to have an fRsi not less than 0.75. Approved Document C (England, 2013) frames surface condensation as a maximum U-value of 0.7 W/m²K at any point plus junction details; it does not state 0.75 in the text read.
 - Thermal bridges sit at reveals, lintels, floor perimeters, intermediate floors, eaves, gables and party walls. Discontinuous insulation can make a junction the coldest surface in the room, and airtightness work can raise room humidity.
 - Moisture meters on masonry are set up for timber and strongly affected by salts. Readings on different materials cannot be compared. Do not report a meter reading on masonry as a moisture content or as evidence of rising damp.
-- Recognise and record; say "possible" or "likely"; recommend professional advice. Never tell a householder to open up walls. For external wall insulation under ECO4 or GBIS, signpost TrustMark's free audit.
+- Recognise and record; say "possible" or "likely"; recommend professional advice. Never tell a householder to open up walls. For solid wall insulation, external or internal, installed under ECO4 or GBIS, signpost TrustMark's free audit.
 
 ---
 
@@ -601,11 +610,11 @@ D) Meter readings can confirm rising damp without other tests
 **Q5.** During a retrofit assessment, a householder says the external wall insulation on their home was installed under ECO4, and you see mould at the window reveals. What is the appropriate response?
 
 A) Tell the householder the installation is defective and should be stripped
-B) Record the observation factually, recommend professional advice, and tell the householder about TrustMark's free audit for ECO4 and GBIS external wall insulation
+B) Record the observation factually, recommend professional advice, and tell the householder about TrustMark's free audit for solid wall insulation installed under ECO4 or GBIS
 C) Take moisture meter readings and report the moisture content of the wall
 D) Say nothing, because moisture is outside the scope of the assessment
 
-**Correct answer: B.** The assessor recognises and records, does not tell anyone to open up walls, and signposts the free TrustMark audit described for external wall insulation under ECO4 or GBIS; PAS 2035 clause 7.3.2 d) requires condensation and mould to be recorded (Section 7).
+**Correct answer: B.** The assessor recognises and records, does not tell anyone to open up walls, and signposts the free TrustMark audit for solid wall insulation, external or internal, installed under ECO4 or GBIS; PAS 2035 clause 7.3.2 d) requires condensation and mould to be recorded (Section 7).
 
 ---
 
@@ -613,10 +622,11 @@ D) Say nothing, because moisture is outside the scope of the assessment
 
 Sources used for this course:
 - **Understanding and addressing the health risks of damp and mould in the home.** Ministry of Housing, Communities and Local Government, Department of Health and Social Care, Office for Health Improvement and Disparities and UK Health Security Agency, updated 1 April 2026. Sections "Understanding damp and mould", "Health effects", "People at increased risk", "Legal standards", "Identifying and addressing damp and mould" and "Reducing the risk".
-- **English Housing Survey 2022 to 2023: headline report, Chapter 4 Dwelling condition.** Ministry of Housing, Communities and Local Government, published 14 December 2023. The "Damp" section, Annex Tables 4.5 and 4.6.
+- **English Housing Survey 2024 to 2025: headline findings on housing quality and energy efficiency, Chapter 1 Housing quality.** Ministry of Housing, Communities and Local Government, published 29 January 2026. The "Damp" section, Annex Tables 1.9 and 1.10.
+- **English Housing Survey 2022 to 2023: headline report, Chapter 4 Dwelling condition.** Ministry of Housing, Communities and Local Government, published 14 December 2023. The "Damp" section (superseded figure for 2022).
 - **Housing with damp problems.** Ethnicity facts and figures, gov.uk, published 30 April 2025 (English Housing Survey, April 2021 to March 2023).
-- **Approved Document C: Site preparation and resistance to contaminants and moisture.** 2004 edition incorporating 2010 and 2013 amendments, for use in England. Requirement C2; paragraphs 0.6, 0.12, 4.5, 4.22, 5.2, 5.36 and 6.10 to 6.12. Wales edition (2004 incorporating 2010 amendments), paragraph 4.22.
-- **Approved Document F: Ventilation, Volume 1: Dwellings.** 2021 edition, for use in England. Paragraphs 1.1, 3.6, 3.7 and 3.15; Table 1.1; Appendix B, paragraphs B2, B3, B10 and B11, Tables B2 and B3.
+- **Approved Document C: Site preparation and resistance to contaminants and moisture.** 2004 edition incorporating 2010 and 2013 amendments, for use in England. Requirement C2; paragraphs 0.6, 0.12, 4.5, 4.22, 5.1(d), 5.2 and 5.36. Wales edition (2004 incorporating 2010 amendments), paragraph 4.22.
+- **Approved Document F: Ventilation, Volume 1: Dwellings.** 2021 edition, for use in England. Paragraphs 1.1, 3.6, 3.7 and 3.15; Table 1.1; Appendix B, paragraphs B2, B3, B10 and B11, Tables B2 and B3. Also the 2022 edition for use in Wales (Welsh Government): Table 1.1; Appendix B, paragraphs B.11 and B.12, Tables B.2 and B.3.
 - **Approved Document L: Conservation of fuel and power, Volume 1: Dwellings.** 2021 edition incorporating 2023 amendments, for use in England. Paragraphs 0.10, 4.14, 4.16 to 4.19.
 - **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, 2023. Clauses 3.36, 3.37, 4.3.3, 4.3.6, 7.3.2, 7.4.1, 7.4.2, 8.2.10, 8.2.13 and 8.2.15 to 8.2.17.
 - **A Comparative Evaluation of Methods to Monitor Moisture in Historic Porous Masonry Materials.** Historic England Research Report 2/2022, H. Viles, H. Zhang and S. Orr. Sections 1.4.3, 1.4.7, 1.4.8, 1.5, 2.4.1 and 2.4.3; Table 1.
@@ -624,8 +634,12 @@ Sources used for this course:
 - **Calibration of humidity instruments, Part 1: Introduction.** World Meteorological Organization training unit (Expert Team on Quality, Traceability and Calibration), citing WMO-No. 8, Volume I, Annex 4.B.
 - **The Hazards in Social Housing (Prescribed Requirements) (England) Regulations 2025, SI 2025/1042.** Regulations 1 and 3.
 - **TrustMark.** Free audit leaflet for ECO external wall insulation; "Free Find & Fix Audit Offer" web page (updated 23 October 2026); "Complaints process" and "TrustMark roles and responsibilities" web pages.
+- **Get help with faulty solid wall insulation.** Citizens Advice web page (undated; read 25 October 2026).
+- **Energy efficiency installations under the Energy Company Obligation.** National Audit Office, HC 1334, 14 October 2025. Summary, paragraphs 11, 12 and 15.
 
-Not opened for this course: BS 5250:2021; BS EN ISO 13788; BRE IP1/06; BRE BR 497; the Zero Carbon Hub thermal bridging guide; the Welsh editions of Approved Documents F and L.
+- **Assessing the effects of thermal bridging at junctions and around openings (IP1/06).** BRE bookshop listing (price, publication date and the note that it revises IP17/01). The paper itself was not opened.
+
+Not opened for this course: BS 5250:2021; BS EN ISO 13788; the text of BRE IP1/06; BRE BR 497; the Zero Carbon Hub thermal bridging guide; the Welsh edition of Approved Document L.
 
 Related Meridian courses: MER-ALL-017 (Awaab's Law Phase 2); MER-RA-010 (Thermal Bridging in Retrofit Assessment: What Assessors Must Record).
 

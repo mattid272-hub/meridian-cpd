@@ -691,7 +691,52 @@ def build_story(parsed: dict, S: dict) -> list:
                 bullets_buf = []
             in_list = False
 
+        table_buf = []
+
+        def flush_table():
+            # Markdown pipe table -> ReportLab table. The separator row (|---|) is dropped;
+            # the first row is the header.
+            nonlocal table_buf
+            rows = []
+            for row in table_buf:
+                cells = [c.strip() for c in row.strip().strip('|').split('|')]
+                if all(re.fullmatch(r':?-{2,}:?', c) for c in cells if c):
+                    continue
+                rows.append(cells)
+            table_buf = []
+            if not rows:
+                return
+            ncols = max(len(r) for r in rows)
+            cell_style = ParagraphStyle("TableCell", fontSize=8.5, fontName="Helvetica",
+                                        leading=11.5, textColor=BLACK)
+            head_style = ParagraphStyle("TableHead", parent=cell_style,
+                                        fontName="Helvetica-Bold", textColor=WHITE)
+            data = []
+            for i, r in enumerate(rows):
+                r = r + [''] * (ncols - len(r))
+                st = head_style if i == 0 else cell_style
+                data.append([Paragraph(inline_fmt(c), st) for c in r])
+            t = Table(data, colWidths=[W_inner / ncols] * ncols, repeatRows=1)
+            t.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), DARK),
+                ('GRID', (0, 0), (-1, -1), 0.4, BORDER),
+                ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+                ('TOPPADDING', (0, 0), (-1, -1), 3),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+                ('LEFTPADDING', (0, 0), (-1, -1), 4),
+                ('RIGHTPADDING', (0, 0), (-1, -1), 4),
+            ]))
+            story.append(t)
+            story.append(Spacer(1, 3*mm))
+
         for ln in lines:
+            if ln.startswith('|'):
+                flush_bullets()
+                table_buf.append(ln)
+                continue
+            if table_buf:
+                flush_table()
+
             if not ln or ln == '---':
                 flush_bullets()
                 if ln == '---':
@@ -717,6 +762,8 @@ def build_story(parsed: dict, S: dict) -> list:
             else:
                 story.append(Paragraph(inline_fmt(ln), S['body']))
 
+        if table_buf:
+            flush_table()
         flush_bullets()
 
     return story
