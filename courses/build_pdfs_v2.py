@@ -34,6 +34,7 @@ except ImportError:
     sys.exit(1)
 
 ROOT = Path(__file__).parent
+COURSE_DIR: Optional[Path] = None  # set per course in build_pdf; figures resolve against it
 
 # ── Brand colours ─────────────────────────────────────────────────────────────
 DARK    = colors.HexColor("#0D1F0E")
@@ -736,6 +737,29 @@ def build_story(parsed: dict, S: dict) -> list:
             story.append(Spacer(1, 3*mm))
 
         for ln in lines:
+            m_img = re.match(r'!\[([^\]]*)\]\(([^)]+)\)\s*$', ln)
+            if m_img:
+                # Course figure: ![caption](images/file.png), path relative to the course folder.
+                flush_bullets()
+                if table_buf:
+                    flush_table()
+                img_path = (COURSE_DIR or ROOT) / m_img.group(2)
+                if img_path.exists():
+                    iw, ih = ImageReader(str(img_path)).getSize()
+                    w = W_inner
+                    h = w * ih / iw
+                    max_h = 215*mm
+                    if h > max_h:
+                        h = max_h
+                        w = h * iw / ih
+                    parts = [Image(str(img_path), width=w, height=h)]
+                    if m_img.group(1):
+                        parts.append(Paragraph(f'<i>{inline_fmt(m_img.group(1))}</i>', S['meta']))
+                    story.append(KeepTogether(parts))
+                    story.append(Spacer(1, 3*mm))
+                else:
+                    print(f'    (image not found: {img_path})', end=' ')
+                continue
             if ln.startswith('|'):
                 flush_bullets()
                 table_buf.append(ln)
@@ -795,6 +819,8 @@ class MeridianDoc(BaseDocTemplate):
 
 
 def build_pdf(course_id: str, md_content: str) -> bytes:
+    global COURSE_DIR
+    COURSE_DIR = ROOT / course_id
     parsed = parse_md(md_content)
     S = make_styles()
 
