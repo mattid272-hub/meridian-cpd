@@ -25,7 +25,7 @@ try:
     from reportlab.platypus import (
         BaseDocTemplate, Frame, Image, NextPageTemplate,
         PageBreak, PageTemplate, Paragraph, Spacer, Table, TableStyle,
-        HRFlowable, KeepTogether,
+        HRFlowable, KeepTogether, CondPageBreak,
     )
     from reportlab.platypus.flowables import Flowable
     from reportlab.lib.utils import ImageReader
@@ -610,6 +610,9 @@ def build_story(parsed: dict, S: dict) -> list:
     W_inner = 170*mm
 
     def add_h2(text):
+        # Never leave a section title stranded at the foot of a page: if less than
+        # about a quarter page is left, start the section on the next page.
+        story.append(CondPageBreak(60*mm))
         story.append(Spacer(1, 1*mm))
         story.append(Paragraph(inline_fmt(text), S['h2']))
         story.append(HRFlowable(width=W_inner, thickness=2, color=ACCENT, spaceAfter=2*mm))
@@ -726,7 +729,10 @@ def build_story(parsed: dict, S: dict) -> list:
                 ('LEFTPADDING', (0, 0), (-1, -1), 4),
                 ('RIGHTPADDING', (0, 0), (-1, -1), 4),
             ]))
-            story.append(t)
+            # Keep each table on one page (the course tables are short); the paragraph
+            # before it introduces the table, so it travels with it where it fits.
+            prev = story.pop() if story and isinstance(story[-1], Paragraph) else None
+            story.append(KeepTogether(([prev] if prev else []) + [t]))
             story.append(Spacer(1, 3*mm))
 
         for ln in lines:
@@ -746,6 +752,7 @@ def build_story(parsed: dict, S: dict) -> list:
 
             if ln.startswith('### '):
                 flush_bullets()
+                story.append(CondPageBreak(30*mm))
                 story.append(Paragraph(inline_fmt(ln[4:]), S['h3']))
                 continue
 
