@@ -69,6 +69,8 @@ Two points from the guidance shape how you should write about this:
 
 So a report that says "mould caused by tenant drying clothes indoors" is both outside your competence and at odds with government guidance. A report that says "clothes drying on radiators in bedroom 2 at time of visit; no extract fan in that room" records facts.
 
+That position is the guidance's, written for landlords. In a particular home, occupant activity can still be the main moisture source, and you should record it when you see it. The difference is in how you record it: describe what you observed, alongside the ventilation and heating you found, and let the evidence speak rather than naming a cause.
+
 ### Moisture from outside and below
 
 Penetrating and rising damp bring water in from outside the occupied space. The guidance's external checks for landlords include "damaged or blocked pipes, gutters or downpipes", "broken seals around windows or ill-fitting windows that do not close fully", "visible structural or facade defects, such as cracks in render or the foundation, missing or broken roof finishes" and a "bridged (compromised) damp proof course" ("Internal and external checks"). Each of these is something an assessor can see and record without any instrument.
