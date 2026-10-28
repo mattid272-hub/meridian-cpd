@@ -25,7 +25,7 @@ try:
     from reportlab.platypus import (
         BaseDocTemplate, Frame, Image, NextPageTemplate,
         PageBreak, PageTemplate, Paragraph, Spacer, Table, TableStyle,
-        HRFlowable, KeepTogether,
+        HRFlowable, KeepTogether, CondPageBreak,
     )
     from reportlab.platypus.flowables import Flowable
     from reportlab.lib.utils import ImageReader
@@ -34,6 +34,7 @@ except ImportError:
     sys.exit(1)
 
 ROOT = Path(__file__).parent
+COURSE_DIR: Optional[Path] = None  # set per course in build_pdf; figures resolve against it
 
 # ── Brand colours ─────────────────────────────────────────────────────────────
 DARK    = colors.HexColor("#0D1F0E")
@@ -610,6 +611,9 @@ def build_story(parsed: dict, S: dict) -> list:
     W_inner = 170*mm
 
     def add_h2(text):
+        # Never leave a section title stranded at the foot of a page: if less than
+        # about a quarter page is left, start the section on the next page.
+        story.append(CondPageBreak(60*mm))
         story.append(Spacer(1, 1*mm))
         story.append(Paragraph(inline_fmt(text), S['h2']))
         story.append(HRFlowable(width=W_inner, thickness=2, color=ACCENT, spaceAfter=2*mm))
@@ -691,7 +695,78 @@ def build_story(parsed: dict, S: dict) -> list:
                 bullets_buf = []
             in_list = False
 
+        table_buf = []
+
+        def flush_table():
+            # Markdown pipe table -> ReportLab table. The separator row (|---|) is dropped;
+            # the first row is the header.
+            nonlocal table_buf
+            rows = []
+            for row in table_buf:
+                cells = [c.strip() for c in row.strip().strip('|').split('|')]
+                if all(re.fullmatch(r':?-{2,}:?', c) for c in cells if c):
+                    continue
+                rows.append(cells)
+            table_buf = []
+            if not rows:
+                return
+            ncols = max(len(r) for r in rows)
+            cell_style = ParagraphStyle("TableCell", fontSize=8.5, fontName="Helvetica",
+                                        leading=11.5, textColor=BLACK)
+            head_style = ParagraphStyle("TableHead", parent=cell_style,
+                                        fontName="Helvetica-Bold", textColor=WHITE)
+            data = []
+            for i, r in enumerate(rows):
+                r = r + [''] * (ncols - len(r))
+                st = head_style if i == 0 else cell_style
+                data.append([Paragraph(inline_fmt(c), st) for c in r])
+            t = Table(data, colWidths=[W_inner / ncols] * ncols, repeatRows=1)
+            t.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), DARK),
+                ('GRID', (0, 0), (-1, -1), 0.4, BORDER),
+                ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+                ('TOPPADDING', (0, 0), (-1, -1), 3),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+                ('LEFTPADDING', (0, 0), (-1, -1), 4),
+                ('RIGHTPADDING', (0, 0), (-1, -1), 4),
+            ]))
+            # Keep each table on one page (the course tables are short); the paragraph
+            # before it introduces the table, so it travels with it where it fits.
+            prev = story.pop() if story and isinstance(story[-1], Paragraph) else None
+            story.append(KeepTogether(([prev] if prev else []) + [t]))
+            story.append(Spacer(1, 3*mm))
+
         for ln in lines:
+            m_img = re.match(r'!\[([^\]]*)\]\(([^)]+)\)\s*$', ln)
+            if m_img:
+                # Course figure: ![caption](images/file.png), path relative to the course folder.
+                flush_bullets()
+                if table_buf:
+                    flush_table()
+                img_path = (COURSE_DIR or ROOT) / m_img.group(2)
+                if img_path.exists():
+                    iw, ih = ImageReader(str(img_path)).getSize()
+                    w = W_inner
+                    h = w * ih / iw
+                    max_h = 215*mm
+                    if h > max_h:
+                        h = max_h
+                        w = h * iw / ih
+                    parts = [Image(str(img_path), width=w, height=h)]
+                    if m_img.group(1):
+                        parts.append(Paragraph(f'<i>{inline_fmt(m_img.group(1))}</i>', S['meta']))
+                    story.append(KeepTogether(parts))
+                    story.append(Spacer(1, 3*mm))
+                else:
+                    print(f'    (image not found: {img_path})', end=' ')
+                continue
+            if ln.startswith('|'):
+                flush_bullets()
+                table_buf.append(ln)
+                continue
+            if table_buf:
+                flush_table()
+
             if not ln or ln == '---':
                 flush_bullets()
                 if ln == '---':
@@ -701,6 +776,7 @@ def build_story(parsed: dict, S: dict) -> list:
 
             if ln.startswith('### '):
                 flush_bullets()
+                story.append(CondPageBreak(30*mm))
                 story.append(Paragraph(inline_fmt(ln[4:]), S['h3']))
                 continue
 
@@ -717,6 +793,8 @@ def build_story(parsed: dict, S: dict) -> list:
             else:
                 story.append(Paragraph(inline_fmt(ln), S['body']))
 
+        if table_buf:
+            flush_table()
         flush_bullets()
 
     return story
@@ -741,6 +819,8 @@ class MeridianDoc(BaseDocTemplate):
 
 
 def build_pdf(course_id: str, md_content: str) -> bytes:
+    global COURSE_DIR
+    COURSE_DIR = ROOT / course_id
     parsed = parse_md(md_content)
     S = make_styles()
 

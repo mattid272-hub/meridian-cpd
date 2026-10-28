@@ -156,6 +156,7 @@ COURSES = {
     "MER-ALL-015": {"course_id": "MER-ALL-015", "title": "EPC Reform and the Future Home Buying Process: What Assessors Must Know", "cpd_hours": 1.0, "published": "2026-09-01"},
     "MER-ALL-016": {"course_id": "MER-ALL-016", "title": "Scheme Operating Requirements: How They Work and What Changed in 2026", "cpd_hours": 1.0, "published": "2026-09-15"},
     "MER-ALL-017": {"course_id": "MER-ALL-017", "title": "Awaab's Law Phase 2: What Energy Assessors Must Know", "cpd_hours": 1.0, "published": "2026-10-01"},
+    "MER-ALL-018": {"course_id": "MER-ALL-018", "title": "Damp, Condensation and Thermal Bridging: Reading the Moisture", "cpd_hours": 3.0, "published": "2026-10-25"},
     # Subscription — welcome email only; library access granted via plan field
     "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0, "published": "2026-03-01"},
 }
