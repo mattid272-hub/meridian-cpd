@@ -351,6 +351,10 @@ Three cautions when you use these figures:
 - Paragraph 11: "They have not audited homes retrofitted from 16 January 2025 onwards", and those homes are excluded from the estimates.
 - Figure 2, note 6: the wall insulation numbers "include installations on both cavity walls and solid walls".
 
+> **Wider view: the same measure under other schemes.** The NAO also reported results from audits of two other government schemes (Summary paragraph 17; paragraph 2.9; Figure 9). DESNZ commissioned these audits of the Social Housing Decarbonisation Fund (wave 2.1) and the Home Upgrade Grant (phase 2), using a random sample of 188 wall insulation measures. They found major issues in 12% of external wall insulation. The NAO describes these audits as comparable to the ECO4 and GBIS audits. Like the ECO figures, they relate to installations before the audit dates, not to current rates.
+>
+> **What it means for your work:** the same measure can turn out very differently depending on how it is designed, installed and checked. The scheme an installation came through is useful context to record, and so is any evidence you are shown of checks made before the work was covered. Neither tells you the condition of the wall in front of you; your own observations do.
+
 Use them to explain why you look carefully at ECO-era EWI and why you mention the audit route. Do not use them to tell a householder their installation is defective. A scheme-wide estimate says nothing certain about the house in front of you.
 
 On who pays, paragraph 15 says "The original installer is liable for all the cost of remediating non-compliant installations" and that "DESNZ has stated that no household with a faulty installation should have to pay to fix the issues". Paragraph 2.20 says that where the installer has ceased to trade, the 25-year guarantee TrustMark requires should cover remediation, and that TrustMark said these guarantees should cover costs up to £20,000.
