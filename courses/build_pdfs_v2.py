@@ -385,9 +385,12 @@ def make_styles():
     H2 = ParagraphStyle("H2",
         fontSize=13, fontName="Helvetica-Bold", textColor=DARK,
         spaceBefore=8*mm, spaceAfter=2*mm, keepWithNext=1)
+    # No keepWithNext on H3: it would bind the sub-heading to the whole of the next
+    # paragraph and push both to a new page, leaving a gap under the section title. The
+    # CondPageBreak(30mm) placed before each H3 already keeps it off the foot of a page.
     H3 = ParagraphStyle("H3",
         fontSize=10.5, fontName="Helvetica-Bold", textColor=DARK,
-        spaceBefore=4*mm, spaceAfter=1*mm, keepWithNext=1)
+        spaceBefore=4*mm, spaceAfter=1*mm, keepWithNext=0)
     BODY = ParagraphStyle("Body",
         fontSize=10, fontName="Helvetica", leading=15.5,
         spaceAfter=3*mm, alignment=TA_JUSTIFY, textColor=BLACK)
