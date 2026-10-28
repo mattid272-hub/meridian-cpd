@@ -25,6 +25,8 @@ This edition replaces the March 2026 edition, which said windows are measured as
 
 ## Section 1: Is It a Window, and Is It Relevant?
 
+**In short:** If in doubt about a glazed door, measure it and treat it as a window if the glazing is 60% or more of the whole opening, door and frame. Measure every window, highly glazed door and roof light in the heat loss envelope, including those onto a separated conservatory, unheated corridor or excluded porch, but not windows in a non-separated conservatory. In a highly glazed room that fails the conservatory criteria, measure all windows and roof windows.
+
 ### The definition
 
 A window is an opening in an external wall or roof of a building, fitted with glass or similar material, usually in a frame, that admits light (convention 2.14).
@@ -70,6 +72,8 @@ Where a dwelling has a curtain wall, opaque panels are treated as a curtain wall
 
 ## Section 2: Measuring Width and Height
 
+**In short:** Measure from inside and include the visible frame: width between the internal reveals and height from the inner sill to the top reveal, to 0.01 m or better. Neither source asks for the structural opening or an addition for reveal depth. For an arched window, enter the actual width and the average of the shoulder and top heights; for other unusual shapes, enter the area as the width and 1 as the height.
+
 ### The rule
 
 Assessors are required to measure and enter the width and height of all relevant windows, including the visible frame. The width is the overall width of the window between the internal reveals. The height is the overall height of the window between the inner sill and the top reveal (convention 2.15).
@@ -100,6 +104,8 @@ Roof lights are relevant windows, so the same rule applies (convention 2.15). Ea
 ---
 
 ## Section 3: Glazing Type, Age, Gap and Secondary Glazing
+
+**In short:** Date multiple glazed units from evidence: the manufacturing date on the spacer bar or frame, documents such as a FENSA certificate, or a build date after the trigger dates. With none of those, a thermal spacer bar supports post 2002 in England and Wales but not Age 3; otherwise choose unknown. For non-metal frames that are Age 1 or of unknown period, record the gap to the nearest of 6, 12 or 16 mm.
 
 ### What is recorded against each window
 
@@ -157,6 +163,8 @@ If secondary glazing has been removed for the summer, enter it only if you can c
 ---
 
 ## Section 4: Draught Proofing, Shutters, Known Values and Open Questions
+
+**In short:** If you cannot tell the state of draught proofing, take triple, double and secondary glazed units as draught proofed, and single glazed windows and doors as not, unless there is evidence that they are. Confirm shutters are operational on the day by opening them. Overwrite default U-values and g-values only with a BFRC Window Energy Rating certificate or manufacturer's data, not a FENSA certificate. For an unreachable window, a bay window and the other gaps listed, ask your scheme.
 
 ### Draught proofing
 

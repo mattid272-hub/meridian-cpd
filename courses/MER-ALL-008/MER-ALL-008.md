@@ -31,6 +31,8 @@ The course is correct to 14 October 2026, and much of it is time-sensitive. On t
 
 ## Section 1: What the Act does and what is in force
 
+**In short:** The tenancy reforms in force since 1 May 2026, for tenancies that are not social housing, change nothing about how an EPC is produced or when one is needed; that duty comes from the 2012 EPC Regulations. Remember too that the database, the landlord redress scheme, Awaab's Law for private tenancies and the decent homes requirements were not in force on 14 October 2026, beyond some limited purposes.
+
 ### Commencement
 
 Section 145 brings most of the Act into force on days appointed by regulations; a few provisions, including Part 4 Chapter 3 (councils' investigatory powers), came in two months after Royal Assent (section 145(5)). The Secretary of State had made three sets of commencement regulations:
@@ -55,6 +57,8 @@ Four parts that matter to assessors were not in force on 14 October 2026:
 ---
 
 ## Section 2: The Private Rented Sector Database and EPC information
+
+**In short:** Don't tell a client that registering needs a new EPC; nothing in the draft text read says so. As drafted, a landlord required to give the current tenant a valid EPC would supply the most recent one "if one exists", and on 14 October 2026 the draft had not yet been made. It is a sensible habit to check the EPC register for a valid EPC before booking a reassessment, and to explain that a new one replaces the old.
 
 ### What the Act provides
 
@@ -84,6 +88,8 @@ A sensible habit is to check the EPC register for a valid EPC before booking a r
 ---
 
 ## Section 3: Decent Homes, Awaab's Law and hazards
+
+**In short:** If a landlord asks whether a property passes Decent Homes, the accurate answer is that no private sector standard applies yet, that the EPC bears only on the energy part of the proposed Criterion D, and that hazards are for the local housing authority. The new standard is a policy decision to apply from 2035. The HHSRS, including damp and mould growth and excess cold, applies now, and Awaab's Law for private tenancies is not in force.
 
 ### The Decent Homes power
 
@@ -115,6 +121,8 @@ RdSAP produces an "asset rating" of energy cost for "standardised use of buildin
 ---
 
 ## Section 4: MEES, separate legislation and the 2030 decision
+
+**In short:** Check for a valid EPC before you reassess: the newest lodged EPC counts, so a lower rating replaces a better certificate. A property whose valid EPC is below band E still must not be let unless an exemption applies, and the 1 October 2030 standard is a decision, not law. If you model a route to 2030, you can only work against today's EER and should say so in writing. Planned works cannot be lodged as done.
 
 ### The law in force
 

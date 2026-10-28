@@ -29,6 +29,8 @@ The legal status statements here are correct to 14 October 2026; Phase 2 was sti
 
 ## Section 1: The Law in Force Now
 
+**In short:** Since 27 October 2025, registered providers of social housing in England must investigate any emergency hazard except lack of space and complete any relevant safety work within 24 hours; for potential significant damp, mould or fungal growth hazards, they must investigate within 10 working days of becoming aware and make them safe within 5 working days after that, subject to the detail below. Tenants enforce this through claims for breach of covenant; Awaab's Law does not provide for fines.
+
 ### Where the duty comes from
 
 Section 42 of the Social Housing (Regulation) Act 2023 inserted sections 10A and 10B into the Landlord and Tenant Act 1985, in force from 20 September 2023 (section 42, commencement note). Section 10A implies into each qualifying lease a covenant by the landlord to comply with "all prescribed requirements" (section 10A(2)), and requires regulations setting periods for landlords to act on prescribed hazards (section 10A(3)). A lease qualifies where the dwelling is in England, the landlord is a registered provider of social housing, the dwelling is social housing other than low cost home ownership, and the fitness for human habitation covenant in section 9A applies, or would apply, to the lease (section 10A(1) and (6)). "Prescribed hazard" means a hazard prescribed under section 2 of the Housing Act 2004 (section 10A(7); section 10(2)): the Housing Health and Safety Rating System (HHSRS) hazards in Schedule 1 to the HHSRS (England) Regulations 2005.
@@ -60,6 +62,8 @@ The regulations are enforceable "only through actions for breach of the covenant
 ---
 
 ## Section 2: Phase 2, Phase 3 and Private Renting
+
+**In short:** Treat Phase 2 as a draft: if it is approved and made, excess cold, excess heat and other hazards join damp and mould as significant hazards from 30 November 2026, with the same timescales, and until then Phase 1 applies. Carbon monoxide is planned for Phase 3, though an imminent and significant risk is already an emergency hazard. No private landlord has Awaab's Law duties today; extending them is out to consultation until 18 December 2026.
 
 ### Status of Phase 2
 
@@ -97,6 +101,8 @@ In Wales, landlords under secure contracts, periodic standard contracts and fixe
 
 ## Section 3: What Your Assessments Do and Do Not Establish
 
+**In short:** An EPC does not comment on the safety or maintenance of services and does not tell a landlord whether there is an excess cold hazard. Your retrofit record of where mould is and how bad it is may be useful evidence, but it is not the Awaab's Law investigation unless the landlord commissioned you to carry one out. Remember that the existence of a ventilation system is not proof that a building is adequately ventilated.
+
 ### The EPC
 
 An EPC's purpose "is to indicate how energy efficient a building is". It "will not comment on the safety aspects or maintenance of the services", nor confirm that a system "is fit for purpose" (DCLG, A guide to energy performance certificates for the marketing, sale and let of dwellings, December 2017, chapter 3). Neither the RdSAP 10 Conventions v12.2 nor the RdSAP10 Specification v4.0 mentions damp or mould.
@@ -122,6 +128,8 @@ The damp and mould guidance says "some energy efficiency interventions may reduc
 ---
 
 ## Section 4: When Your Findings Meet the Landlord's Duties
+
+**In short:** These Regulations place no duty on you, though your scheme, contract or the general law may set expectations, so ask your scheme and read your terms. A sensible habit is to tell the landlord promptly in writing when you see a possible hazard, with dated photographs and locations, describing what you saw and leaving categorising to them. The landlord will usually be considered aware from the date you notify it, subject to the contractor exception below.
 
 ### No duty on you in these Regulations
 

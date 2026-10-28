@@ -29,6 +29,8 @@ This edition replaces the September 2026 edition. That edition presented intenti
 
 ## Section 1: The Law Today on Sale and Letting
 
+**In short:** You must make sure the EPC data is on the register before you give it to the person who asked for it, and buyers and tenants can already enforce your duty of reasonable care and skill while the EPC is valid. Where there is no valid EPC, the seller or prospective landlord must secure that one is commissioned before marketing, then use all reasonable efforts to obtain it within 7 days, plus a further 21 days if that proves impossible.
+
 The duties are in Part 2 of the Energy Performance of Buildings (England and Wales) Regulations 2012 (SI 2012/3118). On legislation.gov.uk the regulations below show "no known outstanding effects", and the latest amending instruments listed date from 2024.
 
 ### Commissioning before marketing
@@ -57,6 +59,8 @@ You must make sure the data used to produce the EPC is entered on the register b
 
 ## Section 2: EPB Reform: Decisions, Intentions and Timetable
 
+**In short:** Treat everything here as government intention with no made or draft instrument behind it: four headline metrics, ten-year validity kept for reformed and existing EPCs, and an EPC required at the point of marketing. Until amending regulations are made, regulation 7 and its 7 plus 21 days remain the law. The launch has moved to the second half of 2027, and no published launch date was found, so check the consultation page and ask your scheme.
+
 The consultation "Reforms to the Energy Performance of Buildings regime" ran from 4 December 2024 to 26 February 2025, from MHCLG and DESNZ, applying to England and Wales. A partial government response was added on 21 January 2026 and an outcome update on 9 March 2026 (gov.uk consultation page). Everything in this section is a stated government intention with no made or draft instrument behind it.
 
 ### What reformed EPCs will measure
@@ -82,6 +86,8 @@ The response said that, subject to parliamentary approvals, the government inten
 ---
 
 ## Section 3: The Home Buying and Selling Reform Roadmap
+
+**In short:** Remember that requiring a sales pack before listing is a commitment to legislate when parliamentary time allows; it is not law. "EPC rating" is one item the government anticipates a pack will include, with details subject to change, and the roadmap does not say how EPC information would reach a pack or mention the new metrics or the HEM. Keep this separate from the EPB intention to require an EPC at the point of marketing.
 
 MHCLG consulted from 6 October to 29 December 2025 on "Home buying and selling reform" and "Material information in property listings". Its response to both is the "Home buying and selling reform roadmap", added on 19 June 2026, covering reform "over the remainder of this parliament" (gov.uk consultation pages).
 
@@ -109,6 +115,8 @@ The sales pack is a commitment to legislate in future; it is not law. It is also
 ---
 
 ## Section 4: Material Information, the Home Energy Model and Your Practice
+
+**In short:** Do not sell an EPC as "sales pack ready", and check your own scheme's indemnity terms. Agents' material information duties now rest on the DMCCA 2024, not the revoked 2008 Regulations behind the old Parts A, B and C guidance. RdSAP 10 applies now; a DESNZ consultation, with no outcome published, says the HEM will replace it when new EPCs launch in the second half of 2027, exact date not set.
 
 ### Material information law has changed
 

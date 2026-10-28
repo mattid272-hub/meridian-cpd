@@ -25,6 +25,8 @@ Four v12.2 changes dated 13 July 2026 are covered in this course. Convention 4.0
 
 ## Section 1: Main or Secondary, Room Counts and Missing Systems
 
+**In short:** When counting habitable rooms, leave out rooms used solely as a kitchen, utility rooms, bathrooms, hallways, stairs, landings and rooms without access to natural daylight, among others. Main systems cannot be room heaters unless the heating consists solely of room heaters. A system fitted but not working, or condemned, still counts when deciding main and secondary heating; one present but not accessible, with no documentary evidence, means the assessment cannot be completed until access is provided, except for community heating.
+
 ### Habitable rooms
 
 Habitable rooms include any living room, sitting room, dining room, kitchen/diner, bedroom, study and similar. A non-separated conservatory adds to the count if it has an internal quality door between it and the dwelling, but one open to the rest of the dwelling is not counted as a separate room (convention 2.04a). The same convention excludes the following from the count:
@@ -58,6 +60,8 @@ Where no space heating system is present, the calculation is done for portable e
 ---
 
 ## Section 2: Storage Heaters and Other Electric Main Heating
+
+**In short:** Record a storage heater as high heat retention only if you locate its brand name and model in the database; one identified as high heat retention but not in the PCDB is entered as fan-assisted. More than one type means two main systems, with system 1 always heating the living area. Storage heaters as main heating on a single rate meter are entered as panel heaters with Addendum 6. Treat electric underfloor mats and infra-red heaters as panel heaters.
 
 ### Types, and the high heat retention rule
 
@@ -105,6 +109,8 @@ The sources do not list the other direct electric heating types, which sit in SA
 ---
 
 ## Section 3: Secondary Heating, Open Fires and Room Heaters
+
+**In short:** Include secondary heating wherever a fixed emitter is present, even if the main system heats every room: a fixed heater in a non-habitable room counts, as does a plug-in electric focal point fire. Ask your scheme about borderline appliances. Where there are several, choose the one heating the most habitable rooms, then cheapest fuel, then lowest efficiency. Consider an open fire if the fireplace can support one, with a grate suitable for holding fuel, even with no fuel present.
 
 ### When to include secondary heating
 
@@ -155,6 +161,8 @@ If there are more than two main heating systems, use the same rules to settle sy
 ---
 
 ## Section 4: Meters and Tariffs
+
+**In short:** Two single-reading meters for on-peak and off-peak are a dual meter, and unless you are choosing a particular tariff on additional information such as a recent bill, treat a tele-switch as single and a time-switch as dual. With storage heaters as main heating or a dual immersion on a single meter, enter panel heaters or a single immersion with Addendum 6. An electric CPSU on a single tariff is a direct-acting electric boiler; ask your scheme about Addendum 6.
 
 ### Recording the meter
 

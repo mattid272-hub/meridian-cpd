@@ -25,6 +25,8 @@ Photovoltaics are covered in summary only; course MER-DEA-011 deals with PV, bat
 
 ## Section 1: Lighting under convention 7.01
 
+**In short:** Count lamps, not fittings, in permanent fittings within the dwelling, fixed under-cupboard kitchen lights included but not free-standing plug-in lamps, and count an LED strip as one lamp per running metre, rounded to the nearest metre. Record a single missing or unidentifiable lamp as CFL, but if more than 50% of the non-incandescent lamps are missing or unidentifiable, record all of them as LEL. You enter counts, not wattage, efficacy bands or controls, so identify lamps wherever you safely can.
+
 ### What is counted
 
 The rules are short:
@@ -86,6 +88,8 @@ Change one thing. Suppose the six kitchen spots and the four LED pendants could 
 
 ## Section 2: Photovoltaics in summary, wind turbines and hydro
 
+**In short:** A wind turbine you cannot document is still recorded as present on the default values, because documentary evidence is needed to overwrite them; do not estimate the rotor diameter by eye. Record terrain even where there is no turbine, based on the obstacles in the dwelling's curtilage. Record small-scale hydro as yes or no with basic documentary evidence of its presence; no usage information is required.
+
 ### Photovoltaics: the short version
 
 These are the main points of convention 9.05:
@@ -127,6 +131,8 @@ The presence of a smart meter, and of a smart meter for gas, is also recorded, b
 
 ## Section 3: Solar water heating and heat recovery
 
+**In short:** You need documentary evidence to overwrite solar collector or store values, though orientation, tilt and overshading can be overwritten. Once solar details are known, record the shower type: one fed from a cylinder is non-electric even if the cylinder is electrically heated. Include flue gas or waste water heat recovery only if found in the PCDB; otherwise leave it out and record its presence in site notes. Confirm the treatment of a storage type WWHRS with your scheme before lodging.
+
 ### Solar water heating
 
 Start with whether a solar panel is present. After that the data set works in three layers, each available only once the one before is known (specification section 17, Table 31 items 8-1 to 8-4):
@@ -160,6 +166,8 @@ The sources conflict on storage types. Convention 9.08 gives recording rules for
 ---
 
 ## Section 4: New technologies, Technical Notes and cooling
+
+**In short:** For a possible Appendix Q technology, photograph the NCM (SAP) identifier label, which the convention notes is still being developed, and disregard the technology if the label and, where applicable, a commissioning certificate cannot be found, or if there is no RdSAP spreadsheet. If a technology might be the subject of a BRE Technical Note, you must check BRE's list and follow any note that applies to RdSAP. For cooling, include only fixed systems, never reversible heat pumps.
 
 ### Technologies recognised through SAP Appendix Q
 

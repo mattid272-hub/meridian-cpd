@@ -31,6 +31,8 @@ The course is correct to 12 October 2026.
 
 ## Section 1: Who Assesses, and When
 
+**In short:** Check you meet Annex A, for example as a domestic energy assessor certified and registered by an assessor body or as a RICS registered surveyor, and for a traditionally constructed dwelling also hold the Level 3 older and traditional buildings award or a listed equivalent. Every dwelling to receive energy retrofit work is assessed first, to inform the Designer; after a distressed replacement of a heating appliance, assess as soon as possible during or after the work.
+
 ### The Retrofit Assessor
 
 A retrofit assessment is the "survey, inspection and assessment" of a building to collate information for a retrofit design (clause 3.27). A Retrofit Assessor shall be qualified in accordance with Annex A (clause 7.3.1). Annex A is titled "Qualifications"; the other annexes cover quality assurance schemes (B), ventilation (C), interactions between measures (D) and significance for traditional buildings (E). Under A.1.1 the assessor shall be one of these:
@@ -55,6 +57,8 @@ BSI has published BS 40104:2025, "Retrofit assessment for domestic dwellings. Co
 ---
 
 ## Section 2: What the Assessment Shall Include
+
+**In short:** All twelve items of clause 7.3.2 are required; its notes are informative. Locate defects, leaks, condensation and mould and record their severity whatever measures are in view, measure the heat loss envelope showing how elements meet at corners, junctions and within openings, and confirm whether services are working correctly or otherwise. If occupants are out, the occupancy appraisal is still required; a sensible habit is to obtain it by a method your scheme accepts and record how and from whom.
 
 Clause 7.3.2 lists twelve items. Notes 1 to 14 among them are informative, not requirements (Foreword), and are mostly written with "might" and "should".
 
@@ -100,6 +104,8 @@ Item k) does not say how occupancy information is gathered. If the occupants are
 
 ## Section 3: Ventilation, the Energy Model and RdSAP Data
 
+**In short:** Record any fan's position and type, with make and model where possible or the reasons if not, and the size and location of any background ventilators. The 2023 text has no Table C.1, so do not invent a checklist: ask your scheme provider which it expects and state in your report which you used. The energy model gives an estimate, not an EPC. In RdSAP 10, overwrite default wall, roof and floor U-values only on documentary evidence meeting convention 3.08.
+
 ### Ventilation: item f)
 
 Item f) requires an inspection and review of the existing ventilation following "the checklist provided in Table C.1", and in addition you shall:
@@ -129,6 +135,8 @@ Where note 8 leads you to calculate or measure a U-value, a sensible approach is
 ---
 
 ## Section 4: Traditional Buildings and the Report
+
+**In short:** For a traditionally constructed dwelling, listed or not, assess significance before design starts using the Table E.2 checklist and, where retrofit might affect appearance, tick the box for each significant feature with details and photographs; a protected building's assessment also follows BS 7913. Report to the Designer with any data file and photographs of all recorded features and defects, putting any defects, leaks, condensation or mould into two categories: repair before retrofit work can proceed, or recommended but not essential.
 
 ### Traditional and protected buildings
 

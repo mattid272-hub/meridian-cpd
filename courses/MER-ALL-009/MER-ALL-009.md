@@ -31,6 +31,8 @@ No source in this course gives a domestic energy assessor, as such, any part in 
 
 ## Section 1: Two Different Numbers
 
+**In short:** Don't let EPC figures stand in for a heat pump design: they are whole-dwelling, use standard occupancy and climate data that is not a cold design day, and MCS says annual heat demand is not appropriate for sizing. The design heat load works room by room, because the emitters do. Even the design heat loss behind an RdSAP heat pump recommendation is one whole-dwelling number used to model that recommendation.
+
 ### The design heat load
 
 BSI describes BS EN 12831-1:2017 as covering the calculation of "the design heat load for single rooms, building entities, and buildings": the heat supply needed "to maintain the required internal design temperature under design external conditions", usually worked out "prior to the dimensioning of components of a heating system" (BSI catalogue entry). It is a paid standard; this course teaches only what the MCS documents say about it.
@@ -52,6 +54,8 @@ MCS is explicit: "Neither the annual heat demand of the building nor the annual 
 ---
 
 ## Section 2: What MCS Requires
+
+**In short:** Expect an MCS design to follow MIS 3005-D: a heat load calculation should be performed with internal temperatures not less than Table 1 and external ones from Table 2, and shall otherwise comply with BS EN 12831-1:2017; the heat pump shall be selected to provide at least 100% of that load without any supplementary electric heater. MCS's own calculator normally starts from default U-values too; what differs from RdSAP is room-level working at design temperatures.
 
 ### Which documents
 
@@ -83,6 +87,8 @@ MCS publishes a Heat Load Calculator which it says "Complies with the BS EN 1283
 
 ## Section 3: The Boiler Upgrade Scheme and PAS 2035
 
+**In short:** Since 28 April 2026 the Boiler Upgrade Scheme no longer requires an EPC, but where a valid one exists its certificate number must be provided. Under PAS 2035:2023, where an MCS-covered system is the single measure, the Retrofit Designer shall be a specialist designer or specifier of the system who is MCS certified, or a chartered building services engineer. As Retrofit Assessor you survey the heat loss envelope and installed services; clause 7 asks for no design heat load.
+
 ### BUS on 14 October 2026
 
 The scheme rests on SI 2022/565, "amended in 2024, and further amended on 28 April 2026", and Ofgem administers it (Ofgem, BUS Installer Guidance V5.1, 2 July 2026, paragraph 1.03). Ofgem's guidance page still named V5.1 as "the current version" when checked. Grant values are (paragraph 1.02):
@@ -113,6 +119,8 @@ Where the single measure is a system covered by MCS, the Retrofit Designer "shal
 ---
 
 ## Section 4: Where the Energy Assessor Fits
+
+**In short:** Enter the heat pump from the Product Characteristics Database whenever possible, record MCS installation as yes only with documentary evidence, and leave the design flow temperature unknown unless documentary evidence shows low temperature design and commissioning. Your EPC's space heating demand may feed an MCS performance estimate but is not for sizing. If you offer heat load calculations, ask the MCS Contractor how your work would be contracted, agree the scope in writing and ask your insurer about design cover.
 
 ### What you record about a heat pump
 

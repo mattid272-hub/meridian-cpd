@@ -31,6 +31,8 @@ This course is correct to 12 October 2026.
 
 ## Section 1: What the Retrofit Assessor Records
 
+**In short:** Record the position and type of any fans, with make and model where possible or the reasons why not, the size and location of all background ventilators, the location and severity of any condensation or mould, and whether installed systems are working correctly. The "Table C.1" that clause 7.3.2 f) cites is not in the September 2023 text, so work from the f) list. Whether the ventilation is adequate is the Retrofit Designer's decision, not yours.
+
 ### The clause 7.3.2 items
 
 Clause 7.3.2 a) to l) of PAS 2035:2023 sets the content of the assessment. The ventilation items are:
@@ -56,6 +58,8 @@ Whether the ventilation is adequate for the package, and what replaces it, is th
 ---
 
 ## Section 2: System Types, Wet Rooms and the WC Rule
+
+**In short:** When you record a system, remember that Approved Document F Table 1.6 has three types, not four: natural ventilation with background ventilators and intermittent extract fans (less airtight dwellings only), continuous mechanical extract, and MVHR. A WC without a fan is not automatically deficient, so record the window's type, opening angle and size and leave adequacy to the designer. Do not skip the utility room, and record marked ventilator sizes and door gaps.
 
 ### Three system types, not four
 
@@ -85,6 +89,8 @@ For natural ventilation, Table 1.7 sets 8000 mm2 for habitable rooms and kitchen
 ---
 
 ## Section 3: The Trigger: Table 3.1, Diagram 3.1 and Clause 8.2.13
+
+**In short:** Record measures already done, such as cavity fill, replacement windows, a sealed hatch or a capped chimney, and record condensation and mould precisely, because either can trigger the designer's check. Under clause 8.2.13 the Retrofit Designer shall confirm the adequacy of the existing ventilation if the specified and existing measures fall into Category B or C under Table 3.1 and Diagram 3.1, or the assessment shows condensation or mould growth. These categories are not risk paths.
 
 ### What Approved Document F asks
 
@@ -121,6 +127,8 @@ Replacement windows should keep background ventilators where the old ones had th
 ---
 
 ## Section 4: Annex C and the Chimney Entries
+
+**In short:** Record each chimney's location, treatment and any air brick area: under convention 9.01 an open chimney is modelled at 80 m3/hr, a decommissioned one with air bricks under 30,000 mm2 is treated as blocked at 20 m3/hr, and a completely sealed one with no air bricks is not counted. Remember that the existence of a ventilation system is not proof of adequate ventilation, and enter an air test result in RdSAP only from a competent tester's pressure test certificate.
 
 ### Adequate existing systems
 

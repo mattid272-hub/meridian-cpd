@@ -31,6 +31,8 @@ This course is correct to 12 October 2026.
 
 ## Section 1: Who Chooses IWI or EWI, and What the Assessment Contributes
 
+**In short:** You establish what the wall is, its condition and constraints, and whether the dwelling is fit for improvement; the IWI or EWI choice comes later, in the options evaluation and design. If you note that a wall looks unsuitable for a measure, a sensible habit is to give the evidence. In England, on article 2(3) land, which includes conservation areas, Class A permitted development excludes cladding in render or the other materials it lists, Article 4 direction or not.
+
 ### Where the choice is made
 
 A retrofit design "determines the unique combination of EEM systems, products, and materials" for a building (PAS 2035:2023, clause 3.30). The Retrofit Designer prepares it taking into account the building's condition, including the need to repair structural defects and "address causes of damp or water ingress" first; the agreed scope and budget; the assessment report; planning or building control conditions; and the existing ventilation (clause 8.2.8 a) to e)). The choice comes after your assessment: the Retrofit Coordinator's improvement options evaluation identifies a recommended package of measures for the medium-term improvement plan, which also identifies the building's constraints (clauses 8.1.1, 8.1.4 and 8.1.7 a); the Retrofit Designer agrees the measures with the client (clause 8.2.6), and the design settles the system and details.
@@ -59,6 +61,8 @@ BS 40104:2025, "Retrofit assessment for domestic dwellings. Code of practice" (B
 ---
 
 ## Section 2: Recording a Solid Wall
+
+**In short:** Check a "solid" wall is solid, since stretcher bond with a wall thickness of 220 to 250 mm indicates a narrow cavity, and measure thickness for each building part, with evidence. Record the location and severity of defects, leaks, condensation and mould; a sensible habit is to record ground levels against the damp proof course, each elevation's finishes and what you could not see. For traditional construction, a qualified assessor completes the Table E.2 significance checklist before design starts.
 
 PAS 2035:2023 has no list of "mandatory IWI data" or "mandatory EWI data". Points marked as the IWI guide's come from "Retrofit internal wall insulation: guide to best practice" (BEIS, September 2021), one of the PAS's listed insulation guides (clause 15.1.3). It says the risk areas in its Table 1 "should also be included in the retrofit assessment" (paragraph 22): advice, not a PAS requirement.
 
@@ -91,6 +95,8 @@ Table E.2 asks "Is the exterior wall surface significant?", "Are any features vi
 
 ## Section 3: Interstitial Condensation and Thermal Bridging
 
+**In short:** Clause 7.3.2 asks you for no condensation calculation; the design provides for managing moisture in line with BS 5250. Your part is the inputs: materials and moisture properties, finishes, exposure, occupancy and ventilation. Your measured survey must show how elements meet at corners, junctions and within openings, and a sensible habit is to record reveal depths, frame positions, eaves overhang, floor and joist junctions, the damp proof course line, meter boxes and flues.
+
 ### Interstitial condensation
 
 An interstitial condensation assessment to BS EN ISO 13788 "might not be sufficient" as the basis of a BS 5250 moisture risk assessment for some walls, "e.g. solid walls with internal wall insulation (IWI) proposed in exposed locations" (clause 4.3.3, NOTE 1). The requirement sits in the design, which "shall include provision for the management of moisture within the construction, in line with BS 5250" (clause 8.2.10). BS 5250 is cited undated, so its latest edition applies (clause 2); we do not teach it. The note to 8.2.10 says materials "should match the moisture strategy of the existing building", with vapour permeable and capillary active materials "most suited" to keeping a dynamic moisture equilibrium.
@@ -115,6 +121,8 @@ For ventilation, Approved Document F Volume 1 (2021 edition, England) counts EWI
 ---
 
 ## Section 4: The Installer's Checks and the RdSAP Record
+
+**In short:** The installer checks that the design includes your assessment report identifying repairs, and confirms at its pre-installation inspection that they are done. In RdSAP, wall insulation is as built unless added insulation is evidenced; for stone, solid brick and cavity walls in bands A to E, dry lining alone does not confirm insulation. With both internal and external insulation, add the thicknesses together and enter as external, and where the conventions conflict with the specification, the convention takes precedence.
 
 ### What the installer checks
 

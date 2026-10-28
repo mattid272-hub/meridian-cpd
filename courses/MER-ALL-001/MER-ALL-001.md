@@ -27,6 +27,8 @@ Related courses: MER-ALL-005 (Future Homes Standard), MER-ALL-008 (Renters' Righ
 
 ## Section 1: What is law today
 
+**In short:** Tell clients that band E is the only legal minimum for letting private rented property in England and Wales until new regulations are made and in force; below it a landlord must not let unless an exception or exemption in the Regulations applies. If you see a band move between RdSAP 9.94 and RdSAP 10 certificates with no work done, the carbon factor is not the reason: the band is cost-based, on the SAP 2012 prices.
+
 ### The minimum standard for letting is band E
 
 The Energy Efficiency (Private Rented Property) (England and Wales) Regulations 2015 (SI 2015/962) set the minimum level of energy efficiency for domestic and non-domestic private rented property as "an energy performance indicator of band E" (regulation 22(b)). A property is sub-standard if its valid EPC shows a lower rating, and an EPC counts as valid only if it was entered on the register no more than 10 years before the date it is relied on and no other EPC has since been entered for the property (regulation 22(a) and (c)).
@@ -52,6 +54,8 @@ So when a band changes between an RdSAP 9.94 certificate and an RdSAP 10 one wit
 ---
 
 ## Section 2: Rented homes, the decisions of 2026
+
+**In short:** Keep decisions and law apart when you advise. Privately rented homes in England and Wales are to reach EPC C by 1 October 2030, and social rented homes in England C on one metric by 1 April 2030 and a second by 1 April 2039, subject to the caps, exemptions and other conditions below. On the sources read neither is shown in force, so for private lettings the law is still band E.
 
 ### Private rented homes: EPC C by 1 October 2030
 
@@ -79,6 +83,8 @@ DESNZ's interim response of 18 June 2026, for England and Wales, proposes EPC B 
 
 ## Section 3: EPC reform and the Future Homes Standard
 
+**In short:** Treat EPC reform in England and Wales as policy, not law: the launch has moved to the second half of 2027 with no launch date given, so ask your scheme for the timetable. Scotland's 30 April 2028 date for new-style EPCs is in draft regulations whose approval this course could not confirm. The Future Homes Standard regulations are made but not yet in force: they apply in England from 24 March 2027, subject to the exceptions below.
+
 ### EPC reform in England and Wales
 
 MHCLG, supported by DESNZ, published a partial government response on reforms to the Energy Performance of Buildings regime on 21 January 2026. For domestic EPCs it set out these policies:
@@ -105,6 +111,8 @@ The Building Regulations etc. (Amendment) (England) Regulations 2026 (SI 2026/33
 ---
 
 ## Section 4: The Warm Homes Plan and the funding schemes
+
+**In short:** Check a scheme's status before pointing a client to it: as at 12 October 2026, Home Upgrade Grant Phase 2 and the Great British Insulation Scheme are closed, ECO4 runs until 31 December 2026, and Warm Homes: Local Grant is delivered in England to March 2028 under guidance requiring the latest PAS 2035, currently PAS 2035:2023. The Warm Homes Plan text read mentions neither PAS 2035 nor TrustMark, so ask TrustMark or your scheme before saying those arrangements are changing.
 
 ### What the plan is
 

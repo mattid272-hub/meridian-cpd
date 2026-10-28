@@ -31,6 +31,8 @@ This course is correct to 12 October 2026.
 
 ## Section 1: What the Assessment Covers
 
+**In short:** Use clause 7.3.2, not Annex A, to cover the wall's construction, condition, existing fill, defects and exposure to wind and rain, as evidence of the dwelling's suitability for improvement; choosing measures and products is for others. As practice, photograph every elevation, the DPC line or its absence, pointing and cracking, signs of earlier injection and internal damp, and check what your own scheme asks for. Report defects as needing repair before retrofit can proceed, or recommended but not essential.
+
 ### Annex A is not a data list
 
 Every dwelling is first assessed by a Retrofit Assessor "to provide information about the dwelling for use by a Retrofit Designer" (PAS 2035:2023, clause 7.1.1). The assessor is trained and qualified in accordance with Annex A (clause 7.3.1), and Annex A is titled "Qualifications"; it lists no cavity wall data fields. The assessment content is clause 7.3.2, items a) to l). None of them names the exposure zone, the damp-proof course or wall ties, but they are broad enough to take them in.
@@ -59,6 +61,8 @@ BSI lists BS 40104:2025, "Retrofit assessment for domestic dwellings. Code of pr
 
 ## Section 2: Recording the Cavity Wall in RdSAP 10
 
+**In short:** Enter a cavity wall whatever its width, measure each external wall's thickness, and treat the insulation as "as built" unless there is evidence of retro-fitted insulation; keep "unknown" for exceptional cases and explain it in site notes. Use convention 9.10 for access issues, narrow cavities and possible high exposure, recording possible high exposure if in doubt. A flag prompts investigation; it does not show the wall is unsuitable, and no flag does not show it is suitable.
+
 ### Wall type, thickness and lining
 
 Enter a cavity wall "irrespective of the width of the cavity", and record insulation level, presence of dry-lining and wall thickness (convention 3.01; RdSAP10 Specification v4.0, section 5.2.1). Measure each external wall's thickness; Table 3 defaults are only for when it could not be measured (specification, section 3.5). Dry lining "alone does not confirm the presence of insulation" (convention 3.06, for age bands A to E).
@@ -83,6 +87,8 @@ Measure B, cavity wall insulation, is considered for an unfilled cavity wall ass
 ---
 
 ## Section 3: Risk Factors and Where the Rules Sit
+
+**In short:** Your survey should record what product certificates check, such as cavity width, state of repair, mortar joints, damp on the inner face and the DPC, because conditions of use come from each certificate and differ between them. In England, Approved Document C has the wall's suitability for filling assessed before the work. No source read sets a rule on wall tie condition for cavity fill, so record any cracking, bulging or other structural defect with location, severity and a photograph.
 
 ### Exposure to wind-driven rain
 
@@ -119,6 +125,8 @@ Approved Document B Volume 1 (England) excludes masonry cavity walls meeting Dia
 ---
 
 ## Section 4: Who Decides What
+
+**In short:** You record and report the evidence; the installer's pre-installation inspection identifies whether the structure is suitable and the extent of the cavity to be filled. A sensible habit is to write what you saw and how you established it, not "CWI appears suitable"; if a wall raises a question, flag it to the Coordinator. Under ECO4, the building fabric repair increase applies only to issues identified under clause 7.3.2 and reported under clause 7.4.2 as defects to repair before retrofit.
 
 ### The assessor and the Coordinator
 

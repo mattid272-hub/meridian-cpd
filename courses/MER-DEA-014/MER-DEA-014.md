@@ -25,6 +25,8 @@ Section 4 uses one accreditation scheme's "Evidence Required for Audit" list for
 
 ## Section 1: What the Conventions Mean by Evidence
 
+**In short:** Assume "as built" unless there is evidence of retrofitted insulation, and rely on a document only if you are confident, and can demonstrate, that it relates to this property and that no physical evidence, or in England, Wales and Northern Ireland other documentary evidence, contradicts it. Intent to install does not count on its own, and the Scotland wording has no equivalent of rules (a) and (b), which say when it can. Ask your scheme about invoices and verbal statements.
+
 ### Three kinds of evidence
 
 The conventions rely on three kinds of evidence: what you see or measure on the day, photographs, and documents. Some entries accept more than one kind. In England, Wales and Northern Ireland, upgraded elements in a converted building can be specified where documentary or visual evidence is available (convention 3.05a). Others accept only a document: a door is counted as insulated only if documentary evidence is provided (convention 3.09).
@@ -50,6 +52,8 @@ Convention 9.02 gives an open list. The example scheme accepts guarantees, warra
 ---
 
 ## Section 2: Evidence for the Fabric
+
+**In short:** State whether dimensions are internal or external, without mixing the two, evidence each different wall thickness, and measure and photograph the loft insulation thickness where safe and practicable access is possible. "No access" means no hatch or other means of access; "unknown" suppresses any insulation recommendation and is only for exceptional circumstances such as those listed, and an unknown type must be clarified in site notes. Change default window, door or fabric U-values only with the documents the conventions name.
 
 ### Dimensions and walls
 
@@ -93,6 +97,8 @@ Suitable expertise and experience can be shown by, but is not limited to, member
 
 ## Section 3: Evidence for Services, Renewables and Recommendations
 
+**In short:** If the heat source or emitters are inaccessible and no documents are available, you cannot complete the assessment until there is access, community heating excepted. Keep defaults such as unknown design flow temperature unless the named document exists; without evidence, a PV battery defaults to 5 kWh and a diverter cannot be entered. Remove a recommendation only on documentary evidence showing it is not appropriate, and record it in site notes; listed or conservation area status alone is not enough.
+
 ### Heating
 
 If a heating source or heat emitters are present but not accessible for inspection, and no documentary evidence is made available, the assessment cannot be completed until access has been provided, community heating excepted (convention 4.03).
@@ -127,6 +133,8 @@ Recommendations should be removed only if there is documentary evidence showing 
 ---
 
 ## Section 4: One Scheme's Evidence List and a Pre-Lodgement Check
+
+**In short:** One example scheme wants enough evidence for an auditor to re-create the EPC without the data input report; check your own scheme's rules, which may differ. Before lodging, check that every replaced default is backed by the document the convention names and every "unknown" insulation entry is explained in site notes. If you lodge an EPC in error and lodge a corrected one, inform your scheme so the erroneous one can be marked "not for issue".
 
 ### What one scheme asks to see
 

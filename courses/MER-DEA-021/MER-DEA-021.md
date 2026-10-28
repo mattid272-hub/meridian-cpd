@@ -27,6 +27,8 @@ This edition replaces the March 2026 edition. That edition gave a three-year lim
 
 ## Section 1: The pressure test result and convention 10.01
 
+**In short:** Leave the default unless you have a pressure test certificate giving a measured air permeability at 50 Pa or 4 Pa, and know which; do not estimate or enter a design figure. Confirm it relates to this dwelling and comes from a person with suitable expertise and experience. Material changes since the test make it invalid; the sources do not define them, so compare the test date with later works, record what you find and ask your scheme if unsure.
+
 ### The default comes first
 
 The pressure test result must be the RdSAP default and must not be overwritten unless specific documentary evidence is available (convention 10.01). The specification agrees: the infiltration rate is calculated when a pressure test result is not available, and when one is available it can be used (specification section 4.1, Table 5). No certificate, no entry: you do not estimate a figure.
@@ -61,6 +63,8 @@ Results from background ventilation tests are not included in the assessment (co
 ---
 
 ## Section 2: What the calculation does with a test, and without one
+
+**In short:** Get the chimney, flue, fan and vent counts right whether or not there is a test, because a test replaces only the fabric allowances and those counts are still added. The 50 Pa and 4 Pa results use different formulas, so do not enter one as the other. Built form sets the shelter factor on either route, and the sources do not say any recorded item can be skipped when a test is entered, so collect it all.
 
 The specification takes the infiltration calculation from the SAP 10.2 worksheet and reproduces the relevant lines in Table 5 (specification section 4.1). Every figure in this section comes from that table. There are two parts: openings you count, and fabric allowances that follow from what you record.
 
@@ -111,6 +115,8 @@ With a valid 50 Pa certificate, the 0.75 is replaced by the certificate figure d
 ---
 
 ## Section 3: Chimneys, fireplaces and flues
+
+**In short:** Count chimneys of 200 mm diameter or more, or 125,000 mm2, as open where unrestricted and suitable for use, plus the other cases listed; a duct under 200 mm in diameter, including a sealed flexible gas flue liner, is a flue. A decommissioned chimney with a ventilation area below 30,000 mm2 is blocked, at 30,000 mm2 or more is open, and one sealed completely with no air bricks need not be counted. Where the sources are silent, ask your scheme.
 
 The specification refers you to the conventions for the chimney and fireplace definitions and count (specification section 4.1). Everything in this section comes from convention 9.01 unless another source is cited.
 
@@ -165,6 +171,8 @@ That gives two open chimneys at 80 and one blocked chimney at 20: 180 m3 per hou
 ---
 
 ## Section 4: Draught lobby, draught proofing, vents and construction
+
+**In short:** A draught lobby counts only if it meets all four tests, including covering the entrance designed as the Main Entrance, which may not be the one used most, but a flat reached by an enclosed corridor or stairwell should be classified as having one. Examine every external door and openable window for draught proofing, using the glazing-type rule only where its state cannot be determined. Record timber frame as timber frame whatever the cladding; retro-fitted floor insulation must be evidenced.
 
 ### Draught lobby
 

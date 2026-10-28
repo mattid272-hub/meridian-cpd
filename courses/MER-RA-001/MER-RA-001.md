@@ -31,6 +31,8 @@ Statements about scheme status and the standard's status are correct to 12 Octob
 
 ## Section 1: What PAS 2035:2023 Is and How It Is Used
 
+**In short:** PAS 2035:2023 has been in effect since 30 March 2025 and has no Path A, B or C; TrustMark says risk pathway data on a 2019 assessment becomes superfluous. Even when a scale retrofit design starts from archetypes, every dwelling needs its own assessment before the design package is complete. Scheme status has moved on, and the government said ECO4 would end on 31 December 2026, so ask your scheme provider or TrustMark which requirements apply to a job.
+
 ### Scope and status
 
 PAS 2035:2023 specifies requirements for the retrofit of dwellings in four activities: assessment; identification and evaluation of improvement options (energy efficiency measures, or EEMs); design and specification of EEMs; and monitoring and evaluation (clause 1). The EEMs in scope run from fabric insulation and airtightness through heating, hot water, ventilation and lighting to measures against overheating and climate change (clause 1, items 1 to 13). It does not apply to maintenance, repair or like-for-like replacement that does not improve energy performance or ventilation or reduce emissions, but it does apply to the distressed replacement of heating appliances (clause 1). It describes itself as the overarching document of the retrofit standards framework (Introduction).
@@ -59,6 +61,8 @@ For England, Approved Document F Volume 1 (2021) says following PAS 2035 is cons
 ---
 
 ## Section 2: Roles and Qualifications
+
+**In short:** Annex A requires you to be a domestic energy assessor certified and registered by an assessor body, or working towards that through a recognised RPEL process or a regulated course, or a RICS registered surveyor. For a traditionally constructed dwelling you must also hold the Level 3 Award in Energy Efficiency for Older and Traditional Buildings or a listed equivalent. Annex A names no retrofit assessment diploma, so anything further your scheme asks for is a scheme requirement.
 
 ### The Retrofit Coordinator
 
@@ -89,6 +93,8 @@ A Retrofit Evaluator shall be a Coordinator qualified under A.2 (A.4.1). One per
 ---
 
 ## Section 3: The Whole-Dwelling Assessment
+
+**In short:** Cover all twelve items in clause 7.3.2 and report to the Designer with the RdSAP, SAP or PHPP data file and a photographic record of all recorded features and any defects. Sort defects into those to repair before any retrofit work can proceed and those recommended but not an essential prerequisite, and report tested air flows below the minimum. Table C.1 is cited but missing from the September 2023 text, so ask your scheme provider which ventilation checklist it expects.
 
 ### Who and when
 
@@ -140,6 +146,8 @@ BSI published BS 40104:2025, "Retrofit assessment for domestic dwellings. Code o
 
 ## Section 4: Traditional and Protected Buildings
 
+**In short:** For traditional construction, or a listed or conservation area building, an assessment of significance to BS 7913 is also required, made before retrofit proposals and design and in proportion to the building's importance. The Table E.2 checklist must be used by an assessor qualified for traditional buildings: tick the features found, with details and photographs. A heritage impact assessment, where a measure might affect a significant aspect, comes later in the options appraisal.
+
 ### Definitions
 
 Traditional construction means solid brick, stone or earth external walls of moisture-permeable materials, usually built before 1919, or pre-1919 timber frame (clause 3.39). A protected building is listed or in a designated conservation area (clause 3.23).
@@ -163,6 +171,8 @@ The Designer and Coordinator shall take significance into account when selecting
 ---
 
 ## Section 5: Options, Plans and Design
+
+**In short:** Your data file and the dwelling's areas feed the Coordinator's options evaluation, and a note says deemed savings should not be used: one reason your measured survey matters. If your assessment finds condensation or mould, or the specified and existing measures fall into Approved Document F Category B or C, the Designer must confirm whether existing ventilation is adequate. Those categories are Approved Document F's, not risk paths, and the 2021 England edition is the one in use today.
 
 ### Improvement options evaluation and plan
 
@@ -190,6 +200,8 @@ For Category C measures, Annex C accepts continuous mechanical extract with corr
 
 ## Section 6: Installation, Testing, Commissioning, Handover and Advice
 
+**In short:** You can deliver retrofit advice, since the guidance in clause 5.7.1 includes the Retrofit Assessor, but advice after the options evaluation is for the Coordinator who did it, and after design for the Designer or Coordinator. The Coordinator recommends a new or updated EPC and, if the client agrees, arranges for a domestic energy assessor to produce it. Under PAS 2030, the installer's pre-installation inspection confirms that the identified repairs have been done.
+
 ### Installation and site inspection
 
 Installation shall follow PAS 2030, or MCS standards for systems within MCS scope (clause 9.1). The Coordinator shall collect evidence that PAS 2035 has been met, through in-person or remote site inspections, the number agreed with the client (clause 9.2). Third-party digital evidence is allowed, when an in-person visit is not possible, only for listed measures such as loft and cavity wall insulation, single replacement windows and boiler replacement; any unlisted measure, or a listed one that connects to another fabric measure, needs an in-person inspection (clause 9.2). Non-compliance is recorded, reported in writing and escalated to the quality assurance regime if not put right (clause 9.3.2). On the installer's side, PAS 2030 requires a pre-installation building inspection that reviews the design and confirms that the identified repairs have been done (PAS 2030:2023, clauses 7.2.1 and 7.2.4).
@@ -205,6 +217,8 @@ The Coordinator shall verify that retrofit advice is delivered on every project 
 ---
 
 ## Section 7: Monitoring, Evaluation and Claims of Compliance
+
+**In short:** The Evaluator's findings come back to you, and basic evaluation, the minimum for every project, is completed and reported within three months after handover: that is how you learn whether your assessment held up. Claims of compliance are made by Retrofit Coordinators and must say whether they rest on other-party validation or self-assessment. Where the standard leaves something open, such as which ventilation checklist to use, follow your scheme provider's rules and record in your report what you did.
 
 ### Monitoring and evaluation
 
