@@ -51,7 +51,7 @@ The secondary heating system is a room heater type (specification section 10.4),
 ### Not working, not installed, not accessible
 
 Convention 4.03 separates three situations:
-- Fitted but not working, or condemned: the system is still taken into account when deciding the main and secondary heating.
+- Fitted but not working, or condemned: the system should still be taken into account when deciding the main and secondary heating.
 - Not fitted or installed: enter no heating system, or do another survey when the system is installed.
 - Present but not accessible for inspection, with no documentary evidence: the assessment cannot be completed until access is provided (community heating excluded).
 

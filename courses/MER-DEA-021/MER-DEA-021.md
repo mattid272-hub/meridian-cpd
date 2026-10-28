@@ -224,7 +224,7 @@ The floor infiltration for the whole dwelling is determined by the floor type of
 - Material changes since the test make the certificate invalid for RdSAP entry. The sources do not define a material change (convention 10.01).
 - A test result replaces the fabric allowances, but the chimney, flue, fan and vent counts are still added (specification section 4.1, Table 5).
 - An open chimney is an unrestricted, usable duct of 200 mm diameter or more, or 125,000 mm2. Smaller ducts are flues (convention 9.01).
-- A decommissioned chimney need not be counted if sealed completely, is blocked with a ventilation area below 30,000 mm2 and is open at 30,000 mm2 or more (convention 9.01).
+- A decommissioned chimney with a ventilation area below 30,000 mm2 is blocked and one at 30,000 mm2 or more is open; one sealed completely, with no air bricks required, need not be counted (convention 9.01).
 - A draught lobby must meet all four tests in convention 2.09b. Flats reached by an enclosed corridor or stairwell are classified as having one.
 
 ---

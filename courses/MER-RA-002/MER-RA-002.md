@@ -8,7 +8,7 @@
 - State what PAS 2035:2023 changed about moisture, and recognise unsourced claims about it.
 - Identify the items of clause 7.3.2 that bear on moisture, including the notes to item d).
 - Report defects, leaks, condensation and mould in the two categories of clause 7.4.2, with the photographic record of clause 7.4.1.
-- Describe the types of damp as the government's damp and mould guidance for England describes them, and the limits of a visual diagnosis.
+- Describe the types of damp as the government's damp and mould guidance for England describes them, and the limits of judging the cause by eye.
 - Explain what the Retrofit Designer, Retrofit Coordinator and installer must do with your moisture findings.
 
 ---
@@ -96,7 +96,7 @@ Traditional construction means solid walls "constructed with moisture-permeable 
 
 ---
 
-## Section 3: Diagnosing damp: what the sources let us say
+## Section 3: Recognising damp: what the sources let us say
 
 **In short:** Your PAS duty is location and severity, and a sensible habit is to describe what you saw and where, give a likely cause only where the evidence supports it, and say plainly where the cause could not be established without testing or opening up. Neither source here is a PAS requirement, and the government guidance for England says chemical testing is the most appropriate way of confirming rising damp. Specifying treatment is not your job.
 
@@ -123,7 +123,7 @@ PAS 2035:2023 cites "Investigation of moisture and its effects in traditional bu
 
 ### Where that leaves the assessor
 
-Your PAS duty is location and severity (clause 7.3.2 d), and neither source treats a visual diagnosis as final. A sensible habit is to describe what you saw and where, give a likely cause only where the evidence supports it, and say plainly where the cause could not be established without testing or opening up. Specifying treatment is not your job.
+Your PAS duty is location and severity (clause 7.3.2 d), and neither source treats a judgement made by eye as final. A sensible habit is to describe what you saw and where, give a likely cause only where the evidence supports it, and say plainly where the cause could not be established without testing or opening up. Specifying treatment is not your job.
 
 ---
 

@@ -54,7 +54,7 @@ Installation, commissioning and handover are covered by PAS 2030:2023, "Installa
 
 ### How it is required in practice
 
-A DESNZ letter of 5 March 2025, published by TrustMark, said measures completed after 30 March 2025 under ECO4, the Great British Insulation Scheme (GBIS), the Warm Homes: Local Grant and the Warm Homes: Social Housing Fund "must be delivered to PAS 2035:2023". Scheme status has moved on. The government response of 23 January 2026 said GBIS would end as planned on 31 March 2026, ECO4 would end on 31 December 2026, and there would be no successor supplier obligation (DESNZ, Extending the ECO4 end date: government response).
+A DESNZ letter of 5 March 2025, published by TrustMark, said measures completed after 30 March 2025 under ECO4, the Great British Insulation Scheme (GBIS), the Warm Homes: Local Grant and the Warm Homes: Social Housing Fund "must be delivered to PAS 2035:2023". Scheme status has moved on. The government response of 23 January 2026 said GBIS would end as planned on 31 March 2026, ECO4 would end on 31 December 2026, and there would be no successor supplier obligation (DESNZ, Extending the ECO4 end date: government response). Ofgem's delivery guidance states that "The Great British Insulation Scheme closed on 31 March 2026" (Ofgem, ECO4 Guidance: Delivery v4.0, 26 March 2026, paragraph 3.177).
 
 For England, Approved Document F Volume 1 (2021) says following PAS 2035 is considered an adequate means of demonstrating compliance with its paragraph 3.6, which says energy efficiency work should not leave ventilation below the minimum standard (Approved Document F Volume 1, paragraphs 3.6 and 3.7). This course does not cover which schemes run in which nation; your scheme provider or TrustMark can tell you which requirements apply to a job.
 
@@ -140,7 +140,7 @@ Distressed replacement is fast-paced installation of an EEM, typically replacing
 
 ### BS 40104:2025
 
-BSI published BS 40104:2025, "Retrofit assessment for domestic dwellings. Code of practice", describing it as a "risk-based methodology" for assessing dwellings before retrofit (BSI press release, 28 October 2025). PAS 2035:2023 does not refer to it. This course does not teach its content; ask your scheme provider whether and when it will apply to your work.
+BSI published BS 40104:2025, "Retrofit assessment for domestic dwellings. Code of practice", on 24 September 2025 (BSI online catalogue). Its press release of 28 October 2025 describes it as a "risk-based methodology" for assessing dwellings before retrofit. PAS 2035:2023 does not refer to it. This course does not teach its content; ask your scheme provider whether and when it will apply to your work.
 
 ---
 
@@ -318,6 +318,7 @@ Sources used for this course:
 - **Retrofit Assessment Transition: PAS2035:2019 to PAS2035:2023 Assessment Conversion, V1.0.** TrustMark, 4 March 2025. The entry on risk pathways.
 - **DESNZ letter on PAS 2035 transition arrangements (untitled, addressed "To whom it may concern").** DESNZ, published by TrustMark, 5 March 2025. Which schemes must deliver to PAS 2035:2023.
 - **Extending the ECO4 end date: government response.** DESNZ, updated 23 January 2026. The ECO4 and GBIS end dates.
+- **ECO4 Guidance: Delivery, version 4.0.** Ofgem, 26 March 2026. Paragraph 3.177 on the closure of GBIS.
 
 ---
 

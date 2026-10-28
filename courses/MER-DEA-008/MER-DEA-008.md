@@ -188,7 +188,7 @@ A basement that meets the criteria in convention 2.05 becomes the lowest occupie
 - "Unknown" is for exceptional circumstances and suppresses the insulation recommendation (convention 3.03b).
 - A U-value entry needs the evidence in convention 3.08; product and thickness alone lead to a thickness entry under convention 3.07.
 - Solid brick and stone walls in age bands A to E take a conductivity of 0.040, 0.030 or 0.025 W/mK, with no doubling of thickness for low conductivity (convention 3.07).
-- "No access" means no hatch or other means of access; a hatch you could not use, or insulation fully obstructed, is "access, loft insulation unknown" (convention 3.04).
+- "No access" means no hatch or other means of access; a hatch you could not use is "access, loft insulation unknown", and fully obstructed insulation is "pitched, access, loft insulation unknown" unless the householder has documentary evidence, lifts the boards or removes the obstructions (convention 3.04).
 - Varying loft insulation is an area-weighted average; an area with none means splitting into building parts (convention 3.04).
 
 ---

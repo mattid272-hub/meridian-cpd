@@ -43,7 +43,7 @@ The specification gives the same instruction (section 10.5.1, and Table 31, item
 
 ### Fitted but not working, and not fitted at all
 
-Convention 4.03 was amended in v12.2 to refer to hot water as well as heating. A fixed hot water source that is fitted but not working, or that has been condemned, is still taken into account when you decide the hot water type (convention 4.03). You record what is installed, not what currently runs.
+Convention 4.03 was amended in v12.2 to refer to hot water as well as heating. A fixed hot water source that is fitted but not working, or that has been condemned, should still be taken into account when you decide the hot water type (convention 4.03). You record what is installed, not what currently runs.
 
 Where there is no water heating system at all, the calculation is done for an electric immersion heater. The immersion is taken as dual if the electricity meter is dual and as single otherwise, including where the meter is unknown. The cylinder is taken from the first rows of Tables 28 and 29, which are the rows for an inaccessible cylinder (specification section 10.7).
 
