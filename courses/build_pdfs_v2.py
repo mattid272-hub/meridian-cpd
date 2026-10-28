@@ -487,6 +487,24 @@ def section_box(heading: str, items: list, bg: colors.Color, fg: colors.Color,
     return [KeepTogether([head_table, body_table]), Spacer(1, 4*mm)]
 
 
+def in_short_box(text: str) -> Table:
+    """A section's "In short:" opener as a tinted call-out with a green rule down the left."""
+    W_box = 170*mm
+    p = Paragraph(inline_fmt(text),
+        ParagraphStyle("InShort", fontSize=10, fontName="Helvetica", leading=15,
+                       textColor=DARK))
+    t = Table([[p]], colWidths=[W_box])
+    t.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,-1), colors.HexColor("#f0faf2")),
+        ('LINEBEFORE', (0,0), (0,-1), 3, GREEN),
+        ('LEFTPADDING', (0,0), (-1,-1), 5*mm),
+        ('RIGHTPADDING', (0,0), (-1,-1), 5*mm),
+        ('TOPPADDING', (0,0), (-1,-1), 3*mm),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 3*mm),
+    ]))
+    return t
+
+
 def reading_box(heading: str, items: list, S: dict) -> list:
     """Further reading box in light green."""
     W_box = 170*mm
@@ -742,7 +760,13 @@ def build_story(parsed: dict, S: dict) -> list:
             # Keep each table on one page (the course tables are short); the paragraph
             # before it introduces the table, so it travels with it where it fits.
             prev = story.pop() if story and isinstance(story[-1], Paragraph) else None
-            story.append(KeepTogether(([prev] if prev else []) + [t]))
+            group = [prev] if prev else []
+            # A sub-heading just above the intro paragraph travels too, so it is never
+            # left at the foot of a page while its table moves to the next one.
+            if prev is not None and prev.style.name != 'H3' and story \
+                    and isinstance(story[-1], Paragraph) and story[-1].style.name == 'H3':
+                group.insert(0, story.pop())
+            story.append(KeepTogether(group + [t]))
             story.append(Spacer(1, 3*mm))
 
         for ln in lines:
@@ -764,6 +788,9 @@ def build_story(parsed: dict, S: dict) -> list:
                     parts = [Image(str(img_path), width=w, height=h)]
                     if m_img.group(1):
                         parts.append(Paragraph(f'<i>{inline_fmt(m_img.group(1))}</i>', S['meta']))
+                    # A sub-heading directly above a figure moves with it.
+                    if story and isinstance(story[-1], Paragraph) and story[-1].style.name == 'H3':
+                        parts.insert(0, story.pop())
                     story.append(KeepTogether(parts))
                     story.append(Spacer(1, 3*mm))
                 else:
@@ -796,6 +823,11 @@ def build_story(parsed: dict, S: dict) -> list:
 
             if in_list:
                 flush_bullets()
+
+            if ln.startswith('**In short:**'):
+                story.append(in_short_box(ln))
+                story.append(Spacer(1, 4*mm))
+                continue
 
             if ln.startswith('*') and ln.endswith('*') and not ln.startswith('**') and len(ln) < 150:
                 story.append(Paragraph(f'<i>{inline_fmt(ln.strip("*"))}</i>', S['meta']))

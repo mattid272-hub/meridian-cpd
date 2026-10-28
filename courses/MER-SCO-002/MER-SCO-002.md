@@ -38,13 +38,15 @@ Every statement is cited to the document it comes from; where a page would not o
 
 ## Section 1: The Instruments and the Dates
 
+**In short:** The 2025 Regulations are made, but so far only the opening provisions and the rules on approved organisations and accreditation schemes are in force. The draft 2026 Amendment Regulations would bring in the rest on 30 April 2028. They would also raise the register fee for a dwelling from £2.60 to £6.00 on 31 October 2026, provided they are in force by then. For now, the EPC you lodge is a 2008 Regulations certificate, and you still work to the RdSAP 10 Conventions.
+
 ### The 2025 Regulations
 
-The draft 2025 Regulations were laid on 10 October 2025 under the affirmative procedure (Local Government, Housing and Planning (LGHP) Committee report, 27 November 2025, paragraph 1). The committee recommended that the draft be approved (paragraph 25), the Parliament agreed, and the Regulations were made on 16 December 2025 as SSI 2025/417 (heading and preamble). Regulation 1(3) brought regulations 1, 2 (interpretation), 11 (approved organisations), 12 (accreditation schemes) and 36 (transitional provisions for approved organisations) into force on 1 January 2026. Regulation 37 and Schedule 2 revoke the 2008 Regulations (SSI 2008/309) and the seven instruments that amended them, subject to the saving and transitional provisions in regulation 38.
+The draft 2025 Regulations were laid on 10 October 2025 under the affirmative procedure (Local Government, Housing and Planning (LGHP) Committee report, 27 November 2025, paragraph 1). The committee recommended that the draft be approved (paragraph 25), the Parliament agreed, and the Regulations were made on 16 December 2025 as SSI 2025/417 (heading and preamble). Regulations 1, 2 (interpretation), 11 (approved organisations), 12 (accreditation schemes) and 36 (transitional provisions for approved organisations) came into force on 1 January 2026 (regulation 1(3)). Regulation 37 and Schedule 2 revoke the 2008 Regulations (SSI 2008/309) and the seven instruments that amended them, subject to the saving and transitional provisions in regulation 38.
 
 ### The draft 2026 Amendment Regulations
 
-On 17 March 2026 the Scottish Government said the new-style certificates "will not come into force in October 2026 as planned", citing the UK Government's "delay to the introduction of EPC reforms until the second half of 2027" and the dependence on "a new methodology (the Home Energy Model) and assessor training being finalised across the UK" (Energy Performance Certificate Reform: updates, page dated 17 March 2026). The draft amending instrument was laid on 24 August 2026 (Economy, Tourism and Energy (ETE) Committee paper ETE/S7/26/6/6, 29 September 2026). Its text (legislation.gov.uk) has three regulations:
+On 17 March 2026 the Scottish Government said the new-style certificates "will not come into force in October 2026 as planned", citing the UK Government's "delay to the introduction of EPC reforms until the second half of 2027" and the dependence on "a new methodology (the Home Energy Model) and assessor training being finalised across the UK" (Energy Performance Certificate Reform: updates, page dated 17 March 2026). The draft amending instrument was laid on 24 August 2026 (Economy, Tourism and Energy (ETE) Committee paper ETE/S7/26/6/6, 29 September 2026). Its text has three regulations (legislation.gov.uk):
 - regulation 1 brings it into force on 30 October 2026, except regulation 2, which comes into force on 31 October 2026 (regulation 1(2) and (3));
 - regulation 2 substitutes new regulations 10 and 10A in the 2008 Regulations so that the register fee still rises on 31 October 2026, as regulation 15 of the 2025 Regulations had planned (regulation 2(2); ETE report, paragraph 7);
 - regulation 3 substitutes "30 April 2028" for "31 October 2026" in regulation 1(2) of the 2025 Regulations and moves the transitional dates in regulations 36 and 38(4) to match (regulation 3(2) to (4)).
@@ -64,6 +66,8 @@ The Scottish Government says "the majority of the Energy Performance of Building
 ---
 
 ## Section 2: Three Ratings, a Certificate and a Property Report
+
+**In short:** The new-style domestic EPC you produce will carry three ratings: heat retention for the fabric, heating system for the main system's emissions and efficiency, and energy cost, which closely follows today's Energy Efficiency Rating. The certificate has no Environmental Impact Rating equivalent, and a property report replaces the recommendations report. Treat the bands and calculation bases published so far as initial intentions: none is settled until the Scottish Ministers approve a methodology.
 
 ### The definitions
 
@@ -91,9 +95,11 @@ Today's Environmental Impact Rating is "based on carbon dioxide equivalent emiss
 
 ## Section 3: Five Years, and the Transition
 
+**In short:** New-style certificates last five years, not ten. Under the draft amendment, from 30 April 2028 a valid 2008 Regulations EPC can serve a sale until the first sale and a let until the first letting, and never after 30 April 2029. It is sensible to explain this to clients when you issue a 2008 Regulations EPC, and to confirm with your Approved Organisation whether a sale followed by a letting within the year needs a new-style EPC.
+
 ### Validity
 
-Under regulation 8(4) an EPC and its property report cease to be valid on the earlier of "the expiry of a period of 5 years from the date on which the energy performance certificate was issued" and the issue of another EPC for the building. That replaces the 10 years in regulation 6(2)(b) of the 2008 Regulations. The Cabinet Secretary told the LGHP Committee she was "open minded to the idea that the validity period could move back to ten years once a heat retention rating C has been achieved, but we will keep that under review" (paragraph 21). Nothing in the Regulations provides for that.
+Under regulation 8(4) an EPC and its property report cease to be valid on the earlier of "the expiry of a period of 5 years from the date on which the energy performance certificate was issued" and the issue of another EPC for the building. That replaces the 10 years in the 2008 Regulations (regulation 6(2)(b)). The Cabinet Secretary told the LGHP Committee she was "open minded to the idea that the validity period could move back to ten years once a heat retention rating C has been achieved, but we will keep that under review" (paragraph 21). Nothing in the Regulations provides for that.
 
 ### Certificates issued under the 2008 Regulations
 
@@ -106,13 +112,15 @@ The Scottish Government reads this to mean that "from 30 April 2028 onwards, whe
 
 ### Reading it in practice
 
-From 30 April 2028 a ten-year EPC lodged in 2026 serves a sale until the first sale and a let until the first letting, and never after 30 April 2029. A second sale within the year, or a second letting, needs a new-style EPC and property report on any reading. Because regulation 38(4) sets separate periods for sales and for lets, whether a sale followed by a first letting within the year can still use the old EPC is a point to confirm with your Approved Organisation. A sensible habit is to explain this to clients when you issue a 2008 Regulations EPC from now on.
+From 30 April 2028 a ten-year EPC lodged in 2026 serves a sale until the first sale and a let until the first letting, and never after 30 April 2029. A second sale within the year, or a second letting, needs a new-style EPC and property report on any reading. Whether a sale followed by a first letting within the year can still use the old EPC is a point to confirm with your Approved Organisation, because the Regulations set separate periods for sales and for lets (regulation 38(4)). A sensible habit is to explain this to clients when you issue a 2008 Regulations EPC from now on.
 
 New buildings are outside the transition. From commencement the developer must give the owner a copy of a valid new-style EPC and property report within seven days of the date a completion certificate is submitted to a verifier (regulation 6).
 
 ---
 
 ## Section 4: Methodology, Building Standards and Governance
+
+**In short:** The Regulations leave the calculation method to the Scottish Ministers: the Home Energy Model is the stated policy, but no published approval had been found by 28 October 2026. Under the draft, your Approved Organisation's existing approval would continue until 30 April 2028. Expect at least 2% of EPCs to be checked, six weeks to replace a below-standard one, an annual CPD record, and training with no published syllabus found yet.
 
 ### The methodology
 
@@ -128,13 +136,13 @@ The Scottish Government's Stage 2 consultation on a Scottish equivalent to the P
 
 ### Approved Organisations and the accreditation scheme
 
-Regulation 11 lets the Scottish Ministers approve organisations to operate accreditation schemes, once satisfied that certificates and property reports will be prepared "in a consistent, accurate and independent manner" by fit and proper, suitably qualified people. Regulation 12 requires every energy assessor to belong to an approved scheme, and each scheme to provide for, among other things, a code of conduct, indemnity arrangements, complaints handling and audit of "a specified proportion" of certificates and reports, "including where practicable by means of an on-site inspection" (regulation 12(3)).
+The Scottish Ministers may approve organisations to operate accreditation schemes, once satisfied that certificates and property reports will be prepared "in a consistent, accurate and independent manner" by fit and proper, suitably qualified people (regulation 11). Regulation 12 requires every energy assessor to belong to an approved scheme, and each scheme to provide for, among other things, a code of conduct, indemnity arrangements, complaints handling and audit of "a specified proportion" of certificates and reports, "including where practicable by means of an on-site inspection" (regulation 12(3)).
 
-As made, regulation 36 keeps approvals of approved organisations under regulation 8 of the 2008 Regulations in effect until 31 October 2026. The draft substitutes "29 April 2028" for "30 October 2026" (the end of the regulation 36 period) and "30 April 2028" for "31 October 2026" (draft regulation 3(3)), so those approvals would continue until 30 April 2028. The scheme's operating requirements were first published on 6 March 2026, and on 17 March the Scottish Government said "The new Scottish EPC Accreditation Scheme has launched" (updates, 17 March 2026). It "remains open for new applicants who will be appointed in advance of the remainder of the 2025 Regulations, as amended, coming into force on 30 April 2028"; existing and potential Approved Organisations face "evaluation and (re)appointment" when the new Regulations come into force (updates, 24 August 2026).
+As made, approvals of approved organisations under regulation 8 of the 2008 Regulations stay in effect until 31 October 2026 (regulation 36). The draft substitutes "29 April 2028" for "30 October 2026" (the end of the regulation 36 period) and "30 April 2028" for "31 October 2026" (draft regulation 3(3)), so those approvals would continue until 30 April 2028. The scheme's operating requirements were first published on 6 March 2026, and on 17 March the Scottish Government said "The new Scottish EPC Accreditation Scheme has launched" (updates, 17 March 2026). It "remains open for new applicants who will be appointed in advance of the remainder of the 2025 Regulations, as amended, coming into force on 30 April 2028"; existing and potential Approved Organisations face "evaluation and (re)appointment" when the new Regulations come into force (updates, 24 August 2026).
 
 ### The operating requirements
 
-The Scottish EPC Accreditation Scheme operating requirements (6 March 2026, updated 14 October 2026) set the audit rules:
+The Scottish EPC Accreditation Scheme operating requirements set the audit rules (6 March 2026, updated 14 October 2026):
 - Approved Organisations must check "a minimum of 2%" of members' EPCs for accuracy (4.1.3), and Ministers may raise that minimum (4.1.8);
 - each active assessor's output must be checked at least every six months, or every twelve where they produce five or fewer EPCs in six months (4.1.5), and a new member's output within the first month (4.1.6);
 - technical failures include the wrong heating system, building typology, address or UPRN, or potential improvements, a change of band, or a rating change outside a +/- 5% tolerance (4.5.2), with the tolerance table in 4.5 set for the new ratings, for example Heat Retention Rating +/- 5% (kWh/m²/yr);

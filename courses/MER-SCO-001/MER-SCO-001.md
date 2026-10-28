@@ -29,6 +29,8 @@ The reform that will replace the 2008 Regulations is the subject of MER-SCO-002 
 
 ## Section 1: The Legal Basis Today
 
+**In short:** Under the 2008 Regulations an EPC must be issued by a qualified member of an approved organisation for that category of building, and is valid for 10 years. Any deviation from the Specification and Conventions applicable at the time of assessment invalidates the calculation. The instrument postponing the reform was still a draft on 28 October 2026, so in the first week of November check for the made instrument and read your Approved Organisation's notice before you lodge.
+
 ### The 2008 Regulations
 
 The Energy Performance of Buildings (Scotland) Regulations 2008 came into force on 4 January 2009 and extend to Scotland only (regulation 1). Where a building is to be sold or let, the owner must make a copy of a valid EPC and the related recommendations report available free of charge to a prospective buyer or tenant, and provide a copy free of charge to the buyer or tenant; renewing a lease with the same tenant is not a letting for this purpose (regulation 5, substituted from 1 October 2012 by SSI 2012/208).
@@ -44,7 +46,7 @@ The asset rating is a numerical indicator of the estimated energy consumed and c
 
 ### The method
 
-The Regulations do not name RdSAP. Regulation 7, substituted from 21 December 2012 by SSI 2012/315, requires the Scottish Ministers to approve "a methodology of calculation of the energy performance of buildings or building units", based on Annex 1 to Directive 2010/31/EU. The Scottish Government's 2019 review records that it "took the decision in 2008 to adopt the same respective methodologies" as the rest of the UK: SAP for new homes, RdSAP for existing homes and SBEM for non-domestic buildings (Domestic and non-domestic energy performance certificates: review, 7 February 2019, section 2). The Specification calls RdSAP "the UK approved methodology", but its footnotes cite only the England and Wales regulations (Introduction). This course did not find the Scottish Ministers' approval notice under regulation 7.
+The Regulations do not name RdSAP. The Scottish Ministers must approve "a methodology of calculation of the energy performance of buildings or building units", based on Annex 1 to Directive 2010/31/EU (regulation 7, substituted from 21 December 2012 by SSI 2012/315). The Scottish Government's 2019 review records that it "took the decision in 2008 to adopt the same respective methodologies" as the rest of the UK: SAP for new homes, RdSAP for existing homes and SBEM for non-domestic buildings (Domestic and non-domestic energy performance certificates: review, 7 February 2019, section 2). The Specification calls RdSAP "the UK approved methodology", but its footnotes cite only the England and Wales regulations (Introduction). This course did not find the Scottish Ministers' approval notice under regulation 7.
 
 Two sentences govern every assessment. Any deviation from the Specification and the Conventions "applicable at the time of assessment invalidates the calculation and therefore cannot be used for generating EPC" (Specification, Introduction). Where a convention conflicts with the published SAP specification, "the Convention takes precedence" (Conventions v12.2, front page). Version 12.2 says it is applicable from 6 August 2026; this course found no Scottish Government notice of its adoption, so confirm with your Approved Organisation which edition applies to Scottish lodgements.
 
@@ -58,15 +60,17 @@ On 28 October 2026 legislation.gov.uk still described it as "a draft item of leg
 
 ### The lodgement fee
 
-Regulation 10A of the 2008 Regulations lets the keeper charge £2.60 for entering the data for a dwelling and £12.10 for any other building (sums substituted from 1 October 2017 by SSI 2017/225). Draft regulation 2 of the 2026 Amendment Regulations substitutes new regulations 10 and 10A from 31 October 2026, with fees of £6.00 for a dwelling and £15.50 for other buildings, a power that "only applies where the keeper of a register is a Scottish public authority" (new regulation 10A(2)). These are the sums in regulation 15 of the 2025 Regulations. The Scottish Government says the fees "will rise as planned, on 31 October 2026", which "will ensure technical and operational infrastructure is ready" and support "the development of an effective audit regime" (updates, 24 August 2026). How the fee is collected from you depends on your Approved Organisation's terms, which this course has not seen.
+The keeper may charge £2.60 for entering the data for a dwelling and £12.10 for any other building (regulation 10A of the 2008 Regulations, sums substituted from 1 October 2017 by SSI 2017/225). Draft regulation 2 of the 2026 Amendment Regulations substitutes new regulations 10 and 10A from 31 October 2026, with fees of £6.00 for a dwelling and £15.50 for other buildings, a power that "only applies where the keeper of a register is a Scottish public authority" (new regulation 10A(2)). These are the sums in regulation 15 of the 2025 Regulations. The Scottish Government says the fees "will rise as planned, on 31 October 2026", which "will ensure technical and operational infrastructure is ready" and support "the development of an effective audit regime" (updates, 24 August 2026). How the fee is collected from you depends on your Approved Organisation's terms, which this course has not seen.
 
 ---
 
 ## Section 2: The Register and the Approved Organisations
 
+**In short:** Before you issue a certificate you must ensure its data is sent to the register, and registered data must not be altered: a mistake is dealt with by a corrected lodgement, and you tell your Approved Organisation. Every assessor in Scotland must belong to at least one Approved Organisation; accreditation in England and Wales is not enough by itself, so ask your scheme in writing what it requires before your first Scottish job.
+
 ### The register duty
 
-Regulation 10 of the 2008 Regulations (substituted from 1 October 2012 by SSI 2012/190) requires registers of energy performance data from which an EPC and recommendations report may be produced, each maintained by a keeper, defined as "the Scottish Ministers or a person appointed by the Scottish Ministers to keep a register on their behalf" (regulations 2 and 10(1) and (2)). Your duty is regulation 10(4): where a member of an approved organisation issues either document, "that person must ensure that the energy performance data relating to that document is sent to the relevant register before the document is issued". Registered data carries a unique reference, must not be altered once registered (green deal information apart) and stays on the register for at least 10 years (regulation 10(5), (5A) and (6)).
+There must be registers of energy performance data from which an EPC and recommendations report may be produced, each maintained by a keeper, defined as "the Scottish Ministers or a person appointed by the Scottish Ministers to keep a register on their behalf" (regulations 2 and 10(1) and (2) of the 2008 Regulations, regulation 10 substituted from 1 October 2012 by SSI 2012/190). Your duty is regulation 10(4): where a member of an approved organisation issues either document, "that person must ensure that the energy performance data relating to that document is sent to the relevant register before the document is issued". Registered data carries a unique reference, must not be altered once registered (green deal information apart) and stays on the register for at least 10 years (regulation 10(5), (5A) and (6)).
 
 ### The Scottish EPC Register in practice
 
@@ -97,6 +101,8 @@ Today's route is set by each Approved Organisation. Before your first Scottish j
 
 ## Section 3: Age Bands
 
+**In short:** Most defaults are read by age band, so your first job is to take each building part's band from the Scottish column of Table 1. A part built in 1900 to 1918, 1965 or 1966, 1983, 1991, 1996 to 1998, 2007 or 2023 takes a different letter from England and Wales. In other years the letter matches, but Scottish tables and footnotes still apply, so the same letter does not mean the same defaults.
+
 ### Why the band comes first
 
 Most defaults in the Specification are read by age band, so in Scotland the band is the first thing to get right. Table 31 item 2-1 asks for the band of each building part "According to Table 1", noting the "differences for England, Wales, Scotland". Bands relate to "the age of each building part", and band M "can apply to extensions added to an older property" (section 2). A roof room takes the band of its building part unless evidence such as planning applications or dated photographs proves otherwise (convention 3.13), and an upper storey of a different build date is entered as a vertical extension (convention 2.11). The dates in Table 1 "are generally one year after a change in regulations, to allow for completion of dwellings approved under the previous regulations" (section 2).
@@ -118,7 +124,7 @@ Years of construction, Scotland first and England and Wales second (Table 1):
 - Band L: 2012 to 2023; 2012 to 2022.
 - Band M: 2024 onwards; 2023 onwards.
 
-Read side by side, the two columns give a building part a different letter only if it was built in 1900 to 1918, 1965 or 1966, 1983, 1991, 1996 to 1998, 2007 or 2023. In every other year the letter is the same, but it then draws on Scottish tables and footnotes (Table 7 rather than Table 6 for walls, and the Scottish entries in Tables 3, 18, 19, 20 and 26), so the same letter does not mean the same defaults. For conversions the Specification sends you to the Conventions (section 2), and Scotland has its own text there (Section 7).
+Read side by side, the two columns give a building part a different letter only if it was built in 1900 to 1918, 1965 or 1966, 1983, 1991, 1996 to 1998, 2007 or 2023. In every other year the letter is the same, but it then draws on Scottish tables and footnotes, so the same letter does not mean the same defaults (Table 7 rather than Table 6 for walls, and the Scottish entries in Tables 3, 18, 19, 20 and 26). For conversions the Specification sends you to the Conventions (section 2), and Scotland has its own text there (Section 7).
 
 ### Worked examples
 
@@ -132,6 +138,8 @@ Five cases show the effect:
 ---
 
 ## Section 4: Walls, Roofs and Floors
+
+**In short:** Measure each external wall's thickness; the Table 3 default is only for when you cannot, and in Scotland it adds thickness to stone and cavity walls, which for uninsulated stone in bands A to D means a lower U-value. For a Scottish address, wall U-values come from Table 7, not Table 6, and Tables 18 to 20 for roofs and floors have Scottish entries. Some tables with no Scottish column still change with the Scottish band.
 
 ### Wall thickness
 
@@ -185,6 +193,8 @@ Some tables have no Scottish column but are read by band, so the Scottish band c
 
 ## Section 5: Windows, Doors and Curtain Walls
 
+**In short:** In Scotland the glazing steps fall at 2003 and 2023, where England and Wales use 2002 and 2022, so the same spacer bar date can give a different glazing age and U-value. With no evidence of the date, choose unknown; the convention names no Scottish equivalent of FENSA or CERTASS, so ask your Approved Organisation what installation evidence it accepts. Band L door U-values and the curtain wall date also differ in Scotland.
+
 ### The Scottish glazing dates
 
 The Specification dates multiple glazing by country: 2002 and 2022 in England and Wales, "2003 in Scotland" and "2023 in Scotland" for the same steps (section 3.7.1, footnotes 7 and 8; Table 31 item 6-5). Table 24 gives the defaults for wood or PVC frames:
@@ -222,6 +232,8 @@ Table 26 gives an external door 3.0 W/m²K in bands A to J, 2.0 in K, 1.4 in M, 
 
 ## Section 6: Country, Region, Climate and Other Data Items
 
+**In short:** You must make sure the correct country is identified so the EPC is lodged in the right register; do not let a postcode or the region your software suggests settle it. Location within Scotland changes costs, emissions and primary energy but not the two ratings, which use UK average climate data. Dual 24-hour meters are possible in Scotland, and flats off a common stair follow the UK-wide rules.
+
 ### Country and region
 
 The first data item is the country (Table 31 item 1-1), and convention 1.03 makes it your responsibility near the border: "Assessors must ensure that the correct country is identified so that the EPC will be lodged in the appropriate register." The region is "Derived from the postcode of the property" (item 1-2), using Table U6, which the Specification reproduces from SAP 10.2. For Scotland it gives:
@@ -241,7 +253,7 @@ Section 14 limits the effect of location. "For ratings (SAP rating and EI rating
 
 ### Meters, rooms and transactions
 
-The meter is recorded as single, dual, dual 18-hour, dual 24-hour or unknown, and "Dual 24-hour is possible in Scotland and some parts of northern Northumberland"; a dual 24-hour meter gives the 24-hour tariff (section 12), which Table 32 lists as the "24-hour heating tariff". Convention 9.13 says to gather additional information, such as a recent electricity bill, if choosing a particular tariff, and otherwise to treat a tele-switch as a single meter and a time-switch as dual.
+The meter is recorded as single, dual, dual 18-hour, dual 24-hour or unknown, and "Dual 24-hour is possible in Scotland and some parts of northern Northumberland"; a dual 24-hour meter gives the 24-hour tariff (section 12), which Table 32 lists as the "24-hour heating tariff". Gather additional information, such as a recent electricity bill, if choosing a particular tariff, and otherwise treat a tele-switch as a single meter and a time-switch as dual (convention 9.13).
 
 Habitable rooms are counted by the RdSAP definition (section 9.1.1; convention 2.04a), and the Specification notes that they are "In Scotland, usually referred to as 'apartments'" (section 9.1, footnote 9); whatever the sales particulars say, the count follows the RdSAP definition. The transaction types include "stock condition survey/EESSH", which the Specification does not expand (Table 31 item 1-3); where more than one type applies, seek clarification from the client and in doubt choose the one nearest the top of the list, and record Right to Buy as a non-marketed sale (convention 9.11). Addendum 8, on feed-in tariffs with PV or a wind turbine, is written for "England, Wales or Scotland" (Table 30).
 
@@ -257,6 +269,8 @@ Neither the Specification nor the Conventions uses the word "tenement", and no r
 ---
 
 ## Section 7: The Scottish Conventions, One by One
+
+**In short:** For a converted heated building, the Scottish text of 3.05a works from the building warrant application date: with acceptable documentary evidence of an application on or after 1 May 2005 you apply the U-values it lists, and otherwise the original construction date, in each case subject to the exceptions set out below. Under the Scottish text of 9.02, evidence of intent to install does not qualify, and there is no oversight route.
 
 Searching Conventions v12.2 for "Scotland" and "Scottish" finds Scottish wording in conventions 1.03, 2.16, 3.05a, 3.05b, 3.08, 3.12a, 3.12b and 9.02, and otherwise only in the revision history. Conventions 1.03, 2.16, 3.12a and 3.12b are covered above.
 
