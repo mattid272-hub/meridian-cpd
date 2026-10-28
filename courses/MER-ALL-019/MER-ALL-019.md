@@ -145,7 +145,7 @@ On an EPC visit, damp is not part of the rating, but if you see a possible probl
 
 ## Section 3: Is the Wall Suitable? Exposure, Cavity and Condition
 
-**In short:** Suitability depends mainly on exposure to driving rain and wall condition (Historic England); not yours to decide. Record setting, height and elevation of findings, and spalled brick, poor pointing or hard mortar on soft masonry. Course practice: if a borescope inspection is needed, look first; drill only if it appears safe. No cracks does not mean sound ties; a regular horizontal crack pattern or bulging is a referral trigger: do not drill; recommend a structural engineer before any cavity work.
+**In short:** Historic England says suitability depends mainly on exposure to driving rain and wall condition; that is not yours to decide. Record the setting, height and elevation of findings, and spalled brick, poor pointing or hard mortar on soft masonry. Our practice: if a borescope inspection is needed, look first; drill only if it appears safe. No cracks does not mean sound ties. A regular horizontal crack pattern or bulging: do not drill; recommend a structural engineer before any cavity work.
 
 ### Why suitability comes first
 
