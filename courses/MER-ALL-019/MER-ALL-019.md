@@ -145,7 +145,7 @@ On an EPC visit, damp is not part of the rating, but if you see a possible probl
 
 ## Section 3: Is the Wall Suitable? Exposure, Cavity and Condition
 
-**In short:** Historic England says suitability depends mainly on exposure to driving rain and the wall's condition, which is not yours to decide. Record the setting, height and elevation of findings, and spalled brick, poor pointing or hard mortar on soft masonry. If a borescope inspection is needed, look first; drill only if it appears safe. No cracks does not mean sound ties; a regular horizontal crack pattern or bulging is a referral trigger: recommend a structural engineer before any cavity work.
+**In short:** Suitability depends mainly on exposure to driving rain and wall condition (Historic England); not yours to decide. Record setting, height and elevation of findings, and spalled brick, poor pointing or hard mortar on soft masonry. Course practice: if a borescope inspection is needed, look first; drill only if it appears safe. No cracks does not mean sound ties; a regular horizontal crack pattern or bulging is a referral trigger: do not drill; recommend a structural engineer before any cavity work.
 
 ### Why suitability comes first
 
@@ -174,7 +174,7 @@ Historic England says that in cheaper early cavity walls "two single skins of br
 
 Historic England describes "a thorough survey of the cavity with a borescope" (section 3.3). You may also record overall wall thickness at a reveal.
 
-**If your work calls for a borescope inspection.** Some jobs need a drilled inspection, for example to show that a cavity is already filled. This course's recommended practice, not a legal requirement: before you drill, take time over a careful visual inspection of the outer leaf from the ground and of the inside face. Look for the signs in this section and the next: a regular horizontal crack pattern, bulging, spalled or cracked brick at the drilling position, damp linked to the wall, or signs of failed or wet fill. Only drill and inspect if, having looked, it appears a safe course of action. If any of those signs are present, do not drill: record what you see and recommend professional advice. Follow your scheme's and your organisation's procedure for the inspection itself.
+**If your work calls for a borescope inspection.** Some jobs may call for a drilled inspection, for example to show that a cavity is already filled. This course's recommended practice, not a legal or scheme requirement: before you drill, take time over a careful visual inspection of the outer leaf from the ground and of the inside face. Look for the signs in this section and the next: a regular horizontal crack pattern, bulging, spalled or cracked brick at the drilling position, damp linked to the wall, or signs of failed or wet fill. Only drill and inspect if, having looked, it appears a safe course of action. A clear visual check does not show that the ties are sound. If any of those signs are present, do not drill: record what you see and recommend professional advice as set out in the referral triggers in Section 5 (a structural engineer or building surveyor for cracking or bulging). Follow your scheme's and your organisation's procedure for the inspection itself.
 
 ### Brickwork, pointing and render
 
