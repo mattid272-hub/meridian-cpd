@@ -46,7 +46,7 @@ Some numbers in Section 1 are calculated, not quoted; each shows its inputs and 
 
 ## Section 1: How Insulation Works, and Why Moisture Travels With It
 
-**In short:** A U-value is the heat lost per square metre for each degree of temperature difference, so lower is better: on the England RdSAP defaults, filling a pre-1976 cavity wall takes it from 1.5 to 0.7 W/m²K. But filling introduces the risk that moisture finds its way across to the inner leaf, and gaps in the fill risk condensation and mould. Damp following the weather and condensation following the occupants and season are this course's guide, not tests.
+**In short:** A U-value is the heat lost per square metre for each degree of temperature difference, so lower is better: on the England RdSAP defaults, filling a pre-1976 cavity wall takes it from 1.5 to 0.7 W/m²K. Historic England says filling risks moisture crossing to the inside leaf; Approved Document L says gaps in insulation risk condensation and mould. Damp following the weather and condensation following the occupants and season are this course's guide, not tests.
 
 ### U-values in plain terms
 
@@ -215,7 +215,7 @@ So no cracks does not mean sound ties. A regular horizontal crack pattern or bul
 
 ## Section 4: How Cavity Fill Goes In, and What Goes Wrong
 
-**In short:** Most problems after filling show from the room or the ground: damp after wind-driven rain on an exposed elevation, a low-level band, localised mould where the fill may have gaps, blocked or unsafeguarded vents, and escaped insulation. Each pattern has a twin with a different cause, so record both possibilities and treat patterns as reasons to look closely and refer, not proof. A blocked combustion air vent or a flue concern goes through your organisation's gas safety procedure.
+**In short:** Problems after filling may show from the room or the ground: damp after wind-driven rain on an exposed elevation, a low-level band, localised mould where the fill may have gaps, blocked or unsafeguarded vents, and escaped insulation. Most patterns have a twin with a different cause, so record both possibilities and treat patterns as reasons to look closely and refer, not proof. A blocked combustion air vent or a flue concern goes through your organisation's gas safety procedure.
 
 ### Installation types in general terms
 

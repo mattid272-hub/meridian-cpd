@@ -138,7 +138,7 @@ You will not choose the strategy. You can record the facts that tell the designe
 
 ## Section 3: Interstitial Condensation in Plain Terms
 
-**In short:** Interstitial condensation occurs within or between the layers of the wall, and the coldest place room air can reach is where the insulation meets the old wall. Air carries vapour much faster than diffusion does, so air barrier gaps, unsealed back boxes and dot-and-dab air gaps matter. That face also takes rain soaking inwards, so, in this course's reading, a blocked gutter or failed pointing on a wall with IWI is not only an external defect.
+**In short:** Interstitial condensation occurs within or between the layers of the building envelope, and the coldest place room air can reach is where the insulation meets the old wall. Air carries vapour much faster than diffusion does, so air barrier gaps, unsealed back boxes and dot-and-dab air gaps matter. That face also takes rain soaking inwards, so, in this course's reading, a blocked gutter or failed pointing on a wall with IWI is not only an external defect.
 
 ### The definition
 

@@ -43,7 +43,7 @@ Every figure, dimension and quotation below comes from a document opened for thi
 
 ## Section 1: How an EWI System Is Built Up
 
-**In short:** A rendered EWI system can add 70 to 160 mm to the wall, so everything on the old face, from the roof edge to the flue, has to be re-detailed. At every edge, ask what would stop the water if the visible sealant failed: INCA does not accept sealant as the sole means of a weather tight seal, so if only mastic is visible, record it. Each edge must also keep the insulation reasonably continuous.
+**In short:** The Welsh Government guide says EWI can add 70 to 160 mm to the wall, so everything on the old face, from the roof edge to the flue, has to be re-detailed. At every edge, ask what would stop the water if the visible sealant failed: INCA does not accept sealant as the sole means of a weather tight seal, so if only mastic is visible, record it. Each edge must also keep the insulation reasonably continuous.
 
 ### The layers
 
@@ -226,7 +226,7 @@ Doors follow the same principles, and their thresholds are also base details (Zo
 
 ## Section 5: Zone 3, The Base, the DPC and the Splash Zone
 
-**In short:** LABC Warranty says the system must not bridge any horizontal DPC, so look for a base track, bead or break at about DPC level, or render running to the ground. Record paving or soil raised against the system, a gapped, damaged or blocked base closure, low-level staining, impact damage, and damp at skirting level inside. Apparent rising damp is so often misdiagnosed that the right response here is to record the base, not name a cause.
+**In short:** LABC Warranty says the system must not bridge any horizontal DPC, so look for a base track, bead or break at about DPC level, or render running to the ground. Record paving or soil raised against the system, a gapped, damaged or blocked base closure, low-level staining, impact damage, and damp at skirting level inside. MER-ALL-018 explains why apparent rising damp is so often misdiagnosed; here, the right response is to record the base, not name a cause.
 
 ### The DPC must not be bridged
 
