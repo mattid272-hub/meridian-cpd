@@ -57,6 +57,12 @@ STRAND_LABELS = {
     "MER-RA":  "Retrofit Assessor",
     "MER-ALL": "All Strands",
 }
+# Courses whose ID prefix is a nation rather than a strand (MER-SCO-...) take their badge
+# from here: (strand prefix for the colour, badge label).
+COURSE_BADGES = {
+    "MER-SCO-001": ("MER-DEA", "Domestic Energy Assessor · Scotland"),
+    "MER-SCO-002": ("MER-ALL", "All Strands · Scotland"),
+}
 
 # ── The Meridian mark ─────────────────────────────────────────────────────────
 # The cover carries no photograph. Its artwork is the company mark (a circle, its
@@ -827,6 +833,9 @@ def build_pdf(course_id: str, md_content: str) -> bytes:
     strand_prefix = '-'.join(course_id.split('-')[:2])
     strand_colour = STRAND_COLOURS.get(strand_prefix, GREEN)
     strand_label = STRAND_LABELS.get(strand_prefix, 'All Strands')
+    if course_id in COURSE_BADGES:
+        badge_prefix, strand_label = COURSE_BADGES[course_id]
+        strand_colour = STRAND_COLOURS.get(badge_prefix, GREEN)
     hours_str = f"{parsed['cpd_hours']:g}"
 
     meta = dict(

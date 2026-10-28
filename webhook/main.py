@@ -157,6 +157,8 @@ COURSES = {
     "MER-ALL-016": {"course_id": "MER-ALL-016", "title": "Scheme Operating Requirements: How They Work and What Changed in 2026", "cpd_hours": 1.0, "published": "2026-09-15"},
     "MER-ALL-017": {"course_id": "MER-ALL-017", "title": "Awaab's Law Phase 2: What Energy Assessors Must Know", "cpd_hours": 1.0, "published": "2026-10-01"},
     "MER-ALL-018": {"course_id": "MER-ALL-018", "title": "Damp, Condensation and Thermal Bridging: Reading the Moisture", "cpd_hours": 3.0, "published": "2026-10-25"},
+    "MER-SCO-001": {"course_id": "MER-SCO-001", "title": "RdSAP 10 in Scotland: Where It Differs", "cpd_hours": 2.0, "published": "2026-10-28"},
+    "MER-SCO-002": {"course_id": "MER-SCO-002", "title": "Scotland's EPC Reform: HEM, Three Ratings and Five Years, from 30 April 2028", "cpd_hours": 1.0, "published": "2026-10-28"},
     # Subscription — welcome email only; library access granted via plan field
     "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0, "published": "2026-03-01"},
 }
