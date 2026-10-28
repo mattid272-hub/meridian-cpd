@@ -43,6 +43,8 @@ Every figure, dimension and quotation below comes from a document opened for thi
 
 ## Section 1: How an EWI System Is Built Up
 
+**In short:** A rendered EWI system can add 70 to 160 mm to the wall, so everything on the old face, from the roof edge to the flue, has to be re-detailed. At every edge, ask what would stop the water if the visible sealant failed: INCA does not accept sealant as the sole means of a weather tight seal, so if only mastic is visible, record it. Each edge must also keep the insulation reasonably continuous.
+
 ### The layers
 
 LABC Warranty's technical update on external wall insulation (March 2022) and the Welsh Government's householder planning guide (October 2013) describe the same build-up, from the wall outwards:
@@ -84,6 +86,8 @@ You will not check compliance with these. They explain why a building control re
 
 ## Section 2: Reading an EWI House from the Ground
 
+**In short:** Looking systematically from the ground and the rooms, you can record most edge defects, but not the adhesive, fixings, mesh or inside of the wall, so say so. Walk the six zones in the same order every time, then inside, recording internal mould and outside edges at the same location without concluding that one causes the other. For EWI on a building with a storey at or above 11 m, or any fire question, record and recommend professional advice.
+
 ### What you can and cannot see
 
 On a domestic assessment you are on the ground, outside and in. What you can see from the pavement, the garden and the rooms is enough to record most edge defects, if you look systematically. What you cannot see is the adhesive, the fixings, the mesh and the inside of the wall. Say so: "System build-up not visible; not inspected" is an honest record.
@@ -123,6 +127,8 @@ For an assessor of houses and low-rise flats the point is narrow. If you see EWI
 ---
 
 ## Section 3: Zone 1, Eaves and Verges
+
+**In short:** Check whether the roof edge visibly oversails the render, or only a sealant bead protects the top of the insulation. INCA calls an extended roofline, designed and installed appropriately, the most robust solution; the NAO gives eaves not effectively extended over the insulation as an example of a major issue affecting performance. Check whether gutters were reinstated and soffit vents covered, and look for mould at the top-floor ceiling line, without saying water is getting in.
 
 ### What a sound detail looks like
 
@@ -173,6 +179,8 @@ From inside: mould or staining at the junction of external wall and ceiling on t
 
 ## Section 4: Zone 2, Window and Door Openings
 
+**In short:** Openings interrupt the insulation, render, mesh and weathering line at once, and LABC Warranty says EWI at reveals often fails through poor detailing or support. Check whether the render returns into the reveal to the frame, whether each sill projects clearly beyond the render with end caps, and whether the head has a drip line. Record split or missing sealant and drainage slots covered by render, and inside, mould on reveals, at window corners or below the window.
+
 ### Why openings are the hardest detail
 
 Every opening interrupts the insulation, the render, the mesh and the weathering line at once. LABC Warranty says: "The installation of EWIs at window/door reveals often fail due to poor detailing or support." Historic England (Section 2.3) says that when wall insulation is added, the weak points "are typically at window and door reveals". The BRE guide says reveal insulation "should be a fundamental part of any installation" (p.9).
@@ -218,6 +226,8 @@ Doors follow the same principles, and their thresholds are also base details (Zo
 
 ## Section 5: Zone 3, The Base, the DPC and the Splash Zone
 
+**In short:** LABC Warranty says the system must not bridge any horizontal DPC, so look for a base track, bead or break at about DPC level, or render running to the ground. Record paving or soil raised against the system, a gapped, damaged or blocked base closure, low-level staining, impact damage, and damp at skirting level inside. Apparent rising damp is so often misdiagnosed that the right response here is to record the base, not name a cause.
+
 ### The DPC must not be bridged
 
 The base of the system must close and support the bottom edge, keep the DPC working, and let water drain out.
@@ -257,6 +267,8 @@ This course uses "splash zone" for the low part of the wall wetted by rain bounc
 
 ## Section 6: Zone 4, Render Cracking, Board Joints and Mesh
 
+**In short:** The render and basecoat are the rain screen: a crack lets water into the insulation, where it may not drain or dry. This course does not teach crack diagnosis; describe the pattern precisely: diagonal from opening corners, a regular grid, along corners, or impact damage. A crack continuing a line in the old wall, or a bowed area, is for referral. Do not tap, probe or pick at the render, or tell a householder to fill cracks themselves.
+
 ### Why the surface matters
 
 The render and basecoat are the rain screen. A crack lets water into the insulation, where it may not drain or dry. The BRE guide says: "Any cracks in the external finish due to movement/ settling or other damage should be quickly rectified" (p.37).
@@ -292,6 +304,8 @@ Do not tap, press or probe the render to test whether it is hollow. Do not pick 
 ---
 
 ## Section 7: Zones 5 and 6, Penetrations, Fixtures, Boundaries and Corners
+
+**In short:** Every pipe, cable, flue, vent, bracket and box is a hole in the weathering line and often a thermal bridge. Check whether meter box doors open, vents serving gas appliances are covered, flues sit close to openings, or cables are exposed. For any gas or combustion concern, follow your organisation's gas safety procedure; for exposed cabling, recommend urgent advice from a qualified electrician. At boundaries, record stop ends and sealant, but do not advise on party wall matters.
 
 ### Zone 5: penetrations and fixtures
 
@@ -332,6 +346,8 @@ LABC Warranty requires beads "at corners, angles and interfaces" and corrosion p
 ---
 
 ## Section 8: The ECO4 and GBIS Evidence, the TrustMark Route, and Recording
+
+**In short:** The NAO reported government and Ofgem estimates that 98% of homes with EWI under ECO4 and GBIS, installed before 16 January 2025, have major issues requiring remediation. Use these extrapolated estimates to explain why you look carefully and mention the audit route, never to tell a householder their installation is defective. Point householders with ECO4 or GBIS solid wall insulation to TrustMark rather than judging eligibility or quoting cover figures. Never tell anyone to open up a wall.
 
 ### What the National Audit Office found
 

@@ -47,6 +47,8 @@ Where the course describes how a defect tends to look, or what to record, that i
 
 ## Section 1: How Internal Wall Insulation Is Built Up
 
+**In short:** An IWI system can do up to five jobs: the insulation, the fixing to the wall, an air barrier on the warm side, a vapour control layer where one is used, and a service void and board. The air barrier is not the same as a VCL, and dot-and-dab should be avoided as it leaves air gaps behind the insulation. Once insulation is fixed inside a solid wall, the old masonry is on the cold side.
+
 ### The main guidance
 
 The most detailed government source is "Retrofit Internal Wall Insulation: Guide to Best Practice" (September 2021), written by technical authors from Enhabit and published on gov.uk on 13 September 2021 by the Department for Business, Energy and Industrial Strategy (now also listed under the Department for Energy Security and Net Zero) as "Guidance for designers, surveyors, project managers and installers about retrofit internal wall insulation." This course calls it the IWI best practice guide. It sets no single standard build-up, because the right one depends on the wall; read together, its sections give an IWI system up to five jobs.
@@ -85,6 +87,8 @@ A moisture-open system differs: capillary-active insulation bonded to the wall w
 ---
 
 ## Section 2: Moisture-Closed and Moisture-Open, and Why Solid Walls Need Care
+
+**In short:** A traditional solid wall copes with water by getting wet and drying, and the lowest-risk IWI matches the building's existing moisture strategy. For solid walls the guide recommends a moisture-open build-up, or a moisture-closed one with a ventilated cavity of at least 25 mm on the cold side; in many cases a vapour barrier may cause more harm than good. Every system needs an air barrier. You will not choose the strategy; record the facts the designer needs.
 
 ### Two strategies
 
@@ -134,6 +138,8 @@ You will not choose the strategy. You can record the facts that tell the designe
 
 ## Section 3: Interstitial Condensation in Plain Terms
 
+**In short:** Interstitial condensation occurs within or between the layers of the wall, and the coldest place room air can reach is where the insulation meets the old wall. Air carries vapour much faster than diffusion does, so air barrier gaps, unsealed back boxes and dot-and-dab air gaps matter. That face also takes rain soaking inwards, so, in this course's reading, a blocked gutter or failed pointing on a wall with IWI is not only an external defect.
+
 ### The definition
 
 Approved Document C (England) defines interstitial condensation as deposition of liquid water from a vapour "occurring within or between the layers of the building envelope", and surface condensation as occurring "on visible surfaces within the building" (paragraph 0.12). "Interstitial condensation may cause damage to the structure" (paragraph 0.6). Walls should "be designed and constructed so that their structural and thermal performance are not adversely affected by interstitial condensation", and should "not promote surface condensation or mould growth, given reasonable occupancy conditions" (paragraph 5.2(e) and (f)).
@@ -164,6 +170,8 @@ So, in this course's reading, a blocked gutter, failed pointing or cracked rende
 ---
 
 ## Section 4: The Defect Zones
+
+**In short:** Walk the insulated room's zones: services, reveals, joist ends, ceiling and party wall junctions, skirting, partial coverage and impermeable finishes. What you may see at each is this course's practical reading. Record location and extent, and map where the IWI stops. Do not remove faceplates, lift boards or inspect next door, and do not call a system moisture-open or moisture-closed without documentary evidence. Possible decay at a floor is a referral to a structural engineer or building surveyor.
 
 This section walks round an insulated room. For each zone: what the sources say, then, as this course's practical reading, what you may see and record.
 
@@ -217,6 +225,8 @@ This section walks round an insulated room. For each zone: what the sources say,
 
 ## Section 5: Reading the Signs
 
+**In short:** The guide says large areas of mould may indicate poor ventilation or underheating, and focused areas thermal bridging or water ingress from elsewhere; the rest of the twins table is this course's reading, reasons to record and refer, not tests. Ask when it is worst, note where the problem sits relative to the IWI's edge, and record ventilation factually, including any PIV unit. Do not report a meter reading on an IWI board as evidence about the wall.
+
 ### The twins in an insulated home
 
 The guide offers one distinction: "Large areas of mould growth or condensation may indicate poor ventilation or underheating", whereas "Focused areas of fungus or mould growth may indicate thermal bridging or water ingress from elsewhere" (Table 1). The rest of this table is this course's practical reading of Sections 2 to 4. It lists reasons to record and refer, not tests that settle a cause.
@@ -251,6 +261,8 @@ MER-ALL-018 Section 5 covers the limits of moisture meters. With IWI there is a 
 
 ## Section 6: Moisture Risk Assessment, and Where It Sits
 
+**In short:** The moisture risk assessment for IWI is design work: PAS 2035:2023 asks for moisture management in line with BS 5250, and a standard interstitial condensation assessment might not be sufficient for solid walls with IWI proposed in exposed locations. Your part is the evidence: construction, condition, and the location and severity of defects, condensation and mould. On a traditional wall the improved U-value and moisture risk can pull in different directions; resolving that is design work.
+
 ### Who does it
 
 The moisture risk assessment for IWI is design work. PAS 2035:2023 requires the retrofit design to "include provision for the management of moisture within the construction, in line with BS 5250" (clause 8.2.10), and construction details "for the corners, junctions and edges" of affected elements (clause 8.2.15). Your part is the evidence the designer starts from: "an appraisal of the dwelling's heritage, architectural features, structure, construction and condition" (clause 7.3.2 b)) and "identification of the location and severity of any existing construction defects" and "of any condensation and/or mould growth in the dwelling" (clause 7.3.2 d)).
@@ -279,6 +291,8 @@ Set that beside the Loughborough finding that "the relative moisture risk increa
 ---
 
 ## Section 7: What the National Audit Office Found
+
+**In short:** The NAO estimated from a sample audit that 29% of homes given IWI under ECO4 or GBIS before 16 January 2025 have major issues requiring remediation. A householder saying the walls were insulated on a grant is a reason to look carefully, not to assume the installation is faulty. Citizens Advice and the NAO include IWI in the free audit route; TrustMark's leaflet and page mention only external. Signpost: eligibility is for TrustMark or Ofgem to confirm.
 
 ### The figures
 
@@ -319,6 +333,8 @@ So Citizens Advice and the NAO include internal wall insulation; TrustMark's own
 ---
 
 ## Section 8: Recording, Referring and the Traffic Light
+
+**In short:** Record the location and severity of defects, condensation and mould, not their cause, and use PAS 2035's two defect categories; where you cannot tell which applies, say so and refer. Do not call an installation defective, non-compliant or safe, or tell a householder to open anything up. The traffic light and referral triggers are this course's recommended practice, not legal requirements. A visual inspection cannot rule out hidden moisture; say so.
 
 ### The vocabulary
 

@@ -46,6 +46,8 @@ Some numbers in Section 1 are calculated, not quoted; each shows its inputs and 
 
 ## Section 1: How Insulation Works, and Why Moisture Travels With It
 
+**In short:** A U-value is the heat lost per square metre for each degree of temperature difference, so lower is better: on the England RdSAP defaults, filling a pre-1976 cavity wall takes it from 1.5 to 0.7 W/m²K. But filling introduces the risk that moisture finds its way across to the inner leaf, and gaps in the fill risk condensation and mould. Damp following the weather and condensation following the occupants and season are this course's guide, not tests.
+
 ### U-values in plain terms
 
 BRE's "Conventions for U-value calculations" (BR 443, 2019 edition) explains the U-value by how it is used: the U-value of an element multiplied by its area gives the rate of heat loss per degree of temperature difference, in W/m²K (Section 1). Approved Document L says U-values "should be assessed using the methods and conventions set out in the Building Research Establishment's BR 443" (paragraph 4.1). So a U-value of 1.5 means each square metre loses 1.5 watts for every degree the inside is warmer than the outside. Lower is better.
@@ -108,6 +110,8 @@ So two different problems can follow cavity fill. Water crossing from outside te
 
 ## Section 2: Fabric First and the Whole-House Context
 
+**In short:** PAS 2035:2023's fabric first order puts repair first: water penetration, damp, cracks and poor pointing are dealt with before insulation, and they are the conditions most often linked to cavity fill problems. The assessment asks for the location and severity of defects, condensation and mould, not their cause, so record well enough for the designer and coordinator to decide. On an EPC visit, if you see a possible problem, tell the client in writing and recommend professional advice.
+
 ### The PAS 2035 order of work
 
 PAS 2035:2023 calls "fabric first" "a technically sound and usually cost-effective approach" which "should always be considered when a retrofit plan is formulated" (clause 5.5.1). Its five stages are:
@@ -140,6 +144,8 @@ On an EPC visit, damp is not part of the rating, but if you see a possible probl
 ---
 
 ## Section 3: Is the Wall Suitable? Exposure, Cavity and Condition
+
+**In short:** Historic England says suitability depends mainly on exposure to driving rain and the wall's condition, and that is not yours to decide. Record the setting, height and elevation of each finding, and spalled brick, poor pointing or hard mortar on soft masonry; do not drill or inspect the cavity. No cracks does not mean sound ties, and a regular horizontal crack pattern or bulging is a referral trigger: recommend a structural engineer before any cavity work.
 
 ### Why suitability comes first
 
@@ -209,6 +215,8 @@ So no cracks does not mean sound ties. A regular horizontal crack pattern or bul
 
 ## Section 4: How Cavity Fill Goes In, and What Goes Wrong
 
+**In short:** Most problems after filling show from the room or the ground: damp after wind-driven rain on an exposed elevation, a low-level band, localised mould where the fill may have gaps, blocked or unsafeguarded vents, and escaped insulation. Each pattern has a twin with a different cause, so record both possibilities and treat patterns as reasons to look closely and refer, not proof. A blocked combustion air vent or a flue concern goes through your organisation's gas safety procedure.
+
 ### Installation types in general terms
 
 Historic England names three generic types: "mineral wool", "beads or granules" and "foamed insulation" (section 3.3). Existing cavities are filled through holes drilled in the outer leaf, which "still necessitates drilling a considerable number of reasonably large holes in the brick or stone façade" (section 3.3). It notes that "services, ventilation ducts and flues need to be sleeved" (section 3.4).
@@ -275,6 +283,8 @@ LABC's summary of the BRE report for Wales says "all of the cavity wall failures
 
 ## Section 5: Recognise, Record, Refer
 
+**In short:** You recognise and record; you do not state that a wall was unsuitable, that an installation is defective or that insulation must be removed. Use "possible", "consistent with" and "cause not established", and photograph each finding with the date, time and weather. Never tell a householder to open up walls or have the insulation extracted. The referral triggers and traffic light are this course's recommended practice, not legal requirements or a published scheme.
+
 ### What to record
 
 You recognise and record. You do not state that a wall was unsuitable, that an installation is defective, or that insulation must be removed. Use "possible", "likely", "consistent with" and "cause not established".
@@ -327,6 +337,8 @@ It does not say "the fill has failed", "the wall was unsuitable" or "the insulat
 ---
 
 ## Section 6: Remediation Routes
+
+**In short:** You signpost; you do not judge the installation, the claim or the remedy. The installer comes first; if it has gone out of business or not addressed the concern, the guarantee provider. CIGA is the route only where CIGA issued the guarantee; do not tell a householder they have one unless shown it. On the sources opened, TrustMark's free Find & Fix audit is for ECO4 or GBIS solid wall insulation and does not mention cavity walls.
 
 You signpost. You do not judge whether an installation is defective, whether a claim will succeed, or what the remedy should be.
 
