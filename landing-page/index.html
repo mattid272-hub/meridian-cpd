@@ -682,10 +682,10 @@
     }
     .pricing-cards {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       width: 100%;
-      max-width: 820px;
+      max-width: 1100px;
       margin: 0 auto 2rem;
     }
     .price-card {
@@ -767,8 +767,11 @@
       padding-bottom: 1rem;
     }
     .price-free-note a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 960px) {
+      .pricing-cards { grid-template-columns: 1fr; max-width: 520px; }
+    }
     @media (max-width: 640px) {
-      .pricing-cards { grid-template-columns: 1fr; max-width: 100%; }
+      .pricing-cards { max-width: 100%; }
       .price-card { padding: 1.8rem 1.4rem; }
     }
 
@@ -1550,6 +1553,20 @@
           <li>Self-assessment questions + further reading</li>
         </ul>
         <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="btn-s">Buy a Course &mdash; &#163;19.99</a>
+      </div>
+
+      <!-- Field Work series: three courses for one price -->
+      <div class="price-card">
+        <p class="price-card-type">Field Work Series</p>
+        <p class="price-card-amount">&#163;39.99</p>
+        <p class="price-card-period">three courses &mdash; three certificates</p>
+        <ul class="price-card-features">
+          <li>Three linked courses on one subject, bought together</li>
+          <li>Slides for the site visit, written notes for the desk</li>
+          <li>A certificate for each part as you complete it</li>
+          <li>Nearly &#163;20 less than the three parts bought separately</li>
+        </ul>
+        <a href="courses.html" class="btn-s">See the Series</a>
       </div>
 
       <!-- Annual membership -->
