@@ -39,6 +39,7 @@ Every figure, threshold and quotation comes from a document opened for this cour
 - **BS 8104**, **BRE BR 262**, **BS 5250** and **PAS 2030:2023** were not opened. **BS 8208-1:1985**, the guide to assessing existing cavity walls for filling, is listed by BSI as withdrawn on 1 July 2009; its text was not opened.
 - **CIGA's guarantee terms.** CIGA's website was opened (home page, FAQs and "How to Report a Concern"), but the guarantee document itself was not. What the course says about cover comes from those pages, the government guides, the Welsh Government statement and CIGA's written evidence to Parliament (October 2015). Check the terms of any individual guarantee with CIGA.
 - **Slumped or settled fibre.** No source opened for this course describes it, so the course does not describe it as a mechanism.
+- **Approved Document L edition.** The Approved Document L cited is the 2021 edition incorporating 2023 amendments, in force until 24 March 2027, when the 2026 edition takes effect (24 September 2027 for higher-risk building work). In the 2026 edition the quoted text is at paragraphs 3.1, 3.15, 3.18(f)(ii), 3.18(h)(ii) and 3.20, and Table 4.3 becomes Table 3.3 with the same values.
 
 Some numbers in Section 1 are calculated, not quoted; each shows its inputs and formula.
 

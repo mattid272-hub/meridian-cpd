@@ -38,6 +38,7 @@ Every figure, dimension and quotation below comes from a document opened for thi
 - **The current consolidated Approved Document B Volume 1** could not be retrieved. Fire provisions are quoted from the June 2022 amendment booklet; later amendments have not been checked.
 - **The gov.uk consultation "Reforming consumer protection for home upgrade schemes" (June 2026)** could not be retrieved. What is said about the June 2026 change to guarantee cover is attributed to the sources that reported it.
 - **BS EN 13914-1, BS 6213, BRE BR 262 and individual system certificates** are referred to by INCA and LABC Warranty but were not opened. No manufacturer data is used.
+- **Approved Document L edition.** The Approved Document L cited is the 2021 edition incorporating 2023 amendments, in force until 24 March 2027, when the 2026 edition takes effect (24 September 2027 for higher-risk building work). In the 2026 edition paragraph 4.19 becomes 3.20 and Table 4.3 becomes Table 3.3, with the same values.
 
 ---
 
@@ -72,7 +73,7 @@ So the question at every edge is: if the visible sealant bead failed tomorrow, w
 
 Each edge detail must keep rain out and keep the insulation reasonably continuous. Approved Document L Volume 1 paragraph 4.19 says: "When carrying out work in existing dwellings, care should be taken to reduce unwanted heat loss through thermal bridging." The BRE guide notes that "heat loss from poorly detailed junctions can be nearly 50% of that from all the fabric elements" and that "fRsi should be greater than 0.75 for residential dwellings" (p.23). MER-ALL-018 explains the temperature factor.
 
-INCA rates its standard details green or amber for thermal bridging. Amber details carry increased condensation and mould risk, and INCA states that amber "will increase the assessed inherent technical risk level in table B2 of PAS 2035 by 1". This course uses its own traffic light for recording later; do not confuse the two.
+INCA rates its standard details green or amber for thermal bridging. Amber details carry increased condensation and mould risk, and INCA states that amber "will increase the assessed inherent technical risk level in table B2 of PAS 2035 by 1". PAS 2035:2023 has no such table (its Annex B covers quality assurance schemes, and its risk assessment process "has been simplified"), so INCA's reference is to an earlier edition. This course uses its own traffic light for recording later; do not confuse the two.
 
 ### The regulatory frame, briefly
 
