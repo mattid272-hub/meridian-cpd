@@ -11,7 +11,7 @@ By the end of this course you should be able to:
 - Name the six zones where EWI defects concentrate and say what a sound detail and a doubtful detail look like in each.
 - Explain why each zone fails, using published industry and warranty-provider guidance, and record what you see in terms someone else can act on.
 - Summarise what the National Audit Office found about EWI installed under ECO4 and the Great British Insulation Scheme (GBIS), and what the free TrustMark audit route offers a householder.
-- Recognise when to stop describing and recommend professional advice, without diagnosing, without condemning an installation and without telling anyone to open up a wall.
+- Recognise when to stop describing and recommend professional advice, without naming a cause, without condemning an installation and without telling anyone to open up a wall.
 
 ---
 
@@ -227,7 +227,7 @@ Doors follow the same principles, and their thresholds are also base details (Zo
 
 ## Section 5: Zone 3, The Base, the DPC and the Splash Zone
 
-**In short:** LABC Warranty says the system must not bridge any horizontal DPC, so look for a base track, bead or break at about DPC level, or render running to the ground. Record paving or soil raised against the system, a gapped, damaged or blocked base closure, low-level staining, impact damage, and damp at skirting level inside. MER-ALL-018 explains why apparent rising damp is so often misdiagnosed; here, the right response is to record the base, not name a cause.
+**In short:** LABC Warranty says the system must not bridge any horizontal DPC, so look for a base track, bead or break at about DPC level, or render running to the ground. Record paving or soil raised against the system, a gapped, damaged or blocked base closure, low-level staining, impact damage, and damp at skirting level inside. MER-ALL-018 explains why apparent rising damp is so often put down to the wrong cause; here, the right response is to record the base, not name a cause.
 
 ### The DPC must not be bridged
 
@@ -237,7 +237,7 @@ LABC Warranty's EWI update says the system "must not bridge any horizontal damp 
 
 The BRE guide for the Welsh Government notes that system certificates may not cover insulating below DPC, even though the DPC can be preserved (p.29), and that where it is done the DPC should be maintained "via a break-channel in the insulation" (p.34).
 
-If render or insulation runs continuously from below the DPC to above it, ground moisture has a path around the DPC. MER-ALL-018 explains why apparent rising damp is so often misdiagnosed; here, the right response is to record the base, not name a cause.
+If render or insulation runs continuously from below the DPC to above it, ground moisture has a path around the DPC. MER-ALL-018 explains why apparent rising damp is so often put down to the wrong cause; here, the right response is to record the base, not name a cause.
 
 ### Starter tracks and closures
 
@@ -260,7 +260,7 @@ This course uses "splash zone" for the low part of the wall wetted by rain bounc
 - **Damage.** Holes or cracks where bins and bikes hit the wall let water straight into the insulation.
 - **Inside.** Damp or blistering at skirting level.
 
-"Front elevation: render continues to paving level; no visible base track or break at DPC level; paving appears laid against render; dark staining to about 200 mm above paving. Inside front room: damp staining at skirting level along front wall." That is a set of observations, not a diagnosis.
+"Front elevation: render continues to paving level; no visible base track or break at DPC level; paving appears laid against render; dark staining to about 200 mm above paving. Inside front room: damp staining at skirting level along front wall." That is a set of observations, not a conclusion about cause.
 
 **Visual:** Section detail at the base, two panels. Left (sound): solid wall with horizontal DPC; EWI starting above the DPC from a base closure with a drainage gap below the render; gravel margin; ground well below the DPC; where insulation continues below DPC, a break in the insulation at DPC level. Highlight the DPC line and drainage gap. Right (doubtful): render and insulation continuous from raised paving to above the DPC; the bridge highlighted red; damp band inside at skirting level.
 
@@ -268,7 +268,7 @@ This course uses "splash zone" for the low part of the wall wetted by rain bounc
 
 ## Section 6: Zone 4, Render Cracking, Board Joints and Mesh
 
-**In short:** The render and basecoat are the rain screen: a crack lets water into the insulation, where it may not drain or dry. This course does not teach crack diagnosis; describe the pattern precisely: diagonal from opening corners, a regular grid, along corners, or impact damage. A crack continuing a line in the old wall, or a bowed area, is for referral. Do not tap, probe or pick at the render, or tell a householder to fill cracks themselves.
+**In short:** The render and basecoat are the rain screen: a crack lets water into the insulation, where it may not drain or dry. This course does not teach how to read the cause of a crack; describe the pattern precisely: diagonal from opening corners, a regular grid, along corners, or impact damage. A crack continuing a line in the old wall, or a bowed area, is for referral. Do not tap, probe or pick at the render, or tell a householder to fill cracks themselves.
 
 ### Why the surface matters
 
@@ -283,7 +283,7 @@ LABC Warranty's rendering update says "Render failures are generally due to poor
 
 ### Describing crack patterns
 
-This course does not teach crack diagnosis. Some cracks reflect movement in the wall behind, and some of that is structural. What you can do is describe the pattern precisely, because that is what a qualified person will use. The categories below are this course's recording vocabulary, tied to the locations the guidance singles out:
+This course does not teach how to read the cause of a crack. Some cracks reflect movement in the wall behind, and some of that is structural. What you can do is describe the pattern precisely, because that is what a qualified person will use. The categories below are this course's recording vocabulary, tied to the locations the guidance singles out:
 - **Diagonal cracks from the corners of openings.** The corners of openings are where LABC Warranty requires extra reinforcement. Record which corners and how long.
 - **Straight lines in a regular grid.** These may follow board joints; LABC Warranty calls for an additional layer of mesh where there are concerns about straight-line joints. Record the approximate spacing.
 - **A crack continuing a line in the old wall**, such as an old movement joint or the junction with an extension. LABC Warranty says substrate movement joints should be mirrored through the system. Refer.
@@ -415,7 +415,7 @@ Never tell anyone to open up a wall. If something needs opening up to be underst
 - LABC Warranty says EWI "must not bridge any horizontal damp proof course".
 - The NAO reports estimates that 98% of ECO4 and GBIS EWI homes installed before 16 January 2025 have major issues (22,000 to 23,000 homes), 6% with immediate health and safety risks, and 1% fully meeting PAS 2035.
 - Citizens Advice says householders with solid wall insulation installed under ECO4 or GBIS between April 2022 and January 2025 can get a free check; TrustMark arranges it (0333 555 1234). In June 2026 the Installation Assurance Authority raised its guarantee maxima for this work from £20,000 to £25,000; check cover with TrustMark and the guarantee provider.
-- Recognise and record by zone, inside and out. Do not diagnose, condemn, probe or tell anyone to open up a wall.
+- Recognise and record by zone, inside and out. Do not name a cause, condemn, probe or tell anyone to open up a wall.
 
 ---
 
