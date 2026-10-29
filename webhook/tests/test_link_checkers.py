@@ -129,4 +129,6 @@ check("old unsigned consent links record nothing and say what to do", r.status_c
       and "hello@meridiancpd.co.uk" in r.text)
 
 print(f"\n{'ALL PASSED' if not fails else f'{fails} FAILED'}")
-sys.exit(1 if fails else 0)
+assert not fails, f"{fails} check(s) failed"  # lets pytest collect this script
+if __name__ == "__main__":
+    sys.exit(1 if fails else 0)

@@ -203,4 +203,6 @@ r = c.post("/admin/members/pat/email", auth=A, data={"email": "a@b.co.uk", "emai
 check("admin: mismatched addresses refused", r.status_code == 400 and member("pat")["email"] == "pat@newfirm.co.uk")
 
 print(f"\n{'ALL PASSED' if not fails else f'{fails} FAILED'}")
-sys.exit(1 if fails else 0)
+assert not fails, f"{fails} check(s) failed"  # lets pytest collect this script
+if __name__ == "__main__":
+    sys.exit(1 if fails else 0)

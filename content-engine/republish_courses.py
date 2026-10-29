@@ -5,6 +5,10 @@ Rebuilds the PDF for one or more existing courses from their markdown and replac
 the file in Supabase Storage. Unlike course_publisher.py it sends no emails and does
 not touch the catalogue: use it when a course's content has been corrected.
 
+Only ever writes {id}.pdf. A course delivered as a slide deck keeps its deck at
+{id}-deck.pdf (uploaded with tools/upload_deck.py), so a markdown change rebuilds the
+notes and can never overwrite the deck.
+
 Usage:
   python3 republish_courses.py MER-DEA-004 MER-DEA-011
   python3 republish_courses.py --dry-run MER-DEA-004     # build only, no upload

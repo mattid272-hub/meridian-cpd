@@ -522,6 +522,65 @@
       vertical-align: middle;
     }
 
+    /* series: part tag on the card, parts list in the modal */
+    .series-tag {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .25rem .7rem;
+      font-size: .76rem;
+      color: var(--muted-d);
+      letter-spacing: .02em;
+      margin-top: -.4rem;
+    }
+    .series-link {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .series-link:hover { text-decoration: underline; }
+    .series-parts {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+      margin-bottom: 1.6rem;
+    }
+    .series-parts li {
+      display: flex;
+      gap: .7rem;
+      align-items: baseline;
+      font-size: .88rem;
+      color: rgba(255,255,255,.7);
+      line-height: 1.5;
+    }
+    .series-parts li > span:first-child {
+      flex-shrink: 0;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .series-mark {
+      display: inline-block;
+      margin-left: .4rem;
+      font-size: .66rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(212,255,0,.35);
+      padding: .1rem .4rem;
+      border-radius: 3px;
+      vertical-align: middle;
+    }
+    .series-mark.series-held {
+      color: var(--muted-d);
+      border-color: rgba(255,255,255,.18);
+    }
+
     .no-results {
       display: none;
       grid-column: 1/-1;
@@ -873,6 +932,7 @@
     <p class="modal-desc" id="modalDesc"></p>
     <p class="modal-section-lbl">What you'll learn</p>
     <ul class="modal-objectives" id="modalObjectives"></ul>
+    <div id="modalSeries" style="display:none"></div>
     <div class="modal-actions" id="modalActions"></div>
     <p class="modal-price-note" id="modalPromoNote"></p>
   </div>
@@ -897,11 +957,26 @@
 // ── Course data ──────────────────────────────────────────────────────────────
 const STRIPE_SINGLE = 'https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00';
 const STRIPE_SUB    = 'https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01';
+// The £39.99 Field Work series Payment Link (see webhook/DEPLOY.md). Empty until it is
+// created in Stripe: the series buttons stay hidden while it is empty.
+const STRIPE_SERIES = 'https://buy.stripe.com/7sYaEWfIu8VJ7Dkdei73G02';
 
 // Courses withdrawn while they are revised against the current standards. They are not
-// shown or sold. To restore one, publish its corrected PDF and delete its ID here and
-// in UNDER_REVIEW in webhook/main.py.
-const UNDER_REVIEW = new Set([]);
+// shown or sold. To restore one, publish its corrected PDF and delete its ID here, in
+// under-review.json and in UNDER_REVIEW in webhook/main.py. The Field Work: Insulation
+// parts are listed until their decks are in Storage.
+const UNDER_REVIEW = new Set(['MER-ALL-019', 'MER-ALL-020', 'MER-ALL-021']);
+
+// Field Work series: three courses bought together for £39.99, each with its own
+// certificate. Mirrors SERIES in webhook/main.py. A series is only offered when every
+// part is on sale (listed below and not under review) and STRIPE_SERIES is set.
+const SERIES = {
+  'FW-INSULATION': { title: 'Field Work: Insulation', courses: ['MER-ALL-019', 'MER-ALL-020', 'MER-ALL-021'] },
+  'FW-HEATING':    { title: 'Field Work: Heating',    courses: ['MER-ALL-022', 'MER-ALL-023', 'MER-ALL-024'] },
+  'FW-VENTILATION':{ title: 'Field Work: Ventilation',courses: ['MER-ALL-025', 'MER-ALL-026', 'MER-ALL-027'] },
+  'FW-MOISTURE':   { title: 'Field Work: Moisture',   courses: ['MER-ALL-018', 'MER-ALL-028', 'MER-ALL-029'] },
+};
+const SERIES_PRICE = '£39.99';
 
 const ALL_COURSES = [
   {
@@ -1215,6 +1290,42 @@ const ALL_COURSES = [
     ]
   },
   {
+    id: 'MER-ALL-019', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-INSULATION', part: 1,
+    title: 'Insulation Series, Part 1: Principles and Cavity Wall Insulation',
+    desc: 'What a U-value is and how it becomes a heat loss figure, why the moisture risk in a wall moves when insulation is added, thermal bridging and the fabric-first approach in PAS 2035:2023, the wall conditions that published sources link to cavity wall insulation problems, the failure patterns seen after filling, and where to signpost a householder for remediation. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Explain in plain terms what a U-value is, how it becomes a heat loss figure, and why the moisture risk in a wall moves when insulation is added',
+      'Explain thermal bridging at junctions and the "fabric first" approach in PAS 2035:2023, and where cavity wall insulation sits within it',
+      'Recognise the wall conditions that published sources link to cavity wall insulation problems: exposure to wind-driven rain, narrow or obstructed cavities, damaged brickwork and pointing, and corroded wall ties',
+      'Recognise and record the common failure patterns after filling without stating a cause as fact',
+      'Signpost a householder to the right remediation route, and know which free schemes do not cover cavity walls'
+    ]
+  },
+  {
+    id: 'MER-ALL-020', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-INSULATION', part: 2,
+    title: 'Insulation Series, Part 2: External Wall Insulation: Spotting the Failures',
+    desc: 'How a rendered external wall insulation system is built up and why its edges matter more than its face, the six zones where EWI defects concentrate and what a sound and a doubtful detail look like in each, what the National Audit Office found about EWI installed under ECO4 and the Great British Insulation Scheme, and the free TrustMark audit route. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Describe how a rendered external wall insulation (EWI) system is built up, and why its edges matter more than its face',
+      'Name the six zones where EWI defects concentrate and say what a sound detail and a doubtful detail look like in each',
+      'Explain why each zone fails, using published industry and warranty-provider guidance, and record what you see in terms someone else can act on',
+      'Summarise what the National Audit Office found about EWI installed under ECO4 and the Great British Insulation Scheme (GBIS), and what the free TrustMark audit route offers a householder',
+      'Recognise when to stop describing and recommend professional advice, without naming a cause, without condemning an installation and without telling anyone to open up a wall'
+    ]
+  },
+  {
+    id: 'MER-ALL-021', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-INSULATION', part: 3,
+    title: 'Insulation Series, Part 3: Internal Wall Insulation and Hidden Moisture',
+    desc: 'How an internal wall insulation system is built up and the jobs done by the insulation, the air barrier, the vapour control layer, the service void and the board; moisture-closed against moisture-open IWI; interstitial condensation and where the risk concentrates in an insulated solid wall; the common IWI defect zones; and how findings fit the designer\'s moisture risk assessment under PAS 2035:2023. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Describe how an internal wall insulation (IWI) system is built up, and the different jobs done by the insulation, the air barrier, the vapour control layer, the service void and the board',
+      'Explain the difference between moisture-closed and moisture-open IWI, and why traditional solid walls need particular care',
+      'Explain interstitial condensation in plain terms, and where in an insulated solid wall the risk concentrates',
+      'Recognise the common IWI defect zones and record what you see at each',
+      'Place your findings within the designer\'s moisture risk assessment, using the PAS 2035:2023 clauses and the standards they name, and signpost the free TrustMark audit route for solid wall insulation installed under ECO4 or GBIS'
+    ]
+  },
+  {
     id: 'MER-ALL-017', strand: 'ALL', hours: 1.0, where: 'E',
     title: 'Awaab\'s Law Phase 2: What Energy Assessors Must Know',
     desc: 'Awaab\'s Law as it stands in October 2026: the statutory basis, the hazards and timescales that have bound social landlords in England since 27 October 2025, the status of the draft Phase 2 Regulations due from 30 November 2026, what is planned for Phase 3 and private renting, and what an EPC, a retrofit assessment and a ventilation assessment do and do not establish about damp, mould and cold.',
@@ -1378,13 +1489,37 @@ function getStripeLink(courseId) {
   return base + '?' + params.toString();
 }
 
+// ── Series ───────────────────────────────────────────────────────────────────
+// The series link carries the series id the same way a course link carries the course
+// id; the app expands it to the three courses. No promo code is passed on this link
+// (MERIDIAN10 is for a single course; it is also restricted to the £19.99 product in
+// Stripe, so typing it at checkout does nothing here either).
+function getSeriesLink(seriesId) {
+  return STRIPE_SERIES + '?' + new URLSearchParams({ client_reference_id: seriesId }).toString();
+}
+function seriesOnSale(seriesId) {
+  const s = SERIES[seriesId];
+  return !!(STRIPE_SERIES && s && s.courses.every(id => COURSES.some(c => c.id === id)));
+}
+function seriesTitle(c) {
+  return c.series && SERIES[c.series] ? SERIES[c.series].title : '';
+}
+function seriesTag(c) {
+  const s = c.series && SERIES[c.series];
+  if (!s) return '';
+  const link = seriesOnSale(c.series)
+    ? ` <a class="series-link" href="${getSeriesLink(c.series)}" target="_blank" rel="noopener">Get all three, ${SERIES_PRICE} →</a>`
+    : '';
+  return `<p class="series-tag">Part ${c.part} of ${s.courses.length} · ${s.title}${link}</p>`;
+}
+
 // ── Filtering ────────────────────────────────────────────────────────────────
 function filteredCourses() {
   return COURSES.filter(c => {
     const strandMatch = activeFilter === 'all' || c.strand === activeFilter;
     const nationMatch = appliesIn(c, activeNation);
     const q = searchQuery.toLowerCase();
-    const textMatch = !q || c.title.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q) || c.id.toLowerCase().includes(q) || whereLabel(c).toLowerCase().includes(q);
+    const textMatch = !q || c.title.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q) || c.id.toLowerCase().includes(q) || whereLabel(c).toLowerCase().includes(q) || seriesTitle(c).toLowerCase().includes(q);
     return strandMatch && nationMatch && textMatch;
   });
 }
@@ -1484,6 +1619,7 @@ function renderGrid() {
       </div>
       <p class="card-title">${c.title}${freeTag}</p>
       <span class="where-tag">${whereLabel(c)}</span>
+      ${seriesTag(c)}
       <p class="card-desc">${c.desc.substring(0, 110)}…</p>
       <div class="card-footer">
         <div class="card-price">
@@ -1520,15 +1656,38 @@ function openModal(courseId) {
   const objList = document.getElementById('modalObjectives');
   objList.innerHTML = c.objectives.map(o => `<li>${o}</li>`).join('');
 
+  // A course that is one part of a series: list the parts, offer the whole series
+  const seriesBox = document.getElementById('modalSeries');
+  const s = c.series && SERIES[c.series];
+  let seriesBtn = '', seriesNote = '';
+  if (s) {
+    const parts = s.courses.map((id, i) => {
+      const p = ALL_COURSES.find(x => x.id === id);
+      const mark = id === c.id ? ' <span class="series-mark">this course</span>'
+        : (!COURSES.some(x => x.id === id) ? ' <span class="series-mark series-held">being updated</span>' : '');
+      return `<li><span>Part ${i + 1}</span><span>${p ? p.title : id}${mark}</span></li>`;
+    }).join('');
+    seriesBox.innerHTML = `<p class="modal-section-lbl">${s.title}: the three parts</p><ol class="series-parts">${parts}</ol>`;
+    seriesBox.style.display = '';
+    if (seriesOnSale(c.series)) {
+      seriesBtn = `<a href="${getSeriesLink(c.series)}" target="_blank" rel="noopener" class="btn-s">All three — ${SERIES_PRICE}</a>`;
+    }
+    seriesNote = ` Each part is its own course with its own certificate. Annual subscribers already have every part in their library, so there is no need to buy the series.`;
+  } else {
+    seriesBox.innerHTML = '';
+    seriesBox.style.display = 'none';
+  }
+
   const link = getStripeLink(c.id);
-  const promoNote = promoCode
+  const promoNote = (promoCode
     ? `<strong>Code "${promoCode}" will be applied at checkout.</strong>`
     : c.free
       ? `Use code <strong>MERIDIAN10</strong> to get this course free.`
-      : `Have a code? Enter it above or at Stripe checkout. Annual subscribers get every course free.`;
+      : `Have a code? Enter it above or at Stripe checkout. Annual subscribers get every course free.`) + seriesNote;
 
   document.getElementById('modalActions').innerHTML = `
     <a href="${link}" target="_blank" rel="noopener" class="btn-p">Enrol — £19.99 →</a>
+    ${seriesBtn}
     <a href="${STRIPE_SUB}" target="_blank" rel="noopener" class="btn-s">Annual Access — £79/yr</a>`;
   document.getElementById('modalPromoNote').innerHTML = promoNote;
 
