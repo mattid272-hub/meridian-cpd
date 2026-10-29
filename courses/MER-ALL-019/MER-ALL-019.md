@@ -25,7 +25,7 @@ Part 1 of the Insulation Series sets out the principles that apply to every insu
 
 This course is written for England and Wales. The physics applies anywhere; the sources differ by nation:
 - **Approved Document L Volume 1** (2021 edition incorporating 2023 amendments) is the England edition; its cover says it "takes effect on 15 June 2022 for use in England". The Welsh edition could not be retrieved, so check paragraph and table numbers on gov.wales before relying on them in Wales.
-- **The RdSAP 10 defaults** quoted are from Table 6 of the specification (version 3.0, June 2025), the England table. The Wales table (Table 9) could not be read in full. BRE's SAP 10 page now links a later specification file (its address is dated 7 June 2026) that could not be read for this course, so check Table 6 against the version your software uses.
+- **The RdSAP 10 defaults** quoted are from Table 6 (England) of the RdSAP 10 specification dated 7 June 2026. For the age bands quoted, the Wales table (Table 9) gives the same cavity values.
 - **The Welsh Government consumer guide** (7 February 2022), the **Welsh Government written statement** (13 June 2017) and the **BRE study for Constructing Excellence in Wales** concern Wales. The BEIS consumer guide (October 2019) does not state its geographical scope.
 - **Historic England** is England's heritage body; its guidance on early cavity walls is cited for its technical content.
 
@@ -58,7 +58,7 @@ One detail matters for cavity walls. BR 443 says "The effect of wall ties may be
 
 ### Worked numbers
 
-RdSAP 10 (BRE specification, version 3.0, June 2025, Table 6, England) gives these default wall U-values:
+RdSAP 10 (BRE specification dated 7 June 2026, Table 6, England; Table 9, Wales, gives the same values for these bands) gives these default wall U-values:
 
 | Age band | Years | Cavity as built | Filled cavity |
 |---|---|---|---|
@@ -469,7 +469,7 @@ Sources used for this course:
 - **Waterproofing cavity walls to allow insulation in exposed areas.** BEIS Research Paper 2021/017, UCL and BRE, issue 1 (May 2020). Introduction; Conclusions; sections 2.8 and 3.6.2. **Appendix A: WP2 – Wall analysis** (C. Weeks, A. Sutton, T. Bassett, BRE), pages 22 to 28, section 2.3.3.12, section 2.3.5 and Table 11.
 - **Energy Efficiency and Historic Buildings: Insulating Early Cavity Walls.** Historic England, HEAG083, version 1.1, April 2016 (first published by English Heritage, March 2012). Sections 1, 3.3, 3.4, 3.5 and 4.3; Figure 9.
 - **Conventions for U-value calculations.** BRE, BR 443, 2019 edition, B. Anderson and L. Kosmina. Sections 1 and 4; paragraphs 4.7.1 and 4.8.2.
-- **RdSAP 10 Specification.** BRE, version 3.0, June 2025. Table 1 (age bands) and Table 6 (wall U-values, England).
+- **RdSAP 10 Specification.** BRE, 7 June 2026. Table 1 (age bands), Table 6 (wall U-values, England) and Table 9 (wall U-values, Wales).
 - **Approved Document L: Conservation of fuel and power, Volume 1: Dwellings.** 2021 edition incorporating 2023 amendments, for use in England. Paragraphs 4.1, 4.14, 4.17(f)(ii), 4.17(h)(ii) and 4.19; Table 4.3 and its notes.
 - **Approved Document C: Site preparation and resistance to contaminants and moisture.** 2004 edition incorporating 2010 and 2013 amendments, for use in England; and the 2004 edition incorporating 2010 amendments, for use in Wales. Contents lists (titles of Diagram 12 and Table 4) and paragraphs 5.8 and 5.15.
 - **PAS 2035:2023 Retrofitting dwellings for improved energy efficiency. Specification and guidance.** BSI, 2023. Clauses 3.36, 4.2.3, 4.2.6, 5.5.1, 7.3.2, 7.4.2, 8.2.10 and 8.2.16.
@@ -483,7 +483,7 @@ Sources used for this course:
 - **Energy efficiency installations under the Energy Company Obligation.** National Audit Office, HC 1334, 14 October 2025. Summary, paragraph 17.
 - **BS 8208-1:1985.** BSI listing only (published 31 July 1985, withdrawn 1 July 2009).
 
-Not opened for this course: the BRE report "Post Installation Performance of Cavity Wall & External Wall Insulation" for Constructing Excellence in Wales; the text of Approved Document C after paragraph 5.15, including Table 4 and Diagram 12; BS 8104; BRE BR 262; the text of BS 8208-1; PAS 2030:2023; BS 5250; the Welsh edition of Approved Document L; the Wales table (Table 9) of the RdSAP 10 specification; the later RdSAP 10 specification file linked from BRE's SAP 10 page (dated 7 June 2026 in its address); the CIGA guarantee document.
+Not opened for this course: the BRE report "Post Installation Performance of Cavity Wall & External Wall Insulation" for Constructing Excellence in Wales; the text of Approved Document C after paragraph 5.15, including Table 4 and Diagram 12; BS 8104; BRE BR 262; the text of BS 8208-1; PAS 2030:2023; BS 5250; the Welsh edition of Approved Document L; the CIGA guarantee document.
 
 Related Meridian courses: MER-ALL-018 (Damp, Condensation and Thermal Bridging: Reading the Moisture); MER-RA-010 (Thermal Bridging in Retrofit Assessment: What Assessors Must Record). Parts 2 and 3 of the Insulation Series follow.
 
