@@ -34,7 +34,7 @@ This course is written for England and Wales:
 
 Every figure, threshold and quotation comes from a document opened for this course, and clause numbers are given as read. The gaps that matter:
 - **BS EN 12831-1:2017** (heat load) and **BS EN 442** (radiator output) are paid British Standards and were not opened. What the course says about them comes from documents that refer to them.
-- **The text of Approved Document L**, in both the 2021/2023 and 2026 editions, could not be read: the files returned no readable text. The course therefore does not say what Approved Document L requires on heat pump flow temperatures.
+- **Approved Document L edition.** The Approved Document L cited is the 2021 edition incorporating 2023 amendments, in force until 24 March 2027, when the 2026 edition takes effect (subject to transitional provisions; Section 2). Its flow temperature guidance (paragraphs 5.10 and 5.12) and the 2026 equivalents (4.10, 4.12 and 4.13) were read for this course.
 - **HSE's guidance on hot water temperatures** and the **IOA/CIEH/ANC professional advice note on heat pump noise** could not be opened. The course does not quote either.
 - **The earlier England boundary rules** (the omitted Class G paragraphs) were not shown in the legislation as read. The course reports how MCS and the Welsh Government describe the change.
 
@@ -94,7 +94,7 @@ Clause 3.1.4 adds that "The contractor shall ensure the building (including curt
 
 ## Section 2: Sizing, Flow Temperature and Hybrids
 
-**In short:** MIS 3005-D:2025 asks for a heat pump that provides at least 100% of the calculated heat load without a supplementary electric heater, and an air source system that holds temperature through defrost cycles. High temperature heat pumps should be avoided unless a flow above 55°C is needed; above 55°C, a 55°C-or-lower alternative design should also be provided and explained. In a hybrid, the heat pump covers at least 55% of the load.
+**In short:** MIS 3005-D:2025 asks for a heat pump that provides at least 100% of the calculated heat load without a supplementary electric heater, and an air source system that holds temperature through defrost cycles. High temperature heat pumps should be avoided unless a flow above 55°C is needed; above 55°C, a 55°C-or-lower alternative design should also be provided and explained. In a hybrid, the heat pump covers at least 55% of the load. Approved Document L, in both editions, sizes new and fully replaced wet heating systems for a maximum flow temperature of 55°C.
 
 ### At least 100% of the load
 
@@ -140,7 +140,13 @@ The government's circular of 24 March 2026 sets the dates. The Building Regulati
 | From 24 March 2027 | 2026 edition, except work covered by the transitional provisions |
 | Transitional | Notice or plans given before 24 March 2027 and work commenced before 24 March 2028 |
 
-The text of neither edition could be read for this course, so it does not say what Approved Document L requires on heat pump flow temperatures. Check the edition that applies to the work.
+### Approved Document L: the 55°C flow temperature
+
+In the 2021 edition incorporating 2023 amendments, paragraph 5.10 covers a wet heating system that is newly installed, or fully replaced in an existing building "including the heating appliance, emitters and associated pipework". All parts of the system should be sized to meet the heating needs of the dwelling "at a maximum flow temperature of 55°C or lower". Where that is not feasible (its examples are insufficient space for larger radiators, or higher temperature heat from a low carbon district heat network), the system should be designed to "the lowest design temperature possible" that still meets the heating needs. Paragraph 5.12 says heat pumps should meet the full space heating requirement at the design condition, without assuming heat from "additional electric heaters".
+
+The 2026 edition keeps the rule at paragraph 4.10, with one change: the fallback now begins "In existing dwellings", so a new dwelling's wet heating system is sized for a maximum flow of 55°C without that exception. Paragraph 4.12 carries the full-load sizing rule for heat pump and hybrid systems, and paragraph 4.13 says the flow temperature should be designed "to optimise efficiency of the heat pump".
+
+Paragraph 5.10 does not describe replacing the heat generator alone, with the emitters kept. Check the edition and the scope of the work that apply.
 
 **Visual:** Twin-to-rule-out grid. Two columns, "Heat pump system" and "Hybrid system", each with a bar for 100% of the heat load. Left: filled by the heat pump, supplementary heater crossed out. Right: heat pump fills 55% ("rated at 55°C flow"), the second source the rest, one controller marked "heat pump priority". Strip beneath: "Above 55°C flow? Provide and explain a 55°C-or-lower alternative (cl. 3.4.4)".
 
@@ -398,7 +404,7 @@ It does not say the design is correct or the unit complies with permitted develo
 - At a 21 K mean water to room difference, a radiator gives about a third of its 50 K output (IDHEE factor 0.324).
 - Hot water design demand is 45 × N litres a day, and systems shall include a means to prevent bacterial growth.
 - MCS 020(a): 37 dB LAeq,5mins at 1 m from a neighbour's habitable room window or door, two units combined where they share an assessment position. The 1 m (England) and 3 m (Wales) boundary rules have gone; listed buildings are outside permitted development in both.
-- Approved Document L 2021/2023 applies in England until the 2026 edition comes into force on 24 March 2027, subject to transitional provisions.
+- Approved Document L 2021/2023 applies in England until the 2026 edition comes into force on 24 March 2027, subject to transitional provisions. Both size new and fully replaced wet heating systems for a maximum 55°C flow (paragraph 5.10; 2026 edition 4.10, where the fallback applies to existing dwellings only).
 - Record design flow temperature in RdSAP only on documentary evidence (convention 4.01b).
 
 ---
@@ -480,10 +486,11 @@ Sources used for this course:
 - **Domestic Heat Distribution Systems: Evidence Gathering.** Element Energy and Ricardo Energy & Environment for BEIS, Research Paper 2021/015, February 2021. Final report and executive summary.
 - **Final Report on Analysis of Heat Pump Data from the Renewable Heat Premium Payment (RHPP) Scheme.** Lowe and others (RAPID-HPC) for DECC/BEIS, March 2017. Sections 5, 7.5 and 8.
 - **Conventions (v12.2) for RdSAP 10.** BRE for MHCLG, applicable from 6 August 2026. Conventions 4.01a and 4.01b.
-- **Approved Document L: Energy and greenhouse gas emissions (2026).** gov.uk publication page (24 March 2026, revised 8 September 2026).
+- **Approved Document L: Conservation of fuel and power, Volume 1: Dwellings.** 2021 edition incorporating 2023 amendments, for use in England. Paragraphs 5.10 and 5.12.
+- **Approved Document L: Energy and greenhouse gas emissions, Volume 1: Dwellings.** 2026 edition, for use in England. Paragraphs 4.10, 4.12 and 4.13. And the gov.uk publication page (24 March 2026, revised 8 September 2026).
 - **Housing, Communities and Local Government Circular: The Building Regulations etc. (Amendment) (England) Regulations 2026.** MHCLG, 24 March 2026. Paras 1, 8, 11, 15 and 16; Annex C.
 
-Not opened for this course: BS EN 12831-1:2017; BS EN 442; CIBSE Guide A; the Domestic Heating Design Guide (including its Table 10.1); the text of Approved Document L (England) in its 2021/2023 and 2026 editions; the Welsh Approved Document L; Approved Document G; HSE's "Hot and cold water systems: things to consider" (permission request not answered); the IOA/CIEH/ANC Domestic ASHP Professional Advice Note (2026) (permission request not answered); TrustMark's own web pages (permission request not answered); the gov.uk Boiler Upgrade Scheme pages; the omitted wording of England's former Class G paragraphs G.2(e) and G.3(a), and of Wales's former G.2(d); MCS 020(a) Issue 1.0; PAS 2035:2023 and PAS 2030:2023.
+Not opened for this course: BS EN 12831-1:2017; BS EN 442; CIBSE Guide A; the Domestic Heating Design Guide (including its Table 10.1); the Welsh Approved Document L; Approved Document G; HSE's "Hot and cold water systems: things to consider" (permission request not answered); the IOA/CIEH/ANC Domestic ASHP Professional Advice Note (2026) (permission request not answered); TrustMark's own web pages (permission request not answered); the gov.uk Boiler Upgrade Scheme pages; the omitted wording of England's former Class G paragraphs G.2(e) and G.3(a), and of Wales's former G.2(d); MCS 020(a) Issue 1.0; PAS 2035:2023 and PAS 2030:2023.
 
 Related Meridian courses: Parts 1 and 3 of the Heating Series; MER-RA-001 (PAS 2035:2023 Overview for Retrofit Assessors).
 
