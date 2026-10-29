@@ -184,8 +184,10 @@ for Pages and the app corrects itself within ten minutes, or restart the Railway
 `metadata.series=FW-INSULATION` instead). For each part the app records the purchase row,
 sends the email, then marks the row `emailed_at`. If anything fails part-way, the webhook
 answers non-2xx and Stripe delivers the event again; the app then finishes only the parts
-not yet marked, so no part is ever sent twice, and prints `ACTION NEEDED` so the buyer's
-emails can be checked. A series payment the app cannot match to a series is recorded as
+not yet marked, so a part whose mark is recorded is never sent twice (if the mark itself
+failed after a successful send, the retry may re-send that part with the same unused link,
+so no second certificate can result), and prints `ACTION NEEDED` so the buyer's emails can
+be checked. A series payment the app cannot match to a series is recorded as
 one row (`course_id` SERIES) with an `ACTION NEEDED` line and nothing is sent: work out
 the series from the Stripe receipt and send each part with Admin → Test purchase (email
 and course id; it records a £0 test row), or refund.

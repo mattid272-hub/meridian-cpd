@@ -704,7 +704,7 @@ async def handle_checkout(session):
     # Stripe delivers an event again if it did not get a quick 200, and this handler can
     # fail part-way through a series. Each part is recorded before its email goes, and
     # marked once the email has gone, so a repeat delivery picks up exactly the parts that
-    # are not yet done and never sends a part twice.
+    # are not yet done; a part is not re-sent once its emailed_at mark is recorded.
     recorded = _order_purchases(session_id)
     on_file = {p.get("course_id") for p in recorded}
     emailed = {p.get("course_id") for p in recorded if p.get("emailed_at")}
