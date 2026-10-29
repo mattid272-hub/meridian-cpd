@@ -21,7 +21,7 @@ Heat pumps now appear on assessment visits more often than any other low carbon 
 
 Part 1 of the Heating Series covers how heat pumps work, how their efficiency is measured, and what two large government-funded field trials found. Part 2 covers design: heat loss, emitters, hot water, siting and installer standards. Part 3 covers running costs, carbon, grants and how heat pumps are entered in RdSAP.
 
-This course does not train you to design, commission or diagnose a heat pump. Your job on site is to recognise and record what is there, to write "possible" rather than "is", and to know when to suggest the householder gets professional advice.
+This course does not train you to design, commission or fault-find a heat pump. Your job on site is to recognise and record what is there, to write "possible" rather than "is", and to know when to suggest the householder gets professional advice.
 
 ### Where this course applies
 
@@ -301,7 +301,7 @@ Write what you saw and what you were told, with its source:
 - "Air-to-water heat pump, outdoor unit on rear wall. Label photographed. Cylinder with immersion heater. Householder reports immersion timer runs daily; not verified."
 - "Gas boiler present alongside heat pump; possible hybrid arrangement. MCS certificate not available on the day."
 
-Avoid writing that a system "is undersized", "is running inefficiently" or "is faulty". Those are design and diagnostic judgements a visit gives you no basis to make.
+Avoid writing that a system "is undersized", "is running inefficiently" or "is faulty". Those are design and fault-finding judgements a visit gives you no basis to make.
 
 ### Traffic light
 
@@ -311,7 +311,7 @@ The bands are advisory. They help you decide what to record and whether to sugge
 |---|---|---|
 | Green | Type clear; label readable; emitters in all heated rooms; MCS certificate and design information available | Record and photograph. |
 | Amber | No certificate or design information; immersion or backup heater apparently set to run often; a boiler alongside with no clear controls; heated rooms without emitters | Record as observed, using "possible" where cause is unclear. Suggest the householder asks the installer for the design information or a check of settings. |
-| Red | Something you can see that may be a safety concern, such as visibly damaged wiring or water near electrical parts; the householder reports the home cannot be kept warm in cold weather; error messages they cannot clear | Record what you saw or were told. Adjust nothing and do not diagnose. Suggest the householder gets professional advice promptly: the installer, and a competent professional for any possible safety concern. |
+| Red | Something you can see that may be a safety concern, such as visibly damaged wiring or water near electrical parts; the householder reports the home cannot be kept warm in cold weather; error messages they cannot clear | Record what you saw or were told. Adjust nothing and do not try to find the cause. Suggest the householder gets professional advice promptly: the installer, and a competent professional for any possible safety concern. |
 
 **Visual:** Traffic light. Three stacked bands, each with a sketch of the same installation from the airing cupboard and the rear wall. Green: readable label, cylinder, radiators in each room, MCS certificate in a folder. Amber: an immersion timer set to a long daily period, and a boiler beside the heat pump with a question mark over the controls. Red: water under the outdoor unit's electrical box and a householder's note "cold in January". Each band carries its action line. Footer: "Advisory only. Record, write 'possible', suggest advice."
 
@@ -421,7 +421,7 @@ B) Record what you saw, including "possible hybrid arrangement" and the immersio
 C) Tell the householder to remove the boiler
 D) Record nothing, as performance cannot be measured on a visit
 
-**Correct answer: B.** This is an amber case. RHPP links heavy immersion use with low SPFH4, and MIS 3005-D requires hybrid controls to prioritise the heat pump, but neither gives grounds to diagnose. Record, write "possible", adjust nothing, and refer to the installer first (Sections 4 and 6).
+**Correct answer: B.** This is an amber case. RHPP links heavy immersion use with low SPFH4, and MIS 3005-D requires hybrid controls to prioritise the heat pump, but neither gives grounds to name a cause. Record, write "possible", adjust nothing, and refer to the installer first (Sections 4 and 6).
 
 ---
 
