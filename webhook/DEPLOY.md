@@ -124,6 +124,7 @@ Expected flow:
 | `STRIPE_WEBHOOK_SECRET` | Stripe → Developers → Webhooks → signing secret |
 | `STRIPE_PRICE_SINGLE` | Stripe → Products → price ID |
 | `STRIPE_PRICE_SUBSCRIPTION` | Stripe → Products → price ID |
+| `STRIPE_PRICE_SERIES` | Stripe → Products → "Field Work series" → price ID (see below) |
 | `SUPABASE_URL` | Already known: cpkyloywjmpesmjgqaxm.supabase.co |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Settings → API |
 | `GMAIL_CLIENT_ID` | Google Cloud Console |
@@ -131,6 +132,40 @@ Expected flow:
 | `GMAIL_REFRESH_TOKEN` | OAuth Playground |
 | `BASE_URL` | `https://meridiancpd.co.uk` |
 | `PDF_MER_DEA_001` etc. | Supabase Storage → public URLs |
+
+## Field Work series (one purchase, three courses)
+
+A series is three courses sold together for £39.99. One checkout makes three purchase
+rows, three completion links and three certificates; the price is recorded as £13.33 a
+part. The series are defined in `SERIES` in `main.py`; a series whose courses are not all
+in the catalogue is skipped at start-up and cannot be bought.
+
+Set-up, in this order:
+
+1. **Supabase, before deploying:** run `migrations/2026-10-29_series.sql` in SQL Editor.
+   It replaces the one-row-per-session rule on `purchases` with one row per course per
+   session and adds `series_id`. With the old rule still in place a series purchase
+   records one course of three. Safe to run again.
+2. **Stripe:** Products → Add product "Field Work series", one-off price £39.99 GBP.
+   Create a Payment Link from it; on the link, collect the customer's name, and set
+   After payment → redirect to `https://app.meridiancpd.co.uk/thanks?session_id={CHECKOUT_SESSION_ID}`
+   as for the other links. Copy the price ID (`price_...`) to Railway as `STRIPE_PRICE_SERIES`.
+3. **Stripe, promo codes:** restrict the MERIDIAN10 coupon to the £19.99 single-course
+   product. The site passes `prefilled_promo_code` on every buy link, including the series
+   link, so an unrestricted coupon would make the series free.
+4. **Site:** paste the Payment Link into `STRIPE_SERIES` in `landing-page/courses.html`.
+   The series button only shows when that is set and every part is on sale.
+5. **Decks:** a series course is delivered as a NotebookLM slide deck with the written
+   course as notes. Upload each deck with `tools/upload_deck.py MER-ALL-019 deck.pdf`
+   (it goes to Storage as `MER-ALL-019-deck.pdf`; the notes stay at `MER-ALL-019.pdf`,
+   built from the markdown as usual). Then take the course out of `UNDER_REVIEW` in
+   `main.py`, `landing-page/courses.html` and `landing-page/under-review.json`.
+   Admin → System checks both files for every deck course on sale.
+
+The buy link carries the series id: `<payment link>?client_reference_id=FW-INSULATION`.
+A Payment Link can carry `metadata.series=FW-INSULATION` instead. A series payment the
+app cannot match to a series is recorded as one row (`course_id` SERIES) with an
+`ACTION NEEDED` line in the deploy log, and nothing is sent.
 
 ## Outreach from the app (Admin → Outreach)
 

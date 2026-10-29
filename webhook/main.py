@@ -102,9 +102,38 @@ LOGO_URL = os.environ.get("LOGO_URL", "")  # Set this env var when new logo is r
 
 # PDF URLs are derived automatically from the Supabase project URL + course ID.
 # No per-course env vars needed — new courses just need their PDF uploaded to Storage.
+#
+# Two files can exist for a course in the `courses` bucket:
+#   {id}.pdf        the written course, built from courses/{id}/{id}.md (the republish
+#                   workflow rewrites this file whenever the markdown changes)
+#   {id}-deck.pdf   the slide deck exported from NotebookLM, uploaded by tools/upload_deck.py
+# A course whose catalogue entry says "deliverable": "deck" is delivered as the deck, with
+# the written PDF attached as the notes. The deck lives under its own name so a markdown
+# republish can never overwrite it.
 _SUPABASE_URL = os.environ["SUPABASE_URL"]
+
+
+def _storage_url(filename: str) -> str:
+    return f"{_SUPABASE_URL}/storage/v1/object/public/courses/{filename}"
+
+
+def _is_deck(course_id: str) -> bool:
+    return COURSES.get(course_id, {}).get("deliverable") == "deck"
+
+
+def _notes_url(course_id: str) -> str:
+    """The written PDF built from the course markdown (the course itself, or the notes
+    that go with a deck)."""
+    return _storage_url(f"{course_id}.pdf")
+
+
+def _deck_url(course_id: str) -> str:
+    return _storage_url(f"{course_id}-deck.pdf")
+
+
 def _pdf_url(course_id: str) -> str:
-    return f"{_SUPABASE_URL}/storage/v1/object/public/courses/{course_id}.pdf"
+    """The file a member is sent and reads to complete the course."""
+    return _deck_url(course_id) if _is_deck(course_id) else _notes_url(course_id)
 
 def _logo() -> str:
     """Returns logo HTML — image if LOGO_URL is set, otherwise styled text fallback."""
@@ -118,6 +147,8 @@ def _logo() -> str:
 # Content engine: add new entry with today's date. Admin shows NEW badge for 14 days.
 # To add a course: (1) upload PDF to Supabase Storage as {course_id}.pdf,
 #                  (2) add entry here with published date. Redeploy. Done.
+# A course that is one part of a Field Work series also carries "series" (a key of
+# SERIES below), "part" (1-based) and "deliverable": "deck" (see _pdf_url).
 COURSES = {
     "MER-DEA-001": {"course_id": "MER-DEA-001", "title": "RdSAP 10: What's Changed and Why", "cpd_hours": 2.0, "published": "2026-03-01"},
     "MER-DEA-002": {"course_id": "MER-DEA-002", "title": "Measuring Windows in RdSAP 10", "cpd_hours": 1.0, "published": "2026-03-01"},
@@ -157,9 +188,89 @@ COURSES = {
     "MER-ALL-016": {"course_id": "MER-ALL-016", "title": "Scheme Operating Requirements: How They Work and What Changed in 2026", "cpd_hours": 1.0, "published": "2026-09-15"},
     "MER-ALL-017": {"course_id": "MER-ALL-017", "title": "Awaab's Law Phase 2: What Energy Assessors Must Know", "cpd_hours": 1.0, "published": "2026-10-01"},
     "MER-ALL-018": {"course_id": "MER-ALL-018", "title": "Damp, Condensation and Thermal Bridging: Reading the Moisture", "cpd_hours": 3.0, "published": "2026-10-25"},
+    # Field Work: Insulation (series FW-INSULATION). Delivered as NotebookLM decks with the
+    # written course as notes. Listed in UNDER_REVIEW until the decks are in Storage.
+    "MER-ALL-019": {"course_id": "MER-ALL-019", "title": "Insulation Series, Part 1: Principles and Cavity Wall Insulation", "cpd_hours": 2.0, "published": "2026-10-29", "series": "FW-INSULATION", "part": 1, "deliverable": "deck"},
+    "MER-ALL-020": {"course_id": "MER-ALL-020", "title": "Insulation Series, Part 2: External Wall Insulation: Spotting the Failures", "cpd_hours": 2.0, "published": "2026-10-29", "series": "FW-INSULATION", "part": 2, "deliverable": "deck"},
+    "MER-ALL-021": {"course_id": "MER-ALL-021", "title": "Insulation Series, Part 3: Internal Wall Insulation and Hidden Moisture", "cpd_hours": 2.0, "published": "2026-10-29", "series": "FW-INSULATION", "part": 3, "deliverable": "deck"},
     # Subscription — welcome email only; library access granted via plan field
     "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0, "published": "2026-03-01"},
 }
+
+# ── Series ─────────────────────────────────────────────────────────────────────
+# A Field Work series is three courses sold together for one price (SERIES_PRICE_PENCE,
+# Stripe price STRIPE_PRICE_SERIES). The buy link carries the series id as
+# client_reference_id. One purchase makes three purchase rows, three completion links
+# and, in time, three certificates; the price is split across the parts for the books.
+#
+# Every course id here must be in COURSES and belong to one series only. A series whose
+# courses are not all in the catalogue yet is defined but not on sale: it is skipped with
+# a warning at start-up, and a series checkout for it is recorded for Matt to sort out
+# rather than expanded (see _keys_for_checkout). MER-ALL-018 joins FW-MOISTURE when
+# MER-ALL-028 and MER-ALL-029 are published.
+SERIES = {
+    "FW-INSULATION": {"title": "Field Work: Insulation", "courses": ["MER-ALL-019", "MER-ALL-020", "MER-ALL-021"]},
+    "FW-HEATING": {"title": "Field Work: Heating", "courses": ["MER-ALL-022", "MER-ALL-023", "MER-ALL-024"]},
+    "FW-VENTILATION": {"title": "Field Work: Ventilation", "courses": ["MER-ALL-025", "MER-ALL-026", "MER-ALL-027"]},
+    "FW-MOISTURE": {"title": "Field Work: Moisture", "courses": ["MER-ALL-018", "MER-ALL-028", "MER-ALL-029"]},
+}
+SERIES_PRICE_PENCE = 3999  # £39.99; the three parts are recorded at £13.33 each
+
+
+def series_courses(series_id: str) -> list[str]:
+    """The course ids of a series that is complete in the catalogue, else an empty list."""
+    s = SERIES.get(series_id)
+    if not s or any(cid not in COURSES for cid in s["courses"]):
+        return []
+    return list(s["courses"])
+
+
+def _check_series() -> None:
+    """Import-time check of SERIES against COURSES. A definition error (a course in two
+    series, a course entry naming the wrong series or part) stops the app from starting;
+    a series whose courses are not all published yet only prints a warning."""
+    owner: dict[str, str] = {}
+    for sid, s in SERIES.items():
+        for cid in s["courses"]:
+            if cid in owner:
+                raise ValueError(f"Series: {cid} is listed in both {owner[cid]} and {sid}")
+            owner[cid] = sid
+    active: set[str] = set()
+    for sid, s in SERIES.items():
+        missing = [cid for cid in s["courses"] if cid not in COURSES]
+        if missing:
+            print(f"Series {sid} is not on sale: {', '.join(missing)} not in the catalogue yet")
+            continue
+        active.add(sid)
+        for part, cid in enumerate(s["courses"], 1):
+            entry = COURSES[cid]
+            if entry.get("series") != sid or entry.get("part") != part:
+                raise ValueError(f"Series: {cid} must carry series={sid!r}, part={part} in COURSES")
+    for cid, entry in COURSES.items():
+        sid = entry.get("series")
+        if sid and (sid not in active or owner.get(cid) != sid):
+            raise ValueError(f"Series: {cid} names series {sid!r}, which is not defined, not complete, or does not list it")
+
+
+_check_series()
+
+
+def _series_label(course_id: str) -> str:
+    """'Part 1 of 3 · Field Work: Insulation', or '' for a course that is not in a series."""
+    entry = COURSES.get(course_id, {})
+    s = SERIES.get(entry.get("series", ""))
+    part = entry.get("part")
+    if not s or not part:
+        return ""
+    return f"Part {part} of {len(s['courses'])} · {s['title']}"
+
+
+def _split_amount(amount: int, n: int) -> list[int]:
+    """Split pence across n rows: equal shares, any remainder on the first."""
+    if n <= 0:
+        return []
+    base, rem = divmod(int(amount), n)
+    return [base + rem] + [base] * (n - 1)
 
 # ── Courses withdrawn for revision ─────────────────────────────────────────────
 # An accuracy check in October 2026 found that these courses contain statements that
@@ -168,7 +279,12 @@ COURSES = {
 # been written from the source documents and independently checked. To restore a
 # course, publish its corrected PDF and delete its ID from this set (and from the same
 # list in landing-page/courses.html). Certificates already issued are not affected.
-UNDER_REVIEW: set = set()  # nothing withdrawn; add course ids here, or list them in under-review.json
+#
+# The same mechanism holds back a course that is catalogued before its files are in
+# Storage. The Field Work: Insulation parts stay here until their decks are uploaded
+# (tools/upload_deck.py); then delete them here, in landing-page/courses.html and in
+# landing-page/under-review.json, and the series goes on sale.
+UNDER_REVIEW: set = {"MER-ALL-019", "MER-ALL-020", "MER-ALL-021"}
 
 
 def is_available(course_id: str) -> bool:
@@ -248,12 +364,20 @@ def _merge_catalogue(data) -> int:
             hours = 1.0
         if not 0 < hours <= 10:
             hours = 1.0
-        COURSES[cid] = {
+        course = {
             "course_id": cid,
             "title": title[:200],
             "cpd_hours": hours,
             "published": str(entry.get("published") or "")[:10],
         }
+        # Series membership and the deck flag pass through when they make sense.
+        sid, part = entry.get("series"), entry.get("part")
+        parts = SERIES.get(sid, {}).get("courses", []) if isinstance(sid, str) else []
+        if isinstance(part, int) and 1 <= part <= len(parts) and parts[part - 1] == cid:
+            course["series"], course["part"] = sid, part
+        if entry.get("deliverable") == "deck":
+            course["deliverable"] = "deck"
+        COURSES[cid] = course
         added += 1
     return added
 
@@ -277,12 +401,15 @@ def refresh_catalogue(force: bool = False) -> None:
 
 
 # Stripe price ID → course_id mapping
-# Single course payment link maps to MER-DEA-001 (flagship)
-# Add more price IDs here as individual course links are created in Stripe
-PRICE_TO_COURSE = {
-    os.environ.get("STRIPE_PRICE_SINGLE", ""): "MER-DEA-001",
-    os.environ.get("STRIPE_PRICE_SUBSCRIPTION", ""): "SUBSCRIPTION",
-}
+# Single course payment link maps to MER-DEA-001 (flagship); the buy links on the site
+# name the actual course in client_reference_id, which takes precedence.
+# "SERIES" is a sentinel: the series price plus a client_reference_id (or metadata
+# "series") naming a key of SERIES expands to that series' three courses.
+PRICE_TO_COURSE = {price_id: key for price_id, key in (
+    (os.environ.get("STRIPE_PRICE_SINGLE", ""), "MER-DEA-001"),
+    (os.environ.get("STRIPE_PRICE_SUBSCRIPTION", ""), "SUBSCRIPTION"),
+    (os.environ.get("STRIPE_PRICE_SERIES", ""), "SERIES"),
+) if price_id}
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
@@ -312,13 +439,18 @@ def get_or_create_member(email: str, name: str, stripe_customer_id: str, plan: s
         return result.data[0]
 
 
-def log_purchase(member_id: str, course_id: str, session_id: str, amount: float):
-    supabase.table("purchases").insert({
+def log_purchase(member_id: str, course_id: str, session_id: str, amount: float, series_id: str = ""):
+    """One row per course bought. A series purchase makes one row per part, all with the
+    same session id, which needs migrations/2026-10-29_series.sql to have been run."""
+    row = {
         "member_id": member_id,
         "course_id": course_id,
         "stripe_session_id": session_id,
         "amount_gbp": amount / 100,
-    }).execute()
+    }
+    if series_id:
+        row["series_id"] = series_id
+    supabase.table("purchases").insert(row).execute()
 
 
 def create_completion_token(member_id: str, course_id: str) -> str:
@@ -329,6 +461,21 @@ def create_completion_token(member_id: str, course_id: str) -> str:
         "completion_token": token,
     }).execute()
     return token
+
+
+def ensure_completion_token(member_id: str, course_id: str) -> str | None:
+    """The member's unused completion token for this course, made now if there is none.
+    Returns None when the course is already completed, so a second purchase or a resend
+    can never lead to a second certificate. A subscriber's dashboard makes tokens for
+    the whole library, so a purchase must reuse that token rather than add another."""
+    rows = supabase.table("completions").select("*").eq("member_id", member_id).eq(
+        "course_id", course_id).execute().data or []
+    unused = [r for r in rows if not r.get("completed_at") and r.get("completion_token")]
+    if unused:
+        return unused[0]["completion_token"]
+    if rows:
+        return None
+    return create_completion_token(member_id, course_id)
 
 
 def next_cert_number() -> str:
@@ -485,6 +632,54 @@ def sync_subscription(sub) -> dict | None:
     return update
 
 
+def _series_for_session(session, client_ref: str) -> str:
+    """Which series a series-price checkout is for: the buy link's client_reference_id
+    (the site's convention) or the session's metadata "series" (a Payment Link can carry
+    that instead). '' if neither names a series that is complete in the catalogue."""
+    meta = _g(session, "metadata", {}) or {}
+    for ref in (client_ref, str(_g(meta, "series", "") or "")):
+        if ref and series_courses(ref):
+            return ref
+    return ""
+
+
+def _keys_for_checkout(session, line_items, client_ref: str) -> tuple[list[str], str, str]:
+    """What a checkout session bought, as catalogue keys: (keys, plan, series_id).
+    A series price expands to the series' course ids. A series price whose reference
+    cannot be resolved yields the sentinel key "SERIES", so the payment is still recorded
+    and flagged for Matt rather than lost."""
+    keys: list[str] = []
+    plan, series_id = "single", ""
+    for item in line_items:
+        course_key = PRICE_TO_COURSE.get(item.price.id, "")
+        if course_key == "SUBSCRIPTION":
+            plan = "subscription"
+            keys.append(course_key)
+        elif course_key == "SERIES":
+            series_id = _series_for_session(session, client_ref)
+            keys.extend(series_courses(series_id) or ["SERIES"])
+        elif client_ref and client_ref in COURSES:
+            # client_reference_id set on the buy link — use it directly
+            keys.append(client_ref)
+        elif course_key:
+            keys.append(course_key)
+    return keys, plan, series_id
+
+
+def _course_email_kwargs(course_id: str, held: list[str] | None = None) -> dict:
+    """The file and series details send_course_email needs for one course."""
+    entry = COURSES.get(course_id, {})
+    s = SERIES.get(entry.get("series", ""))
+    return {
+        "pdf_url": _pdf_url(course_id),
+        "notes_url": _notes_url(course_id) if _is_deck(course_id) else None,
+        "series_title": s["title"] if s else None,
+        "part": entry.get("part") if s else None,
+        "parts_total": len(s["courses"]) if s else None,
+        "held_parts": held or None,
+    }
+
+
 async def handle_checkout(session):
     customer_details = getattr(session, "customer_details", None) or {}
     email = ((getattr(customer_details, "email", None) or customer_details.get("email", "")) if customer_details else "").strip().lower()
@@ -494,30 +689,29 @@ async def handle_checkout(session):
     session_id = getattr(session, "id", None) or session["id"]
     amount = getattr(session, "amount_total", 0) or 0
 
+    # Stripe delivers an event again if it did not get a quick 200 (a slow email send is
+    # enough). The emails go before the purchase rows, so a redelivery would send the
+    # course twice: once the order is recorded there is nothing more to do.
+    if _order_purchases(session_id):
+        print(f"Checkout {session_id} is already recorded; ignoring the repeat delivery")
+        return
+
     refresh_catalogue()
 
     # Determine what was purchased
     # client_reference_id carries the course ID set by the buy link (e.g. MER-DEA-001)
+    # or, on the series link, the series id (e.g. FW-INSULATION)
     client_ref = getattr(session, "client_reference_id", None) or ""
     line_items = stripe.checkout.Session.list_line_items(session_id, limit=5)
-    course_keys: list[str] = []
-    plan = "single"
-    for item in line_items.data:
-        price_id = item.price.id
-        course_key = PRICE_TO_COURSE.get(price_id, "")
-        if course_key == "SUBSCRIPTION":
-            plan = "subscription"
-            course_keys.append(course_key)
-        elif client_ref and client_ref in COURSES:
-            # client_reference_id set on the buy link — use it directly
-            course_keys.append(client_ref)
-        elif course_key:
-            course_keys.append(course_key)
+    course_keys, plan, series_id = _keys_for_checkout(session, line_items.data, client_ref)
     print(f"Checkout: email={email}, client_ref={client_ref}, course_keys={course_keys}")
 
     if not email:
         print(f"No email in session {session_id} — skipping")
         return
+    if not course_keys:
+        print(f"ACTION NEEDED: session {session_id} paid for a price this app does not know "
+              f"(client_reference_id={client_ref!r}). Check STRIPE_PRICE_* in Railway; nothing was sent.")
 
     member = get_or_create_member(email, name, stripe_customer_id, plan)
     member_id = member["id"]
@@ -526,7 +720,22 @@ async def handle_checkout(session):
         # The course may have been restored in the last few minutes: read the list again.
         refresh_catalogue(force=True)
 
-    for course_key in course_keys:
+    # A series is one payment for three courses: split it so the books add up.
+    if series_id and course_keys == series_courses(series_id):
+        amounts = _split_amount(amount, len(course_keys))
+        held = [str(COURSES[k]["title"]) for k in course_keys if k in UNDER_REVIEW]
+    else:
+        amounts = [amount] * len(course_keys)
+        held = []
+
+    for course_key, key_amount in zip(course_keys, amounts):
+        if course_key == "SERIES":
+            # The series price was paid but no series could be worked out from the link.
+            log_purchase(member_id, "SERIES", session_id, key_amount)
+            print(f"ACTION NEEDED: series price paid in session {session_id} but the series "
+                  f"could not be identified (client_reference_id={client_ref!r}). Nothing was "
+                  f"sent. Send the courses from Admin → Members, or refund.")
+            continue
         course = COURSES.get(course_key)
         if not course:
             continue
@@ -541,28 +750,29 @@ async def handle_checkout(session):
                 completion_link=None,
                 is_subscription=True,
             )
-            log_purchase(member_id, "SUBSCRIPTION", session_id, amount)
+            log_purchase(member_id, "SUBSCRIPTION", session_id, key_amount)
         elif str(course["course_id"]) in UNDER_REVIEW:
             # Should not happen (withdrawn courses have no buy button), but an old link could
-            # still be used. Record the payment and do not send a withdrawn edition.
+            # still be used. Record the payment and do not send a withdrawn edition. For a
+            # series the other parts go out and their emails say this one follows.
             cid = str(course["course_id"])
-            log_purchase(member_id, cid, session_id, amount)
+            log_purchase(member_id, cid, session_id, key_amount, series_id)
             print(f"ACTION NEEDED: {cid} was bought while withdrawn for revision "
                   f"(session {session_id}). Nothing was sent. Contact the buyer or refund.")
         else:
             cid = str(course["course_id"])
-            token = create_completion_token(member_id, cid)
-            completion_link = f"{BASE_URL}/complete/{token}"
+            token = ensure_completion_token(member_id, cid)
+            completion_link = f"{BASE_URL}/complete/{token}" if token else None
             await send_course_email(
                 to_email=email,
                 to_name=name,
                 course_title=str(course["title"]),
                 course_id=cid,
-                pdf_url=_pdf_url(cid),
                 completion_link=completion_link,
                 is_subscription=False,
+                **_course_email_kwargs(cid, held),
             )
-            log_purchase(member_id, cid, session_id, amount)
+            log_purchase(member_id, cid, session_id, key_amount, series_id)
 
     if plan == "subscription":
         sub_id = _g(session, "subscription")
@@ -740,18 +950,11 @@ async def resend_order_emails(member: dict, purchases: list) -> int:
                                     course_id="SUBSCRIPTION", pdf_url=None, completion_link=None,
                                     is_subscription=True)
         else:
-            rows = supabase.table("completions").select("*").eq("member_id", member["id"]).eq(
-                "course_id", cid).execute().data or []
-            unused = [r for r in rows if not r.get("completed_at") and r.get("completion_token")]
-            if unused:
-                link = f"{BASE_URL}/complete/{unused[0]['completion_token']}"
-            elif rows:
-                link = None
-            else:
-                link = f"{BASE_URL}/complete/{create_completion_token(member['id'], cid)}"
+            token = ensure_completion_token(member["id"], cid)
+            link = f"{BASE_URL}/complete/{token}" if token else None
             await send_course_email(to_email=email, to_name=name, course_title=str(course["title"]),
-                                    course_id=cid, pdf_url=_pdf_url(cid), completion_link=link,
-                                    is_subscription=False)
+                                    course_id=cid, completion_link=link, is_subscription=False,
+                                    **_course_email_kwargs(cid))
         sent += 1
     return sent
 
@@ -795,6 +998,11 @@ def _order_what(purchases: list) -> str:
     ids = list(dict.fromkeys(p.get("course_id") for p in purchases if p.get("course_id")))
     if "SUBSCRIPTION" in ids:
         return "your subscription details"
+    if "SERIES" in ids:
+        return "your order"
+    for sid, s in SERIES.items():
+        if ids and set(ids) <= set(s["courses"]):
+            return f"the {_n(len(ids), 'course')} in <strong>{_esc(s['title'])}</strong>"
     titles = [str(COURSES.get(c, {}).get("title", c)) for c in ids]
     return ("your course, <strong>" + _esc(titles[0]) + "</strong>,") if len(titles) == 1 else "your courses"
 
@@ -980,6 +1188,24 @@ async def download_course(course_id: str, request: Request):
     return RedirectResponse(_pdf_url(course_id), status_code=302)
 
 
+@app.get("/download/{course_id}/notes")
+async def download_notes(course_id: str, request: Request):
+    """The written PDF that goes with a deck course. The deck is the course, so reading
+    the notes alone is not recorded as a download for the completion gate. For a course
+    delivered as a PDF this is that same file."""
+    session_token = request.cookies.get("session_token")
+    email = _verify_session_token(session_token) if session_token else None
+    if not email:
+        return RedirectResponse("/my-cpd", status_code=302)
+
+    refresh_catalogue()
+    if course_id not in COURSES or course_id == "SUBSCRIPTION":
+        raise HTTPException(status_code=404, detail="Course not found")
+    if course_id in UNDER_REVIEW:
+        return _under_review_page(course_id)
+    return RedirectResponse(_notes_url(course_id), status_code=302)
+
+
 # ── Completion flow ────────────────────────────────────────────────────────────
 
 @app.get("/complete/{token}", response_class=HTMLResponse)
@@ -1009,6 +1235,11 @@ async def completion_page(token: str):
     if not has_downloaded:
         course = COURSES.get(course_id, {})
         course_title = course.get("title", course_id)
+        if _is_deck(course_id):
+            download_btn = (f'<a class="btn" href="/download/{course_id}">Download the slides →</a> '
+                            f'<a class="btn btn-alt" href="/download/{course_id}/notes">Notes PDF</a>')
+        else:
+            download_btn = f'<a class="btn" href="/download/{course_id}">Download course PDF →</a>'
         return HTMLResponse(f"""
         <html>
         <head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -1021,6 +1252,7 @@ async def completion_page(token: str):
             .btn {{ display: inline-block; background: #D4FF00; color: #0D1F0E; padding: 14px 28px;
                     border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 16px;
                     margin-top: 16px; }}
+            .btn-alt {{ background: white; border: 2px solid #0D1F0E; padding: 12px 26px; }}
             .small {{ color: #666; font-size: 13px; margin-top: 20px; }}
           </style>
         </head>
@@ -1032,7 +1264,7 @@ async def completion_page(token: str):
             you need to download and read the course material.</p>
             <p style="margin-top:12px">This ensures your CPD record accurately reflects the learning you've completed —
             which is what your accreditation body expects to see.</p>
-            <a class="btn" href="/download/{course_id}">Download course PDF →</a>
+            {download_btn}
           </div>
           <p class="small">Once you've read the course, return to your
           <a href="{BASE_URL}/my-cpd/dashboard">CPD dashboard</a> and click Mark Complete.</p>
@@ -1108,6 +1340,29 @@ async def confirm_completion(token: str, request: Request):
     member_email = row["members"]["email"]
     cert_name = str(form.get("cert_name", "")).strip()
     member_name = cert_name or row["members"]["name"] or "Assessor"
+
+    # One certificate per member per course. A second unused link for the same course
+    # (an old email, a resend, a subscriber's dashboard token plus a purchase) must not
+    # earn a second one: retire this link and point to the certificate they hold.
+    held = supabase.table("certificates").select("cert_number").eq(
+        "member_id", member_id).eq("course_id", course_id).execute().data or []
+    if held:
+        supabase.table("completions").update({
+            "completed_at": datetime.now(timezone.utc).isoformat(),
+        }).eq("id", row["id"]).execute()
+        cert_number = str(held[0].get("cert_number") or "")
+        print(f"Completion link for {course_id} used by member {member_id} who already holds {cert_number}; no new certificate")
+        return HTMLResponse(f"""<!DOCTYPE html>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Already certified — Meridian CPD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="font-family: 'DM Sans', Arial, sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1f2a20">
+{_logo()}
+<h1 style="color:#0D1F0E">You already hold this certificate</h1>
+<p style="line-height:1.6">Your certificate for <strong>{_esc(str(COURSES.get(course_id, {}).get("title", course_id)))}</strong>
+is <strong>{_esc(cert_number)}</strong>. A course earns one certificate, so no new one has been issued.</p>
+<p><a style="color:#4d7c0f" href="{BASE_URL}/verify/{_esc(cert_number)}">View the certificate record</a> &nbsp;·&nbsp;
+<a style="color:#4d7c0f" href="{BASE_URL}/my-cpd/dashboard">My CPD dashboard</a></p>
+</body></html>""")
 
     # Mark completion
     supabase.table("completions").update({
@@ -1936,6 +2191,12 @@ async def subscriber_dashboard(request: Request):
     for cid, course in show_courses.items():
         hours = course["cpd_hours"]
         title = course["title"]
+        # A deck course is the slides plus the written notes; a PDF course is one file.
+        if _is_deck(cid):
+            download = (f'<a class="btn btn-dl" href="/download/{cid}">Download slides</a>'
+                        f'<a class="btn btn-dl" href="/download/{cid}/notes">Notes PDF</a>')
+        else:
+            download = f'<a class="btn btn-dl" href="/download/{cid}">Download PDF</a>'
         if cid in UNDER_REVIEW:
             # Withdrawn for revision: listed so the library does not silently shrink,
             # but with nothing to download or complete.
@@ -1944,22 +2205,23 @@ async def subscriber_dashboard(request: Request):
             action = ""
         elif cid in completed:
             status_pill = '<span class="pill pill-complete">✓ Completed</span>'
-            action = f'<a class="btn btn-dl" href="/download/{cid}">Download PDF</a>'
+            action = download
         elif cid in pending_tokens:
             tok = pending_tokens[cid]
             status_pill = '<span class="pill pill-pending">⏳ Awaiting completion</span>'
-            action = (f'<a class="btn btn-dl" href="/download/{cid}">Download PDF</a>'
-                      f'<a class="btn btn-read" href="{BASE_URL}/complete/{tok}">Mark Complete</a>')
+            action = download + f'<a class="btn btn-read" href="{BASE_URL}/complete/{tok}">Mark Complete</a>'
         else:
             status_pill = '<span class="pill pill-locked">Available</span>'
-            action = f'<a class="btn btn-dl" href="/download/{cid}">Download PDF</a>'
+            action = download
 
+        series_note = _series_label(cid)
+        meta = f"{hours:g} CPD hour{'s' if hours != 1 else ''}" + (f" &nbsp;·&nbsp; {series_note}" if series_note else "")
         course_rows += f"""
         <div class="course-row">
           <div class="course-info">
             <div class="course-id">{cid}</div>
             <div class="course-title">{title}</div>
-            <div class="course-meta">{hours:g} CPD hour{'s' if hours != 1 else ''}</div>
+            <div class="course-meta">{meta}</div>
           </div>
           <div class="course-actions">
             {status_pill}
@@ -2268,8 +2530,8 @@ async def test_purchase(request: Request, credentials=Depends(_check_admin)):
 
     await send_course_email(
         to_email=email, to_name=name, course_title=str(course["title"]),
-        course_id=course_id, pdf_url=_pdf_url(course_id),
-        completion_link=completion_link, is_subscription=False,
+        course_id=course_id, completion_link=completion_link, is_subscription=False,
+        **_course_email_kwargs(course_id),
     )
 
     return HTMLResponse(f"""
@@ -2460,8 +2722,12 @@ def _n(count: int, word: str, plural: str | None = None) -> str:
 def _course_label(cid: str) -> str:
     if cid == "SUBSCRIPTION":
         return "Annual subscription"
+    if cid == "SERIES":
+        return "Field Work series (which one is not recorded: see the deploy log)"
     title = str(COURSES.get(cid, {}).get("title", ""))
-    return f"{cid} · {title}" if title else (cid or "—")
+    label = f"{cid} · {title}" if title else (cid or "—")
+    series = _series_label(cid)
+    return f"{label} · {series}" if series else label
 
 
 def _status_badge(key: str) -> str:
@@ -3186,12 +3452,17 @@ async def admin_courses(credentials=Depends(_check_admin)):
             new_courses.append(course)
 
         hours = course['cpd_hours']
+        series = _series_label(cid)
+        files = (f'<a href="{pdf_link}" target="_blank" class="badge badge-ok" style="text-decoration:none">View deck ↗</a> '
+                 f'<a href="{_notes_url(cid)}" target="_blank" class="badge badge-ok" style="text-decoration:none">Notes ↗</a>'
+                 if _is_deck(cid) else
+                 f'<a href="{pdf_link}" target="_blank" class="badge badge-ok" style="text-decoration:none">View PDF ↗</a>')
         cards += f"""
         <div class="course-card{' course-new' if is_new else ''}">
           <div class="cid">{new_badge}{course['course_id']}</div>
           <div class="ctitle">{course['title']}</div>
-          <div class="cmeta">{hours:g} CPD Hour{'s' if hours != 1 else ''} &nbsp;•&nbsp;
-            <a href="{pdf_link}" target="_blank" class="badge badge-ok" style="text-decoration:none">View PDF ↗</a>
+          <div class="cmeta">{hours:g} CPD Hour{'s' if hours != 1 else ''}{f' &nbsp;•&nbsp; {series}' if series else ''} &nbsp;•&nbsp;
+            {files}
           </div>
         </div>"""
 
@@ -3264,6 +3535,8 @@ async def admin_system(credentials=Depends(_check_admin)):
         ("STRIPE_WEBHOOK_SECRET", "Stripe webhook signing secret", True, ""),
         ("STRIPE_PRICE_SINGLE", "Stripe price, single course", True, ""),
         ("STRIPE_PRICE_SUBSCRIPTION", "Stripe price, annual subscription", True, ""),
+        ("STRIPE_PRICE_SERIES", "Stripe price, Field Work series (£39.99, three courses)", False,
+         "Needed before a series goes on sale: without it a series purchase is not recognised and nothing is sent."),
         ("RESEND_API_KEY", "Resend (sends course and certificate emails)", True, ""),
         ("SUPABASE_URL", "Supabase project", True, ""),
         ("SUPABASE_SERVICE_ROLE_KEY", "Supabase service key", True, ""),
@@ -3289,22 +3562,31 @@ async def admin_system(credentials=Depends(_check_admin)):
         f"<td style='font-size:12px;color:#5C6B5D'>{note}</td></tr>"
         for key, label, req, note in check_vars)
 
-    # Course PDFs: check each one on sale can actually be downloaded
+    # Course files: check each course on sale can actually be downloaded. A deck course
+    # has two files (the deck and the notes) and both must be there.
     live = [k for k in COURSES if k != "SUBSCRIPTION" and is_available(k)]
+    def _files(cid) -> list[tuple[str, str]]:
+        return [("Deck", _deck_url(cid)), ("Notes", _notes_url(cid))] if _is_deck(cid) else [("PDF", _pdf_url(cid))]
     async def _check(cid):
-        try:
-            async with httpx.AsyncClient(timeout=6) as client:
-                r = await client.head(_pdf_url(cid))
-            return cid, r.status_code
-        except Exception:
-            return cid, None
+        out = []
+        for label, url in _files(cid):
+            try:
+                async with httpx.AsyncClient(timeout=6) as client:
+                    r = await client.head(url)
+                out.append((label, r.status_code))
+            except Exception:
+                out.append((label, None))
+        return cid, out
     import asyncio
     results = dict(await asyncio.gather(*[_check(c) for c in live]))
-    missing = [c for c in live if results.get(c) != 200]
+    missing = [c for c in live if any(code != 200 for _, code in results.get(c, []))]
+    def _file_status(label, code) -> str:
+        if code == 200:
+            return '<span class="badge badge-ok">Downloadable</span>' if label == "PDF" else f'<span class="badge badge-ok">{label}</span>'
+        return f'<span class="badge badge-off">{"" if label == "PDF" else label + ": "}Problem ({code or "no response"})</span>'
     pdf_rows = "".join(
         f"<tr><td>{c}</td><td>{COURSES[c]['title']}</td><td>"
-        + ('<span class="badge badge-ok">Downloadable</span>' if results.get(c) == 200
-           else f'<span class="badge badge-off">Problem ({results.get(c) or "no response"})</span>')
+        + " ".join(_file_status(label, code) for label, code in results.get(c, []))
         + "</td></tr>" for c in live)
 
     try:
@@ -3319,7 +3601,7 @@ async def admin_system(credentials=Depends(_check_admin)):
     </div>
     <div class="card section">
       <h2>Course PDFs on sale ({len(live) - len(missing)} of {len(live)} downloadable)</h2>
-      <table><tr><th>Course</th><th>Title</th><th>PDF</th></tr>{pdf_rows}</table>
+      <table><tr><th>Course</th><th>Title</th><th>Files</th></tr>{pdf_rows}</table>
     </div>
     <div class="card section">
       <h2>Outreach</h2>
