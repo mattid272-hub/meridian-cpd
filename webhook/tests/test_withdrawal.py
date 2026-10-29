@@ -54,7 +54,10 @@ r = c.get("/complete/tok-dea"); assert r.status_code == 200 and "being updated" 
 r = c.get("/my-cpd/dashboard", cookies=cookie); assert r.status_code == 200, r.status_code
 t = r.text
 assert t.count("Being updated") == W, t.count("Being updated")
-assert t.count('href="/download/') == N, t.count('href="/download/')
+# One download link per available course, plus a notes link for each deck course
+n_notes = sum(1 for k in main.COURSES if main.is_available(k) and main._is_deck(k))
+assert t.count('href="/download/') == N + n_notes, (t.count('href="/download/'), N, n_notes)
+assert t.count('/notes"') == n_notes
 assert "/download/MER-ALL-016" not in t and "/complete/tok-ra" not in t
 new_tokens = [x["course_id"] for x in db["completions"] if x["completion_token"] not in ("tok-ra", "tok-done", "tok-dea")]
 had = {"MER-ALL-016", "MER-ALL-004", "MER-DEA-002"}
