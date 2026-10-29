@@ -16,8 +16,9 @@ CREATE TABLE IF NOT EXISTS members (
 
 -- ── Purchases ─────────────────────────────────────────────────────────────────
 -- A series purchase records one row per course with the same stripe_session_id, so the
--- UNIQUE below is replaced by a unique index on (stripe_session_id, course_id) and a
--- series_id column is added by migrations/2026-10-29_series.sql. Run that after this.
+-- UNIQUE below is replaced by a unique index on (stripe_session_id, course_id), and
+-- series_id and emailed_at columns are added, by migrations/2026-10-29_series.sql.
+-- Run that after this.
 CREATE TABLE IF NOT EXISTS purchases (
   id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   member_id        UUID REFERENCES members(id),

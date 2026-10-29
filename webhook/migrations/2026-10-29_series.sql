@@ -32,3 +32,8 @@ create unique index if not exists idx_purchases_session_course
 
 -- 3. Which series a row was bought as part of (null for a single course or subscription).
 alter table public.purchases add column if not exists series_id text;
+
+-- 4. When the course email for this row went. The webhook records each part before
+--    sending its email and marks it here afterwards, so a Stripe redelivery of the event
+--    finishes only the parts that are not yet done and never sends a part twice.
+alter table public.purchases add column if not exists emailed_at timestamptz;

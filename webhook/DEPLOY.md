@@ -142,19 +142,27 @@ in the catalogue is skipped at start-up and cannot be bought.
 
 Set-up, in this order:
 
-1. **Supabase, before deploying:** run `migrations/2026-10-29_series.sql` in SQL Editor.
-   It replaces the one-row-per-session rule on `purchases` with one row per course per
-   session and adds `series_id`. With the old rule still in place a series purchase
-   records one course of three. Safe to run again.
+1. **Supabase, before deploying (hard rule):** run `migrations/2026-10-29_series.sql` in
+   SQL Editor. It replaces the one-row-per-session rule on `purchases` with one row per
+   course per session and adds `series_id` and `emailed_at`. Safe to run again.
+   What happens if the app is deployed without it: a series purchase cannot be recorded
+   at all (the first row's `series_id` has nowhere to go), so nothing is sent, the
+   webhook answers 500 with the error in the Railway log, and Stripe retries the event
+   into the same error for up to three days. The buyer has paid and has nothing until
+   the migration is run, after which the next retry delivers all three parts. Single
+   courses and subscriptions still work without it (their `emailed_at` mark is skipped
+   with a log line), but do not rely on that.
 2. **Stripe:** Products → Add product "Field Work series", one-off price £39.99 GBP.
    Create a Payment Link from it; on the link, collect the customer's name, and set
    After payment → redirect to `https://app.meridiancpd.co.uk/thanks?session_id={CHECKOUT_SESSION_ID}`
    as for the other links. Copy the price ID (`price_...`) to Railway as `STRIPE_PRICE_SERIES`.
 3. **Stripe, promo codes:** restrict the MERIDIAN10 coupon to the £19.99 single-course
-   product. The site passes `prefilled_promo_code` on every buy link, including the series
-   link, so an unrestricted coupon would make the series free.
+   product. The site does not pass a promo code on the series link, but a code typed at
+   checkout applies to whatever product the coupon allows.
 4. **Site:** paste the Payment Link into `STRIPE_SERIES` in `landing-page/courses.html`.
-   The series button only shows when that is set and every part is on sale.
+   The series button only shows when that is set and every part is on sale. The £39.99
+   card on the home page pricing section is commented out until then (see the note in
+   `index.html`).
 5. **Decks:** a series course is delivered as a NotebookLM slide deck with the written
    course as notes. Upload each deck with `tools/upload_deck.py MER-ALL-019 deck.pdf`
    (it goes to Storage as `MER-ALL-019-deck.pdf`; the notes stay at `MER-ALL-019.pdf`,
@@ -162,10 +170,25 @@ Set-up, in this order:
    `main.py`, `landing-page/courses.html` and `landing-page/under-review.json`.
    Admin → System checks both files for every deck course on sale.
 
-The buy link carries the series id: `<payment link>?client_reference_id=FW-INSULATION`.
-A Payment Link can carry `metadata.series=FW-INSULATION` instead. A series payment the
-app cannot match to a series is recorded as one row (`course_id` SERIES) with an
-`ACTION NEEDED` line in the deploy log, and nothing is sent.
+**Deploy window.** The app follows the site's `landing-page/under-review.json` (read
+every ten minutes), and this change lists MER-ALL-019 to 021 there. Both the site (GitHub
+Pages) and the app (Railway) deploy from `main`, so after merging check that
+`https://meridiancpd.co.uk/under-review.json` lists the three courses before, or as soon
+as, the Railway deploy finishes. If Railway finishes first and the site still serves the
+old empty list, the app un-withdraws the three courses and subscribers see them in their
+library with download links that 404 until the Pages deploy lands. If that happens, wait
+for Pages and the app corrects itself within ten minutes, or restart the Railway service.
+
+**How a series checkout runs.** The buy link carries the series id:
+`<payment link>?client_reference_id=FW-INSULATION` (a Payment Link can carry
+`metadata.series=FW-INSULATION` instead). For each part the app records the purchase row,
+sends the email, then marks the row `emailed_at`. If anything fails part-way, the webhook
+answers non-2xx and Stripe delivers the event again; the app then finishes only the parts
+not yet marked, so no part is ever sent twice, and prints `ACTION NEEDED` so the buyer's
+emails can be checked. A series payment the app cannot match to a series is recorded as
+one row (`course_id` SERIES) with an `ACTION NEEDED` line and nothing is sent: work out
+the series from the Stripe receipt and send each part with Admin → Test purchase (email
+and course id; it records a £0 test row), or refund.
 
 ## Outreach from the app (Admin → Outreach)
 

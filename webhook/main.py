@@ -680,6 +680,18 @@ def _course_email_kwargs(course_id: str, held: list[str] | None = None) -> dict:
     }
 
 
+def _mark_emailed(session_id: str, course_id: str) -> None:
+    """Note on the purchase row that its email has gone, so a repeat delivery of the
+    event skips it. Best effort: the email is already sent, and a missing column (the
+    series migration not run yet) must not turn one sent email into a failed webhook."""
+    try:
+        supabase.table("purchases").update({
+            "emailed_at": datetime.now(timezone.utc).isoformat(),
+        }).eq("stripe_session_id", session_id).eq("course_id", course_id).execute()
+    except Exception as e:
+        print(f"Could not mark {course_id} as emailed for session {session_id}: {e}")
+
+
 async def handle_checkout(session):
     customer_details = getattr(session, "customer_details", None) or {}
     email = ((getattr(customer_details, "email", None) or customer_details.get("email", "")) if customer_details else "").strip().lower()
@@ -689,12 +701,13 @@ async def handle_checkout(session):
     session_id = getattr(session, "id", None) or session["id"]
     amount = getattr(session, "amount_total", 0) or 0
 
-    # Stripe delivers an event again if it did not get a quick 200 (a slow email send is
-    # enough). The emails go before the purchase rows, so a redelivery would send the
-    # course twice: once the order is recorded there is nothing more to do.
-    if _order_purchases(session_id):
-        print(f"Checkout {session_id} is already recorded; ignoring the repeat delivery")
-        return
+    # Stripe delivers an event again if it did not get a quick 200, and this handler can
+    # fail part-way through a series. Each part is recorded before its email goes, and
+    # marked once the email has gone, so a repeat delivery picks up exactly the parts that
+    # are not yet done and never sends a part twice.
+    recorded = _order_purchases(session_id)
+    on_file = {p.get("course_id") for p in recorded}
+    emailed = {p.get("course_id") for p in recorded if p.get("emailed_at")}
 
     refresh_catalogue()
 
@@ -713,6 +726,15 @@ async def handle_checkout(session):
         print(f"ACTION NEEDED: session {session_id} paid for a price this app does not know "
               f"(client_reference_id={client_ref!r}). Check STRIPE_PRICE_* in Railway; nothing was sent.")
 
+    todo = [k for k in course_keys if k not in emailed]
+    if recorded and not todo:
+        print(f"Checkout {session_id} is already recorded; ignoring the repeat delivery")
+        return
+    if recorded:
+        print(f"ACTION NEEDED: checkout {session_id} was only partly handled last time "
+              f"(done: {sorted(emailed) or 'none'}; recorded but not emailed: {sorted(on_file - emailed) or 'none'}). "
+              f"Finishing it now: {todo}. Check the buyer has every email.")
+
     member = get_or_create_member(email, name, stripe_customer_id, plan)
     member_id = member["id"]
 
@@ -728,51 +750,73 @@ async def handle_checkout(session):
         amounts = [amount] * len(course_keys)
         held = []
 
+    not_sent: list[str] = []
     for course_key, key_amount in zip(course_keys, amounts):
+        if course_key in emailed:
+            continue
         if course_key == "SERIES":
             # The series price was paid but no series could be worked out from the link.
-            log_purchase(member_id, "SERIES", session_id, key_amount)
+            if "SERIES" not in on_file:
+                log_purchase(member_id, "SERIES", session_id, key_amount)
             print(f"ACTION NEEDED: series price paid in session {session_id} but the series "
                   f"could not be identified (client_reference_id={client_ref!r}). Nothing was "
-                  f"sent. Send the courses from Admin → Members, or refund.")
+                  f"sent. Work out which series from the buyer's receipt, then send each part "
+                  f"with Admin → Test purchase (email and course id; it records a £0 test row), "
+                  f"or refund in Stripe.")
             continue
         course = COURSES.get(course_key)
         if not course:
             continue
-        if course["course_id"] == "SUBSCRIPTION":
+        cid = str(course["course_id"])
+        if cid == "SUBSCRIPTION":
+            if cid not in on_file:
+                log_purchase(member_id, "SUBSCRIPTION", session_id, key_amount)
             # Welcome email for subscription — no specific course PDF yet
-            await send_course_email(
-                to_email=email,
-                to_name=name,
-                course_title="Your Meridian CPD Subscription",
-                course_id="SUBSCRIPTION",
-                pdf_url=None,
-                completion_link=None,
-                is_subscription=True,
-            )
-            log_purchase(member_id, "SUBSCRIPTION", session_id, key_amount)
-        elif str(course["course_id"]) in UNDER_REVIEW:
+            try:
+                await send_course_email(
+                    to_email=email,
+                    to_name=name,
+                    course_title="Your Meridian CPD Subscription",
+                    course_id="SUBSCRIPTION",
+                    pdf_url=None,
+                    completion_link=None,
+                    is_subscription=True,
+                )
+            except Exception as e:
+                print(f"ACTION NEEDED: welcome email for session {session_id} failed: {e}")
+                not_sent.append(cid)
+                continue
+            _mark_emailed(session_id, cid)
+        elif cid in UNDER_REVIEW:
             # Should not happen (withdrawn courses have no buy button), but an old link could
             # still be used. Record the payment and do not send a withdrawn edition. For a
             # series the other parts go out and their emails say this one follows.
-            cid = str(course["course_id"])
-            log_purchase(member_id, cid, session_id, key_amount, series_id)
+            if cid not in on_file:
+                log_purchase(member_id, cid, session_id, key_amount, series_id)
             print(f"ACTION NEEDED: {cid} was bought while withdrawn for revision "
                   f"(session {session_id}). Nothing was sent. Contact the buyer or refund.")
         else:
-            cid = str(course["course_id"])
+            if cid not in on_file:
+                log_purchase(member_id, cid, session_id, key_amount, series_id)
             token = ensure_completion_token(member_id, cid)
             completion_link = f"{BASE_URL}/complete/{token}" if token else None
-            await send_course_email(
-                to_email=email,
-                to_name=name,
-                course_title=str(course["title"]),
-                course_id=cid,
-                completion_link=completion_link,
-                is_subscription=False,
-                **_course_email_kwargs(cid, held),
-            )
-            log_purchase(member_id, cid, session_id, key_amount, series_id)
+            try:
+                await send_course_email(
+                    to_email=email,
+                    to_name=name,
+                    course_title=str(course["title"]),
+                    course_id=cid,
+                    completion_link=completion_link,
+                    is_subscription=False,
+                    **_course_email_kwargs(cid, held),
+                )
+            except Exception as e:
+                print(f"ACTION NEEDED: {cid} is recorded for session {session_id} but its email "
+                      f"failed: {e}. Stripe will retry this event; if it keeps failing, send it with "
+                      f"Admin → Test purchase (email and course id).")
+                not_sent.append(cid)
+                continue
+            _mark_emailed(session_id, cid)
 
     if plan == "subscription":
         sub_id = _g(session, "subscription")
@@ -783,6 +827,11 @@ async def handle_checkout(session):
                 sync_subscription(stripe.Subscription.retrieve(sub_id))
             except Exception as e:  # the welcome email has gone; the subscription events will catch up
                 print(f"Could not sync subscription {sub_id} at checkout: {e}")
+
+    if not_sent:
+        # A non-2xx makes Stripe deliver the event again; the parts already sent are
+        # marked and will be skipped, so only these go out on the retry.
+        raise RuntimeError(f"checkout {session_id}: email failed for {not_sent}; recorded, will retry")
 
     print(f"Handled checkout for {email}: {course_keys}")
 
@@ -1000,9 +1049,17 @@ def _order_what(purchases: list) -> str:
         return "your subscription details"
     if "SERIES" in ids:
         return "your order"
-    for sid, s in SERIES.items():
-        if ids and set(ids) <= set(s["courses"]):
-            return f"the {_n(len(ids), 'course')} in <strong>{_esc(s['title'])}</strong>"
+    # Series wording only for a series order: the rows say so (series_id), or every part
+    # of a series is on the order. A course bought on its own that also belongs to a
+    # series (MER-ALL-018 today) is just a course.
+    bought_as = {p.get("series_id") for p in purchases if p.get("series_id")}
+    sid = next(iter(bought_as)) if len(bought_as) == 1 else next(
+        (k for k, s in SERIES.items() if set(ids) == set(s["courses"])), "")
+    s = SERIES.get(sid)
+    if s and len(ids) >= len(s["courses"]):
+        return f"the {_n(len(ids), 'course')} in <strong>{_esc(s['title'])}</strong>"
+    if s:
+        return f"the first {_n(len(ids), 'course')} of <strong>{_esc(s['title'])}</strong> (the rest follow shortly)"
     titles = [str(COURSES.get(c, {}).get("title", c)) for c in ids]
     return ("your course, <strong>" + _esc(titles[0]) + "</strong>,") if len(titles) == 1 else "your courses"
 

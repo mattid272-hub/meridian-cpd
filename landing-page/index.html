@@ -682,12 +682,14 @@
     }
     .pricing-cards {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
       width: 100%;
-      max-width: 1100px;
+      max-width: 820px;
       margin: 0 auto 2rem;
     }
+    /* with the series card (see the comment in the pricing section) */
+    .pricing-cards.three { grid-template-columns: repeat(3, 1fr); max-width: 1100px; }
     .price-card {
       background: var(--dark2);
       border: 1px solid rgba(212,255,0,.15);
@@ -768,10 +770,10 @@
     }
     .price-free-note a { color: var(--accent); text-decoration: none; }
     @media (max-width: 960px) {
-      .pricing-cards { grid-template-columns: 1fr; max-width: 520px; }
+      .pricing-cards.three { grid-template-columns: 1fr; max-width: 520px; }
     }
     @media (max-width: 640px) {
-      .pricing-cards { max-width: 100%; }
+      .pricing-cards, .pricing-cards.three { grid-template-columns: 1fr; max-width: 100%; }
       .price-card { padding: 1.8rem 1.4rem; }
     }
 
@@ -1555,7 +1557,10 @@
         <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="btn-s">Buy a Course &mdash; &#163;19.99</a>
       </div>
 
-      <!-- Field Work series: three courses for one price -->
+      <!-- Field Work series: three courses for one price. Held back until there is a
+           series to buy: when STRIPE_SERIES is set in courses.html and every part of a
+           series is on sale, uncomment this card and add class="pricing-cards three"
+           to the grid above so it shows three columns.
       <div class="price-card">
         <p class="price-card-type">Field Work Series</p>
         <p class="price-card-amount">&#163;39.99</p>
@@ -1568,6 +1573,7 @@
         </ul>
         <a href="courses.html" class="btn-s">See the Series</a>
       </div>
+      -->
 
       <!-- Annual membership -->
       <div class="price-card featured">

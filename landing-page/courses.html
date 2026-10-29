@@ -1491,12 +1491,11 @@ function getStripeLink(courseId) {
 
 // ── Series ───────────────────────────────────────────────────────────────────
 // The series link carries the series id the same way a course link carries the course
-// id; the app expands it to the three courses. A promo code rides along as well, which
-// is why MERIDIAN10 is restricted to the £19.99 product in Stripe.
+// id; the app expands it to the three courses. No promo code is passed on this link
+// (MERIDIAN10 is for a single course; it is also restricted to the £19.99 product in
+// Stripe, so typing it at checkout does nothing here either).
 function getSeriesLink(seriesId) {
-  const params = new URLSearchParams({ client_reference_id: seriesId });
-  if (promoCode) params.set('prefilled_promo_code', promoCode);
-  return STRIPE_SERIES + '?' + params.toString();
+  return STRIPE_SERIES + '?' + new URLSearchParams({ client_reference_id: seriesId }).toString();
 }
 function seriesOnSale(seriesId) {
   const s = SERIES[seriesId];

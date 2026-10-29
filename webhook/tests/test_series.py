@@ -32,6 +32,7 @@ class Q:
     def execute(s):
         rows = s.db.setdefault(s.t, [])
         if s.op == "insert":
+            if s.db.get("_fail_insert") and s.db["_fail_insert"](s.t, s.pl): raise RuntimeError("insert failed (test)")
             row = dict(s.pl); row.setdefault("id", f"{s.t}-{len(rows) + 1}")  # Supabase generates ids
             if s.t == "certificates": row.setdefault("issued_at", "2026-10-29T12:00:00+00:00")  # and the issue date
             rows.append(row); return Res([row])
@@ -60,7 +61,10 @@ main.stripe.checkout.Session.list_line_items = staticmethod(lambda sid, limit: t
 pending = {}
 main.stripe.Webhook.construct_event = staticmethod(lambda payload, sig, secret: pending["event"])
 sent, certs_sent = [], []
-async def fake_send(**k): sent.append(k)
+fail_email = set()  # course ids whose email send should fail
+async def fake_send(**k):
+    if k.get("course_id") in fail_email: raise RuntimeError("Resend down (test)")
+    sent.append(k)
 async def fake_cert(**k): certs_sent.append(k)
 main.send_course_email = fake_send
 main.send_certificate_email = fake_cert
@@ -71,11 +75,18 @@ def send(etype, obj):
     obj = main.stripe.StripeObject.construct_from(obj, "sk_test_x")
     pending["event"] = {"type": etype, "data": {"object": obj}}
     r = c.post("/stripe-webhook", content=b"{}", headers={"stripe-signature": "x"}); assert r.status_code == 200, r.text
-def checkout(sid, email, price="price_series", client_ref="FW-INSULATION", amount=3999, **extra):
+def checkout(sid, email, price="price_series", client_ref="FW-INSULATION", amount=3999, expect_error=False, **extra):
     prices[sid] = price
-    send("checkout.session.completed", {"id": sid, "mode": "payment", "customer": "cus_" + sid,
-         "customer_details": {"email": email, "name": email.split("@")[0].title()},
-         "amount_total": amount, "client_reference_id": client_ref, **extra})
+    obj = {"id": sid, "mode": "payment", "customer": "cus_" + sid,
+           "customer_details": {"email": email, "name": email.split("@")[0].title()},
+           "amount_total": amount, "client_reference_id": client_ref, **extra}
+    if not expect_error:
+        return send("checkout.session.completed", obj)
+    # the handler must fail (non-2xx to Stripe) so the event is delivered again
+    pending["event"] = {"type": "checkout.session.completed", "data": {"object": main.stripe.StripeObject.construct_from(obj, "sk_test_x")}}
+    try: c.post("/stripe-webhook", content=b"{}", headers={"stripe-signature": "x"})
+    except RuntimeError as e: return e
+    raise SystemExit(f"{sid}: expected the webhook to fail")
 def rows(sid): return [p for p in db["purchases"] if p["stripe_session_id"] == sid]
 def member(email): return next(m for m in db["members"] if m["email"] == email)
 def comps(mid): return [x for x in db["completions"] if x["member_id"] == mid]
@@ -137,6 +148,52 @@ n_p, n_c = len(db["purchases"]), len(db["completions"])
 sent.clear(); checkout("cs_live_s1", "ann@example.com")
 assert len(db["purchases"]) == n_p and len(db["completions"]) == n_c and not sent
 print("4 redelivered event makes no duplicate rows and sends nothing")
+assert all(p.get("emailed_at") for p in rows("cs_live_s1"))
+
+# 4b. The insert of part 2 fails: part 1 is recorded and sent, the webhook fails so Stripe retries,
+#     and the retry finishes parts 2 and 3 only, with no second email for part 1
+db["_fail_insert"] = lambda t, row: t == "purchases" and row.get("course_id") == "MER-ALL-020"
+sent.clear(); e = checkout("cs_live_s4b", "eve@example.com", expect_error=True)
+assert "insert failed" in str(e)
+assert [p["course_id"] for p in rows("cs_live_s4b")] == ["MER-ALL-019"] and rows("cs_live_s4b")[0].get("emailed_at")
+assert [x["course_id"] for x in sent] == ["MER-ALL-019"]
+db["_fail_insert"] = None
+import contextlib, io
+log = io.StringIO()
+with contextlib.redirect_stdout(log): sent.clear(); checkout("cs_live_s4b", "eve@example.com")
+assert "ACTION NEEDED: checkout cs_live_s4b was only partly handled" in log.getvalue(), log.getvalue()
+assert [p["course_id"] for p in rows("cs_live_s4b")] == PARTS and all(p.get("emailed_at") for p in rows("cs_live_s4b"))
+assert [x["course_id"] for x in sent] == ["MER-ALL-020", "MER-ALL-021"], [x["course_id"] for x in sent]
+assert round(sum(p["amount_gbp"] for p in rows("cs_live_s4b")), 2) == 39.99 and len(comps(member("eve@example.com")["id"])) == 3
+sent.clear(); checkout("cs_live_s4b", "eve@example.com"); assert not sent and len(rows("cs_live_s4b")) == 3
+print("4b insert fails on part 2: redelivery finishes parts 2 and 3 only, part 1 is not sent again")
+
+# 4c. The email for part 3 fails after its row is recorded: the webhook fails so Stripe retries,
+#     and the retry sends part 3 only
+fail_email.add("MER-ALL-021")
+sent.clear(); e = checkout("cs_live_s4c", "fay@example.com", expect_error=True)
+assert "email failed for ['MER-ALL-021']" in str(e)
+assert [p["course_id"] for p in rows("cs_live_s4c")] == PARTS and [bool(p.get("emailed_at")) for p in rows("cs_live_s4c")] == [True, True, False]
+assert [x["course_id"] for x in sent] == ["MER-ALL-019", "MER-ALL-020"]
+fail_email.clear()
+sent.clear(); checkout("cs_live_s4c", "fay@example.com")
+assert [x["course_id"] for x in sent] == ["MER-ALL-021"] and all(p.get("emailed_at") for p in rows("cs_live_s4c"))
+assert len(comps(member("fay@example.com")["id"])) == 3 and len(rows("cs_live_s4c")) == 3
+print("4c email fails on part 3 after its row: redelivery sends part 3 only")
+
+# 4d. A single course bought on its own is unchanged by all this: row, then email, then the mark
+sent.clear(); checkout("cs_live_s4d", "gus@example.com", price="price_single", client_ref="MER-ALL-018", amount=1999)
+assert [p["course_id"] for p in rows("cs_live_s4d")] == ["MER-ALL-018"] and rows("cs_live_s4d")[0]["amount_gbp"] == 19.99
+assert "series_id" not in rows("cs_live_s4d")[0] and rows("cs_live_s4d")[0].get("emailed_at")
+assert [x["course_id"] for x in sent] == ["MER-ALL-018"] and sent[0]["series_title"] is None and sent[0]["notes_url"] is None
+# and the thanks page calls it a course, not a series (MER-ALL-018 will one day be part of FW-MOISTURE)
+what = main._order_what(rows("cs_live_s4d"))
+assert what.startswith("your course, <strong>Damp, Condensation") and "Field Work" not in what, what
+assert "Field Work" not in main._order_what([{"course_id": "MER-ALL-019"}]), "one part without series_id is just a course"
+assert main._order_what(rows("cs_live_s1")) == "the 3 courses in <strong>Field Work: Insulation</strong>"
+assert main._order_what([{"course_id": k} for k in PARTS]) == "the 3 courses in <strong>Field Work: Insulation</strong>"
+assert main._order_what([dict(rows("cs_live_s1")[0])]).startswith("the first 1 course of <strong>Field Work: Insulation</strong>")
+print("4d single course on its own: recorded, sent, marked; the thanks page calls it a course")
 
 # 5. A member who already has an unused link for a part keeps it; a part already certified gets no new link
 sent.clear(); checkout("cs_live_s5", "tok@example.com")
@@ -257,6 +314,8 @@ json_withdrawn = set(json.loads((HERE.parent.parent / "landing-page" / "under-re
 assert site_withdrawn == DEFAULT_UNDER_REVIEW == json_withdrawn == set(PARTS), (site_withdrawn, DEFAULT_UNDER_REVIEW, json_withdrawn)
 assert "STRIPE_SERIES" in html and "getSeriesLink" in html and "39.99" in html
 index = (HERE.parent.parent / "landing-page" / "index.html").read_text(encoding="utf-8")
-assert "&#163;39.99" in index and "three courses" in index
+i = index.index("Field Work Series"); assert index.rindex("<!--", 0, i) > index.rindex("-->", 0, i), "the £39.99 card must stay commented out until a series is on sale"
+assert "&#163;39.99" in index and "pricing-cards three" in index
+assert "prefilled_promo_code" not in html.split("function getSeriesLink", 1)[1].split("}", 1)[0]
 print("12 catalogue parity: main.py, courses.html, under-review.json and index.html agree")
 print("ALL CHECKS PASSED")
