@@ -1278,7 +1278,7 @@ const ALL_COURSES = [
     ]
   },
   {
-    id: 'MER-ALL-018', strand: 'ALL', hours: 3.0, where: 'EW',
+    id: 'MER-ALL-018', strand: 'ALL', hours: 3.0, where: 'EW', series: 'FW-MOISTURE', part: 1,
     title: 'Damp, Condensation and Thermal Bridging: Reading the Moisture',
     desc: 'How surface condensation forms, where thermal bridges sit at the junctions of UK homes and the mould patterns they leave, how to tell condensation from penetrating damp, rising damp and leaks, what moisture meters can and cannot tell you on masonry, and how to record and refer without going beyond an assessor\'s competence. Written from Approved Documents C, F and L, PAS 2035:2023, the government\'s damp and mould guidance and the English Housing Survey. Comes with two field guides for use on site.',
     objectives: [
@@ -1323,6 +1323,105 @@ const ALL_COURSES = [
       'Explain interstitial condensation in plain terms, and where in an insulated solid wall the risk concentrates',
       'Recognise the common IWI defect zones and record what you see at each',
       'Place your findings within the designer\'s moisture risk assessment, using the PAS 2035:2023 clauses and the standards they name, and signpost the free TrustMark audit route for solid wall insulation installed under ECO4 or GBIS'
+    ]
+  },
+  {
+    id: 'MER-ALL-022', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-HEATING', part: 1,
+    title: 'Heating Series, Part 1: How Heat Pumps Work, and What the Field Data Shows',
+    desc: 'How a heat pump moves heat and why the temperature lift matters; air-to-water, ground and water source, air-to-air, hybrid and exhaust air systems and what the Boiler Upgrade Scheme and MCS recognise for each; COP, SCOP and SPF and the H1 to H4 boundaries; the two government field trials and what they measured; and how to record a heat pump on site without judging how well it performs. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Explain in plain terms how a heat pump moves heat from a source to a home, and why the temperature lift between the two matters',
+      'Distinguish air-to-water, ground and water source, air-to-air, hybrid and exhaust air systems, and say what the Boiler Upgrade Scheme and MCS recognise for each, as at the dates given',
+      'Define COP, SCOP and SPF, explain the H1 to H4 system boundaries, and say why a figure cannot be compared without its boundary and period',
+      'Summarise the two government field trials, the Renewable Heat Premium Payment monitoring (2013 to 2015) and the Electrification of Heat demonstration (2020 to 2022), including their medians, the coldest-day result and their stated limits',
+      'Test common claims about heat pumps against what those trials measured, and record what you see on site without judging how well a system performs'
+    ]
+  },
+  {
+    id: 'MER-ALL-023', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-HEATING', part: 2,
+    title: 'Heating Series, Part 2: Designing It Right: Heat Loss, Emitters, Hot Water, Noise and Siting',
+    desc: 'The heat load calculation MIS 3005-D:2025 asks for and its design temperatures; the sizing rules for heat pumps and hybrids and what the standard says above 55°C flow; why radiator output falls at lower flow temperatures, with a sourced worked example; hot water sizing and bacterial control; the permitted development rules for air source heat pumps in England and Wales and the MCS 020(a) sound calculation; and the installer standards and consumer protection routes to ask about and record. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Describe the heat load calculation that MCS\'s heat pump design standard, MIS 3005-D:2025, asks for, and the design temperatures it sets',
+      'Explain the sizing rules: at least 100% of the calculated heat load for a heat pump system, at least 55% for the heat pump in a hybrid, and what the standard says about flow temperatures above 55°C',
+      'Explain why radiator output falls at lower flow temperatures, and work through a sourced example of how much',
+      'Describe the hot water sizing basis in MIS 3005-D:2025 and what the sources say about controlling bacterial growth and the cost of immersion heating',
+      'Set out the permitted development rules for air source heat pumps in England (from 29 May 2025) and Wales (from 1 June 2026), and the MCS 020(a) sound calculation they rely on',
+      'Identify the installer standards and consumer protection routes that apply, and know what to ask for and record as an assessor or coordinator'
+    ]
+  },
+  {
+    id: 'MER-ALL-024', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-HEATING', part: 3,
+    title: 'Heating Series, Part 3: Cost, Carbon, Grid and the Assessor\'s View',
+    desc: 'The cost of a kilowatt hour of heat from a heat pump and from a gas boiler at the current price cap and the break-even seasonal performance factor; why the price ratio inside an RdSAP 10 rating differs from the EPC running costs and a household bill; carbon per kilowatt hour from the RdSAP 10 and SAP 10.3 emission factors; the Boiler Upgrade Scheme grant levels and uptake; the government\'s smart flexibility timetable; and how to enter a heat pump in RdSAP 10 correctly. Figures dated, with the 31 March 2027 re-check flagged. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Work out the cost of a kilowatt hour of heat from a heat pump and from a gas boiler at the current Ofgem price cap, find the break-even seasonal performance factor, and explain why the comparison has to be re-run after 31 March 2027',
+      'Explain why the price ratio inside an RdSAP 10 rating differs from the ratio in the EPC\'s running costs and on a household bill, and which set of prices each part of an EPC uses',
+      'Calculate carbon per kilowatt hour of heat from the emission factors in RdSAP 10 and in SAP 10.3, and say when EPCs are due to change',
+      'State the Boiler Upgrade Scheme grant levels, the main eligibility conditions and the latest published uptake figures, with their dates',
+      'Describe the government\'s timetable for smart, flexible electricity use, and how RdSAP 10 treats tariffs, meters and controls for a heat pump',
+      'Enter a heat pump in RdSAP 10 correctly: database record or Table 4a default, the MCS installation factor, and the conventions that apply, and know what to record on site and when to refer the householder on'
+    ]
+  },
+  {
+    id: 'MER-ALL-025', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-VENTILATION', part: 1,
+    title: 'Ventilation Series, Part 1: How Homes Breathe, and What Approved Document F Expects',
+    desc: 'The four jobs ventilation does in a home and why Approved Document F counts infiltration in an existing dwelling; where the housing stock sits on airtightness, from the DESNZ 2025 baseline study; the three systems in ADF Table 1.6 and where PIV, passive stack and single-room heat recovery sit outside it; the whole dwelling, extract, background ventilator, door undercut and purge figures for a sample house with the arithmetic shown; and which edition of ADF applies before and after the 2027 dates in England and Wales. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Separate the four jobs that ventilation does in a home (extract, whole dwelling ventilation, purge and infiltration), and explain why Approved Document F counts infiltration as part of the ventilation of an existing dwelling',
+      'Describe where homes in Great Britain sit on airtightness, using the DESNZ 2025 baseline study, and explain why "less airtight" and "highly airtight" are ADF terms for new work, not labels for the stock',
+      'Name the three systems in ADF Table 1.6, and say where positive input ventilation, passive stack ventilation and single-room heat recovery ventilators sit outside that table',
+      'Work out the whole dwelling ventilation rate, extract rates, background ventilator areas, door undercut and purge openings for a sample house, with the arithmetic shown',
+      'Use a compact England and Wales grid to say which edition of ADF applies to work before and after 24 March 2027 (England) and 4 March 2027 (Wales)'
+    ]
+  },
+  {
+    id: 'MER-ALL-026', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-VENTILATION', part: 2,
+    title: 'Ventilation Series, Part 2: Systems on Site: What You See, How They Fail, and What You Record',
+    desc: 'Recognising intermittent extract, continuous mechanical extract, MVHR, single-room heat recovery, positive input ventilation and passive stack on site; the faults government-funded field studies found and the limits of those studies; signs that may point to under-ventilation and signs that point elsewhere, without attributing damp or mould to occupants; recording ventilation to PAS 2035:2023 clause 7.3.2 f); what ADF and RdSAP 10 say about PIV; and the referral where fans and an open-flued appliance share a home. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Recognise intermittent extract, continuous mechanical extract, MVHR, single-room heat recovery, positive input ventilation and passive stack on site, and name their main parts',
+      'Describe the faults that government-funded field studies found in these systems, and the limits of those studies',
+      'Tell signs that may point to under-ventilation from signs that point elsewhere, without attributing damp or mould to occupants',
+      'Record ventilation to the level PAS 2035:2023 clause 7.3.2 f) asks for, so the Retrofit Designer can decide what is needed',
+      'State what Approved Document F and RdSAP 10 say about PIV, and what no source opened for this course shows about it',
+      'Recognise when fans and an open-flued combustion appliance share a home, and refer under your organisation\'s gas safety procedure'
+    ]
+  },
+  {
+    id: 'MER-ALL-027', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-VENTILATION', part: 3,
+    title: 'Ventilation Series, Part 3: Commissioning, Measurement and the 2027 Changes',
+    desc: 'What a commissioned mechanical ventilation system should leave behind under Approved Document F Section 4 and Appendix C; what a valid air flow measurement needs and why a fan that runs is not a fan that has been measured; reading a commissioning sheet against the design flows with the comparison rule and device accuracy ADF gives; what changes when the 2026 editions take effect on 4 March 2027 in Wales and 24 March 2027 in England; and what an assessor can observe, record and refer. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Recognise what a commissioned mechanical ventilation system should leave behind: the checks, the commissioning sheet and the information pack, as set out in Approved Document F Section 4 and Appendix C',
+      'Explain what a valid air flow measurement needs (device, hood, calibration, set-up and averaging) and why a fan that runs is not a fan that has been measured',
+      'Read a commissioning sheet against the design flows, using only the comparison rule and the device accuracy that ADF actually gives',
+      'Set out what changes when the 2026 editions of ADF take effect on 4 March 2027 in Wales and 24 March 2027 in England, including who may commission and when flows in an existing home should be tested',
+      'Say what an assessor can observe, what they cannot measure, what to record, and who to refer a finding to'
+    ]
+  },
+  {
+    id: 'MER-ALL-028', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-MOISTURE', part: 2,
+    title: 'Moisture and Damp Series, Part 2: Floors: Solid Ground Floors and Suspended Timber Floors',
+    desc: 'Recognising solid, suspended timber and suspended concrete ground floors and the moisture defences each relies on; recording the condition of those defences and any evidence of moisture or timber decay without naming a cause; working the Approved Document C sub-floor ventilation rule for a real floor; what insulating or sealing a ground floor changes, from sub-floor ventilation to radon and traditional moisture-open floors; and reporting floor defects in the two PAS 2035:2023 categories with the right referrals. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Recognise solid, suspended timber and suspended concrete ground floors on site, and name the moisture defences each relies on: damp-proof membrane, damp-proof course, ventilated void and ventilation openings',
+      'Record the condition of those defences, and any evidence of moisture or timber decay, without naming a cause',
+      'Work the Approved Document C sub-floor ventilation rule for a real floor, and explain why the answer is for the designer to settle, not a pass or fail for the assessor',
+      'Explain what insulating or sealing a ground floor changes: sub-floor ventilation, room ventilation, perimeter cold spots, gas pipes, radon and traditional moisture-open floors',
+      'Report floor defects in the two PAS 2035:2023 categories and refer timber, damp, radon and safety findings to the right person'
+    ]
+  },
+  {
+    id: 'MER-ALL-029', strand: 'ALL', hours: 2.0, where: 'EW', series: 'FW-MOISTURE', part: 3,
+    title: 'Moisture and Damp Series, Part 3: Roofs and Lofts: Condensation, Ventilation and Insulation',
+    desc: 'Telling a cold loft, a warm roof, a flat roof and a room in the roof apart and where the moisture risk sits in each; the site evidence of roof-space condensation, roof leaks, plumbing leaks and blocked ventilation, recorded without naming a cause; how loft insulation, hatch sealing and room-in-roof work change a roof space, including tanks, pipes, cables, downlighters and ducts; getting into a loft safely or deciding not to; and recording and referring within PAS 2035:2023, with TrustMark first for ECO4 and Great British Insulation Scheme work. Delivered as a slide deck with the written course as notes.',
+    objectives: [
+      'Tell a cold loft, a warm (rafter-level) roof, a flat roof and a room in the roof apart, and say where the moisture risk sits in each',
+      'Recognise the site evidence of roof-space condensation, roof leaks, plumbing leaks and blocked ventilation, and record it without naming a cause',
+      'Explain how loft insulation, hatch sealing and room-in-roof work change the temperature and ventilation of a roof space, including the effect on tanks, pipes, cables, downlighters and ducts',
+      'Get into a loft safely or decide not to, and record what you could and could not see',
+      'Record findings within PAS 2035:2023, refer each to the right person, and name TrustMark first where the insulation was funded under ECO4 or the Great British Insulation Scheme'
     ]
   },
   {

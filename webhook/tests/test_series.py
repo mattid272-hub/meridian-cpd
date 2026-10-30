@@ -92,8 +92,13 @@ def member(email): return next(m for m in db["members"] if m["email"] == email)
 def comps(mid): return [x for x in db["completions"] if x["member_id"] == mid]
 PARTS = ["MER-ALL-019", "MER-ALL-020", "MER-ALL-021"]
 
-# 0. Definitions: the series is complete, the others are defined but not on sale, the split adds up
-assert main.series_courses("FW-INSULATION") == PARTS and main.series_courses("FW-HEATING") == [] and main.series_courses("nope") == []
+# 0. Definitions: every series is complete and on sale; an incomplete one is simulated for the negative cases
+assert main.series_courses("FW-INSULATION") == PARTS and main.series_courses("nope") == []
+for sid, s in main.SERIES.items():
+    assert main.series_courses(sid) == s["courses"], sid
+assert main.series_courses("FW-MOISTURE") == ["MER-ALL-018", "MER-ALL-028", "MER-ALL-029"]
+main.SERIES["FW-INCOMPLETE"] = {"title": "Field Work: Incomplete", "courses": ["MER-ALL-900", "MER-ALL-901"]}
+assert main.series_courses("FW-INCOMPLETE") == []
 assert main._split_amount(3999, 3) == [1333, 1333, 1333] and main._split_amount(4000, 3) == [1334, 1333, 1333]
 assert main._series_label("MER-ALL-020") == "Part 2 of 3 · Field Work: Insulation" and main._series_label("MER-DEA-001") == ""
 assert main.PRICE_TO_COURSE == {"price_single": "MER-DEA-001", "price_sub": "SUBSCRIPTION", "price_series": "SERIES"}
@@ -108,7 +113,7 @@ main.SERIES["FW-X"] = {"title": "x", "courses": ["MER-ALL-019"]}
 try: main._check_series(); raise SystemExit("course in two series accepted")
 except ValueError: pass
 finally: del main.SERIES["FW-X"]
-main.COURSES["MER-DEA-002"]["series"] = "FW-HEATING"
+main.COURSES["MER-DEA-002"]["series"] = "FW-INCOMPLETE"
 try: main._check_series(); raise SystemExit("course naming an incomplete series accepted")
 except ValueError: pass
 finally: del main.COURSES["MER-DEA-002"]["series"]
@@ -137,8 +142,9 @@ print("2 series via metadata")
 # 3. A series price the app cannot place: recorded once as SERIES, nothing sent; same for a series not yet complete
 sent.clear(); checkout("cs_live_s3", "cat@example.com", client_ref="FW-NOPE")
 assert [p["course_id"] for p in rows("cs_live_s3")] == ["SERIES"] and rows("cs_live_s3")[0]["amount_gbp"] == 39.99 and not sent
-checkout("cs_live_s3b", "cat@example.com", client_ref="FW-HEATING")
+checkout("cs_live_s3b", "cat@example.com", client_ref="FW-INCOMPLETE")
 assert [p["course_id"] for p in rows("cs_live_s3b")] == ["SERIES"] and not sent and not comps(member("cat@example.com")["id"])
+del main.SERIES["FW-INCOMPLETE"]  # the simulated series has done its job
 assert "your order" in main._order_what(rows("cs_live_s3")) and "SERIES" not in main._order_what(rows("cs_live_s3"))
 assert "Field Work series" in main._course_label("SERIES")
 print("3 unknown or incomplete series reference: one SERIES row, nothing sent")
@@ -185,8 +191,10 @@ print("4c email fails on part 3 after its row: redelivery sends part 3 only")
 sent.clear(); checkout("cs_live_s4d", "gus@example.com", price="price_single", client_ref="MER-ALL-018", amount=1999)
 assert [p["course_id"] for p in rows("cs_live_s4d")] == ["MER-ALL-018"] and rows("cs_live_s4d")[0]["amount_gbp"] == 19.99
 assert "series_id" not in rows("cs_live_s4d")[0] and rows("cs_live_s4d")[0].get("emailed_at")
-assert [x["course_id"] for x in sent] == ["MER-ALL-018"] and sent[0]["series_title"] is None and sent[0]["notes_url"] is None
-# and the thanks page calls it a course, not a series (MER-ALL-018 will one day be part of FW-MOISTURE)
+assert [x["course_id"] for x in sent] == ["MER-ALL-018"] and sent[0]["notes_url"] is None
+assert sent[0]["series_title"] == "Field Work: Moisture" and sent[0]["part"] == 1 and sent[0]["parts_total"] == 3
+assert main._series_label("MER-ALL-018") == "Part 1 of 3 · Field Work: Moisture"
+# and the thanks page calls it a course, not a series (one part bought on its own has no series_id)
 what = main._order_what(rows("cs_live_s4d"))
 assert what.startswith("your course, <strong>Damp, Condensation") and "Field Work" not in what, what
 assert "Field Work" not in main._order_what([{"course_id": "MER-ALL-019"}]), "one part without series_id is just a course"
