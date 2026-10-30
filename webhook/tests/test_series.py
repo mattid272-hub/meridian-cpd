@@ -311,11 +311,13 @@ site_series = {m.group(1): {"title": m.group(2), "courses": re.findall(r"'(MER-[
 assert site_series == main.SERIES, (site_series, main.SERIES)
 site_withdrawn = set(re.findall(r"'(MER-[A-Z]+-\d{3})'", re.search(r"const UNDER_REVIEW = new Set\(\[(.*?)\]\)", html).group(1)))
 json_withdrawn = set(json.loads((HERE.parent.parent / "landing-page" / "under-review.json").read_text())["under_review"])
-assert site_withdrawn == DEFAULT_UNDER_REVIEW == json_withdrawn == set(PARTS), (site_withdrawn, DEFAULT_UNDER_REVIEW, json_withdrawn)
+assert site_withdrawn == DEFAULT_UNDER_REVIEW == json_withdrawn, (site_withdrawn, DEFAULT_UNDER_REVIEW, json_withdrawn)
 assert "STRIPE_SERIES" in html and "getSeriesLink" in html and "39.99" in html
 index = (HERE.parent.parent / "landing-page" / "index.html").read_text(encoding="utf-8")
-i = index.index("Field Work Series"); assert index.rindex("<!--", 0, i) > index.rindex("-->", 0, i), "the £39.99 card must stay commented out until a series is on sale"
-assert "&#163;39.99" in index and "pricing-cards three" in index
+i = index.index("Field Work Series"); card_hidden = index.rindex("<!--", 0, i) > index.rindex("-->", 0, i)
+series_on_sale = not (set(PARTS) & DEFAULT_UNDER_REVIEW)
+assert card_hidden != series_on_sale, "the £39.99 card is shown exactly when every part of a series is on sale"
+assert "&#163;39.99" in index and ("pricing-cards three" in index) == series_on_sale
 assert "prefilled_promo_code" not in html.split("function getSeriesLink", 1)[1].split("}", 1)[0]
 print("12 catalogue parity: main.py, courses.html, under-review.json and index.html agree")
 print("ALL CHECKS PASSED")
