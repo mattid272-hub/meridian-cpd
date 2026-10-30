@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meridian CPD — Stay Sharp. Stay Certified.</title>
   <meta name="description" content="CPD for UK Domestic Energy Assessors and Retrofit Assessors. Practitioner-written courses, downloadable PDFs, tamper-proof certificates. From £19.99.">
+  <!-- Link previews (Facebook, LinkedIn, WhatsApp, X): branded card, never a portrait -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Meridian CPD">
+  <meta property="og:title" content="Meridian CPD — Stay Sharp. Stay Certified.">
+  <meta property="og:description" content="CPD for UK Domestic Energy Assessors and Retrofit Assessors. Practitioner-written courses, downloadable PDFs, tamper-proof certificates. From £19.99.">
+  <meta property="og:url" content="https://meridiancpd.co.uk/">
+  <meta property="og:image" content="https://meridiancpd.co.uk/images/meridian-cpd-social.png">
+  <meta property="og:image:secure_url" content="https://meridiancpd.co.uk/images/meridian-cpd-social.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Meridian CPD: Stay Sharp. Stay Certified. meridiancpd.co.uk">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Meridian CPD — Stay Sharp. Stay Certified.">
+  <meta name="twitter:description" content="CPD for UK Domestic Energy Assessors and Retrofit Assessors. Practitioner-written courses, downloadable PDFs, tamper-proof certificates. From £19.99.">
+  <meta name="twitter:image" content="https://meridiancpd.co.uk/images/meridian-cpd-social.png">
+  <meta name="twitter:image:alt" content="Meridian CPD: Stay Sharp. Stay Certified. meridiancpd.co.uk">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -670,6 +688,8 @@
       max-width: 820px;
       margin: 0 auto 2rem;
     }
+    /* with the series card (see the comment in the pricing section) */
+    .pricing-cards.three { grid-template-columns: repeat(3, 1fr); max-width: 1100px; }
     .price-card {
       background: var(--dark2);
       border: 1px solid rgba(212,255,0,.15);
@@ -749,8 +769,11 @@
       padding-bottom: 1rem;
     }
     .price-free-note a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 960px) {
+      .pricing-cards.three { grid-template-columns: 1fr; max-width: 520px; }
+    }
     @media (max-width: 640px) {
-      .pricing-cards { grid-template-columns: 1fr; max-width: 100%; }
+      .pricing-cards, .pricing-cards.three { grid-template-columns: 1fr; max-width: 100%; }
       .price-card { padding: 1.8rem 1.4rem; }
     }
 
@@ -1291,7 +1314,7 @@
 
   <!-- Floating value anchor (desktop only) -->
   <div class="hero-stat">
-    <div class="hero-stat-num">&#163;1.98</div>
+    <div class="hero-stat-num">&#163;1.55</div>
     <div class="hero-stat-label">Average cost per course<br>on the annual plan</div>
   </div>
 
@@ -1501,15 +1524,15 @@
 
     <div class="offer-stats">
       <div>
-        <div class="stat-num">40</div>
+        <div class="stat-num">51</div>
         <div class="stat-label">Courses in the library today, each checked against the source documents</div>
       </div>
       <div>
-        <div class="stat-num">&#163;1.98</div>
+        <div class="stat-num">&#163;1.55</div>
         <div class="stat-label">Average cost per course on the annual plan &mdash; less than a couple of coffees</div>
       </div>
       <div>
-        <div class="stat-num">45</div>
+        <div class="stat-num">67</div>
         <div class="stat-label">CPD hours in the library today</div>
       </div>
     </div>
@@ -1518,7 +1541,7 @@
   <!-- Pricing cards -->
   <div class="pricing-wrap">
     <p class="pricing-label">Choose how you want to learn.</p>
-    <div class="pricing-cards">
+    <div class="pricing-cards three">
 
       <!-- Individual course -->
       <div class="price-card">
@@ -1532,6 +1555,20 @@
           <li>Self-assessment questions + further reading</li>
         </ul>
         <a href="https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00" class="btn-s">Buy a Course &mdash; &#163;19.99</a>
+      </div>
+
+      <!-- Field Work series: three courses for one price -->
+      <div class="price-card">
+        <p class="price-card-type">Field Work Series</p>
+        <p class="price-card-amount">&#163;39.99</p>
+        <p class="price-card-period">three courses &mdash; three certificates</p>
+        <ul class="price-card-features">
+          <li>Three linked courses on one subject, bought together</li>
+          <li>Slides for the site visit, written notes for the desk</li>
+          <li>A certificate for each part as you complete it</li>
+          <li>Nearly &#163;20 less than the three parts bought separately</li>
+        </ul>
+        <a href="courses.html" class="btn-s">See the Series</a>
       </div>
 
       <!-- Annual membership -->
@@ -1856,5 +1893,6 @@
   });
 </script>
 
+<script src="/consent.js" defer></script>
 </body>
 </html>
