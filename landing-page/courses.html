@@ -1278,6 +1278,30 @@ const ALL_COURSES = [
     ]
   },
   {
+    id: 'MER-SCO-001', strand: 'DEA', hours: 2.0, where: 'S',
+    title: 'RdSAP 10 in Scotland: Where It Differs',
+    desc: 'What changes when you lodge a domestic EPC for an existing dwelling in Scotland: the 2008 Regulations and the Scottish register, Approved Organisation membership, the Scottish age bands and the wall, roof, floor, door and window defaults that follow from them, the Scottish trigger years for glazing, the conventions with Scottish wording, and how country, region and climate data behave for a Scottish address. Written from the RdSAP 10 Specification (v4.0) and Conventions (v12.2), the Scottish regulations and the Scottish Government\'s accreditation scheme documents, with worked examples.',
+    objectives: [
+      'State the regulations a Scottish domestic EPC is issued under today and what they require of the certificate and the register',
+      'Explain what an Approved Organisation is and which questions only your own scheme can answer if you are accredited in England and Wales',
+      'Choose the Scottish age band for each building part and trace the wall, roof, floor, door and thermal bridging defaults that follow',
+      'Date glazing against the Scottish trigger years of 2003 and 2023 and apply the Scottish window, door and curtain wall defaults',
+      'Apply each convention that carries Scottish wording, and recognise how country, region and climate data behave for a Scottish address'
+    ]
+  },
+  {
+    id: 'MER-SCO-002', strand: 'ALL', hours: 1.0, where: 'S',
+    title: 'Scotland\'s EPC Reform: HEM, Three Ratings and Five Years, from 30 April 2028',
+    desc: 'The reform under the Energy Performance of Buildings (Scotland) Regulations 2025: full commencement moving to 30 April 2028 under the draft 2026 Amendment Regulations, the three new domestic ratings and the property report, five-year validity and the transition rules, where the Home Energy Model fits, the new accreditation scheme and its audits, and the lodgement fee change. Written from the regulations, the Scottish Parliament\'s committee papers and the Scottish Government\'s published updates, and dated so you know what to re-check.',
+    objectives: [
+      'State what the 2025 Regulations do, which parts are in force, and how the draft 2026 Amendment Regulations move full commencement to 30 April 2028',
+      'Name the three domestic ratings and list what the new certificate and property report must contain',
+      'Apply the five-year validity rule and the transitional rules for certificates issued under the 2008 Regulations',
+      'Explain where the Home Energy Model sits in the Regulations and in Scottish Building Standards, and what is not yet published',
+      'Describe the new accreditation scheme, its audit rules, the lodgement fee change and the training assessors have been told to expect'
+    ]
+  },
+  {
     id: 'MER-ALL-018', strand: 'ALL', hours: 3.0, where: 'EW', series: 'FW-MOISTURE', part: 1,
     title: 'Damp, Condensation and Thermal Bridging: Reading the Moisture',
     desc: 'How surface condensation forms, where thermal bridges sit at the junctions of UK homes and the mould patterns they leave, how to tell condensation from penetrating damp, rising damp and leaks, what moisture meters can and cannot tell you on masonry, and how to record and refer without going beyond an assessor\'s competence. Written from Approved Documents C, F and L, PAS 2035:2023, the government\'s damp and mould guidance and the English Housing Survey. Comes with two field guides for use on site.',
@@ -1686,7 +1710,7 @@ function renderGrid() {
     note.innerHTML = '<strong>' + usable.length + ' of ' + COURSES.length + ' courses (' + hrs + ' CPD hours) apply in ' + name + '</strong> as they stand. ' +
       'Each course says where it applies, on its card and in its details. ' +
       (activeNation === 'S'
-        ? 'RdSAP 10 and PAS 2035:2023 courses apply in Scotland; courses on English or England-and-Wales legislation are left out. Scotland-specific courses on the Scottish EPC Register, the 2028 reform and Section 6 are being written.'
+        ? 'RdSAP 10 and PAS 2035:2023 courses apply in Scotland; courses on English or England-and-Wales legislation are left out. Two courses are written for Scotland: RdSAP 10 in Scotland and the 2028 EPC reform. More Scotland-specific courses are being written.'
         : activeNation === 'W'
           ? 'Courses written on English-only legislation (Approved Documents, the Future Homes Standard, the Renters\' Rights Act) are left out.'
           : '');
