@@ -30,12 +30,15 @@ MIN_BYTES = 50_000  # a real deck is a megabyte or two; anything smaller is the 
 
 def upload(filename: str, pdf_bytes: bytes) -> str:
     """Put one PDF in the bucket (overwriting) and return its public URL."""
+    global SERVICE_KEY
+    SERVICE_KEY = SERVICE_KEY.strip()
     url = f"{SUPABASE_URL}/storage/v1/object/{BUCKET}/{filename}"
     req = urllib.request.Request(
         url,
         data=pdf_bytes,
         method="POST",
         headers={
+            "apikey": SERVICE_KEY,  # new-style sb_secret_ keys need this; JWT keys accept it too
             "Authorization": f"Bearer {SERVICE_KEY}",
             "Content-Type": "application/pdf",
             "x-upsert": "true",
@@ -75,6 +78,12 @@ def main() -> int:
     if not SERVICE_KEY:
         print("ERROR: set SUPABASE_SERVICE_ROLE_KEY first (never paste it into a file).")
         return 1
+    key = SERVICE_KEY.strip()
+    shape = "JWT" if key.startswith("eyJ") and key.count(".") == 2 else ("sb_secret" if key.startswith("sb_secret_") else "unrecognised")
+    print(f"Key: {len(key)} characters, {shape} format" + ("" if shape != "unrecognised" else
+          " (a service key starts with eyJ and has two dots, or starts with sb_secret_; copy it again from Railway)"))
+    if key != SERVICE_KEY:
+        print("Note: whitespace trimmed from the key.")
 
     course_id, deck_path = args
     try:
