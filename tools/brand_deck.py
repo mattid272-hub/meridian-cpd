@@ -62,13 +62,14 @@ def band_overlay(width: float, height: float, course_id: str, version: str, when
     return buf.getvalue()
 
 
-def brand(src: Path, out: Path, course_id: str, version: str, when: str, cover_badge: bool) -> int:
+def brand(src: Path, out: Path, course_id: str, version: str, when: str, cover_badge: bool,
+          extra: list[Path] | None = None) -> int:
     """The band is added below the slide, not over it: the page grows by the band's height, so
     no slide content is ever hidden. With --cover-badge the band also runs full width over the
     slide's bottom edge, which is the only mode that hides anything."""
-    reader = PdfReader(str(src))
     writer = PdfWriter()
-    for page in reader.pages:
+    pages = [pg for part in [src, *(extra or [])] for pg in PdfReader(str(part)).pages]
+    for page in pages:
         w = float(page.mediabox.width)
         h = float(page.mediabox.height)
         band_h = h * 0.052
@@ -90,7 +91,7 @@ def brand(src: Path, out: Path, course_id: str, version: str, when: str, cover_b
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("wb") as fh:
         writer.write(fh)
-    return len(reader.pages)
+    return len(pages)
 
 
 def main() -> None:
@@ -102,6 +103,8 @@ def main() -> None:
     ap.add_argument("--out", help="output path (default courses/<id>/<id>-deck.pdf)")
     ap.add_argument("--cover-badge", action="store_true",
                     help="run the band the full width, covering the Gemini badge (Matt's decision)")
+    ap.add_argument("--append", action="append", default=[], metavar="PDF",
+                    help="a further NotebookLM export whose pages follow the first (for example a supplement deck)")
     args = ap.parse_args()
 
     if not COURSE_ID_RE.match(args.course_id):
@@ -110,7 +113,11 @@ def main() -> None:
     if not src.is_file() or not src.read_bytes().startswith(b"%PDF"):
         raise SystemExit(f"Not a PDF: {src}")
     out = Path(args.out) if args.out else Path("courses") / args.course_id / f"{args.course_id}-deck.pdf"
-    n = brand(src, out, args.course_id, args.version, args.date, args.cover_badge)
+    extra = [Path(p) for p in args.append]
+    for p in extra:
+        if not p.is_file() or not p.read_bytes().startswith(b"%PDF"):
+            raise SystemExit(f"Not a PDF: {p}")
+    n = brand(src, out, args.course_id, args.version, args.date, args.cover_badge, extra)
     print(f"{n} pages → {out}")
 
 
