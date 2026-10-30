@@ -226,4 +226,6 @@ r = c.post("/admin/outreach/run", headers=auth)
 check("send-now button sends the rest of today's allowance", "Batch finished: 3 sent" in r.text and len(sent) == 3)
 
 print(f"\n{'ALL PASSED' if not fails else f'{fails} FAILED'}")
-sys.exit(1 if fails else 0)
+assert not fails, f"{fails} check(s) failed"  # lets pytest collect this script
+if __name__ == "__main__":
+    sys.exit(1 if fails else 0)
