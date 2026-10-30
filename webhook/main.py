@@ -187,12 +187,21 @@ COURSES = {
     "MER-ALL-015": {"course_id": "MER-ALL-015", "title": "EPC Reform and the Future Home Buying Process: What Assessors Must Know", "cpd_hours": 1.0, "published": "2026-09-01"},
     "MER-ALL-016": {"course_id": "MER-ALL-016", "title": "Scheme Operating Requirements: How They Work and What Changed in 2026", "cpd_hours": 1.0, "published": "2026-09-15"},
     "MER-ALL-017": {"course_id": "MER-ALL-017", "title": "Awaab's Law Phase 2: What Energy Assessors Must Know", "cpd_hours": 1.0, "published": "2026-10-01"},
-    "MER-ALL-018": {"course_id": "MER-ALL-018", "title": "Damp, Condensation and Thermal Bridging: Reading the Moisture", "cpd_hours": 3.0, "published": "2026-10-25"},
+    "MER-ALL-018": {"course_id": "MER-ALL-018", "title": "Damp, Condensation and Thermal Bridging: Reading the Moisture", "cpd_hours": 3.0, "published": "2026-10-25", "series": "FW-MOISTURE", "part": 1},
     # Field Work: Insulation (series FW-INSULATION). Delivered as NotebookLM decks with the
     # written course as notes. On sale since the decks went into Storage (30 Oct 2026).
     "MER-ALL-019": {"course_id": "MER-ALL-019", "title": "Insulation Series, Part 1: Principles and Cavity Wall Insulation", "cpd_hours": 2.0, "published": "2026-10-29", "series": "FW-INSULATION", "part": 1, "deliverable": "deck"},
     "MER-ALL-020": {"course_id": "MER-ALL-020", "title": "Insulation Series, Part 2: External Wall Insulation: Spotting the Failures", "cpd_hours": 2.0, "published": "2026-10-29", "series": "FW-INSULATION", "part": 2, "deliverable": "deck"},
     "MER-ALL-021": {"course_id": "MER-ALL-021", "title": "Insulation Series, Part 3: Internal Wall Insulation and Hidden Moisture", "cpd_hours": 2.0, "published": "2026-10-29", "series": "FW-INSULATION", "part": 3, "deliverable": "deck"},
+    # Field Work: Heating, Ventilation and Moisture (decks; on sale from 30 Oct 2026).
+    "MER-ALL-022": {"course_id": "MER-ALL-022", "title": "Heating Series, Part 1: How Heat Pumps Work, and What the Field Data Shows", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-HEATING", "part": 1, "deliverable": "deck"},
+    "MER-ALL-023": {"course_id": "MER-ALL-023", "title": "Heating Series, Part 2: Designing It Right: Heat Loss, Emitters, Hot Water, Noise and Siting", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-HEATING", "part": 2, "deliverable": "deck"},
+    "MER-ALL-024": {"course_id": "MER-ALL-024", "title": "Heating Series, Part 3: Cost, Carbon, Grid and the Assessor's View", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-HEATING", "part": 3, "deliverable": "deck"},
+    "MER-ALL-025": {"course_id": "MER-ALL-025", "title": "Ventilation Series, Part 1: How Homes Breathe, and What Approved Document F Expects", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-VENTILATION", "part": 1, "deliverable": "deck"},
+    "MER-ALL-026": {"course_id": "MER-ALL-026", "title": "Ventilation Series, Part 2: Systems on Site: What You See, How They Fail, and What You Record", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-VENTILATION", "part": 2, "deliverable": "deck"},
+    "MER-ALL-027": {"course_id": "MER-ALL-027", "title": "Ventilation Series, Part 3: Commissioning, Measurement and the 2027 Changes", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-VENTILATION", "part": 3, "deliverable": "deck"},
+    "MER-ALL-028": {"course_id": "MER-ALL-028", "title": "Moisture and Damp Series, Part 2: Floors: Solid Ground Floors and Suspended Timber Floors", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-MOISTURE", "part": 2, "deliverable": "deck"},
+    "MER-ALL-029": {"course_id": "MER-ALL-029", "title": "Moisture and Damp Series, Part 3: Roofs and Lofts: Condensation, Ventilation and Insulation", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-MOISTURE", "part": 3, "deliverable": "deck"},
     # Subscription — welcome email only; library access granted via plan field
     "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0, "published": "2026-03-01"},
 }
@@ -206,8 +215,8 @@ COURSES = {
 # Every course id here must be in COURSES and belong to one series only. A series whose
 # courses are not all in the catalogue yet is defined but not on sale: it is skipped with
 # a warning at start-up, and a series checkout for it is recorded for Matt to sort out
-# rather than expanded (see _keys_for_checkout). MER-ALL-018 joins FW-MOISTURE when
-# MER-ALL-028 and MER-ALL-029 are published.
+# rather than expanded (see _keys_for_checkout). MER-ALL-018 is Part 1 of FW-MOISTURE and
+# is still delivered as the written course until its deck is published.
 SERIES = {
     "FW-INSULATION": {"title": "Field Work: Insulation", "courses": ["MER-ALL-019", "MER-ALL-020", "MER-ALL-021"]},
     "FW-HEATING": {"title": "Field Work: Heating", "courses": ["MER-ALL-022", "MER-ALL-023", "MER-ALL-024"]},
