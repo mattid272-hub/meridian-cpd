@@ -27,6 +27,8 @@ This edition replaces the March 2026 edition. That edition taught rules for a co
 
 ## Section 1: Identifying the Water Heating Source
 
+**In short:** Where a boiler or heat pump only heats water, make it main system 2 with 0% of the heat, and the space heating system main system 1 with 100%, subject to the exception below. A fixed hot water source fitted but not working, or condemned, still counts. Enter a dual immersion on a single tariff as a single immersion with Addendum 6. An electric CPSU on a single tariff is a direct-acting electric boiler; ask your scheme about Addendum 6.
+
 ### The choices in the data set
 
 The specification lists where the hot water can come from: the main heating system, the second main system, the secondary system, another water heater from the hot-water-only part of SAP 10.2 Table 4a, or no hot water system present. If the water is not heated by the main system, the fuel is needed as well (specification Table 31, item 7-9).
@@ -41,7 +43,7 @@ The specification gives the same instruction (section 10.5.1, and Table 31, item
 
 ### Fitted but not working, and not fitted at all
 
-Convention 4.03 was amended in v12.2 to refer to hot water as well as heating. A fixed hot water source that is fitted but not working, or that has been condemned, is still taken into account when you decide the hot water type (convention 4.03). You record what is installed, not what currently runs.
+Convention 4.03 was amended in v12.2 to refer to hot water as well as heating. A fixed hot water source that is fitted but not working, or that has been condemned, should still be taken into account when you decide the hot water type (convention 4.03). You record what is installed, not what currently runs.
 
 Where there is no water heating system at all, the calculation is done for an electric immersion heater. The immersion is taken as dual if the electricity meter is dual and as single otherwise, including where the meter is unknown. The cylinder is taken from the first rows of Tables 28 and 29, which are the rows for an inaccessible cylinder (specification section 10.7).
 
@@ -60,6 +62,8 @@ Specification section 12 words the single meter case differently (heating entere
 ---
 
 ## Section 2: Cylinders: Size, Insulation and Cylinderstat
+
+**In short:** Use the cylinder size from its label where you can, otherwise choose a descriptor. Treat a modern unvented cylinder such as a Megaflo, or one with a factory fitted jacket, as 50 mm factory-applied foam with a cylinderstat assumed. For foam plus a jacket, enter the foam thickness plus one third of the jacket. Apart from the Megaflo type, include a cylinderstat only when it is mounted on the side of the cylinder and has an electric connection.
 
 ### Cylinder size
 
@@ -105,6 +109,8 @@ The entry has a second effect. Boiler interlock is assumed present if there is a
 
 ## Section 3: Instantaneous Heaters, Electric Combis and Electric Showers
 
+**In short:** Disregard a store of 55 litres or less in an instantaneous water heater; above 55 litres, specify an electric immersion or a gas boiler for water heating only. Record space heating from an electric combi manually as a standard boiler, direct acting, fuel electricity, and its water heater as instantaneous at point of use. Where an electric shower is the only water heater, enter electric instant water heating.
+
 ### Instantaneous water heaters and the 55 litre test
 
 An instantaneous water heater may contain a small store. Convention 6.08 says to disregard a small water storage volume, and defines small as less than or equal to 55 litres. If the storage volume exceeds 55 litres, the heater is specified as an electric immersion or a gas boiler for water heating only (convention 6.08). Exactly 55 litres is still small and is disregarded.
@@ -124,6 +130,8 @@ Convention 6.10, which dealt with water heated by PV, is deleted. A PV diverter 
 ---
 
 ## Section 4: Baths, Showers, Heat Recovery and Solar
+
+**In short:** Always record the baths and showers, because they are collected so that a recommendation can be made. Include waste water or flue gas heat recovery only if it is found in the PCDB; otherwise there is no default, so leave it out and record its presence in site notes. For an instantaneous system, a shower integral with bath taps is a mixer shower only with a bracket at least 1.5 m above the plughole and a curtain or screen.
 
 ### Baths and showers are always counted
 

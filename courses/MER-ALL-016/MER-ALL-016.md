@@ -31,6 +31,8 @@ This course is correct to 14 October 2026.
 
 ## Section 1: Where the SORs Come From
 
+**In short:** Whatever your scheme says, the law requires you to declare in the EPC any personal or business relationship with the person who commissioned it or anyone you believe has, or may have, an interest in the building; assess with reasonable care and skill; and make sure the data is registered before handing the certificate over. Registered data, green deal information apart, must not be altered, so a wrong certificate is replaced. The SORs bind schemes and reach you through membership.
+
 ### The legal hook
 
 The Energy Performance of Buildings (England and Wales) Regulations 2012, SI 2012/3118, came into force on 9 January 2013 (regulation 1(4)). "An energy assessor must be a member of an accreditation scheme approved by the Secretary of State" (regulation 22(1)), and an energy assessor is "an individual who is a member of an accreditation scheme" (regulation 2(1)). Your ability to produce certificates rests on that membership.
@@ -56,6 +58,8 @@ So the SORs bind schemes. They reach you through membership: schemes must "ensur
 
 ## Section 2: Who Writes Them: Level 1, Level 2 and EASOB
 
+**In short:** Know which document you are reading: Level 1, version 1.5 of 2025, is MHCLG's, and Level 2, version 1.14 of 4 September 2026, is managed by EASOB for the schemes, with MHCLG able to stop any proposed amendment it considers inappropriate. The 2026 changes are all in Level 2. Retrofit assessment is not in the SORs' scope, so as a retrofit assessor they reach you only through the EPCs you lodge as a DEA.
+
 ### Two levels
 
 The SORs come as two documents, both titled "Scheme Operating Requirements for the production of Energy Certificates":
@@ -79,6 +83,8 @@ Retrofit assessment is not in the SORs' scope list (Level 1 SORs, Preface), and 
 ---
 
 ## Section 3: The Standing Rules That Touch Your Work
+
+**In short:** Your evidence must be clear enough for your scheme to replicate the certificate and unique to the property visited, and you should make sure you can always reach it, even in a previous employer's files. Where a certificate is found defective, re-lodge and ask your scheme to mark the old one "Not for Issue". CPD is at least 10 hours a year plus 5 per additional strand, at least half "certified", meaning with a certificate of attendance or completion.
 
 ### How quality is judged
 
@@ -128,6 +134,8 @@ The main points are:
 ---
 
 ## Section 4: What Changed in September 2026, and What to Do
+
+**In short:** Version 1.14 requires schemes to ensure you declare, before lodging, that the minimum evidence has been obtained and retained, so check your evidence against the strand's Minimum Evidence Requirements, not memory. EASOB lists the DEA requirements as effective 1 October 2026; the parts of Level 2 read for this course give no start date for the declaration, so ask your scheme. Inaccurate or unsupported declarations lead to disciplinary or remedial action, which may include suspension or removal for repeat offenders.
 
 ### The change record
 

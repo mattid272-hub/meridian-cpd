@@ -27,6 +27,8 @@ The course is correct to 14 October 2026.
 
 ## Section 1: The vocabulary, as the RICS standard defines it
 
+**In short:** When you discuss carbon with clients or designers, the RICS definitions are the reference: embodied carbon covers modules A0 to A5, B1 to B5 and C1 to C4, so end of life is part of it, while operational carbon is B6 for energy and B7 for water. Module D sits outside the whole life carbon total and is reported separately, and a component replaced during the study period counts again under B4.
+
 The reference document is the RICS professional standard "Whole life carbon assessment for the built environment", 2nd edition, September 2023 (version 3, August 2024). Its carbon definitions are:
 - Whole life carbon: the sum of all asset-related greenhouse gas emissions and removals, "both operational and embodied", over the life cycle of an asset including its disposal: modules A0 to A5, B1 to B7, B8 (optional) and C1 to C4 (RICS standard, Carbon definitions).
 - Embodied carbon: the total emissions and removals associated with materials and construction processes throughout the life cycle: modules A0 to A5, B1 to B5 and C1 to C4 (Carbon definitions).
@@ -57,6 +59,8 @@ For domestic projects the reference study period is 60 years, and the standard a
 
 ## Section 2: The documents and where they stand
 
+**In short:** The RICS standard binds RICS members when they carry out a whole life carbon assessment; no source read for this course obliges you, as an energy or retrofit assessor, to carry one out. Under it a single house is a small project, where assessing only upfront and embodied carbon is allowable, subject to the conditions below. BS EN 15978:2011 was withdrawn on 31 July 2026, and the text of BS EN 15978:2026 was not available for this course.
+
 ### The RICS professional standard
 
 The 2nd edition is a "RICS PROFESSIONAL STANDARD", effective from 1 July 2024 (RICS standard, cover). RICS calls it "a significant expansion of the first, published in 2017", and says the version 3 changes are "minor and mostly editorial" (RICS whole life carbon assessment web page).
@@ -81,6 +85,8 @@ UKGBC marks its 2019 "Net Zero Carbon Buildings: A Framework Definition", which 
 ---
 
 ## Section 3: Whole life carbon in regulation and planning in England
+
+**In short:** Embodied carbon is outside the Building Regulations in England, none of the main 2026 amendments concerns it, and the checks for this course found no government consultation on regulating it and no commitment to do so. In London, the whole life-cycle carbon policy reaches a domestic retrofit only if the work is part of an application referred to the Mayor; other planning authorities were not checked, so ask them.
 
 ### Building Regulations: operational only
 
@@ -107,6 +113,8 @@ It reaches a domestic retrofit only if the work forms part of an application ref
 ---
 
 ## Section 4: What it means for your work
+
+**In short:** It is sensible to say plainly in your write-up that its carbon figures are for energy in use only: neither an RdSAP figure nor PAS 2035 carbon cost-effectiveness covers the carbon in making and installing a measure. If a client wants the embodied side looked at, point them to the manufacturer's EPD and check whether it is independently verified; do not quote payback periods or rank products by embodied carbon unless based on verified EPDs for the actual products.
 
 ### What an RdSAP calculation covers
 

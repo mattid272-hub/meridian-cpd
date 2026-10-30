@@ -57,6 +57,12 @@ STRAND_LABELS = {
     "MER-RA":  "Retrofit Assessor",
     "MER-ALL": "All Strands",
 }
+# Courses whose ID prefix is a nation rather than a strand (MER-SCO-...) take their badge
+# from here: (strand prefix for the colour, badge label).
+COURSE_BADGES = {
+    "MER-SCO-001": ("MER-DEA", "Domestic Energy Assessor · Scotland"),
+    "MER-SCO-002": ("MER-ALL", "All Strands · Scotland"),
+}
 
 # ── The Meridian mark ─────────────────────────────────────────────────────────
 # The cover carries no photograph. Its artwork is the company mark (a circle, its
@@ -379,9 +385,12 @@ def make_styles():
     H2 = ParagraphStyle("H2",
         fontSize=13, fontName="Helvetica-Bold", textColor=DARK,
         spaceBefore=8*mm, spaceAfter=2*mm, keepWithNext=1)
+    # No keepWithNext on H3: it would bind the sub-heading to the whole of the next
+    # paragraph and push both to a new page, leaving a gap under the section title. The
+    # CondPageBreak(30mm) placed before each H3 already keeps it off the foot of a page.
     H3 = ParagraphStyle("H3",
         fontSize=10.5, fontName="Helvetica-Bold", textColor=DARK,
-        spaceBefore=4*mm, spaceAfter=1*mm, keepWithNext=1)
+        spaceBefore=4*mm, spaceAfter=1*mm, keepWithNext=0)
     BODY = ParagraphStyle("Body",
         fontSize=10, fontName="Helvetica", leading=15.5,
         spaceAfter=3*mm, alignment=TA_JUSTIFY, textColor=BLACK)
@@ -476,6 +485,24 @@ def section_box(heading: str, items: list, bg: colors.Color, fg: colors.Color,
     ]))
 
     return [KeepTogether([head_table, body_table]), Spacer(1, 4*mm)]
+
+
+def in_short_box(text: str) -> Table:
+    """A section's "In short:" opener as a tinted call-out with a green rule down the left."""
+    W_box = 170*mm
+    p = Paragraph(inline_fmt(text),
+        ParagraphStyle("InShort", fontSize=10, fontName="Helvetica", leading=15,
+                       textColor=DARK))
+    t = Table([[p]], colWidths=[W_box])
+    t.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,-1), colors.HexColor("#f0faf2")),
+        ('LINEBEFORE', (0,0), (0,-1), 3, GREEN),
+        ('LEFTPADDING', (0,0), (-1,-1), 5*mm),
+        ('RIGHTPADDING', (0,0), (-1,-1), 5*mm),
+        ('TOPPADDING', (0,0), (-1,-1), 3*mm),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 3*mm),
+    ]))
+    return t
 
 
 def reading_box(heading: str, items: list, S: dict) -> list:
@@ -733,7 +760,13 @@ def build_story(parsed: dict, S: dict) -> list:
             # Keep each table on one page (the course tables are short); the paragraph
             # before it introduces the table, so it travels with it where it fits.
             prev = story.pop() if story and isinstance(story[-1], Paragraph) else None
-            story.append(KeepTogether(([prev] if prev else []) + [t]))
+            group = [prev] if prev else []
+            # A sub-heading just above the intro paragraph travels too, so it is never
+            # left at the foot of a page while its table moves to the next one.
+            if prev is not None and prev.style.name != 'H3' and story \
+                    and isinstance(story[-1], Paragraph) and story[-1].style.name == 'H3':
+                group.insert(0, story.pop())
+            story.append(KeepTogether(group + [t]))
             story.append(Spacer(1, 3*mm))
 
         for ln in lines:
@@ -755,6 +788,9 @@ def build_story(parsed: dict, S: dict) -> list:
                     parts = [Image(str(img_path), width=w, height=h)]
                     if m_img.group(1):
                         parts.append(Paragraph(f'<i>{inline_fmt(m_img.group(1))}</i>', S['meta']))
+                    # A sub-heading directly above a figure moves with it.
+                    if story and isinstance(story[-1], Paragraph) and story[-1].style.name == 'H3':
+                        parts.insert(0, story.pop())
                     story.append(KeepTogether(parts))
                     story.append(Spacer(1, 3*mm))
                 else:
@@ -787,6 +823,11 @@ def build_story(parsed: dict, S: dict) -> list:
 
             if in_list:
                 flush_bullets()
+
+            if ln.startswith('**In short:**'):
+                story.append(in_short_box(ln))
+                story.append(Spacer(1, 4*mm))
+                continue
 
             if ln.startswith('*') and ln.endswith('*') and not ln.startswith('**') and len(ln) < 150:
                 story.append(Paragraph(f'<i>{inline_fmt(ln.strip("*"))}</i>', S['meta']))
@@ -827,6 +868,9 @@ def build_pdf(course_id: str, md_content: str) -> bytes:
     strand_prefix = '-'.join(course_id.split('-')[:2])
     strand_colour = STRAND_COLOURS.get(strand_prefix, GREEN)
     strand_label = STRAND_LABELS.get(strand_prefix, 'All Strands')
+    if course_id in COURSE_BADGES:
+        badge_prefix, strand_label = COURSE_BADGES[course_id]
+        strand_colour = STRAND_COLOURS.get(badge_prefix, GREEN)
     hours_str = f"{parsed['cpd_hours']:g}"
 
     meta = dict(

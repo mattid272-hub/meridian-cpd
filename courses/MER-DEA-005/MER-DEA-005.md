@@ -25,6 +25,8 @@ Version 12.2 added conventions 4.05b on Heat as a Service and 4.22 on electric c
 
 ## Section 1: Identifying the Main Heating System and Its Fuel
 
+**In short:** Use the PCDB whenever possible for gas or oil boilers, micro-CHP and heat pumps; enter an unlisted boiler or heat pump as a default, and unlisted micro-CHP as a default condensing boiler with Addendum 5. Installed fixed heating that is not working or condemned is still taken into account. If you cannot inspect the heating source or emitters and no documentary evidence is made available, the assessment cannot be completed until access is provided, except for community heating.
+
 The main heating system is the one that heats the largest proportion of the dwelling. It is not usually based on individual room heaters, unless room heaters are all there is (specification section 10.1).
 
 ### Database first, default second
@@ -64,6 +66,8 @@ Convention 4.21 adds a note: if the boiler model is in the database with mains g
 
 ## Section 2: Heat Pumps, Heat Emitters and Design Flow Temperature
 
+**In short:** Where a heat source other than a heat pump serves both radiators and underfloor heating, enter it as main heating 1 and main heating 2. A heat pump gets a single entry, with radiators when they serve 50% or more of the total floor area; for an exact 50/50 split, check with your scheme. For condensing boilers and heat pumps, record the design flow temperature as unknown unless there is documentary evidence of low temperature design and commissioning.
+
 A heat pump is identified from the database whenever possible and entered as a default if it is not listed (convention 4.07). A reversible heat pump is not recorded as a cooling system (convention 9.04).
 
 ### One system serving radiators and underfloor
@@ -95,6 +99,8 @@ Convention 9.02 describes acceptable documentary evidence only in general terms,
 
 ## Section 3: Two Main Heating Systems
 
+**In short:** Pick main system 1 by working through the rules in order: the system heating the living area, then the one heating most habitable rooms, then the one providing water heating, then the one cheapest to run. Record proportions by floor area served, or 50/50 on a shared heating circuit unless clear documentary evidence supports another ratio. If a heat pump system does not heat the living area, confirm with your accreditation scheme which is main system 1.
+
 RdSAP allows for two main heating systems, to cover different systems heating different parts of the dwelling. If main system 1 heats all habitable rooms there is no main system 2, unless the second system serves hot water only (specification section 10.2). Main systems 1 and 2 cannot be room heaters unless the dwelling's heating consists solely of room heaters, and a second main system is not to be confused with a secondary heater (convention 4.09).
 
 ### Which is main system 1
@@ -125,6 +131,8 @@ Two gas boilers both feed radiators in a large living room. Boiler A also heats 
 
 ## Section 4: Community Heating and Heat as a Service
 
+**In short:** Treat a heat generator serving more than one premises as community heating when it is not in the dwelling, and select the scheme from the community network database where you can, using only the current record. Otherwise try to find out the fuel, and select mains gas if it cannot be ascertained. Heat as a Service counts as community heating wherever the generator sits, if the provider owns and/or operates it and specific documentary evidence is provided.
+
 ### What counts as community heating
 
 Community heating is a system in which a heat generator provides heat, hot water or both to more than one premises. Each dwelling is assessed individually. If the heat generator is in the dwelling, it is the heating system for that dwelling. If it is not in the dwelling, treat it as community heating (convention 4.05a).
@@ -146,6 +154,8 @@ Convention 4.05b does not say what form the evidence must take, and convention 9
 ---
 
 ## Section 5: Controls, Pump Age and Flue Gas Heat Recovery
+
+**In short:** Include TRVs only when they are on 50% or more of all radiators, counting those outside habitable rooms. Record a separate pump you cannot see as unknown; it is 2013 or later if it has an EEI label or the manufacture date on its ID plate indicates it, otherwise 2012 or earlier. Include flue gas heat recovery only if it is in the PCDB; if not, leave it out, but its presence should be recorded in site notes.
 
 ### Where the control options come from
 

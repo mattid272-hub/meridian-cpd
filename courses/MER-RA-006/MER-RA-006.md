@@ -31,6 +31,8 @@ This course depends on dates and scheme status. It is correct to 12 October 2026
 
 ## Section 1: EPRs, EPCs and the EPR Variation Conventions
 
+**In short:** Never use the EPR Variation Conventions to produce an EPC, which is a separate product. Leave changes not installed through the ECO project out of the post-install EPR unless the conventions allow otherwise, revisit if you cannot reach the loft, and do not override U-values without the scheme provider's prior agreement. TrustMark says its RdSAP 10 revision applies only to new projects with retrofit assessments on or after 10 November 2025; for an older project, ask your scheme.
+
 ### What an EPR is
 
 TrustMark's conventions say the RdSAP assessment for an ECO4 or GBIS project "may also be referred to as an EPR (Energy Performance Report)" and is "not to be confused with EPCs". An EPR must be lodged on TrustMark's Retrofit Portal with the XML file from the approved RdSAP engine, and TrustMark and the accreditation scheme quality assure that XML (EPR Variation Conventions v1.4, convention 5.01).
@@ -59,6 +61,8 @@ Conventions 6.01 and 6.02 carry an issue date of 10 November 2025, and TrustMark
 ---
 
 ## Section 2: The Dates and the Transitional Law
+
+**In short:** For ECO4, the post-retrofit assessment must use the same RdSAP version as the pre-retrofit one, regardless of when it is completed: that is Ofgem's guidance, not law, and SI 2025/802 requires it where RdSAP 2012 was used in the transition period. If an RdSAP 2012 pre-retrofit assessment has to be redone on or after 29 January 2026, it must use RdSAP 10, and so must the post-retrofit one. Novel data light projects are treated separately.
 
 ### RdSAP 10 arrives
 
@@ -97,6 +101,8 @@ Government's March 2024 response said retrofits straddling the go-live date "wil
 
 ## Section 3: What RdSAP 10 Changed, and What It Did Not
 
+**In short:** An RdSAP 10 EPR needs RdSAP 10 data, such as measurements for all windows and hot water tank size and insulation, which a 9.94 survey will not all hold. The SAP rating still uses the SAP 2012 fuel prices, while the Environmental Impact Rating uses SAP 10.2 emission factors, so the two respond to different inputs. RdSAP 10 may in some cases affect eligibility, so read the scoring rules for the version your pre-retrofit assessment used before advising.
+
 ### Data a 9.94 survey does not hold
 
 The current RdSAP10 Specification (version 4.0, 7 June 2026) lists significant changes from RdSAP 2012 in its introduction, including:
@@ -128,6 +134,8 @@ Government accepted that RdSAP10 "may in some cases affect the eligibility of pr
 ---
 
 ## Section 4: Where Things Stand in October 2026, and Your Part
+
+**In short:** Work out the post-installation EPR version from the pre-installation EPR, and on anything unusual get the version confirmed in writing by the obligated supplier before you lodge. As practice, state the RdSAP version on every assessment report and put any version question to the Retrofit Coordinator in writing. GBIS closed on 31 March 2026 and ECO4 runs to 31 December 2026; nothing was found from TrustMark on EPRs in later grant schemes, so ask TrustMark or your scheme.
 
 ### The schemes
 

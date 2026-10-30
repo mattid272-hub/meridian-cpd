@@ -27,6 +27,8 @@ This edition replaces the March 2026 edition. That edition said PAS 2035:2023 An
 
 ## Section 1: The appraisal of occupancy, clause 7.3.2 k)
 
+**In short:** Record the number of occupants and any special considerations, such as the presence of vulnerable persons, for example children, elderly people or people with disabilities; the examples are not a closed list. Clause 7.3.2 k) sets no age bands, health conditions, fuel poverty assessment or heating patterns. As practice, not a requirement, ask how the home is used and note what the householder tells you, so the Retrofit Coordinator has actual occupancy information.
+
 ### What the clause says
 
 Clause 7.3.2 lists what "The assessment shall include", as items a) to l). Occupancy is item k): "an appraisal of occupancy", including the number of occupants and "any special considerations", such as "the presence of vulnerable persons". The examples it gives are "children, elderly people or people with disabilities" (PAS 2035:2023, clause 7.3.2 k)). That is the whole of the requirement.
@@ -53,6 +55,8 @@ PAS 2035:2023 never uses the phrase "heating pattern"; occupancy pattern is the 
 
 ## Section 2: Health, comfort and vulnerability: who does what
 
+**In short:** The requirements on occupants' health, comfort and vulnerability fall mostly on other roles, such as the Retrofit Coordinator; the guidance clauses add nothing you must record. What you record under item k) can reach the Retrofit Designer, the Retrofit Coordinator and the installer. When an occupant raises a worry about how the works might affect their health, a sensible habit is to write it down in their words and pass it to the Retrofit Coordinator rather than answer it yourself.
+
 ### What the guidance clauses say
 
 Clause 4 is guidance. It says occupants' comfort, health and safety depend on controlling the flows of heat, moisture and air through their homes (clause 4.1.2), and treats the occupants as part of the system because they need certain conditions for comfort, give off heat and produce moisture (clauses 4.2.3 and 4.2.4). Clause 5.2.2 says occupants' health, well-being and comfort "should be prioritized". Annex C links poor indoor air quality to "serious health risks for occupants" (C.1); the ventilation assessment is its own item (clause 7.3.2 f)). These passages explain why item k) exists. They add nothing the assessor must record.
@@ -77,6 +81,8 @@ Clause 5.7.1 (guidance) lists the Retrofit Assessor among those who may deliver 
 ---
 
 ## Section 3: Overheating: what you record and who decides
+
+**In short:** Record overheating as a climate change-induced risk under item 7.3.2 l), and, under other items, orientation, window and door openings and exposure to sun; clause 7.3.2 asks for no overheating calculation or risk rating, and the overheating risk assessment is the Retrofit Designer's, at design stage. As practice, note which windows open and whether occupants say noise or security stops them opening windows at night. Approved Document O applies to new residential buildings only; rules outside England were not checked.
 
 ### In the assessment
 
@@ -119,6 +125,8 @@ Approved Document O, Overheating, is guidance: the approved document supporting 
 ---
 
 ## Section 4: Handling health information, and what has changed
+
+**In short:** Health information is special category data. As practice, record the consideration that matters to the works, such as a wheelchair user on the ground floor, not a medical history, and if the occupant declines, record that it was declined, never "none". Your organisation's data protection policy settles which lawful basis applies. The ECO4 medical conditions list is a funding route, not a PAS 2035:2023 requirement, and whether you must follow BS 40104:2025 could not be confirmed, so ask your scheme.
 
 ### Health information is special category data
 

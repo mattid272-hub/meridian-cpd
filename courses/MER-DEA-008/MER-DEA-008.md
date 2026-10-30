@@ -23,6 +23,8 @@ The course uses the data item names in specification Table 31, not software scre
 
 ## Section 1: As built, unknown, or added insulation
 
+**In short:** Assume "as built" where there is no evidence of retro-fitted insulation; it gives the age band default, not an uninsulated element. Keep "unknown" for exceptional circumstances, explain it in site notes, and remember it suppresses the insulation recommendation. Evidence of intent to install does not qualify on its own, though in England, Wales and Northern Ireland the exceptions below can apply. Do not overwrite a default U-value without the specific documentary evidence convention 3.08 requires.
+
 ### What "as built" delivers
 
 RdSAP assigns default insulation from the age band of the part of the property concerned (specification section 5.1), so "as built" does not mean "uninsulated". In England, a cavity wall as built is 1.5 W/m2K in age bands A to E and 0.26 in band M (specification Table 6). A wall that has only the insulation that was part of its original construction is "as built" (Table 31 item 4-4).
@@ -59,6 +61,8 @@ For a conversion of a building originally intended to be heated, or a sub-divide
 ---
 
 ## Section 2: Walls
+
+**In short:** Measure wall thickness for each building part and alternative wall, with evidence for each different thickness. Enter a cavity wall as cavity whatever the cavity width, and timber frame as timber frame whatever the cladding. Always include a sheltered alternative wall, but disregard a non-sheltered one under 10% of the building part's total exposed wall area, windows and doors included. Indicate added insulation only where evidence exists, and treat an inconclusive tap test as not dry-lined.
 
 ### Construction type
 
@@ -119,6 +123,8 @@ Basement walls are those adjacent to earth, and are only included when the basem
 
 ## Section 3: Roofs
 
+**In short:** Where access is safe and practicable, measure the loft insulation and provide photographic evidence of the thickness. Record "no access" only where there is no hatch or other means of access. A hatch you could not use on the day is "access, loft insulation unknown", and fully obstructed insulation is "pitched, access, loft insulation unknown" unless the exceptions below apply. Keep "none" for a loft seen to be uninsulated, and use an area-weighted average where the thickness varies.
+
 ### What is above the building part
 
 Table 31 item 2-3 lists what can be above a building part: four pitched roof options, a flat roof, non-residential or other unheated space, the same dwelling, or another dwelling. The sources conflict on commercial premises above: convention 2.21 says non-residential/other unheated space, specification section 5.2.5 says another dwelling above. The convention takes precedence.
@@ -155,6 +161,8 @@ The age band of a roof room is the same as the building part unless evidence, su
 
 ## Section 4: Floors
 
+**In short:** Record the construction of the lowest floor of each building part, and use "unknown" if you cannot determine it. Commercial premises below are recorded as partially heated space below. Record retro-fitted floor insulation only with evidence, and enter a thickness only when it is retro-fitted; a known U-value needs the convention 3.08 evidence. Where a basement does not meet the convention 2.05 criteria, follow the convention over the specification: treat the floor above as a suspended floor above unheated space.
+
 ### What is below, and the floor construction
 
 Table 31 item 2-2 records what is below each building part. Commercial premises below are recorded as partially heated space below (convention 2.21).
@@ -180,7 +188,7 @@ A basement that meets the criteria in convention 2.05 becomes the lowest occupie
 - "Unknown" is for exceptional circumstances and suppresses the insulation recommendation (convention 3.03b).
 - A U-value entry needs the evidence in convention 3.08; product and thickness alone lead to a thickness entry under convention 3.07.
 - Solid brick and stone walls in age bands A to E take a conductivity of 0.040, 0.030 or 0.025 W/mK, with no doubling of thickness for low conductivity (convention 3.07).
-- "No access" means no hatch or other means of access; a hatch you could not use, or insulation fully obstructed, is "access, loft insulation unknown" (convention 3.04).
+- "No access" means no hatch or other means of access; a hatch you could not use is "access, loft insulation unknown", and fully obstructed insulation is "pitched, access, loft insulation unknown" unless the householder has documentary evidence, lifts the boards or removes the obstructions (convention 3.04).
 - Varying loft insulation is an area-weighted average; an area with none means splitting into building parts (convention 3.04).
 
 ---
