@@ -189,7 +189,7 @@ COURSES = {
     "MER-ALL-017": {"course_id": "MER-ALL-017", "title": "Awaab's Law Phase 2: What Energy Assessors Must Know", "cpd_hours": 1.0, "published": "2026-10-01"},
     "MER-ALL-018": {"course_id": "MER-ALL-018", "title": "Damp, Condensation and Thermal Bridging: Reading the Moisture", "cpd_hours": 3.0, "published": "2026-10-25"},
     # Field Work: Insulation (series FW-INSULATION). Delivered as NotebookLM decks with the
-    # written course as notes. Listed in UNDER_REVIEW until the decks are in Storage.
+    # written course as notes. On sale since the decks went into Storage (30 Oct 2026).
     "MER-ALL-019": {"course_id": "MER-ALL-019", "title": "Insulation Series, Part 1: Principles and Cavity Wall Insulation", "cpd_hours": 2.0, "published": "2026-10-29", "series": "FW-INSULATION", "part": 1, "deliverable": "deck"},
     "MER-ALL-020": {"course_id": "MER-ALL-020", "title": "Insulation Series, Part 2: External Wall Insulation: Spotting the Failures", "cpd_hours": 2.0, "published": "2026-10-29", "series": "FW-INSULATION", "part": 2, "deliverable": "deck"},
     "MER-ALL-021": {"course_id": "MER-ALL-021", "title": "Insulation Series, Part 3: Internal Wall Insulation and Hidden Moisture", "cpd_hours": 2.0, "published": "2026-10-29", "series": "FW-INSULATION", "part": 3, "deliverable": "deck"},
@@ -281,10 +281,10 @@ def _split_amount(amount: int, n: int) -> list[int]:
 # list in landing-page/courses.html). Certificates already issued are not affected.
 #
 # The same mechanism holds back a course that is catalogued before its files are in
-# Storage. The Field Work: Insulation parts stay here until their decks are uploaded
-# (tools/upload_deck.py); then delete them here, in landing-page/courses.html and in
-# landing-page/under-review.json, and the series goes on sale.
-UNDER_REVIEW: set = {"MER-ALL-019", "MER-ALL-020", "MER-ALL-021"}
+# Storage. A course delivered as a deck is listed here until its deck is uploaded
+# (tools/upload_deck.py); delete it here, in landing-page/courses.html and in
+# landing-page/under-review.json together.
+UNDER_REVIEW: set = set()
 
 
 def is_available(course_id: str) -> bool:

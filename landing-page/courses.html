@@ -963,9 +963,9 @@ const STRIPE_SERIES = 'https://buy.stripe.com/7sYaEWfIu8VJ7Dkdei73G02';
 
 // Courses withdrawn while they are revised against the current standards. They are not
 // shown or sold. To restore one, publish its corrected PDF and delete its ID here, in
-// under-review.json and in UNDER_REVIEW in webhook/main.py. The Field Work: Insulation
-// parts are listed until their decks are in Storage.
-const UNDER_REVIEW = new Set(['MER-ALL-019', 'MER-ALL-020', 'MER-ALL-021']);
+// under-review.json and in UNDER_REVIEW in webhook/main.py. A deck-delivered course is
+// listed until its deck is in Storage.
+const UNDER_REVIEW = new Set([]);
 
 // Field Work series: three courses bought together for £39.99, each with its own
 // certificate. Mirrors SERIES in webhook/main.py. A series is only offered when every
