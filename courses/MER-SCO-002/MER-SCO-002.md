@@ -7,7 +7,7 @@
 ## Learning Objectives
 
 By the end of this course you should be able to:
-- State what the Energy Performance of Buildings (Scotland) Regulations 2025 do, which parts are in force, and how the draft 2026 Amendment Regulations move full commencement to 30 April 2028.
+- State what the Energy Performance of Buildings (Scotland) Regulations 2025 do, which parts are in force, and how the 2026 Amendment Regulations (SSI 2026/322) move full commencement to 30 April 2028.
 - Name the three domestic ratings and list what the new certificate and property report must contain.
 - Apply the five-year validity rule and the transitional rules for certificates issued under the 2008 Regulations.
 - Explain where the Home Energy Model sits in the Regulations and in Scottish Building Standards, and what is not yet published.
@@ -17,9 +17,9 @@ By the end of this course you should be able to:
 
 ## Introduction
 
-From 30 April 2028, if the draft amending instrument now before the Scottish Parliament is approved and made, the Energy Performance of Buildings (Scotland) Regulations 2008 are revoked and the Energy Performance of Buildings (Scotland) Regulations 2025 (SSI 2025/417) take their place. A domestic EPC will then carry three ratings, one of them today's Energy Efficiency Rating under a new name, in place of today's two, last five years instead of ten, be calculated by a methodology the Scottish Ministers approve (the stated policy is the Home Energy Model), and come with a property report instead of a recommendations report.
+From 30 April 2028, the date set by the amending instrument made on 28 October 2026, the Energy Performance of Buildings (Scotland) Regulations 2008 are revoked and the Energy Performance of Buildings (Scotland) Regulations 2025 (SSI 2025/417) take their place. A domestic EPC will then carry three ratings, one of them today's Energy Efficiency Rating under a new name, in place of today's two, last five years instead of ten, be calculated by a methodology the Scottish Ministers approve (the stated policy is the Home Energy Model), and come with a property report instead of a recommendations report.
 
-As made, the 2025 Regulations were to come fully into force on 31 October 2026 (regulation 1(2)). The draft Energy Performance of Buildings (Scotland) Amendment Regulations 2026, laid on 24 August 2026, move that to 30 April 2028 but keep the lodgement fee rise on 31 October 2026.
+As made, the 2025 Regulations were to come fully into force on 31 October 2026 (regulation 1(2)). The Energy Performance of Buildings (Scotland) Amendment Regulations 2026 (SSI 2026/322), laid in draft on 24 August 2026 and approved by the Scottish Parliament, move that to 30 April 2028, and the lodgement fee still rose on 31 October 2026.
 
 ### Where this course applies
 
@@ -27,10 +27,13 @@ This course applies in Scotland. The 2025 Regulations extend to Scotland only (r
 
 ### Status of the law and of this course
 
-This course is correct to 28 October 2026. On that date the 2026 Amendment Regulations were still a draft: the lead committee had recommended approval, but legislation.gov.uk still described the instrument as "a draft item of legislation" that "has not yet been made", and this course found no record of a vote of the whole Parliament or a made SSI number. The draft is designed to come into force on 30 October 2026, and until an amending instrument is made and in force, regulation 1(2) of the 2025 Regulations still reads 31 October 2026. After 30 October 2026, re-check:
-- legislation.gov.uk for the made instrument, its SSI number and date, and the 2025 Regulations as amended (regulation 1(2) should then read 30 April 2028);
-- that the register fee of £6.00 for a dwelling applies from 31 October 2026;
-- the gov.scot "Energy Performance Certificate Reform: updates" page, and your Approved Organisation's notices, for anything later than 24 August 2026.
+This course is correct to 28 October 2026, and the status of the 2026 Amendment Regulations was re-checked on 2 November 2026. The re-check confirmed:
+- the instrument was made on 28 October 2026 as SSI 2026/322, and its preamble records that the draft was laid before and approved by the Scottish Parliament; this course did not find the date of the approval vote;
+- regulations 1 and 3 came into force on 30 October 2026, so regulation 1(2) of the 2025 Regulations, as amended, now reads 30 April 2028 (SSI 2026/322, regulations 1(2) and 3(2));
+- regulation 2 came into force on 31 October 2026, so the register fee is now £6.00 for a dwelling and £15.50 for other buildings (SSI 2026/322, regulations 1(3) and 2);
+- the operative text matches the draft this course was first written from.
+
+For anything later than 24 August 2026, check the gov.scot "Energy Performance Certificate Reform: updates" page and your Approved Organisation's notices.
 
 Every statement is cited to the document it comes from; where a page would not open, or a point appears only in an accreditation body's article, the text says so.
 
@@ -38,26 +41,26 @@ Every statement is cited to the document it comes from; where a page would not o
 
 ## Section 1: The Instruments and the Dates
 
-**In short:** The 2025 Regulations are made, but so far only the opening provisions and the rules on approved organisations and accreditation schemes are in force. The draft 2026 Amendment Regulations would bring in the rest on 30 April 2028. They would also raise the register fee for a dwelling from £2.60 to £6.00 on 31 October 2026, provided they are in force by then. For now, the EPC you lodge is a 2008 Regulations certificate, and you still work to the RdSAP 10 Conventions.
+**In short:** The 2025 Regulations are made, but so far only the opening provisions and the rules on approved organisations and accreditation schemes are in force. The 2026 Amendment Regulations, made as SSI 2026/322, bring in the rest on 30 April 2028. They also raised the register fee for a dwelling from £2.60 to £6.00 on 31 October 2026. For now, the EPC you lodge is a 2008 Regulations certificate, and you still work to the RdSAP 10 Conventions.
 
 ### The 2025 Regulations
 
 The draft 2025 Regulations were laid on 10 October 2025 under the affirmative procedure (Local Government, Housing and Planning (LGHP) Committee report, 27 November 2025, paragraph 1). The committee recommended that the draft be approved (paragraph 25), the Parliament agreed, and the Regulations were made on 16 December 2025 as SSI 2025/417 (heading and preamble). Regulations 1, 2 (interpretation), 11 (approved organisations), 12 (accreditation schemes) and 36 (transitional provisions for approved organisations) came into force on 1 January 2026 (regulation 1(3)). Regulation 37 and Schedule 2 revoke the 2008 Regulations (SSI 2008/309) and the seven instruments that amended them, subject to the saving and transitional provisions in regulation 38.
 
-### The draft 2026 Amendment Regulations
+### The 2026 Amendment Regulations
 
-On 17 March 2026 the Scottish Government said the new-style certificates "will not come into force in October 2026 as planned", citing the UK Government's "delay to the introduction of EPC reforms until the second half of 2027" and the dependence on "a new methodology (the Home Energy Model) and assessor training being finalised across the UK" (Energy Performance Certificate Reform: updates, page dated 17 March 2026). The draft amending instrument was laid on 24 August 2026 (Economy, Tourism and Energy (ETE) Committee paper ETE/S7/26/6/6, 29 September 2026). Its text has three regulations (legislation.gov.uk):
+On 17 March 2026 the Scottish Government said the new-style certificates "will not come into force in October 2026 as planned", citing the UK Government's "delay to the introduction of EPC reforms until the second half of 2027" and the dependence on "a new methodology (the Home Energy Model) and assessor training being finalised across the UK" (Energy Performance Certificate Reform: updates, page dated 17 March 2026). The amending instrument was laid in draft on 24 August 2026 (Economy, Tourism and Energy (ETE) Committee paper ETE/S7/26/6/6, 29 September 2026) and made on 28 October 2026 as SSI 2026/322. Its operative text, the same as the draft's, has three regulations (legislation.gov.uk):
 - regulation 1 brings it into force on 30 October 2026, except regulation 2, which comes into force on 31 October 2026 (regulation 1(2) and (3));
-- regulation 2 substitutes new regulations 10 and 10A in the 2008 Regulations so that the register fee still rises on 31 October 2026, as regulation 15 of the 2025 Regulations had planned (regulation 2(2); ETE report, paragraph 7);
+- regulation 2 substitutes new regulations 10 and 10A in the 2008 Regulations so that the register fee still rose on 31 October 2026, as regulation 15 of the 2025 Regulations had planned (regulation 2(2); ETE report, paragraph 7);
 - regulation 3 substitutes "30 April 2028" for "31 October 2026" in regulation 1(2) of the 2025 Regulations and moves the transitional dates in regulations 36 and 38(4) to match (regulation 3(2) to (4)).
 
-The ETE Committee recorded that "There is no other change to the substance or content of the 2025 Regulations" (report of 7 October 2026, paragraph 8), and the draft text contains nothing else.
+The ETE Committee recorded that "There is no other change to the substance or content of the 2025 Regulations" (report of 7 October 2026, paragraph 8), and the made text, like the draft, contains nothing else.
 
-The Scottish Government chose April 2028 "to provide additional contingency within its implementation timetable" (updates, 24 August 2026). The Minister for Europe, External Affairs and Energy told the committee that the UK Government had written on 17 July saying its reform "will be delivered in England and Wales during the second half of 2027" (letter of 24 August 2026). The ETE Committee agreed the motion recommending approval on 29 September 2026 (paragraphs 1, 20 and 21).
+The Scottish Government chose April 2028 "to provide additional contingency within its implementation timetable" (updates, 24 August 2026). The Minister for Europe, External Affairs and Energy told the committee that the UK Government had written on 17 July saying its reform "will be delivered in England and Wales during the second half of 2027" (letter of 24 August 2026). The ETE Committee agreed the motion recommending approval on 29 September 2026 (paragraphs 1, 20 and 21). The Scottish Parliament approved the draft, as the made instrument's preamble records.
 
 ### The fee
 
-The register keeper, the Scottish Ministers, may now charge £2.60 to lodge data for a dwelling and £12.10 for other buildings (2008 Regulations, regulation 10A). From 31 October 2026 those become £6.00 and £15.50 (draft regulation 2(2), new regulation 10A(1); updates, 24 August 2026), the same sums that regulation 15 of the 2025 Regulations sets from commencement. The rise depends on regulation 2 of the draft being in force on that date. The Minister told the committee that fees will be reviewed in two years (ETE report, paragraph 18).
+Until 31 October 2026 the register keeper, the Scottish Ministers, could charge £2.60 to lodge data for a dwelling and £12.10 for other buildings (2008 Regulations, former regulation 10A). From 31 October 2026 those became £6.00 and £15.50 (SSI 2026/322, regulation 2(2), new regulation 10A(1); updates, 24 August 2026), the same sums that regulation 15 of the 2025 Regulations sets from commencement. Regulation 2 came into force on that date (SSI 2026/322, regulation 1(3)). The Minister told the committee that fees will be reviewed in two years (ETE report, paragraph 18).
 
 ### What it means today
 
@@ -95,7 +98,7 @@ Today's Environmental Impact Rating is "based on carbon dioxide equivalent emiss
 
 ## Section 3: Five Years, and the Transition
 
-**In short:** New-style certificates last five years, not ten. Under the draft amendment, from 30 April 2028 a valid 2008 Regulations EPC can serve a sale until the first sale and a let until the first letting, and never after 30 April 2029. It is sensible to explain this to clients when you issue a 2008 Regulations EPC, and to confirm with your Approved Organisation whether a sale followed by a letting within the year needs a new-style EPC.
+**In short:** New-style certificates last five years, not ten. Under the 2026 Amendment Regulations, from 30 April 2028 a valid 2008 Regulations EPC can serve a sale until the first sale and a let until the first letting, and never after 30 April 2029. It is sensible to explain this to clients when you issue a 2008 Regulations EPC, and to confirm with your Approved Organisation whether a sale followed by a letting within the year needs a new-style EPC.
 
 ### Validity
 
@@ -103,7 +106,7 @@ Under regulation 8(4) an EPC and its property report cease to be valid on the ea
 
 ### Certificates issued under the 2008 Regulations
 
-Regulation 38 lets a valid 2008 Regulations EPC and its recommendations report stand in for the new documents during a "relevant period", and lets an advertisement state the single 2008 indicator (regulation 38(1), (3) and (4)). It does not apply to a newly constructed property, meaning one built but not yet occupied (38(2); regulation 2). As made, the sale and let periods ran from 31 October 2026 to 31 October 2027 at the latest. Under the draft amendment each begins on 30 April 2028 (draft regulation 3(4); updates, 24 August 2026):
+Regulation 38 lets a valid 2008 Regulations EPC and its recommendations report stand in for the new documents during a "relevant period", and lets an advertisement state the single 2008 indicator (regulation 38(1), (3) and (4)). It does not apply to a newly constructed property, meaning one built but not yet occupied (38(2); regulation 2). As made, the sale and let periods were to run from 31 October 2026 to 31 October 2027 at the latest. Under the 2026 Amendment Regulations each begins on 30 April 2028 (SSI 2026/322, regulation 3(4); updates, 24 August 2026):
 - for a sale, it ends on the earlier of the first sale after that date and 30 April 2029;
 - for a let other than a short-term let, on the earlier of the first letting after that date and 30 April 2029;
 - for a short-term let, on 30 April 2029.
@@ -120,7 +123,7 @@ New buildings are outside the transition. From commencement the developer must g
 
 ## Section 4: Methodology, Building Standards and Governance
 
-**In short:** The Regulations leave the calculation method to the Scottish Ministers: the Home Energy Model is the stated policy, but no published approval had been found by 28 October 2026. Under the draft, your Approved Organisation's existing approval would continue until 30 April 2028. Expect at least 2% of EPCs to be checked, six weeks to replace a below-standard one, an annual CPD record, and training with no published syllabus found yet.
+**In short:** The Regulations leave the calculation method to the Scottish Ministers: the Home Energy Model is the stated policy, but no published approval had been found by 28 October 2026. Under the 2026 Amendment Regulations, your Approved Organisation's existing approval continues until 30 April 2028. Expect at least 2% of EPCs to be checked, six weeks to replace a below-standard one, an annual CPD record, and training with no published syllabus found yet.
 
 ### The methodology
 
@@ -138,7 +141,7 @@ The Scottish Government's Stage 2 consultation on a Scottish equivalent to the P
 
 The Scottish Ministers may approve organisations to operate accreditation schemes, once satisfied that certificates and property reports will be prepared "in a consistent, accurate and independent manner" by fit and proper, suitably qualified people (regulation 11). Regulation 12 requires every energy assessor to belong to an approved scheme, and each scheme to provide for, among other things, a code of conduct, indemnity arrangements, complaints handling and audit of "a specified proportion" of certificates and reports, "including where practicable by means of an on-site inspection" (regulation 12(3)).
 
-As made, approvals of approved organisations under regulation 8 of the 2008 Regulations stay in effect until 31 October 2026 (regulation 36). The draft substitutes "29 April 2028" for "30 October 2026" (the end of the regulation 36 period) and "30 April 2028" for "31 October 2026" (draft regulation 3(3)), so those approvals would continue until 30 April 2028. The scheme's operating requirements were first published on 6 March 2026, and on 17 March the Scottish Government said "The new Scottish EPC Accreditation Scheme has launched" (updates, 17 March 2026). It "remains open for new applicants who will be appointed in advance of the remainder of the 2025 Regulations, as amended, coming into force on 30 April 2028"; existing and potential Approved Organisations face "evaluation and (re)appointment" when the new Regulations come into force (updates, 24 August 2026).
+As made, approvals of approved organisations under regulation 8 of the 2008 Regulations were to stay in effect until 31 October 2026 (regulation 36). The 2026 Amendment Regulations substitute "29 April 2028" for "30 October 2026" (the end of the regulation 36 period) and "30 April 2028" for "31 October 2026" (SSI 2026/322, regulation 3(3)), so those approvals continue until 30 April 2028. The scheme's operating requirements were first published on 6 March 2026, and on 17 March the Scottish Government said "The new Scottish EPC Accreditation Scheme has launched" (updates, 17 March 2026). It "remains open for new applicants who will be appointed in advance of the remainder of the 2025 Regulations, as amended, coming into force on 30 April 2028"; existing and potential Approved Organisations face "evaluation and (re)appointment" when the new Regulations come into force (updates, 24 August 2026).
 
 ### The operating requirements
 
@@ -163,10 +166,10 @@ The Scottish Government has committed to ensuring "that all assessors receive tr
 
 ## Key Takeaways
 - SSI 2025/417 was made on 16 December 2025; regulations 1, 2, 11, 12 and 36 have been in force since 1 January 2026.
-- The draft 2026 Amendment Regulations move full commencement to 30 April 2028 with no other change of substance; on 28 October 2026 legislation.gov.uk still showed them as not yet made, so re-check after 30 October 2026.
-- The register fee is due to rise on 31 October 2026 from £2.60 to £6.00 for a dwelling and from £12.10 to £15.50 for other buildings, through regulation 2 of the draft.
+- The 2026 Amendment Regulations (SSI 2026/322), made on 28 October 2026 after the Scottish Parliament approved the draft, move full commencement to 30 April 2028 with no other change of substance; regulations 1 and 3 have been in force since 30 October 2026.
+- The register fee rose on 31 October 2026 from £2.60 to £6.00 for a dwelling and from £12.10 to £15.50 for other buildings, through regulation 2 of SSI 2026/322.
 - A domestic EPC under the 2025 Regulations carries a heat retention rating, a heating system rating and an energy cost rating (regulation 8(1)); the energy cost rating continues the Energy Efficiency Rating under a new name, though the October 2025 response says it will assume a Scottish average climate.
-- New certificates last five years (regulation 8(4)); under the draft, from 30 April 2028 a 2008 Regulations EPC serves only until the first sale or letting, and never after 30 April 2029.
+- New certificates last five years (regulation 8(4)); under the 2026 Amendment Regulations, from 30 April 2028 a 2008 Regulations EPC serves only until the first sale or letting, and never after 30 April 2029.
 - Regulation 10 requires Ministers to approve a methodology; the Home Energy Model is the stated policy, and no approval had been published by 28 October 2026.
 - Building Standards run to their own timetable: guidance and approved methodologies under standard 6.1 are due in autumn 2027, and the Passivhaus-equivalent compliance statements are to move to autumn 2029 (Stage 2 consultation).
 - The operating requirements set a 2% minimum audit and a six-week replacement period; the Scottish Ministers remain committed to an independent on-site regime within 12 months of commencement.
@@ -175,14 +178,14 @@ The Scottish Government has committed to ensuring "that all assessors receive tr
 
 ## Self-Assessment Questions
 
-**Q1.** Under the draft Energy Performance of Buildings (Scotland) Amendment Regulations 2026, on what date do the remaining provisions of the 2025 Regulations come into force?
+**Q1.** Under the Energy Performance of Buildings (Scotland) Amendment Regulations 2026 (SSI 2026/322), on what date do the remaining provisions of the 2025 Regulations come into force?
 
 A) 31 October 2026
 B) The second half of 2027
 C) 30 April 2028
 D) 30 April 2029
 
-**Correct answer: C.** Regulation 3(2) of the draft substitutes 30 April 2028 for 31 October 2026 in regulation 1(2) of the 2025 Regulations (ETE report, paragraph 5); A is the original date and the date of the fee rise, B is the UK Government's planning date for England and Wales, and D is the end of the sale and let transition.
+**Correct answer: C.** Regulation 3(2) of SSI 2026/322 substitutes 30 April 2028 for 31 October 2026 in regulation 1(2) of the 2025 Regulations (ETE report, paragraph 5); A is the original date and the date of the fee rise, B is the UK Government's planning date for England and Wales, and D is the end of the sale and let transition.
 
 ---
 
@@ -197,7 +200,7 @@ D) Fabric, services and cost ratings
 
 ---
 
-**Q3.** Assume the draft 2026 Amendment Regulations are made as laid. A ten-year EPC lodged under the 2008 Regulations in June 2026 is used to sell a house in August 2028, and the buyer puts it back on the market in February 2029. What does the second sale need?
+**Q3.** A ten-year EPC lodged under the 2008 Regulations in June 2026 is used to sell a house in August 2028, and the buyer puts it back on the market in February 2029. What does the second sale need?
 
 A) Nothing: the 2026 EPC is valid until 2036
 B) Nothing: the 2026 EPC can be used until 30 April 2029
@@ -232,7 +235,7 @@ D) 10%
 
 ## Further Reading
 - **The Energy Performance of Buildings (Scotland) Regulations 2025 (SSI 2025/417).** Scottish Ministers, made 16 December 2025. Regulations 1, 2, 8 to 12, 34, 36 and 38 for commencement, ratings, validity, methodology, accreditation and transition.
-- **The Energy Performance of Buildings (Scotland) Amendment Regulations 2026 [draft].** Scottish Ministers, laid 24 August 2026; not yet made on 28 October 2026. Regulations 1 to 3 for commencement, the fee and the new transitional dates; check whether it has been made.
+- **The Energy Performance of Buildings (Scotland) Amendment Regulations 2026 (SSI 2026/322).** Scottish Ministers, laid in draft 24 August 2026, made 28 October 2026. Regulations 1 to 3 for commencement, the fee and the new transitional dates.
 - **Energy Performance Certificate Reform: updates.** Scottish Government, published 27 August 2026 (pages dated 17 March 2026 and 24 August 2026). The 24 August page on the transition, fees and next steps.
 - **Scottish Energy Performance Certificate (EPC) Accreditation Scheme: operating requirements.** Scottish Government, 6 March 2026, updated 14 October 2026. Sections 3 and 4 on insurance, CPD records, audit tolerances, replacement periods and on-site audit.
 - **Energy Performance of Buildings (Scotland) Regulations 2025: EPC reform consultations: SG response.** Scottish Government, 10 October 2025. Section 5 on the intended rating bands and calculation bases.
