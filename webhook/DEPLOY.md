@@ -228,3 +228,18 @@ Sources are the `SOURCES` list in `news.py`: GOV.UK activity feeds for DESNZ, MH
 ### Briefs
 
 Clicking a news item opens a short brief in place: three to five bullet points and a "why it matters" line, written the first time the item is opened and saved on it. With `ANTHROPIC_API_KEY` set in Railway, Claude (claude-haiku-5-5) writes the brief from the article's own text; without it, the brief is the article's opening paragraphs. "Source ↗" opens the original. Run `webhook/migrations/2026-10-23_news_briefs.sql` once to add the brief columns (briefs still show without it, but are rewritten each time).
+
+## Meta Pixel and Conversions API (retargeting)
+
+The site's cookie banner and pixel live in `landing-page/consent.js`; the app's My CPD pages load the same file, and this server sends the same events through Meta's Conversions API. Nothing loads or is sent until the visitor presses Accept (cookie `mcpd_consent=yes` on `.meridiancpd.co.uk`, shared by the site and the app). `webhook/meta_capi.py` explains the events and how they are deduplicated.
+
+Railway variables (all optional; without them the app loads nothing from Meta and sends nothing):
+
+| Variable | What |
+|---|---|
+| `META_PIXEL_ID` | The dataset id from Events Manager (the site uses dataset 1133939432819396, set in consent.js). Turns on the banner and pixel on the app's pages. |
+| `META_CAPI_TOKEN` | Events Manager → the dataset → Settings → Conversions API → Generate access token. With `META_PIXEL_ID`, turns on the server events. A secret: Railway only. |
+| `META_TEST_EVENT_CODE` | Optional. Events Manager → Test events code, to watch server events arrive. Remove afterwards. |
+| `META_GRAPH_VERSION` | Optional. Graph API version, default `v24.0`. |
+
+Check after deploy: Events Manager → Test events, open meridiancpd.co.uk, press Accept, open a course: PageView and ViewContent should show "Browser" and "Server", deduplicated. A MERIDIAN10 order shows Lead (server); a paid order shows Purchase with its value.

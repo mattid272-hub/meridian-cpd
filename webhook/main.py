@@ -27,6 +27,7 @@ import stripe
 from fastapi import FastAPI, HTTPException, Request, Response, Depends, Cookie
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from starlette.background import BackgroundTask
 import httpx
 from supabase import create_client
 
@@ -35,6 +36,7 @@ from certificate_generator import generate_certificate
 from settings import APP_URL, SITE_URL
 import outreach
 import news
+import meta_capi
 
 
 @asynccontextmanager
@@ -84,6 +86,57 @@ class _AnswerHeadRequests:
         await self.app({**scope, "method": "GET"}, receive, send_without_body)
 
 
+# The Meta Pixel and cookie banner go only on app pages whose address carries no token,
+# email address or checkout session id: the pixel sends the page address to Meta. /thanks,
+# /complete, /my-cpd/login, /unsubscribe, /download, /verify and /admin are left out on purpose.
+# The certificate check pages (/verify) are left out too: their address carries the
+# certificate number and the page shows the holder's name.
+_PIXEL_PAGES = ("/my-cpd", "/my-cpd/dashboard")
+
+
+def _pixel_page(path: str) -> bool:
+    return path in _PIXEL_PAGES
+
+
+class _MetaPixel:
+    """Adds the banner and pixel script (meta_capi.script_tag) before </body> on the pages
+    above. Does nothing while META_PIXEL_ID is not set."""
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if (scope.get("type") != "http" or scope.get("method") != "GET"
+                or not _pixel_page(scope.get("path", "")) or not meta_capi.browser_enabled()):
+            return await self.app(scope, receive, send)
+        start, chunks = None, []
+
+        async def buffer(message):
+            nonlocal start
+            if message["type"] == "http.response.start":
+                start = message
+                return
+            if message["type"] != "http.response.body":
+                return await send(message)
+            chunks.append(message.get("body", b""))
+            if message.get("more_body"):
+                return
+            body = b"".join(chunks)
+            headers = [(k, v) for k, v in start.get("headers", [])]
+            ctype = dict(headers).get(b"content-type", b"")
+            if start.get("status") == 200 and ctype.startswith(b"text/html") and b"</body>" in body:
+                tag = meta_capi.script_tag().encode()
+                i = body.rfind(b"</body>")
+                body = body[:i] + tag + body[i:]
+                headers = [(k, v) for k, v in headers if k != b"content-length"]
+                headers.append((b"content-length", str(len(body)).encode()))
+            await send({**start, "headers": headers})
+            await send({"type": "http.response.body", "body": body})
+
+        await self.app(scope, receive, buffer)
+
+
+app.add_middleware(_MetaPixel)
 app.add_middleware(_AnswerHeadRequests)
 
 # ── Clients ───────────────────────────────────────────────────────────────────
@@ -1160,7 +1213,12 @@ async def order_thanks(request: Request):
   <a href="mailto:hello@meridiancpd.co.uk">hello@meridiancpd.co.uk</a> and we will send it straight away.</p>""")
 
     member = _member(purchases[0]["member_id"]) or {}
-    return _thanks_page(s, purchases, member)
+    page = _thanks_page(s, purchases, member)
+    if meta_capi.server_enabled() and meta_capi.consented(request):
+        # Lead (free course) or Purchase, server side only; see meta_capi.py.
+        ev = meta_capi.order_event(s, purchases, member.get("email") or _session_email(s), request, _g)
+        page.background = BackgroundTask(meta_capi.send, [ev])
+    return page
 
 
 @app.post("/thanks/email", response_class=HTMLResponse)
@@ -1632,6 +1690,24 @@ async def verify_certificate(cert_number: str):
     </body>
     </html>
     """)
+
+
+# ── Meta Conversions API: browser beacons ─────────────────────────────────────
+
+@app.post("/meta/event")
+async def meta_event(request: Request):
+    """consent.js posts each browser pixel event here with its eventID, and this sends the
+    same event from the server so Meta still counts it when the browser blocks the pixel.
+    Sends nothing without META_PIXEL_ID and META_CAPI_TOKEN, without the visitor's Accept
+    (mcpd_consent=yes), or for a request that is not from one of our pages. Always 204."""
+    done = Response(status_code=204)
+    if not meta_capi.server_enabled() or not meta_capi.consented(request) \
+            or not meta_capi.from_our_pages(request):
+        return done
+    ev = meta_capi.beacon_event(await request.body(), request)
+    if ev:
+        done.background = BackgroundTask(meta_capi.send, [ev])
+    return done
 
 
 @app.get("/health")
@@ -3622,6 +3698,12 @@ async def admin_system(credentials=Depends(_check_admin)):
          "Optional. Set to off to stop the daily batch without a deploy (pausing in Admin → Outreach does the same)."),
         ("ANTHROPIC_API_KEY", "News briefs", False,
          "Optional. Lets Claude write the short brief shown when a news item is opened. Without it, briefs use the article's opening paragraphs."),
+        ("META_PIXEL_ID", "Meta Pixel (dataset id)", False,
+         "Optional. With it, the My CPD pages show the cookie banner and, after Accept, load the pixel. Without it nothing from Meta loads."),
+        ("META_CAPI_TOKEN", "Meta Conversions API access token", False,
+         "Optional. With META_PIXEL_ID, sends page views, course views, free-course orders (Lead) and purchases from this server, only for visitors who accepted the cookie banner."),
+        ("META_TEST_EVENT_CODE", "Meta test events code", False,
+         "Optional, for checking in Events Manager → Test events. Remove it afterwards."),
         ("NEWS_SCHEDULER", "News checks", False,
          "Optional. Set to off to stop the news checks behind the admin sidebar. See Admin → News."),
     ]
