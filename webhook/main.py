@@ -1330,8 +1330,8 @@ async def completion_page(token: str):
           <div class="box">
             <p>Hi {name}, before you can claim your certificate for <strong>{course_title}</strong>,
             you need to download and read the course material.</p>
-            <p style="margin-top:12px">This ensures your CPD record accurately reflects the learning you've completed —
-            which is what your accreditation body expects to see.</p>
+            <p style="margin-top:12px">This makes sure your CPD record reflects the learning you have completed.
+            Check your own scheme's CPD rules for what it asks to see.</p>
             {download_btn}
           </div>
           <p class="small">Once you've read the course, return to your
@@ -1365,12 +1365,11 @@ async def completion_page(token: str):
       <form method="POST" action="/complete/{token}">
         <div class="name-box">
           <p><strong>Your name for this certificate</strong></p>
-          <p>This is the name that will appear on your CPD certificate. Please make sure it
-          matches <strong>exactly</strong> the name registered with your accreditation body
-          (e.g. Elmhurst, Quidos, ECMK, TrustMark). Your accreditation body will use this
-          to verify your CPD record — a mismatch may mean they cannot accept it.</p>
+          <p>This is the name that will appear on your certificate of completion. Use the name
+          you are registered under as an assessor, spelled <strong>exactly</strong> the same way.
+          Check your own scheme's CPD rules.</p>
           <input type="text" name="cert_name" value="{name}" required
-                 placeholder="Your full name as registered with your accreditation body">
+                 placeholder="Your full name as registered as an assessor">
         </div>
         <label style="display:flex;align-items:center;gap:10px;margin:20px 0">
           <input type="checkbox" name="confirm" required style="width:20px;height:20px;flex-shrink:0">
@@ -1378,8 +1377,8 @@ async def completion_page(token: str):
         </label>
         <button type="submit" class="btn">Confirm Completion &amp; Get Certificate</button>
       </form>
-      <p class="small">Your certificate will be sent to your registered email address
-      and serves as evidence of CPD completion for your accreditation body.</p>
+      <p class="small">Your certificate of completion will be sent to your registered email address.
+      Check your own scheme's CPD rules.</p>
     </body>
     </html>
     """)
@@ -1421,7 +1420,7 @@ async def confirm_completion(token: str, request: Request):
         cert_number = str(held[0].get("cert_number") or "")
         print(f"Completion link for {course_id} used by member {member_id} who already holds {cert_number}; no new certificate")
         return HTMLResponse(f"""<!DOCTYPE html>
-<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Already certified — Meridian CPD</title>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Certificate already issued — Meridian CPD</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="font-family: 'DM Sans', Arial, sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1f2a20">
 {_logo()}
@@ -1506,7 +1505,7 @@ is <strong>{_esc(cert_number)}</strong>. A course earns one certificate, so no n
       <h1>CPD Completed</h1>
       <p>Well done, {member_name}. {email_note}</p>
       <div class="cert-num">{cert_number}</div>
-      <p>Keep this certificate number — your accreditation body can verify it at
+      <p>Keep this certificate number. Anyone can verify it at
          <a href="{BASE_URL}/verify/{cert_number}">{BASE_URL.split("://", 1)[-1]}/verify/{cert_number}</a>
       </p>
       <p><a href="{BASE_URL}/my-cpd/dashboard">Back to my CPD dashboard →</a></p>
@@ -1626,8 +1625,8 @@ async def verify_certificate(cert_number: str):
              <span class="value">Meridian CPD (meridiancpd.co.uk)</span></div>
       </div>
       <p style="color:#6b7280;font-size:13px">
-        Meridian CPD is an independent CPD provider. Acceptance of CPD hours is at the
-        discretion of the subscriber's accreditation body.
+        Meridian CPD is an independent CPD provider. This is a certificate of completion.
+        Check your own scheme's CPD rules.
       </p>
     </body>
     </html>
@@ -2310,15 +2309,14 @@ async def subscriber_dashboard(request: Request):
                     padding:28px 32px;margin-bottom:28px;color:white;">
           <div style="font-size:11px;font-weight:700;letter-spacing:1px;
                       text-transform:uppercase;color:#D4FF00;margin-bottom:8px">
-            Unlock the full library
+            Annual access
           </div>
           <div style="font-size:20px;font-weight:800;margin-bottom:8px">
-            You have access to {courses_owned} of {total_courses} courses.
+            The whole library for £79 a year.
           </div>
           <p style="font-size:14px;color:#D4FF00;margin-bottom:20px;line-height:1.6">
-            An annual subscription gives you unlimited access to all {total_courses} courses —
-            DEA, Retrofit Assessor, and cross-strand — plus every new course added throughout the year.
-            At £79/year, it pays for itself after just 4 courses.
+            An annual subscription gives you every course in the library, DEA, Retrofit Assessor
+            and cross-strand, plus every new course added during your year.
           </p>
           <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
              style="display:inline-block;background:#d4ff00;color:#0D1F0E;padding:12px 24px;
@@ -2390,7 +2388,7 @@ async def subscriber_dashboard(request: Request):
       <div class="progress-fill" style="width:{pct}%"></div>
     </div>
     <p style="font-size:12px;color:#8A9E8B;margin-top:8px">
-      Based on a {target}-hour annual CPD requirement. Check your accreditation body for your specific obligations.
+      Based on a {target}-hour annual CPD requirement. Check your own scheme's CPD rules.
     </p>
   </div>
 
