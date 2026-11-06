@@ -237,4 +237,8 @@ Emails for people who took a free course (MERIDIAN10) and have paid nothing: a n
 2. Set `FREE_FOLLOWUP=dry_run` in Railway Variables. Admin → Follow-up then shows who would get which email and why the others would not; the log prints the day's plan once. Nothing is sent or written.
 3. Only once Matt has approved every email's text: `FREE_FOLLOWUP=on`.
 
+The annual price in the emails is the one checkout charges: the app reads the unit amount of the Stripe price in `STRIPE_PRICE_SUBSCRIPTION` (a read, at most every six hours) and picks the £79 or £99 text to match. If that price cannot be read, or is anything other than £79 or £99, no email that names the annual price goes (Admin → Follow-up says so). On the £99 change, pointing `STRIPE_PRICE_SUBSCRIPTION` at the £99 price is what switches the emails; nothing keys off the date.
+
+The price-rise email (1 to 23 December, only while checkout still charges £79) is held until `FREE_FOLLOWUP_PRICE_RISE=on`. Set it only once the £99 line is live on meridiancpd.co.uk and Matt has approved that email's text.
+
 Optional: `FREE_FOLLOWUP_CONSENT` (yes_only default, or not_no), `FREE_FOLLOWUP_DAILY_LIMIT` (10), `FREE_FOLLOWUP_MIN_GAP_DAYS` (30), `FREE_FOLLOWUP_MAX_EMAILS` (4). To stop it at any time set `FREE_FOLLOWUP=off`.

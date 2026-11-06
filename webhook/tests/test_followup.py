@@ -4,6 +4,8 @@ What must hold: off by default and nothing sent unless switched on; dry-run send
 writes nothing; each step once per person; the right step at the right time; the sequence
 stops for buyers, subscribers, the suppressed and anyone who said no; the gap and the
 lifetime cap hold; the sales emails respect the consent setting; the daily limit holds;
+the annual price in an email is the one checkout charges (the Stripe price), and with no
+known price no email names one; the price-rise email waits for FREE_FOLLOWUP_PRICE_RISE;
 every email carries a working unsubscribe link, the approved prices and none of the
 banned words; bounces suppress; the admin page and the Friday figures work."""
 import asyncio, os, sys, types, re
@@ -14,6 +16,8 @@ os.environ.update(STRIPE_SECRET_KEY="sk_test_x", STRIPE_WEBHOOK_SECRET="whsec_x"
                   RESEND_API_KEY="re_x", OUTREACH_SCHEDULER="off", NEWS_SCHEDULER="off")
 os.environ.pop("FREE_FOLLOWUP", None)
 os.environ.pop("FREE_FOLLOWUP_CONSENT", None)
+os.environ.pop("FREE_FOLLOWUP_PRICE_RISE", None)
+os.environ["STRIPE_PRICE_SUBSCRIPTION"] = "price_annual_test"
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 import main, followup, outreach
 from fastapi.testclient import TestClient
@@ -125,6 +129,18 @@ followup.httpx.AsyncClient = FakeHTTP
 main.httpx.AsyncClient = FakeHTTP
 followup.PACE_SECONDS = 0
 
+price_reads = []
+def set_price(pence):
+    """What the Stripe price in STRIPE_PRICE_SUBSCRIPTION charges, as the app would read it."""
+    def fetch():
+        price_reads.append(pence)
+        if isinstance(pence, Exception):
+            raise pence
+        return pence
+    followup._fetch_annual_pence = fetch
+    followup._price_cache.update(at=None, gbp=None)
+set_price(7900)
+
 fails = 0
 def check(name, cond):
     global fails
@@ -172,8 +188,10 @@ check("on: sends the two due emails and logs each with Resend's id",
       and all(r["resend_id"].startswith("msg-") and r["status"] == "sent" for r in db[followup.TABLE]))
 nudge = next(m for m in sent if m["to"][0] == "person1@firm1.co.uk")
 nxt = next(m for m in sent if m["to"][0] == "person2@firm2.co.uk")
-check("the nudge carries the member's own completion link and greets by first name",
-      "/complete/tok-1" in nudge["text"] and nudge["text"].startswith("Hello Alex,") and "two CPD hours" in nudge["text"])
+check("the nudge points at My CPD (sign in, download, Mark Complete) and greets by first name",
+      "/my-cpd\n" in nudge["text"] and "/complete/" not in nudge["text"] and "Mark Complete" in nudge["text"]
+      and "comes by email" in nudge["text"] and nudge["text"].startswith("Hello Alex,") and "two CPD hours" in nudge["text"])
+check("what's next names the price checkout charges (£79 now)", "£79 a year" in nxt["text"] and "£99" not in nxt["text"])
 unsub = nudge["headers"]["List-Unsubscribe"].split(", <")[1].rstrip(">")
 tok = unsub.rsplit("token=", 1)[1]
 check("every email has a working unsubscribe link in the body and the headers",
@@ -186,13 +204,51 @@ res = go(db, NOV_20 + timedelta(days=10))
 check("the gap holds: ten days later m1 and m2 get nothing (m9 is now due its nudge)",
       [r["member_id"] for r in db[followup.TABLE][2:]] == ["m9"])
 d = NOV_20 + timedelta(days=31)  # Monday 21 December: inside the price window
+os.environ["FREE_FOLLOWUP"] = "dry_run"
 res = go(db, d)
-check("after the gap, in December, both get the price email (it takes priority)",
+check("in December the price email is held while FREE_FOLLOWUP_PRICE_RISE is off (m1 gets what's next instead)",
+      steps_of(res) == [("m1", "next")])
+os.environ["FREE_FOLLOWUP_PRICE_RISE"] = "on"
+set_price(9900)
+res = go(db, d)
+check("and it never goes once checkout already charges £99 (m1 gets what's next at £99)",
+      steps_of(res) == [("m1", "next")])
+os.environ["FREE_FOLLOWUP"] = "on"
+set_price(7900)
+res = go(db, d)
+check("with FREE_FOLLOWUP_PRICE_RISE=on and checkout at £79, both get the price email (it takes priority)",
       sorted(r["step"] for r in db[followup.TABLE] if r["sent_at"] == d.isoformat()) == ["price", "price"])
+os.environ.pop("FREE_FOLLOWUP_PRICE_RISE")
 res = go(db, datetime(2027, 3, 1, 10, 0, tzinfo=UK))
 check("price supersedes what's next: m1 never gets 'next' after the price email, and with no monthly edition nothing more goes",
       not any(r["member_id"] in ("m1", "m2") and r["sent_at"] >= "2027" for r in db[followup.TABLE])
       and not any(r["member_id"] == "m1" and r["step"] == "next" for r in db[followup.TABLE]))
+
+# The annual price comes from Stripe, not the calendar
+os.environ["FREE_FOLLOWUP"] = "dry_run"
+set_price(None)
+res = go(fresh_db(), NOV_20)
+check("no annual price known: what's next is held for m2 and m7 and says why, the nudge still goes",
+      steps_of(res) == [("m1", "nudge")] and res["skipped"].get("annual price not known") == 2)
+set_price(RuntimeError("Stripe unreachable"))
+res = go(fresh_db(), NOV_20)
+check("Stripe unreadable: the same", steps_of(res) == [("m1", "nudge")] and res["skipped"].get("annual price not known") == 2)
+set_price(8900)
+res = go(fresh_db(), NOV_20)
+check("a price the texts were not written for (£89): what's next is held", steps_of(res) == [("m1", "nudge")])
+set_price(9900)
+os.environ["FREE_FOLLOWUP"] = "on"
+db = fresh_db(); sent.clear()
+go(db, JAN_12 - timedelta(days=50))
+nxt99 = next(m for m in sent if m["to"][0] == "person2@firm2.co.uk")
+check("checkout at £99: what's next says £99 and not £79, whatever the date",
+      "£99 a year" in nxt99["text"] and "£79" not in nxt99["text"])
+set_price(7900)
+price_reads.clear()
+for _ in range(3):
+    go(fresh_db(), NOV_20, dry_run=True)
+check("the price is read from Stripe at most once in six hours", len(price_reads) == 1)
+followup._price_cache.update(at=None, gbp=None)
 
 # Buying stops it
 db = fresh_db(); sent.clear()
@@ -257,19 +313,31 @@ check("the send window is weekdays 09:00 to 17:00", followup.in_send_window(NOV_
 # ── The words ──
 BANNED = ["accredited", "approved", "Elmhurst", "Stroma", "Quidos", "ECMK", "Sterling", "NHER", "TrustMark",
           "—", "–", "!", "#", "delve", "unlock", "seamless", "exciting", "guarantee", "the best", "the only"]
-texts = followup.previews(NOV_20) + followup.previews(JAN_12)
+texts = followup.previews()
 for step, subject, text in texts:
     body = subject + "\n" + text.split("Kind regards,")[0]
     check(f"{step}: no banned words, dashes or exclamation marks", not [w for w in BANNED if w.lower() in body.lower()])
     check(f"{step}: ends at 'Kind regards,' then the hello@ signature and the unsubscribe line",
           "Kind regards,\n\n" + outreach.SIGNATURE_TEXT in text and "unsubscribe" in text.lower())
-nov = {s: t for s, _, t in followup.previews(NOV_20)}
-jan = {s: t for s, _, t in followup.previews(JAN_12)}
-check("prices are exactly as approved", "£39.99" in nov["next"] and "£79 a year" in nov["next"] and "£99" in nov["next"]
-      and "£79 a year until 31 December 2026" in nov["price"] and "£99 a year" in nov["price"] and "£39.99" in nov["price"])
-check("after 1 January, what's next says £99 and no longer mentions £79", "£99 a year" in jan["next"] and "£79" not in jan["next"])
-check("'certificate of completion' is the wording", all("certificate of completion" in t for t in nov.values()))
-check("no course counts", not any(re.search(r"\b\d+\s+courses\b", t) for t in nov.values()))
+v = {s: t for s, _, t in followup.previews()}
+check("every email and both versions of what's next are previewed",
+      list(v) == ["nudge", "next (annual £79)", "next (annual £99)", "price"])
+check("prices are exactly as approved",
+      "£39.99" in v["next (annual £79)"] and "£79 a year" in v["next (annual £79)"] and "£99" not in v["next (annual £79)"]
+      and "£99 a year" in v["next (annual £99)"] and "£79" not in v["next (annual £99)"]
+      and "£79 a year until 31 December 2026" in v["price"] and "£99 a year" in v["price"] and "£39.99" in v["price"])
+check("the nudge no longer claims a re-download from the completion page or 'straight to your inbox'",
+      "download the course again" not in v["nudge"] and "straight to your inbox" not in v["nudge"])
+check("the sales emails say the Field Work series are written for England and Wales and to check scheme rules",
+      all("written for England and Wales" in v[k] and "check your own scheme's cpd rules" in v[k].lower()
+          for k in ("next (annual £79)", "next (annual £99)", "price")))
+check("'certificate of completion' is the wording", all("certificate of completion" in t for t in v.values()))
+check("no course counts", not any(re.search(r"\b\d+\s+courses\b", t) for t in v.values()))
+try:
+    followup.render_next("Jo", "x", "u", 89); unknown_ok = False
+except ValueError:
+    unknown_ok = True
+check("there is no text for an annual price other than £79 or £99", unknown_ok)
 
 # ── Admin and the Friday figures ──
 db = fresh_db(); sent.clear()
@@ -287,7 +355,7 @@ check("Admin → Follow-up needs the password", c.get("/admin/followup").status_
 sent.clear()
 r = c.post("/admin/followup/test", data={"email": "matt@example.org"}, auth=auth)
 check("a test copy of each email goes to the address given, marked Test, and is not logged",
-      r.status_code == 200 and len(sent) == 3 and all(m["subject"].startswith("Test: ") for m in sent) and len(db[followup.TABLE]) == 2)
+      r.status_code == 200 and len(sent) == 4 and all(m["subject"].startswith("Test: ") for m in sent) and len(db[followup.TABLE]) == 2)
 r = c.get("/admin/system", auth=auth)
 check("System lists the switch", "FREE_FOLLOWUP" in r.text)
 broken = types.SimpleNamespace(table=lambda t: (_ for _ in ()).throw(RuntimeError("relation does not exist")) if t == followup.TABLE else Q(db, t))

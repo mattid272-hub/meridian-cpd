@@ -3516,6 +3516,10 @@ def _followup_page(notice: str = "") -> HTMLResponse:
         p, s = {"takers": 0, "due": [], "skipped": {}}, {"steps": {}, "people": 0, "buyers_after": 0, "revenue_after": 0}
         problem = (f'<p class="note" style="color:#b45309">Could not read the follow-up figures ({_esc(type(e).__name__)}). '
                    f'Has <code>webhook/migrations/2026-11-06_free_course_followup.sql</code> been run?</p>')
+    price_note = (f"£{p['annual']}, read from the Stripe price checkout charges" if p.get("annual") else
+                  "not known (STRIPE_PRICE_SUBSCRIPTION unreadable, or not £79 or £99), so no email that names it goes")
+    rise_note = ("allowed (FREE_FOLLOWUP_PRICE_RISE=on)" if followup.price_rise_notice_on() else
+                 "held until FREE_FOLLOWUP_PRICE_RISE=on, which Matt sets once the £99 line is live on the site")
     due_by: dict = {}
     for d in p["due"]:
         due_by[d["step"]] = due_by.get(d["step"], 0) + 1
@@ -3543,6 +3547,8 @@ def _followup_page(notice: str = "") -> HTMLResponse:
       {followup.daily_limit()} a day, weekdays {followup.SEND_FROM[0]:02d}:00 to {followup.SEND_UNTIL[0]:02d}:00 UK.
       Stops for anyone who buys, unsubscribes, bounces, complains, is on the do-not-email list or said no to marketing.
       Sales emails go to {"members who said yes only" if followup.consent_mode() == "yes_only" else "everyone who has not said no"}.
+      Annual price in the emails: {price_note}.
+      Price-rise email: {rise_note}.
       The switch is <code>FREE_FOLLOWUP</code> on the hosting service (off, dry_run, on).</p>
       {problem}
       <form method="post" action="/admin/followup/test" style="display:inline-flex;gap:6px;align-items:center">
@@ -3582,13 +3588,10 @@ async def admin_followup_test(request: Request, credentials=Depends(_check_admin
     email = str(form.get("email", "")).strip()
     if not outreach._EMAIL_RE.match(email):
         return _followup_page("That address does not look right.")
-    now = datetime.now(followup.UK)
     unsub = outreach.unsubscribe_url(email)
-    info = {"course_title": "RdSAP 10: What's Changed and Why", "cpd_hours": 2.0, "completion_url": None}
-    steps = list(followup.STEPS) + [f"monthly:{e['key']}" for e in followup.MONTHLY_EDITIONS]
+    steps = followup.versions("Matt", unsub)
     try:
-        for step in steps:
-            subject, text, html = followup.render(step, {"name": "Matt"}, info, unsub, now)
+        for _label, subject, text, html in steps:
             await followup.send_one(email, f"Test: {subject}", text, html, unsub)
     except Exception as e:
         return _followup_page(f"Could not send: {_esc(str(e)[:200])}")
@@ -3729,6 +3732,8 @@ async def admin_system(credentials=Depends(_check_admin)):
         ("FREE_FOLLOWUP", "Free-course follow-up emails", False,
          "Optional. off (default), dry_run (works out who would get what, sends nothing) or on. "
          "Turn on only once Matt has approved every email's text. See Admin → Follow-up."),
+        ("FREE_FOLLOWUP_PRICE_RISE", "Follow-up: the price-rise email", False,
+         "Optional. off (default) or on. Set on only once the £99 line is live on meridiancpd.co.uk; the email then goes once, 1 to 23 December, while checkout still charges £79."),
         ("FREE_FOLLOWUP_CONSENT", "Follow-up: who gets the sales emails", False,
          "Optional. yes_only (default): only members who said yes to hearing from us. not_no: also those who never answered."),
         ("FREE_FOLLOWUP_DAILY_LIMIT", "Follow-up emails a day", False,

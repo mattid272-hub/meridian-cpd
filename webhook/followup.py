@@ -2,10 +2,13 @@
 
 The sequence Matt approved on 6 November 2026:
   1. nudge    finish the free course: 14 days after taking it, only if not completed
-  2. next     what's next (a Field Work series at £39.99, or the year at £79): 7 days
-              after completing the free course, or after the nudge if it was never completed
+  2. next     what's next (a Field Work series at £39.99, or the year at the annual price
+              checkout charges): 7 days after completing the free course, or after the nudge
+              if it was never completed
   3. price    the annual price rises to £99 on 1 January 2027: once, between 1 and 23
-              December 2026; it covers what 'next' says, so 'next' is not sent after it
+              December 2026, and only while checkout still charges £79 and
+              FREE_FOLLOWUP_PRICE_RISE is on (Matt sets it once the £99 line is live on the
+              site); it covers what 'next' says, so 'next' is not sent after it
   4. monthly  then at most one email a month: each edition is its own dated entry in
               MONTHLY_EDITIONS and needs Matt's approval of its text; the list is empty, so
               nothing beyond step 3 is sent until he adds one
@@ -29,6 +32,10 @@ Rules enforced on every send (the contact rule in Matt's HQ, 5 November 2026):
   - the marketing steps (next, price, monthly) go only to people who said yes to hearing
     from us, unless FREE_FOLLOWUP_CONSENT is set to not_no (see the PR for why)
   - every email carries the app's working unsubscribe link and List-Unsubscribe headers
+  - the annual price in an email is the price checkout charges, read from the Stripe price
+    in STRIPE_PRICE_SUBSCRIPTION (a read, never a change), not the calendar; if it cannot be
+    read, or is not £79 or £99 (the two prices the approved texts are written for), no email
+    that names the annual price goes
   - bounces and complaints reported by Resend suppress the address before the next send
 
 The wording is in the templates below. It was drafted for Matt's approval; a changed word
@@ -66,9 +73,11 @@ POLL_DAYS = 3
 
 NUDGE_AFTER_DAYS = 14
 NEXT_AFTER_COMPLETION_DAYS = 7
-PRICE_RISE = datetime(2027, 1, 1, tzinfo=UK)
 PRICE_NOTICE_FROM = datetime(2026, 12, 1, tzinfo=UK)
 PRICE_NOTICE_UNTIL = datetime(2026, 12, 24, tzinfo=UK)   # exclusive: the last day is 23 December
+
+ANNUAL_PRICES = (79, 99)   # the annual prices the approved texts are written for
+PRICE_CACHE_HOURS = 6
 
 STEPS = ("nudge", "next", "price")
 MARKETING_STEPS = {"next", "price"}   # and every monthly edition
@@ -116,6 +125,45 @@ def consent_mode() -> str:
     true). not_no: also to those who never answered. A 'no' always stops everything."""
     m = os.environ.get("FREE_FOLLOWUP_CONSENT", "yes_only").strip().lower()
     return m if m in ("yes_only", "not_no") else "yes_only"
+
+
+def price_rise_notice_on() -> bool:
+    """FREE_FOLLOWUP_PRICE_RISE=on lets the price-rise email go (1 to 23 December, while
+    checkout still charges £79). Default off: Matt turns it on once the £99 line is live
+    on meridiancpd.co.uk, so the email never says something the site does not."""
+    return os.environ.get("FREE_FOLLOWUP_PRICE_RISE", "off").strip().lower() == "on"
+
+
+def _fetch_annual_pence() -> int | None:
+    """Unit amount, in pence, of the Stripe price the webhook treats as the annual
+    subscription (STRIPE_PRICE_SUBSCRIPTION). Reads only."""
+    price_id = os.environ.get("STRIPE_PRICE_SUBSCRIPTION", "").strip()
+    if not price_id:
+        return None
+    import stripe   # main sets stripe.api_key at start-up
+    price = stripe.Price.retrieve(price_id)
+    amount = price.get("unit_amount") if hasattr(price, "get") else getattr(price, "unit_amount", None)
+    return int(amount) if amount is not None else None
+
+
+_price_cache: dict = {"at": None, "gbp": None}
+
+
+def annual_price_gbp(now: datetime | None = None) -> int | None:
+    """The annual price checkout charges, in whole pounds, if it is one the approved texts
+    are written for (£79 or £99); else None. Cached for PRICE_CACHE_HOURS."""
+    now = now or datetime.now(UK)
+    at = _price_cache["at"]
+    if at is not None and timedelta(0) <= now - at < timedelta(hours=PRICE_CACHE_HOURS):
+        return _price_cache["gbp"]
+    try:
+        pence = _fetch_annual_pence()
+    except Exception as e:
+        print(f"Free-course follow-up: could not read the annual price from Stripe ({type(e).__name__})")
+        pence = None
+    gbp = pence // 100 if pence is not None and pence % 100 == 0 and pence // 100 in ANNUAL_PRICES else None
+    _price_cache.update(at=now, gbp=gbp)
+    return gbp
 
 
 def in_send_window(now: datetime) -> bool:
@@ -193,35 +241,33 @@ def _compose(subject: str, paragraphs: list[str], unsub: str) -> tuple[str, str,
     return subject, text, html
 
 
-def render_nudge(name: str, course_title: str, cpd_hours, completion_url: str | None, unsub: str):
+def render_nudge(name: str, course_title: str, cpd_hours, unsub: str):
+    """Points at My CPD, not the completion link: a download needs a signed-in session,
+    and the completion page sends anyone who has not downloaded there back to My CPD."""
     hours = _hours(cpd_hours)
-    link = completion_url or f"{APP_URL}/my-cpd"
     paragraphs = [
         f"Hello {name},",
         f"You took {course_title} with us and it isn't marked as complete yet. "
         + (f"It is {hours}, and it is there whenever you have the time." if hours else "It is there whenever you have the time."),
-        "When you've read it, confirm completion at the link below and your certificate of completion comes straight to your inbox.",
-        link,
+        "Sign in at the link below with this email address and the course is on your page, ready to download.",
+        f"{APP_URL}/my-cpd",
+        "When you've read it, press Mark Complete next to the course and your certificate of completion comes by email.",
+        "Kind regards,",
     ]
-    if completion_url:
-        paragraphs.append("The same page lets you download the course again if the first email has gone astray.")
-    else:
-        paragraphs.append("Sign in with this email address and the course is on your page, ready to download.")
-    paragraphs.append("Kind regards,")
     return _compose("Your free course is still open", paragraphs, unsub)
 
 
-def render_next(name: str, course_title: str, unsub: str, now: datetime):
-    before_rise = now < PRICE_RISE
-    annual = ("The annual membership is every course in the library, plus every new one we add, for £79 a year. "
-              "That is the price until 31 December 2026. From 1 January 2027 it is £99.") if before_rise else \
-             "The annual membership is every course in the library, plus every new one we add, for £99 a year."
+def render_next(name: str, course_title: str, unsub: str, annual: int):
+    """annual is the price checkout charges (annual_price_gbp), 79 or 99."""
+    if annual not in ANNUAL_PRICES:
+        raise ValueError(f"no approved text for an annual price of {annual!r}")
     paragraphs = [
         f"Hello {name},",
         f"Thanks for taking {course_title}. If it was useful, there are two ways to carry on.",
-        "A Field Work series is three linked courses on one subject for £39.99. There are series on insulation, "
-        "heating, ventilation, and moisture and damp. Each part has its own certificate of completion as you finish it.",
-        annual,
+        "A Field Work series is three linked courses on one subject for £39.99, written for England and Wales. "
+        "There are series on insulation, heating, ventilation and moisture. "
+        "Each part has its own certificate of completion as you finish it.",
+        f"The annual membership is every course in the library, plus every new one we add, for £{annual} a year.",
         "Both are here:",
         COURSES_URL,
         "Whichever you choose, check your own scheme's CPD rules for what counts towards your hours.",
@@ -236,9 +282,11 @@ def render_price(name: str, unsub: str):
         "A short note on price. Annual membership at Meridian CPD is £79 a year until 31 December 2026. "
         "From 1 January 2027 it will be £99 a year.",
         "Membership is every course in the library, plus every new one we add, with a certificate of completion "
-        "for each course you finish. If you join before 1 January, you pay £79.",
+        "for each course you finish. If you join before 1 January, your first year is £79.",
         COURSES_URL,
-        "If a whole year is more than you need, a Field Work series is three courses on one subject for £39.99.",
+        "If a whole year is more than you need, a Field Work series is three courses on one subject for £39.99, "
+        "written for England and Wales.",
+        "Check your own scheme's CPD rules for what counts towards your hours.",
         "Kind regards,",
     ]
     return _compose("The annual membership goes up to £99 on 1 January", paragraphs, unsub)
@@ -252,9 +300,9 @@ def render_monthly(edition: dict, name: str, unsub: str):
 def render(step: str, member: dict, info: dict, unsub: str, now: datetime):
     name = first_name(member.get("name"))
     if step == "nudge":
-        return render_nudge(name, info["course_title"], info.get("cpd_hours"), info.get("completion_url"), unsub)
+        return render_nudge(name, info["course_title"], info.get("cpd_hours"), unsub)
     if step == "next":
-        return render_next(name, info["course_title"], unsub, now)
+        return render_next(name, info["course_title"], unsub, info["annual"])
     if step == "price":
         return render_price(name, unsub)
     if step.startswith("monthly:"):
@@ -263,17 +311,29 @@ def render(step: str, member: dict, info: dict, unsub: str, now: datetime):
     raise ValueError(step)
 
 
-def previews(now: datetime) -> list[tuple[str, str, str]]:
-    """(step, subject, text) for every email, with a sample name, for Admin and for review."""
-    unsub = f"{APP_URL}/unsubscribe?email=…&token=…"
+SAMPLE_COURSE = ("RdSAP 10: What's Changed and Why", 2.0)
+
+
+def versions(name: str, unsub: str) -> list[tuple[str, str, str, str]]:
+    """(label, subject, text, html) for every email, including both annual-price versions
+    of 'next' and every monthly edition, with the sample course. For Admin's previews and
+    test copies, and for review."""
+    title, hours = SAMPLE_COURSE
     out = [
-        ("nudge", *render_nudge("Jo", "RdSAP 10: What's Changed and Why", 2.0, f"{APP_URL}/complete/…", unsub)[:2]),
-        ("next", *render_next("Jo", "RdSAP 10: What's Changed and Why", unsub, now)[:2]),
-        ("price", *render_price("Jo", unsub)[:2]),
+        ("nudge", *render_nudge(name, title, hours, unsub)),
+        ("next (annual £79)", *render_next(name, title, unsub, 79)),
+        ("next (annual £99)", *render_next(name, title, unsub, 99)),
+        ("price", *render_price(name, unsub)),
     ]
     for e in MONTHLY_EDITIONS:
-        out.append((f"monthly:{e['key']}", *render_monthly(e, "Jo", unsub)[:2]))
+        out.append((f"monthly:{e['key']}", *render_monthly(e, name, unsub)))
     return out
+
+
+def previews(now: datetime | None = None) -> list[tuple[str, str, str]]:
+    """(label, subject, text) for every email, with the sample name Jo."""
+    unsub = f"{APP_URL}/unsubscribe?email=…&token=…"
+    return [(label, subject, text) for label, subject, text, _html in versions("Jo", unsub)]
 
 
 # ── Who is due what ───────────────────────────────────────────────────────────
@@ -325,20 +385,29 @@ def _consent_ok(member: dict, step: str) -> bool:
     return True
 
 
-def due_step(member: dict, free: dict, completion: dict | None, sends: list, now: datetime) -> tuple[str | None, str]:
+def due_step(member: dict, free: dict, completion: dict | None, sends: list, now: datetime,
+             annual: int | None = None) -> tuple[str | None, str]:
     """(step, why) for one free-course taker, ignoring suppression and gap (checked after).
-    step is None when nothing is due, and why says why."""
+    step is None when nothing is due, and why says why. annual is the price checkout
+    charges (annual_price_gbp); without it no email that names the annual price is due."""
     done = {s.get("step") for s in sends}
     if len(sends) >= max_emails():
         return None, "lifetime cap reached"
     taken = _parse(free.get("purchased_at")) or now
     completed = _parse((completion or {}).get("completed_at"))
     candidates = []
-    if PRICE_NOTICE_FROM <= now < PRICE_NOTICE_UNTIL and "price" not in done:
-        candidates.append("price")
+    priced_out = False   # an email that names the annual price is due, but the price is not known
+    if PRICE_NOTICE_FROM <= now < PRICE_NOTICE_UNTIL and "price" not in done and price_rise_notice_on():
+        if annual == 79:
+            candidates.append("price")
+        elif annual is None:
+            priced_out = True
     if "next" not in done and "price" not in done:
         if (completed and now >= completed + timedelta(days=NEXT_AFTER_COMPLETION_DAYS)) or (not completed and "nudge" in done):
-            candidates.append("next")
+            if annual in ANNUAL_PRICES:
+                candidates.append("next")
+            else:
+                priced_out = True
     if not completed and "nudge" not in done and now >= taken + timedelta(days=NUDGE_AFTER_DAYS):
         candidates.append("nudge")
     if done & {"next", "price"}:
@@ -347,7 +416,7 @@ def due_step(member: dict, free: dict, completion: dict | None, sends: list, now
             if key not in done and e["send_from"] <= now < e["send_until"]:
                 candidates.append(key)
     if not candidates:
-        return None, "nothing due yet"
+        return None, "annual price not known" if priced_out else "nothing due yet"
     for step in candidates:
         if _consent_ok(member, step):
             return step, "due"
@@ -371,6 +440,7 @@ def plan(db, now: datetime, courses: dict | None = None) -> dict:
     def skip(why):
         skipped[why] = skipped.get(why, 0) + 1
     gap = timedelta(days=min_gap_days())
+    annual = None
     for m in members:
         free = free_course_of(m, by_member.get(m["id"], []))
         if not free:
@@ -381,7 +451,9 @@ def plan(db, now: datetime, courses: dict | None = None) -> dict:
             .eq("member_id", m["id"]).eq("course_id", cid).execute().data or []
         completion = next((c for c in comps if c.get("completed_at")), None)
         sends = sends_by.get(m["id"], [])
-        step, why = due_step(m, free, completion, sends, now)
+        if annual is None:
+            annual = annual_price_gbp(now)
+        step, why = due_step(m, free, completion, sends, now, annual)
         if not step:
             skip(why)
             continue
@@ -394,17 +466,16 @@ def plan(db, now: datetime, courses: dict | None = None) -> dict:
         if last and now - last < gap:
             skip("too soon after the last email")
             continue
-        token = next((c.get("completion_token") for c in comps if not c.get("completed_at") and c.get("completion_token")), None)
         course = courses.get(cid) or {}
         due.append({
             "member": m, "step": step, "course_id": cid,
             "course_title": str(course.get("title") or cid),
             "cpd_hours": course.get("cpd_hours"),
-            "completion_url": f"{APP_URL}/complete/{token}" if token else None,
+            "annual": annual,
         })
     order = {"price": 0, "nudge": 1, "next": 2}
     due.sort(key=lambda d: (order.get(d["step"], 3), str(d["member"].get("id"))))
-    return {"takers": takers, "due": due, "skipped": skipped}
+    return {"takers": takers, "due": due, "skipped": skipped, "annual": annual}
 
 
 # ── Sending ───────────────────────────────────────────────────────────────────
