@@ -187,7 +187,7 @@ COURSES = {
     "MER-ALL-015": {"course_id": "MER-ALL-015", "title": "EPC Reform and the Future Home Buying Process: What Assessors Must Know", "cpd_hours": 1.0, "published": "2026-09-01"},
     "MER-ALL-016": {"course_id": "MER-ALL-016", "title": "Scheme Operating Requirements: How They Work and What Changed in 2026", "cpd_hours": 1.0, "published": "2026-09-15"},
     "MER-ALL-017": {"course_id": "MER-ALL-017", "title": "Awaab's Law Phase 2: What Energy Assessors Must Know", "cpd_hours": 1.0, "published": "2026-10-01"},
-    "MER-ALL-018": {"course_id": "MER-ALL-018", "title": "Damp, Condensation and Thermal Bridging: Reading the Moisture", "cpd_hours": 3.0, "published": "2026-10-25", "series": "FW-MOISTURE", "part": 1},
+    "MER-ALL-018": {"course_id": "MER-ALL-018", "title": "Damp, Condensation and Thermal Bridging: Reading the Moisture", "cpd_hours": 3.0, "published": "2026-10-25", "series": "FW-MOISTURE", "part": 1, "deliverable": "deck"},
     # Field Work: Insulation (series FW-INSULATION). Delivered as NotebookLM decks with the
     # written course as notes. On sale since the decks went into Storage (30 Oct 2026).
     "MER-ALL-019": {"course_id": "MER-ALL-019", "title": "Insulation Series, Part 1: Principles and Cavity Wall Insulation", "cpd_hours": 2.0, "published": "2026-10-29", "series": "FW-INSULATION", "part": 1, "deliverable": "deck"},
@@ -217,8 +217,8 @@ COURSES = {
 # Every course id here must be in COURSES and belong to one series only. A series whose
 # courses are not all in the catalogue yet is defined but not on sale: it is skipped with
 # a warning at start-up, and a series checkout for it is recorded for Matt to sort out
-# rather than expanded (see _keys_for_checkout). MER-ALL-018 is Part 1 of FW-MOISTURE and
-# is still delivered as the written course until its deck is published.
+# rather than expanded (see _keys_for_checkout). MER-ALL-018 is Part 1 of FW-MOISTURE and,
+# like the other parts, is delivered as its deck (MER-ALL-018-deck.pdf) with the notes.
 SERIES = {
     "FW-INSULATION": {"title": "Field Work: Insulation", "courses": ["MER-ALL-019", "MER-ALL-020", "MER-ALL-021"]},
     "FW-HEATING": {"title": "Field Work: Heating", "courses": ["MER-ALL-022", "MER-ALL-023", "MER-ALL-024"]},
@@ -1062,7 +1062,7 @@ def _order_what(purchases: list) -> str:
         return "your order"
     # Series wording only for a series order: the rows say so (series_id), or every part
     # of a series is on the order. A course bought on its own that also belongs to a
-    # series (MER-ALL-018 today) is just a course.
+    # series (MER-ALL-018, for example) is just a course.
     bought_as = {p.get("series_id") for p in purchases if p.get("series_id")}
     sid = next(iter(bought_as)) if len(bought_as) == 1 else next(
         (k for k, s in SERIES.items() if set(ids) == set(s["courses"])), "")
