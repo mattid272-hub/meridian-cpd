@@ -109,6 +109,11 @@ check("sign-off is the hello@ signature: no company name in the name lines, trad
       and text.count("Matt Davies") == 1 and "meridiancpd.co.uk" in text.split("Matt Davies")[1])
 check("html uses the signature's palette, not the old navy/cyan", "#0891b2" not in html and "#0f2547" not in html and outreach.INK in html)
 check("email promises nothing about frequency, only a working opt-out", "only email" not in text and "that's the end of it" in text and "that's the end of it" in html)
+check("the email's site link carries the campaign tag, with the visible words unchanged",
+      'href="https://meridiancpd.co.uk/?utm_source=email&amp;utm_medium=outreach&amp;utm_campaign=dea-wave1"' in html
+      and ">meridiancpd.co.uk</a>" in html and "utm_" not in text)
+check("the tag stays off the unsubscribe, privacy and verify links",
+      all("utm_" not in seg for seg in html.split("href=")[1:] if "meridiancpd.co.uk/?" not in seg.split(" ")[0]))
 check("odd first names become 'there'", [outreach.greeting_name(n) for n in ("", None, "J", "A.", "Smith Surveying", "123", "x" * 25)] == ["there"] * 7)
 check("shouted names are calmed down", outreach.greeting_name("SAM") == "Sam" and outreach.greeting_name("McDonald") == "McDonald")
 
