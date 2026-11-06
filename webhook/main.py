@@ -202,6 +202,8 @@ COURSES = {
     "MER-ALL-027": {"course_id": "MER-ALL-027", "title": "Ventilation Series, Part 3: Commissioning, Measurement and the 2027 Changes", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-VENTILATION", "part": 3, "deliverable": "deck"},
     "MER-ALL-028": {"course_id": "MER-ALL-028", "title": "Moisture and Damp Series, Part 2: Floors: Solid Ground Floors and Suspended Timber Floors", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-MOISTURE", "part": 2, "deliverable": "deck"},
     "MER-ALL-029": {"course_id": "MER-ALL-029", "title": "Moisture and Damp Series, Part 3: Roofs and Lofts: Condensation, Ventilation and Insulation", "cpd_hours": 2.0, "published": "2026-10-30", "series": "FW-MOISTURE", "part": 3, "deliverable": "deck"},
+    "MER-SCO-001": {"course_id": "MER-SCO-001", "title": "RdSAP 10 in Scotland: Where It Differs", "cpd_hours": 2.0, "published": "2026-10-28"},
+    "MER-SCO-002": {"course_id": "MER-SCO-002", "title": "Scotland's EPC Reform: HEM, Three Ratings and Five Years, from 30 April 2028", "cpd_hours": 1.0, "published": "2026-10-28"},
     # Subscription — welcome email only; library access granted via plan field
     "SUBSCRIPTION": {"course_id": "SUBSCRIPTION", "title": "Annual Subscription — All Courses", "cpd_hours": 0, "published": "2026-03-01"},
 }
