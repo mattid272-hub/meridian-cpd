@@ -231,7 +231,7 @@ Clicking a news item opens a short brief in place: three to five bullet points a
 
 ## Meta Pixel and Conversions API (retargeting)
 
-The site's cookie banner and pixel live in `landing-page/consent.js`; the app's My CPD and certificate check pages load the same file, and this server sends the same events through Meta's Conversions API. Nothing loads or is sent until the visitor presses Accept (cookie `mcpd_consent=yes` on `.meridiancpd.co.uk`, shared by the site and the app). `webhook/meta_capi.py` explains the events and how they are deduplicated.
+The site's cookie banner and pixel live in `landing-page/consent.js`; the app's My CPD pages load the same file, and this server sends the same events through Meta's Conversions API. Nothing loads or is sent until the visitor presses Accept (cookie `mcpd_consent=yes` on `.meridiancpd.co.uk`, shared by the site and the app). `webhook/meta_capi.py` explains the events and how they are deduplicated.
 
 Railway variables (all optional; without them the app loads nothing from Meta and sends nothing):
 

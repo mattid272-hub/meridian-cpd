@@ -77,7 +77,10 @@ assert 'src="https://meridiancpd.co.uk/consent.js" data-pixel="1133939432819396"
 assert r.text.rstrip().endswith("</html>") and int(r.headers["content-length"]) == len(r.content)
 assert "consent.js" not in c.get("/thanks?session_id=cs_live_subs1234567").text, "pixel on /thanks sends the session id to Meta"
 assert "consent.js" not in c.get("/unsubscribe?email=a@b.co&token=x").text
-assert main._pixel_page("/verify/MER-2026-0001") and not main._pixel_page("/complete/tok") \
+assert "consent.js" not in c.get("/verify/MER-2026-0001").text, "pixel on a certificate check page"
+assert "consent.js" not in c.get("/verify").text
+assert not main._pixel_page("/verify/MER-2026-0001") and not main._pixel_page("/verify") \
+    and not main._pixel_page("/complete/tok") \
     and not main._pixel_page("/my-cpd/login/tok") and not main._pixel_page("/admin")
 c.post("/meta/event", content=beacon, headers=SITE, cookies={"mcpd_consent": "yes"})
 assert posted == [], "server send without META_CAPI_TOKEN"
