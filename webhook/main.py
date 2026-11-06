@@ -95,13 +95,14 @@ class _AnswerHeadRequests:
 
 # The Meta Pixel and cookie banner go only on app pages whose address carries no token,
 # email address or checkout session id: the pixel sends the page address to Meta. /thanks,
-# /complete, /my-cpd/login, /unsubscribe, /download and /admin are left out on purpose.
-_PIXEL_PAGES = ("/my-cpd", "/my-cpd/dashboard", "/verify")
-_PIXEL_PREFIXES = ("/verify/",)
+# /complete, /my-cpd/login, /unsubscribe, /download, /verify and /admin are left out on purpose.
+# The certificate check pages (/verify) are left out too: their address carries the
+# certificate number and the page shows the holder's name.
+_PIXEL_PAGES = ("/my-cpd", "/my-cpd/dashboard")
 
 
 def _pixel_page(path: str) -> bool:
-    return path in _PIXEL_PAGES or path.startswith(_PIXEL_PREFIXES)
+    return path in _PIXEL_PAGES
 
 
 class _MetaPixel:
@@ -4315,7 +4316,7 @@ async def admin_system(credentials=Depends(_check_admin)):
         ("ANTHROPIC_API_KEY", "News briefs", False,
          "Optional. Lets Claude write the short brief shown when a news item is opened. Without it, briefs use the article's opening paragraphs."),
         ("META_PIXEL_ID", "Meta Pixel (dataset id)", False,
-         "Optional. With it, the My CPD and certificate check pages show the cookie banner and, after Accept, load the pixel. Without it nothing from Meta loads."),
+         "Optional. With it, the My CPD pages show the cookie banner and, after Accept, load the pixel. Without it nothing from Meta loads."),
         ("META_CAPI_TOKEN", "Meta Conversions API access token", False,
          "Optional. With META_PIXEL_ID, sends page views, course views, free-course orders (Lead) and purchases from this server, only for visitors who accepted the cookie banner."),
         ("META_TEST_EVENT_CODE", "Meta test events code", False,

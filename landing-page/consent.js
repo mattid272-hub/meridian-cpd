@@ -93,7 +93,7 @@
   var style = document.createElement("style"); style.textContent = css; document.head.appendChild(style);
   var banner = document.createElement("div");
   banner.className = "mcpd-cookie"; banner.setAttribute("role", "region"); banner.setAttribute("aria-label", "Cookie choice"); banner.hidden = true;
-  banner.innerHTML = '<div class="mcpd-cookie-in"><p>With your permission we use Meta\'s advertising cookie (_fbp) to see which of our Facebook and Instagram adverts work. Our server also tells Meta about your visit, and about an order if you make one. Nothing is set or sent unless you accept. <a href="' + PRIVACY + '">How it is used</a>.</p>' +
+  banner.innerHTML = '<div class="mcpd-cookie-in"><p>With your permission we use Meta\'s advertising cookie (_fbp) to see which of our Facebook and Instagram adverts work. Our server also tells Meta about your visit, and about an order if you make one. Nothing from Meta is set or sent unless you accept. <a href="' + PRIVACY + '">How it is used</a>.</p>' +
     '<div class="mcpd-cookie-btns"><button type="button" data-consent="yes">Accept</button><button type="button" data-consent="no">Reject</button></div></div>';
   document.body.appendChild(banner);
   var show = function () { banner.hidden = false; banner.querySelector("button").focus(); };
