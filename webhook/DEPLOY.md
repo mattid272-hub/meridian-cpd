@@ -228,3 +228,13 @@ Sources are the `SOURCES` list in `news.py`: GOV.UK activity feeds for DESNZ, MH
 ### Briefs
 
 Clicking a news item opens a short brief in place: three to five bullet points and a "why it matters" line, written the first time the item is opened and saved on it. With `ANTHROPIC_API_KEY` set in Railway, Claude (claude-haiku-5-5) writes the brief from the article's own text; without it, the brief is the article's opening paragraphs. "Source ↗" opens the original. Run `webhook/migrations/2026-10-23_news_briefs.sql` once to add the brief columns (briefs still show without it, but are rewritten each time).
+
+## Free-course follow-up emails (followup.py)
+
+Emails for people who took a free course (MERIDIAN10) and have paid nothing: a nudge to finish it, what's next, the 1 January price rise, then at most one a month. Off until Matt turns it on.
+
+1. Run `webhook/migrations/2026-11-06_free_course_followup.sql` in Supabase → SQL Editor. It creates the send log and the `free_course_followup_stats` view for the Friday review. It sends nothing.
+2. Set `FREE_FOLLOWUP=dry_run` in Railway Variables. Admin → Follow-up then shows who would get which email and why the others would not; the log prints the day's plan once. Nothing is sent or written.
+3. Only once Matt has approved every email's text: `FREE_FOLLOWUP=on`.
+
+Optional: `FREE_FOLLOWUP_CONSENT` (yes_only default, or not_no), `FREE_FOLLOWUP_DAILY_LIMIT` (10), `FREE_FOLLOWUP_MIN_GAP_DAYS` (30), `FREE_FOLLOWUP_MAX_EMAILS` (4). To stop it at any time set `FREE_FOLLOWUP=off`.

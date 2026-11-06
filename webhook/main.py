@@ -35,6 +35,7 @@ from certificate_generator import generate_certificate
 from settings import APP_URL, SITE_URL
 import outreach
 import news
+import followup
 
 
 @asynccontextmanager
@@ -47,6 +48,10 @@ async def _lifespan(app):
         tasks.append(asyncio.create_task(outreach.scheduler_loop(lambda: supabase)))
     if os.environ.get("NEWS_SCHEDULER", "on").strip().lower() != "off":
         tasks.append(asyncio.create_task(news.scheduler_loop(lambda: supabase)))
+    # Follow-up emails to free-course takers (followup.py). FREE_FOLLOWUP defaults to off;
+    # dry_run works out who would get what and sends nothing; on sends.
+    if followup.mode() != "off":
+        tasks.append(asyncio.create_task(followup.scheduler_loop(lambda: supabase, lambda: COURSES)))
     yield
     for task in tasks:
         task.cancel()
@@ -2625,6 +2630,7 @@ def _nav(active: str) -> str:
         ("members", "Members"),
         ("contacts", "Contacts"),
         ("outreach", "Outreach"),
+        ("followup", "Follow-up"),
         ("news", "News"),
         ("courses", "Courses"),
         ("certificates", "Certificates"),
@@ -3493,6 +3499,102 @@ async def admin_outreach_test(request: Request, credentials=Depends(_check_admin
                           "that address goes on the do-not-email list (remove it in Supabase if you need to).")
 
 
+# ── Admin → Follow-up (free-course takers) ─────────────────────────────────────
+
+def _followup_page(notice: str = "") -> HTMLResponse:
+    now = datetime.now(followup.UK)
+    m = followup.mode()
+    notice_html = f'<div class="card" style="border-left:4px solid #8db600">{notice}</div>' if notice else ""
+    badge = {"off": '<span class="badge badge-off">Off</span>',
+             "dry_run": '<span class="badge badge-warn">Dry run: sends nothing</span>',
+             "on": '<span class="badge badge-ok">Sending</span>'}[m]
+    try:
+        p = followup.plan(supabase, now, COURSES)
+        s = followup.summary(supabase)
+        problem = ""
+    except Exception as e:  # most likely the migration has not been run yet
+        p, s = {"takers": 0, "due": [], "skipped": {}}, {"steps": {}, "people": 0, "buyers_after": 0, "revenue_after": 0}
+        problem = (f'<p class="note" style="color:#b45309">Could not read the follow-up figures ({_esc(type(e).__name__)}). '
+                   f'Has <code>webhook/migrations/2026-11-06_free_course_followup.sql</code> been run?</p>')
+    due_by: dict = {}
+    for d in p["due"]:
+        due_by[d["step"]] = due_by.get(d["step"], 0) + 1
+    due_rows = "".join(f"<tr><td>{_esc(k)}</td><td>{v}</td></tr>" for k, v in sorted(due_by.items())) \
+        or '<tr><td colspan="2" class="empty">Nobody is due an email right now</td></tr>'
+    skip_rows = "".join(f"<tr><td>{_esc(k)}</td><td>{v}</td></tr>" for k, v in sorted(p["skipped"].items())) \
+        or '<tr><td colspan="2" class="empty">None</td></tr>'
+    step_rows = "".join(
+        f"<tr><td>{_esc(k)}</td><td>{v['sent']}</td><td>{v['delivered']}</td><td>{v['bounced']}</td>"
+        f"<td>{v['complained']}</td><td>{v['failed']}</td></tr>" for k, v in sorted(s["steps"].items())) \
+        or '<tr><td colspan="6" class="empty">Nothing sent yet</td></tr>'
+    previews = "".join(
+        f"<h3 style='margin:18px 0 6px'>{_esc(step)}: {_esc(subject)}</h3>"
+        f"<pre style=\"white-space:pre-wrap;font-family: 'DM Sans', Arial, sans-serif;font-size:14px;line-height:1.5;"
+        f"background:#F5F5F0;padding:16px;border-radius:8px\">{_esc(text)}</pre>"
+        for step, subject, text in followup.previews(now))
+    body = f"""
+    {notice_html}
+    <div class="card">
+      <h2>Free-course follow-up {badge}</h2>
+      <p class="note">For people who took a free course and have paid nothing: a nudge to finish it
+      ({followup.NUDGE_AFTER_DAYS} days on, only if unfinished), what's next ({followup.NEXT_AFTER_COMPLETION_DAYS} days
+      after finishing), the 1 January price rise (1 to 23 December), then at most one a month. Each step once per person;
+      at least {followup.min_gap_days()} days between emails; at most {followup.max_emails()} per person; up to
+      {followup.daily_limit()} a day, weekdays {followup.SEND_FROM[0]:02d}:00 to {followup.SEND_UNTIL[0]:02d}:00 UK.
+      Stops for anyone who buys, unsubscribes, bounces, complains, is on the do-not-email list or said no to marketing.
+      Sales emails go to {"members who said yes only" if followup.consent_mode() == "yes_only" else "everyone who has not said no"}.
+      The switch is <code>FREE_FOLLOWUP</code> on the hosting service (off, dry_run, on).</p>
+      {problem}
+      <form method="post" action="/admin/followup/test" style="display:inline-flex;gap:6px;align-items:center">
+        <input name="email" type="email" required placeholder="your address"
+               style="padding:8px 12px;border:1px solid #e3e5dc;border-radius:6px;font-size:13px;width:220px">
+        <button style="background:#5C6B5D">Send me a test copy of each email</button></form>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="lbl">Free-course takers</div><div class="val">{p['takers']:,}</div></div>
+      <div class="stat"><div class="lbl">Due now</div><div class="val">{len(p['due']):,}</div></div>
+      <div class="stat"><div class="lbl">People emailed</div><div class="val">{s['people']:,}</div></div>
+      <div class="stat"><div class="lbl">Paid afterwards</div><div class="val">{s['buyers_after']:,}</div></div>
+      <div class="stat"><div class="lbl">Paid afterwards (£)</div><div class="val">{s['revenue_after']:,.2f}</div></div>
+    </div>
+    <div class="card"><h2>Due now (dry run: what the next pass would send)</h2>
+      <table><tr><th>Email</th><th>People</th></tr>{due_rows}</table>
+      <h3 style="margin-top:16px">Not due, and why</h3>
+      <table><tr><th>Reason</th><th>People</th></tr>{skip_rows}</table></div>
+    <div class="card"><h2>Sent</h2>
+      <table><tr><th>Email</th><th>Sent</th><th>Delivered</th><th>Bounced</th><th>Complaints</th><th>Failed</th></tr>{step_rows}</table></div>
+    <div class="card"><h2>The emails</h2>
+      <p class="note">Wording lives in <code>webhook/followup.py</code>. A changed word needs Matt's approval again.</p>
+      {previews}</div>"""
+    return _page("Follow-up", "followup", body)
+
+
+@app.get("/admin/followup", response_class=HTMLResponse)
+async def admin_followup(credentials=Depends(_check_admin)):
+    return _followup_page()
+
+
+@app.post("/admin/followup/test", response_class=HTMLResponse)
+async def admin_followup_test(request: Request, credentials=Depends(_check_admin)):
+    """Sends each email once to the address given, marked as a test, so Matt can see them
+    as they arrive. Records nothing in the send log."""
+    form = await request.form()
+    email = str(form.get("email", "")).strip()
+    if not outreach._EMAIL_RE.match(email):
+        return _followup_page("That address does not look right.")
+    now = datetime.now(followup.UK)
+    unsub = outreach.unsubscribe_url(email)
+    info = {"course_title": "RdSAP 10: What's Changed and Why", "cpd_hours": 2.0, "completion_url": None}
+    steps = list(followup.STEPS) + [f"monthly:{e['key']}" for e in followup.MONTHLY_EDITIONS]
+    try:
+        for step in steps:
+            subject, text, html = followup.render(step, {"name": "Matt"}, info, unsub, now)
+            await followup.send_one(email, f"Test: {subject}", text, html, unsub)
+    except Exception as e:
+        return _followup_page(f"Could not send: {_esc(str(e)[:200])}")
+    return _followup_page(f"{len(steps)} test emails sent to {_esc(email)}. Their unsubscribe links are live.")
+
+
 @app.get("/admin/courses", response_class=HTMLResponse)
 async def admin_courses(credentials=Depends(_check_admin)):
     from datetime import date, timedelta
@@ -3624,6 +3726,17 @@ async def admin_system(credentials=Depends(_check_admin)):
          "Optional. Lets Claude write the short brief shown when a news item is opened. Without it, briefs use the article's opening paragraphs."),
         ("NEWS_SCHEDULER", "News checks", False,
          "Optional. Set to off to stop the news checks behind the admin sidebar. See Admin → News."),
+        ("FREE_FOLLOWUP", "Free-course follow-up emails", False,
+         "Optional. off (default), dry_run (works out who would get what, sends nothing) or on. "
+         "Turn on only once Matt has approved every email's text. See Admin → Follow-up."),
+        ("FREE_FOLLOWUP_CONSENT", "Follow-up: who gets the sales emails", False,
+         "Optional. yes_only (default): only members who said yes to hearing from us. not_no: also those who never answered."),
+        ("FREE_FOLLOWUP_DAILY_LIMIT", "Follow-up emails a day", False,
+         f"Optional. Default {followup.DEFAULT_LIMIT}, ceiling {followup.HARD_CEILING}."),
+        ("FREE_FOLLOWUP_MIN_GAP_DAYS", "Follow-up: days between emails to one person", False,
+         f"Optional. Default {followup.DEFAULT_GAP_DAYS}."),
+        ("FREE_FOLLOWUP_MAX_EMAILS", "Follow-up: most emails to one person, ever", False,
+         f"Optional. Default {followup.DEFAULT_MAX_EMAILS}."),
     ]
     vars_rows = "".join(
         f"<tr><td>{label}</td><td><code>{key}</code></td><td>{var_status(key, req)}</td>"
