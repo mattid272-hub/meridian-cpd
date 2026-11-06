@@ -57,6 +57,9 @@ _run_lock = asyncio.Lock()
 
 SUBJECT = "Renewal's coming and the CPD hours aren't there yet?"
 OFFER_DEADLINE = "31 December"   # the £79 price holds until then; raise it in January
+# Tags the email's link to the site so analytics can tell outreach visits from the rest.
+# Only the href changes; the words a reader sees stay "meridiancpd.co.uk".
+CAMPAIGN_UTM = "utm_source=email&utm_medium=outreach&utm_campaign=dea-wave1"
 
 
 # The hello@ signature Matt set up in Gmail (22 October): same fonts, colours and logo, so
@@ -98,6 +101,7 @@ def render(first_name: str | None, unsubscribe_url: str) -> tuple[str, str, str]
     name = greeting_name(first_name)
     verify = f"{APP_URL}/verify"
     privacy = f"{SITE_URL}/privacy.html"
+    site_link = f"{SITE_URL}/?{CAMPAIGN_UTM}"
     text = f"""Hello {name},
 
 Every assessor knows the feeling. The renewal reminder lands, you open your CPD record, and the year that was meant to be full of webinars and reading has somehow got away from you. Six weeks left, or four, or two, and the hours still have to be real, evidenced and ready to show your scheme.
@@ -122,7 +126,7 @@ Privacy: meridiancpd.co.uk/privacy.html
 <p style="{p}">Hello {escape(name)},</p>
 <p style="{p}">Every assessor knows the feeling. The renewal reminder lands, you open your CPD record, and the year that was meant to be full of webinars and reading has somehow got away from you. Six weeks left, or four, or two, and the hours still have to be real, evidenced and ready to show your scheme.</p>
 <p style="{p}">I'm a practising assessor and I built Meridian CPD because I was that person. I wanted CPD I could actually use on the job, written by people who do the job, that I could get through in an evening and have the certificate in my hand the same night. It didn't exist, so I made it. I love doing it, and I'd like you to try it.</p>
-<p style="{p}"><strong>Start with the free one.</strong> &ldquo;RdSAP 10: What's Changed and Why&rdquo; is two CPD hours, certificate included, free with the code <strong>MERIDIAN10</strong> at <a href="{SITE_URL}" {link}>meridiancpd.co.uk</a>. Read it when it suits you, confirm you've completed it, and your certificate arrives straight away, with a number anyone, including your scheme, can check at <a href="{verify}" {link}>meridiancpd.co.uk/verify</a>.</p>
+<p style="{p}"><strong>Start with the free one.</strong> &ldquo;RdSAP 10: What's Changed and Why&rdquo; is two CPD hours, certificate included, free with the code <strong>MERIDIAN10</strong> at <a href="{escape(site_link)}" {link}>meridiancpd.co.uk</a>. Read it when it suits you, confirm you've completed it, and your certificate arrives straight away, with a number anyone, including your scheme, can check at <a href="{verify}" {link}>meridiancpd.co.uk/verify</a>.</p>
 <p style="{p}">If it works for you, the annual subscription is every course in the library, plus every new one we add, for <strong>£79 a year</strong> if you join before {OFFER_DEADLINE}.</p>
 <p style="margin:0 0 24px">If this isn't for you, the unsubscribe link below works, and that's the end of it.</p>
 {SIGNATURE_HTML}
