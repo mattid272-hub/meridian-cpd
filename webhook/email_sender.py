@@ -88,9 +88,7 @@ Before you dive in, a few things worth knowing from people who've been in the in
 ─────────────────────────────
 SPREAD YOUR CPD THROUGH THE YEAR
 ─────────────────────────────
-CPD spread across your membership year is easier to keep on top of than hours logged in a single weekend. Check your own scheme's CPD rules for what it asks of you.
-
-We'd suggest one course every few weeks, whenever you have a quiet hour.
+We'd suggest one course every few weeks across your membership year, whenever you have a quiet hour. Check your own scheme's CPD rules for what it asks of you.
 
 ─────────────────────────────
 DON'T RUSH TO COMPLETE EVERYTHING AT ONCE
