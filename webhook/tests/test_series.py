@@ -103,7 +103,7 @@ assert main._split_amount(3999, 3) == [1333, 1333, 1333] and main._split_amount(
 assert main._series_label("MER-ALL-020") == "Part 2 of 3 · Field Work: Insulation" and main._series_label("MER-DEA-001") == ""
 assert main.PRICE_TO_COURSE == {"price_single": "MER-DEA-001", "price_sub": "SUBSCRIPTION", "price_series": "SERIES"}
 for cid in PARTS: assert main._is_deck(cid) and main._pdf_url(cid).endswith(f"{cid}-deck.pdf") and main._notes_url(cid).endswith(f"{cid}.pdf")
-assert not main._is_deck("MER-ALL-018") and main._pdf_url("MER-ALL-018").endswith("MER-ALL-018.pdf")
+assert main._is_deck("MER-ALL-018") and main._pdf_url("MER-ALL-018").endswith("MER-ALL-018-deck.pdf") and main._notes_url("MER-ALL-018").endswith("MER-ALL-018.pdf")
 # a definition error stops the app from starting
 bad = main.COURSES["MER-ALL-020"]["part"]; main.COURSES["MER-ALL-020"]["part"] = 3
 try: main._check_series(); raise SystemExit("wrong part accepted")
@@ -191,7 +191,7 @@ print("4c email fails on part 3 after its row: redelivery sends part 3 only")
 sent.clear(); checkout("cs_live_s4d", "gus@example.com", price="price_single", client_ref="MER-ALL-018", amount=1999)
 assert [p["course_id"] for p in rows("cs_live_s4d")] == ["MER-ALL-018"] and rows("cs_live_s4d")[0]["amount_gbp"] == 19.99
 assert "series_id" not in rows("cs_live_s4d")[0] and rows("cs_live_s4d")[0].get("emailed_at")
-assert [x["course_id"] for x in sent] == ["MER-ALL-018"] and sent[0]["notes_url"] is None
+assert [x["course_id"] for x in sent] == ["MER-ALL-018"] and sent[0]["pdf_url"].endswith("MER-ALL-018-deck.pdf") and sent[0]["notes_url"].endswith("MER-ALL-018.pdf")
 assert sent[0]["series_title"] == "Field Work: Moisture" and sent[0]["part"] == 1 and sent[0]["parts_total"] == 3
 assert main._series_label("MER-ALL-018") == "Part 1 of 3 · Field Work: Moisture"
 # and the thanks page calls it a course, not a series (one part bought on its own has no series_id)
