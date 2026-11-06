@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Course Library — Meridian CPD</title>
-  <meta name="description" content="CPD courses for UK Domestic Energy Assessors and Retrofit Assessors, written from the RdSAP 10 conventions and specification with every rule referenced. From £19.99.">
+  <title>RdSAP 10 and Retrofit CPD Courses | Meridian CPD</title>
+  <meta name="description" content="CPD courses on RdSAP 10 and retrofit assessment, and the Field Work series on insulation, heating, ventilation and moisture. Written from the source documents, each rule referenced.">
+  <link rel="canonical" href="https://meridiancpd.co.uk/courses.html">
   <!-- Link previews (Facebook, LinkedIn, WhatsApp, X): branded card, never a portrait -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Meridian CPD">
-  <meta property="og:title" content="Course Library — Meridian CPD">
-  <meta property="og:description" content="CPD courses for UK Domestic Energy Assessors and Retrofit Assessors, written from the RdSAP 10 conventions and specification with every rule referenced. From £19.99.">
+  <meta property="og:title" content="RdSAP 10 and Retrofit CPD Courses | Meridian CPD">
+  <meta property="og:description" content="CPD courses on RdSAP 10 and retrofit assessment, and the Field Work series on insulation, heating, ventilation and moisture. Written from the source documents, each rule referenced.">
   <meta property="og:url" content="https://meridiancpd.co.uk/courses.html">
   <meta property="og:image" content="https://meridiancpd.co.uk/images/meridian-cpd-social.png">
   <meta property="og:image:secure_url" content="https://meridiancpd.co.uk/images/meridian-cpd-social.png">
@@ -19,8 +20,8 @@
   <meta property="og:image:alt" content="Meridian CPD: Stay Sharp. Stay Certified. meridiancpd.co.uk">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Course Library — Meridian CPD">
-  <meta name="twitter:description" content="CPD courses for UK Domestic Energy Assessors and Retrofit Assessors, written from the RdSAP 10 conventions and specification with every rule referenced. From £19.99.">
+  <meta name="twitter:title" content="RdSAP 10 and Retrofit CPD Courses | Meridian CPD">
+  <meta name="twitter:description" content="CPD courses on RdSAP 10 and retrofit assessment, and the Field Work series on insulation, heating, ventilation and moisture. Written from the source documents, each rule referenced.">
   <meta name="twitter:image" content="https://meridiancpd.co.uk/images/meridian-cpd-social.png">
   <meta name="twitter:image:alt" content="Meridian CPD: Stay Sharp. Stay Certified. meridiancpd.co.uk">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -824,7 +825,7 @@
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="courses.html" class="active">Courses</a></li>
-    <li><a href="index.html#pricing">Pricing</a></li>
+    <li><a href="index.html#offer">Pricing</a></li>
     <li><a href="index.html#faq">FAQ</a></li>
     <li><a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="nav-btn">Subscribe — £79/yr</a></li>
   </ul>
@@ -1861,6 +1862,35 @@ document.addEventListener('keydown', e => {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 renderGrid();
+
+// Structured data for Google: one Course entry per course on sale, built from the
+// same COURSES list the grid uses, so withdrawn courses never appear in it. Names and
+// descriptions are the catalogue's own text; no prices, no accreditation wording.
+(function addCourseSchema() {
+  const BASE = 'https://meridiancpd.co.uk/courses.html';
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'itemListElement': COURSES.map((c, i) => ({
+      '@type': 'ListItem',
+      'position': i + 1,
+      'item': {
+        '@type': 'Course',
+        'url': BASE + '?open=' + encodeURIComponent(c.id),
+        'name': c.title,
+        'description': c.desc,
+        'courseCode': c.id,
+        'inLanguage': 'en-GB',
+        'educationalCredentialAwarded': 'Certificate of completion',
+        'provider': { '@type': 'Organization', 'name': 'Meridian CPD', 'url': 'https://meridiancpd.co.uk/' }
+      }
+    }))
+  };
+  const el = document.createElement('script');
+  el.type = 'application/ld+json';
+  el.textContent = JSON.stringify(data);
+  document.head.appendChild(el);
+})();
 
 // Deep-link: courses.html?where=S preselects a nation (E, W or S)
 const _whereParam = new URLSearchParams(window.location.search).get('where');
