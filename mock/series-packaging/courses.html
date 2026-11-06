@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Courses (mock) | Meridian CPD</title><link rel="stylesheet" href="mock.css"></head>
+<body><div id="app"></div>
+<script src="data.js"></script><script src="mock.js"></script>
+<script>
+const { D, courseCard, seriesCard, row, ICON } = M;
+const ids = f => D.courses.filter(f).map(c => c.id);
+document.getElementById('app').innerHTML = `
+<div class="mock-ribbon">Mock for approval of the public courses page. Course and series data are real; buttons go nowhere.</div>
+<header class="site-nav"><a class="brand" href="#">MERIDIAN <span>CPD</span></a>
+  <ul><li><a href="#">Home</a></li><li><a href="#" style="color:#fff">Courses</a></li><li><a href="#">Pricing</a></li><li><a href="#">FAQ</a></li><li><a href="dashboard.html">Sign in</a></li><li class="keep"><a class="btn btn-p btn-sm" href="#">Subscribe, £79 a year</a></li></ul>
+</header>
+<section class="site-hero">
+  <div class="kicker">Courses</div>
+  <h1>Field Work series</h1>
+  <p>Three courses on one subject, bought together for £39.99. Slides for the site visit, written notes for the desk. A certificate of completion for each part as you finish it.</p>
+</section>
+<section class="series-grid">${Object.keys(D.series).map(s => seriesCard(s, 'public')).join('')}</section>
+<section class="sub-strip">
+  <div><h2>Annual membership</h2><p>Every course in the library, and new courses as they are released. A certificate of completion for every course you finish.</p></div>
+  <div style="display:flex;align-items:center;gap:20px"><div class="big">£79<span style="font-family:var(--body);font-size:15px"> a year</span></div><a class="btn" href="#">Subscribe</a></div>
+</section>
+<section class="lib">
+  <h2 class="big">Single courses, £19.99 each</h2>
+  <p class="muted" style="margin-bottom:18px">Start with RdSAP 10: What's Changed and Why, free with the code MERIDIAN10.</p>
+  <div class="toolbar" style="justify-content:flex-start"><div class="search" style="min-width:280px">${ICON.search} Search courses and topics</div></div>
+  <div class="chips">${['Anywhere', 'England', 'Wales', 'Scotland'].map((c, i) => `<span class="chip ${i ? '' : 'on'}">${c}</span>`).join('')}<span style="width:16px"></span>${['All topics', 'For DEAs', 'Retrofit', 'Heating', 'Insulation', 'Ventilation', 'Moisture'].map((c, i) => `<span class="chip ${i ? '' : 'on'}">${c}</span>`).join('')}</div>
+  ${row('For DEAs', ids(c => c.strand === 'DEA' && c.where !== 'S').map(id => courseCard(id, 'public')), 'See all')}
+  ${row('Retrofit', ids(c => c.strand === 'RA').map(id => courseCard(id, 'public')), 'See all')}
+  ${row('For every assessor', ids(c => c.strand === 'ALL' && !c.series && c.where !== 'S').map(id => courseCard(id, 'public')), 'See all')}
+  ${row('Scotland', ids(c => c.where === 'S').map(id => courseCard(id, 'public')), 'See all')}
+</section>
+<footer class="footer">© Meridian CPD 2026. Meridian CPD is a trading name of FistralAI Ltd. Check your own scheme's CPD rules.</footer>`;
+</script></body></html>

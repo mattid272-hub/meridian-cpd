@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My certificates (mock) | Meridian CPD</title><link rel="stylesheet" href="mock.css"></head>
+<body><div id="app"></div>
+<script src="data.js"></script><script src="mock.js"></script>
+<script>
+const { D, byId, MEMBER, memberTopbar, coursePoster, hours, esc, fmtDate, totals } = M;
+const list = Object.entries(MEMBER.completed).sort((a, b) => b[1].date.localeCompare(a[1].date));
+const t = totals();
+const rows = list.map(([id, r]) => { const c = byId[id]; return `<tr>
+  <td><div class="t"><div class="thumb">${coursePoster(c)}</div><div><b style="font-size:14px">${esc(c.title)}</b><div class="muted" style="font-size:12px">${id}${c.series ? ' · ' + esc(D.series[c.series].title) + ', Part ' + c.part : ''}</div></div></div></td>
+  <td style="white-space:nowrap">${fmtDate(r.date)}</td>
+  <td style="white-space:nowrap">${esc(hours(c.hours))}</td>
+  <td class="certno">${r.cert}</td>
+  <td><a class="lnk" href="#">Download PDF</a></td>
+  <td><a class="lnk" href="#">Verify</a></td></tr>`; }).join('');
+const cards = list.map(([id, r]) => { const c = byId[id]; return `<div class="card" style="flex:none">
+  <div class="body"><div class="title">${esc(c.title)}</div>
+  <div class="meta">${fmtDate(r.date)}<span class="dot"></span>${esc(hours(c.hours))}</div>
+  <div class="meta"><span style="font-family:ui-monospace,Menlo,monospace;color:#D4FF00">${r.cert}</span></div>
+  <div class="acts"><a class="btn btn-p btn-sm" href="#">Download PDF</a><a class="btn btn-s btn-sm" href="#">Verify</a></div></div></div>`; }).join('');
+document.getElementById('app').innerHTML = memberTopbar('My certificates') + `
+<main class="wrap">
+  <div class="kicker">My certificates</div>
+  <h1 class="h-display" style="font-size:54px;margin:6px 0 18px">Every certificate you have earned</h1>
+  <div class="tally">
+    <div><div class="num">${t.hours}</div><div class="lab">CPD hours in 2026</div></div>
+    <div><div class="num">${t.certs}</div><div class="lab">certificates of completion</div></div>
+    <div class="note">Each certificate carries its own number and a verify link. Check your own scheme's CPD rules for what it accepts and how to log it.</div>
+  </div>
+  <div class="toolbar"><span class="select">Year: 2026 ▾</span><a class="btn btn-p btn-sm" href="#">Download CPD record (PDF)</a></div>
+  <table class="cert-table"><thead><tr><th>Course</th><th>Completed</th><th>CPD hours</th><th>Certificate number</th><th></th><th></th></tr></thead><tbody>${rows}</tbody></table>
+  <div class="cert-cards">${cards}</div>
+</main>`;
+</script></body></html>

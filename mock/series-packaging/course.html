@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course (mock) | Meridian CPD</title><link rel="stylesheet" href="mock.css"></head>
+<body><div id="app"></div>
+<script src="data.js"></script><script src="mock.js"></script>
+<script>
+const { D, byId, MEMBER, memberTopbar, coursePoster, hours, esc, shortTitle, fmtDate, ICON, WHERE } = M;
+const issued = new URLSearchParams(location.search).get('state') === 'issued';
+const c = byId['MER-ALL-020'], s = D.series[c.series], next = byId[s.courses[c.part]];
+const sampleCert = 'MER-2026-0090';
+const panel = `<aside class="complete">
+  <div class="kicker" style="color:#4d7c0f">Certificate of completion</div>
+  <h2>${issued ? 'Certificate issued' : 'Get your certificate'}</h2>
+  <div class="step ok"><b class="n">1</b><span>Open the slide deck or the notes and work through the course.</span></div>
+  <div class="step ${issued ? 'ok' : ''}"><b class="n">2</b><span>Tick the declaration below.</span></div>
+  <div class="step ${issued ? 'ok' : ''}"><b class="n">3</b><span>Your certificate is issued here straight away. We email you a copy.</span></div>
+  ${issued ? `<div class="issued">
+      <div style="font-size:13px;color:#5C6B5D">Certificate number</div>
+      <div class="certno">${sampleCert}</div>
+      <div style="font-size:13px;margin-top:6px">${esc(c.title)}<br>${esc(hours(c.hours))} · completed ${fmtDate('2026-11-06')} · issued to Sample Member</div>
+      <div class="acts"><a class="btn btn-dark btn-sm" href="#">Download PDF</a><a class="btn btn-line btn-sm" href="#">Verify</a></div>
+      <p class="small">Saved in <a href="certificates.html" style="text-decoration:underline">My certificates</a>. A copy is on its way to your email.</p>
+      <a class="btn btn-p" style="margin-top:12px" href="#">Next: Part ${next.part}, ${esc(shortTitle(next))}</a>
+    </div>`
+  : `<label class="name">Name on your certificate</label>
+    <input type="text" value="Sample Member">
+    <div class="hint">Use your name as your scheme holds it.</div>
+    <div class="declare"><span class="box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D1F0E" stroke-width="3.5"><path d="M4 12l5 5L20 6"/></svg></span><span>I confirm I have read and understood the course material.</span></div>
+    <button class="btn btn-p">Confirm completion and get my certificate</button>
+    <p class="small">Your certificate of completion appears in My certificates as soon as you confirm. Check your own scheme's CPD rules for how to log it.</p>`}
+</aside>`;
+document.getElementById('app').innerHTML = memberTopbar('Series') + `
+<section class="page-head">
+  <div class="poster">${coursePoster(c)}</div>
+  <div>
+    <div class="crumb">Series › ${esc(s.title)} › Part ${c.part} of 3</div>
+    <div class="kicker">${esc(s.title)}</div>
+    <h1>${esc(shortTitle(c))}</h1>
+    <p style="color:#cfd8cf;max-width:640px">${esc(c.desc)}</p>
+    <div class="facts"><span class="fact">${esc(hours(c.hours))}</span><span class="fact">${esc(WHERE[c.where])}</span><span class="fact">Part ${c.part} of 3</span><span class="fact">${issued ? 'Certificate issued' : 'No certificate yet'}</span></div>
+    <div style="display:flex;gap:10px;margin-top:14px"><button class="icon-btn" title="Favourite">${ICON.heart}</button><button class="icon-btn" title="Read later">${ICON.mark}</button></div>
+  </div>
+</section>
+<main class="wrap"><div class="two-col">
+  <div>
+    <h2 class="section-title">Course material</h2>
+    <div class="materials">
+      <a class="material" href="#">${ICON.deck}<div><b>Open the slide deck</b><span>For the site visit</span></div></a>
+      <a class="material" href="#">${ICON.notes}<div><b>Open the written notes</b><span>The written course, for the desk</span></div></a>
+    </div>
+    <div class="panel"><h2>What you will be able to do</h2><ul>${c.objectives.map(o => `<li>${esc(o)}</li>`).join('')}</ul></div>
+  </div>
+  ${panel}
+</div></main>`;
+</script></body></html>

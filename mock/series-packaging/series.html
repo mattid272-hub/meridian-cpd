@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Work: Insulation (mock) | Meridian CPD</title><link rel="stylesheet" href="mock.css"></head>
+<body><div id="app"></div>
+<script src="data.js"></script><script src="mock.js"></script>
+<script>
+const { D, byId, MEMBER, memberTopbar, seriesPoster, coursePoster, hours, esc, shortTitle, fmtDate, status, ICON, WHERE } = M;
+const sid = 'FW-INSULATION', s = D.series[sid];
+const done = M.seriesDone(sid);
+const parts = s.courses.map(id => {
+  const c = byId[id], cert = MEMBER.completed[id], prog = MEMBER.inProgress[id];
+  const side = cert
+    ? `<span class="status done" style="align-self:flex-start">Certificate issued ${fmtDate(cert.date)}</span><span class="certno">${cert.cert}</span>
+       <a class="btn btn-s btn-sm" href="#">Download PDF</a><a class="btn btn-s btn-sm" href="#">Open again</a>`
+    : prog != null
+      ? `<span class="status prog" style="align-self:flex-start">In progress</span><a class="btn btn-p btn-sm" href="course.html">Continue Part ${c.part}</a>`
+      : `<span class="status none" style="align-self:flex-start">No certificate yet</span><a class="btn btn-p btn-sm" href="course.html">Open Part ${c.part}</a>`;
+  return `<div class="part"><div class="cover">${coursePoster(c)}</div>
+    <div><div class="kicker">Part ${c.part} of 3 · ${esc(hours(c.hours))}</div><h3>${esc(shortTitle(c))}</h3><p>${esc(c.desc)}</p></div>
+    <div class="side">${side}</div></div>`;
+}).join('');
+document.getElementById('app').innerHTML = memberTopbar('Series') + `
+<section class="page-head">
+  <div class="poster">${seriesPoster(sid)}</div>
+  <div>
+    <div class="crumb">Series › Field Work</div>
+    <div class="kicker">Field Work series</div>
+    <h1>${esc(s.title)}</h1>
+    <p style="color:#cfd8cf;max-width:620px">Three courses on insulation: the principles and cavity wall insulation, external wall insulation, and internal wall insulation. Slides for the site visit, written notes for the desk. Each part has its own certificate of completion.</p>
+    <div class="facts"><span class="fact">${esc(hours(M.seriesHours(sid)))}</span><span class="fact">Three parts</span><span class="fact">A certificate for each part</span><span class="fact">${esc(WHERE[byId[s.courses[0]].where])}</span></div>
+    <div class="progress"><div class="bar"><div class="fill" style="width:${done / 3 * 100}%"></div></div><div class="lbl">${done} of 3 parts complete · ${done} certificate${done === 1 ? '' : 's'} issued</div></div>
+    <div style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap"><a class="btn btn-p" href="course.html">Continue Part 2</a><button class="btn btn-s">${ICON.heart.replace('<svg', '<svg width="16" height="16"')} Favourite</button></div>
+  </div>
+</section>
+<main class="wrap">
+  <h2 class="section-title">The three parts</h2>
+  ${parts}
+  <h2 class="section-title" style="margin-top:28px">Certificates from this series</h2>
+  <div class="panel" style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+    <div><b>${done} of 3 issued.</b> <span class="muted">Each certificate is listed in My certificates with its number, a PDF and a verify link.</span></div>
+    <a class="btn btn-s btn-sm" href="certificates.html">Open My certificates</a>
+  </div>
+</main>`;
+</script></body></html>
