@@ -30,6 +30,8 @@ Expect a further edition when the full response or draft regulations appear.
 
 ## Section 1: The law in force, EPC E under the 2015 Regulations
 
+**In short:** The newest valid EPC decides whether a let non-domestic property in England or Wales is sub-standard: below band E, whatever the building's size, the landlord must not grant, extend or renew a tenancy, or since 1 April 2023 continue letting, unless an exemption applies. Some properties are excluded, as set out below, but do not tell a client that a listed building is automatically outside MEES.
+
 Part 3 of SI 2015/962 sets the non-domestic standard. It is in force; the 2031 standard in Section 3 is not.
 
 ### Which properties are caught
@@ -64,6 +66,8 @@ Each also carries the publication penalty: details such as the breach, the addre
 
 ## Section 2: The seven-year payback test and the exemptions
 
+**In short:** A commercial landlord who quotes you a £3,500 cap is reading the domestic rules: for Table 6 improvements the non-domestic test is a simple payback of seven years or less, with cost taken excluding VAT. The evidence registered for a payback exemption includes three quotations, not your EPC, and a savings calculation is a separate instruction whose scope it is sensible to agree in writing. Exemptions can be relied on only once registered.
+
 ### Where the list of improvements comes from
 
 The prohibition turns on "relevant energy efficiency improvements". For non-domestic property an improvement is relevant if it is listed in the Schedule to the Green Deal (Qualifying Energy Improvements) Order 2012 or in Table 6 of Approved Document L2B, and has been recommended for the property in a green deal report, a recommendation report or a report by a surveyor (regulation 28(1)). A recommendation report means an energy assessor's recommendations "for the cost-effective improvement of the energy performance of a building" (SI 2012/3118, regulation 4(1)). Your report identifies measures and notes indicative paybacks; the government guide does not describe it as giving prices (Guide to EPCs for non-dwellings, section 5).
@@ -96,6 +100,8 @@ Exemptions are registered on the PRS Exemptions Register (regulation 36(2)) and 
 
 ## Section 3: The 2031 proposal, what was said and what is still open
 
+**In short:** If a client asks whether their building must reach B by 2031, the accurate answer today is no: the law requires E, and the government intends B from 2031 for private rented buildings over 1,000 square metres, where cost effective, which needs secondary legislation. The interim response does not give the start day, how the area is measured or the enforcement model, so do not fill those gaps with the 2021 proposals.
+
 ### How we got here
 
 The government consulted in 2019 and again in 2021. The 2021 consultation (England and Wales, 17 March to 9 June 2021) proposed "one interim milestone: EPC C by 2027" and EPC B for all non-domestic rented buildings by 1 April 2030, with compliance windows and "a move away from enforcement at the point of let". It said the government intended "to retain the payback threshold at 7 years", and proposed replacing the "three quotes" system with a calculator giving standardised purchase and installation costs (BEIS consultation document, March 2021, pages 20 to 23 and 38 to 39). These were proposals. None was legislated.
@@ -127,6 +133,8 @@ On scale, the 2021 consultation said commercial and industrial buildings above 1
 ---
 
 ## Section 4: What this means for the assessor's work
+
+**In short:** A prospective or actual tenant can enforce your duty of reasonable care and skill while your EPC is valid, and near a band boundary the conventions on defaults, evidence, U-values and measurement are worth rereading. It is sensible to say that an indicative payback is not the regulation 28 calculation, and for a building near 1,000 square metres, keep your measurement record in good order and tell the client the threshold rule is not yet known.
 
 ### Your EPC already carries legal weight
 

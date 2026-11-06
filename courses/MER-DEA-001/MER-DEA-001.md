@@ -25,6 +25,8 @@ We describe something as new or changed only where the specification, the conven
 
 ## Section 1: The documents and how they fit together
 
+**In short:** You should read the specification together with the Conventions applicable at the time of assessment, and where a convention conflicts with the specification, follow the convention. Version 12.2 is marked applicable from 6 August 2026, but the conventions do not say whether that means the inspection date or the lodgement date, so check your scheme's bulletin for jobs close to that date. If a technology might be the subject of a BRE Technical Note, you must check BRE's list.
+
 ### What RdSAP is
 
 The specification describes Reduced data SAP as the UK approved methodology for assessing energy performance and generating EPCs for existing dwellings. Any new dwelling must be assessed using SAP (specification, Introduction; convention 1.01).
@@ -60,6 +62,8 @@ BRE produces Technical Notes so that certain technologies can be recognised in S
 ---
 
 ## Section 2: What is new in RdSAP 10
+
+**In short:** You now measure every window and allocate each to a main wall, extension or alternative wall, and new rules cover curtain wall, mechanical ventilation and small-scale hydro. A draught lobby must meet every condition in convention 2.09b, though a flat reached through an enclosed corridor or stairwell should be classified as having one. Shutters must be confirmed operational on the day by opening them, and the air tightness default applies unless you have a pressure test certificate meeting convention 10.01.
 
 ### The specification's own list
 
@@ -112,6 +116,8 @@ A scheme technical bulletin also draws attention to the following. Each can be f
 
 ## Section 3: Windows measured individually
 
+**In short:** Measure the width and height of every relevant window, including the visible frame, to 0.01 m or better; if in doubt about a glazed door, measure it and treat it as a window if the glazing area is 60% or more. Windows in a non-separated conservatory are not relevant windows. Choose unknown glazing age if there is no evidence of the date, and overwrite default window U-values and g-values only with a BFRC Window Energy Rating certificate or manufacturer's data.
+
 ### What counts as a window
 
 A window is an opening in an external wall or roof, fitted with glass or similar material, usually in a frame, that admits light. A door may be treated as a window if it is highly glazed, for example a patio door, a fully glazed door or a French door. If in doubt, measure it and treat it as a window if the glazing area is 60% or more (convention 2.14).
@@ -149,6 +155,8 @@ Default window U-values and g-values can be overwritten only with documentary ev
 
 ## Section 4: Roof rooms, Type 1 and Type 2
 
+**In short:** Type 1 sits fully within the roof and is always treated as a roof room; a space with an accessible common wall is a Type 2 roof room only if that wall is 1.8 m or less for 50% or more of it, excluding gable ends and party walls. Neither definition depends on whether it is a conversion. At exactly 1.8 m, ask your scheme. If any element has known insulation levels, use the detailed method and measure all elements.
+
 ### Is it a roof room at all?
 
 A roof room is included when it is reached by a permanent fixed staircase that you can walk down facing forwards (convention 2.06).
@@ -180,6 +188,8 @@ For each roof room the gable type is recorded as exposed, party wall (adjacent t
 ---
 
 ## Section 5: PV, batteries, diverters and lighting
+
+**In short:** Find the PV peak power in kWp; if you cannot, the declared net capacity on the MCS certificate may be used. Each battery needs photographic or written evidence of manufacturer, model and usable capacity, or you use 5 kWh per battery; ask your scheme how many can be entered. A diverter without written evidence of manufacturer and model cannot be entered. Count lamps, not fittings, and record a missing or unidentifiable lamp as CFL, subject to the 50% rule below.
 
 ### Photovoltaics
 
@@ -218,6 +228,8 @@ Consider all lamps, meaning bulbs or tubes, in permanent fittings within the dwe
 
 ## Section 6: What v12.2 changed
 
+**In short:** Record a conservatory whose roof has been replaced or given a false ceiling, so that it no longer meets the definition, as an extension, and treat Heat as a Service as community heating where the provider owns or operates the heat generator and specific documentary evidence is provided. Both come from conventions added in v12.2, which also deletes Appendix 4. Version 12.2 does not say how to treat a temporarily blocked chimney, so ask your scheme.
+
 ### The lists in the revision history
 
 The revision history for version 12.2 reads (conventions v12.2, revision history):
@@ -252,6 +264,8 @@ Conventions 1.04a, 2.16, 2.17, 4.09, 9.02 and 9.08 also have visible changes, an
 ---
 
 ## Section 7: Evidence
+
+**In short:** In England, Wales and Northern Ireland, rely on a document only if you are confident, and can demonstrate, that it relates to the property and no physical or other documentary evidence contradicts it. Intent to install alone does not qualify. Keep default wall, roof and floor U-values unless you have, for that property, building control approval correctly defining the construction and stating the calculated U-value, or a U-value calculation produced or verified by a person with suitable expertise and experience.
 
 ### Documentary evidence
 

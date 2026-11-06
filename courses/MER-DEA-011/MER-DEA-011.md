@@ -25,6 +25,8 @@ The course does not describe software screens, which differ between schemes and 
 
 ## Section 1: Capacity: kWp, DNC and the percentage of roof route
 
+**In short:** Look for the array's kWp in the system specification documents or the schematic wiring diagram; if it cannot be found, you may use the DNC stated on the MCS certificate. If neither can be ascertained, do not allocate the PV, except where it is connected to a meter serving a single dwelling: then record the percentage of the total roof area occupied by PVs, extensions included, not just the slope the panels sit on.
+
 ### The figure you are looking for
 
 When photovoltaics are present, the peak power of the array in kWp is required (convention 9.05). The convention names where you might find it: the system specification documents, or the schematic wiring diagram, which may be next to the electricity meter or the consumer unit (convention 9.05).
@@ -64,6 +66,8 @@ An illustration using those rules: a dwelling has 50 square metres of roof area 
 
 ## Section 2: Roof planes, the generation meter and connection
 
+**In short:** Enter panels on different roof planes as separate systems, apportioning a single total kWp or DNC by the estimated relative area of each. Verify connection to the dwelling's meter by a PV generation meter or documentary evidence, but PV generation is included only if a generation meter serves the dwelling, so with documents but no meter, ask your scheme before lodging. If connection cannot be determined, the panels are still allocated but should not be specified as connected.
+
 ### Panels on different roof planes
 
 If there are PV panels on different planes of the roof, enter them as separate systems (convention 9.05). If only a total kWp or DNC is provided, estimate the relative area of each and apportion the value accordingly (convention 9.05).
@@ -100,6 +104,8 @@ The data set also asks whether the dwelling is export-capable, yes or no, becaus
 
 ## Section 3: PV shared between buildings or dwellings
 
+**In short:** Where PV serves more than one building, or several dwellings in a building, allocate its total capacity on an area-weighted basis using an estimate of the total floor area of everything it serves, whether dwellings, non-domestic buildings or a mix. Entering the full capacity against one flat, or splitting it equally, would not follow the convention. The sources do not say how a shared array with no kWp or DNC, or a shared battery, is treated, so ask your scheme.
+
 ### The rule
 
 Where the PV supply is serving more than one building, or multiple dwellings within the building, the total capacity of the PV is allocated between the buildings on an area-weighted basis, based on an estimate of the total floor area of all of the buildings or dwellings served by the PV (convention 9.05).
@@ -125,6 +131,8 @@ On either, ask your accreditation scheme.
 ---
 
 ## Section 4: Batteries, diverters and related entries
+
+**In short:** For a PV battery you need photographic or written evidence of the manufacturer, model and usable capacity; without it, use a default of 5 kWh per battery. An individual battery above 5 is entered as two, the first at 5 and the excess as the second, but the sources mix their units, so ask your scheme if that matters. A PV diverter needs written evidence of its manufacturer and model, and without it the diverter cannot be entered.
 
 ### PV batteries: what is recorded
 

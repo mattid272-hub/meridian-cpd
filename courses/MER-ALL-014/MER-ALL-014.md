@@ -31,6 +31,8 @@ The policy statements in this course are correct to 14 October 2026.
 
 ## Section 1: What a SMETER Measures and How
 
+**In short:** When a client shows you a SMETER result, remember that an HTC is a heat loss rate in W/K, covering fabric and ventilation together, not an energy rating, a cost or a carbon figure. A SMETER typically estimates it from metered energy use and indoor and outdoor temperatures, while RdSAP 10 calculates heat loss from your survey; this course found no provision in the RdSAP 10 Specification or Conventions for entering metered consumption.
+
 ### The heat transfer coefficient
 
 The government's technical evaluation defines the HTC as "the rate at which heat is lost per degree Celsius air temperature difference" between inside and outside, "in units of W/K" (TEST executive summary, BEIS, January 2022). Heat is lost by transmission through the fabric and by ventilation, both intended and unintended (strategic guide), so an HTC covers fabric and ventilation losses together. It is a heat loss rate, not an energy rating, a cost or a carbon figure.
@@ -54,6 +56,8 @@ RdSAP 10 calculates heat loss from your survey; where a pressure test result "at
 ---
 
 ## Section 2: What the Government Trial Found
+
+**In short:** Do not assume a SMETER beats RdSAP: in the government trial, only one SMETER was more accurate than a commercial RdSAP on both measures, though that used an older RdSAP in relatively simple homes, and the report warns average commercial RdSAP would be less accurate than observed. The trial had no flats, new-build or larger homes, and later work suggests remote-only SMETERs are not accurate enough to show the effect of works in individual homes.
 
 ### The programme
 
@@ -83,6 +87,8 @@ DESNZ's Green Homes Grant SMETER project, published on 4 September 2025, studied
 ---
 
 ## Section 3: Where SMETER Stands in Policy, October 2026
+
+**In short:** Treat SMETER as outside the EPC today: this course found no provision for lodging a result in the RdSAP 10 Specification or Conventions, and no source read makes SMETER mandatory. The January 2026 HEM consultation proposes an option to record a validated SMETER HTC voluntarily beside the calculated one, and feedback was still being analysed on 14 October 2026: a proposal, not a decision. DESNZ is developing validation and quality assurance, and its strategic guide sets no thresholds.
 
 ### Not part of the EPC
 
@@ -115,6 +121,8 @@ No British Standard or PAS specific to SMETER was found. Related documents, not 
 ---
 
 ## Section 4: Measured Performance in Your Practice
+
+**In short:** A marked difference between a credible measured HTC and your calculated one is information, not proof of error on either side; a sensible habit is to recheck your own evidence first. Useful questions, not requirements, are what type of method, what period and season, how wide the confidence interval is and whether all the heat was metered. PAS 2035:2023 does not mention SMETER; it is one technique an evaluator could choose, and nothing in the PAS requires it.
 
 ### What PAS 2035:2023 says
 

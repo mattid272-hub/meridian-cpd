@@ -15,7 +15,7 @@
 
 ## Introduction
 
-This course is a status report. For each policy it gives the rule, its status (regulations in force, made but not yet in force, a decision not yet legislated, or a proposal), the nation and the dates. It is correct to 12 October 2026; several items will move again, so check the source before quoting a date.
+This course is a status report. For each policy it gives the rule, its status (regulations in force, made but not yet in force, a decision not yet legislated, or a proposal), the nation and the dates. It is correct to 12 October 2026, and the Scottish position was re-checked on 2 November 2026; several items will move again, so check the source before quoting a date.
 
 Most of what follows applies to England and Wales, because the EPC and private rented sector regulations are England and Wales instruments. The Future Homes Standard regulations, the social housing decision, Warm Homes: Local Grant and the Home Upgrade Grant apply to England only. ECO is a Great Britain scheme. Scotland appears only for its EPC reform date. Northern Ireland is not covered: no source for it was read.
 
@@ -26,6 +26,8 @@ Related courses: MER-ALL-005 (Future Homes Standard), MER-ALL-008 (Renters' Righ
 ---
 
 ## Section 1: What is law today
+
+**In short:** Tell clients that band E is the only legal minimum for letting private rented property in England and Wales until new regulations are made and in force; below it a landlord must not let unless an exception or exemption in the Regulations applies. If you see a band move between RdSAP 9.94 and RdSAP 10 certificates with no work done, the carbon factor is not the reason: the band is cost-based, on the SAP 2012 prices.
 
 ### The minimum standard for letting is band E
 
@@ -53,6 +55,8 @@ So when a band changes between an RdSAP 9.94 certificate and an RdSAP 10 one wit
 
 ## Section 2: Rented homes, the decisions of 2026
 
+**In short:** Keep decisions and law apart when you advise. Privately rented homes in England and Wales are to reach EPC C by 1 October 2030, and social rented homes in England C on one metric by 1 April 2030 and a second by 1 April 2039, subject to the caps, exemptions and other conditions below. On the sources read neither is shown in force, so for private lettings the law is still band E.
+
 ### Private rented homes: EPC C by 1 October 2030
 
 The Department for Energy Security and Net Zero (DESNZ) consulted from 7 February to 2 May 2025 on privately rented homes in England and Wales, and responded on 21 January 2026 (GOV.UK, Improving the energy performance of privately rented homes: 2025 update). It decided:
@@ -79,6 +83,8 @@ DESNZ's interim response of 18 June 2026, for England and Wales, proposes EPC B 
 
 ## Section 3: EPC reform and the Future Homes Standard
 
+**In short:** Treat EPC reform in England and Wales as policy, not law: the launch has moved to the second half of 2027 with no launch date given, so ask your scheme for the timetable. Scotland's 30 April 2028 date for new-style EPCs is now law, in regulations the Scottish Parliament approved (SSI 2026/322). The Future Homes Standard regulations are made but not yet in force: they apply in England from 24 March 2027, subject to the exceptions below.
+
 ### EPC reform in England and Wales
 
 MHCLG, supported by DESNZ, published a partial government response on reforms to the Energy Performance of Buildings regime on 21 January 2026. For domestic EPCs it set out these policies:
@@ -91,7 +97,7 @@ These are policy positions, not law. The response says that, subject to parliame
 
 ### Scotland
 
-Scotland has its own regime. The Scottish Government's update of 24 August 2026 says regulations introducing new-style EPC certificates, validity periods and rating systems "will now be amended to come into force on 30 April 2028" (gov.scot, Energy Performance Certificate reform: updates). These are the Energy Performance of Buildings (Scotland) Regulations 2025, otherwise due to come fully into force on 31 October 2026. The change is in draft amending regulations laid on 24 August 2026 under the affirmative procedure, which cannot take effect unless the Scottish Parliament approves them (Clerk's note of 29 September 2026, Economy, Tourism and Energy Committee). This course could not confirm that Parliament has approved them.
+Scotland has its own regime. The Scottish Government's update of 24 August 2026 says regulations introducing new-style EPC certificates, validity periods and rating systems "will now be amended to come into force on 30 April 2028" (gov.scot, Energy Performance Certificate reform: updates). These are the Energy Performance of Buildings (Scotland) Regulations 2025, which as made were to come fully into force on 31 October 2026. The amending regulations were laid in draft on 24 August 2026 under the affirmative procedure (Clerk's note of 29 September 2026, Economy, Tourism and Energy Committee). The Scottish Parliament approved the draft, and it was made on 28 October 2026 as the Energy Performance of Buildings (Scotland) Amendment Regulations 2026 (SSI 2026/322, heading and preamble). Its regulation 3(2), in force since 30 October 2026 (regulation 1(2)), moves full commencement of the 2025 Regulations to 30 April 2028.
 
 ### The Future Homes Standard
 
@@ -105,6 +111,8 @@ The Building Regulations etc. (Amendment) (England) Regulations 2026 (SI 2026/33
 ---
 
 ## Section 4: The Warm Homes Plan and the funding schemes
+
+**In short:** Check a scheme's status before pointing a client to it: as at 12 October 2026, Home Upgrade Grant Phase 2 and the Great British Insulation Scheme are closed, ECO4 runs until 31 December 2026, and Warm Homes: Local Grant is delivered in England to March 2028 under guidance requiring the latest PAS 2035, currently PAS 2035:2023. The Warm Homes Plan text read mentions neither PAS 2035 nor TrustMark, so ask TrustMark or your scheme before saying those arrangements are changing.
 
 ### What the plan is
 

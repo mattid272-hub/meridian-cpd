@@ -29,6 +29,8 @@ This edition replaces the March 2026 edition. That edition listed "mandatory" Tr
 
 ## Section 1: What PAS 2035:2023 requires of the assessment
 
+**In short:** Your assessment shall cover every item of clause 7.3.2 a) to l), with a BS 7913 significance assessment for a traditionally constructed dwelling, and shall go to the Retrofit Designer as a complete report with the data file and a photographic record, defects sorted into the two clause 7.4.2 categories. The "Table C.1" ventilation checklist that item f) cites is not in the published text, so ask your scheme provider which checklist it expects.
+
 ### Who assesses
 
 PAS 2035:2023 defines a retrofit assessment as the "survey, inspection and assessment of a building to collate information for a retrofit design" (clause 3.27). A Retrofit Assessor shall be trained and qualified in accordance with Annex A (clause 7.3.1): a domestic energy assessor certified and registered by an assessor body (or working towards it by a recognised route), or a RICS registered surveyor (Annex A.1.1), with a traditional buildings award as well where the dwelling is traditionally constructed (Annex A.1.2). The Retrofit Coordinator shall confirm that every dwelling due for energy retrofit work is first assessed by a Retrofit Assessor (clause 7.1.1).
@@ -64,6 +66,8 @@ So the submission PAS 2035:2023 itself requires of you is a complete report, dat
 ---
 
 ## Section 2: TrustMark and the Data Warehouse: what each source says
+
+**In short:** In PAS 2035:2023, uploading to TrustMark's data warehouse appears only in NOTEs, so the duty to lodge, and who does it, comes from scheme and funding rules. For ECO4, Ofgem expects the pre-installation RdSAP assessment to be lodged in the Data Warehouse but does not say who lodges it, so ask your scheme provider or Retrofit Coordinator. TrustMark's own documents could not be opened for this edition, so read the current versions before lodging.
 
 ### What PAS 2035:2023 says
 
@@ -103,6 +107,8 @@ Ofgem refers to TrustMark's Framework Operating Requirements (paragraph 5.263) a
 
 ## Section 3: What your data decides in an ECO4 project
 
+**In short:** In ECO4 your pre-retrofit assessment determines the starting SAP rating, and rules turn on your entries: overridden U-values need the scheme provider's prior agreement, and a recorded full set of working heating controls rules out standard heating controls measures. A building fabric repair increase on an owner-occupied home starting in band E, F or G depends on defects being reported as needing repair before any retrofit work can proceed. As practice, note the smart meter conversation and the consumer's choice.
+
 ### Starting point and the minimum requirement
 
 The pre-retrofit assessment "determines the starting SAP rating", needed to evidence eligibility and calculate scores (paragraph 4.15). For a full project score, unless an exemption or consumer circumstance applies, a project must lift a starting band F or G home to at least band D, and a D or E home to at least band C (paragraphs 4.36 and 4.41 to 4.43); homes starting at band C or above are not eligible, except in-fill (paragraph 4.37). The floor area should not change between the pre and post retrofit assessments (paragraph 6.13).
@@ -130,6 +136,8 @@ Ofgem's guidance says the Retrofit Assessor will discuss the benefits of a smart
 ---
 
 ## Section 4: Evidence quality, audit and records
+
+**In short:** Make sure your report, data file and photographs agree on address, dates, dimensions and findings: under Ofgem's standards, ECO documentation that falls short may be considered for rejection, so score errors through with a single line, sign and date the correction, and use date and geo-stamped photos. PAS 2035:2023 sets no retention period for assessment records, so ask your scheme provider for the period that applies. The data system reforms DESNZ consulted on in June 2026 are proposals, not law.
 
 ### TrustMark's quality assurance in ECO4
 

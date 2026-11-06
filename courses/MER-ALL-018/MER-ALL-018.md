@@ -47,6 +47,8 @@ Some worked numbers in Section 2 are calculated, not quoted. Each calculation sh
 
 ## Section 1: Where Moisture in Homes Comes From
 
+**In short:** Treat mould as a symptom: the government's guidance names four kinds of damp that produce it, and warns that rising damp "is often misdiagnosed". Record what you observe, such as clothes drying on radiators, alongside the ventilation and heating you found, rather than blaming lifestyle or naming a cause. The cause matters for what the landlord should do next, not for whether the problem should be reported.
+
 ### Four sources, one symptom
 
 Mould and damp staining are symptoms. The government's damp and mould guidance names four kinds of damp that produce them ("Understanding damp and mould"):
@@ -113,6 +115,8 @@ On a typical working week you will see more mould than the 5% figure suggests, b
 ---
 
 ## Section 2: Condensation Mechanics
+
+**In short:** Mould can start on a surface that never looks wet, because relative humidity at a cold surface is higher than the room reading: at 20°C and 60% RH, a 15°C surface sits at about 82%. As a working concept, mould becomes likely above about 75% to 80% surface humidity sustained over weeks, but do not quote a single number as a hard threshold in a report. Treat mould patterns as pointers, not conclusions.
 
 ### Relative humidity and dew point
 
@@ -236,6 +240,8 @@ Those are patterns, not conclusions. Section 4 shows how to use them.
 
 ## Section 3: Thermal Bridging at Junctions
 
+**In short:** Check reveals, lintels, floor perimeters, external corners, eaves and party wall junctions, where thermal bridges leave surfaces colder, but treat the mould pattern at each as a reason to look closely, never as proof. After insulation, an uninsulated junction can become the coldest surface in the room. Record construction accurately, including lime render or cement repairs, and whether extract fans are present and run, because the designer and coordinator need that evidence.
+
 ### What a thermal bridge is
 
 PAS 2035:2023 defines a thermal bridge as an area where insulation is discontinuous, thinner or of higher conductivity than the adjacent insulation, or less effective because of the geometry, "leading to locally increased heat loss" and "locally reduced internal surface temperature" (clause 3.36). Approved Document L Volume 1 puts it the same way: "Thermal bridges occur when an area of a building has significantly higher heat transfer than the surrounding parts. Breaks in insulation, reduced insulation or more conductive materials can contribute to thermal bridge effects" (paragraph 4.16).
@@ -325,6 +331,8 @@ Note what Approved Document C does and does not say. It sets a maximum U-value "
 
 ## Section 4: Telling the Twins Apart
 
+**In short:** You are not there to name the cause, but a good record of pattern, location and context lets whoever does name it get it right first time, and helps you decide when to refer. As indicators, not tests, note whether the damp follows the weather or life inside, sits only low on the wall, or grows from a source point, and check outside for defects. Record everything you saw without forcing a single cause.
+
 ### Why the twins get confused
 
 Condensation, penetrating damp, rising damp and leaks can all leave wet patches, staining and mould. They can coexist in the same room. And the treatments are very different: an extract fan does nothing for a leaking gutter, and injecting a chemical damp proof course does nothing for condensation. The government's guidance warns that rising damp in particular "is often misdiagnosed" ("Understanding damp and mould").
@@ -389,6 +397,8 @@ A home can have more than one moisture source at once. A wall with a blocked gut
 
 ## Section 5: Instruments and Their Limits
 
+**In short:** Do not report a moisture meter reading on masonry or plaster as a moisture content, or use a single high reading as evidence of rising damp: in Historic England's laboratory tests on historic masonry, salts strongly affected readings, and comparing readings across materials is not advisable. If you record one, give it as a relative reading on the meter's own scale, with meter type, material, location and height. A single spot humidity reading is only a snapshot.
+
 ### The question meters are asked to answer
 
 On many visits someone will ask for, or expect, a moisture meter reading. The instrument is quick, the number looks authoritative, and a high reading appears to settle the question. On masonry and plaster it usually does not. The best primary source this course could open on this is a 2022 Historic England research report that tested handheld moisture meters against weighed samples.
@@ -432,6 +442,8 @@ The damp and mould guidance lists "consistently high relative humidity, as asses
 
 ## Section 6: Health Context and Landlord Duties
 
+**In short:** Where there is mould and the household includes people at increased risk, such as children or older people, record both facts together, factually, with consent where personal information is involved. The legal duties fall on landlords, not you, but your written report can be the moment a social landlord in England becomes aware of a potential hazard. You should not advise on cleaning extensive mould, but you can point tenants to their landlord and owners to professional advice.
+
 ### Why damp and mould matter for health
 
 The government's guidance states: "Damp and mould primarily affect the airways and lungs, but they can also affect the eyes and skin." It says "Everyone is vulnerable to the health impacts of damp and mould" ("Health effects of damp and mould"). It names people at increased risk, including:
@@ -461,6 +473,8 @@ The guidance says "most tenants could reasonably be expected to remove condensat
 ---
 
 ## Section 7: Recording, Photographing and Referring
+
+**In short:** Recognise and record: describe location, extent, pattern, context and construction, say what is "possible" or "likely" rather than "confirmed" or "caused by", and advise the client to get professional advice. Never tell a householder or landlord to open up walls, inject a damp proof course or apply tanking. Where a householder reports solid wall insulation, external or internal, installed under ECO4 or GBIS, signpost TrustMark's free audit; they should contact TrustMark to confirm whether the home qualifies.
 
 ### What an assessor should say
 

@@ -29,6 +29,8 @@ This subject is still moving; the course is correct to 14 October 2026.
 
 ## Section 1: What Was Published and When It Applies
 
+**In short:** Work out which standard applies building by building. In England the 2026 changes come into force on 24 March 2027, with the main changes for higher-risk building work on 24 September 2027, and do not apply to a building whose notice or application was given before 24 March 2027, provided work on it is commenced before 24 March 2028; higher-risk work has its own rule below. Homes built to the 2021 standard will still be completing well after March 2027.
+
 ### The package
 
 The Ministry of Housing, Communities and Local Government (MHCLG) published the package on 24 March 2026 (gov.uk, Future Homes and Buildings Standards: 2023 consultation). The parts an assessor needs are:
@@ -55,6 +57,8 @@ Wales has its own instrument, the Building etc. (Amendment) (Wales) Regulations 
 ---
 
 ## Section 2: What the 2026 Standards Ask of a New Home
+
+**In short:** Calculate a new dwelling's rates at design stage and as built; they must not exceed the three targets, and the as-built BREL report should come with photographic evidence. Limiting fabric values are unchanged from 2021, but the default y-value of 0.20 has gone. Gas boilers are not banned by law, but paragraph 4.4 guidance says heating and hot water in new dwellings should use fuels within set CO2 and primary energy factors or a district heat network.
 
 ### What the Regulations change
 
@@ -98,6 +102,8 @@ Part O was not revised: the Circular lists only the L and F volumes (paragraph 1
 
 ## Section 3: SAP 10.3, the Home Energy Model and EPCs
 
+**In short:** At the last statement found, 8 June 2026, SAP 10.3 was the sole approved methodology, with HEM to follow; no notice approving HEM was found, but the search was not exhaustive, so confirm with your scheme, and ask which SAP version applies to homes still being built to the 2021 standard. EPC reform is separate, its launch moved to the second half of 2027, and producing EPCs from HEM is not settled in what was read.
+
 ### SAP 10.3 is the method in use
 
 ADL1 2026 names two methodologies "developed for this purpose", the Home Energy Model (HEM) and SAP, each with its own notional dwelling, and leaves the dates each is approved to the notice of approval (regulation 24 intention and paragraph 1.3). At the last statement found, only SAP was available. On 8 June 2026 DESNZ said HEM's launch had been delayed and SAP 10.3 "is currently available as the sole approved methodology", with HEM to follow "in the coming months" (gov.uk, Standard Assessment Procedure guidance).
@@ -121,6 +127,8 @@ DESNZ's consultation on producing EPCs with HEM closed on 18 March 2026 and is m
 ---
 
 ## Section 4: Existing Homes, Retrofit and Your Practice
+
+**In short:** If you do RdSAP work, nothing in the package changes your work now; EPC reform is what will. Existing-dwelling guidance in the 2026 editions takes effect on 24 March 2027, subject to the transitional rules, while L3 and paragraph 4.4 are for new dwellings. Whether limiting values for extensions or thermal elements changed could not be confirmed, so check those tables or ask building control. For on-construction work, it is sensible to record plot by plot which standard applies.
 
 ### Work on existing homes
 

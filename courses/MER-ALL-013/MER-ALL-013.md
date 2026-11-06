@@ -29,6 +29,8 @@ This edition replaces the August 2026 edition. That edition was written without 
 
 ## Section 1: TM59 (2026): What CIBSE Says Has Changed
 
+**In short:** TM59 is CIBSE guidance, not a regulation, and the 2026 edition is a design stage tool using dynamic thermal models, not a site survey method; this course has not read its text. CIBSE says TM59 (2017), with the 2016 weather files, is still required for Part O, and PAS 2035:2023 cites the 2017 edition. The PAS does not say whether a Designer may also run the 2026 method, so if it matters, ask your scheme or TrustMark.
+
 ### What TM59 is
 
 TM59 is a CIBSE Technical Memorandum: guidance from a professional body, not a regulation. The 2017 edition, "Design methodology for the assessment of overheating risk in homes", is still marked Active (CIBSE Knowledge Portal, TM59 (2017) page).
@@ -60,6 +62,8 @@ PAS 2035:2023 is in the same position. Its overheating clause cites TM59 as refe
 
 ## Section 2: Approved Document O: What It Covers and What It Does Not
 
+**In short:** In England, Part O applies to new residential buildings only, not to insulation, replacement windows or a new conservatory on an existing home, nor to a change of use. If someone says otherwise, ask which provision they rely on, and ask building control where there is genuine doubt. Scotland's standard 3.28 reaches conversions, so far as is reasonably practicable; for Wales, this course did not confirm how change of use is treated, so check gov.wales or building control.
+
 ### The requirement and its status
 
 Part O was inserted into Schedule 1 to the Building Regulations 2010 by the Building Regulations etc. (Amendment) (England) Regulations 2021, in force on 15 June 2022 for building work in England (SI 2021/1391, regulations 1 and 11). Requirement O1 says reasonable provision must be made for residential buildings, other than hotel rooms, to "limit unwanted solar gains in summer" and to "provide an adequate means to remove heat from the indoor environment", with mechanical cooling used only where not enough heat can be removed without it (Approved Document O, requirement O1). Approved Document O, 2021 edition, is the statutory guidance on meeting it, taking effect on 15 June 2022.
@@ -85,6 +89,8 @@ Scotland's standard 3.28, in force since 1 February 2023, requires homes and sha
 ---
 
 ## Section 3: Whose Job Is It Under PAS 2035:2023?
+
+**In short:** As Retrofit Assessor you include overheating among the climate change-induced risks in clause 7.3.2 l) and record orientation, exposure, ventilation and occupancy, but nothing in clause 7 asks you to model overheating, apply TM59 or reach a pass or fail. The overheating duty sits with the Retrofit Designer, with the Coordinator overseeing and verifying. Occupant advice on overheating is required at inception and handover, and as a qualified Assessor you may be the one giving it.
 
 PAS 2035:2023 lists minimising the risks associated with overheating among the aims of the measures it covers (PAS 2035:2023, clause 1), then splits the work between roles.
 
@@ -125,6 +131,8 @@ PAS 2030:2023 requires the Retrofit Installer to check that the design provides 
 ---
 
 ## Section 4: Where TM59 Comes In, and What to Do on an Existing Home
+
+**In short:** If asked whether a job "needs a TM59", say that the Designer decides how to meet clause 8.2.31. A sensible habit is to make your notes and photographs show the Designer, without a second visit, glazing orientation and shading, windows on more than one side, restrictors, position in the block and who lives there. Clause 7.3.2 l) is the place to say plainly you have seen features that may raise overheating risk: a note, not a verdict.
 
 ### When TM59 or other methods come in
 

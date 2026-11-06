@@ -31,6 +31,8 @@ This course is correct to 12 October 2026.
 
 ## Section 1: The Law and the Guidance in Force
 
+**In short:** Treat regulation 7, including the 18 m ban, as applying to any EWI that is building work: in a relevant building, with a storey at least 18 m above ground and containing dwellings, external wall materials are to be A2-s1, d0 or A1, subject to the regulation 7(3) exemptions. "At least 7 storeys" belongs to the Building Safety Act 2022, a different regime. Whether the job is a material alteration is for the Retrofit Designer and building control.
+
 ### What the regulations require
 
 Requirement B4(1) is law: external walls "shall adequately resist the spread of fire over the walls and from one building to another", having regard to the building's "height, use and position" (Approved Document B Volume 1, Requirement B4).
@@ -68,6 +70,8 @@ Pages the 2029 amendments change are marked "Effective until 1 September 2029". 
 
 ## Section 2: Section 10 Applied to Houses and Flats
 
+**In short:** Check which height measure a provision uses: Table 10.1 uses building height, while paragraphs 10.6 and 10.7 use the top storey's floor. For residential buildings, external surfaces over 11 m in building height should be A2-s1, d0 or better, as should insulation where a storey is 11 m or more, subject to the exclusions and the BR 135 route below. Don't guess any product's class; that comes from its own evidence, and choosing products is the Retrofit Designer's job.
+
 ### Routes and Table 10.1
 
 Volume 1 covers flats (purpose group 1(a)) and dwellinghouses (1(b) and 1(c)) (Approved Document B Volume 1, Table 0.1). For buildings that are not relevant buildings, there are two routes: follow paragraphs 10.5 to 10.9, or meet the criteria of BRE report BR 135 using full-scale test data from BS 8414-1 or BS 8414-2 (paragraph 10.3). At any height, the choice of materials should be considered to reduce fire spread risk (paragraph 10.4).
@@ -100,6 +104,8 @@ No source read here gives any product's class; that comes from its own evidence,
 
 ## Section 3: Planning Permission for EWI in England
 
+**In short:** For a house in England, the technical guidance treats solid wall insulation as an improvement under Class A, but check for article 2(3) land, such as a conservation area, where render or other listed cladding needs planning permission, and Article 4 directions and listing. Everywhere, materials must look similar to the existing house's, which is the local planning authority's judgement, and Class A does not cover flats. In Wales confirm with the planning authority; Scottish permitted development was not checked.
+
 ### Houses: Part 1, Class A
 
 Class A permits "the enlargement, improvement or other alteration of a dwellinghouse" (SI 2015/596, Schedule 2, Part 1, Class A).
@@ -130,6 +136,8 @@ The Scottish Government announced that from 1 June 2022 its ban would apply to b
 ---
 
 ## Section 4: The Assessor's Record and the Designer's Decision
+
+**In short:** Record planning constraints, construction, main materials, existing insulation or cladding, a measured survey of the heat loss envelope and site constraints, as clause 7.3.2 asks. It does not ask for height, storeys, fire classes or a fire risk assessment, but as practice record storeys and any heights you can establish near 11 m or 18 m, without guessing a class, and check what your scheme expects if you see a fire risk. Verifying fire safety belongs to the Retrofit Designer.
 
 ### What the assessment includes
 

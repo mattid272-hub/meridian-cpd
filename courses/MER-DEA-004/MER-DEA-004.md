@@ -27,6 +27,8 @@ Convention 2.06 was amended on 13 July 2026 for v12.2, and Appendix 4 was delete
 
 ## Section 1: Is it a roof room? Inclusion, separate storeys and special cases
 
+**In short:** Check that access is by a permanent fixed staircase you can walk down facing forwards, then apply the common wall test; a space that fails it is a separate storey. A storey with non-vertical walls of at least 70 degrees pitch is also a separate storey. A roof room built later than the storeys below is handled through its own age band, not as a vertical extension. Bungalows with rooms in the roof are treated as houses.
+
 ### The inclusion test
 
 A roof room is included in the assessment when it is accessed via a permanent fixed staircase such that one is able to walk downwards facing forwards (convention 2.06). A space that passes this test is still not a roof room if it fails the common wall test in Section 2. It is then a separate storey (convention 2.06).
@@ -58,6 +60,8 @@ A bungalow has all of its habitable accommodation at the ground floor only. Chal
 
 ## Section 2: Type 1 and Type 2: the common wall and the 1.8 m rule
 
+**In short:** Type 2 has an accessible common wall, the storey below's external wall continued upwards, as part of the room; Type 1 does not and is always treated as a roof room. Measure that wall from the floor to where the roof plane meets its head, excluding gables and party walls: 1.8 m or less for 50% or more of its length makes a roof room, otherwise a separate storey. At exactly 1.80 m or an even split, ask your scheme.
+
 ### The two types
 
 The common wall is a vertical continuation of the external wall of the storey below (convention 2.06).
@@ -87,6 +91,8 @@ The body of convention 2.06 says "equal to or less than 1.8 m" for "50% or more"
 ---
 
 ## Section 3: Simplified or detailed: methods, measurements, gables and dormers
+
+**In short:** If any element has known insulation levels, use the detailed method and measure all elements; otherwise use the simplified method. Measure roof room floor area internally. Record each gable as exposed, party wall, sheltered wall or connected, treating one less than 25% connected as exposed. In the detailed method, ignore dormers if their protruding floor area totals less than 20% of the roof room's; otherwise enter all their vertical elements as stud wall and flat ceilings as flat ceiling.
 
 ### Which method
 
@@ -138,6 +144,8 @@ Where a connected gable is not connected for its full area, because of stepped a
 ---
 
 ## Section 4: Age band, insulation evidence and U-values
+
+**In short:** Give the roof room the age band of its building part unless evidence, such as planning applications or dated photographs, proves otherwise. With no access and no documentary evidence, record the insulation as built; use unknown only in exceptional circumstances, such as conflicting evidence of added insulation, and explain it in site notes. Appendix 4 has been deleted and the conventions do not say what replaces it, so if your scheme guidance still refers to its values, ask your scheme.
 
 ### Age band and defaults
 

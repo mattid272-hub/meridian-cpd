@@ -8,7 +8,7 @@
 - State what PAS 2035:2023 changed about moisture, and recognise unsourced claims about it.
 - Identify the items of clause 7.3.2 that bear on moisture, including the notes to item d).
 - Report defects, leaks, condensation and mould in the two categories of clause 7.4.2, with the photographic record of clause 7.4.1.
-- Describe the types of damp as the government's damp and mould guidance for England describes them, and the limits of a visual diagnosis.
+- Describe the types of damp as the government's damp and mould guidance for England describes them, and the limits of judging the cause by eye.
 - Explain what the Retrofit Designer, Retrofit Coordinator and installer must do with your moisture findings.
 
 ---
@@ -26,6 +26,8 @@ This edition replaces the March 2026 edition. That edition taught six mandatory 
 ---
 
 ## Section 1: What PAS 2035:2023 says about moisture
+
+**In short:** Nothing in clause 7 asks you to grade moisture risk, and risk paths A, B and C appear nowhere in the 2023 text; if you meet "Path C" in Ofgem's ECO4 guidance, that is Ofgem's wording, so ask the Coordinator what it means for you. BS 5250 is the moisture reference, and your energy model is not a moisture assessment. Clause 7.3.2 does not ask you to assess interstitial condensation, though assessors should be familiar with the calculation techniques.
 
 ### What changed in 2023
 
@@ -55,6 +57,8 @@ Fabric first starts with repair: "Deal with water penetration and damp (so that 
 ---
 
 ## Section 2: What the assessment must include
+
+**In short:** Record the location and severity of any defects, leaks, condensation and mould; the PAS requires no moisture meter or indicator list, and a sensible habit, though not required, is to note what you checked and found sound. Item f) cites a Table C.1 the PAS does not contain, so ask your scheme or Coordinator which ventilation checklist they expect. For exposure the PAS gives no method, but the RdSAP convention 9.10 map is a reasonable starting point.
 
 Clause 7.3.2 lists what "The assessment shall include", items a) to l). These bear on moisture:
 - b) an appraisal of construction and condition "in sufficient detail to establish the suitability of the dwelling for improvement";
@@ -92,7 +96,9 @@ Traditional construction means solid walls "constructed with moisture-permeable 
 
 ---
 
-## Section 3: Diagnosing damp: what the sources let us say
+## Section 3: Recognising damp: what the sources let us say
+
+**In short:** Your PAS duty is location and severity, and a sensible habit is to describe what you saw and where, give a likely cause only where the evidence supports it, and say plainly where the cause could not be established without testing or opening up. Neither source here is a PAS requirement, and the government guidance for England says chemical testing is the most appropriate way of confirming rising damp. Specifying treatment is not your job.
 
 We could not read BS 5250:2021 Annex C, so this section uses two sources we could read; neither is a PAS requirement.
 
@@ -117,11 +123,13 @@ PAS 2035:2023 cites "Investigation of moisture and its effects in traditional bu
 
 ### Where that leaves the assessor
 
-Your PAS duty is location and severity (clause 7.3.2 d), and neither source treats a visual diagnosis as final. A sensible habit is to describe what you saw and where, give a likely cause only where the evidence supports it, and say plainly where the cause could not be established without testing or opening up. Specifying treatment is not your job.
+Your PAS duty is location and severity (clause 7.3.2 d), and neither source treats a judgement made by eye as final. A sensible habit is to describe what you saw and where, give a likely cause only where the evidence supports it, and say plainly where the cause could not be established without testing or opening up. Specifying treatment is not your job.
 
 ---
 
 ## Section 4: Reporting, and who decides
+
+**In short:** Report to the Retrofit Designer with your data file and a photographic record of all recorded features and identified defects, placing defects in two categories: repair before any retrofit work, or recommended but not an essential prerequisite. Your record of condensation or mould is, on its own, a trigger for the designer to confirm whether existing ventilation is adequate. If the report is not enough to design from, the Coordinator arranges for you to add what is missing.
 
 ### What your report must contain
 

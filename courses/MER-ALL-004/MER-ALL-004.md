@@ -31,6 +31,8 @@ This course is correct to 13 October 2026.
 
 ## Section 1: The Law, the Guidance and the Classes
 
+**In short:** The 18 m test in regulation 7(4) is law in England: in a relevant building, external wall materials are to be class A2-s1, d0 or A1, with exemptions, and the 7 storey figure belongs to a different regime. Whether a job is a material alteration is for the Retrofit Designer and building control. When you read a class for a product other than flooring, A1 is highest and F lowest, and untested products cannot be classified.
+
 ### The requirements
 
 Part B of Schedule 1 is law. Retrofit touches these most (Approved Document B Volume 1, requirement boxes):
@@ -66,6 +68,8 @@ Fire resistance is given as R (loadbearing), E (integrity) and I (insulation) in
 
 ## Section 2: Compartments, Cavities and Fire-Stopping
 
+**In short:** In a brick or concrete cavity wall that meets Diagram 5.3, the guidance does not call for a cavity barrier where the cavity meets the party wall; timber-framed walls, including timber frame with brick cladding, lack the diagram's two masonry leaves, so paragraph 5.18 applies. On survey, look for a compartment wall between buildings that continues through the roof space to the underside of the roof, and for fire-stopping wherever services pass through a fire-separating element.
+
 ### Compartment walls and floors
 
 Semi-detached and terraced houses are treated as separate buildings, and every wall separating them should be a compartment wall (Approved Document B Volume 1, paragraph 5.5). In blocks of flats, any floor not within a flat, and any wall separating a flat from another part of the building, should be a compartment floor or wall (paragraph 7.1). Both should form "a complete barrier to fire" (paragraphs 5.8, 7.5). A compartment wall between buildings should run the full height, continue through any roof space to the underside of the roof, meet the roof covering with fire-stopping, and continue across any eaves (paragraphs 5.10, 5.11).
@@ -87,6 +91,8 @@ Where ducts pass through fire-separating elements, dampers, fire resisting enclo
 ---
 
 ## Section 3: Measure by Measure
+
+**In short:** For each measure, look out for concealed spaces left by internal insulation or new linings, which Approved Document B treats as cavities; openings for pipes or cables through a party wall or compartment floor, which should be fire-stopped; and, in a house, escape windows, whose replacements should keep at least the same potential for escape, subject to the conditions below. Whether cavity barriers or other details are needed is a design decision.
 
 ### Cavity wall insulation
 
@@ -120,6 +126,8 @@ For mechanical ventilation with heat recovery, the installer checks Building Reg
 ---
 
 ## Section 4: What the Assessor Records and Who Decides
+
+**In short:** Record and photograph anything that looks like a fire safety defect, such as a breached party wall or unsealed opening, and, as practice rather than a PAS 2035 requirement, note existing precautions such as alarms and the stair. Don't guess a class or rating, and check your scheme's wording on reporting a fire risk. The fire safety verification sits in the Retrofit Designer's design; telling the Retrofit Coordinator too is a sensible habit.
 
 ### The assessment
 

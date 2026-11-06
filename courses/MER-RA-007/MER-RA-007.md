@@ -27,6 +27,8 @@ This edition replaces the March 2026 edition. That edition called its heating fi
 
 ## Section 1: What PAS 2035:2023 Asks For
 
+**In short:** For heating, hot water and controls, record what is installed, its age and service history where available, where the equipment is, the areas served, and whether it is working correctly or otherwise; the items you record should be in the photographs. Serial numbers, efficiency figures and radiator sizes are not named as requirements, though item b) leaves open how much detail is enough. Whether the boiler should be replaced, or a heat pump would suit, is not your call.
+
 ### Clause 7.3.2 j)
 
 Clause 7.3.2 lists what the assessment shall include, as items a) to l). Item j) covers heating. It requires (clause 7.3.2 j)):
@@ -59,6 +61,8 @@ Whether the boiler should be replaced, or a heat pump would suit, is not the ass
 ---
 
 ## Section 2: Recording Heating So the Designer Can Use It
+
+**In short:** A sensible habit is to record the installation date with its source, labelling the occupant's recollection as such; if no paperwork is produced, record that you asked. Keep what you observed separate from what the occupant reports. In RdSAP, a fixed heating or hot water source that is fitted but not working is still taken into account, while your PAS record must say whether it works. A recent bill, seen with the occupant's agreement, gives the coordinator the actual tariff.
 
 Clause 7.3.2 j) says what to record but not how. What follows is practice, except where a reference is given.
 
@@ -96,6 +100,8 @@ RdSAP asks for the cylinder size, from the label if possible, insulation type an
 
 ## Section 3: What RdSAP Needs and What the PAS Record Needs
 
+**In short:** Put service history, equipment locations and installation year in your report, because the RdSAP heating items do not ask for them. Identify gas or oil boilers and heat pumps from the PCDB whenever possible; a data plate photograph lets anyone check your match. If a heating source or its emitters cannot be inspected and no documentary evidence is available, the assessment cannot be completed until access is provided, community heating excepted. Ask your scheme which heating documents it accepts.
+
 ### Two records from one visit
 
 The RdSAP data file goes to the designer with your report (clause 7.4.1), but it is not the whole record. None of its heating items (specification Table 31 items 7-1 to 7-20) asks for service history, equipment locations or an installation year. Age appears in narrower forms, such as the extra items for gas boilers from 1998 or later not taken from the database (Table 31 item 7-4) and pump age (convention 4.18). The parts of clause 7.3.2 j) that RdSAP does not hold belong in your report.
@@ -120,6 +126,8 @@ Some heating entries depend on documents: design flow temperature (convention 4.
 ---
 
 ## Section 4: Heat Pumps, Distressed Replacement and the Medium-Term Plan
+
+**In short:** Heat pump readiness is a design question, and nothing in PAS 2035 asks you to judge it. After a distressed replacement, the whole-dwelling assessment shall be completed as soon as possible, during or after the retrofit process; record the new appliance as installed, with its commissioning paperwork as service history. For a recent heat pump installation, ask the occupant for the design paperwork; whether it satisfies convention 4.01b is for your accreditation scheme.
 
 ### Heat pumps: what the standards put where
 

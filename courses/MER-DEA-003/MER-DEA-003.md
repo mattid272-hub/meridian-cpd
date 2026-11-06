@@ -25,6 +25,8 @@ The March 2026 edition taught rules on trickle vents, cooker hoods, a default du
 
 ## Section 1: What the Calculation Takes From Your Survey
 
+**In short:** Count chimneys, flues, intermittent extract fans, passive vents and flueless gas fires carefully, because each one counted carries a set flow rate: an open chimney is 80 m3 per hour. Treat ventilation as natural with intermittent extract fans unless a mechanical system is clearly identified. Without a pressure test result, your draught lobby and draught proofing entries also feed the infiltration rate. Neither document says whether a cooker hood counts as an extract fan, so ask your scheme.
+
 Specification section 4.1 says the parameters for the ventilation rate come from its Table 5 and that the calculation follows the SAP 10.2 worksheet. The first part of Table 5 is a list of openings. Each one counted is multiplied by a fixed flow rate in m3 per hour:
 - Open chimneys: 80
 - Open flues: 20
@@ -47,6 +49,8 @@ For a park home, open fireplaces are always none and ventilation is always natur
 ---
 
 ## Section 2: Chimneys, Blocked Chimneys and Flues
+
+**In short:** Count an open chimney, 200 mm diameter or more or a rectangular duct of equivalent area, only when it is unrestricted and suitable for use. For a decommissioned chimney, check the ventilation: sealed completely with no air bricks, it is not counted; under 30,000 mm2 it is a blocked chimney; at 30,000 mm2 or more it is open. A chimney with a flexible gas flue liner sealed into it is a flue. For temporary blocking, ask your scheme.
 
 The specification refers you to the conventions for chimney and fireplace definitions and count (specification section 4.1). The governing text is convention 9.01, amended in v12.2.
 
@@ -92,6 +96,8 @@ A house has four chimney positions (conventions 5.02 and 9.01):
 
 ## Section 3: Natural, Mechanical and Passive Stack
 
+**In short:** Intermittent kitchen and bathroom fans are not a mechanical ventilation system, and if you cannot identify the type of ventilation, assume natural. Where make and model details are available, a mechanical system should be entered from the product database; with no evidence of them, it must be entered using the defaults. If vents, excluding air bricks, are present and you cannot confirm mechanical ventilation, enter the number of vents as passive stack.
+
 ### The names the sources use
 
 Convention 7.03a defines mechanical ventilation systems as those that circulate fresh air via ducts and vents and use continually running fans when in operation. They can be input-only, extract-only or balanced (input and extract).
@@ -135,6 +141,8 @@ Worked example: a flat has ceiling vents in the kitchen and bathroom. You cannot
 
 ## Section 4: Wet Rooms, Ducts and Two Systems
 
+**In short:** For a system chosen from the product database, set the wet room count for a balanced whole house or centralised system, excluding bedrooms with hand basins, and identify the duct type for a decentralised system. With two mechanical ventilation systems, enter one: if identical, with half the wet rooms; if different, the one selectable from the database; if both or neither are selectable, follow the order of precedence. Ask your scheme about an odd number of wet rooms.
+
 Conventions 7.03b, 7.03c and 7.03d apply when a system is chosen from the product database.
 
 ### Wet rooms
@@ -175,6 +183,8 @@ The convention does not say what to do when the wet room count is an odd number;
 ---
 
 ## Section 5: Draught Lobby, Draught Proofing, Air Tightness and Cooling
+
+**In short:** A draught lobby must meet every condition in convention 2.09b, including covering the Main Entrance and at least 2 m2 of floor area, although a flat reached through an enclosed corridor or stairwell should be classified as having one. Keep the RdSAP default pressure test result unless you have a pressure test certificate that meets convention 10.01, which becomes invalid for RdSAP entry after material changes since the test. For cooling, include fixed systems only, not reversible heat pumps.
 
 ### Draught lobby
 

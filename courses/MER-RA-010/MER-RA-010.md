@@ -27,6 +27,8 @@ This edition replaces the March 2026 edition. That edition said RdSAP 10 sets y 
 
 ## Section 1: Thermal bridges in PAS 2035:2023
 
+**In short:** Look for a thermal bridge at the insulation layer: where it is discontinuous, thinner or more conductive, or weakened by the geometry, giving locally increased heat loss and a colder inside surface. You should be familiar with psi, fRsi and y calculations, but nothing in clause 7 asks you to calculate them. Thermography is not a PAS requirement of the assessment, though identifying defects might require test equipment. Pay most attention to corners, junctions and edges.
+
 ### The definition
 
 PAS 2035:2023 defines a thermal bridge as an area of the building envelope where the insulation is discontinuous, thinner or more conductive than the adjacent insulation, or has reduced effectiveness because of the building geometry, "leading to locally increased heat loss and therefore locally reduced internal surface temperature", or in summer a locally increased heat gain (clause 3.36). So a bridge is found by looking at the insulation layer, and shows itself as extra heat loss and a colder inside surface. The PAS separately defines thermal by-pass, external air getting to the warm side of the insulation (clause 3.37); the design requirements deal with both (clause 8.2.16).
@@ -50,6 +52,8 @@ The PAS's "concentrate on the interfaces" guidance says retrofit projects "often
 
 ## Section 2: What the designer must do at junctions
 
+**In short:** Your record is what the Retrofit Designer works from: where the design includes fabric measures, it shall include construction details for every affected corner, junction and edge, using good-practice details or details shown by calculation to have an fRsi of at least 0.75. So show how the elements meet, where openings sit and where any existing insulation stops. If your report is not sufficient, the Retrofit Coordinator arranges for you to collate what is missing in an updated report.
+
 ### The design requirements
 
 Clause 8 puts junction design on the Retrofit Designer:
@@ -71,6 +75,8 @@ The designer must review your report to confirm it is sufficient for a retrofit 
 ---
 
 ## Section 3: What you record at junctions, openings and cold spots
+
+**In short:** Your measured survey must show how envelope elements meet at corners, junctions and within openings (window position is the PAS's example); recording reveals, lintels and eaves is good practice, not a named PAS item. Record condensation and mould by location and severity and place each in one of the two clause 7.4.2 categories. Where mould sits does not on its own prove a thermal bridge, so it is sensible to say when the cause is not confirmed.
 
 ### The requirement
 
@@ -113,6 +119,8 @@ No clause of the PAS forbids the assessor to recommend; clause 7.4.2 b) itself u
 ---
 
 ## Section 4: How RdSAP 10 treats thermal bridging
+
+**In short:** Get the main dwelling's age band right, because RdSAP 10 takes y from Table 21 by that band alone: 0.15 for bands A to I, 0.11 for J and 0.08 for K to M, with park homes at 0.15 in every band, applied across all exposed area including extensions. You cannot enter a calculated psi value or y, so junction observations do not change the RdSAP result; the y-value is a default, not a description of this dwelling's junctions.
 
 ### One factor from one table
 

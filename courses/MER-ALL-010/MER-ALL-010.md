@@ -27,6 +27,8 @@ This edition replaces the June 2026 edition. That edition described a Scottish d
 
 ## Section 1: Scotland's Standards: Tolerable, Repairing and SHQS
 
+**In short:** When you note damp in Scotland, be clear which standard you mean: the tolerable standard's damp limb names rising or penetrating damp only, while the repairing standard's wider limb (ha), added from 6 October 2026, is "substantially free from damp and mould". Scottish secure tenancies are outside the repairing standard and covered by the right to repair scheme. The SHQS technical guidance could not be opened for this course, so ask a social landlord which guidance it works to.
+
 ### The tolerable standard
 
 The tolerable standard is in section 86 of the Housing (Scotland) Act 1987. The limbs a house must meet include that it:
@@ -56,6 +58,8 @@ For social housing the Scottish Government calls the SHQS, introduced in Februar
 ---
 
 ## Section 2: The 2026 Duties to Investigate and Start Repairs
+
+**In short:** Once a Scottish landlord, private or social, is told of or otherwise becomes aware of possible damp or mould, including during a routine inspection or visit, a competent person must investigate within 10 working days; from completion, the tenant gets a written summary within 3 working days and any work needed must start within 5, subject to the exceptions below. The guidance says an investigation should be in person unless another method is justified and should establish the root cause.
 
 ### How the law was made
 
@@ -91,6 +95,8 @@ Regulation 4 inserts regulation 8A into the Scottish Secure Tenants (Right to Re
 
 ## Section 3: England and Wales in Brief
 
+**In short:** In England the Regulations apply to social landlords only, and relevant safety work on a significant damp or mould hazard must be completed, not just started, within 5 working days of the investigation. In Wales, the WHQS requires social landlords to investigate HHSRS hazards that may present a significant risk within 10 working days and remedy them within a further 5, subject to the conditions below; the Welsh Government's announcement set no timescales for private landlords.
+
 ### England
 
 England's Awaab's Law is section 10A of the Landlord and Tenant Act 1985, inserted by the Social Housing (Regulation) Act 2023, which implies into relevant social housing leases of dwellings in England a covenant to comply with prescribed requirements (section 10A(1) and (2)). The requirements are in SI 2025/1042, in force since 27 October 2025, which "apply to lessors of social homes in England" (regulation 1(4)). For significant hazards, currently those associated with exposure to damp, mould or fungal growth (regulation 3(2)), the lessor must investigate within 10 working days (regulation 6(4)), give a written summary within 3 working days (regulation 9(4)) and complete relevant safety work within 5 working days of the investigation (regulation 11(2)). MER-ALL-017 covers England in full.
@@ -104,6 +110,8 @@ In Wales, landlords under secure contracts, periodic standard contracts and fixe
 ---
 
 ## Section 4: What Your Assessments Record, and What They Do Not
+
+**In short:** Neither RdSAP nor a PAS 2035 retrofit assessment is a statutory damp and mould investigation: RdSAP records ventilation for an energy calculation, and the retrofit assessment asks for the location and severity of condensation and mould, not the root cause. As sensible practice, not a legal requirement, agree with a Scottish landlord at instruction how you will report damp or mould you see, record it with photographs, and, if asked to investigate, check your contract and insurance cover it.
 
 ### RdSAP 10
 
