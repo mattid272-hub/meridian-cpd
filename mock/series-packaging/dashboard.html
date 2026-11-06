@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My CPD (mock) | Meridian CPD</title><link rel="stylesheet" href="mock.css"></head>
+<body><div id="app"></div>
+<script src="data.js"></script><script src="mock.js"></script>
+<script>
+const { D, byId, MEMBER, courseCard, seriesCard, row, memberTopbar, coursePoster, totals, hours, esc, ICON, shortTitle } = M;
+const recentCut = '2026-10-07'; // 30 days before the mock date
+const cont = byId['MER-ALL-020'];
+const t = totals();
+const seriesOrder = Object.keys(D.series).sort((a, b) => {
+  const score = s => D.series[s].courses.some(id => MEMBER.inProgress[id] != null) ? 0 : M.seriesDone(s) === 3 ? 2 : M.seriesDone(s) ? 1 : 3;
+  return score(a) - score(b);
+});
+const ids = f => D.courses.filter(f).map(c => c.id);
+const fieldWork = Object.values(D.series).flatMap(s => s.courses);
+document.getElementById('app').innerHTML = memberTopbar('Home') + `
+<section class="hero">
+  <div>
+    <div class="kicker">Continue where you left off</div>
+    <h1>Field Work: Insulation</h1>
+    <div class="sub">Part 2 of 3 · ${esc(shortTitle(cont))}. ${esc(hours(cont.hours))}, ${esc(M.WHERE[cont.where])}.</div>
+    <div class="progress"><div class="bar"><div class="fill" style="width:33.3%"></div></div><div class="lbl">1 of 3 parts complete · 1 certificate issued</div></div>
+    <div class="actions"><a class="btn btn-p" href="course.html">Continue Part 2</a><a class="btn btn-s" href="series.html">${ICON.info.replace('<svg', '<svg width="16" height="16"')} Series info</a></div>
+  </div>
+  <div class="poster">${coursePoster(cont)}</div>
+</section>
+<main class="wrap">
+  <div class="tally">
+    <div><div class="num">${t.hours}</div><div class="lab">CPD hours with Meridian in 2026</div></div>
+    <div><div class="num">${t.certs}</div><div class="lab">certificates of completion</div></div>
+    <div class="note">This counts what you completed here. Check your own scheme's CPD rules for what you need in a year.</div>
+    <a class="btn btn-s btn-sm" href="certificates.html">Download CPD record (PDF)</a>
+  </div>
+  <div class="chips">${['All topics', 'Field Work', 'For DEAs', 'Retrofit', 'Scotland', 'Insulation', 'Heating', 'Ventilation', 'Moisture'].map((c, i) => `<span class="chip ${i ? '' : 'on'}">${c}</span>`).join('')}</div>
+  ${row('Continue where you left off', Object.keys(MEMBER.inProgress).map(id => courseCard(id)))}
+  ${row('Your series', seriesOrder.map(s => seriesCard(s)), 'All series')}
+  ${row('New this month', ids(c => c.published >= recentCut).sort((a, b) => byId[b].published.localeCompare(byId[a].published)).map(id => courseCard(id)), 'See all')}
+  ${row('Field Work', fieldWork.map(id => courseCard(id)), 'See all')}
+  ${row('Scotland', ids(c => c.where === 'S').map(id => courseCard(id)), 'See all')}
+  ${row('Retrofit', ids(c => c.strand === 'RA').map(id => courseCard(id)), 'See all')}
+  ${row('For DEAs', ids(c => c.strand === 'DEA' && c.where !== 'S').map(id => courseCard(id)), 'See all')}
+  ${row('Completed', Object.keys(MEMBER.completed).sort((a, b) => MEMBER.completed[b].date.localeCompare(MEMBER.completed[a].date)).map(id => courseCard(id)), 'My certificates')}
+  ${row('Favourites', MEMBER.favourites.map(id => courseCard(id)))}
+  ${row('Read later', MEMBER.readLater.map(id => courseCard(id)))}
+</main>`;
+</script></body></html>
