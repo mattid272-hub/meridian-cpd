@@ -359,10 +359,8 @@ def generate_certificate(
     c.setFillColorRGB(0.62, 0.62, 0.62)
     c.setFont("Helvetica", 6.5)
     disclaimer = (
-        "Meridian CPD is an independent CPD provider. This certificate is not issued by or on "
-        "behalf of any accreditation scheme. Acceptance of CPD hours is at the discretion of the "
-        "subscriber's accreditation body. Subscribers are responsible for verifying their scheme's "
-        "CPD acceptance criteria."
+        "Meridian CPD is an independent CPD provider. This is a certificate of completion. It is "
+        "not issued by or on behalf of any accreditation scheme. Check your own scheme's CPD rules."
     )
     words = disclaimer.split()
     lines, current = [], ""

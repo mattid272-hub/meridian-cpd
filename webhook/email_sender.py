@@ -86,11 +86,11 @@ Welcome to Meridian CPD. Your annual subscription is active and the full course 
 Before you dive in, a few things worth knowing from people who've been in the industry a while:
 
 ─────────────────────────────
-SPREAD YOUR CPD THROUGH THE YEAR — IT MATTERS MORE THAN YOU THINK
+SPREAD YOUR CPD THROUGH THE YEAR
 ─────────────────────────────
-Accreditation bodies don't just count hours — some look at when you completed them. A portfolio showing steady engagement across the year looks far more credible than 10 hours logged in a single weekend.
+CPD spread across your membership year is easier to keep on top of than hours logged in a single weekend. Check your own scheme's CPD rules for what it asks of you.
 
-We'd suggest one course every few weeks, whenever you have a quiet hour. By the end of the year your CPD record tells a story of a professional who takes their development seriously.
+We'd suggest one course every few weeks, whenever you have a quiet hour.
 
 ─────────────────────────────
 DON'T RUSH TO COMPLETE EVERYTHING AT ONCE
@@ -179,8 +179,9 @@ Thank you for purchasing {course_title} (Course {course_id}).
 
 Certificate details:
 • CPD Hours: see course cover page
-• Your certificate will be a PDF you can upload to your accreditation body
-• Accreditation bodies can verify any Meridian CPD certificate at {APP_HOST}/verify
+• Your certificate of completion will be a PDF you can keep with your CPD record
+• Anyone can verify a Meridian CPD certificate at {APP_HOST}/verify
+• Check your own scheme's CPD rules
 
 ─────────────────────────────
 Would you like to hear about new courses and tools from Meridian CPD? Only if you say yes:
@@ -231,7 +232,7 @@ Certificate number: {cert_number}
 CPD hours: {cpd_hours}
 Verified at: {APP_URL}/verify/{cert_number}
 
-Keep this certificate — you can upload it to your accreditation body as evidence of CPD completion. Your accreditation body can independently verify the certificate number at the link above.
+Keep this certificate of completion with your CPD record. Anyone can verify the certificate number at the link above. Check your own scheme's CPD rules.
 
 Matt
 Meridian CPD | Stay Sharp. Stay Certified.

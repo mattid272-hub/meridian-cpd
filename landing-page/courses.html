@@ -838,12 +838,8 @@
     <p class="page-sub">Courses for DEAs and Retrofit Assessors, written from the source documents with every rule referenced. Download the PDF, read it, claim your CPD.</p>
     <div class="hero-stats">
       <div class="hero-stat-item">
-        <span class="hero-stat-num" id="statTotal">26</span>
-        <span class="hero-stat-lbl">Courses available</span>
-      </div>
-      <div class="hero-stat-item">
-        <span class="hero-stat-num" id="statHours">13</span>
-        <span class="hero-stat-lbl">CPD hours in library</span>
+        <span class="hero-stat-num">&#163;79</span>
+        <span class="hero-stat-lbl">A year for the whole library</span>
       </div>
       <div class="hero-stat-item">
         <span class="hero-stat-num">v12.2</span>
@@ -905,13 +901,13 @@
     <ul class="sub-strip-pts">
       <li>Unlimited access to every course in the library</li>
       <li>Every new course the moment it publishes</li>
-      <li>CPD certificates for every course you complete</li>
+      <li>A certificate of completion for every course you finish</li>
       <li>Cancel any time — PDFs and certs are yours to keep</li>
     </ul>
   </div>
   <div class="sub-strip-right">
     <div class="sub-price-big">£79</div>
-    <p class="sub-price-per">per year &mdash; less than £3 a course</p>
+    <p class="sub-price-per">per year &mdash; the whole library</p>
     <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Annual Access</a>
   </div>
 </div>
@@ -950,7 +946,7 @@
     <a href="refunds.html">Refunds &amp; cancellations</a>
     <a href="privacy.html">Privacy</a>
   </div>
-  <p class="footer-copy">&copy; Meridian CPD 2026. All rights reserved. Meridian CPD is an independent CPD provider. Acceptance of CPD hours is at the discretion of your accreditation body.</p>
+  <p class="footer-copy">&copy; Meridian CPD 2026. All rights reserved. Meridian CPD is an independent CPD provider. Check your own scheme&apos;s CPD rules.</p>
 </footer>
 
 <script>
@@ -1682,10 +1678,6 @@ function renderGrid() {
   const counts = { DEA: 0, RA: 0, ALL: 0 };
   COURSES.forEach(c => counts[c.strand]++);
   document.getElementById('countAll').textContent = '(' + COURSES.length + ')';
-  const statTotal = document.getElementById('statTotal');
-  if (statTotal) statTotal.textContent = COURSES.length;
-  const statHours = document.getElementById('statHours');
-  if (statHours) statHours.textContent = COURSES.reduce((t, c) => t + c.hours, 0);
   document.getElementById('countDEA').textContent = '(' + counts.DEA + ')';
   document.getElementById('countRA').textContent  = '(' + counts.RA  + ')';
   document.getElementById('countALL').textContent = '(' + counts.ALL + ')';
