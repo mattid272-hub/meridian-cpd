@@ -2323,6 +2323,9 @@ async def subscriber_dashboard(request: Request):
             An annual subscription gives you every course in the library, DEA, Retrofit Assessor
             and cross-strand, plus every new course added during your year.
           </p>
+          <p style="font-size:13px;color:#ffffff;margin-bottom:20px;line-height:1.6">
+            £79 a year until 31 December. £99 from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.
+          </p>
           <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
              style="display:inline-block;background:#d4ff00;color:#0D1F0E;padding:12px 24px;
                     border-radius:8px;text-decoration:none;font-weight:800;font-size:14px">
@@ -3731,7 +3734,7 @@ async def admin_system(credentials=Depends(_check_admin)):
          "Optional. off (default), dry_run (works out who would get what, sends nothing) or on. "
          "Turn on only once Matt has approved every email's text. See Admin → Follow-up."),
         ("FREE_FOLLOWUP_PRICE_RISE", "Follow-up: the price-rise email", False,
-         "Optional. off (default) or on. Set on only once the £99 line is live on meridiancpd.co.uk; the email then goes once, 1 to 23 December, while checkout still charges £79."),
+         "Optional. off (default) or on. Set on only once the £99 line is live on meridiancpd.co.uk; the email then goes once, 1 to 23 December, while checkout still charges £79, and the £79 what's-next email carries the January heads-up."),
         ("FREE_FOLLOWUP_CONSENT", "Follow-up: who gets the sales emails", False,
          "Optional. yes_only (default): only members who said yes to hearing from us. not_no: also those who never answered."),
         ("FREE_FOLLOWUP_DAILY_LIMIT", "Follow-up emails a day", False,
