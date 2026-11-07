@@ -1138,7 +1138,7 @@ def _thanks_page(s, purchases: list, member: dict, notice: str = "", status_code
   Only if you say yes, and you can change your mind at any time.</p>
   <div style="display:flex;gap:10px">{btn("yes", "Yes, keep me posted", True)}{btn("no", "No thanks", False)}</div>"""
     start = ""
-    if _thanks_signin_open(s, purchases):
+    if _thanks_signin_open(s, purchases, member):
         start = f"""
   <h2>Start now</h2>
   <p>Your courses are in My CPD. Sign in here now; there is no need to open the email first.</p>
@@ -1165,8 +1165,39 @@ def _thanks_page(s, purchases: list, member: dict, notice: str = "", status_code
 # and marks the order's purchase rows (purchases.thanks_signin_at, see
 # migrations/2026-11-07_platform_phase_1.sql) so it cannot be used again.
 
-def _thanks_signin_open(s, purchases: list) -> bool:
-    return bool(purchases) and _within_fix_window(s) and not any(p.get("thanks_signin_at") for p in purchases)
+THANKS_SIGNIN_JOIN_SECONDS = 15 * 60
+
+
+def _order_made_the_account(s, member: dict, purchases: list) -> bool:
+    """True only when this checkout is what created the member's record: every purchase
+    the member has is from this session, they hold no certificates, and the record was
+    made at the time of the session. The webhook attaches any checkout to the existing
+    member with that email, so without this a £0 checkout typed with someone else's
+    address would sign the buyer in as that member."""
+    sid = _g(s, "id", "")
+    if not purchases or not sid:
+        return False
+    if any(p.get("stripe_session_id") != sid for p in _member_purchases(member["id"])):
+        return False
+    if supabase.table("certificates").select("id").eq("member_id", member["id"]).execute().data:
+        return False
+    joined = member.get("joined_at")
+    if joined:
+        try:
+            when = datetime.fromisoformat(str(joined).replace("Z", "+00:00"))
+        except ValueError:
+            return False
+        if when.tzinfo is None:
+            when = when.replace(tzinfo=timezone.utc)
+        if abs(when.timestamp() - float(_g(s, "created", 0) or 0)) > THANKS_SIGNIN_JOIN_SECONDS:
+            return False
+    return True
+
+
+def _thanks_signin_open(s, purchases: list, member: dict) -> bool:
+    return (bool(purchases) and bool(member) and _within_fix_window(s)
+            and not any(p.get("thanks_signin_at") for p in purchases)
+            and _order_made_the_account(s, member, purchases))
 
 
 @app.post("/thanks/signin", response_class=HTMLResponse)
@@ -1181,15 +1212,17 @@ async def order_signin(request: Request):
   <h1>We could not sign you in</h1>
   <p>We could not find this order. Sign in at <a href="{BASE_URL}/my-cpd">My CPD</a> and we will email you a link.</p>""",
             status_code=404)
-    if not _thanks_signin_open(s, purchases):
+    if not _thanks_signin_open(s, purchases, member):
         return _customer_page("Sign in", f"""
   <h1>Sign in from My CPD</h1>
   <p>This button works once, in the week after you buy. Sign in at <a href="{BASE_URL}/my-cpd">My CPD</a> with
   <strong>{_esc(member.get('email') or '')}</strong> and we will email you a link.</p>""", status_code=400)
     try:
-        supabase.table("purchases").update({
+        marked = supabase.table("purchases").update({
             "thanks_signin_at": datetime.now(timezone.utc).isoformat(),
-        }).eq("stripe_session_id", sid).is_("thanks_signin_at", "null").execute()
+        }).eq("stripe_session_id", sid).is_("thanks_signin_at", "null").execute().data
+        if not marked:
+            raise RuntimeError("no purchase row was marked (already used?)")
     except Exception as e:
         # Most likely the migration has not been run: never sign anyone in without the mark.
         print(f"ACTION NEEDED: could not mark order {sid} as used for sign-in (run migrations/2026-11-07_platform_phase_1.sql?): {e}")
@@ -1446,7 +1479,7 @@ async def completion_page(token: str):
       {_logo()}
       <h1>Complete Your CPD</h1>
       <p>Hi {name}, you&apos;re one step away from your certificate for <strong>Course {course_id}</strong>.</p>
-      <form method="POST" action="/complete/{token}">
+      <form method="POST" action="/complete/{token}" onsubmit="this.querySelector('button[type=submit]').disabled=true">
         <div class="name-box">
           <p><strong>Your name for this certificate</strong></p>
           <p>This is the name that will appear on your certificate of completion. Use the name
@@ -1468,6 +1501,17 @@ async def completion_page(token: str):
     """)
 
 
+CERT_NAME_MAX = 80
+_CONTROL_RE = re.compile(r"[\x00-\x1f\x7f-\x9f]")
+
+
+def _clean_cert_name(raw) -> str:
+    """The name typed for the certificate: control characters out, spaces tidied, at most
+    CERT_NAME_MAX characters."""
+    name = " ".join(_CONTROL_RE.sub("", re.sub(r"[\t\n\r]", " ", str(raw or ""))).split())
+    return name[:CERT_NAME_MAX].strip()
+
+
 async def _issue_certificate(row: dict, member_email: str, fallback_name: str, cert_name: str) -> dict:
     """Marks `row` (an unused completion record, with downloaded_at set) complete and
     issues the certificate: numbering (MER-YYYY-NNNN), the PDF, the certificates row and
@@ -1478,7 +1522,7 @@ async def _issue_certificate(row: dict, member_email: str, fallback_name: str, c
     old email, a resend, a subscriber's dashboard token plus a purchase) must not earn a
     second one: that link is retired and the certificate they hold is returned instead."""
     member_id, course_id = row["member_id"], row["course_id"]
-    member_name = cert_name or fallback_name or "Assessor"
+    member_name = _clean_cert_name(cert_name) or _clean_cert_name(fallback_name) or "Assessor"
     held = supabase.table("certificates").select("cert_number").eq(
         "member_id", member_id).eq("course_id", course_id).execute().data or []
     if held:
@@ -1489,10 +1533,17 @@ async def _issue_certificate(row: dict, member_email: str, fallback_name: str, c
         print(f"Completion link for {course_id} used by member {member_id} who already holds {cert_number}; no new certificate")
         return {"cert_number": cert_number, "already_held": True, "email_sent": False, "member_name": member_name}
 
-    # Mark completion
-    supabase.table("completions").update({
+    # Mark completion. Conditional on the row still being open: a double submit (two
+    # clicks, two tabs) gets here twice, and only the request that marks the row issues.
+    marked = supabase.table("completions").update({
         "completed_at": datetime.now(timezone.utc).isoformat(),
-    }).eq("id", row["id"]).execute()
+    }).eq("id", row["id"]).is_("completed_at", "null").execute().data
+    if not marked:
+        held = supabase.table("certificates").select("cert_number").eq(
+            "member_id", member_id).eq("course_id", course_id).execute().data or []
+        cert_number = str(held[0].get("cert_number") or "") if held else ""
+        print(f"Completion of {course_id} for member {member_id} was already in progress; no second certificate")
+        return {"cert_number": cert_number, "already_held": True, "email_sent": False, "member_name": member_name}
 
     # Find course details
     course = next(
@@ -1560,7 +1611,7 @@ async def confirm_completion(token: str, request: Request):
         # No new certificates for an edition that has been withdrawn.
         return _under_review_page(course_id)
     member_email = row["members"]["email"]
-    issued = await _issue_certificate(row, member_email, row["members"]["name"] or "", str(form.get("cert_name", "")).strip())
+    issued = await _issue_certificate(row, member_email, row["members"]["name"] or "", _clean_cert_name(form.get("cert_name")))
     cert_number, member_name = issued["cert_number"], issued["member_name"]
     if issued["already_held"]:
         return HTMLResponse(f"""<!DOCTYPE html>
@@ -1570,8 +1621,8 @@ async def confirm_completion(token: str, request: Request):
 {_logo()}
 <h1 style="color:#0D1F0E">You already hold this certificate</h1>
 <p style="line-height:1.6">Your certificate for <strong>{_esc(str(COURSES.get(course_id, {}).get("title", course_id)))}</strong>
-is <strong>{_esc(cert_number)}</strong>. No new one has been issued.</p>
-<p><a style="color:#4d7c0f" href="{BASE_URL}/verify/{_esc(cert_number)}">View the certificate record</a> &nbsp;·&nbsp;
+{"is <strong>" + _esc(cert_number) + "</strong>." if cert_number else "is being issued and will be in My certificates in a moment."} No new one has been issued.</p>
+<p>{f'<a style="color:#4d7c0f" href="{BASE_URL}/verify/{_esc(cert_number)}">View the certificate record</a> &nbsp;·&nbsp;' if cert_number else ""}
 <a style="color:#4d7c0f" href="{BASE_URL}/my-cpd/dashboard">My CPD dashboard</a></p>
 </body></html>""")
 
@@ -2705,7 +2756,7 @@ def _course_page(st: dict, course_id: str, notice: str = "", email_failed: bool 
   <div class="step {'ok' if opened else ''}"><b class="n">1</b><span>{step1}</span></div>
   <div class="step"><b class="n">2</b><span>Tick the declaration below.</span></div>
   <div class="step"><b class="n">3</b><span>Your certificate is issued here straight away. We email you a copy.</span></div>
-  <form method="post" action="/my-cpd/course/{course_id}/complete">
+  <form method="post" action="/my-cpd/course/{course_id}/complete" onsubmit="this.querySelector('button[type=submit]').disabled=true">
     <label class="name" for="cert_name">Name on your certificate</label>
     <input type="text" id="cert_name" name="cert_name" value="{_esc(st['name'])}" required {'' if opened else 'disabled'}>
     <div class="hint">Use your name as your scheme holds it.</div>
@@ -2796,7 +2847,7 @@ async def member_course_complete(course_id: str, request: Request):
         if not rows:
             ensure_completion_token(st["member_id"], course_id)
         return _course_page(st, course_id, notice="Open the course material first, then confirm.", status_code=400)
-    result = await _issue_certificate(row, email, st["name"], str(form.get("cert_name", "")).strip())
+    result = await _issue_certificate(row, email, st["name"], _clean_cert_name(form.get("cert_name")))
     print(f"In-app completion: {result['cert_number']} for member {st['member_id']} ({course_id})"
           + (" (already held)" if result["already_held"] else ""))
     return RedirectResponse(f"/my-cpd/course/{course_id}?issued=1&sent={1 if result['email_sent'] or result['already_held'] else 0}",
