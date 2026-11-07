@@ -907,10 +907,10 @@
 <!-- ─── CONTROLS ─── -->
 <div class="controls-bar">
   <div class="filter-tabs" id="filterTabs">
-    <button class="filter-tab active" data-filter="all">All <span id="countAll"></span></button>
-    <button class="filter-tab" data-filter="DEA">DEA Track <span id="countDEA"></span></button>
-    <button class="filter-tab" data-filter="RA">Retrofit Assessor <span id="countRA"></span></button>
-    <button class="filter-tab" data-filter="ALL">All Strands <span id="countALL"></span></button>
+    <button class="filter-tab active" data-filter="all">All</button>
+    <button class="filter-tab" data-filter="DEA">DEA Track</button>
+    <button class="filter-tab" data-filter="RA">Retrofit Assessor</button>
+    <button class="filter-tab" data-filter="ALL">All Strands</button>
   </div>
   <div class="search-wrap">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A9E8B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -927,7 +927,6 @@
 </div>
 <p class="where-note" id="whereNote" style="display:none"></p>
 
-<p class="results-meta" id="resultsMeta"></p>
 
 <!-- ─── COURSE GRID ─── -->
 <div class="course-grid" id="courseGrid">
@@ -1819,34 +1818,23 @@ function renderGrid() {
   const courses = filteredCourses();
   const grid = document.getElementById('courseGrid');
   const noRes = document.getElementById('noResults');
-  const meta = document.getElementById('resultsMeta');
 
-  // Update counts
+  // No course counts anywhere on the page: the tabs carry plain labels.
   const counts = { DEA: 0, RA: 0, ALL: 0 };
   COURSES.forEach(c => counts[c.strand]++);
-  document.getElementById('countAll').textContent = '(' + COURSES.length + ')';
-  document.getElementById('countDEA').textContent = '(' + counts.DEA + ')';
-  document.getElementById('countRA').textContent  = '(' + counts.RA  + ')';
-  document.getElementById('countALL').textContent = '(' + counts.ALL + ')';
   // A strand with nothing on sale (its courses are being revised) gets no tab.
   ['DEA', 'RA', 'ALL'].forEach(k => {
     const tab = document.querySelector('.filter-tab[data-filter="' + k + '"]');
     if (tab) tab.style.display = counts[k] ? '' : 'none';
   });
 
-  // Meta
-  const showing = courses.length;
-  meta.innerHTML = 'Showing <span>' + showing + '</span> of ' + COURSES.length + ' courses';
-
   // Where note: what the chosen nation can use as it stands
   const note = document.getElementById('whereNote');
   if (activeNation === 'any') {
     note.style.display = 'none';
   } else {
-    const usable = COURSES.filter(c => appliesIn(c, activeNation));
-    const hrs = usable.reduce((t, c) => t + c.hours, 0);
     const name = NATION_NAME[activeNation];
-    note.innerHTML = '<strong>' + usable.length + ' of ' + COURSES.length + ' courses (' + hrs + ' CPD hours) apply in ' + name + '</strong> as they stand. ' +
+    note.innerHTML = '<strong>Courses that apply in ' + name + '</strong> as they stand. ' +
       'Each course says where it applies, on its card and in its details. ' +
       (activeNation === 'S'
         ? 'RdSAP 10 and PAS 2035:2023 courses apply in Scotland; courses on English or England-and-Wales legislation are left out. Two courses are written for Scotland: RdSAP 10 in Scotland and the 2028 EPC reform. More Scotland-specific courses are being written.'
