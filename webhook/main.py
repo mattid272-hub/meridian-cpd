@@ -1564,13 +1564,13 @@ async def confirm_completion(token: str, request: Request):
     cert_number, member_name = issued["cert_number"], issued["member_name"]
     if issued["already_held"]:
         return HTMLResponse(f"""<!DOCTYPE html>
-<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Certificate already issued — Meridian CPD</title>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Certificate already issued | Meridian CPD</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="font-family: 'DM Sans', Arial, sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1f2a20">
 {_logo()}
 <h1 style="color:#0D1F0E">You already hold this certificate</h1>
 <p style="line-height:1.6">Your certificate for <strong>{_esc(str(COURSES.get(course_id, {}).get("title", course_id)))}</strong>
-is <strong>{_esc(cert_number)}</strong>. A course earns one certificate, so no new one has been issued.</p>
+is <strong>{_esc(cert_number)}</strong>. No new one has been issued.</p>
 <p><a style="color:#4d7c0f" href="{BASE_URL}/verify/{_esc(cert_number)}">View the certificate record</a> &nbsp;·&nbsp;
 <a style="color:#4d7c0f" href="{BASE_URL}/my-cpd/dashboard">My CPD dashboard</a></p>
 </body></html>""")
@@ -2658,11 +2658,11 @@ def _course_page(st: dict, course_id: str, notice: str = "", email_failed: bool 
         materials = (f'<a class="material" href="/download/{course_id}">{member_ui.ICON["deck"]}<div><b>Open the slide deck</b><span>For the site visit</span></div></a>'
                      f'<a class="material" href="/download/{course_id}/notes">{member_ui.ICON["notes"]}<div><b>Open the written notes</b><span>The written course, for the desk</span></div></a>')
         step1 = "Open the slide deck or the notes and work through the course."
-        locked_note = "Open the slide deck or the notes first. The button unlocks once you have."
+        locked_note = "Open the slide deck or the notes first. Then you can confirm."
     else:
         materials = f'<a class="material" href="/download/{course_id}">{member_ui.ICON["notes"]}<div><b>Open the written notes</b><span>The written course, as a PDF</span></div></a>'
         step1 = "Open the written notes and work through the course."
-        locked_note = "Open the written notes first. The button unlocks once you have."
+        locked_note = "Open the written notes first. Then you can confirm."
     objectives = "".join(f"<li>{_esc(o)}</li>" for o in text.get("objectives", []))
 
     if cert:
@@ -2694,7 +2694,7 @@ def _course_page(st: dict, course_id: str, notice: str = "", email_failed: bool 
         fact_status = "Certificate issued"
     elif course_id in UNDER_REVIEW:
         panel = ('<aside class="complete"><div class="kicker" style="color:#4d7c0f">Certificate of completion</div><h2>Course being updated</h2>'
-                 '<p class="small">This course has been withdrawn while it is revised. It cannot be opened or completed until the updated edition is published.</p></aside>')
+                 '<p class="small">This course is being updated. It opens again when the new edition is published.</p></aside>')
         fact_status = "Being updated"
     else:
         err = f'<div class="err">{_esc(notice)}</div>' if notice else ""
@@ -2795,7 +2795,7 @@ async def member_course_complete(course_id: str, request: Request):
     if not row:
         if not rows:
             ensure_completion_token(st["member_id"], course_id)
-        return _course_page(st, course_id, notice="Open the slide deck or the notes first, then confirm.", status_code=400)
+        return _course_page(st, course_id, notice="Open the course material first, then confirm.", status_code=400)
     result = await _issue_certificate(row, email, st["name"], str(form.get("cert_name", "")).strip())
     print(f"In-app completion: {result['cert_number']} for member {st['member_id']} ({course_id})"
           + (" (already held)" if result["already_held"] else ""))
