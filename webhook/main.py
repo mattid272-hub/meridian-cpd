@@ -1638,6 +1638,12 @@ async def verify_certificate(cert_number: str):
     """)
 
 
+@app.get("/", include_in_schema=False)
+async def root_redirect():
+    """The app has no home page of its own; a bare app.meridiancpd.co.uk link goes to the member area."""
+    return RedirectResponse("/my-cpd", status_code=302)
+
+
 @app.get("/health")
 def health():
     # Re-read the catalogue and the withdrawn list on the same ten-minute cycle as the
