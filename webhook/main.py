@@ -1182,15 +1182,16 @@ def _order_made_the_account(s, member: dict, purchases: list) -> bool:
     if supabase.table("certificates").select("id").eq("member_id", member["id"]).execute().data:
         return False
     joined = member.get("joined_at")
-    if joined:
-        try:
-            when = datetime.fromisoformat(str(joined).replace("Z", "+00:00"))
-        except ValueError:
-            return False
-        if when.tzinfo is None:
-            when = when.replace(tzinfo=timezone.utc)
-        if abs(when.timestamp() - float(_g(s, "created", 0) or 0)) > THANKS_SIGNIN_JOIN_SECONDS:
-            return False
+    if not joined:
+        return False  # no record of when the account was made: fail closed
+    try:
+        when = datetime.fromisoformat(str(joined).replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=timezone.utc)
+    if abs(when.timestamp() - float(_g(s, "created", 0) or 0)) > THANKS_SIGNIN_JOIN_SECONDS:
+        return False
     return True
 
 
