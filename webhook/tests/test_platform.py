@@ -47,6 +47,7 @@ class Q:
         hit = [r for r in rows if all(f(r) for f in s.f)]
         if s.op == "update":
             if s.db.get("_fail_update") and s.db["_fail_update"](s.t, s.pl): raise RuntimeError("update failed (test)")
+            if s.db.get("_empty_update") and s.db["_empty_update"](s.t, s.pl): return Res([])  # a lost race: nothing matched
             [r.update(s.pl) for r in hit]
         if s.o: hit = sorted(hit, key=lambda r: str(r.get(s.o[0]) or ""), reverse=s.o[1])
         if s.t == "completions" and s.op == "select":
@@ -55,12 +56,13 @@ class Q:
 
 
 now = time.time()
+iso = lambda ts: datetime.fromtimestamp(ts, timezone.utc).isoformat()
 db = {
     "members": [
-        {"id": "buyer", "email": "buyer@example.com", "name": "Bea Buyer", "plan": "single", "stripe_customer_id": "cus_b"},
-        {"id": "sub", "email": "sub@example.com", "name": "Sue Sub", "plan": "subscription", "stripe_customer_id": "cus_s"},
-        {"id": "other", "email": "other@example.com", "name": "Otto Other", "plan": "single", "stripe_customer_id": ""},
-        {"id": "newb", "email": "new@example.com", "name": "Nia New", "plan": "single", "stripe_customer_id": ""},
+        {"id": "buyer", "email": "buyer@example.com", "name": "Bea Buyer", "plan": "single", "stripe_customer_id": "cus_b", "joined_at": iso(now - 6 * 86400)},
+        {"id": "sub", "email": "sub@example.com", "name": "Sue Sub", "plan": "subscription", "stripe_customer_id": "cus_s", "joined_at": f"{YEAR}-01-05T10:00:00+00:00"},
+        {"id": "other", "email": "other@example.com", "name": "Otto Other", "plan": "single", "stripe_customer_id": "", "joined_at": iso(now - 10 * 86400)},
+        {"id": "newb", "email": "new@example.com", "name": "Nia New", "plan": "single", "stripe_customer_id": "", "joined_at": iso(now - 20)},
     ],
     "purchases": [
         # Bea bought Field Work: Insulation last week and has Part 1 done already
@@ -72,6 +74,8 @@ db = {
         {"id": "p5", "member_id": "newb", "course_id": "MER-DEA-001", "amount_gbp": 0, "stripe_session_id": "cs_live_nia123456789"},
         # Otto's older order, more than a week ago
         {"id": "p6", "member_id": "other", "course_id": "MER-DEA-003", "amount_gbp": 19.99, "stripe_session_id": "cs_live_ottoold12345"},
+        # Someone just bought the £0 course typing the subscriber's address: the webhook attached it to Sue
+        {"id": "p7", "member_id": "sub", "course_id": "MER-DEA-001", "amount_gbp": 0, "stripe_session_id": "cs_live_evil12345678"},
     ],
     "completions": [
         {"id": "c1", "member_id": "buyer", "course_id": "MER-ALL-019", "completion_token": "tok-019", "completed_at": f"{YEAR}-11-02T09:00:00+00:00", "downloaded_at": f"{YEAR}-11-02T08:00:00+00:00"},
@@ -101,6 +105,8 @@ SESSIONS = {
                              "customer_details": {"email": "other@example.com"}},
     "cs_live_bea12345678": {"id": "cs_live_bea12345678", "status": "complete", "created": now - 6 * 86400, "customer": "cus_b",
                             "customer_details": {"email": "buyer@example.com"}},
+    "cs_live_evil12345678": {"id": "cs_live_evil12345678", "status": "complete", "created": now - 30, "customer": None,
+                             "customer_details": {"email": "sub@example.com"}},
 }
 def _retrieve(sid):
     if sid not in SESSIONS:
@@ -175,7 +181,7 @@ check("course page: material links, objectives, the declaration and a locked but
       and "Open the slide deck" in t and "Open the written notes" in t and "What you will be able to do" in t
       and COURSE_TEXT["MER-ALL-020"]["objectives"][0] in t
       and "I confirm I have read and understood the course material." in t
-      and 'disabled>Confirm completion and get my certificate' in t and "Open the slide deck or the notes first" in t
+      and ' disabled>Confirm completion and get my certificate' in t and "Open the slide deck or the notes first" in t
       and "Part 2 of 3" in t and "Field Work: Insulation" in t and "England and Wales" in t and "No certificate yet" in t)
 r = c.post("/my-cpd/course/MER-ALL-020/complete", data={"confirm": "on", "cert_name": "Bea Buyer"}, cookies=BEA)
 check("confirm is refused until the material has been opened", r.status_code == 400 and "Open the slide deck or the notes first" in r.text
@@ -184,7 +190,7 @@ r = c.get("/download/MER-ALL-020/notes", cookies=BEA)
 check("opening the notes counts as opening the course", r.status_code == 302 and r.headers["location"].endswith("MER-ALL-020.pdf")
       and completion("c2")["downloaded_at"])
 r = c.get("/my-cpd/course/MER-ALL-020", cookies=BEA); t = flat(r.text)
-check("after opening: the button is live and the page says In progress", "disabled" not in t.split('<form method="post"', 1)[1].split("</form>")[0]
+check("after opening: the button is live and the page says In progress", " disabled>" not in t.split('<form method="post"', 1)[1].split("</form>")[0]
       and "In progress" in t)
 r = c.post("/my-cpd/course/MER-ALL-020/complete", data={"cert_name": "Bea Buyer"}, cookies=BEA)
 check("the declaration must be ticked", r.status_code == 400 and "Tick the declaration" in r.text and len(certs_of("buyer")) == 2)
@@ -214,11 +220,24 @@ check("the emailed link for an already-certified course retires without a second
 # the email copy failing does not stop the certificate
 fail_cert_email["on"] = True
 r = c.get("/download/MER-ALL-021", cookies=BEA)
-r = c.post("/my-cpd/course/MER-ALL-021/complete", data={"confirm": "on", "cert_name": "Bea Buyer"}, cookies=BEA)
+dirty = "Bea\x00 \x1b[31mBuyer\t" + "x" * 200
+r = c.post("/my-cpd/course/MER-ALL-021/complete", data={"confirm": "on", "cert_name": dirty}, cookies=BEA)
 fail_cert_email["on"] = False
 check("if the email copy fails the certificate is still issued and the page says so",
       r.status_code == 303 and r.headers["location"].endswith("?issued=1&sent=0") and len(certs_of("buyer")) == 4
       and "We could not send the email copy" in flat(c.get(r.headers["location"], cookies=BEA).text))
+nm = certs_of("buyer")[-1]["member_name"]
+check("the name on the certificate is capped at 80 characters with control characters removed",
+      len(nm) == 80 and nm.startswith("Bea [31mBuyer xxx") and not re.search(r"[\x00-\x1f\x7f]", nm)
+      and main._clean_cert_name("  A \n B  ") == "A B" and main._clean_cert_name(None) == "")
+check("both completion forms disable their button on submit", "onsubmit=\"this.querySelector('button[type=submit]').disabled=true\"" in c.get("/my-cpd/course/MER-ALL-022", cookies=SUE).text)
+# a lost race: the completion row was marked by another request between the read and the update
+import asyncio
+db["completions"].append({"id": "race", "member_id": "newb", "course_id": "MER-ALL-022", "completion_token": "tok-race", "completed_at": f"{YEAR}-11-07T10:00:00+00:00", "downloaded_at": f"{YEAR}-11-07"})
+n_certs = len(db["certificates"]); n_sent = len(certs_sent)
+res = asyncio.run(main._issue_certificate({"id": "race", "member_id": "newb", "course_id": "MER-ALL-022"}, "new@example.com", "Nia", "Nia"))
+check("a completion row already marked by another request issues no second certificate",
+      res["already_held"] and res["cert_number"] == "" and len(db["certificates"]) == n_certs and len(certs_sent) == n_sent)
 r = c.get("/my-cpd/course/MER-ALL-021", cookies=BEA)
 check("a finished series offers the series page, not a next part", "Back to the series" in r.text and "Next: Part" not in r.text)
 
@@ -324,6 +343,15 @@ r = c.post("/thanks/signin", data={"session_id": "cs_live_nia123456789"})
 check("a second press is refused", r.status_code == 400 and "set-cookie" not in r.headers and "works once" in r.text)
 r = c.get("/thanks?session_id=cs_live_nia123456789")
 check("and the button is gone from the page", 'action="/thanks/signin"' not in r.text)
+r = c.get("/thanks?session_id=cs_live_evil12345678")
+check("a checkout typed with an existing member's address gets no Start now block",
+      r.status_code == 200 and "Start now" not in r.text and 'action="/thanks/signin"' not in r.text)
+r = c.post("/thanks/signin", data={"session_id": "cs_live_evil12345678"})
+check("and cannot sign in as that member", r.status_code == 400 and "set-cookie" not in r.headers
+      and not any(p.get("thanks_signin_at") for p in db["purchases"] if p["stripe_session_id"] == "cs_live_evil12345678"))
+check("the account check: every purchase from this session, no certificates, record made at the time of the session",
+      main._order_made_the_account(SESSIONS["cs_live_nia123456789"], next(m for m in db["members"] if m["id"] == "newb"), [{"stripe_session_id": "cs_live_nia123456789"}])
+      and not main._order_made_the_account(SESSIONS["cs_live_bea12345678"], next(m for m in db["members"] if m["id"] == "buyer"), [{"stripe_session_id": "cs_live_bea12345678"}]))
 r = c.get("/thanks?session_id=cs_live_ottoold12345")
 check("an order older than a week has no button", r.status_code == 200 and 'action="/thanks/signin"' not in r.text)
 r = c.post("/thanks/signin", data={"session_id": "cs_live_ottoold12345"})
@@ -339,6 +367,10 @@ db["_fail_update"] = lambda t, row: t == "purchases" and "thanks_signin_at" in r
 r = c.post("/thanks/signin", data={"session_id": "cs_live_nia123456789"})
 db["_fail_update"] = None
 check("if the used mark cannot be written, nobody is signed in", r.status_code == 503 and "set-cookie" not in r.headers)
+db["_empty_update"] = lambda t, row: t == "purchases" and "thanks_signin_at" in row
+r = c.post("/thanks/signin", data={"session_id": "cs_live_nia123456789"})
+db["_empty_update"] = None
+check("if the mark lands on no row (a lost race), nobody is signed in", r.status_code == 503 and "set-cookie" not in r.headers)
 check("test_fix_email's pages still carry the correction form", 'action="/thanks/email"' in c.get("/thanks?session_id=cs_live_nia123456789").text)
 
 # ── 10. The public courses page ──
@@ -352,6 +384,9 @@ check("courses.html: the series cards use the poster template and the existing s
       and "Buy, ${SERIES_PRICE}" in html and "SERIES_PRICE = '£39.99'" in html and "renderSeries()" in html)
 check("courses.html: the approved series line", "Three courses on one subject, bought together for £39.99. A certificate of completion for each part as you finish it." in html)
 check("courses.html: single courses heading with the free course", "Single courses, £19.99 each" in html and "MERIDIAN10" in html)
+check("courses.html: no course counts (tab labels, results line, nation note)",
+      "countAll" not in html and "resultsMeta" not in html and "Showing <span>" not in html
+      and "' of ' + COURSES.length" not in html and "Courses that apply in ' + name" in html)
 check("courses.html: the annual strip lines PR #56 edits are untouched",
       '<p class="sub-price-per">per year for the whole library</p>' in html and "seriesNote = ` Each part is its own course" in html)
 # (one Scotland course objective in the catalogue describes an assessor "accredited in England and Wales"; the page text itself must not)
