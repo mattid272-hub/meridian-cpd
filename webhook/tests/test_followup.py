@@ -188,9 +188,10 @@ check("on: sends the two due emails and logs each with Resend's id",
       and all(r["resend_id"].startswith("msg-") and r["status"] == "sent" for r in db[followup.TABLE]))
 nudge = next(m for m in sent if m["to"][0] == "person1@firm1.co.uk")
 nxt = next(m for m in sent if m["to"][0] == "person2@firm2.co.uk")
-check("the nudge points at My CPD (sign in, download, Mark Complete) and greets by first name",
-      "/my-cpd\n" in nudge["text"] and "/complete/" not in nudge["text"] and "Mark Complete" in nudge["text"]
-      and "comes by email" in nudge["text"] and nudge["text"].startswith("Hello Alex,") and "two CPD hours" in nudge["text"])
+check("the nudge points at My CPD (sign in, open the course, tick the declaration, certificate in My certificates) and greets by first name",
+      "/my-cpd\n" in nudge["text"] and "/complete/" not in nudge["text"] and "tick the declaration" in nudge["text"]
+      and "My certificates at once" in nudge["text"] and "a copy comes by email" in nudge["text"]
+      and "Mark Complete" not in nudge["text"] and nudge["text"].startswith("Hello Alex,") and "two CPD hours" in nudge["text"])
 check("what's next names the price checkout charges (£79 now)", "£79 a year" in nxt["text"] and "£99" not in nxt["text"])
 unsub = nudge["headers"]["List-Unsubscribe"].split(", <")[1].rstrip(">")
 tok = unsub.rsplit("token=", 1)[1]
