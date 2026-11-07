@@ -837,6 +837,11 @@
     .series-price small { font-family: var(--body); font-size: .78rem; color: var(--muted-d); margin-left: .4rem; letter-spacing: 0; }
     .series-acts { display: flex; gap: .5rem; }
     .series-acts .card-btn-buy { flex: 1; text-align: center; }
+    /* Reading order: the series, then the £79 strip, then the single courses. The strip's
+       lines stay where they are in this file (other work edits them); flex order places it. */
+    body { display: flex; flex-direction: column; }
+    .page-hero, .series-grid { order: -2; }
+    .sub-strip { order: -1; }
     .lib-head { padding: 2.8rem 6vw 0; }
     .lib-title { font-family: var(--display); font-size: clamp(2.2rem, 4vw, 2.8rem); letter-spacing: .03em; line-height: 1; margin-bottom: .4rem; }
     .lib-sub { font-size: .95rem; color: var(--muted-d); }
@@ -880,25 +885,6 @@
 
 <!-- ─── FIELD WORK SERIES (rendered by renderSeries) ─── -->
 <section class="series-grid" id="seriesGrid" aria-label="Field Work series"></section>
-
-<!-- ─── ANNUAL SUB STRIP ─── -->
-<div class="sub-strip">
-  <div class="sub-strip-left">
-    <p class="sub-strip-label">Annual Subscription</p>
-    <h2 class="sub-strip-title">Everything.<br>Always.</h2>
-    <ul class="sub-strip-pts">
-      <li>Unlimited access to every course in the library</li>
-      <li>Every new course the moment it publishes</li>
-      <li>A certificate of completion for every course you finish</li>
-      <li>Cancel any time — PDFs and certs are yours to keep</li>
-    </ul>
-  </div>
-  <div class="sub-strip-right">
-    <div class="sub-price-big">£79</div>
-    <p class="sub-price-per">per year for the whole library</p>
-    <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Annual Access</a>
-  </div>
-</div>
 
 <!-- ─── SINGLE COURSES ─── -->
 <section class="lib-head">
@@ -947,6 +933,25 @@
 <div class="course-grid" id="courseGrid">
   <div class="no-results" id="noResults">
     No courses match your search. <a href="#" onclick="clearFilters(); return false;" style="color:var(--accent)">Clear filters</a>
+  </div>
+</div>
+
+<!-- ─── ANNUAL SUB STRIP ─── -->
+<div class="sub-strip">
+  <div class="sub-strip-left">
+    <p class="sub-strip-label">Annual Subscription</p>
+    <h2 class="sub-strip-title">Everything.<br>Always.</h2>
+    <ul class="sub-strip-pts">
+      <li>Unlimited access to every course in the library</li>
+      <li>Every new course the moment it publishes</li>
+      <li>A certificate of completion for every course you finish</li>
+      <li>Cancel any time — PDFs and certs are yours to keep</li>
+    </ul>
+  </div>
+  <div class="sub-strip-right">
+    <div class="sub-price-big">£79</div>
+    <p class="sub-price-per">per year for the whole library</p>
+    <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Annual Access</a>
   </div>
 </div>
 

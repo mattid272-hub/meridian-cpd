@@ -343,8 +343,10 @@ check("test_fix_email's pages still carry the correction form", 'action="/thanks
 
 # ── 10. The public courses page ──
 html = (ROOT / "landing-page" / "courses.html").read_text(encoding="utf-8")
-i_series, i_strip, i_grid = html.index('id="seriesGrid"'), html.index('class="sub-strip"'), html.index('id="courseGrid"')
-check("courses.html: series first, then the £79 strip, then the single courses", i_series < i_strip < i_grid)
+i_series, i_strip, i_grid, i_lib = html.index('id="seriesGrid"'), html.index('class="sub-strip"'), html.index('id="courseGrid"'), html.index('class="lib-head"')
+check("courses.html: series first, then the £79 strip (placed by flex order, its lines left where PR #56 edits them), then the single courses",
+      i_series < i_lib < i_grid < i_strip and ".page-hero, .series-grid { order: -2; }" in html and ".sub-strip { order: -1; }" in html
+      and "body { display: flex; flex-direction: column; }" in html)
 check("courses.html: the series cards use the poster template and the existing series links at £39.99",
       "function poster(" in html and "function seriesCard(" in html and "getSeriesLink(sid)" in html
       and "Buy, ${SERIES_PRICE}" in html and "SERIES_PRICE = '£39.99'" in html and "renderSeries()" in html)
