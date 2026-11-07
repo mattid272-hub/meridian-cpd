@@ -2376,7 +2376,7 @@ def _series_card(st: dict, series_id: str) -> str:
     where = _where_label(parts[0])
     if not held:
         bottom = (f'<div class="meta"><span class="status none">Not in your library</span></div>'
-                  f'<div class="acts"><a class="btn btn-p btn-sm" href="{SITE_URL}/courses.html#series">Buy the series, £39.99</a>'
+                  f'<div class="acts"><a class="btn btn-p btn-sm" href="{SITE_URL}/courses.html#seriesGrid">Buy the series, £39.99</a>'
                   f'<a class="btn btn-s btn-sm" href="/my-cpd/series/{series_id}">See the parts</a></div>')
     else:
         label = "View series" if done == n else ("Continue series" if done or any(cid in st["opened"] for cid in parts) else "Start series")
@@ -2582,7 +2582,7 @@ async def member_series_page(series_id: str, request: Request):
         cert = st["cert_by_course"].get(cid)
         if cid not in st["library"]:
             side = (f'<span class="status none">Not in your library</span>'
-                    f'<a class="btn btn-s btn-sm" href="{SITE_URL}/courses.html#series">Buy the series, £39.99</a>')
+                    f'<a class="btn btn-s btn-sm" href="{SITE_URL}/courses.html#seriesGrid">Buy the series, £39.99</a>')
         elif cid in UNDER_REVIEW:
             side = (_STATUS_PILL["done"] if status == "done" else "") + _STATUS_PILL["held"]
         elif status == "done" and cert:
@@ -2603,7 +2603,7 @@ async def member_series_page(series_id: str, request: Request):
     <h3>{_esc(_short(cid))}</h3><p>{_esc(_course_text(cid).get('desc', ''))}</p></div>
   <div class="side">{side}</div></div>"""
     if not held:
-        next_action = f'<a class="btn btn-p" href="{SITE_URL}/courses.html#series">Buy the series, £39.99</a>'
+        next_action = f'<a class="btn btn-p" href="{SITE_URL}/courses.html#seriesGrid">Buy the series, £39.99</a>'
     elif not next_action:
         next_action = '<a class="btn btn-s" href="/my-cpd/certificates">View certificates</a>'
 
