@@ -72,12 +72,12 @@ async def send_course_email(
     course sits in a Field Work series; held_parts lists the titles of parts of that
     series that were bought but are being updated and will follow."""
     if is_subscription:
-        subject = "Welcome to Meridian CPD — a few things worth knowing"
+        subject = "Welcome to Meridian CPD: a few things worth knowing"
         base_url = APP_URL
         consent_query = f"email={quote(to_email)}&token={consent_token(to_email)}"
         body = f"""Hi {to_name},
 
-⚠ QUICK NOTE: This email may have landed in your junk or spam folder. If it did, please mark it as safe and add hello@meridiancpd.co.uk to your contacts — this ensures your CPD certificates reach you without any issues.
+⚠ QUICK NOTE: This email may have landed in your junk or spam folder. If it did, please mark it as safe and add hello@meridiancpd.co.uk to your contacts so your certificates reach you.
 
 ─────────────────────────────
 
@@ -93,12 +93,12 @@ We'd suggest one course every few weeks across your membership year, whenever yo
 ─────────────────────────────
 DON'T RUSH TO COMPLETE EVERYTHING AT ONCE
 ─────────────────────────────
-Each course is designed to be read properly — not skimmed. Download it, read it, mark it complete, get your certificate. Then move on. The library isn't going anywhere.
+Each course is designed to be read properly, not skimmed. Download it, read it, mark it complete, get your certificate. Then move on. The library isn't going anywhere.
 
 ─────────────────────────────
 YOUR CERTIFICATES ARRIVE INSTANTLY
 ─────────────────────────────
-No waiting, no monthly batch. As soon as you click Mark Complete and confirm, your certificate lands in your inbox. Keep them somewhere safe — a dedicated folder works well. Your dashboard also holds a permanent record.
+No waiting, no monthly batch. As soon as you click Mark Complete and confirm, your certificate lands in your inbox. Keep them somewhere safe. A dedicated folder works well. Your dashboard also holds a permanent record.
 
 ─────────────────────────────
 START WITH WHAT'S MOST RELEVANT RIGHT NOW
@@ -110,7 +110,7 @@ Your dashboard is always at:
 
 ─────────────────────────────
 
-One last thing — we occasionally develop new tools, resources, and products for energy assessors and retrofit professionals. If you'd be happy to hear about those from time to time, just let us know with one click:
+One last thing. We occasionally develop new tools, resources, and products for energy assessors and retrofit professionals. If you'd be happy to hear about those from time to time, just let us know with one click:
 
 Yes, keep me in the loop → {base_url}/my-cpd/consent/yes?{consent_query}
 
