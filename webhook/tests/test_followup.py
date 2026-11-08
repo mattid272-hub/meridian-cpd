@@ -339,6 +339,18 @@ try:
 except ValueError:
     unknown_ok = True
 check("there is no text for an annual price other than £79 or £99", unknown_ok)
+check("the price-rise email gives the founder rate (keep £79 at every renewal), not 'your first year is £79'",
+      "keep £79 at every renewal" in v["price"] and "first year" not in v["price"])
+os.environ["FREE_FOLLOWUP_PRICE_RISE"] = "on"
+on79 = followup.render_next("Jo", "x", "u", 79)[1]
+on99 = followup.render_next("Jo", "x", "u", 99)[1]
+check("with FREE_FOLLOWUP_PRICE_RISE on, what's next at £79 carries the January heads-up, and the £99 version does not",
+      "£99 a year from 1 January 2027" in on79 and "keep £79" in on79 and "keep £79" not in on99 and "£79" not in on99)
+check("and the preview of what's next at £79 shows the heads-up then",
+      "keep £79" in {s: t for s, _, t in followup.previews()}["next (annual £79)"])
+os.environ.pop("FREE_FOLLOWUP_PRICE_RISE")
+off79 = followup.render_next("Jo", "x", "u", 79)[1]
+check("with the switch off, what's next at £79 says nothing about £99", "£99" not in off79 and "keep £79" not in off79)
 
 # ── Admin and the Friday figures ──
 db = fresh_db(); sent.clear()

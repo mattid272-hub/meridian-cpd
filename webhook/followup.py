@@ -4,7 +4,8 @@ The sequence Matt approved on 6 November 2026:
   1. nudge    finish the free course: 14 days after taking it, only if not completed
   2. next     what's next (a Field Work series at £39.99, or the year at the annual price
               checkout charges): 7 days after completing the free course, or after the nudge
-              if it was never completed
+              if it was never completed; while FREE_FOLLOWUP_PRICE_RISE is on, the £79
+              version carries a heads-up (£99 from 1 January; subscribe before and keep £79)
   3. price    the annual price rises to £99 on 1 January 2027: once, between 1 and 23
               December 2026, and only while checkout still charges £79 and
               FREE_FOLLOWUP_PRICE_RISE is on (Matt sets it once the £99 line is live on the
@@ -258,10 +259,18 @@ def render_nudge(name: str, course_title: str, cpd_hours, unsub: str):
     return _compose("Your free course is still open", paragraphs, unsub)
 
 
-def render_next(name: str, course_title: str, unsub: str, annual: int):
-    """annual is the price checkout charges (annual_price_gbp), 79 or 99."""
+RISE_HEADS_UP = ("One thing to know before you decide: it is £79 a year until 31 December and £99 a year "
+                 "from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.")
+
+
+def render_next(name: str, course_title: str, unsub: str, annual: int, rise_notice: bool | None = None):
+    """annual is the price checkout charges (annual_price_gbp), 79 or 99. rise_notice adds
+    the January heads-up to the £79 version; by default it follows FREE_FOLLOWUP_PRICE_RISE,
+    so the email never says something the site does not."""
     if annual not in ANNUAL_PRICES:
         raise ValueError(f"no approved text for an annual price of {annual!r}")
+    if rise_notice is None:
+        rise_notice = price_rise_notice_on()
     paragraphs = [
         f"Hello {name},",
         f"Thanks for taking {course_title}. If it was useful, there are two ways to carry on.",
@@ -269,6 +278,10 @@ def render_next(name: str, course_title: str, unsub: str, annual: int):
         "There are series on insulation, heating, ventilation and moisture. "
         "Each part has its own certificate of completion as you finish it.",
         f"The annual membership is every course in the library, plus every new one we add, for £{annual} a year.",
+    ]
+    if annual == 79 and rise_notice:
+        paragraphs.append(RISE_HEADS_UP)
+    paragraphs += [
         "Both are here:",
         COURSES_URL,
         "Whichever you choose, check your own scheme's CPD rules for what counts towards your hours.",
@@ -283,7 +296,8 @@ def render_price(name: str, unsub: str):
         "A short note on price. Annual membership at Meridian CPD is £79 a year until 31 December 2026. "
         "From 1 January 2027 it will be £99 a year.",
         "Membership is every course in the library, plus every new one we add, with a certificate of completion "
-        "for each course you finish. If you join before 1 January, your first year is £79.",
+        "for each course you finish. Join before 1 January and you keep £79 at every renewal for as long as you "
+        "stay subscribed.",
         COURSES_URL,
         "If a whole year is more than you need, a Field Work series is three courses on one subject for £39.99, "
         "written for England and Wales.",

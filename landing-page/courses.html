@@ -949,7 +949,7 @@
   </div>
   <div class="sub-strip-right">
     <div class="sub-price-big">£79</div>
-    <p class="sub-price-per">per year for the whole library</p>
+    <p class="sub-price-per">per year for the whole library<br>£79 a year until 31 December. £99 from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.</p>
     <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Annual Access</a>
   </div>
 </div>
@@ -1925,17 +1925,19 @@ function openModal(courseId) {
       seriesBtn = `<a href="${getSeriesLink(c.series)}" target="_blank" rel="noopener" class="btn-s">All three — ${SERIES_PRICE}</a>`;
     }
     seriesNote = ` Each part is its own course with its own certificate. Annual subscribers already have every part in their library, so there is no need to buy the series.`;
+    // (the annual price line, ANNUAL_NOTE, is appended to every modal's note below)
   } else {
     seriesBox.innerHTML = '';
     seriesBox.style.display = 'none';
   }
 
   const link = getStripeLink(c.id);
+  const ANNUAL_NOTE = ` £79 a year until 31 December. £99 from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.`;
   const promoNote = (promoCode
     ? `<strong>Code "${promoCode}" will be applied at checkout.</strong>`
     : c.free
       ? `Use code <strong>MERIDIAN10</strong> to get this course free.`
-      : `Have a code? Enter it above or at Stripe checkout. Annual subscribers get every course free.`) + seriesNote;
+      : `Have a code? Enter it above or at Stripe checkout. Annual subscribers get every course free.`) + seriesNote + ANNUAL_NOTE;
 
   document.getElementById('modalActions').innerHTML = `
     <a href="${link}" target="_blank" rel="noopener" class="btn-p">Enrol — £19.99 →</a>
