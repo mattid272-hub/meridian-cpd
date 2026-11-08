@@ -242,16 +242,17 @@ def _compose(subject: str, paragraphs: list[str], unsub: str) -> tuple[str, str,
 
 
 def render_nudge(name: str, course_title: str, cpd_hours, unsub: str):
-    """Points at My CPD, not the completion link: a download needs a signed-in session,
-    and the completion page sends anyone who has not downloaded there back to My CPD."""
+    """Points at My CPD, not the completion link: the course is opened and completed on its
+    page in the member area, and the certificate appears in My certificates at once."""
     hours = _hours(cpd_hours)
     paragraphs = [
         f"Hello {name},",
         f"You took {course_title} with us and it isn't marked as complete yet. "
         + (f"It is {hours}, and it is there whenever you have the time." if hours else "It is there whenever you have the time."),
-        "Sign in at the link below with this email address and the course is on your page, ready to download.",
+        "Sign in at the link below with this email address, open the course and read it.",
         f"{APP_URL}/my-cpd",
-        "When you've read it, press Mark Complete next to the course and your certificate of completion comes by email.",
+        "When you have read it, tick the declaration on the course page. Your certificate of completion appears "
+        "in My certificates at once, and a copy comes by email.",
         "Kind regards,",
     ]
     return _compose("Your free course is still open", paragraphs, unsub)

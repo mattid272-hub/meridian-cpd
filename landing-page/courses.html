@@ -805,10 +805,53 @@
       border-top: 1px solid rgba(255,255,255,.06);
     }
 
+    /* ── FIELD WORK SERIES + COVERS ── */
+    .series-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      padding: 2.4rem 6vw 3rem;
+    }
+    .series-card {
+      background: var(--dark2);
+      border: 1.5px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .2s, transform .15s, box-shadow .2s;
+    }
+    .series-card:hover { border-color: rgba(212,255,0,.35); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
+    .card-cover { aspect-ratio: 16/9; }
+    .card-cover svg { display: block; width: 100%; height: 100%; }
+    .course-card .card-cover { margin: -1.5rem -1.5rem 0; border-radius: 10px 10px 0 0; overflow: hidden; }
+    .series-body { padding: 1rem 1.2rem 1.2rem; display: flex; flex-direction: column; gap: .6rem; flex: 1; }
+    .series-title { font-size: 1.05rem; font-weight: 700; line-height: 1.3; }
+    .series-parts-list { list-style: none; font-size: .82rem; color: rgba(255,255,255,.72); display: grid; gap: .25rem; }
+    .series-parts-list li::before {
+      content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      border: 1.5px solid var(--muted-d); margin-right: .5rem; vertical-align: 1px;
+    }
+    .series-meta { font-size: .78rem; color: var(--muted-d); }
+    .series-price { font-family: var(--display); font-size: 2rem; color: var(--accent); line-height: 1; margin-top: auto; padding-top: .4rem; letter-spacing: .04em; }
+    .series-price small { font-family: var(--body); font-size: .78rem; color: var(--muted-d); margin-left: .4rem; letter-spacing: 0; }
+    .series-acts { display: flex; gap: .5rem; }
+    .series-acts .card-btn-buy { flex: 1; text-align: center; }
+    /* Reading order: the series, then the £79 strip, then the single courses. The strip's
+       lines stay where they are in this file (other work edits them); flex order places it. */
+    body { display: flex; flex-direction: column; }
+    .page-hero, .series-grid { order: -2; }
+    .sub-strip { order: -1; }
+    .lib-head { padding: 2.8rem 6vw 0; }
+    .lib-title { font-family: var(--display); font-size: clamp(2.2rem, 4vw, 2.8rem); letter-spacing: .03em; line-height: 1; margin-bottom: .4rem; }
+    .lib-sub { font-size: .95rem; color: var(--muted-d); }
+    @media (max-width: 1100px) { .series-grid { grid-template-columns: repeat(2, 1fr); } }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       .nav-links { display: none; }
       .course-grid { grid-template-columns: 1fr; }
+      .series-grid { grid-template-columns: 1fr; padding: 1.6rem 6vw 2rem; }
       .controls-bar { flex-direction: column; align-items: flex-start; }
       .promo-banner { margin: 1.6rem 6vw 1.8rem; padding: 1.1rem 1.2rem; }
       .search-input { width: 100%; }
@@ -834,20 +877,19 @@
 <!-- ─── PAGE HERO ─── -->
 <section class="page-hero">
   <div class="page-hero-inner">
-    <span class="page-label">Course Library</span>
-    <h1 class="page-title">Browse &amp; Enrol</h1>
-    <p class="page-sub">Courses for DEAs and Retrofit Assessors, written from the source documents with every rule referenced. Download the PDF, read it, claim your CPD.</p>
-    <div class="hero-stats">
-      <div class="hero-stat-item">
-        <span class="hero-stat-num">&#163;79</span>
-        <span class="hero-stat-lbl">A year for the whole library</span>
-      </div>
-      <div class="hero-stat-item">
-        <span class="hero-stat-num">v12.2</span>
-        <span class="hero-stat-lbl">RdSAP 10 conventions covered</span>
-      </div>
-    </div>
+    <span class="page-label">Courses</span>
+    <h1 class="page-title">Field Work series</h1>
+    <p class="page-sub">Three courses on one subject, bought together for £39.99. A certificate of completion for each part as you finish it.</p>
   </div>
+</section>
+
+<!-- ─── FIELD WORK SERIES (rendered by renderSeries) ─── -->
+<section class="series-grid" id="seriesGrid" aria-label="Field Work series"></section>
+
+<!-- ─── SINGLE COURSES ─── -->
+<section class="lib-head">
+  <h2 class="lib-title">Single courses, £19.99 each</h2>
+  <p class="lib-sub">Start with RdSAP 10: What's Changed and Why, free with the code MERIDIAN10.</p>
 </section>
 
 <!-- ─── PROMO BANNER ─── -->
@@ -865,10 +907,10 @@
 <!-- ─── CONTROLS ─── -->
 <div class="controls-bar">
   <div class="filter-tabs" id="filterTabs">
-    <button class="filter-tab active" data-filter="all">All <span id="countAll"></span></button>
-    <button class="filter-tab" data-filter="DEA">DEA Track <span id="countDEA"></span></button>
-    <button class="filter-tab" data-filter="RA">Retrofit Assessor <span id="countRA"></span></button>
-    <button class="filter-tab" data-filter="ALL">All Strands <span id="countALL"></span></button>
+    <button class="filter-tab active" data-filter="all">All</button>
+    <button class="filter-tab" data-filter="DEA">DEA Track</button>
+    <button class="filter-tab" data-filter="RA">Retrofit Assessor</button>
+    <button class="filter-tab" data-filter="ALL">All Strands</button>
   </div>
   <div class="search-wrap">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A9E8B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -885,7 +927,6 @@
 </div>
 <p class="where-note" id="whereNote" style="display:none"></p>
 
-<p class="results-meta" id="resultsMeta"></p>
 
 <!-- ─── COURSE GRID ─── -->
 <div class="course-grid" id="courseGrid">
@@ -1635,6 +1676,108 @@ function seriesTag(c) {
   return `<p class="series-tag">Part ${c.part} of ${s.courses.length} · ${s.title}${link}</p>`;
 }
 
+// ── Covers ───────────────────────────────────────────────────────────────────
+// One line-drawing poster template for every series and course cover: a kicker, a
+// short title, an optional part label and a line motif chosen from the title. It
+// carries no claims. The app draws the same poster for the member area
+// (webhook/member_ui.py); keep the two in step.
+function shortTitle(c) {
+  let t = c.title.replace(/^.*Series, Part \d+:\s*/, '');
+  if (t.includes(':')) t = t.split(':')[0];
+  return t;
+}
+function kickerFor(c) {
+  if (c.series) return 'Field Work';
+  if (c.where === 'S') return 'Scotland';
+  return { DEA: 'For DEAs', RA: 'Retrofit', ALL: 'All assessors' }[c.strand] || '';
+}
+function motifFor(text) {
+  const t = text.toLowerCase();
+  if (/insulation|wall/.test(t)) return 'layers';
+  if (/heat pump|heating|boiler|hot water|heat loss/.test(t)) return 'fan';
+  if (/ventilat|airtight|breathe/.test(t)) return 'flow';
+  if (/damp|moisture|condensation|mould|floors|roofs and lofts/.test(t)) return 'drop';
+  if (/window/.test(t)) return 'window';
+  if (/roof/.test(t)) return 'roof';
+  if (/solar|renewable|lighting|pv/.test(t)) return 'sun';
+  if (/scotland/.test(t)) return 'contour';
+  return 'meridian';
+}
+const MOTIFS = {
+  layers: '<g>' + [0,1,2,3,4].map(i => `<rect x="${300+i*26}" y="40" width="18" height="190" rx="2"/>`).join('') + '<path d="M290 80h150M290 135h150M290 190h150" opacity=".5"/></g>',
+  fan: '<g><circle cx="370" cy="135" r="92"/><circle cx="370" cy="135" r="14"/>' + [0,72,144,216,288].map(a => `<path transform="rotate(${a} 370 135)" d="M370 121c10-40 40-62 58-50 10 18-20 42-58 50z"/>`).join('') + '</g>',
+  flow: '<g>' + [0,1,2,3,4].map(i => `<path d="M280 ${60+i*38}c40-26 80 26 120 0s60-12 70 0"/>`).join('') + '<path d="M455 50l15 10-15 10M455 202l15 10-15 10"/></g>',
+  drop: '<g><path d="M370 40c38 58 70 96 70 132a70 70 0 0 1-140 0c0-36 32-74 70-132z"/><path d="M335 175a36 36 0 0 0 30 34" opacity=".6"/><path d="M290 250h160" opacity=".5"/></g>',
+  window: '<g><rect x="300" y="40" width="140" height="190" rx="3"/><path d="M370 40v190M300 135h140"/><path d="M285 245h170" opacity=".5"/></g>',
+  roof: '<g><path d="M270 170l100-110 100 110"/><path d="M300 170v70h140v-70"/><path d="M330 128h80" opacity=".6"/></g>',
+  sun: '<g><circle cx="370" cy="120" r="40"/>' + [0,45,90,135,180,225,270,315].map(a => `<path transform="rotate(${a} 370 120)" d="M370 60v-24"/>`).join('') + '<path d="M290 230l40-50h120l-40 50z" opacity=".7"/></g>',
+  contour: '<g>' + [0,1,2,3,4].map(i => `<ellipse cx="380" cy="140" rx="${30+i*22}" ry="${18+i*16}" transform="rotate(-18 380 140)"/>`).join('') + '</g>',
+  meridian: '<g><circle cx="370" cy="135" r="90"/><path d="M370 45v180"/><path d="M370 45q60 90 0 180"/><path d="M280 135h180" opacity=".4"/><circle cx="370" cy="135" r="6" fill="#D4FF00"/></g>',
+};
+function wrapWords(text, max) {
+  const words = text.split(/\s+/); const lines = []; let cur = '';
+  for (const w of words) {
+    if ((cur + ' ' + w).trim().length > max && cur) { lines.push(cur); cur = w; } else cur = (cur + ' ' + w).trim();
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+function escHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function poster({ kicker, title, part, motif }) {
+  let max = 13, size = 48, lines = wrapWords(title.toUpperCase(), max);
+  if (lines.length > 3) { max = 17; size = 38; lines = wrapWords(title.toUpperCase(), max); }
+  if (lines.length > 3) { lines = lines.slice(0, 3); lines[2] += '…'; }
+  const y0 = 230 - (lines.length - 1) * size * 0.95 - (part ? 34 : 0);
+  return `<svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${escHtml(title)}">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16301A"/><stop offset="1" stop-color="#0A170B"/></linearGradient></defs>
+  <rect width="480" height="270" fill="url(#g)"/>
+  <g fill="none" stroke="#D4FF00" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity=".35">${MOTIFS[motif] || MOTIFS.meridian}</g>
+  <rect x="24" y="24" width="4" height="18" fill="#D4FF00"/>
+  <text x="36" y="39" fill="#D4FF00" font-family="DM Sans, Arial" font-weight="700" font-size="13" letter-spacing="2">${escHtml(kicker.toUpperCase())}</text>
+  ${lines.map((l, i) => `<text x="24" y="${y0 + i * size * 0.95}" fill="#FFFFFF" font-family="Bebas Neue, Impact, sans-serif" font-size="${size}" letter-spacing="1">${escHtml(l)}</text>`).join('')}
+  ${part ? `<rect x="24" y="214" width="${part.length * 8.4 + 20}" height="26" rx="3" fill="#D4FF00"/><text x="34" y="232" fill="#0D1F0E" font-family="DM Sans, Arial" font-weight="700" font-size="12.5" letter-spacing="1.5">${escHtml(part.toUpperCase())}</text>` : ''}
+  <text x="456" y="250" text-anchor="end" fill="#FFFFFF" opacity=".55" font-family="Bebas Neue, Impact, sans-serif" font-size="17" letter-spacing="2">MERIDIAN CPD</text>
+</svg>`;
+}
+function coursePoster(c) {
+  const s = c.series ? SERIES[c.series] : null;
+  return poster({ kicker: kickerFor(c), title: shortTitle(c), part: s ? `Part ${c.part} of ${s.courses.length}` : '', motif: motifFor(c.title) });
+}
+function seriesPoster(sid) {
+  const s = SERIES[sid];
+  return poster({ kicker: 'Field Work series', title: s.title.replace('Field Work: ', ''), part: 'Three parts', motif: motifFor(s.title) });
+}
+
+// ── Series cards ─────────────────────────────────────────────────────────────
+// The four Field Work series lead the page: poster, title, the three parts, hours,
+// where they apply, and a Buy button on the existing series Payment Link.
+function seriesCard(sid) {
+  const s = SERIES[sid];
+  const parts = s.courses.map(id => ALL_COURSES.find(c => c.id === id)).filter(Boolean);
+  const hours = parts.reduce((t, c) => t + c.hours, 0);
+  const onSale = seriesOnSale(sid);
+  const items = parts.map(c => `<li>Part ${c.part}: ${escHtml(shortTitle(c))}</li>`).join('');
+  const first = parts.find(c => COURSES.some(x => x.id === c.id));
+  const acts = onSale
+    ? `<a class="card-btn-buy" href="${getSeriesLink(sid)}" target="_blank" rel="noopener">Buy, ${SERIES_PRICE}</a>` +
+      (first ? `<button class="card-btn-detail" onclick="openModal('${first.id}')">See the parts</button>` : '')
+    : `<span class="card-btn-detail" style="cursor:default">Not on sale yet</span>`;
+  return `<article class="series-card" aria-label="${escHtml(s.title)}">
+    <div class="card-cover">${seriesPoster(sid)}</div>
+    <div class="series-body">
+      <h2 class="series-title">${escHtml(s.title)}</h2>
+      <ul class="series-parts-list">${items}</ul>
+      <p class="series-meta">${hrsLabel(hours)} · ${escHtml(whereLabel(parts[0] || {}))} · A certificate for each part</p>
+      <div class="series-price">${SERIES_PRICE}<small>three parts</small></div>
+      <div class="series-acts">${acts}</div>
+    </div></article>`;
+}
+function renderSeries() {
+  const grid = document.getElementById('seriesGrid');
+  if (!grid) return;
+  grid.innerHTML = Object.keys(SERIES).map(seriesCard).join('');
+}
+
 // ── Filtering ────────────────────────────────────────────────────────────────
 function filteredCourses() {
   return COURSES.filter(c => {
@@ -1675,37 +1818,26 @@ function renderGrid() {
   const courses = filteredCourses();
   const grid = document.getElementById('courseGrid');
   const noRes = document.getElementById('noResults');
-  const meta = document.getElementById('resultsMeta');
 
-  // Update counts
+  // No course counts anywhere on the page: the tabs carry plain labels.
   const counts = { DEA: 0, RA: 0, ALL: 0 };
   COURSES.forEach(c => counts[c.strand]++);
-  document.getElementById('countAll').textContent = '(' + COURSES.length + ')';
-  document.getElementById('countDEA').textContent = '(' + counts.DEA + ')';
-  document.getElementById('countRA').textContent  = '(' + counts.RA  + ')';
-  document.getElementById('countALL').textContent = '(' + counts.ALL + ')';
   // A strand with nothing on sale (its courses are being revised) gets no tab.
   ['DEA', 'RA', 'ALL'].forEach(k => {
     const tab = document.querySelector('.filter-tab[data-filter="' + k + '"]');
     if (tab) tab.style.display = counts[k] ? '' : 'none';
   });
 
-  // Meta
-  const showing = courses.length;
-  meta.innerHTML = 'Showing <span>' + showing + '</span> of ' + COURSES.length + ' courses';
-
   // Where note: what the chosen nation can use as it stands
   const note = document.getElementById('whereNote');
   if (activeNation === 'any') {
     note.style.display = 'none';
   } else {
-    const usable = COURSES.filter(c => appliesIn(c, activeNation));
-    const hrs = usable.reduce((t, c) => t + c.hours, 0);
     const name = NATION_NAME[activeNation];
-    note.innerHTML = '<strong>' + usable.length + ' of ' + COURSES.length + ' courses (' + hrs + ' CPD hours) apply in ' + name + '</strong> as they stand. ' +
+    note.innerHTML = '<strong>Courses that apply in ' + name + '</strong> as they stand. ' +
       'Each course says where it applies, on its card and in its details. ' +
       (activeNation === 'S'
-        ? 'RdSAP 10 and PAS 2035:2023 courses apply in Scotland; courses on English or England-and-Wales legislation are left out. Two courses are written for Scotland: RdSAP 10 in Scotland and the 2028 EPC reform. More Scotland-specific courses are being written.'
+        ? 'RdSAP 10 and PAS 2035:2023 courses apply in Scotland; courses on English or England-and-Wales legislation are left out. Courses written for Scotland say so on their card.'
         : activeNation === 'W'
           ? 'Courses written on English-only legislation (Approved Documents, the Future Homes Standard, the Renters\' Rights Act) are left out.'
           : '');
@@ -1731,6 +1863,7 @@ function renderGrid() {
     const freeTag = c.free ? '<span class="free-badge">Free with MERIDIAN10</span>' : '';
 
     card.innerHTML = `
+      <div class="card-cover">${coursePoster(c)}</div>
       <div class="card-top">
         <span class="strand-badge ${strandClass(c.strand)}">${strandLabel(c.strand)}</span>
         <span class="card-hours">${hrsLabel(c.hours)}</span>
@@ -1853,6 +1986,7 @@ document.addEventListener('keydown', e => {
 });
 
 // ── Init ─────────────────────────────────────────────────────────────────────
+renderSeries();
 renderGrid();
 
 // Structured data for Google: one Course entry per course on sale, built from the
