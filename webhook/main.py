@@ -25,13 +25,14 @@ from urllib.parse import quote
 
 import stripe
 from fastapi import FastAPI, HTTPException, Request, Response, Depends, Cookie
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 import httpx
 from supabase import create_client
 
 from email_sender import send_course_email, send_certificate_email, send_unsubscribe_goodbye_email, consent_token
 from certificate_generator import generate_certificate
+from cpd_record import generate_cpd_record
 from course_text import COURSE_TEXT
 import member_ui
 from settings import APP_URL, SITE_URL
@@ -2243,6 +2244,8 @@ async def dashboard_logout():
 #   /my-cpd/course/{course_id}/complete   POST: completion inside the app (same code path as /complete)
 #   /my-cpd/certificates                  every certificate earned, hours by calendar year
 #   /my-cpd/certificates/{number}.pdf     the member's own certificate as a PDF
+#   /my-cpd/certificates/record.pdf       the member's CPD record for one year (?year=YYYY)
+#   /my-cpd/marks/add, /my-cpd/marks/remove  POST: favourites and read later
 # The emailed completion link (/complete/{token}) still works for anyone who does not sign in.
 
 SESSION_DAYS = 90  # stay signed in on the member's device
@@ -2341,12 +2344,72 @@ def _member_state(email: str) -> dict | None:
         library = {k: COURSES[k] for k in COURSES if k in keep and k != "SUBSCRIPTION"}
 
     return {
+        "marks": _member_marks(member_id),
         "member": member, "member_id": member_id, "email": email,
         "name": member.get("name") or email.split("@")[0].title(),
         "is_sub": is_sub, "sub_ended": sub_ended, "purchased": purchased_ids,
         "completions": completions, "completed": completed, "pending": pending, "opened": opened,
         "certs": certs, "cert_by_course": cert_by_course, "library": library,
     }
+
+
+# ── Favourites and read later ──────────────────────────────────────────────────
+# One row per member, course and kind in member_marks (migrations/2026-11-08_platform_phase_2.sql).
+# Until that table exists the reads fail quietly and the buttons are not shown.
+MARK_KINDS = {"favourite": "Favourites", "read_later": "Read later"}
+
+
+def _member_marks(member_id: str) -> dict | None:
+    """{kind: [course ids, newest first]} for one member, or None if the table is not there."""
+    try:
+        rows = supabase.table("member_marks").select("course_id, kind, created_at").eq(
+            "member_id", member_id).order("created_at", desc=True).execute().data or []
+    except Exception as e:
+        print(f"member_marks not readable (run migrations/2026-11-08_platform_phase_2.sql?): {e}")
+        return None
+    marks = {k: [] for k in MARK_KINDS}
+    for r in rows:
+        if r.get("kind") in marks and r.get("course_id") not in marks[r["kind"]]:
+            marks[r["kind"]].append(r.get("course_id"))
+    return marks
+
+
+@app.post("/my-cpd/marks/{action}")
+async def member_mark(action: str, request: Request):
+    """Add or remove a favourite or read-later mark for the signed-in member. The member
+    is always the one in the session; a member id in the form is ignored. Answers JSON to
+    the page's script and a redirect back to the dashboard without it."""
+    wants_json = "application/json" in request.headers.get("accept", "")
+    def answer(status: int, ok: bool, on: bool = False):
+        if wants_json:
+            return JSONResponse({"ok": ok, "on": on}, status_code=status)
+        if status in (401,):
+            return RedirectResponse("/my-cpd", status_code=302)
+        if not ok:
+            raise HTTPException(status_code=status, detail="Could not save that")
+        return RedirectResponse("/my-cpd/dashboard", status_code=303)
+    email = _signed_in_email(request)
+    member = _member_by_email(email) if email else None
+    if not member:
+        return answer(401, False)
+    form = await request.form()
+    course_id, kind = str(form.get("course_id") or ""), str(form.get("kind") or "")
+    if action not in ("add", "remove") or kind not in MARK_KINDS:
+        return answer(400, False)
+    if course_id not in COURSES or course_id == "SUBSCRIPTION":
+        return answer(404, False)
+    try:
+        table = supabase.table("member_marks")
+        if action == "add":
+            have = table.select("id").eq("member_id", member["id"]).eq("course_id", course_id).eq("kind", kind).execute().data
+            if not have:
+                supabase.table("member_marks").insert({"member_id": member["id"], "course_id": course_id, "kind": kind}).execute()
+        else:
+            table.delete().eq("member_id", member["id"]).eq("course_id", course_id).eq("kind", kind).execute()
+    except Exception as e:
+        print(f"member_marks not writable (run migrations/2026-11-08_platform_phase_2.sql?): {e}")
+        return answer(503, False)
+    return answer(200, True, action == "add")
 
 
 def _course_status(st: dict, course_id: str) -> str:
@@ -2377,34 +2440,72 @@ def _download_links(course_id: str) -> str:
     return f'<a href="/download/{course_id}">Download PDF</a>'
 
 
+def _tags(course_id: str) -> list[str]:
+    return member_ui.course_tags(COURSES.get(course_id, {}), _course_text(course_id))
+
+
+def _search_text(*parts) -> str:
+    return _esc(" ".join(str(p or "") for p in parts).lower())
+
+
+def _mark_buttons(st: dict, course_id: str) -> str:
+    """Add to favourites and Read later, as small forms the page's script sends with fetch.
+    Nothing is shown when the marks table is not there."""
+    marks = st.get("marks")
+    if marks is None:
+        return ""
+    out = ""
+    for kind, icon, off_label, on_label in (("favourite", "heart", "Add to favourites", "In favourites"),
+                                            ("read_later", "later", "Read later", "In read later")):
+        on = course_id in marks.get(kind, [])
+        label = on_label if on else off_label
+        out += (f'<form class="mark" method="post" action="/my-cpd/marks/{"remove" if on else "add"}" data-course="{course_id}" data-kind="{kind}">'
+                f'<input type="hidden" name="course_id" value="{course_id}"><input type="hidden" name="kind" value="{kind}">'
+                f'<button type="submit" class="icon-btn{" on" if on else ""}" aria-pressed="{"true" if on else "false"}" '
+                f'aria-label="{label}" title="{label}" data-off="{off_label}" data-on="{on_label}">{member_ui.ICON[icon]}</button></form>')
+    return out
+
+
 def _course_card(st: dict, course_id: str) -> str:
+    """One poster card: cover, title, one-line statement, hours and where, certificate
+    status, the primary action (Watch now for a deck, Read now for notes), Info, Add to
+    favourites, Read later, and the Download links."""
     course = COURSES.get(course_id, {})
+    text = _course_text(course_id)
     status = _course_status(st, course_id)
+    held = course_id in st["library"]
     sid, s = _series_of(course_id)
     meta = [member_ui.hours_label(course.get("cpd_hours", 0))]
     if _where_label(course_id):
         meta.append(_where_label(course_id))
     if s:
         meta.append(_series_label(course_id))
-    pills = _STATUS_PILL[status]
+    pills = _STATUS_PILL[status] if held or status == "done" else '<span class="status none">Not in your library</span>'
     if status != "held" and course_id in UNDER_REVIEW:
         pills += " " + _STATUS_PILL["held"]
+    files = ""
     if course_id in UNDER_REVIEW:
-        acts = ""
-    elif status == "done":
-        acts = (f'<div class="acts"><a class="btn btn-s btn-sm" href="/my-cpd/course/{course_id}">View certificate</a></div>'
-                f'<div class="files">{_download_links(course_id)}</div>')
+        primary = ""
+        info = f"/my-cpd/course/{course_id}" if held else f"{SITE_URL}/courses.html?open={quote(course_id)}"
+    elif held:
+        primary = (f'<a class="btn btn-p btn-sm" href="/download/{course_id}" target="_blank" rel="noopener">'
+                   f'{"Watch now" if _is_deck(course_id) else "Read now"}</a>')
+        info = f"/my-cpd/course/{course_id}"
+        files = _download_links(course_id)
+        if status == "done":
+            files += f'<a href="/my-cpd/course/{course_id}">Certificate</a>'
     else:
-        label = "Continue" if status == "prog" else "Open"
-        acts = (f'<div class="acts"><a class="btn btn-p btn-sm" href="/my-cpd/course/{course_id}">{label}</a></div>'
-                f'<div class="files">{_download_links(course_id)}</div>')
-    return f"""<div class="card">
+        primary = f'<a class="btn btn-s btn-sm main" href="{SITE_URL}/courses.html?open={quote(course_id)}">See the course</a>'
+        info = f"{SITE_URL}/courses.html?open={quote(course_id)}"
+    return f"""<div class="card" data-course="{course_id}" data-tags="{' '.join(_tags(course_id))}" data-q="{_search_text(course.get('title'), text.get('desc'), course_id, _where_label(course_id), s['title'] if s else '')}">
   <div class="cover">{_poster(course_id)}</div>
   <div class="body">
     <div class="title">{_esc(str(course.get('title', course_id)))}</div>
+    <div class="stmt">{_esc(member_ui.statement(text.get('desc', '')))}</div>
     <div class="meta">{'<span class="dot"></span>'.join(_esc(m) for m in meta)}</div>
     <div class="meta">{pills}</div>
-    {acts}
+    <div class="acts">{primary}<a class="btn btn-s btn-sm" href="{info}">Info</a>{_mark_buttons(st, course_id)}</div>
+    {f'<div class="files">{files}</div>' if files else ''}
   </div></div>"""
 
 
@@ -2439,6 +2540,7 @@ def _series_card(st: dict, series_id: str) -> str:
   <div class="cover">{member_ui.series_poster(s['title'])}</div>
   <div class="body">
     <div class="title">{_esc(s['title'])}</div>
+    <div class="stmt">{_esc(member_ui.statement(SERIES_INTRO.get(series_id, '')))}</div>
     <ul class="series-parts">{items}</ul>
     <div class="meta">{_esc(member_ui.hours_label(hours))}<span class="dot"></span>{_esc(where)}<span class="dot"></span>A certificate for each part</div>
     {bottom}
@@ -2473,14 +2575,13 @@ def _series_order(st: dict) -> list[str]:
     return sorted(SERIES, key=score)
 
 
-def _continue_course(st: dict) -> str:
-    """The course to put in the hero: the one opened most recently and not finished, else
-    the first unfinished course in the library."""
-    open_unfinished = [cid for cid in st["library"] if _course_status(st, cid) == "prog"]
-    if open_unfinished:
-        return max(open_unfinished, key=lambda cid: str(st["opened"].get(cid) or ""))
-    unfinished = [cid for cid in st["library"] if _course_status(st, cid) == "none"]
-    return unfinished[0] if unfinished else ""
+def _newest_series() -> str:
+    """The series whose parts were published last (ties go to the one defined last)."""
+    def key(item):
+        i, sid = item
+        pubs = [str(COURSES[cid].get("published") or "") for cid in SERIES[sid]["courses"] if cid in COURSES]
+        return (max(pubs or [""]), min(pubs or [""]), i)
+    return max(enumerate(x for x in SERIES if series_courses(x)), key=key)[1]
 
 
 @app.get("/my-cpd/dashboard", response_class=HTMLResponse)
@@ -2504,45 +2605,69 @@ async def subscriber_dashboard(request: Request):
     year = datetime.now(timezone.utc).year
     hours_year, certs_year = _year_tally(st["certs"], year)
 
-    # Hero: continue where you left off
-    cont = _continue_course(st)
-    if cont:
-        sid, s = _series_of(cont)
-        c = COURSES[cont]
-        if s:
-            done, _held = _series_progress(st, sid)
-            n = len(s["courses"])
-            title, sub = s["title"], f"Part {c.get('part')} of {n} · {_esc(_short(cont))}. {member_ui.hours_label(c['cpd_hours'])}, {_where_label(cont)}."
-            progress = (f'<div class="progress"><div class="bar"><div class="fill" style="width:{done / n * 100:.0f}%"></div></div>'
-                        f'<div class="lbl">{done} of {n} parts complete · {_n(done, "certificate")} issued</div></div>')
-            second = f'<a class="btn btn-s" href="/my-cpd/series/{sid}">Series info</a>'
-            label = f"Continue Part {c.get('part')}" if cont in st["opened"] else f"Open Part {c.get('part')}"
+    # Hero: the newest Field Work series, with the member's own progress through it.
+    sid = _newest_series()
+    s = SERIES[sid]
+    parts = s["courses"]
+    n = len(parts)
+    done, held = _series_progress(st, sid)
+    hours = sum(float(COURSES[cid].get("cpd_hours", 0)) for cid in parts)
+    items = "".join(f"<li>Part {COURSES[cid].get('part', i + 1)}: {_esc(_short(cid))}</li>" for i, cid in enumerate(parts))
+    if held:
+        nxt = next((cid for cid in parts if cid in st["library"] and _course_status(st, cid) != "done"), "")
+        if nxt:
+            label = f"{'Continue' if nxt in st['opened'] else 'Start'} Part {COURSES[nxt].get('part')}"
+            first = f'<a class="btn btn-p" href="/my-cpd/course/{nxt}">{label}</a>'
         else:
-            title, sub = str(c["title"]), f"{member_ui.hours_label(c['cpd_hours'])}, {_where_label(cont)}."
-            progress, second = "", ""
-            label = "Continue" if cont in st["opened"] else "Open the course"
-        hero = f"""<section class="hero"><div>
-    <div class="kicker">{'Continue where you left off' if cont in st['opened'] else 'Start here'}</div>
-    <h1>{_esc(title)}</h1><div class="sub">{sub}</div>{progress}
-    <div class="actions"><a class="btn btn-p" href="/my-cpd/course/{cont}">{label}</a>{second}</div>
-  </div><div class="poster">{_poster(cont)}</div></section>"""
-    elif st["library"]:
-        hero = f"""<section class="hero"><div><div class="kicker">All caught up</div><h1>Every course in your library is complete</h1>
-    <div class="sub">Your certificates are in My certificates. New courses appear here as they are released.</div>
-    <div class="actions"><a class="btn btn-p" href="/my-cpd/certificates">My certificates</a><a class="btn btn-s" href="{SITE_URL}/courses.html">Browse all courses</a></div></div></section>"""
+            first = f'<a class="btn btn-p" href="/my-cpd/series/{sid}">View series</a>'
+        progress = (f'<div class="progress"><div class="bar"><div class="fill" style="width:{done / n * 100:.0f}%"></div></div>'
+                    f'<div class="lbl">{done} of {n} parts complete · {_n(done, "certificate")} issued</div></div>')
     else:
-        hero = f"""<section class="hero"><div><div class="kicker">Welcome</div><h1>No courses yet</h1>
-    <div class="sub">When you buy a course or a series it appears here, ready to open.</div>
-    <div class="actions"><a class="btn btn-p" href="{SITE_URL}/courses.html">Browse all courses</a></div></div></section>"""
+        first = f'<a class="btn btn-p" href="{SITE_URL}/courses.html#seriesGrid">Buy the series, £39.99</a>'
+        progress = ""
+    hero = f"""<section class="hero series-hero"><div>
+    <div class="kicker">New series</div>
+    <h1>{_esc(s['title'])}</h1>
+    <div class="sub">{_esc(member_ui.hours_label(hours))} · {_esc(_where_label(parts[0]))} · A certificate for each part</div>
+    <ul class="parts">{items}</ul>{progress}
+    <div class="actions">{first}<a class="btn btn-s" href="/my-cpd/series/{sid}">Series info</a></div>
+  </div><div class="poster">{member_ui.series_poster(s['title'])}</div></section>"""
 
-    # Rows: every course in the library appears in exactly one of these.
-    done_ids = [cid for cid in st["library"] if _course_status(st, cid) == "done"]
-    cont_ids = [cid for cid in st["library"] if _course_status(st, cid) == "prog"]
-    rest = [cid for cid in st["library"] if cid not in done_ids and cid not in cont_ids]
-    field_work = [cid for cid in rest if COURSES[cid].get("series")]
-    others = [cid for cid in rest if not COURSES[cid].get("series")]
-    series_ids = [sid for sid in _series_order(st) if is_sub or _series_progress(st, sid)[1]]
-    done_ids.sort(key=lambda cid: str((st["cert_by_course"].get(cid) or {}).get("issued_at") or st["completed"].get(cid, {}).get("completed_at") or ""), reverse=True)
+    # Rows, built from the member's own data and the course tags. A course can sit in more
+    # than one row; the search and the topic chips work over one flat list of every course.
+    catalogue = [cid for cid in COURSES if cid != "SUBSCRIPTION" and (cid in st["library"] or is_available(cid))]
+    tags = {cid: _tags(cid) for cid in catalogue}
+    held_first = lambda ids: sorted(ids, key=lambda cid: cid not in st["library"])
+    cont_ids = sorted((cid for cid in catalogue if cid in st["library"] and _course_status(st, cid) == "prog"),
+                      key=lambda cid: str(st["opened"].get(cid) or ""), reverse=True)
+    done_ids = sorted((cid for cid in catalogue if _course_status(st, cid) == "done"),
+                      key=lambda cid: str((st["cert_by_course"].get(cid) or {}).get("issued_at")
+                                          or st["completed"].get(cid, {}).get("completed_at") or ""), reverse=True)
+    marks = st.get("marks") or {}
+    series_ids = [x for x in _series_order(st) if is_sub or _series_progress(st, x)[1]]
+    other_series = [x for x in SERIES if x not in series_ids and series_courses(x)]
+    new_ids = sorted((cid for cid in catalogue if "new" in tags[cid]), key=lambda cid: str(COURSES[cid].get("published")), reverse=True)
+    card = lambda cid: _course_card(st, cid)
+    rows = [
+        _row("Continue where you left off", [card(cid) for cid in cont_ids]),
+        _row("Your series", [_series_card(st, x) for x in series_ids], "All series", "/my-cpd/series"),
+        _row("Favourites", [card(cid) for cid in marks.get("favourite", []) if cid in tags]),
+        _row("Read later", [card(cid) for cid in marks.get("read_later", []) if cid in tags]),
+        _row("New this month", [card(cid) for cid in held_first(new_ids)]),
+    ]
+    for tag, label in member_ui.TOPICS:
+        extra = [_series_card(st, x) for x in other_series] if tag == "field-work" else []
+        rows.append(_row(label, extra + [card(cid) for cid in held_first([c for c in catalogue if tag in tags[c]])]))
+    rows.append(_row("Completed", [card(cid) for cid in done_ids], "My certificates", "/my-cpd/certificates"))
+    chips = '<button type="button" class="chip on" data-tag="">All</button>' + "".join(
+        f'<button type="button" class="chip" data-tag="{tag}">{_esc(label)}</button>'
+        for tag, label in member_ui.TOPICS if any(tag in t for t in tags.values()))
+    finder = f"""<div class="finder">
+    <label class="search">{member_ui.ICON['search']}<input id="q" type="search" placeholder="Search courses" aria-label="Search courses" autocomplete="off"></label>
+    <div class="chips" role="group" aria-label="Topics">{chips}</div></div>"""
+    results = (f'<section class="results" aria-live="polite"><div class="row-head"><h2>Results</h2></div>'
+               f'<div class="rail">{"".join(card(cid) for cid in held_first(catalogue))}</div>'
+               f'<p class="empty" id="noMatch" hidden>Nothing matches that search.</p></section>')
 
     # Upsell banner — shown only to single-course buyers
     upsell_html = ""
@@ -2585,14 +2710,12 @@ async def subscriber_dashboard(request: Request):
     <div><div class="num">{certs_year}</div><div class="lab">certificates of completion</div></div>
     <div class="note">This counts what you completed here. Check your own scheme's CPD rules for what you need in a year.</div>
     <a class="btn btn-s btn-sm" href="/my-cpd/certificates">My certificates</a>
+    <a class="btn btn-s btn-sm record-btn" href="/my-cpd/certificates/record.pdf?year={year}">Download CPD record (PDF)</a>
   </div>
   {upsell_html}
-  {_row('Continue where you left off', [_course_card(st, cid) for cid in cont_ids])}
-  {_row('Your series', [_series_card(st, sid) for sid in series_ids], 'All series', '/my-cpd/series')}
-  {_row('Field Work', [_course_card(st, cid) for cid in field_work])}
-  {_row('Your courses' if not is_sub else 'Library', [_course_card(st, cid) for cid in others])}
-  {_row('Completed', [_course_card(st, cid) for cid in done_ids], 'My certificates', '/my-cpd/certificates')}
-</main>"""
+  {finder}
+  <div class="rows" id="rows">{"".join(rows)}{results}</div>
+</main>""" + member_ui.LIBRARY_JS
     return HTMLResponse(member_ui.page("My CPD", body))
 
 
@@ -2904,11 +3027,37 @@ async def member_certificates(request: Request):
   <form class="toolbar" method="get" action="/my-cpd/certificates">
     <label class="muted" style="font-size:13px">Year <select class="select" name="year" onchange="this.form.submit()">{options}</select></label>
     <noscript><button class="btn btn-s btn-sm" type="submit">Show</button></noscript>
+    <a class="btn btn-p btn-sm record-btn" href="/my-cpd/certificates/record.pdf?year={this_year if chosen == "all" else chosen}">Download CPD record (PDF)</a>
   </form>
   <table class="cert-table"><thead><tr><th>Course</th><th>Completed</th><th>CPD hours</th><th>Certificate number</th><th></th></tr></thead>
   <tbody>{rows}</tbody></table>
 </main>"""
     return HTMLResponse(member_ui.page("My certificates", body))
+
+
+@app.get("/my-cpd/certificates/record.pdf")
+async def member_cpd_record(request: Request):
+    """The signed-in member's CPD record for one calendar year (?year=YYYY, default this
+    year) as a PDF: only their own certificates, read by the member id from the session.
+    Declared before /my-cpd/certificates/{number}.pdf so 'record' is never read as a number."""
+    email = _signed_in_email(request)
+    member = _member_by_email(email) if email else None
+    if not member:
+        return RedirectResponse("/my-cpd", status_code=302)
+    this_year = datetime.now(timezone.utc).year
+    try:
+        year = int(request.query_params.get("year") or this_year)
+        if not 2000 <= year <= this_year + 1:
+            raise ValueError
+    except ValueError:
+        year = this_year
+    certs = supabase.table("certificates").select("*").eq("member_id", member["id"]).execute().data or []
+    certs = [c for c in certs if c.get("member_id") == member["id"] and str(c.get("issued_at") or "")[:4] == str(year)]
+    latest = max(certs, key=lambda c: str(c.get("issued_at") or ""), default={})
+    name = str(latest.get("member_name") or member.get("name") or email.split("@")[0].title())
+    pdf = generate_cpd_record(name, year, certs)
+    return Response(content=pdf, media_type="application/pdf",
+                    headers={"Content-Disposition": f'attachment; filename="Meridian-CPD-record-{year}.pdf"'})
 
 
 @app.get("/my-cpd/certificates/{cert_number}.pdf")

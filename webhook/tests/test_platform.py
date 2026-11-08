@@ -306,16 +306,20 @@ check("an opened part shows In progress and Continue", "In progress" in t and "C
 
 # ── 7. Dashboard ──
 r = c.get("/my-cpd/dashboard", cookies=SUE); t = flat(r.text)
-check("dashboard: Your series row with all four series for a subscriber, the hours tally, the continue hero",
+hero_sid = main._newest_series()
+check("dashboard: Your series row with all four series for a subscriber, the hours tally, the newest-series hero, the continue row",
       r.status_code == 200 and "Your series" in t and all(s["title"] in t for s in main.SERIES.values())
-      and f"CPD hours with Meridian in {YEAR}" in t and "Continue where you left off" in t and "Continue Part 2" in t
+      and f"CPD hours with Meridian in {YEAR}" in t and "Continue where you left off" in t
+      and f'<div class="kicker">New series</div> <h1>{main.SERIES[hero_sid]["title"]}</h1>' in t and "Series info" in t
       and "Field Work: Moisture" in t and "/my-cpd/series/FW-MOISTURE" in t and "Annual Subscription" in t and "/my-cpd/billing" in t)
 r = c.get("/my-cpd/dashboard", cookies=BEA); t = flat(r.text)
-check("a single buyer's dashboard: only the series held, the completed row, the upsell, course cards link to the course page",
-      "Your series" in t and "Field Work: Insulation" in t and "Field Work: Heating" not in t and "Completed" in t
+your_series = t.split("<h2>Your series</h2>", 1)[1].split("</section>", 1)[0] if "<h2>Your series</h2>" in t else ""
+check("a single buyer's dashboard: only the series held in Your series, the completed row, the upsell, course cards link to the course page",
+      "Field Work: Insulation" in your_series and "Field Work: Heating" not in your_series and "<h2>Completed</h2>" in t
       and 'href="/my-cpd/course/MER-ALL-020"' in t and "Upgrade to Annual — £79/year" in t and "Pay Per Course" in t)
 r = c.get("/my-cpd/dashboard", cookies=NIA); t = flat(r.text)
-check("a new buyer: Start here, the course, no series row", "Start here" in t and 'href="/my-cpd/course/MER-DEA-001"' in t and "Your series" not in t)
+check("a new buyer: their course with Read now, no series row", 'href="/download/MER-DEA-001" target="_blank" rel="noopener">Read now' in t
+      and 'href="/my-cpd/course/MER-DEA-001"' in t and "Your series" not in t)
 
 # ── 8. The emailed completion link still works without a sign-in ──
 r = c.get("/complete/tok-otto")
@@ -388,7 +392,8 @@ check("courses.html: no course counts (tab labels, results line, nation note)",
       "countAll" not in html and "resultsMeta" not in html and "Showing <span>" not in html
       and "' of ' + COURSES.length" not in html and "Courses that apply in ' + name" in html)
 check("courses.html: the annual strip lines PR #56 edits are untouched",
-      '<p class="sub-price-per">per year for the whole library</p>' in html and "seriesNote = ` Each part is its own course" in html)
+      '<p class="sub-price-per">per year for the whole library<br>£79 a year until 31 December. £99 from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.</p>' in html
+      and "seriesNote = ` Each part is its own course" in html)
 # (one Scotland course objective in the catalogue describes an assessor "accredited in England and Wales"; the page text itself must not)
 page_text = html.split("const ALL_COURSES = [", 1)[0] + html.split("\n];", 1)[1]
 check("courses.html: no accreditation words outside the catalogue array", not re.search(r"accredited|cpd accredit", page_text, re.I))

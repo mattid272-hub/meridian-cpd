@@ -121,7 +121,9 @@ t = r.text
 assert "Subscription ended" in t and "/my-cpd/billing" in t
 assert len(db["completions"]) == n_tokens, "no new tokens for an ex-subscriber"
 for cid in ("MER-DEA-002", "MER-DEA-003", "MER-DEA-004"): assert cid in t, cid
-assert "MER-DEA-005" not in t and "MER-DEA-006" not in t
+# Phase 2 shows the whole library; courses the leaver does not hold have no download link and say so
+assert 'href="/download/MER-DEA-005"' not in t and 'href="/download/MER-DEA-006"' not in t
+assert 'data-course="MER-DEA-005"' in t and "Not in your library" in t
 print("7 ex-subscriber keeps bought, downloaded and completed courses only")
 
 # 8. Active subscriber's dashboard still gets the full library and the manage link
