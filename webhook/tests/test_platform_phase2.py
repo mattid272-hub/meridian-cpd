@@ -271,6 +271,9 @@ check("index.html: the hero shows the platform (My certificates, poster template
       and "Download any year as one PDF." in hero and "your year" not in hero)
 check("index.html: the hero headline is sized to its own column beside the screen (no overlap at desktop widths)",
       "#hero .hero-headline { font-size: clamp(3.6rem, 6.6vw, 8rem); }" in hero_css and "min(560px, 38vw)" in hero_css)
+check("index.html: the hero line as passed by the Matt check (no 'Practitioner-written')",
+      '<p class="hero-sub">CPD for DEAs and Retrofit Assessors, written from the source documents.</p>' in hero
+      and "Practitioner-written" not in index)
 how = index.split('id="how"', 1)[1].split("</section>", 1)[0]
 check("index.html: How certificates work, four plain steps", "How certificates<br>work." in how and '<span class="label on-light">Certificates</span>' in how and how.count('class="step"') == 4
       and all(w in how for w in ("Read", "Confirm", "Certificate", "QR")))
