@@ -96,6 +96,7 @@ db = {
 main.supabase = types.SimpleNamespace(table=lambda t: Q(db, t),
     storage=types.SimpleNamespace(from_=lambda b: types.SimpleNamespace(download=lambda f: (_ for _ in ()).throw(RuntimeError("no catalogue")))))
 main._refresh_under_review = lambda: None
+main.followup._fetch_annual_pence = lambda: 7900   # the annual price checkout charges, as read from Stripe
 main.UNDER_REVIEW.clear()
 
 SESSIONS = {
