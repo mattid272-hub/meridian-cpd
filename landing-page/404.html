@@ -55,6 +55,13 @@
           return;
         }
       }
+      // The cookie banner and pixel load only when nothing is forwarded: a forwarded address
+      // can carry a certificate number or a completion token, which must never reach Meta.
+      document.addEventListener('DOMContentLoaded', function () {
+        var s = document.createElement('script');
+        s.src = '/consent.js';
+        document.body.appendChild(s);
+      });
     })();
   </script>
 </head>
@@ -69,6 +76,5 @@
   <footer>
     <a href="/privacy.html">Privacy</a>
   </footer>
-<script src="/consent.js" defer></script>
 </body>
 </html>

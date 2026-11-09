@@ -75,6 +75,11 @@ def _sha(value: str) -> str:
     return hashlib.sha256(value.strip().lower().encode()).hexdigest()
 
 
+# Pages whose address can carry a certificate number, token, email or checkout session id.
+# Their address is never sent to Meta, even if a browser event claims to come from one.
+PRIVATE_PATHS = ("/verify", "/complete", "/my-cpd/login", "/my-cpd/consent", "/download", "/unsubscribe", "/thanks")
+
+
 def clean_url(url: str) -> str:
     """Scheme, host and path of one of our own pages, nothing else: a query string can carry
     a token or an email address."""
@@ -84,7 +89,10 @@ def clean_url(url: str) -> str:
         return ""
     if parts.scheme != "https" or parts.hostname not in OUR_HOSTS:
         return ""
-    return f"https://{parts.hostname}{parts.path or '/'}"
+    path = parts.path or "/"
+    if path.startswith(PRIVATE_PATHS):
+        return ""
+    return f"https://{parts.hostname}{path}"
 
 
 def from_our_pages(request) -> bool:

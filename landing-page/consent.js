@@ -117,6 +117,8 @@
 
   var choice = read();
   if (choice === "yes") loadPixel(); else if (choice !== "no") banner.hidden = false;
+  // Arriving from a "Cookie settings" link on a page that does not load this file (unsubscribe.html)
+  if (location.hash === "#cookie-settings") show();
 
   // Payment link clicks and email taps
   document.addEventListener("click", function (e) {

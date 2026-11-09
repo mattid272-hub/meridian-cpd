@@ -142,7 +142,32 @@ assert c.head("/my-cpd").headers.get("referrer-policy") == "strict-origin"
 assert c.head("/unsubscribe?email=a@b.co&token=x").headers.get("referrer-policy") == "strict-origin"
 assert c.post("/meta/event", content="x", headers=SITE).headers.get("referrer-policy") == "strict-origin"
 
-# 7. A refusal or a network failure from Meta never breaks the page.
+# 7. Addresses that can carry a certificate number, token, email or session id never go to Meta.
+for u in ("https://meridiancpd.co.uk/verify/MER-2026-0001", "https://app.meridiancpd.co.uk/verify", "https://app.meridiancpd.co.uk/complete/tok",
+          "https://app.meridiancpd.co.uk/my-cpd/login/tok", "https://app.meridiancpd.co.uk/my-cpd/consent/tok", "https://app.meridiancpd.co.uk/download/tok",
+          "https://meridiancpd.co.uk/unsubscribe", "https://meridiancpd.co.uk/unsubscribe.html", "https://app.meridiancpd.co.uk/thanks"):
+    assert meta_capi.clean_url(u) == "", u
+assert meta_capi.clean_url("https://app.meridiancpd.co.uk/my-cpd/dashboard?x=1") == "https://app.meridiancpd.co.uk/my-cpd/dashboard"
+assert meta_capi.clean_url("https://meridiancpd.co.uk/courses.html") == "https://meridiancpd.co.uk/courses.html"
+r = c.post("/meta/event", content=json.dumps({"event_name": "PageView", "event_id": "abc123def457",
+           "event_source_url": "https://meridiancpd.co.uk/verify/MER-2026-0001"}), headers=SITE, cookies={"mcpd_consent": "yes"})
+assert r.status_code == 204 and len(posted) == 1
+assert "event_source_url" not in posted.pop()[1]["data"][0], "a certificate check address went to Meta"
+
+# 8. The 404 page and consent.js in a fake browser (node): no consent.js on a forwarded address;
+#    "Cookie settings" from unsubscribe.html (#cookie-settings) opens the choice.
+import shutil, subprocess
+node = shutil.which("node")
+if node:
+    out = subprocess.run([node, os.path.join(os.path.dirname(os.path.abspath(__file__)), "consent_js_check.js")],
+                         capture_output=True, text=True)
+    assert out.returncode == 0, out.stdout + out.stderr
+else:
+    print("node not found: consent.js checks skipped")
+html = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "landing-page", "unsubscribe.html"), encoding="utf-8").read()
+assert 'href="/privacy.html#cookie-settings">Cookie settings</a>' in html and "consent.js" not in html
+
+# 9. A refusal or a network failure from Meta never breaks the page.
 class Broken(FakeClient):
     async def post(self, *a, **k): raise httpx.ConnectError("down")
 httpx.AsyncClient = Broken
