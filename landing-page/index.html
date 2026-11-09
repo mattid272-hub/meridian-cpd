@@ -256,8 +256,12 @@
     .hs-btn { display: inline-block; margin-top: .5rem; background: var(--accent); color: var(--dark); font-weight: 700; font-size: .72rem;
               padding: .45rem .8rem; border-radius: 5px; }
     .hero-caption { position: relative; z-index: 1; font-size: .72rem; color: var(--muted-d); margin-top: .6rem; text-align: center; }
-    @media (max-width: 960px) {
+    /* Two columns: the headline sizes to its own column so it never runs under the screen. */
+    #hero { grid-template-columns: minmax(0, 1fr) minmax(0, min(560px, 38vw)); }
+    #hero .hero-headline { font-size: clamp(3.6rem, 6.6vw, 8rem); }
+    @media (max-width: 1100px) {
       #hero { grid-template-columns: 1fr; gap: 2.5rem; min-height: 0; padding-top: 110px; }
+      #hero .hero-headline { font-size: clamp(4rem, 13vw, 9rem); }
     }
     @media (max-width: 500px) {
       .hs-row { grid-template-columns: 64px 1fr; }

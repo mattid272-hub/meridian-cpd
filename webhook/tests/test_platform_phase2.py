@@ -226,6 +226,19 @@ r = c.get("/my-cpd/certificates/record.pdf", cookies=SUE)
 check("another member's record never includes Bea's certificates", seen[-1][2] == [f"MER-{YEAR}-0102"])
 r = c.get("/my-cpd/certificates/record.pdf", cookies=ED)
 check("no certificates: still a PDF, with nothing listed", r.status_code == 200 and r.content.startswith(b"%PDF") and seen[-1][2] == [])
+# A course certified twice (issued before the unique index): the earliest stands everywhere
+# the member sees hours, so nothing is counted twice; nothing is deleted.
+db["certificates"].append({"id": "z9", "member_id": "bea", "cert_number": f"MER-{YEAR}-0201", "course_id": "MER-DEA-001",
+    "member_name": "Bea B. Buyer", "course_title": main.COURSES["MER-DEA-001"]["title"], "cpd_hours": 2.0, "issued_at": f"{YEAR}-05-01T09:00:00+00:00"})
+r = c.get("/my-cpd/certificates/record.pdf", cookies=BEA)
+check("a duplicate certificate for one course: the record lists the earliest only", seen[-1][2] == [f"MER-{YEAR}-0101"])
+r = c.get("/my-cpd/certificates", cookies=BEA)
+check("and My certificates shows it once", f"MER-{YEAR}-0101" in r.text and f"MER-{YEAR}-0201" not in r.text)
+check("one_per_course keeps the earliest per course and the input order",
+      [x["cert_number"] for x in main.one_per_course(sorted(db["certificates"], key=lambda x: x["issued_at"], reverse=True)) if x["member_id"] == "bea"]
+      == [f"MER-{YEAR}-0101", f"MER-{YEAR - 1}-0042"])
+check("the duplicate still verifies", c.get(f"/verify/MER-{YEAR}-0201").status_code == 200)
+db["certificates"].pop()
 main.generate_cpd_record = real
 check("record.pdf is not read as a certificate number", c.get("/my-cpd/certificates/record.pdf", cookies=BEA).status_code == 200)
 from reportlab import rl_config
@@ -256,6 +269,8 @@ check("index.html: the hero shows the platform (My certificates, poster template
       "unsplash" not in hero and "unsplash" not in hero_css and 'class="hero-screen"' in hero and "<svg" in hero
       and "Your certificates.<br>In one place." in hero and "Download CPD record (PDF)" in hero
       and "Download any year as one PDF." in hero and "your year" not in hero)
+check("index.html: the hero headline is sized to its own column beside the screen (no overlap at desktop widths)",
+      "#hero .hero-headline { font-size: clamp(3.6rem, 6.6vw, 8rem); }" in hero_css and "min(560px, 38vw)" in hero_css)
 how = index.split('id="how"', 1)[1].split("</section>", 1)[0]
 check("index.html: How certificates work, four plain steps", "How certificates<br>work." in how and '<span class="label on-light">Certificates</span>' in how and how.count('class="step"') == 4
       and all(w in how for w in ("Read", "Confirm", "Certificate", "QR")))

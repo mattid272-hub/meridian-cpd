@@ -2310,6 +2310,22 @@ def _short(course_id: str) -> str:
     return member_ui.short_title(str(COURSES.get(course_id, {}).get("title", course_id)))
 
 
+def one_per_course(certs: list) -> list:
+    """The member's certificates with one per course: where a course has more than one
+    (issued before the database enforced one per member per course), the earliest stands
+    and the others are left out of My certificates, the hours tally and the CPD record so
+    hours are never counted twice. Nothing is deleted and /verify still answers for every
+    number. Order of the input is kept."""
+    first: dict = {}
+    for c in certs:
+        key = c.get("course_id")
+        held = first.get(key)
+        if held is None or str(c.get("issued_at") or "") < str(held.get("issued_at") or ""):
+            first[key] = c
+    keep = {id(c) for c in first.values()}
+    return [c for c in certs if id(c) in keep]
+
+
 def _member_state(email: str) -> dict | None:
     """Everything the member pages need about one signed-in member, read once."""
     member_res = supabase.table("members").select("*").eq("email", email).execute()
@@ -2328,7 +2344,8 @@ def _member_state(email: str) -> dict | None:
     completed = {c["course_id"]: c for c in completions if c.get("completed_at")}
     pending = {c["course_id"]: c["completion_token"] for c in completions if not c.get("completed_at")}
     opened = {c["course_id"]: c["downloaded_at"] for c in completions if c.get("downloaded_at")}
-    certs = supabase.table("certificates").select("*").eq("member_id", member_id).order("issued_at", desc=True).execute().data or []
+    certs = one_per_course(supabase.table("certificates").select("*").eq(
+        "member_id", member_id).order("issued_at", desc=True).execute().data or [])
     cert_by_course = {}
     for cert in certs:
         cert_by_course.setdefault(cert.get("course_id"), cert)
@@ -3066,7 +3083,8 @@ async def member_cpd_record(request: Request):
     except ValueError:
         year = this_year
     certs = supabase.table("certificates").select("*").eq("member_id", member["id"]).execute().data or []
-    certs = [c for c in certs if c.get("member_id") == member["id"] and str(c.get("issued_at") or "")[:4] == str(year)]
+    certs = [c for c in one_per_course(certs)
+             if c.get("member_id") == member["id"] and str(c.get("issued_at") or "")[:4] == str(year)]
     latest = max(certs, key=lambda c: str(c.get("issued_at") or ""), default={})
     name = str(latest.get("member_name") or member.get("name") or email.split("@")[0].title())
     pdf = generate_cpd_record(name, year, certs)
