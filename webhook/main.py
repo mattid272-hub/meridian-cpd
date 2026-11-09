@@ -441,11 +441,62 @@ def refresh_catalogue(force: bool = False) -> None:
 # name the actual course in client_reference_id, which takes precedence.
 # "SERIES" is a sentinel: the series price plus a client_reference_id (or metadata
 # "series") naming a key of SERIES expands to that series' three courses.
+# STRIPE_PRICE_SUBSCRIPTION is the annual price checkout charges today (and the one the
+# follow-up emails and the members area read). STRIPE_PRICE_SUBSCRIPTION_FOUNDER, set when
+# the £99 price goes live on 1 January 2027, holds the old £79 price id so a checkout on it
+# (an old link, a page left open over midnight) is still recognised as a subscription.
+# Renewals never depend on either: sync_subscription follows the subscription, whatever
+# its price, and nothing in this app changes a subscription's price.
 PRICE_TO_COURSE = {price_id: key for price_id, key in (
     (os.environ.get("STRIPE_PRICE_SINGLE", ""), "MER-DEA-001"),
+    (os.environ.get("STRIPE_PRICE_SUBSCRIPTION_FOUNDER", "").strip(), "SUBSCRIPTION"),
     (os.environ.get("STRIPE_PRICE_SUBSCRIPTION", ""), "SUBSCRIPTION"),
     (os.environ.get("STRIPE_PRICE_SERIES", ""), "SERIES"),
 ) if price_id}
+
+# The annual Payment Link the members area offers. The site's links are in landing-page/.
+DEFAULT_SUBSCRIPTION_LINK = "https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
+PRICE_RISE_DAY = datetime(2027, 1, 1, tzinfo=followup.UK)
+
+
+def subscription_link() -> str:
+    return (os.environ.get("STRIPE_LINK_SUBSCRIPTION", "").strip() or DEFAULT_SUBSCRIPTION_LINK)
+
+
+def upsell_banner(now: datetime | None = None) -> str:
+    """The annual offer shown to single-course buyers on My CPD, at the price checkout
+    charges (read from Stripe, as the follow-up emails do). If the price cannot be read,
+    or is not £79 or £99, no banner: the page never names a price checkout might not charge."""
+    now = now or datetime.now(followup.UK)
+    annual = followup.annual_price_gbp(now)
+    if annual not in followup.ANNUAL_PRICES:
+        return ""
+    rise = ""
+    if annual == 79 and now < PRICE_RISE_DAY:
+        rise = """
+          <p style="font-size:13px;color:#ffffff;margin-bottom:20px;line-height:1.6">
+            £79 a year until 31 December. £99 from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.
+          </p>"""
+    return f"""
+        <div style="background:linear-gradient(135deg,#0D1F0E,#1a2f1b);border-radius:12px;
+                    padding:28px 32px;margin-bottom:28px;color:white;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1px;
+                      text-transform:uppercase;color:#D4FF00;margin-bottom:8px">
+            Annual access
+          </div>
+          <div style="font-size:20px;font-weight:800;margin-bottom:8px">
+            The whole library for £{annual} a year.
+          </div>
+          <p style="font-size:14px;color:#D4FF00;margin-bottom:20px;line-height:1.6">
+            An annual subscription gives you every course in the library, DEA, Retrofit Assessor
+            and cross-strand, plus every new course added during your year.
+          </p>{rise}
+          <a href="{_esc(subscription_link())}"
+             style="display:inline-block;background:#d4ff00;color:#0D1F0E;padding:12px 24px;
+                    border-radius:8px;text-decoration:none;font-weight:800;font-size:14px">
+            Upgrade to Annual, £{annual} a year →
+          </a>
+        </div>"""
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
@@ -2545,31 +2596,7 @@ async def subscriber_dashboard(request: Request):
     done_ids.sort(key=lambda cid: str((st["cert_by_course"].get(cid) or {}).get("issued_at") or st["completed"].get(cid, {}).get("completed_at") or ""), reverse=True)
 
     # Upsell banner — shown only to single-course buyers
-    upsell_html = ""
-    if not is_sub:
-        upsell_html = f"""
-        <div style="background:linear-gradient(135deg,#0D1F0E,#1a2f1b);border-radius:12px;
-                    padding:28px 32px;margin-bottom:28px;color:white;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;
-                      text-transform:uppercase;color:#D4FF00;margin-bottom:8px">
-            Annual access
-          </div>
-          <div style="font-size:20px;font-weight:800;margin-bottom:8px">
-            The whole library for £79 a year.
-          </div>
-          <p style="font-size:14px;color:#D4FF00;margin-bottom:20px;line-height:1.6">
-            An annual subscription gives you every course in the library, DEA, Retrofit Assessor
-            and cross-strand, plus every new course added during your year.
-          </p>
-          <p style="font-size:13px;color:#ffffff;margin-bottom:20px;line-height:1.6">
-            £79 a year until 31 December. £99 from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.
-          </p>
-          <a href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
-             style="display:inline-block;background:#d4ff00;color:#0D1F0E;padding:12px 24px;
-                    border-radius:8px;text-decoration:none;font-weight:800;font-size:14px">
-            Upgrade to Annual — £79/year →
-          </a>
-        </div>"""
+    upsell_html = "" if is_sub else upsell_banner()
 
     plan_badge = ("Annual Subscription" if is_sub else
                   "Subscription ended" if sub_ended else "Pay Per Course")
@@ -4219,7 +4246,12 @@ async def admin_system(credentials=Depends(_check_admin)):
         ("STRIPE_SECRET_KEY", "Stripe secret key", True, ""),
         ("STRIPE_WEBHOOK_SECRET", "Stripe webhook signing secret", True, ""),
         ("STRIPE_PRICE_SINGLE", "Stripe price, single course", True, ""),
-        ("STRIPE_PRICE_SUBSCRIPTION", "Stripe price, annual subscription", True, ""),
+        ("STRIPE_PRICE_SUBSCRIPTION", "Stripe price, annual subscription", True,
+         "The price checkout charges for the year. The follow-up emails and My CPD read the amount from it."),
+        ("STRIPE_PRICE_SUBSCRIPTION_FOUNDER", "Stripe price, annual at £79 (founder rate)", False,
+         "Set on 1 January 2027 to the old £79 price id when STRIPE_PRICE_SUBSCRIPTION moves to £99, so a checkout on an old £79 link is still recognised. Renewals do not need it."),
+        ("STRIPE_LINK_SUBSCRIPTION", "Annual Payment Link offered on My CPD", False,
+         f"Optional. Defaults to {DEFAULT_SUBSCRIPTION_LINK}. Set to the £99 link on 1 January 2027."),
         ("STRIPE_PRICE_SERIES", "Stripe price, Field Work series (£39.99, three courses)", False,
          "Needed before a series goes on sale: without it a series purchase is not recognised and nothing is sent."),
         ("RESEND_API_KEY", "Resend (sends course and certificate emails)", True, ""),

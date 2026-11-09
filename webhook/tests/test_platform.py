@@ -96,6 +96,7 @@ db = {
 main.supabase = types.SimpleNamespace(table=lambda t: Q(db, t),
     storage=types.SimpleNamespace(from_=lambda b: types.SimpleNamespace(download=lambda f: (_ for _ in ()).throw(RuntimeError("no catalogue")))))
 main._refresh_under_review = lambda: None
+main.followup._fetch_annual_pence = lambda: 7900   # the annual price checkout charges, as read from Stripe
 main.UNDER_REVIEW.clear()
 
 SESSIONS = {
@@ -313,7 +314,7 @@ check("dashboard: Your series row with all four series for a subscriber, the hou
 r = c.get("/my-cpd/dashboard", cookies=BEA); t = flat(r.text)
 check("a single buyer's dashboard: only the series held, the completed row, the upsell, course cards link to the course page",
       "Your series" in t and "Field Work: Insulation" in t and "Field Work: Heating" not in t and "Completed" in t
-      and 'href="/my-cpd/course/MER-ALL-020"' in t and "Upgrade to Annual — £79/year" in t and "Pay Per Course" in t)
+      and 'href="/my-cpd/course/MER-ALL-020"' in t and "Upgrade to Annual, £79 a year →" in t and "Pay Per Course" in t)
 r = c.get("/my-cpd/dashboard", cookies=NIA); t = flat(r.text)
 check("a new buyer: Start here, the course, no series row", "Start here" in t and 'href="/my-cpd/course/MER-DEA-001"' in t and "Your series" not in t)
 
