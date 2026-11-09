@@ -4366,7 +4366,7 @@ async def member_refer(request: Request):
     people = referrals.referred_by(supabase, member["id"])
     items = "".join(
         f'<li>{_esc(p["first_name"])}: '
-        f'{_pounds(p["credit_pence"]) + " credit" if p["status"] == referrals.CREDITED else "no credit, a free year is already waiting"}</li>'
+        f'{_pounds(p["credit_pence"]) + " credit" if p["status"] == referrals.CREDITED else "no credit, your credit had already reached a free year"}</li>'
         for p in people) or '<li class="muted">None yet.</li>'
     field = ('style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.18);'
              'background:rgba(255,255,255,.06);color:inherit;font:inherit"')

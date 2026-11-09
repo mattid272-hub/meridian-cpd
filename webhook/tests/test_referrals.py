@@ -200,7 +200,7 @@ check(ref("cs_live_p1")["credit_pence"] == 400 and balances["cus_1"] == -7900, "
 send(session("cs_live_p2", "p2@example.com", name="Pip Two", promo=promo_id))
 check(ref("cs_live_p2")["status"] == "capped" and balances["cus_1"] == -7900, "past a free year the referral counts with no credit")
 r = c.get("/my-cpd/refer", cookies=signed("matt@example.com"))
-check("Pip: no credit, a free year is already waiting" in r.text and "Credit for your next renewal: £79" in r.text, "the page shows the capped referral and the free year")
+check("Pip: no credit, your credit had already reached a free year" in r.text and "Credit for your next renewal: £79" in r.text, "the page shows the capped referral and the free year")
 
 # 10. Stripe refuses the credit: the webhook asks Stripe to retry, the retry credits once
 balances["cus_1"] = 0
