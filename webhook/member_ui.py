@@ -5,6 +5,7 @@ database: main.py builds the pages from these.
 
 The same poster template lives in landing-page/courses.html (JavaScript) for the public
 site, which GitHub Pages serves without this app. Keep the two in step."""
+import os
 import re
 from html import escape as _esc
 
@@ -337,6 +338,9 @@ def fmt_date(iso: str) -> str:
 
 def topbar(name: str, on: str) -> str:
     items = [("Home", "/my-cpd/dashboard"), ("Series", "/my-cpd/series"), ("My certificates", "/my-cpd/certificates")]
+    refer = bool(os.environ.get("REFERRAL_COUPON_ID", "").strip())  # refer a colleague is on (referrals.py)
+    if refer:
+        items.append(("Refer a colleague", "/my-cpd/refer"))
     nav = "".join(f'<a href="{h}" class="{"on" if t == on else ""}">{t}</a>' for t, h in items)
     return f"""<header class="topbar"><a class="brand" href="/my-cpd/dashboard">MERIDIAN <span>CPD</span></a>
   <nav class="nav">{nav}</nav><div class="grow"></div>
@@ -345,6 +349,7 @@ def topbar(name: str, on: str) -> str:
   <a href="/my-cpd/dashboard" class="{'on' if on == 'Home' else ''}">{ICON['home']}Home</a>
   <a href="/my-cpd/series" class="{'on' if on == 'Series' else ''}">{ICON['stack']}Series</a>
   <a href="/my-cpd/certificates" class="{'on' if on == 'My certificates' else ''}">{ICON['cert']}Certificates</a>
+  {f'<a href="/my-cpd/refer" class="{"on" if on == "Refer a colleague" else ""}">{ICON["stack"]}Refer</a>' if refer else ""}
   <a href="/my-cpd/logout">{ICON['out']}Sign out</a>
 </nav>"""
 

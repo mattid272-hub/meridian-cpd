@@ -542,7 +542,10 @@ async def stripe_webhook(request: Request):
     etype = event["type"]
     obj = event["data"]["object"]
     if etype == "checkout.session.completed":
-        await handle_checkout(obj)
+        try:
+            await handle_checkout(obj)
+        finally:
+            referrals.on_checkout(supabase, obj)  # refer a colleague: see referrals.py
     elif etype in ("customer.subscription.created", "customer.subscription.updated",
                    "customer.subscription.deleted"):
         sync_subscription(obj)
@@ -4321,3 +4324,82 @@ async def admin_system(credentials=Depends(_check_admin)):
       </table>
     </div>"""
     return _page("System", "system", body)
+
+
+# ── Refer a colleague ──────────────────────────────────────────────────────────
+# The scheme lives in referrals.py and is off until REFERRAL_COUPON_ID is set. These are
+# its two pages: the subscriber's own (code, link, message to send, who has subscribed,
+# credit waiting) and the short page the share link opens.
+import referrals  # noqa: E402  (kept down here so this block stands on its own)
+
+
+def _pounds(pence: int) -> str:
+    return f"£{pence / 100:g}" if pence % 100 == 0 else f"£{pence / 100:.2f}"
+
+
+@app.get("/my-cpd/refer", response_class=HTMLResponse)
+async def member_refer(request: Request):
+    email = _signed_in_email(request)
+    if not email:
+        return RedirectResponse("/my-cpd", status_code=302)
+    st = _member_state(email)
+    if not st:
+        return RedirectResponse("/my-cpd", status_code=302)
+    member = st["member"]
+    terms = f'<p style="margin-top:22px"><a href="{SITE_URL}/referral-terms.html" style="text-decoration:underline">Referral terms</a></p>'
+    head = member_ui.topbar(st["name"], "Refer a colleague") + '<main class="wrap" style="max-width:760px"><h1 style="margin-bottom:12px">Refer a colleague</h1>'
+    if not referrals.enabled():
+        return HTMLResponse(member_ui.page("Refer a colleague", head + '<p class="muted">This is not open yet.</p></main>'))
+    if not st["is_sub"]:
+        body = head + ('<p class="muted">Referral codes come with the annual subscription.</p>'
+                       f'{terms}</main>')
+        return HTMLResponse(member_ui.page("Refer a colleague", body))
+    code = referrals.ensure_code(supabase, member)
+    if not code:
+        body = head + ('<p class="muted">Your code is not ready yet. Please try again later.</p></main>')
+        return HTMLResponse(member_ui.page("Refer a colleague", body))
+    link = f"{APP_URL}/r/{code}"
+    message = f"I do my CPD with Meridian CPD. My code {code} takes £10 off your first year: {link}"
+    held = referrals.credit_held_pence(member.get("stripe_customer_id") or "")
+    credit = (f'<p style="margin:18px 0 6px"><strong>Credit for your next renewal: {_pounds(held)}</strong></p>'
+              if held is not None else "")
+    people = referrals.referred_by(supabase, member["id"])
+    items = "".join(
+        f'<li>{_esc(p["first_name"])}: '
+        f'{_pounds(p["credit_pence"]) + " credit" if p["status"] == referrals.CREDITED else "no credit, a free year is already waiting"}</li>'
+        for p in people) or '<li class="muted">None yet.</li>'
+    field = ('style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.18);'
+             'background:rgba(255,255,255,.06);color:inherit;font:inherit"')
+    body = head + f"""
+  <p>Share your code. Your colleague gets £10 off their first year. You get £10 off your next renewal for each colleague who subscribes, up to a free year.</p>
+  <p style="margin:18px 0 6px"><strong>Your code</strong></p><input readonly value="{_esc(code)}" {field} onclick="this.select()">
+  <p style="margin:18px 0 6px"><strong>Your link</strong></p><input readonly value="{_esc(link)}" {field} onclick="this.select()">
+  <p style="margin:18px 0 6px"><strong>Message to send</strong></p><textarea readonly rows="3" {field} onclick="this.select()">{_esc(message)}</textarea>
+  {credit}
+  <p style="margin:18px 0 6px"><strong>Colleagues who have subscribed</strong></p><ul style="margin-left:18px;line-height:1.8">{items}</ul>
+  {terms}
+</main>"""
+    return HTMLResponse(member_ui.page("Refer a colleague", body))
+
+
+@app.get("/r/{code}", response_class=HTMLResponse)
+async def referral_landing(code: str):
+    code = referrals.normalise_code(code)
+    referrer = referrals.referrer_by_code(supabase, code) if (code and referrals.enabled()) else None
+    if not referrer:
+        body = f"""<main class="wrap" style="max-width:640px"><h1 style="margin-bottom:12px">This referral link is not active</h1>
+  <p><a class="btn btn-p" href="{SITE_URL}/courses.html">See the courses</a></p></main>"""
+        return HTMLResponse(member_ui.page("Referral", body).replace("<head>", '<head><meta name="robots" content="noindex">', 1), status_code=404)
+    gbp = followup.annual_price_gbp()
+    price_line = (f"The annual subscription with code {_esc(code)}: £{gbp - 10} for your first year."
+                  if gbp else f"The annual subscription with code {_esc(code)}.")
+    checkout = f"{referrals.subscription_link()}?prefilled_promo_code={quote(code)}"
+    body = f"""<main class="wrap" style="max-width:640px">
+  <div class="kicker" style="color:var(--accent);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase">Meridian CPD</div>
+  <h1 style="margin:8px 0 12px">£10 off your first year</h1>
+  <p>{price_line}</p>
+  <p>Every course in the library, and every new course added during your year.</p>
+  <p style="margin:22px 0"><a class="btn btn-p" href="{_esc(checkout)}">Continue to checkout</a></p>
+  <p class="muted" style="font-size:13px">The code is filled in at checkout. <a href="{SITE_URL}/referral-terms.html" style="text-decoration:underline">Referral terms</a></p>
+</main>"""
+    return HTMLResponse(member_ui.page("£10 off your first year", body).replace("<head>", '<head><meta name="robots" content="noindex">', 1))

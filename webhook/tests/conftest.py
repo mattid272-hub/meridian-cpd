@@ -12,7 +12,8 @@ import httpx
 import pytest
 import stripe
 
-_APP_MODULES = ("main", "email_sender", "outreach", "news", "settings", "certificate_generator")
+_APP_MODULES = ("main", "email_sender", "outreach", "news", "settings", "certificate_generator",
+                "referrals", "followup", "member_ui")
 _ENV = dict(os.environ)
 # Attributes the scripts replace on shared third-party modules, with their originals.
 _SHARED = {
@@ -26,6 +27,10 @@ _SHARED = {
     (stripe.billing_portal.Session, "create"): stripe.billing_portal.Session.__dict__["create"],
     (stripe.checkout.Session, "retrieve"): stripe.checkout.Session.__dict__["retrieve"],
     (stripe.checkout.Session, "list_line_items"): stripe.checkout.Session.__dict__["list_line_items"],
+    (stripe.Customer, "create_balance_transaction"): stripe.Customer.__dict__["create_balance_transaction"],
+    (stripe.PromotionCode, "create"): stripe.PromotionCode.__dict__["create"],
+    (stripe.PromotionCode, "retrieve"): stripe.PromotionCode.__dict__["retrieve"],
+    (stripe.Price, "retrieve"): stripe.Price.__dict__["retrieve"],
 }
 
 
