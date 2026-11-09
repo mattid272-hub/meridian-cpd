@@ -77,7 +77,7 @@ async def send_course_email(
         consent_query = f"email={quote(to_email)}&token={consent_token(to_email)}"
         body = f"""Hi {to_name},
 
-⚠ QUICK NOTE: This email may have landed in your junk or spam folder. If it did, please mark it as safe and add hello@meridiancpd.co.uk to your contacts so your certificates reach you.
+Quick note: if this email landed in your junk or spam folder, please mark it as safe and add hello@meridiancpd.co.uk to your contacts so your certificates reach you.
 
 ─────────────────────────────
 
@@ -110,7 +110,7 @@ Your dashboard is always at:
 
 ─────────────────────────────
 
-One last thing. We occasionally develop new tools, resources, and products for energy assessors and retrofit professionals. If you'd be happy to hear about those from time to time, just let us know with one click:
+One last thing. Now and then we have something new for energy assessors and retrofit professionals. If you'd be happy to hear about it, let us know with one click:
 
 Yes, keep me in the loop → {base_url}/my-cpd/consent/yes?{consent_query}
 
@@ -128,7 +128,7 @@ hello@meridiancpd.co.uk
         await _send(to_email, to_name, subject, body)
         return
 
-    subject = f"Your course is ready — {course_title}"
+    subject = f"Your course is ready: {course_title}"
     consent_query = f"email={quote(to_email)}&token={consent_token(to_email)}"
     completion_section = f"""
 ─────────────────────────────
@@ -146,8 +146,8 @@ You already hold the certificate for this course, so this email carries no compl
     if notes_url:
         files_section = f"""Two PDFs are attached:
 
-• {course_id}-slides.pdf — the course. Read the slides in full.
-• {course_id}-notes.pdf — the written notes that go with them, for reference and for the self-assessment questions, sources and further reading.
+• {course_id}-slides.pdf: the course. Read the slides in full.
+• {course_id}-notes.pdf: the written notes that go with them, for reference and for the self-assessment questions, sources and further reading.
 
 Save both for your records."""
     else:
@@ -221,7 +221,7 @@ async def send_certificate_email(
 ):
     import base64
 
-    subject = f"Your CPD Certificate — {cert_number}"
+    subject = f"Your CPD certificate: {cert_number}"
     body = f"""Hi {to_name},
 
 Your CPD certificate for {course_title} is attached.
@@ -252,7 +252,7 @@ async def send_new_course_notification(
     cpd_hours: float,
 ):
     """Notify a subscriber that a new course has been added to the library."""
-    subject = f"New CPD course available — {course_title}"
+    subject = f"New CPD course available: {course_title}"
     body = f"""Hi {to_name},
 
 A new course has just been added to your Meridian CPD library.
@@ -298,7 +298,7 @@ async def send_admin_new_course_alert(
     subscriber_count: int,
 ):
     """Alert Matt and Ceri that a new course has been published."""
-    subject = f"[Meridian CPD] New course published — {course_id}"
+    subject = f"[Meridian CPD] New course published: {course_id}"
     body = f"""New course published automatically by the content engine.
 
 Course ID:    {course_id}
@@ -308,7 +308,7 @@ Notified:     {subscriber_count} subscriber{'s' if subscriber_count != 1 else ''
 
 View in admin: {APP_URL}/admin
 
-— Meridian CPD Content Engine
+Meridian CPD content engine
 """
     admin_recipients = [
         ("mattid272@gmail.com", "Matt"),
