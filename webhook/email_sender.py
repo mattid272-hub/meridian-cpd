@@ -244,6 +244,38 @@ Meridian CPD | Stay Sharp. Stay Certified.
     await _send(to_email, to_name, subject, body, attachments)
 
 
+
+async def send_reflection_email(
+    to_email: str,
+    to_name: str,
+    course_title: str,
+    cert_number: str,
+    learned: str,
+    change: str,
+):
+    """A copy of the reflection the learner wrote after completing a course, for their own
+    CPD log. Sent once, when the reflection is saved."""
+    subject = f"Your reflection: {course_title}"
+    parts = []
+    if learned:
+        parts.append(f"What I learned:\n{learned}")
+    if change:
+        parts.append(f"What I will do differently:\n{change}")
+    reflection = "\n\n".join(parts)
+    cert_line = f"Certificate number: {cert_number}\n\n" if cert_number else ""
+    body = f"""Hi {to_name},
+
+Here is the reflection you wrote for {course_title}, to keep with your CPD record.
+
+{cert_line}{reflection}
+
+It is also saved under the course in My CPD: {APP_URL}/my-cpd/certificates
+
+Matt
+Meridian CPD | Stay Sharp. Stay Certified.
+"""
+    await _send(to_email, to_name, subject, body)
+
 async def send_new_course_notification(
     to_email: str,
     to_name: str,

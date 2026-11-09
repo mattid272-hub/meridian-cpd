@@ -30,7 +30,7 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 import httpx
 from supabase import create_client
 
-from email_sender import send_course_email, send_certificate_email, send_unsubscribe_goodbye_email, consent_token
+from email_sender import send_course_email, send_certificate_email, send_reflection_email, send_unsubscribe_goodbye_email, consent_token
 from certificate_generator import generate_certificate
 from course_text import COURSE_TEXT
 import member_ui
@@ -1627,6 +1627,9 @@ async def confirm_completion(token: str, request: Request):
 <a style="color:#4d7c0f" href="{BASE_URL}/my-cpd/dashboard">My CPD dashboard</a></p>
 </body></html>""")
 
+    st = _step_state(row["member_id"], course_id)
+    step = _step_form(f"/complete/{token}/feedback", f"{BASE_URL}/my-cpd/dashboard",
+                      ask_feedback=not st["feedback_given"], ask_reflection=not st["reflection"]) if st["live"] else ""
     email_note = (
         f"Your certificate has been emailed to <strong>{member_email}</strong>."
         if issued["email_sent"] else
@@ -1656,9 +1659,233 @@ async def confirm_completion(token: str, request: Request):
          <a href="{BASE_URL}/verify/{cert_number}">{BASE_URL.split("://", 1)[-1]}/verify/{cert_number}</a>
       </p>
       <p><a href="{BASE_URL}/my-cpd/dashboard">Back to my CPD dashboard →</a></p>
+      {step}
     </body>
     </html>
     """)
+
+
+# ── The optional step after completion: feedback for Meridian, the learner's reflection ──
+# Shown once the certificate has been issued (the declaration tick has been accepted), on
+# the emailed link's confirmation page and on the course page inside My CPD. Both parts
+# are optional and nothing about the certificate depends on them.
+#   Part A (feedback for Meridian) goes to course_feedback: one row per member per course.
+#     Read for the Friday review; never shown on a page.
+#   Part B (the learner's reflection) goes on the completion record (completions.
+#     reflection_learned / reflection_change / reflected_at), is shown under the course in
+#     My CPD and My certificates, and a copy is emailed to the learner.
+# Needs migrations/2026-11-09_completion_feedback.sql. Until it has run the step is not
+# shown at all, so nobody types an answer that cannot be kept.
+
+FEEDBACK_TEXT_MAX = 2000
+FEEDBACK_SCALE = ("yes", "partly", "no")
+_FEEDBACK_SCALE_LABEL = {"yes": "Yes", "partly": "Partly", "no": "No"}
+_feedback_ready_cache = {"ok": False, "checked": 0.0}
+
+
+def _feedback_ready() -> bool:
+    """True once the course_feedback table and the reflection columns exist. A yes is kept
+    for good; a no is checked again after five minutes."""
+    if _feedback_ready_cache["ok"]:
+        return True
+    if time.time() - _feedback_ready_cache["checked"] < 300:
+        return False
+    _feedback_ready_cache["checked"] = time.time()
+    try:
+        supabase.table("course_feedback").select("id").limit(1).execute()
+        supabase.table("completions").select("reflection_learned, reflection_change, reflected_at").limit(1).execute()
+    except Exception as e:
+        print(f"Completion feedback step off: run migrations/2026-11-09_completion_feedback.sql ({type(e).__name__})")
+        return False
+    _feedback_ready_cache["ok"] = True
+    return True
+
+
+def _clean_answer(raw, limit: int = FEEDBACK_TEXT_MAX) -> str:
+    """Free text from the step: control characters out (line breaks kept), at most `limit`
+    characters."""
+    text = str(raw or "").replace("\r\n", "\n").replace("\r", "\n").replace("\t", " ")
+    text = "".join(ch for ch in text if ch == "\n" or not _CONTROL_RE.match(ch))
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    return text[:limit].strip()
+
+
+def _step_state(member_id: str, course_id: str) -> dict:
+    """What this member has already given for this course: the reflection (if any) and
+    whether feedback is on file. Empty when the step is not live or the read fails."""
+    if not _feedback_ready():
+        return {"live": False, "reflection": None, "feedback_given": False}
+    try:
+        rows = supabase.table("completions").select(
+            "id, completed_at, reflection_learned, reflection_change, reflected_at").eq(
+            "member_id", member_id).eq("course_id", course_id).execute().data or []
+        reflection = next((r for r in rows if r.get("reflected_at")), None)
+        given = supabase.table("course_feedback").select("id").eq(
+            "member_id", member_id).eq("course_id", course_id).execute().data or []
+        return {"live": True, "reflection": reflection, "feedback_given": bool(given)}
+    except Exception as e:
+        print(f"Completion feedback: could not read the step state for {course_id} ({type(e).__name__}: {e})")
+        return {"live": False, "reflection": None, "feedback_given": False}
+
+
+def _reflections_by_course(member_id: str) -> dict:
+    """course_id → the completion row holding the member's reflection, for the member pages."""
+    if not _feedback_ready():
+        return {}
+    try:
+        rows = supabase.table("completions").select(
+            "course_id, reflection_learned, reflection_change, reflected_at").eq("member_id", member_id).execute().data or []
+    except Exception as e:
+        print(f"Completion feedback: could not read reflections ({type(e).__name__}: {e})")
+        return {}
+    return {r["course_id"]: r for r in rows if r.get("reflected_at")}
+
+
+_STEP_CSS = """<style>
+.fb { margin: 28px 0 0; padding: 22px; border: 1px solid rgba(127,140,127,.45); border-radius: 10px; text-align: left; }
+.fb h2 { font-size: 20px; margin: 0 0 4px; }
+.fb h3 { font-size: 16px; margin: 20px 0 8px; }
+.fb .q { margin: 12px 0 6px; font-weight: 600; font-size: 14.5px; }
+.fb .opts { display: flex; gap: 16px; flex-wrap: wrap; font-size: 14.5px; }
+.fb .opts label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.fb textarea { width: 100%; box-sizing: border-box; min-height: 84px; padding: 10px 12px; font: inherit; font-size: 15px;
+               border: 1px solid rgba(127,140,127,.6); border-radius: 6px; background: #fff; color: #0D1F0E; }
+.fb .hint { font-size: 13px; opacity: .8; margin: 2px 0 0; }
+.fb .acts { display: flex; gap: 16px; align-items: center; margin-top: 18px; flex-wrap: wrap; }
+.fb .save { background: #D4FF00; color: #0D1F0E; border: none; border-radius: 6px; padding: 12px 28px;
+            font: inherit; font-weight: 700; font-size: 15px; cursor: pointer; }
+.fb .skip { color: inherit; font-size: 14px; }
+.refl { margin: 8px 0 0; font-size: 14px; }
+.refl b { display: block; margin-top: 8px; }
+.refl p { margin: 2px 0 0; white-space: pre-wrap; }
+</style>"""
+
+
+def _step_form(action: str, skip_href: str, ask_feedback: bool, ask_reflection: bool) -> str:
+    """The optional step. Empty when there is nothing left to ask."""
+    if not (ask_feedback or ask_reflection):
+        return ""
+
+    def scale(name: str) -> str:
+        return "".join(f'<label><input type="radio" name="{name}" value="{v}"> {_FEEDBACK_SCALE_LABEL[v]}</label>'
+                       for v in FEEDBACK_SCALE)
+
+    part_a = f"""<h3>For Meridian</h3>
+  <div class="q">Was the course clear?</div><div class="opts">{scale("clear")}</div>
+  <div class="q">Was it useful for your work?</div><div class="opts">{scale("useful")}</div>
+  <div class="q"><label for="fb_comment">Anything wrong, missing or out of date?</label></div>
+  <textarea id="fb_comment" name="comment" maxlength="{FEEDBACK_TEXT_MAX}"></textarea>""" if ask_feedback else ""
+    part_b = f"""<h3>For your CPD record</h3>
+  <p class="hint">Saved with this course in My CPD and emailed to you.</p>
+  <div class="q"><label for="fb_learned">What have you learned?</label></div>
+  <textarea id="fb_learned" name="learned" maxlength="{FEEDBACK_TEXT_MAX}"></textarea>
+  <div class="q"><label for="fb_change">What will you do differently in your practice?</label></div>
+  <textarea id="fb_change" name="change" maxlength="{FEEDBACK_TEXT_MAX}"></textarea>""" if ask_reflection else ""
+    return f"""{_STEP_CSS}<form class="fb" method="post" action="{_esc(action)}" onsubmit="this.querySelector('button[type=submit]').disabled=true">
+  <h2>Optional</h2>
+  <p class="hint">Your certificate is already issued. Answer any of these, or skip.</p>
+  {part_a}
+  {part_b}
+  <div class="acts"><button type="submit" class="save">Save</button><a class="skip" href="{_esc(skip_href)}">Skip</a></div>
+</form>"""
+
+
+def _reflection_html(row: dict | None) -> str:
+    if not row:
+        return ""
+    out = ""
+    if row.get("reflection_learned"):
+        out += f'<b>What I learned</b><p>{_esc(str(row["reflection_learned"]))}</p>'
+    if row.get("reflection_change"):
+        out += f'<b>What I will do differently</b><p>{_esc(str(row["reflection_change"]))}</p>'
+    return f'<div class="refl">{out}</div>' if out else ""
+
+
+async def _save_step(completion: dict, member: dict, form) -> dict:
+    """Saves what was given in the step for one completed course. Feedback once per member
+    per course; the reflection once per member per course. Returns what was saved. Never
+    raises: a failure here must not touch the certificate."""
+    member_id, course_id = completion["member_id"], completion["course_id"]
+    clear = str(form.get("clear") or "").strip().lower()
+    useful = str(form.get("useful") or "").strip().lower()
+    clear = clear if clear in FEEDBACK_SCALE else ""
+    useful = useful if useful in FEEDBACK_SCALE else ""
+    comment = _clean_answer(form.get("comment"))
+    learned = _clean_answer(form.get("learned"))
+    change = _clean_answer(form.get("change"))
+    saved = {"feedback": False, "reflection": False, "email_sent": False}
+    state = _step_state(member_id, course_id)
+    if not state["live"]:
+        return saved
+
+    if (clear or useful or comment) and not state["feedback_given"]:
+        try:
+            supabase.table("course_feedback").insert({
+                "course_id": course_id,
+                "member_id": member_id,
+                "completion_id": completion["id"],
+                "clear": clear or None,
+                "useful": useful or None,
+                "comment": comment or None,
+            }).execute()
+            saved["feedback"] = True
+        except Exception as e:
+            print(f"Completion feedback: could not save feedback for {course_id} ({type(e).__name__}: {e})")
+
+    if (learned or change) and not state["reflection"]:
+        try:
+            done = supabase.table("completions").update({
+                "reflection_learned": learned or None,
+                "reflection_change": change or None,
+                "reflected_at": datetime.now(timezone.utc).isoformat(),
+            }).eq("id", completion["id"]).is_("reflected_at", "null").execute().data
+            saved["reflection"] = bool(done)
+        except Exception as e:
+            print(f"Completion feedback: could not save the reflection for {course_id} ({type(e).__name__}: {e})")
+        if saved["reflection"]:
+            cert = supabase.table("certificates").select("cert_number").eq(
+                "member_id", member_id).eq("course_id", course_id).execute().data or []
+            try:
+                await send_reflection_email(
+                    to_email=member.get("email") or "",
+                    to_name=member.get("name") or "there",
+                    course_title=str(COURSES.get(course_id, {}).get("title", course_id)),
+                    cert_number=str(cert[0].get("cert_number") or "") if cert else "",
+                    learned=learned,
+                    change=change,
+                )
+                saved["email_sent"] = True
+            except Exception as e:
+                print(f"Completion feedback: reflection saved but the email copy failed for {course_id} ({type(e).__name__}: {e})")
+    return saved
+
+
+def _step_thanks_page(saved: dict) -> HTMLResponse:
+    line = "Thank you. Your answers are saved." if (saved["feedback"] or saved["reflection"]) else "Nothing was saved."
+    return HTMLResponse(f"""<!DOCTYPE html>
+<html><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"><title>Thank you | Meridian CPD</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="font-family: 'DM Sans', Arial, sans-serif;max-width:600px;margin:60px auto;padding:0 20px;color:#1f2a20">
+{_logo()}
+<p style="font-size:18px">{line}</p>
+<p><a style="color:#4d7c0f" href="{BASE_URL}/my-cpd/dashboard">My CPD dashboard</a></p>
+</body></html>""")
+
+
+@app.post("/complete/{token}/feedback", response_class=HTMLResponse)
+async def completion_feedback(token: str, request: Request):
+    """The step after the emailed completion link. The token is the one just used to
+    complete, so it only finds a completed record."""
+    form = await request.form()
+    res = supabase.table("completions").select("*, members(name, email)").eq(
+        "completion_token", token).not_.is_("completed_at", "null").execute()
+    if not res.data:
+        return HTMLResponse("<p>This link is not valid.</p>", status_code=404)
+    row = res.data[0]
+    saved = await _save_step(row, row.get("members") or {}, form)
+    if not (saved["feedback"] or saved["reflection"]):
+        return RedirectResponse(f"{BASE_URL}/my-cpd/dashboard", status_code=303)
+    return _step_thanks_page(saved)
 
 
 # ── Certificate verification ───────────────────────────────────────────────────
@@ -2708,6 +2935,7 @@ def _course_page(st: dict, course_id: str, notice: str = "", email_failed: bool 
     cert = st["cert_by_course"].get(course_id)
     opened = course_id in st["opened"]
     deck = _is_deck(course_id)
+    step_html = ""
 
     if deck:
         materials = (f'<a class="material" href="/download/{course_id}">{member_ui.ICON["deck"]}<div><b>Open the slide deck</b><span>For the site visit</span></div></a>'
@@ -2747,6 +2975,13 @@ def _course_page(st: dict, course_id: str, notice: str = "", email_failed: bool 
     {next_btn}
   </div></aside>"""
         fact_status = "Certificate issued"
+        step_st = _step_state(st["member_id"], course_id)
+        if step_st["live"]:
+            step_html = _step_form(f"/my-cpd/course/{course_id}/feedback", f"/my-cpd/course/{course_id}",
+                                   ask_feedback=not step_st["feedback_given"], ask_reflection=not step_st["reflection"])
+            mine = _reflection_html(step_st["reflection"])
+            if mine:
+                step_html = f'{_STEP_CSS}<div class="panel" style="margin-top:28px"><h2>Your reflection</h2>{mine}</div>' + step_html
     elif course_id in UNDER_REVIEW:
         panel = ('<aside class="complete"><div class="kicker" style="color:#4d7c0f">Certificate of completion</div><h2>Course being updated</h2>'
                  '<p class="small">This course is being updated. It opens again when the new edition is published.</p></aside>')
@@ -2799,7 +3034,7 @@ def _course_page(st: dict, course_id: str, notice: str = "", email_failed: bool 
     <div class="panel"><h2>What you will be able to do</h2><ul>{objectives}</ul></div>
   </div>
   {panel}
-</div></main>"""
+</div>{step_html}</main>"""
     return HTMLResponse(member_ui.page(str(c["title"]), body), status_code=status_code)
 
 
@@ -2821,7 +3056,8 @@ async def member_course_page(course_id: str, request: Request):
         if token:
             st["pending"][course_id] = token
     q = request.query_params
-    notice = "Your certificate has been issued." if q.get("issued") == "1" else ""
+    notice = ("Your certificate has been issued." if q.get("issued") == "1" else
+              "Thank you. Your answers are saved." if q.get("saved") == "1" else "")
     return _course_page(st, course_id, notice=notice, email_failed=q.get("sent") == "0")
 
 
@@ -2858,6 +3094,25 @@ async def member_course_complete(course_id: str, request: Request):
                             status_code=303)
 
 
+
+@app.post("/my-cpd/course/{course_id}/feedback")
+async def member_course_feedback(course_id: str, request: Request):
+    """The optional step inside the app, for a course the member has completed."""
+    email = _signed_in_email(request)
+    member = _member_by_email(email) if email else None
+    if not member:
+        return RedirectResponse("/my-cpd", status_code=302)
+    if course_id not in COURSES or course_id == "SUBSCRIPTION":
+        raise HTTPException(status_code=404, detail="Course not found")
+    rows = supabase.table("completions").select("*").eq("member_id", member["id"]).eq(
+        "course_id", course_id).not_.is_("completed_at", "null").execute().data or []
+    if not rows:
+        return RedirectResponse(f"/my-cpd/course/{course_id}", status_code=303)
+    rows.sort(key=lambda r: str(r.get("completed_at") or ""))
+    saved = await _save_step(rows[0], member, await request.form())
+    ok = saved["feedback"] or saved["reflection"]
+    return RedirectResponse(f"/my-cpd/course/{course_id}" + ("?saved=1" if ok else ""), status_code=303)
+
 @app.get("/my-cpd/certificates", response_class=HTMLResponse)
 async def member_certificates(request: Request):
     email = _signed_in_email(request)
@@ -2873,15 +3128,18 @@ async def member_certificates(request: Request):
     shown = certs if chosen == "all" else [c for c in certs if str(c.get("issued_at") or "")[:4] == chosen]
     hours = sum(float(c.get("cpd_hours") or 0) for c in shown)
 
+    reflections = _reflections_by_course(st["member_id"])
     rows = ""
     for cert in shown:
         cid = str(cert.get("course_id") or "")
         number = str(cert.get("cert_number") or "")
         sid, s = _series_of(cid)
         part = f' · {_esc(s["title"])}, Part {COURSES[cid].get("part")}' if s else ""
+        mine = _reflection_html(reflections.get(cid))
+        refl = f'<details style="margin-top:6px"><summary class="muted" style="font-size:12px;cursor:pointer">Your reflection</summary>{mine}</details>' if mine else ""
         rows += f"""<tr>
   <td><div class="t"><div class="thumb">{_poster(cid)}</div><div><b style="font-size:14px">{_esc(str(cert.get('course_title') or ''))}</b>
-    <div class="muted" style="font-size:12px">{_esc(cid)}{part}</div></div></div></td>
+    <div class="muted" style="font-size:12px">{_esc(cid)}{part}</div>{refl}</div></div></td>
   <td style="white-space:nowrap">{_esc(member_ui.fmt_date(cert.get('issued_at')))}</td>
   <td style="white-space:nowrap">{_esc(member_ui.hours_label(cert.get('cpd_hours') or 0))}</td>
   <td><span class="certno">{_esc(number)}</span></td>
@@ -2907,7 +3165,7 @@ async def member_certificates(request: Request):
   </form>
   <table class="cert-table"><thead><tr><th>Course</th><th>Completed</th><th>CPD hours</th><th>Certificate number</th><th></th></tr></thead>
   <tbody>{rows}</tbody></table>
-</main>"""
+</main>{_STEP_CSS if reflections else ""}"""
     return HTMLResponse(member_ui.page("My certificates", body))
 
 
