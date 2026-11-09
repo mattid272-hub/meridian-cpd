@@ -87,7 +87,7 @@ def generate_cpd_record(member_name: str, year: int, certificates: list[dict]) -
         style.append(("SPAN", (0, 1), (-1, 1)))
     table.setStyle(TableStyle(style))
     story += [table, Spacer(1, 14),
-              Paragraph("Each certificate carries its own number. Anyone can check one at the verify address beside it.", body),
+              Paragraph("Anyone can check a certificate at its verify address.", body),
               Spacer(1, 6), Paragraph(f"<b>{SCHEME_LINE}</b>", body)]
 
     def frame(c, d):
