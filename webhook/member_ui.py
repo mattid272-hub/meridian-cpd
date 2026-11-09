@@ -183,6 +183,7 @@ h1, h2, h3 { font-weight: 700; }
 .hero.series-hero .parts { list-style: none; display: grid; gap: 4px; margin-top: 14px; font-size: 14px; color: #cfd8cf; }
 .hero.series-hero .parts li::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--accent); margin-right: 10px; }
 .record-btn { display: inline-flex; gap: 8px; align-items: center; }
+.mark-note { font-size: 12px; color: #fca5a5; }
 @media (max-width: 700px) {
   .search { min-width: 0; max-width: none; width: 100%; }
   .chips { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; scrollbar-width: none; }
@@ -244,7 +245,7 @@ ICON = {
 # which come from the catalogue itself (series, strand, where, published date), never
 # from a hand-kept list. courses.html carries the same rules in courseTags().
 
-NEW_DAYS = 31  # "New this month": published in the last 31 days
+NEW_DAYS = 31  # the "New" row: published in the last 31 days
 
 TOPICS = [  # (tag, label) in chip and row order
     ("field-work", "Field Work"),
@@ -446,7 +447,8 @@ def page(title: str, body: str) -> str:
 
 
 # The dashboard's script: search and topic chips over the flat results list, and the
-# favourite / read-later buttons sent with fetch (a plain form post without script).
+# favourite / read-later buttons sent with fetch. If the save fails the card says so and
+# nothing else happens; a plain form post is used only where fetch does not exist.
 LIBRARY_JS = """<script>
 (function () {
   var rows = document.getElementById('rows'), q = document.getElementById('q');
@@ -471,7 +473,7 @@ LIBRARY_JS = """<script>
   });
   document.addEventListener('submit', function (e) {
     var f = e.target;
-    if (!f.classList || !f.classList.contains('mark')) return;
+    if (!f.classList || !f.classList.contains('mark') || !window.fetch) return;
     e.preventDefault();
     var add = /\\/add$/.test(f.getAttribute('action'));
     fetch(f.getAttribute('action'), { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' }, credentials: 'same-origin' })
@@ -486,7 +488,12 @@ LIBRARY_JS = """<script>
           b.setAttribute('aria-label', b.title);
         });
       })
-      .catch(function () { f.submit(); });
+      .catch(function () {
+        var body = f.closest('.body') || f.parentNode, note = body.querySelector('.mark-note');
+        if (!note) { note = document.createElement('p'); note.className = 'mark-note'; note.setAttribute('role', 'status'); body.appendChild(note); }
+        note.textContent = 'Could not save that. Try again.';
+        clearTimeout(note._t); note._t = setTimeout(function () { note.remove(); }, 4000);
+      });
   });
 })();
 </script>"""

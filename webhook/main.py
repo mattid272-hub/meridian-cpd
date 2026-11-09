@@ -2403,7 +2403,13 @@ async def member_mark(action: str, request: Request):
         if action == "add":
             have = table.select("id").eq("member_id", member["id"]).eq("course_id", course_id).eq("kind", kind).execute().data
             if not have:
-                supabase.table("member_marks").insert({"member_id": member["id"], "course_id": course_id, "kind": kind}).execute()
+                try:
+                    supabase.table("member_marks").insert({"member_id": member["id"], "course_id": course_id, "kind": kind}).execute()
+                except Exception as e:
+                    # A second request for the same mark (a double click) lost the race to the
+                    # unique index: the mark is there, which is what was asked for.
+                    if "23505" not in str(e) and "duplicate key" not in str(e).lower():
+                        raise
         else:
             table.delete().eq("member_id", member["id"]).eq("course_id", course_id).eq("kind", kind).execute()
     except Exception as e:
@@ -2575,38 +2581,10 @@ def _series_order(st: dict) -> list[str]:
     return sorted(SERIES, key=score)
 
 
-def _newest_series() -> str:
-    """The series whose parts were published last (ties go to the one defined last)."""
-    def key(item):
-        i, sid = item
-        pubs = [str(COURSES[cid].get("published") or "") for cid in SERIES[sid]["courses"] if cid in COURSES]
-        return (max(pubs or [""]), min(pubs or [""]), i)
-    return max(enumerate(x for x in SERIES if series_courses(x)), key=key)[1]
-
-
-@app.get("/my-cpd/dashboard", response_class=HTMLResponse)
-async def subscriber_dashboard(request: Request):
-    email = _signed_in_email(request)
-    if not email:
-        return RedirectResponse("/my-cpd", status_code=302)
-    st = _member_state(email)
-    if not st:
-        return RedirectResponse("/my-cpd", status_code=302)
-    member, member_id, member_name, is_sub, sub_ended = st["member"], st["member_id"], st["name"], st["is_sub"], st["sub_ended"]
-    purchased_ids = st["purchased"]
-
-    # For subscribers: ensure every course has a completion token so completing works.
-    # Tokens are created lazily on first dashboard load — no email needed, just DB record.
-    if is_sub:
-        for cid in [k for k in COURSES if is_available(k)]:
-            if cid not in st["completed"] and cid not in st["pending"]:
-                st["pending"][cid] = create_completion_token(member_id, cid)
-
-    year = datetime.now(timezone.utc).year
-    hours_year, certs_year = _year_tally(st["certs"], year)
-
-    # Hero: the newest Field Work series, with the member's own progress through it.
-    sid = _newest_series()
+def _series_hero(st: dict, sid: str) -> str:
+    """The dashboard hero for one series, with the member's progress through it; '' for no series."""
+    if sid not in SERIES:
+        return ""
     s = SERIES[sid]
     parts = s["courses"]
     n = len(parts)
@@ -2632,6 +2610,42 @@ async def subscriber_dashboard(request: Request):
     <ul class="parts">{items}</ul>{progress}
     <div class="actions">{first}<a class="btn btn-s" href="/my-cpd/series/{sid}">Series info</a></div>
   </div><div class="poster">{member_ui.series_poster(s['title'])}</div></section>"""
+    return hero
+
+
+def _newest_series() -> str:
+    """The series whose parts were published last (ties go to the one defined last), or ''
+    when no series is complete in the catalogue."""
+    def key(item):
+        i, sid = item
+        pubs = [str(COURSES[cid].get("published") or "") for cid in SERIES[sid]["courses"] if cid in COURSES]
+        return (max(pubs or [""]), min(pubs or [""]), i)
+    return max(enumerate(x for x in SERIES if series_courses(x)), key=key, default=(0, ""))[1]
+
+
+@app.get("/my-cpd/dashboard", response_class=HTMLResponse)
+async def subscriber_dashboard(request: Request):
+    email = _signed_in_email(request)
+    if not email:
+        return RedirectResponse("/my-cpd", status_code=302)
+    st = _member_state(email)
+    if not st:
+        return RedirectResponse("/my-cpd", status_code=302)
+    member, member_id, member_name, is_sub, sub_ended = st["member"], st["member_id"], st["name"], st["is_sub"], st["sub_ended"]
+    purchased_ids = st["purchased"]
+
+    # For subscribers: ensure every course has a completion token so completing works.
+    # Tokens are created lazily on first dashboard load — no email needed, just DB record.
+    if is_sub:
+        for cid in [k for k in COURSES if is_available(k)]:
+            if cid not in st["completed"] and cid not in st["pending"]:
+                st["pending"][cid] = create_completion_token(member_id, cid)
+
+    year = datetime.now(timezone.utc).year
+    hours_year, certs_year = _year_tally(st["certs"], year)
+
+    # Hero: the newest Field Work series, with the member's own progress through it.
+    hero = _series_hero(st, _newest_series())
 
     # Rows, built from the member's own data and the course tags. A course can sit in more
     # than one row; the search and the topic chips work over one flat list of every course.
@@ -2653,7 +2667,7 @@ async def subscriber_dashboard(request: Request):
         _row("Your series", [_series_card(st, x) for x in series_ids], "All series", "/my-cpd/series"),
         _row("Favourites", [card(cid) for cid in marks.get("favourite", []) if cid in tags]),
         _row("Read later", [card(cid) for cid in marks.get("read_later", []) if cid in tags]),
-        _row("New this month", [card(cid) for cid in held_first(new_ids)]),
+        _row("New", [card(cid) for cid in held_first(new_ids)]),
     ]
     for tag, label in member_ui.TOPICS:
         extra = [_series_card(st, x) for x in other_series] if tag == "field-work" else []

@@ -122,8 +122,11 @@ assert "Subscription ended" in t and "/my-cpd/billing" in t
 assert len(db["completions"]) == n_tokens, "no new tokens for an ex-subscriber"
 for cid in ("MER-DEA-002", "MER-DEA-003", "MER-DEA-004"): assert cid in t, cid
 # Phase 2 shows the whole library; courses the leaver does not hold have no download link and say so
-assert 'href="/download/MER-DEA-005"' not in t and 'href="/download/MER-DEA-006"' not in t
-assert 'data-course="MER-DEA-005"' in t and "Not in your library" in t
+assert "/download/MER-DEA-005" not in t and "/download/MER-DEA-006" not in t  # no file link of any kind, notes included
+card = t.split('class="card" data-course="MER-DEA-005"', 1)[1].split('</div></div>', 1)[0]
+assert "Not in your library" in card and "See the course" in card
+r = c.get("/my-cpd/course/MER-DEA-005", cookies={"session_token": main._make_session_token("leaver@example.com")})
+assert r.status_code == 404 and "not in your library" in r.text, r.status_code
 print("7 ex-subscriber keeps bought, downloaded and completed courses only")
 
 # 8. Active subscriber's dashboard still gets the full library and the manage link

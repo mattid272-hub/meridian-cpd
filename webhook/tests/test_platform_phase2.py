@@ -42,11 +42,17 @@ class Q:
         s._gone()
         rows = s.db.setdefault(s.t, [])
         if s.op == "insert":
+            if s.t == "member_marks" and s.db.get("_race"):
+                s.db["_race"] = False  # the other click's row lands first, then ours hits the unique index
+                rows.append(dict(s.pl, id="race"))
+                raise RuntimeError("{'code': '23505', 'message': 'duplicate key value violates unique constraint \"member_marks_member_id_course_id_kind_key\"'}")
             row = dict(s.pl); row.setdefault("id", f"{s.t}-{len(rows) + 1}")
             row.setdefault("created_at", datetime.now(timezone.utc).isoformat()); rows.append(row); return Res([row])
         hit = [r for r in rows if all(f(r) for f in s.f)]
         if s.op == "delete":
             s.db[s.t] = [r for r in rows if r not in hit]; return Res(hit)
+        if s.op == "select" and s.t == "member_marks" and s.db.get("_race"):
+            return Res([])  # the existence check runs before the other click's row lands
         if s.op == "update":
             [r.update(s.pl) for r in hit]
         if s.o: hit = sorted(hit, key=lambda r: str(r.get(s.o[0]) or ""), reverse=s.o[1])
@@ -117,6 +123,11 @@ r = c.post("/my-cpd/marks/remove", data={"course_id": "MER-RA-001", "kind": "fav
 check("one member cannot remove another member's mark", r.status_code == 200 and marks("sue") == [("MER-RA-001", "favourite")])
 r = c.post("/my-cpd/marks/remove", data={"course_id": "MER-RA-002", "kind": "favourite"}, headers=JSON, cookies=BEA)
 check("removing a mark", r.status_code == 200 and r.json() == {"ok": True, "on": False} and ("MER-RA-002", "favourite") not in marks("bea"))
+db["_race"] = True
+r = c.post("/my-cpd/marks/add", data={"course_id": "MER-RA-003", "kind": "favourite"}, headers=JSON, cookies=BEA)
+check("a double click (duplicate key on insert) is a success, not a 503, and leaves one row",
+      r.status_code == 200 and r.json() == {"ok": True, "on": True} and marks("bea").count(("MER-RA-003", "favourite")) == 1)
+c.post("/my-cpd/marks/remove", data={"course_id": "MER-RA-003", "kind": "favourite"}, headers=JSON, cookies=BEA)
 check("removing needs a sign-in too", c.post("/my-cpd/marks/remove", data={"course_id": "MER-RA-001", "kind": "favourite"}, headers=JSON).status_code == 401
       and marks("sue") == [("MER-RA-001", "favourite")])
 check("an unknown kind or action is a 400", c.post("/my-cpd/marks/add", data={"course_id": "MER-DEA-002", "kind": "star"}, headers=JSON, cookies=BEA).status_code == 400
@@ -145,7 +156,7 @@ check("rows from the member's data and the tags, in order", heads[:3] == ["Conti
       and "Scotland" in heads and heads.index("Continue where you left off") < heads.index("Completed"))
 fav_row = r.text.split("<h2>Favourites</h2>", 1)[1].split("</section>", 1)[0]
 check("Favourites row holds the member's favourite", 'data-course="MER-DEA-002"' in fav_row and fav_row.count('class="card"') == 1)
-check("New this month is built from the published dates", ("New this month" in heads) == any(
+check("the New row is built from the published dates", ("New" in heads and "New this month" not in r.text) == any(
       "new" in member_ui.course_tags(v, main._course_text(k)) for k, v in main.COURSES.items() if k != "SUBSCRIPTION"))
 deck_card = r.text.split('data-course="MER-ALL-019"', 1)[1].split('</div></div>', 1)[0]
 check("deck card: Watch now, Info, favourite, read later, hours, status, Download links",
@@ -164,6 +175,8 @@ check("a course outside a single buyer's library: Not in your library, See the c
 results = r.text.split('<section class="results"', 1)[1]
 catalogue = [k for k in main.COURSES if k != "SUBSCRIPTION" and main.is_available(k)]
 check("the results list holds every course once, for search and chips", all(results.count(f'class="card" data-course="{k}"') == 1 for k in catalogue))
+check("a failed save shows a note on the card and does not post the form again",
+      "Could not save that. Try again." in r.text and "f.submit()" not in r.text and "!window.fetch" in r.text)
 check("search box, topic chips and the script", 'id="q"' in r.text and 'placeholder="Search courses"' in r.text
       and all(f'data-tag="{tag}"' in r.text for tag, _ in member_ui.TOPICS) and "rows.classList.toggle('filtering'" in r.text)
 check("cards carry their tags and search text", 'data-tags="field-work' in r.text and 'data-q="' in r.text)
@@ -174,6 +187,12 @@ check("a member with no data: 200, the hero, the library rows, no member rows, a
       and "<h2>Your series</h2>" not in t and "<h2>Completed</h2>" not in t and "<h2>Favourites</h2>" not in t
       and '<div class="num">0</div>' in t)
 r = c.get("/my-cpd/dashboard", cookies=SUE); t = flat(r.text)
+real_sc = main.series_courses
+main.series_courses = lambda sid: []
+r0 = c.get("/my-cpd/dashboard", cookies=SUE)
+main.series_courses = real_sc
+check("no complete series in the catalogue: the dashboard still loads, without the series hero",
+      main.series_courses("FW-INSULATION") and r0.status_code == 200 and "New series" not in r0.text and "<h2>For DEAs</h2>" in r0.text)
 check("a subscriber's cards all open the material", "See the course" not in t and "Not in your library" not in t
       and "<h2>Favourites</h2>" in t)
 own = re.sub(r'data-q="[^"]*"|<svg.*?</svg>', "", r.text, flags=re.S)
@@ -214,7 +233,8 @@ rl_config.pageCompression = 0  # plain page streams, so the words can be read ba
 pdf = cpd_record.generate_cpd_record("A. N. Assessor", 2026, [db["certificates"][0]])
 text = pdf.decode("latin-1")
 check("the record shows name, year, course, number, verify address, total and the scheme line",
-      all(s in text for s in ("A. N. Assessor", "CPD record 2026", f"MER-{YEAR}-0101", "/verify/", "Total", "Check your own scheme")))
+      all(s in text for s in ("A. N. Assessor", "CPD record 2026", f"MER-{YEAR}-0101", "/verify/", "Total", "Check your own scheme",
+                              "Anyone can check a certificate at its verify address.")) and "beside it" not in text)
 r = c.get("/my-cpd/certificates", cookies=BEA)
 check("My certificates offers the record for the year shown", f'href="/my-cpd/certificates/record.pdf?year={YEAR}">Download CPD record (PDF)' in r.text)
 r = c.get("/my-cpd/certificates?year=all", cookies=BEA)
@@ -234,9 +254,10 @@ hero = index.split('<section id="hero">', 1)[1].split("</section>", 1)[0]
 hero_css = index.split("/* ── SECTION 1: HERO", 1)[1].split("/* ── SECTION", 1)[0]
 check("index.html: the hero shows the platform (My certificates, poster template), not stock imagery",
       "unsplash" not in hero and "unsplash" not in hero_css and 'class="hero-screen"' in hero and "<svg" in hero
-      and "Your certificates.<br>In one place." in hero and "Download CPD record (PDF)" in hero)
+      and "Your certificates.<br>In one place." in hero and "Download CPD record (PDF)" in hero
+      and "Download any year as one PDF." in hero and "your year" not in hero)
 how = index.split('id="how"', 1)[1].split("</section>", 1)[0]
-check("index.html: How certificates work, four plain steps", "How certificates work" in how and how.count('class="step"') == 4
+check("index.html: How certificates work, four plain steps", "How certificates<br>work." in how and '<span class="label on-light">Certificates</span>' in how and how.count('class="step"') == 4
       and all(w in how for w in ("Read", "Confirm", "Certificate", "QR")))
 check("index.html: the structured data and meta tags are kept", 'application/ld+json' in index and '"legalName": "FistralAI Ltd"' in index
       and 'rel="canonical"' in index and 'property="og:image"' in index)
@@ -244,6 +265,8 @@ check("courses.html: topic rows, search and chips; series first, then the £79 s
       'id="topicRows"' in courses and "function courseTags(" in courses and 'class="filter-tab topic-chip' in courses and 'id="searchInput"' in courses
       and courses.index('id="seriesGrid"') < courses.index('id="topicRows"') and ".sub-strip { order: -1; }" in courses
       and ".page-hero, .series-grid { order: -2; }" in courses and "Single courses, £19.99 each" in courses and "Buy, £19.99" in courses)
+check("courses.html: the rolling row is called New, never New this month", "New this month" not in courses
+      and "['new', 'New']" in courses and 'data-filter="new">New</button>' in courses)
 check("courses.html: published dates mirror the app catalogue", all(
       f"'{k}': '{v['published']}'" in courses for k, v in main.COURSES.items() if k != "SUBSCRIPTION"))
 for name, html in (("index.html", index), ("courses.html", courses)):
