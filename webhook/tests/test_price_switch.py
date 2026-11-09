@@ -67,7 +67,7 @@ def banner(pence, when):
 nov, jan = datetime(2026, 11, 20, 9, tzinfo=UK), datetime(2027, 1, 2, 9, tzinfo=UK)
 b = banner(7900, nov)
 check("£79 in November: £79, the January line, the default link",
-      "£79 a year." in b and "£99 from 1 January 2027" in b and "Upgrade to Annual — £79/year" in b
+      "£79 a year." in b and "£99 from 1 January 2027" in b and "Upgrade to Annual, £79 a year →" in b
       and main.DEFAULT_SUBSCRIPTION_LINK in b)
 b = banner(7900, jan)
 check("£79 still live in January (switch late): no stale 'until 31 December' line",
@@ -75,7 +75,7 @@ check("£79 still live in January (switch late): no stale 'until 31 December' li
 os.environ["STRIPE_LINK_SUBSCRIPTION"] = "https://buy.stripe.com/test_new99"
 b = banner(9900, jan)
 check("£99 after the switch: £99, no founder line, the new link",
-      "£99 a year." in b and "£79" not in b and "Upgrade to Annual — £99/year" in b
+      "£99 a year." in b and "£79" not in b and "Upgrade to Annual, £99 a year →" in b
       and "https://buy.stripe.com/test_new99" in b and main.DEFAULT_SUBSCRIPTION_LINK not in b)
 check("price unreadable: no banner", banner(None, jan) == "")
 check("a price no text is written for: no banner", banner(8900, jan) == "")

@@ -494,7 +494,7 @@ def upsell_banner(now: datetime | None = None) -> str:
           <a href="{_esc(subscription_link())}"
              style="display:inline-block;background:#d4ff00;color:#0D1F0E;padding:12px 24px;
                     border-radius:8px;text-decoration:none;font-weight:800;font-size:14px">
-            Upgrade to Annual — £{annual}/year →
+            Upgrade to Annual, £{annual} a year →
           </a>
         </div>"""
 
