@@ -143,8 +143,36 @@ class _MetaPixel:
         await self.app(scope, receive, buffer)
 
 
+class _ReferrerPolicy:
+    """Referrer-Policy: strict-origin on every response. Some app addresses carry a private
+    token, email address or checkout session id (/complete, /thanks, /my-cpd/login, /download,
+    /unsubscribe, /verify). Without this header a link from one of those pages to a page that
+    runs the Meta Pixel (My CPD, or the public site after Accept) would pass the full address
+    on as the referrer. With it, only https://app.meridiancpd.co.uk is ever passed on, and
+    nothing at all from https to http."""
+
+    HEADER = (b"referrer-policy", b"strict-origin")
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope.get("type") != "http":
+            return await self.app(scope, receive, send)
+
+        async def with_policy(message):
+            if message["type"] == "http.response.start":
+                headers = [(k, v) for k, v in message.get("headers", []) if k.lower() != b"referrer-policy"]
+                headers.append(self.HEADER)
+                message = {**message, "headers": headers}
+            await send(message)
+
+        await self.app(scope, receive, with_policy)
+
+
 app.add_middleware(_MetaPixel)
 app.add_middleware(_AnswerHeadRequests)
+app.add_middleware(_ReferrerPolicy)
 
 # ── Clients ───────────────────────────────────────────────────────────────────
 stripe.api_key = os.environ["STRIPE_SECRET_KEY"]

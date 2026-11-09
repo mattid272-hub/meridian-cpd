@@ -23,6 +23,9 @@ class Q:
     def select(s, *a, **k): return s
     def eq(s, c, v): s.f.append(lambda r, c=c, v=v: r.get(c) == v); return s
     def order(s, *a, **k): return s
+    def is_(s, *a, **k): return s
+    def in_(s, *a, **k): return s
+    def gte(s, *a, **k): return s
     def limit(s, *a): return s
     def execute(s): return Res([r for r in s.db.get(s.t, []) if all(f(r) for f in s.f)])
 
@@ -127,7 +130,19 @@ assert ev["custom_data"]["content_name"] == "subscription"
 ev = thanks("cs_live_seri1234567")
 assert ev["event_name"] == "Purchase" and ev["custom_data"]["value"] == 39.99 and ev["custom_data"]["content_ids"] == ["FW-INSULATION"]
 
-# 6. A refusal or a network failure from Meta never breaks the page.
+# 6. Referrer-Policy: strict-origin on every app response, so a link from a page with a private
+#    address (/complete, /thanks, /my-cpd/login, /download, /unsubscribe, /verify) to a pixel page
+#    passes on only the origin, never the token, email or session id.
+for path in ("/thanks?session_id=cs_live_subs1234567", "/complete/tok", "/my-cpd/login/tok", "/unsubscribe?email=a@b.co&token=x",
+             "/verify/MER-2026-0001", "/my-cpd", "/health", "/no-such-page"):
+    r = c.get(path, follow_redirects=False)
+    assert r.headers.get("referrer-policy") == "strict-origin", (path, r.status_code, r.headers.get("referrer-policy"))
+    assert len(r.headers.get_list("referrer-policy")) == 1, path
+assert c.head("/my-cpd").headers.get("referrer-policy") == "strict-origin"
+assert c.head("/unsubscribe?email=a@b.co&token=x").headers.get("referrer-policy") == "strict-origin"
+assert c.post("/meta/event", content="x", headers=SITE).headers.get("referrer-policy") == "strict-origin"
+
+# 7. A refusal or a network failure from Meta never breaks the page.
 class Broken(FakeClient):
     async def post(self, *a, **k): raise httpx.ConnectError("down")
 httpx.AsyncClient = Broken

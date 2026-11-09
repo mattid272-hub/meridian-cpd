@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
+  <meta name="referrer" content="strict-origin">
   <title>Unsubscribe | Meridian CPD</title>
   <!-- Link previews (Facebook, LinkedIn, WhatsApp, X): branded card, never a portrait -->
   <meta property="og:type" content="website">
@@ -25,9 +26,11 @@
   <meta name="twitter:image:alt" content="Meridian CPD: Stay Sharp. Stay Certified. meridiancpd.co.uk">
   <style>
     body { font-family: Arial, sans-serif; background: #0D1F0E; color: #fff;
-           display: flex; align-items: center; justify-content: center;
+           display: flex; flex-direction: column; align-items: center; justify-content: center;
            min-height: 100vh; margin: 0; text-align: center; }
     p { color: #8A9E8B; font-size: 15px; }
+    footer { color: #5C6B5D; font-size: 13px; padding: 24px 20px 0; }
+    footer a { color: #5C6B5D; margin: 0 8px; }
   </style>
   <script>
     // Forward email + token params to the app server that handles unsubscribes
@@ -36,5 +39,8 @@
 </head>
 <body>
   <p>Processing your unsubscribe request&hellip;</p>
+  <footer>
+    <a href="/privacy.html">Privacy</a> <a href="/privacy.html#cookies">Cookie settings</a>
+  </footer>
 </body>
 </html>
