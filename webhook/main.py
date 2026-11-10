@@ -18,6 +18,7 @@ from contextlib import asynccontextmanager
 import uuid
 import hmac
 import hashlib
+import threading
 import time
 from datetime import datetime, timezone, timedelta
 from html import escape as _esc
@@ -842,7 +843,12 @@ async def handle_checkout(session):
         return
     if not course_keys:
         print(f"ACTION NEEDED: session {session_id} paid for a price this app does not know "
-              f"(client_reference_id={client_ref!r}). Check STRIPE_PRICE_* in Railway; nothing was sent.")
+              f"(client_reference_id={client_ref!r}, amount {amount}). Check STRIPE_PRICE_* in "
+              f"Railway; no course was recorded or sent.")
+        if not _g(session, "subscription"):
+            # Stop here: creating the member first left an account with nothing in it. A
+            # subscription still gets its member, so the subscription events can find it.
+            return
 
     todo = [k for k in course_keys if k not in emailed]
     if recorded and not todo:
@@ -2118,6 +2124,82 @@ async def meta_event(request: Request):
     return done
 
 
+# ── Free-course code watch ─────────────────────────────────────────────────────
+# The free course depends on one Stripe promotion code. If Stripe stops accepting it
+# (expired, deactivated, redemption limit reached), checkout just says "This code is
+# invalid" and nobody tells us: in November 2026 that went unseen for five days. /health
+# reports the code's state and the daily health report email flags it.
+FREE_CODE = os.environ.get("FREE_COURSE_CODE", "MERIDIAN10").strip()
+FREE_CODE_CHECK_SECONDS = 600
+_free_code_cache: dict = {"at": 0.0, "state": "unknown"}
+
+
+def _promo_code_state(code: str, now: float | None = None) -> str:
+    """'ok' if Stripe would accept this promotion code today, 'invalid' if not (with the
+    reason), 'unknown' if Stripe could not be asked."""
+    now = time.time() if now is None else now
+    try:
+        # No retries (free_code_state runs this in the background and waits at most a few
+        # seconds, because /health is Railway's healthcheck). The coupon (promotion.coupon
+        # on this API version) is expanded: otherwise Stripe sends only its id and the
+        # coupon's own expiry or limit is unseen.
+        found = stripe.PromotionCode.list(
+            code=code, limit=10, expand=["data.promotion.coupon"],
+            max_network_retries=0,
+        ).data
+    except Exception as e:
+        print(f"Could not check promotion code {code}: {e}")
+        return "unknown"
+    if not found:
+        return "invalid: no such code"
+    reasons = []
+    for pc in found:
+        if not _g(pc, "active", False):
+            reasons.append("inactive")
+            continue
+        if _g(pc, "expires_at") and _g(pc, "expires_at") <= now:
+            reasons.append("expired")
+            continue
+        if _g(pc, "max_redemptions") and _g(pc, "times_redeemed", 0) >= _g(pc, "max_redemptions"):
+            reasons.append("redemption limit reached")
+            continue
+        coupon = _g(pc, "coupon") or _g(_g(pc, "promotion", {}), "coupon")
+        if coupon and not isinstance(coupon, str) and not _g(coupon, "valid", True):
+            reasons.append("coupon no longer valid")
+            continue
+        return "ok"
+    return "invalid: " + ", ".join(sorted(set(reasons)))
+
+
+def _refresh_free_code() -> None:
+    try:
+        state = _promo_code_state(FREE_CODE)
+        _free_code_cache.update(state=state, at=time.time())
+        if state.startswith("invalid"):
+            print(f"ACTION NEEDED: the free-course code {FREE_CODE} is not accepted by Stripe "
+                  f"({state}). Fix it in Stripe > Product catalogue > Coupons.")
+    finally:
+        _free_code_lock.release()
+
+
+_free_code_lock = threading.Lock()
+
+
+def free_code_state(wait: float = 3.0) -> str:
+    """The cached state, refreshed in the background when older than ten minutes. Waits
+    up to `wait` seconds for a refresh, so /health is never held up by a slow Stripe."""
+    if time.time() - _free_code_cache["at"] >= FREE_CODE_CHECK_SECONDS and _free_code_lock.acquire(blocking=False):
+        try:
+            t = threading.Thread(target=_refresh_free_code, daemon=True)
+            t.start()
+        except Exception as e:
+            _free_code_lock.release()
+            print(f"Could not start the free-code check: {e}")
+        else:
+            t.join(wait)
+    return _free_code_cache["state"]
+
+
 @app.get("/health")
 def health():
     # Re-read the catalogue and the withdrawn list on the same ten-minute cycle as the
@@ -2129,6 +2211,7 @@ def health():
         "courses": len(listed),
         "available": len([k for k in listed if is_available(k)]),
         "under_review": len([k for k in listed if k in UNDER_REVIEW]),
+        "free_code": free_code_state(),
     }
 
 
@@ -4763,8 +4846,8 @@ async def admin_system(credentials=Depends(_check_admin)):
         ("STRIPE_WEBHOOK_SECRET", "Stripe webhook signing secret", True, ""),
         ("STRIPE_PRICE_SINGLE", "Stripe price, single course", True, ""),
         ("STRIPE_PRICE_SUBSCRIPTION", "Stripe price, annual subscription", True, ""),
-        ("STRIPE_PRICE_SERIES", "Stripe price, Field Work series (£39.99, three courses)", False,
-         "Needed before a series goes on sale: without it a series purchase is not recognised and nothing is sent."),
+        ("STRIPE_PRICE_SERIES", "Stripe price, Field Work series (£39.99, three courses)", True,
+         "The series is on sale: without it a series purchase is not recognised and nothing is sent."),
         ("RESEND_API_KEY", "Resend (sends course and certificate emails)", True, ""),
         ("SUPABASE_URL", "Supabase project", True, ""),
         ("SUPABASE_SERVICE_ROLE_KEY", "Supabase service key", True, ""),
