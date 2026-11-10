@@ -1,23 +1,26 @@
 """
-Meridian CPD — Daily Health Report
+Meridian CPD: daily funnel report
 
-Runs at 07:20 UTC via GitHub Actions.
-Emails mattid272@gmail.com with a one-glance system status.
+Runs at 07:20 UTC via GitHub Actions and emails REPORT_TO_EMAIL one screen: yesterday and
+the last 7 days from checkout to certificate, with red lines at the top for anything that
+needs Matt. This file only fetches; what the email says is decided in funnel.py.
 
-Checks:
-- Active subscribers (Supabase members table)
-- New sign-ups in last 24 hrs
-- Outreach campaign status
-- Emails sent yesterday (outreach_sends)
-- Backend health (app.meridiancpd.co.uk)
-- Course library count
-- Free-course code (MERIDIAN10) accepted by Stripe, and the date of the last free order
+Reads:
+- Supabase (service key): members, purchases, completions, certificates, member_signins,
+  free_course_followup_sends, outreach_sends, outreach_suppressed
+- Stripe (STRIPE_REPORT_KEY, a restricted key with Checkout Sessions: Read and nothing
+  else): checkout sessions of the last 8 days. Without it the report says so in a red line.
+- The app's /health: up or down, courses on sale, the free code, the series price
 """
 import os
 import sys
-import httpx
 from datetime import datetime, timezone, timedelta
+
+import httpx
 from supabase import create_client
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import funnel  # noqa: E402
 
 
 def fail(reason: str):
@@ -29,7 +32,10 @@ def fail(reason: str):
 SUPABASE_URL   = os.environ.get("SUPABASE_URL", "").strip()
 SUPABASE_KEY   = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "").strip()
+STRIPE_KEY     = os.environ.get("STRIPE_REPORT_KEY", "").strip()
 REPORT_TO      = os.environ.get("REPORT_TO_EMAIL", "mattid272@gmail.com")
+APP_URL        = os.environ.get("APP_URL", "https://app.meridiancpd.co.uk").rstrip("/")
+PAGE = 1000
 
 missing = [name for name, val in [
     ("SUPABASE_URL", SUPABASE_URL),
@@ -46,220 +52,98 @@ except Exception as e:
     fail(f"Could not connect to Supabase: {type(e).__name__}: {str(e)[:200]}")
 
 now = datetime.now(timezone.utc)
-yesterday = (now - timedelta(hours=24)).isoformat()
+since = (funnel.windows(now)["week"][0] - timedelta(days=1)).isoformat()
 
 
 def q(label, fn):
+    """The result, or None (shown as n/a) when this one read fails."""
     try:
         return fn()
     except Exception as e:
-        print(f"  Warning — {label}: {e}")
+        print(f"  Warning: {label}: {type(e).__name__}: {str(e)[:200]}")
         return None
 
 
-live_course_count = None
-free_code = None
+def rows(table, cols, since_field=None):
+    """Every row (paged, Supabase returns at most 1000 at a time), or only those since
+    the start of the report's first day."""
+    out, start = [], 0
+    while True:
+        query = supabase.table(table).select(cols)
+        if since_field:
+            query = query.gte(since_field, since)
+        page = query.range(start, start + PAGE - 1).execute().data or []
+        out += page
+        if len(page) < PAGE:
+            return out
+        start += PAGE
 
 
-def check_backend():
-    global live_course_count, free_code
+def purchases():
     try:
-        r = httpx.get("https://app.meridiancpd.co.uk/health", timeout=20)
-        if r.status_code < 400:
-            try:
-                live_course_count = r.json().get("courses")
-                free_code = r.json().get("free_code")
-            except Exception:
-                pass
-            return "UP"
-        return f"DOWN ({r.status_code})"
-    except Exception:
-        return "UNREACHABLE"
+        return rows("purchases", "member_id, course_id, amount_gbp, stripe_session_id, purchased_at, series_id")
+    except Exception:  # before the series migration there is no series_id column
+        return rows("purchases", "member_id, course_id, amount_gbp, stripe_session_id, purchased_at")
 
 
-def get_subscriber_count():
-    res = supabase.table("members").select("id", count="exact").eq("plan", "subscription").execute()
-    return res.count or 0
-
-
-def get_new_signups():
-    res = supabase.table("members").select("email, name, joined_at").gte("joined_at", yesterday).order("joined_at", desc=True).execute()
-    return res.data or []
-
-
-def get_campaign_status():
-    res = supabase.table("outreach_campaigns").select("name, status").execute()
-    campaigns = res.data or []
-    if not campaigns:
-        return "No campaigns"
-    return "; ".join(f"{c['name']} ({c['status']})" for c in campaigns)
-
-
-def get_emails_sent_yesterday():
-    res = supabase.table("outreach_sends").select("id", count="exact").gte("sent_at", yesterday).execute()
-    return res.count or 0
-
-
-def get_suppressions_today():
-    res = supabase.table("outreach_suppressed").select("email").gte("suppressed_at", yesterday).execute()
-    return res.data or []
-
-
-def get_last_free_order():
+def last_free_order():
     res = (supabase.table("purchases").select("purchased_at").eq("amount_gbp", 0)
            .like("stripe_session_id", "cs_live%").order("purchased_at", desc=True).limit(1).execute())
-    rows = res.data or []
-    return rows[0]["purchased_at"][:10] if rows else "none"
+    found = res.data or []
+    return found[0]["purchased_at"][:10] if found else "none"
 
 
-def get_course_count():
-    """Courses actually visible to subscribers (reported by the live app)."""
-    if live_course_count is not None:
-        return live_course_count
-    return "? (app did not report)"
+def health():
+    r = httpx.get(f"{APP_URL}/health", timeout=20)
+    r.raise_for_status()
+    return r.json()
+
+
+def stripe_sessions():
+    """Checkout sessions created since the report's first day: id, created, status, amount."""
+    if not STRIPE_KEY:
+        return None
+    out, after = [], None
+    created = int(datetime.fromisoformat(since).timestamp())
+    while True:
+        params = {"limit": 100, "created[gte]": created}
+        if after:
+            params["starting_after"] = after
+        r = httpx.get("https://api.stripe.com/v1/checkout/sessions", params=params,
+                      auth=(STRIPE_KEY, ""), timeout=30)
+        r.raise_for_status()
+        body = r.json()
+        out += [{"id": s.get("id"), "created": s.get("created"), "status": s.get("status"),
+                 "amount_total": s.get("amount_total")} for s in body.get("data", [])]
+        if not body.get("has_more") or not body.get("data"):
+            return out
+        after = body["data"][-1]["id"]
 
 
 # ── Gather ────────────────────────────────────────────────────────────────────
-print("Gathering health data...")
+print("Gathering report data...")
+data = {
+    "health":          q("app /health", health),
+    "stripe_sessions": q("Stripe checkout sessions", stripe_sessions),
+    "members":         q("members", lambda: rows("members", "id, plan, stripe_customer_id, joined_at, marketing_consent")),
+    "purchases":       q("purchases", purchases),
+    "last_free_order": q("last free order", last_free_order),
+    "opened":          q("courses opened", lambda: rows("completions", "downloaded_at", "downloaded_at")),
+    "completed":       q("completions", lambda: rows("completions", "completed_at", "completed_at")),
+    "certificates":    q("certificates", lambda: rows("certificates", "issued_at", "issued_at")),
+    "signins":         q("sign-ins", lambda: rows("member_signins", "signed_in_at", "signed_in_at")),
+    "followups":       q("follow-up emails", lambda: rows("free_course_followup_sends", "sent_at, status", "sent_at")),
+    "outreach_sends":  q("outreach emails", lambda: rows("outreach_sends", "sent_at", "sent_at")),
+    "suppressed":      q("unsubscribes", lambda: rows("outreach_suppressed", "suppressed_at, reason", "suppressed_at")),
+}
+# Key set but Stripe would not answer: a different red line from "no key".
+data["stripe_error"] = bool(STRIPE_KEY) and data["stripe_sessions"] is None
 
-backend_status   = q("backend",      check_backend)
-subscriber_count = q("subscribers",  get_subscriber_count)
-new_signups      = q("new signups",  get_new_signups)
-campaign_status  = q("campaigns",    get_campaign_status)
-emails_yesterday = q("emails sent",  get_emails_sent_yesterday)
-suppressions     = q("suppressions", get_suppressions_today)
-course_count     = q("courses",      get_course_count)
-last_free_order  = q("last free order", get_last_free_order)
-
-# The free course is the front door: say loudly if Stripe stops taking the code.
-free_code_ok = free_code == "ok"
-free_code_broken = str(free_code or "").startswith("invalid")
-if free_code_ok:
-    free_code_line = "MERIDIAN10 accepted by Stripe"
-elif free_code_broken:
-    free_code_line = (f"FREE COURSE BROKEN: MERIDIAN10 {free_code}. "
-                      "Fix it in Stripe > Product catalogue > Coupons")
-else:
-    free_code_line = f"MERIDIAN10 not checked ({free_code or 'the app did not report it'})"
-
-today_str = now.strftime("%a %d %b %Y")
-
-# ── Format email ──────────────────────────────────────────────────────────────
-status_icon = "✅" if backend_status == "UP" else "🔴"
-
-signup_lines = ""
-if new_signups:
-    signup_lines = "\n".join(f"  + {s.get('name', 'Unknown')} ({s.get('email', '?')}) — {s.get('joined_at', '')[:10]}" for s in new_signups)
-else:
-    signup_lines = "  None in last 24 hrs"
-
-suppression_lines = ""
-if suppressions:
-    suppression_lines = "Unsubscribes (last 24 hrs):\n" + "\n".join(f"  - {s.get('email', '?')}" for s in suppressions) + "\n\n"
-
-subject = f"Meridian CPD — Daily report {today_str} | {subscriber_count} subscribers | Backend {backend_status}"
-if free_code_broken:
-    subject = "FREE COURSE BROKEN | " + subject
-
-body_text = f"""Meridian CPD — Daily Health Report
-{today_str}
-
-SYSTEM STATUS
-─────────────
-Backend (app.meridiancpd.co.uk): {status_icon} {backend_status}
-Free course: {free_code_line}. Last free order: {last_free_order}
-Courses in library: {course_count}
-Campaign status: {campaign_status}
-
-SUBSCRIBERS
-──────────────
-Active subscribers: {subscriber_count}
-
-New signups (last 24 hrs):
-{signup_lines}
-
-OUTREACH
-────────
-Emails sent yesterday: {emails_yesterday}
-{suppression_lines}
-NOTES
-─────
-• Admin panel (members, certificates): https://app.meridiancpd.co.uk/admin
-• Subscriber login: https://app.meridiancpd.co.uk/my-cpd
-• Content engine runs on the 1st and 15th automatically.
-
-—
-This report is sent daily at 07:20 UTC.
-Meridian CPD | hello@meridiancpd.co.uk
-"""
-
-body_html = f"""<!DOCTYPE html>
-<html><head><meta charset="UTF-8">
-<style>
-  body{{font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:28px 24px;color:#1a1a1a;font-size:15px;line-height:1.6;background:#f5f5f5}}
-  .card{{background:#fff;border-radius:8px;padding:24px;margin-bottom:16px;border:1px solid #e5e7eb}}
-  h1{{font-size:18px;font-weight:700;color:#0D1F0E;margin:0 0 4px}}
-  .date{{font-size:13px;color:#6b7280;margin-bottom:20px}}
-  h2{{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin:0 0 12px;border-bottom:1px solid #e5e7eb;padding-bottom:8px}}
-  .stat{{display:inline-block;margin-right:24px;margin-bottom:12px}}
-  .stat-num{{font-size:28px;font-weight:700;color:#0D1F0E;line-height:1}}
-  .stat-lbl{{font-size:12px;color:#6b7280;margin-top:2px}}
-  .status-ok{{color:#16a34a;font-weight:700}}
-  .status-err{{color:#dc2626;font-weight:700}}
-  .signup-list{{font-size:13px;color:#374151}}
-  .signup-item{{padding:6px 0;border-bottom:1px solid #f3f4f6}}
-  .empty{{color:#9ca3af;font-style:italic;font-size:13px}}
-  .links a{{color:#0D1F0E;font-size:13px;margin-right:16px}}
-  .footer{{font-size:12px;color:#9ca3af;margin-top:20px;padding-top:16px;border-top:1px solid #e5e7eb}}
-  .pill{{display:inline-block;padding:2px 8px;border-radius:100px;font-size:12px;font-weight:600}}
-  .pill-paused{{background:#fef3c7;color:#92400e}}
-  .pill-active{{background:#dcfce7;color:#166534}}
-</style></head><body>
-<div class="card">
-  <h1>Meridian CPD</h1>
-  <div class="date">Daily Report — {today_str}</div>
-
-  <h2>System Status</h2>
-  <p>Backend: <span class="{'status-ok' if backend_status == 'UP' else 'status-err'}">{status_icon} {backend_status}</span>
-  &nbsp;&nbsp; Courses in library: <strong>{course_count}</strong></p>
-  <p>Free course: <span class="{'status-ok' if free_code_ok else 'status-err'}">{free_code_line}</span>. Last free order: {last_free_order}</p>
-  <p style="margin-top:8px;font-size:13px;color:#374151">Campaign: {campaign_status}</p>
-</div>
-
-<div class="card">
-  <h2>Subscribers</h2>
-  <div class="stat">
-    <div class="stat-num">{subscriber_count}</div>
-    <div class="stat-lbl">Active subscribers</div>
-  </div>
-  <div style="margin-top:12px">
-    <strong style="font-size:13px">New signups (last 24 hrs)</strong>
-    {"".join(f'<div class="signup-item">{s.get("name","?")} &bull; {s.get("email","?")} &bull; {s.get("joined_at","")[:10]}</div>' for s in new_signups) if new_signups else '<p class="empty">None</p>'}
-  </div>
-</div>
-
-<div class="card">
-  <h2>Outreach</h2>
-  <p style="font-size:14px">Emails sent (last 24 hrs): <strong>{emails_yesterday}</strong></p>
-  {"<p style='font-size:13px;margin-top:8px'><strong>Unsubscribes:</strong> " + ", ".join(s.get("email","?") for s in suppressions) + "</p>" if suppressions else ""}
-</div>
-
-<div class="links card">
-  <h2>Quick Links</h2>
-  <a href="https://app.meridiancpd.co.uk/admin">Admin panel</a>
-  <a href="https://app.meridiancpd.co.uk/my-cpd">Subscriber login</a>
-  <a href="https://dashboard.stripe.com">Stripe</a>
-  <a href="https://railway.app">Railway</a>
-</div>
-
-<div class="footer">
-  Daily health report sent by GitHub Actions at 07:20 UTC.<br>
-  Meridian CPD | hello@meridiancpd.co.uk
-</div>
-</body></html>"""
+report = funnel.build(data, now)
 
 # ── Send ──────────────────────────────────────────────────────────────────────
-print(f"Sending report to {REPORT_TO}...")
+# The repo is public and so is this run's log: nothing from the report is printed.
+print(f"Sending report ({len(report['red'])} red line(s))...")
 
 try:
     resp = httpx.post(
@@ -268,9 +152,9 @@ try:
         json={
             "from": "Meridian CPD <hello@meridiancpd.co.uk>",
             "to": [REPORT_TO],
-            "subject": subject,
-            "text": body_text,
-            "html": body_html,
+            "subject": report["subject"],
+            "text": report["text"],
+            "html": report["html"],
         },
         timeout=30,
     )
@@ -282,8 +166,3 @@ if resp.status_code >= 400:
          "The same key sends new-course emails from this repo, so those are failing too.")
 
 print("Report sent.")
-print(f"  Backend: {backend_status}")
-print(f"  Subscribers: {subscriber_count}")
-print(f"  New signups: {len(new_signups or [])}")
-print(f"  Emails sent yesterday: {emails_yesterday}")
-print(f"  Courses: {course_count}")

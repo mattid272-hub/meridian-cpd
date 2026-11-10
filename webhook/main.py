@@ -2212,6 +2212,8 @@ def health():
         "available": len([k for k in listed if is_available(k)]),
         "under_review": len([k for k in listed if k in UNDER_REVIEW]),
         "free_code": free_code_state(),
+        # Whether the Field Work series can be bought; the daily report flags "missing".
+        "series_price": "set" if os.environ.get("STRIPE_PRICE_SERIES", "").strip() else "missing",
     }
 
 
@@ -2594,8 +2596,21 @@ def _login_member(member_id: str):
     return res.data[0] if res.data else None
 
 
+def _record_signin(email: str) -> None:
+    """One row in member_signins per sign-in, for the daily report's "My CPD sign-ins".
+    Never stops a sign-in: before migrations/2026-11-10_member_signins.sql is run the
+    insert fails and is only logged."""
+    try:
+        found = supabase.table("members").select("id").eq("email", email).execute().data or []
+        if found:
+            supabase.table("member_signins").insert({"member_id": found[0]["id"]}).execute()
+    except Exception as e:
+        print(f"Sign-in not counted: {type(e).__name__}: {str(e)[:120]}")
+
+
 def _signed_in(email: str) -> RedirectResponse:
     # Stay signed in on this device: a SESSION_DAYS cookie, signed, HTTP-only, secure.
+    _record_signin(email)
     session_token = _make_session_token(email)
     response = RedirectResponse("/my-cpd/dashboard", status_code=302)
     response.set_cookie("session_token", session_token, max_age=86400 * SESSION_DAYS,
