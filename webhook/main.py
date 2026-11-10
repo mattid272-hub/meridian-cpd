@@ -18,6 +18,7 @@ from contextlib import asynccontextmanager
 import uuid
 import hmac
 import hashlib
+import threading
 import time
 from datetime import datetime, timezone, timedelta
 from html import escape as _esc
@@ -841,11 +842,13 @@ async def handle_checkout(session):
         print(f"No email in session {session_id} — skipping")
         return
     if not course_keys:
-        # Stop here: creating the member first left an account with nothing in it.
         print(f"ACTION NEEDED: session {session_id} paid for a price this app does not know "
               f"(client_reference_id={client_ref!r}, amount {amount}). Check STRIPE_PRICE_* in "
               f"Railway; nothing was recorded or sent.")
-        return
+        if not _g(session, "subscription"):
+            # Stop here: creating the member first left an account with nothing in it. A
+            # subscription still gets its member, so the subscription events can find it.
+            return
 
     todo = [k for k in course_keys if k not in emailed]
     if recorded and not todo:
@@ -2136,7 +2139,13 @@ def _promo_code_state(code: str, now: float | None = None) -> str:
     reason), 'unknown' if Stripe could not be asked."""
     now = time.time() if now is None else now
     try:
-        found = stripe.PromotionCode.list(code=code, limit=10).data
+        # No retries (free_code_state runs this in the background and waits at most a few
+        # seconds, because /health is Railway's healthcheck). The coupon is expanded:
+        # otherwise Stripe sends only its id and the coupon's own expiry or limit is unseen.
+        found = stripe.PromotionCode.list(
+            code=code, limit=10, expand=["data.coupon", "data.promotion.coupon"],
+            max_network_retries=0,
+        ).data
     except Exception as e:
         print(f"Could not check promotion code {code}: {e}")
         return "unknown"
@@ -2161,14 +2170,27 @@ def _promo_code_state(code: str, now: float | None = None) -> str:
     return "invalid: " + ", ".join(sorted(set(reasons)))
 
 
-def free_code_state() -> str:
-    now = time.time()
-    if now - _free_code_cache["at"] >= FREE_CODE_CHECK_SECONDS:
-        _free_code_cache["state"] = _promo_code_state(FREE_CODE, now)
-        _free_code_cache["at"] = now
-        if _free_code_cache["state"].startswith("invalid"):
+def _refresh_free_code() -> None:
+    try:
+        state = _promo_code_state(FREE_CODE)
+        _free_code_cache.update(state=state, at=time.time())
+        if state.startswith("invalid"):
             print(f"ACTION NEEDED: the free-course code {FREE_CODE} is not accepted by Stripe "
-                  f"({_free_code_cache['state']}). Fix it in Stripe > Coupons.")
+                  f"({state}). Fix it in Stripe > Product catalogue > Coupons.")
+    finally:
+        _free_code_lock.release()
+
+
+_free_code_lock = threading.Lock()
+
+
+def free_code_state(wait: float = 3.0) -> str:
+    """The cached state, refreshed in the background when older than ten minutes. Waits
+    up to `wait` seconds for a refresh, so /health is never held up by a slow Stripe."""
+    if time.time() - _free_code_cache["at"] >= FREE_CODE_CHECK_SECONDS and _free_code_lock.acquire(blocking=False):
+        t = threading.Thread(target=_refresh_free_code, daemon=True)
+        t.start()
+        t.join(wait)
     return _free_code_cache["state"]
 
 

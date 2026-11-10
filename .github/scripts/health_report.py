@@ -133,9 +133,14 @@ last_free_order  = q("last free order", get_last_free_order)
 
 # The free course is the front door: say loudly if Stripe stops taking the code.
 free_code_ok = free_code == "ok"
-free_code_line = ("MERIDIAN10 accepted by Stripe" if free_code_ok else
-                  f"FREE COURSE BROKEN: MERIDIAN10 {free_code or 'not reported by the app'}. "
-                  "Fix it in Stripe > Product catalogue > Coupons.")
+free_code_broken = str(free_code or "").startswith("invalid")
+if free_code_ok:
+    free_code_line = "MERIDIAN10 accepted by Stripe"
+elif free_code_broken:
+    free_code_line = (f"FREE COURSE BROKEN: MERIDIAN10 {free_code}. "
+                      "Fix it in Stripe > Product catalogue > Coupons")
+else:
+    free_code_line = f"MERIDIAN10 not checked ({free_code or 'the app did not report it'})"
 
 today_str = now.strftime("%a %d %b %Y")
 
@@ -153,7 +158,7 @@ if suppressions:
     suppression_lines = "Unsubscribes (last 24 hrs):\n" + "\n".join(f"  - {s.get('email', '?')}" for s in suppressions) + "\n\n"
 
 subject = f"Meridian CPD — Daily report {today_str} | {subscriber_count} subscribers | Backend {backend_status}"
-if not free_code_ok and free_code is not None:
+if free_code_broken:
     subject = "FREE COURSE BROKEN | " + subject
 
 body_text = f"""Meridian CPD — Daily Health Report
