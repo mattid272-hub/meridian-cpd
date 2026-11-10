@@ -316,7 +316,7 @@ BANNED = ["accredited", "approved", "Elmhurst", "Stroma", "Quidos", "ECMK", "Ste
           "—", "–", "!", "#", "delve", "unlock", "seamless", "exciting", "guarantee", "the best", "the only"]
 texts = followup.previews()
 for step, subject, text in texts:
-    body = subject + "\n" + text.split("Kind regards,")[0]
+    body = re.sub(r"https?://\S+", "", subject + "\n" + text.split("Kind regards,")[0])  # a '#' in a link is not a hashtag
     check(f"{step}: no banned words, dashes or exclamation marks", not [w for w in BANNED if w.lower() in body.lower()])
     check(f"{step}: ends at 'Kind regards,' then the hello@ signature and the unsubscribe line",
           "Kind regards,\n\n" + outreach.SIGNATURE_TEXT in text and "unsubscribe" in text.lower())
@@ -326,7 +326,7 @@ check("every email and both versions of what's next are previewed",
 check("prices are exactly as approved",
       "£39.99" in v["next (annual £79)"] and "£79 a year" in v["next (annual £79)"] and "£99" not in v["next (annual £79)"]
       and "£99 a year" in v["next (annual £99)"] and "£79" not in v["next (annual £99)"]
-      and "£79 a year until 31 December 2026" in v["price"] and "£99 a year" in v["price"] and "£39.99" in v["price"])
+      and "from £79 to £99 a year on 1 January 2027" in v["price"] and "£99 a year" in v["price"] and "£39.99" in v["price"])
 check("the nudge no longer claims a re-download from the completion page or 'straight to your inbox'",
       "download the course again" not in v["nudge"] and "straight to your inbox" not in v["nudge"])
 check("the sales emails say the Field Work series are written for England and Wales and to check scheme rules",
@@ -345,12 +345,49 @@ os.environ["FREE_FOLLOWUP_PRICE_RISE"] = "on"
 on79 = followup.render_next("Jo", "x", "u", 79)[1]
 on99 = followup.render_next("Jo", "x", "u", 99)[1]
 check("with FREE_FOLLOWUP_PRICE_RISE on, what's next at £79 carries the January heads-up, and the £99 version does not",
-      "£99 a year from 1 January 2027" in on79 and "keep £79" in on79 and "keep £79" not in on99 and "£79" not in on99)
+      "£99 a year on 1 January 2027" in on79 and "keep £79" in on79 and "keep £79" not in on99 and "£79" not in on99)
 check("and the preview of what's next at £79 shows the heads-up then",
       "keep £79" in {s: t for s, _, t in followup.previews()}["next (annual £79)"])
+check("the founder-rate line is word for word where the January price appears",
+      followup.FOUNDER_RATE in on79 and followup.FOUNDER_RATE in v["price"]
+      and "for as long as you" not in on79 + v["price"] and "One thing to know" not in on79)
 os.environ.pop("FREE_FOLLOWUP_PRICE_RISE")
 off79 = followup.render_next("Jo", "x", "u", 79)[1]
 check("with the switch off, what's next at £79 says nothing about £99", "£99" not in off79 and "keep £79" not in off79)
+
+
+# ── Greeting, sign-in, claims and links (copy round 3, 10 Nov) ──
+check("the greeting capitalises the first name", followup.first_name("jo smith") == "Jo"
+      and followup.first_name("SAM") == "Sam" and followup.first_name("McDonald") == "McDonald"
+      and followup.render_nudge(followup.first_name("jo"), "x", 2, "u")[1].startswith("Hello Jo,\n"))
+check("no usable name: the greeting is plain 'Hello,'",
+      all(followup.first_name(n) == "" for n in (None, "", "J", "A.", "123"))
+      and followup.render("price", {"name": "123"}, {}, "u", NOV_20)[1].startswith("Hello,\n")
+      and "Hello there" not in followup.render_nudge("", "x", 2, "u")[1])
+check("the nudge says how the live sign-in works (enter the email, a login link is emailed) and sells nothing",
+      "enter this email address and we'll email you a login link" in v["nudge"] and "Sign in at the link" not in v["nudge"]
+      and "£" not in v["nudge"] and "buy.stripe.com" not in v["nudge"])
+check("what's next does not thank people for finishing, and its subject has the price",
+      all("Thanks for taking" not in v[k] and "If it was useful" not in v[k] for k in ("next (annual £79)", "next (annual £99)"))
+      and followup.render_next("Jo", "x", "u", 99)[0] == "The whole library for £99 a year")
+check("new courses are 'added during your year' (register M-LC-6), never 'every new one we add'",
+      all("every new course added during your year" in v[k] and "every new one we add" not in v[k]
+          for k in ("next (annual £79)", "next (annual £99)", "price")))
+check("the filler lines are gone",
+      not any(p in t for t in v.values() for p in ("Whichever you choose", "A short note on price", "Both are here")))
+_, nt, nh = followup.render_next("Jo", "x", "u", 79)
+_, pt, ph = followup.render_price("Jo", "u")
+check("the annual links to the site's Subscribe link (STRIPE_SUB), in text and HTML",
+      followup.SUBSCRIBE_URL == "https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
+      and all(followup.SUBSCRIBE_URL in t for t in (nt, nh, pt, ph))
+      and "const STRIPE_SUB    = '" + followup.SUBSCRIBE_URL + "'" in open(os.path.join(os.path.dirname(__file__), "..", "..", "landing-page", "courses.html")).read())
+check("each series links to its own card on courses.html at £39.99",
+      all(f"{n}: https://meridiancpd.co.uk/courses.html#fw-{n.lower()}" in t and "£39.99" in t
+          for n in ("Insulation", "Heating", "Ventilation", "Moisture") for t in (nt, pt))
+      and all(f'href="https://meridiancpd.co.uk/courses.html#fw-{n.lower()}"' in h and f">{n}</a>" in h
+              for n in ("Insulation", "Heating", "Ventilation", "Moisture") for h in (nh, ph)))
+check("the bare courses page is no longer the destination of a sales email",
+      "https://meridiancpd.co.uk/courses.html\n" not in nt and "https://meridiancpd.co.uk/courses.html\n" not in pt)
 
 # ── Admin and the Friday figures ──
 db = fresh_db(); sent.clear()
@@ -363,7 +400,7 @@ main.supabase = client(db)
 auth = ("admin", "test-admin")
 r = c.get("/admin/followup", auth=auth)
 check("Admin → Follow-up shows the switch, the figures and every email", r.status_code == 200 and "Sending" in r.text
-      and "What comes after the free course" in r.text and "Paid afterwards" in r.text)
+      and "The whole library for £79 a year" in r.text and "Paid afterwards" in r.text)
 check("Admin → Follow-up needs the password", c.get("/admin/followup").status_code == 401)
 sent.clear()
 r = c.post("/admin/followup/test", data={"email": "matt@example.org"}, auth=auth)

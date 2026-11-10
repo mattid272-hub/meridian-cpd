@@ -84,6 +84,12 @@ STEPS = ("nudge", "next", "price")
 MARKETING_STEPS = {"next", "price"}   # and every monthly edition
 
 COURSES_URL = f"{SITE_URL}/courses.html"
+# The site's own Subscribe button (STRIPE_SUB in landing-page/courses.html). Matt agreed on
+# 10 Nov 2026 that Stripe direct is fine in emails to people who already took the free course.
+SUBSCRIBE_URL = "https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
+# Each Field Work series card on courses.html, at £39.99 (anchors fw-<name>).
+SERIES_LINKS = [(name, f"{COURSES_URL}#fw-{name.lower()}")
+                for name in ("Insulation", "Heating", "Ventilation", "Moisture")]
 PRIVACY_URL = f"{SITE_URL}/privacy.html"
 TEST_DOMAINS = outreach.TEST_DOMAINS
 
@@ -211,7 +217,16 @@ def _hours(h) -> str:
 
 
 def first_name(full_name: str | None) -> str:
-    return outreach.greeting_name((full_name or "").strip().split(" ")[0] if full_name else "")
+    """The first name with a capital first letter ('jo' -> 'Jo'), or '' when there is no
+    usable name; the greeting is then plain 'Hello,'."""
+    n = outreach.greeting_name((full_name or "").strip().split(" ")[0] if full_name else "")
+    if n == "there":
+        return ""
+    return n[:1].upper() + n[1:]
+
+
+def _greeting(name: str) -> str:
+    return f"Hello {name}," if name else "Hello,"
 
 
 def _footer_text(unsub: str) -> str:
@@ -221,14 +236,19 @@ def _footer_text(unsub: str) -> str:
 
 def _compose(subject: str, paragraphs: list[str], unsub: str) -> tuple[str, str, str]:
     """Plain text and HTML from the same paragraphs. A paragraph that is only a URL
-    becomes a link in the HTML. The body ends at 'Kind regards,' and the hello@
+    becomes a link in the HTML; a (label, url) pair is 'label: url' in the text and a link
+    named label in the HTML. The body ends at 'Kind regards,' and the hello@
     signature follows, as in the outreach email."""
-    text = "\n\n".join(paragraphs) + "\n\n" + outreach.SIGNATURE_TEXT + "\n\n" + _footer_text(unsub) + "\n"
+    plain = [f"{p[0]}: {p[1]}" if isinstance(p, tuple) else p for p in paragraphs]
+    text = "\n\n".join(plain) + "\n\n" + outreach.SIGNATURE_TEXT + "\n\n" + _footer_text(unsub) + "\n"
     ink, small = outreach.INK, outreach.SMALL
     link = f'style="color:{ink};text-decoration:underline"'
     parts = []
     for p in paragraphs:
-        if re.fullmatch(r"https?://\S+", p):
+        if isinstance(p, tuple):
+            label, url = p
+            parts.append(f'<p style="margin:0 0 16px"><a href="{escape(url)}" {link}>{escape(label)}</a></p>')
+        elif re.fullmatch(r"https?://\S+", p):
             label = p.split("://", 1)[1]
             parts.append(f'<p style="margin:0 0 16px"><a href="{escape(p)}" {link}>{escape(label)}</a></p>')
         else:
@@ -247,10 +267,9 @@ def render_nudge(name: str, course_title: str, cpd_hours, unsub: str):
     page in the member area, and the certificate appears in My certificates at once."""
     hours = _hours(cpd_hours)
     paragraphs = [
-        f"Hello {name},",
-        f"You took {course_title} with us and it isn't marked as complete yet. "
-        + (f"It is {hours}, and it is there whenever you have the time." if hours else "It is there whenever you have the time."),
-        "Sign in at the link below with this email address, open the course and read it.",
+        _greeting(name),
+        f"{course_title} is still in your library, not finished." + (f" It is {hours}." if hours else ""),
+        "Open My CPD below, enter this email address and we'll email you a login link.",
         f"{APP_URL}/my-cpd",
         "When you have read it, tick the declaration on the course page. Your certificate of completion appears "
         "in My certificates at once, and a copy comes by email.",
@@ -259,8 +278,8 @@ def render_nudge(name: str, course_title: str, cpd_hours, unsub: str):
     return _compose("Your free course is still open", paragraphs, unsub)
 
 
-RISE_HEADS_UP = ("One thing to know before you decide: it is £79 a year until 31 December and £99 a year "
-                 "from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.")
+FOUNDER_RATE = "Join before 1 January and you keep £79 at every renewal."
+RISE_HEADS_UP = "It goes up to £99 a year on 1 January 2027. " + FOUNDER_RATE
 
 
 def render_next(name: str, course_title: str, unsub: str, annual: int, rise_notice: bool | None = None):
@@ -272,35 +291,34 @@ def render_next(name: str, course_title: str, unsub: str, annual: int, rise_noti
     if rise_notice is None:
         rise_notice = price_rise_notice_on()
     paragraphs = [
-        f"Hello {name},",
-        f"Thanks for taking {course_title}. If it was useful, there are two ways to carry on.",
-        "A Field Work series is three linked courses on one subject for £39.99, written for England and Wales. "
-        "There are series on insulation, heating, ventilation and moisture. "
-        "Each part has its own certificate of completion as you finish it.",
-        f"The annual membership is every course in the library, plus every new one we add, for £{annual} a year.",
+        _greeting(name),
+        f"Two ways to carry on from {course_title}.",
+        f"The annual membership is every course in the library, plus every new course added during your year, "
+        f"for £{annual} a year.",
     ]
     if annual == 79 and rise_notice:
         paragraphs.append(RISE_HEADS_UP)
     paragraphs += [
-        "Both are here:",
-        COURSES_URL,
-        "Whichever you choose, check your own scheme's CPD rules for what counts towards your hours.",
+        SUBSCRIBE_URL,
+        "A Field Work series is three linked courses on one subject for £39.99, written for England and Wales. "
+        "Each part has its own certificate of completion.",
+        *SERIES_LINKS,
+        "Check your own scheme's CPD rules for what counts towards your hours.",
         "Kind regards,",
     ]
-    return _compose("What comes after the free course", paragraphs, unsub)
+    return _compose(f"The whole library for £{annual} a year", paragraphs, unsub)
 
 
 def render_price(name: str, unsub: str):
     paragraphs = [
-        f"Hello {name},",
-        "A short note on price. Annual membership at Meridian CPD is £79 a year until 31 December 2026. "
-        "From 1 January 2027 it will be £99 a year.",
-        "Membership is every course in the library, plus every new one we add, with a certificate of completion "
-        "for each course you finish. Join before 1 January and you keep £79 at every renewal for as long as you "
-        "stay subscribed.",
-        COURSES_URL,
+        _greeting(name),
+        "The annual membership goes up from £79 to £99 a year on 1 January 2027. " + FOUNDER_RATE,
+        "It is every course in the library, plus every new course added during your year, with a certificate of "
+        "completion for each course you finish.",
+        SUBSCRIBE_URL,
         "If a whole year is more than you need, a Field Work series is three courses on one subject for £39.99, "
         "written for England and Wales.",
+        *SERIES_LINKS,
         "Check your own scheme's CPD rules for what counts towards your hours.",
         "Kind regards,",
     ]
