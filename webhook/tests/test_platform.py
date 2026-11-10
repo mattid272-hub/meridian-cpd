@@ -387,8 +387,14 @@ check("courses.html: single courses heading with the free course", "Single cours
 check("courses.html: no course counts (tab labels, results line, nation note)",
       "countAll" not in html and "resultsMeta" not in html and "Showing <span>" not in html
       and "' of ' + COURSES.length" not in html and "Courses that apply in ' + name" in html)
-check("courses.html: the annual strip lines PR #56 edits are untouched",
-      '<p class="sub-price-per">per year for the whole library</p>' in html and "seriesNote = ` Each part is its own course" in html)
+check("courses.html: the annual strip carries the £99 line PR #56 merged",
+      '<p class="sub-price-per">per year for the whole library<br>£79 a year until 31 December. £99 from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.</p>' in html and "seriesNote = ` Each part is its own course" in html)
+check("courses.html: each series card carries its anchor (courses.html#fw-moisture) and is scrolled into view on load and on a hash change",
+      'id="${seriesAnchor(sid)}"' in html and "return sid.toLowerCase();" in html
+      and all(sid in html for sid in ("'FW-INSULATION'", "'FW-HEATING'", "'FW-VENTILATION'", "'FW-MOISTURE'"))
+      and "scrollToSeriesCard();" in html and "addEventListener('load', scrollToSeriesCard)" in html and "addEventListener('hashchange', scrollToSeriesCard)" in html
+      and "card.scrollIntoView(" in html and "scroll-margin-top" in html
+      and html.index("scrollToSeriesCard();") > html.index("renderSeries();\nrenderGrid();"))
 # (one Scotland course objective in the catalogue describes an assessor "accredited in England and Wales"; the page text itself must not)
 page_text = html.split("const ALL_COURSES = [", 1)[0] + html.split("\n];", 1)[1]
 check("courses.html: no accreditation words outside the catalogue array", not re.search(r"accredited|cpd accredit", page_text, re.I))

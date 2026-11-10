@@ -822,6 +822,8 @@
       transition: border-color .2s, transform .15s, box-shadow .2s;
     }
     .series-card:hover { border-color: rgba(212,255,0,.35); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
+    .series-card { scroll-margin-top: 84px; }
+    .series-card.series-target { border-color: var(--accent); }
     .card-cover { aspect-ratio: 16/9; }
     .card-cover svg { display: block; width: 100%; height: 100%; }
     .course-card .card-cover { margin: -1.5rem -1.5rem 0; border-radius: 10px 10px 0 0; overflow: hidden; }
@@ -1750,6 +1752,11 @@ function seriesPoster(sid) {
 }
 
 // ── Series cards ─────────────────────────────────────────────────────────────
+// Each card carries an anchor, FW-MOISTURE -> fw-moisture, so a post that sells a series
+// can link straight to it: courses.html#fw-moisture (scrolled into view on load below).
+function seriesAnchor(sid) {
+  return sid.toLowerCase();
+}
 // The four Field Work series lead the page: poster, title, the three parts, hours,
 // where they apply, and a Buy button on the existing series Payment Link.
 function seriesCard(sid) {
@@ -1763,7 +1770,7 @@ function seriesCard(sid) {
     ? `<a class="card-btn-buy" href="${getSeriesLink(sid)}" target="_blank" rel="noopener">Buy, ${SERIES_PRICE}</a>` +
       (first ? `<button class="card-btn-detail" onclick="openModal('${first.id}')">See the parts</button>` : '')
     : `<span class="card-btn-detail" style="cursor:default">Not on sale yet</span>`;
-  return `<article class="series-card" aria-label="${escHtml(s.title)}">
+  return `<article class="series-card" id="${seriesAnchor(sid)}" aria-label="${escHtml(s.title)}">
     <div class="card-cover">${seriesPoster(sid)}</div>
     <div class="series-body">
       <h2 class="series-title">${escHtml(s.title)}</h2>
@@ -1991,6 +1998,23 @@ document.addEventListener('keydown', e => {
 // ── Init ─────────────────────────────────────────────────────────────────────
 renderSeries();
 renderGrid();
+
+// Deep-link: courses.html#fw-insulation (fw-heating, fw-ventilation, fw-moisture) scrolls
+// that series card into view. The cards are built by renderSeries, after the browser's own
+// fragment jump, so the scroll is done here, again once the page has loaded (fonts and
+// layout settle and move the card) and on a hash change.
+function scrollToSeriesCard() {
+  const id = decodeURIComponent(window.location.hash.slice(1)).toLowerCase();
+  if (!/^fw-[a-z]+$/.test(id)) return;
+  const card = document.getElementById(id);
+  if (!card || !card.classList.contains('series-card')) return;
+  document.querySelectorAll('.series-card.series-target').forEach(el => el.classList.remove('series-target'));
+  card.scrollIntoView({ block: 'center', behavior: 'instant' });
+  card.classList.add('series-target');
+}
+scrollToSeriesCard();
+window.addEventListener('load', scrollToSeriesCard);
+window.addEventListener('hashchange', scrollToSeriesCard);
 
 // Structured data for Google: one Course entry per course on sale, built from the
 // same COURSES list the grid uses, so withdrawn courses never appear in it. Names and
