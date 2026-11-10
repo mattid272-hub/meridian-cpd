@@ -236,6 +236,43 @@ check("new words: no exclamation marks, em dashes, 'accredited' or 'approved'",
       "!" not in re.sub(r"<!DOCTYPE[^>]*>", "", words) and "—" not in words and not re.search(r"accredit|approved", words, re.I))
 check("quality page says the step exists, in the present tense", "Both are optional." in words and "being added" not in words)
 
+# ── 9. The reflection in the downloadable CPD record ──
+import base64, zlib
+def pdf_text(pdf: bytes) -> str:
+    """The text streams of a reportlab PDF (ASCII85 then Flate, or either, or plain)."""
+    a85 = lambda b: base64.a85decode(b.strip().removesuffix(b"~>"))
+    out = []
+    for m in re.finditer(rb"stream\r?\n(.*?)\r?\n?endstream", pdf, re.S):
+        raw = m.group(1)
+        for dec in (lambda b: zlib.decompress(a85(b)), zlib.decompress, a85, lambda b: b):
+            try:
+                out.append(dec(raw).decode("latin-1")); break
+            except Exception:
+                pass
+    return "".join(out)
+seen_rec = []
+real_rec = main.generate_cpd_record
+main.generate_cpd_record = lambda name, year, certs: (seen_rec.append(certs), real_rec(name, year, certs))[1]
+r = c.get("/my-cpd/certificates/record.pdf", cookies=BOB)
+by_course = {x["course_id"]: x for x in seen_rec[-1]}
+check("the CPD record gets the reflection with its course and no other",
+      r.status_code == 200 and r.content.startswith(b"%PDF")
+      and by_course["MER-DEA-003"].get("reflection_learned") == "How <script>x</script> works"
+      and by_course["MER-DEA-003"].get("reflection_change") == "Check the age band first."
+      and not by_course["MER-DEA-002"].get("reflection_learned") and not by_course["MER-DEA-004"].get("reflection_change"))
+txt = pdf_text(r.content)
+check("and prints it under the course in the PDF", "Reflections" in txt and "What I learned" in txt
+      and "Check the age band first." in txt and "What I will do differently" in txt)
+r = c.get("/my-cpd/certificates/record.pdf", cookies=ANN)
+txt = pdf_text(r.content)
+check("only the answer given is printed", "Photograph the loft hatch." in txt and "What I learned" not in txt)
+migrate(False)
+r = c.get("/my-cpd/certificates/record.pdf", cookies=BOB)
+check("before the migration the record still downloads, with no reflections",
+      r.status_code == 200 and "Reflections" not in pdf_text(r.content) and len(seen_rec[-1]) == 3)
+migrate(True)
+main.generate_cpd_record = real_rec
+
 print(f"\n{'ALL CHECKS PASSED' if not fails else f'{fails} FAILED'}")
 if fails:
     raise SystemExit(1)
