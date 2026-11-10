@@ -11,6 +11,7 @@ Checks:
 - Emails sent yesterday (outreach_sends)
 - Backend health (app.meridiancpd.co.uk)
 - Course library count
+- Free-course code (MERIDIAN10) accepted by Stripe, and the date of the last free order
 """
 import os
 import sys
@@ -57,15 +58,17 @@ def q(label, fn):
 
 
 live_course_count = None
+free_code = None
 
 
 def check_backend():
-    global live_course_count
+    global live_course_count, free_code
     try:
-        r = httpx.get("https://app.meridiancpd.co.uk/health", timeout=8)
+        r = httpx.get("https://app.meridiancpd.co.uk/health", timeout=20)
         if r.status_code < 400:
             try:
                 live_course_count = r.json().get("courses")
+                free_code = r.json().get("free_code")
             except Exception:
                 pass
             return "UP"
@@ -102,6 +105,13 @@ def get_suppressions_today():
     return res.data or []
 
 
+def get_last_free_order():
+    res = (supabase.table("purchases").select("purchased_at").eq("amount_gbp", 0)
+           .like("stripe_session_id", "cs_live%").order("purchased_at", desc=True).limit(1).execute())
+    rows = res.data or []
+    return rows[0]["purchased_at"][:10] if rows else "none"
+
+
 def get_course_count():
     """Courses actually visible to subscribers (reported by the live app)."""
     if live_course_count is not None:
@@ -119,6 +129,13 @@ campaign_status  = q("campaigns",    get_campaign_status)
 emails_yesterday = q("emails sent",  get_emails_sent_yesterday)
 suppressions     = q("suppressions", get_suppressions_today)
 course_count     = q("courses",      get_course_count)
+last_free_order  = q("last free order", get_last_free_order)
+
+# The free course is the front door: say loudly if Stripe stops taking the code.
+free_code_ok = free_code == "ok"
+free_code_line = ("MERIDIAN10 accepted by Stripe" if free_code_ok else
+                  f"FREE COURSE BROKEN: MERIDIAN10 {free_code or 'not reported by the app'}. "
+                  "Fix it in Stripe > Product catalogue > Coupons.")
 
 today_str = now.strftime("%a %d %b %Y")
 
@@ -136,6 +153,8 @@ if suppressions:
     suppression_lines = "Unsubscribes (last 24 hrs):\n" + "\n".join(f"  - {s.get('email', '?')}" for s in suppressions) + "\n\n"
 
 subject = f"Meridian CPD — Daily report {today_str} | {subscriber_count} subscribers | Backend {backend_status}"
+if not free_code_ok and free_code is not None:
+    subject = "FREE COURSE BROKEN | " + subject
 
 body_text = f"""Meridian CPD — Daily Health Report
 {today_str}
@@ -143,6 +162,7 @@ body_text = f"""Meridian CPD — Daily Health Report
 SYSTEM STATUS
 ─────────────
 Backend (app.meridiancpd.co.uk): {status_icon} {backend_status}
+Free course: {free_code_line}. Last free order: {last_free_order}
 Courses in library: {course_count}
 Campaign status: {campaign_status}
 
@@ -197,6 +217,7 @@ body_html = f"""<!DOCTYPE html>
   <h2>System Status</h2>
   <p>Backend: <span class="{'status-ok' if backend_status == 'UP' else 'status-err'}">{status_icon} {backend_status}</span>
   &nbsp;&nbsp; Courses in library: <strong>{course_count}</strong></p>
+  <p>Free course: <span class="{'status-ok' if free_code_ok else 'status-err'}">{free_code_line}</span>. Last free order: {last_free_order}</p>
   <p style="margin-top:8px;font-size:13px;color:#374151">Campaign: {campaign_status}</p>
 </div>
 

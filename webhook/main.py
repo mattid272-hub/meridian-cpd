@@ -841,8 +841,11 @@ async def handle_checkout(session):
         print(f"No email in session {session_id} — skipping")
         return
     if not course_keys:
+        # Stop here: creating the member first left an account with nothing in it.
         print(f"ACTION NEEDED: session {session_id} paid for a price this app does not know "
-              f"(client_reference_id={client_ref!r}). Check STRIPE_PRICE_* in Railway; nothing was sent.")
+              f"(client_reference_id={client_ref!r}, amount {amount}). Check STRIPE_PRICE_* in "
+              f"Railway; nothing was recorded or sent.")
+        return
 
     todo = [k for k in course_keys if k not in emailed]
     if recorded and not todo:
@@ -2118,6 +2121,57 @@ async def meta_event(request: Request):
     return done
 
 
+# ── Free-course code watch ─────────────────────────────────────────────────────
+# The free course depends on one Stripe promotion code. If Stripe stops accepting it
+# (expired, deactivated, redemption limit reached), checkout just says "This code is
+# invalid" and nobody tells us: in November 2026 that went unseen for five days. /health
+# reports the code's state and the daily health report email flags it.
+FREE_CODE = os.environ.get("FREE_COURSE_CODE", "MERIDIAN10").strip()
+FREE_CODE_CHECK_SECONDS = 600
+_free_code_cache: dict = {"at": 0.0, "state": "unknown"}
+
+
+def _promo_code_state(code: str, now: float | None = None) -> str:
+    """'ok' if Stripe would accept this promotion code today, 'invalid' if not (with the
+    reason), 'unknown' if Stripe could not be asked."""
+    now = time.time() if now is None else now
+    try:
+        found = stripe.PromotionCode.list(code=code, limit=10).data
+    except Exception as e:
+        print(f"Could not check promotion code {code}: {e}")
+        return "unknown"
+    if not found:
+        return "invalid: no such code"
+    reasons = []
+    for pc in found:
+        if not _g(pc, "active", False):
+            reasons.append("inactive")
+            continue
+        if _g(pc, "expires_at") and _g(pc, "expires_at") <= now:
+            reasons.append("expired")
+            continue
+        if _g(pc, "max_redemptions") and _g(pc, "times_redeemed", 0) >= _g(pc, "max_redemptions"):
+            reasons.append("redemption limit reached")
+            continue
+        coupon = _g(pc, "coupon") or _g(_g(pc, "promotion", {}), "coupon")
+        if coupon and not isinstance(coupon, str) and not _g(coupon, "valid", True):
+            reasons.append("coupon no longer valid")
+            continue
+        return "ok"
+    return "invalid: " + ", ".join(sorted(set(reasons)))
+
+
+def free_code_state() -> str:
+    now = time.time()
+    if now - _free_code_cache["at"] >= FREE_CODE_CHECK_SECONDS:
+        _free_code_cache["state"] = _promo_code_state(FREE_CODE, now)
+        _free_code_cache["at"] = now
+        if _free_code_cache["state"].startswith("invalid"):
+            print(f"ACTION NEEDED: the free-course code {FREE_CODE} is not accepted by Stripe "
+                  f"({_free_code_cache['state']}). Fix it in Stripe > Coupons.")
+    return _free_code_cache["state"]
+
+
 @app.get("/health")
 def health():
     # Re-read the catalogue and the withdrawn list on the same ten-minute cycle as the
@@ -2129,6 +2183,7 @@ def health():
         "courses": len(listed),
         "available": len([k for k in listed if is_available(k)]),
         "under_review": len([k for k in listed if k in UNDER_REVIEW]),
+        "free_code": free_code_state(),
     }
 
 
