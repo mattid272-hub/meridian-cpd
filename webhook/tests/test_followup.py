@@ -212,8 +212,12 @@ check("in December the price email is held while FREE_FOLLOWUP_PRICE_RISE is off
 os.environ["FREE_FOLLOWUP_PRICE_RISE"] = "on"
 set_price(9900)
 res = go(db, d)
-check("and it never goes once checkout already charges £99 (m1 gets what's next at £99)",
-      steps_of(res) == [("m1", "next")])
+check("and it never goes once checkout already charges £99; with no £99 subscribe link, what's next is held too",
+      steps_of(res) == [] and res["skipped"].get("annual price not known") == 3)
+followup.SUBSCRIBE_URLS[99] = "https://buy.stripe.com/test-99"
+res = go(db, d)
+check("once a £99 link exists, m1 gets what's next at £99 instead", steps_of(res) == [("m1", "next")])
+del followup.SUBSCRIBE_URLS[99]
 os.environ["FREE_FOLLOWUP"] = "on"
 set_price(7900)
 res = go(db, d)
@@ -238,12 +242,24 @@ set_price(8900)
 res = go(fresh_db(), NOV_20)
 check("a price the texts were not written for (£89): what's next is held", steps_of(res) == [("m1", "nudge")])
 set_price(9900)
+res = go(fresh_db(), NOV_20)
+check("checkout at £99 with no £99 subscribe link: what's next is held and says why, the nudge still goes",
+      followup.SUBSCRIBE_URLS == {79: "https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"}
+      and steps_of(res) == [("m1", "nudge")] and res["skipped"].get("annual price not known") == 2)
+try:
+    followup.render_next("Jo", "x", "u", 99); no_link_ok = False
+except ValueError:
+    no_link_ok = True
+check("and there is no £99 email to render until the link exists", no_link_ok)
+followup.SUBSCRIBE_URLS[99] = "https://buy.stripe.com/test-99"
 os.environ["FREE_FOLLOWUP"] = "on"
 db = fresh_db(); sent.clear()
 go(db, JAN_12 - timedelta(days=50))
 nxt99 = next(m for m in sent if m["to"][0] == "person2@firm2.co.uk")
-check("checkout at £99: what's next says £99 and not £79, whatever the date",
-      "£99 a year" in nxt99["text"] and "£79" not in nxt99["text"])
+check("checkout at £99 with a £99 link: what's next says £99 and not £79, and links the £99 link",
+      "£99 a year" in nxt99["text"] and "£79" not in nxt99["text"] and "buy.stripe.com/test-99" in nxt99["text"]
+      and "fZufZgbse3BpcXE7TY73G01" not in nxt99["text"])
+del followup.SUBSCRIBE_URLS[99]
 set_price(7900)
 price_reads.clear()
 for _ in range(3):
@@ -322,7 +338,12 @@ for step, subject, text in texts:
           "Kind regards,\n\n" + outreach.SIGNATURE_TEXT in text and "unsubscribe" in text.lower())
 v = {s: t for s, _, t in followup.previews()}
 check("every email and both versions of what's next are previewed",
-      list(v) == ["nudge", "next (annual £79)", "next (annual £99)", "price"])
+      list(v) == ["nudge", "next (annual £79)", "price"])
+followup.SUBSCRIBE_URLS[99] = "https://buy.stripe.com/test-99"
+check("a £99 version is previewed only once a £99 link exists",
+      [s for s, _, _ in followup.previews()] == ["nudge", "next (annual £79)", "next (annual £99)", "price"])
+v["next (annual £99)"] = followup.render_next("Jo", "x", "u", 99)[1]
+del followup.SUBSCRIBE_URLS[99]
 check("prices are exactly as approved",
       "£39.99" in v["next (annual £79)"] and "£79 a year" in v["next (annual £79)"] and "£99" not in v["next (annual £79)"]
       and "£99 a year" in v["next (annual £99)"] and "£79" not in v["next (annual £99)"]
@@ -343,7 +364,9 @@ check("the price-rise email gives the founder rate (keep £79 at every renewal),
       "keep £79 at every renewal" in v["price"] and "first year" not in v["price"])
 os.environ["FREE_FOLLOWUP_PRICE_RISE"] = "on"
 on79 = followup.render_next("Jo", "x", "u", 79)[1]
+followup.SUBSCRIBE_URLS[99] = "https://buy.stripe.com/test-99"
 on99 = followup.render_next("Jo", "x", "u", 99)[1]
+del followup.SUBSCRIBE_URLS[99]
 check("with FREE_FOLLOWUP_PRICE_RISE on, what's next at £79 carries the January heads-up, and the £99 version does not",
       "£99 a year on 1 January 2027" in on79 and "keep £79" in on79 and "keep £79" not in on99 and "£79" not in on99)
 check("and the preview of what's next at £79 shows the heads-up then",
@@ -369,18 +392,19 @@ check("the nudge says how the live sign-in works (enter the email, a login link 
       and "£" not in v["nudge"] and "buy.stripe.com" not in v["nudge"])
 check("what's next does not thank people for finishing, and its subject has the price",
       all("Thanks for taking" not in v[k] and "If it was useful" not in v[k] for k in ("next (annual £79)", "next (annual £99)"))
-      and followup.render_next("Jo", "x", "u", 99)[0] == "The whole library for £99 a year")
+      and followup.render_next("Jo", "x", "u", 79)[0] == "The whole library for £79 a year")
 check("new courses are 'added during your year' (register M-LC-6), never 'every new one we add'",
       all("every new course added during your year" in v[k] and "every new one we add" not in v[k]
           for k in ("next (annual £79)", "next (annual £99)", "price")))
 check("the filler lines are gone",
       not any(p in t for t in v.values() for p in ("Whichever you choose", "A short note on price", "Both are here")))
 _, nt, nh = followup.render_next("Jo", "x", "u", 79)
+SUB79 = followup.SUBSCRIBE_URLS[79]
 _, pt, ph = followup.render_price("Jo", "u")
 check("the annual links to the site's Subscribe link (STRIPE_SUB), in text and HTML",
-      followup.SUBSCRIBE_URL == "https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
-      and all(followup.SUBSCRIBE_URL in t for t in (nt, nh, pt, ph))
-      and "const STRIPE_SUB    = '" + followup.SUBSCRIBE_URL + "'" in open(os.path.join(os.path.dirname(__file__), "..", "..", "landing-page", "courses.html")).read())
+      SUB79 == "https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
+      and all(SUB79 in t for t in (nt, nh, pt, ph))
+      and "const STRIPE_SUB    = '" + SUB79 + "'" in open(os.path.join(os.path.dirname(__file__), "..", "..", "landing-page", "courses.html")).read())
 check("each series links to its own card on courses.html at £39.99",
       all(f"{n}: https://meridiancpd.co.uk/courses.html#fw-{n.lower()}" in t and "£39.99" in t
           for n in ("Insulation", "Heating", "Ventilation", "Moisture") for t in (nt, pt))
@@ -405,7 +429,7 @@ check("Admin → Follow-up needs the password", c.get("/admin/followup").status_
 sent.clear()
 r = c.post("/admin/followup/test", data={"email": "matt@example.org"}, auth=auth)
 check("a test copy of each email goes to the address given, marked Test, and is not logged",
-      r.status_code == 200 and len(sent) == 4 and all(m["subject"].startswith("Test: ") for m in sent) and len(db[followup.TABLE]) == 2)
+      r.status_code == 200 and len(sent) == 3 and all(m["subject"].startswith("Test: ") for m in sent) and len(db[followup.TABLE]) == 2)
 r = c.get("/admin/system", auth=auth)
 check("System lists the switch", "FREE_FOLLOWUP" in r.text)
 broken = types.SimpleNamespace(table=lambda t: (_ for _ in ()).throw(RuntimeError("relation does not exist")) if t == followup.TABLE else Q(db, t))

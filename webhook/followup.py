@@ -84,9 +84,18 @@ STEPS = ("nudge", "next", "price")
 MARKETING_STEPS = {"next", "price"}   # and every monthly edition
 
 COURSES_URL = f"{SITE_URL}/courses.html"
-# The site's own Subscribe button (STRIPE_SUB in landing-page/courses.html). Matt agreed on
+# The subscribe link for each annual price, so the link charges what the email says. £79 is
+# the site's own Subscribe button (STRIPE_SUB in landing-page/courses.html); Matt agreed on
 # 10 Nov 2026 that Stripe direct is fine in emails to people who already took the free course.
-SUBSCRIBE_URL = "https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
+# A price with no link here is treated like an unreadable price: no email that names the
+# annual price goes. Add £99 only once a £99 Payment Link exists and has been opened and
+# checked; the £99 email then needs a fresh Matt check.
+SUBSCRIBE_URLS = {79: "https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"}
+
+
+def sellable(annual) -> bool:
+    """An annual price the approved texts are written for and that has a subscribe link."""
+    return annual in ANNUAL_PRICES and annual in SUBSCRIBE_URLS
 # Each Field Work series card on courses.html, at £39.99 (anchors fw-<name>).
 SERIES_LINKS = [(name, f"{COURSES_URL}#fw-{name.lower()}")
                 for name in ("Insulation", "Heating", "Ventilation", "Moisture")]
@@ -288,6 +297,8 @@ def render_next(name: str, course_title: str, unsub: str, annual: int, rise_noti
     so the email never says something the site does not."""
     if annual not in ANNUAL_PRICES:
         raise ValueError(f"no approved text for an annual price of {annual!r}")
+    if annual not in SUBSCRIBE_URLS:
+        raise ValueError(f"no subscribe link for an annual price of {annual!r}")
     if rise_notice is None:
         rise_notice = price_rise_notice_on()
     paragraphs = [
@@ -299,7 +310,7 @@ def render_next(name: str, course_title: str, unsub: str, annual: int, rise_noti
     if annual == 79 and rise_notice:
         paragraphs.append(RISE_HEADS_UP)
     paragraphs += [
-        SUBSCRIBE_URL,
+        SUBSCRIBE_URLS[annual],
         "A Field Work series is three linked courses on one subject for £39.99, written for England and Wales. "
         "Each part has its own certificate of completion.",
         *SERIES_LINKS,
@@ -315,7 +326,7 @@ def render_price(name: str, unsub: str):
         "The annual membership goes up from £79 to £99 a year on 1 January 2027. " + FOUNDER_RATE,
         "It is every course in the library, plus every new course added during your year, with a certificate of "
         "completion for each course you finish.",
-        SUBSCRIBE_URL,
+        SUBSCRIBE_URLS[79],
         "If a whole year is more than you need, a Field Work series is three courses on one subject for £39.99, "
         "written for England and Wales.",
         *SERIES_LINKS,
@@ -348,16 +359,14 @@ SAMPLE_COURSE = ("RdSAP 10: What's Changed and Why", 2.0)
 
 
 def versions(name: str, unsub: str) -> list[tuple[str, str, str, str]]:
-    """(label, subject, text, html) for every email, including both annual-price versions
-    of 'next' and every monthly edition, with the sample course. For Admin's previews and
+    """(label, subject, text, html) for every email, including 'next' at each annual price
+    that has a subscribe link (SUBSCRIBE_URLS), and every monthly edition, with the sample course. For Admin's previews and
     test copies, and for review."""
     title, hours = SAMPLE_COURSE
-    out = [
-        ("nudge", *render_nudge(name, title, hours, unsub)),
-        ("next (annual £79)", *render_next(name, title, unsub, 79)),
-        ("next (annual £99)", *render_next(name, title, unsub, 99)),
-        ("price", *render_price(name, unsub)),
-    ]
+    out = [("nudge", *render_nudge(name, title, hours, unsub))]
+    out += [(f"next (annual £{a})", *render_next(name, title, unsub, a)) for a in ANNUAL_PRICES if sellable(a)]
+    if sellable(79):
+        out.append(("price", *render_price(name, unsub)))
     for e in MONTHLY_EDITIONS:
         out.append((f"monthly:{e['key']}", *render_monthly(e, name, unsub)))
     return out
@@ -430,14 +439,15 @@ def due_step(member: dict, free: dict, completion: dict | None, sends: list, now
     completed = _parse((completion or {}).get("completed_at"))
     candidates = []
     priced_out = False   # an email that names the annual price is due, but the price is not known
+    # (or has no subscribe link in SUBSCRIBE_URLS)
     if PRICE_NOTICE_FROM <= now < PRICE_NOTICE_UNTIL and "price" not in done and price_rise_notice_on():
-        if annual == 79:
+        if annual == 79 and sellable(79):
             candidates.append("price")
-        elif annual is None:
+        elif annual is None or annual == 79:   # £79 but no £79 subscribe link
             priced_out = True
     if "next" not in done and "price" not in done:
         if (completed and now >= completed + timedelta(days=NEXT_AFTER_COMPLETION_DAYS)) or (not completed and "nudge" in done):
-            if annual in ANNUAL_PRICES:
+            if sellable(annual):
                 candidates.append("next")
             else:
                 priced_out = True
