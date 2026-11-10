@@ -849,6 +849,27 @@
     .lib-sub { font-size: .95rem; color: var(--muted-d); }
     @media (max-width: 1100px) { .series-grid { grid-template-columns: repeat(2, 1fr); } }
 
+    /* ── TOPIC ROWS (Phase 2) ── Rows built from each course's tags (series, strand, where,
+       published date) by courseTags(); the flat grid replaces them while a search, chip or
+       nation is chosen. Same tag rules as webhook/member_ui.py course_tags(). */
+    .topic-rows { padding: 0 6vw 3rem; }
+    .topic-row { margin-bottom: 2.2rem; }
+    .topic-row h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .8rem; }
+    .topic-rail { display: flex; gap: 1.1rem; overflow-x: auto; padding-bottom: .6rem; scroll-snap-type: x proximity; scrollbar-width: thin; }
+    .topic-rail .course-card { flex: 0 0 290px; scroll-snap-align: start; }
+    .course-card { padding: 0 0 1.2rem; gap: .7rem; overflow: hidden; }
+    .course-card > *:not(.card-cover) { margin-left: 1.2rem; margin-right: 1.2rem; }
+    .course-card .card-cover { margin: 0; border-radius: 0; }
+    .card-stmt { font-size: .84rem; color: rgba(255,255,255,.62); line-height: 1.5; }
+    .card-acts { display: flex; gap: .5rem; margin-top: auto; padding-top: .4rem; }
+    .card-acts .card-btn-buy { flex: 1; text-align: center; }
+    .topic-chip { white-space: nowrap; }
+    .course-grid.hidden, .topic-rows.hidden { display: none; }
+    @media (max-width: 700px) {
+      .filter-tabs { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; }
+      .topic-rail .course-card { flex-basis: 78vw; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       .nav-links { display: none; }
@@ -909,10 +930,13 @@
 <!-- ─── CONTROLS ─── -->
 <div class="controls-bar">
   <div class="filter-tabs" id="filterTabs">
-    <button class="filter-tab active" data-filter="all">All</button>
-    <button class="filter-tab" data-filter="DEA">DEA Track</button>
-    <button class="filter-tab" data-filter="RA">Retrofit Assessor</button>
-    <button class="filter-tab" data-filter="ALL">All Strands</button>
+    <button class="filter-tab topic-chip active" data-filter="all">All</button>
+    <button class="filter-tab topic-chip" data-filter="new">New</button>
+    <button class="filter-tab topic-chip" data-filter="field-work">Field Work</button>
+    <button class="filter-tab topic-chip" data-filter="dea">For DEAs</button>
+    <button class="filter-tab topic-chip" data-filter="retrofit">Retrofit</button>
+    <button class="filter-tab topic-chip" data-filter="all-assessors">All assessors</button>
+    <button class="filter-tab topic-chip" data-filter="scotland">Scotland</button>
   </div>
   <div class="search-wrap">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A9E8B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -930,8 +954,11 @@
 <p class="where-note" id="whereNote" style="display:none"></p>
 
 
-<!-- ─── COURSE GRID ─── -->
-<div class="course-grid" id="courseGrid">
+<!-- ─── TOPIC ROWS (rendered by renderRows) ─── -->
+<div class="topic-rows" id="topicRows"></div>
+
+<!-- ─── COURSE GRID (search and chip results) ─── -->
+<div class="course-grid hidden" id="courseGrid">
   <div class="no-results" id="noResults">
     No courses match your search. <a href="#" onclick="clearFilters(); return false;" style="color:var(--accent)">Clear filters</a>
   </div>
@@ -1604,7 +1631,86 @@ const ALL_COURSES = [
 ];
 
 const COURSES = ALL_COURSES.filter(c => !UNDER_REVIEW.has(c.id));
-const HIDDEN_COUNT = ALL_COURSES.length - COURSES.length;
+
+// Published dates, mirroring COURSES in webhook/main.py (tests check the two agree).
+const PUBLISHED = {
+  'MER-DEA-001': '2026-03-01',
+  'MER-DEA-002': '2026-03-01',
+  'MER-DEA-003': '2026-03-01',
+  'MER-DEA-004': '2026-03-01',
+  'MER-DEA-005': '2026-03-01',
+  'MER-DEA-006': '2026-03-01',
+  'MER-DEA-007': '2026-03-01',
+  'MER-DEA-008': '2026-03-01',
+  'MER-DEA-010': '2026-03-01',
+  'MER-DEA-011': '2026-03-01',
+  'MER-DEA-014': '2026-03-01',
+  'MER-DEA-021': '2026-03-01',
+  'MER-RA-001': '2026-03-01',
+  'MER-RA-002': '2026-03-01',
+  'MER-RA-003': '2026-03-01',
+  'MER-RA-004': '2026-03-01',
+  'MER-RA-005': '2026-03-01',
+  'MER-RA-006': '2026-03-01',
+  'MER-RA-007': '2026-03-01',
+  'MER-RA-008': '2026-03-01',
+  'MER-RA-009': '2026-03-01',
+  'MER-RA-010': '2026-03-01',
+  'MER-RA-011': '2026-03-01',
+  'MER-RA-012': '2026-03-01',
+  'MER-ALL-001': '2026-03-01',
+  'MER-ALL-004': '2026-03-01',
+  'MER-ALL-005': '2026-04-15',
+  'MER-ALL-008': '2026-07-01',
+  'MER-ALL-009': '2026-07-15',
+  'MER-ALL-010': '2026-08-01',
+  'MER-ALL-011': '2026-08-01',
+  'MER-ALL-012': '2026-08-15',
+  'MER-ALL-013': '2026-08-01',
+  'MER-ALL-014': '2026-08-15',
+  'MER-ALL-015': '2026-09-01',
+  'MER-ALL-016': '2026-09-15',
+  'MER-ALL-017': '2026-10-01',
+  'MER-ALL-018': '2026-10-25',
+  'MER-ALL-019': '2026-10-29',
+  'MER-ALL-020': '2026-10-29',
+  'MER-ALL-021': '2026-10-29',
+  'MER-ALL-022': '2026-10-30',
+  'MER-ALL-023': '2026-10-30',
+  'MER-ALL-024': '2026-10-30',
+  'MER-ALL-025': '2026-10-30',
+  'MER-ALL-026': '2026-10-30',
+  'MER-ALL-027': '2026-10-30',
+  'MER-ALL-028': '2026-10-30',
+  'MER-ALL-029': '2026-10-30',
+  'MER-SCO-001': '2026-10-28',
+  'MER-SCO-002': '2026-10-28',
+};
+
+// ── Tags and rows ────────────────────────────────────────────────────────────
+// Every row is built from these tags, never from a hand-kept list. The same rules as
+// course_tags() in webhook/member_ui.py.
+const NEW_DAYS = 31;
+const TOPICS = [
+  ['new', 'New'], ['field-work', 'Field Work'], ['dea', 'For DEAs'],
+  ['retrofit', 'Retrofit'], ['all-assessors', 'All assessors'], ['scotland', 'Scotland'],
+];
+function courseTags(c) {
+  const tags = [];
+  if (c.series) tags.push('field-work');
+  else if (c.where === 'S') tags.push('scotland');
+  else tags.push({ DEA: 'dea', RA: 'retrofit' }[c.strand] || 'all-assessors');
+  if (c.where === 'S' && !tags.includes('scotland')) tags.push('scotland');
+  const pub = PUBLISHED[c.id];
+  if (pub && (Date.now() - new Date(pub + 'T00:00:00Z').getTime()) / 86400000 <= NEW_DAYS) tags.push('new');
+  return tags;
+}
+// One line from the description: up to the first colon, semicolon or full stop.
+function statement(desc) {
+  let s = String(desc || '').split(/(?<=[a-z0-9)])[.:;](?:\s|$)/)[0].trim();
+  if (s.length > 120) s = s.slice(0, 120).replace(/\s+\S*$/, '').replace(/,$/, '') + '…';
+  return s;
+}
 
 // ── State ────────────────────────────────────────────────────────────────────
 let activeFilter = 'all';
@@ -1646,6 +1752,7 @@ function applyPromo() {
   msg.textContent = '✓ Code "' + code + '" will be applied at checkout';
   msg.classList.add('show');
   renderGrid();
+  renderRows();
 }
 
 function getStripeLink(courseId) {
@@ -1789,7 +1896,7 @@ function renderSeries() {
 // ── Filtering ────────────────────────────────────────────────────────────────
 function filteredCourses() {
   return COURSES.filter(c => {
-    const strandMatch = activeFilter === 'all' || c.strand === activeFilter;
+    const strandMatch = activeFilter === 'all' || courseTags(c).includes(activeFilter);
     const nationMatch = appliesIn(c, activeNation);
     const q = searchQuery.toLowerCase();
     const textMatch = !q || c.title.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q) || c.id.toLowerCase().includes(q) || whereLabel(c).toLowerCase().includes(q) || seriesTitle(c).toLowerCase().includes(q);
@@ -1827,14 +1934,15 @@ function renderGrid() {
   const grid = document.getElementById('courseGrid');
   const noRes = document.getElementById('noResults');
 
-  // No course counts anywhere on the page: the tabs carry plain labels.
-  const counts = { DEA: 0, RA: 0, ALL: 0 };
-  COURSES.forEach(c => counts[c.strand]++);
-  // A strand with nothing on sale (its courses are being revised) gets no tab.
-  ['DEA', 'RA', 'ALL'].forEach(k => {
+  // No course counts anywhere on the page. A topic with nothing on sale gets no chip.
+  TOPICS.forEach(([k]) => {
     const tab = document.querySelector('.filter-tab[data-filter="' + k + '"]');
-    if (tab) tab.style.display = counts[k] ? '' : 'none';
+    if (tab) tab.style.display = COURSES.some(c => courseTags(c).includes(k)) ? '' : 'none';
   });
+  // With nothing chosen the page shows the topic rows; any search, chip or nation shows the flat grid.
+  const browsing = activeFilter === 'all' && activeNation === 'any' && !searchQuery.trim();
+  grid.classList.toggle('hidden', browsing);
+  document.getElementById('topicRows').classList.toggle('hidden', !browsing);
 
   // Where note: what the chosen nation can use as it stands
   const note = document.getElementById('whereNote');
@@ -1861,41 +1969,53 @@ function renderGrid() {
   // Remove old cards
   Array.from(grid.querySelectorAll('.course-card')).forEach(el => el.remove());
 
-  courses.forEach(c => {
-    const card = document.createElement('div');
-    card.className = 'course-card';
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'article');
-    card.setAttribute('aria-label', c.title);
-
-    const freeTag = c.free ? '<span class="free-badge">Free with MERIDIAN10</span>' : '';
-
-    card.innerHTML = `
-      <div class="card-cover">${coursePoster(c)}</div>
-      <div class="card-top">
-        <span class="strand-badge ${strandClass(c.strand)}">${strandLabel(c.strand)}</span>
-        <span class="card-hours">${hrsLabel(c.hours)}</span>
-      </div>
-      <p class="card-title">${c.title}${freeTag}</p>
-      <span class="where-tag">${whereLabel(c)}</span>
-      ${seriesTag(c)}
-      <p class="card-desc">${c.desc.substring(0, 110)}…</p>
-      <div class="card-footer">
-        <div class="card-price">
-          £19.99
-          <span class="card-price-small">/course</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-btn-detail" onclick="openModal('${c.id}')">Details</button>
-          <a class="card-btn-buy" href="${getStripeLink(c.id)}" target="_blank" rel="noopener">Enrol →</a>
-        </div>
-      </div>`;
-
-    card.addEventListener('keydown', e => { if (e.key === 'Enter') openModal(c.id); });
-    fragment.appendChild(card);
-  });
+  courses.forEach(c => fragment.appendChild(courseCard(c)));
 
   grid.appendChild(fragment);
+}
+
+// One poster card: cover, title, one-line statement, hours, where, Info and Buy.
+function courseCard(c) {
+  const card = document.createElement('div');
+  card.className = 'course-card';
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('role', 'article');
+  card.setAttribute('aria-label', c.title);
+  const freeTag = c.free ? '<span class="free-badge">Free with MERIDIAN10</span>' : '';
+  card.innerHTML = `
+    <div class="card-cover">${coursePoster(c)}</div>
+    <div class="card-top">
+      <span class="strand-badge ${strandClass(c.strand)}">${strandLabel(c.strand)}</span>
+      <span class="card-hours">${hrsLabel(c.hours)}</span>
+    </div>
+    <p class="card-title">${c.title}${freeTag}</p>
+    <p class="card-stmt">${escHtml(statement(c.desc))}</p>
+    <span class="where-tag">${whereLabel(c)}</span>
+    ${seriesTag(c)}
+    <div class="card-acts">
+      <button class="card-btn-detail" onclick="event.stopPropagation(); openModal('${c.id}')">Info</button>
+      <a class="card-btn-buy" href="${getStripeLink(c.id)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Buy, £19.99</a>
+    </div>`;
+  card.addEventListener('keydown', e => { if (e.key === 'Enter') openModal(c.id); });
+  return card;
+}
+
+function renderRows() {
+  const box = document.getElementById('topicRows');
+  if (!box) return;
+  const byNewest = (a, b) => String(PUBLISHED[b.id] || '').localeCompare(String(PUBLISHED[a.id] || ''));
+  box.innerHTML = '';
+  TOPICS.forEach(([tag, label]) => {
+    let list = COURSES.filter(c => courseTags(c).includes(tag));
+    if (!list.length) return;
+    if (tag === 'new') list = list.slice().sort(byNewest);
+    const row = document.createElement('section');
+    row.className = 'topic-row';
+    row.innerHTML = `<h3>${escHtml(label)}</h3><div class="topic-rail"></div>`;
+    const rail = row.querySelector('.topic-rail');
+    list.forEach(c => rail.appendChild(courseCard(c)));
+    box.appendChild(row);
+  });
 }
 
 // ── Modal ────────────────────────────────────────────────────────────────────
@@ -1997,6 +2117,7 @@ document.addEventListener('keydown', e => {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 renderSeries();
+renderRows();
 renderGrid();
 
 // Deep-link: courses.html#fw-insulation (fw-heating, fw-ventilation, fw-moisture) scrolls
