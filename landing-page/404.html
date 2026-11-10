@@ -26,7 +26,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'DM Sans', Arial, sans-serif; background: #0D1F0E; color: #FFFFFF; margin: 0;
-           display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
+           display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
+    footer { color: #5C6B5D; font-size: 13px; padding: 32px 20px 0; }
+    footer a { color: #5C6B5D; margin: 0 8px; }
     .wrap { max-width: 480px; padding: 0 24px; }
     .logo { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 0.06em; color: #FFFFFF; margin-bottom: 28px; }
     .logo span { color: #D4FF00; }
@@ -53,6 +55,13 @@
           return;
         }
       }
+      // The cookie banner and pixel load only when nothing is forwarded: a forwarded address
+      // can carry a certificate number or a completion token, which must never reach Meta.
+      document.addEventListener('DOMContentLoaded', function () {
+        var s = document.createElement('script');
+        s.src = '/consent.js';
+        document.body.appendChild(s);
+      });
     })();
   </script>
 </head>
@@ -64,6 +73,8 @@
     <a class="btn" href="https://app.meridiancpd.co.uk/verify">Verify a certificate</a>
     <a class="btn ghost" href="https://meridiancpd.co.uk">Home</a>
   </div>
-<script src="/consent.js" defer></script>
+  <footer>
+    <a href="/privacy.html">Privacy</a>
+  </footer>
 </body>
 </html>

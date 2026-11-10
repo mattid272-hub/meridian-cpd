@@ -242,3 +242,18 @@ The annual price in the emails is the one checkout charges: the app reads the un
 The price-rise email (1 to 23 December, only while checkout still charges £79) is held until `FREE_FOLLOWUP_PRICE_RISE=on`. Set it only once the £99 line is live on meridiancpd.co.uk and Matt has approved that email's text.
 
 Optional: `FREE_FOLLOWUP_CONSENT` (yes_only default, or not_no), `FREE_FOLLOWUP_DAILY_LIMIT` (10), `FREE_FOLLOWUP_MIN_GAP_DAYS` (30), `FREE_FOLLOWUP_MAX_EMAILS` (4). To stop it at any time set `FREE_FOLLOWUP=off`.
+
+## Meta Pixel and Conversions API (retargeting)
+
+The site's cookie banner and pixel live in `landing-page/consent.js`; the app's My CPD pages load the same file, and this server sends the same events through Meta's Conversions API. Nothing loads or is sent until the visitor presses Accept (cookie `mcpd_consent=yes` on `.meridiancpd.co.uk`, shared by the site and the app). `webhook/meta_capi.py` explains the events and how they are deduplicated.
+
+Railway variables (all optional; without them the app loads nothing from Meta and sends nothing):
+
+| Variable | What |
+|---|---|
+| `META_PIXEL_ID` | The dataset id from Events Manager (the site uses dataset 1133939432819396, set in consent.js). Turns on the banner and pixel on the app's pages. |
+| `META_CAPI_TOKEN` | Events Manager → the dataset → Settings → Conversions API → Generate access token. With `META_PIXEL_ID`, turns on the server events. A secret: Railway only. |
+| `META_TEST_EVENT_CODE` | Optional. Events Manager → Test events code, to watch server events arrive. Remove afterwards. |
+| `META_GRAPH_VERSION` | Optional. Graph API version, default `v24.0`. |
+
+Check after deploy: Events Manager → Test events, open meridiancpd.co.uk, press Accept, open a course: PageView and ViewContent should show "Browser" and "Server", deduplicated. A MERIDIAN10 order shows Lead (server); a paid order shows Purchase with its value.
