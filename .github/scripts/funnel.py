@@ -115,12 +115,17 @@ def figures(data: dict, bounds) -> dict:
         f["completed"] = sum(1 for s in mine if s.get("status") == "complete")
         f["not_finished"] = f["started"] - f["completed"]
 
-    placed = [o for o in orders(data.get("purchases") or []) if o["at"] and bounds[0] <= o["at"] < bounds[1]]
-    for kind in ("free", "single", "series", "annual"):
-        mine = [o for o in placed if o["product"] == kind]
-        f[kind] = len(mine)
-        f[kind + "_gbp"] = round(sum(o["gbp"] for o in mine), 2)
-    f["paid_gbp"] = round(f["single_gbp"] + f["series_gbp"] + f["annual_gbp"], 2)
+    if data.get("purchases") is None:  # could not be read: n/a, never a false 0
+        for kind in ("free", "single", "series", "annual"):
+            f[kind] = f[kind + "_gbp"] = None
+        f["paid_gbp"] = None
+    else:
+        placed = [o for o in orders(data["purchases"]) if o["at"] and bounds[0] <= o["at"] < bounds[1]]
+        for kind in ("free", "single", "series", "annual"):
+            mine = [o for o in placed if o["product"] == kind]
+            f[kind] = len(mine)
+            f[kind + "_gbp"] = round(sum(o["gbp"] for o in mine), 2)
+        f["paid_gbp"] = round(f["single_gbp"] + f["series_gbp"] + f["annual_gbp"], 2)
 
     real_member = lambda m: m.get("stripe_customer_id") != "cus_test"
     f["members"] = count_in(data.get("members"), "joined_at", bounds, real_member)
@@ -136,10 +141,10 @@ def figures(data: dict, bounds) -> dict:
     return f
 
 
-def pool(members: list | None, purchases: list) -> dict | None:
+def pool(members: list | None, purchases: list | None) -> dict | None:
     """Who we can still sell to: members whose only order is a free course, and how many
-    non-subscribers said yes to emails."""
-    if members is None:
+    non-subscribers said yes to emails. None when either table could not be read."""
+    if members is None or purchases is None:
         return None
     by_member: dict = {}
     for p in purchases or []:
@@ -167,6 +172,29 @@ def _gbp(pence) -> str:
     return f"£{(pence or 0) / 100:.2f}"
 
 
+def uk_date(value) -> str:
+    """A timestamp as its London date, 'Sat 07 Nov'; 'none' passes through."""
+    if value is None:
+        return "not read"
+    if value == "none":
+        return "none"
+    t = ts(value)
+    return t.astimezone(UK).strftime("%a %d %b") if t else str(value)
+
+
+def not_finished_yesterday(data: dict, now: datetime):
+    """'£79.00, £39.99 and 1 more' for checkouts started yesterday and not completed;
+    None when there were none or Stripe was not read."""
+    sessions = data.get("stripe_sessions")
+    if sessions is None:
+        return None
+    left = [s for s in sessions if inside(s.get("created"), windows(now)["yday"]) and s.get("status") != "complete"]
+    if not left:
+        return None
+    more = f" and {len(left) - MAX_LISTED} more" if len(left) > MAX_LISTED else ""
+    return ", ".join(_gbp(s.get("amount_total")) for s in left[:MAX_LISTED]) + more
+
+
 def red_lines(data: dict, now: datetime) -> list:
     """What needs Matt today, most urgent first. Empty when nothing does."""
     w = windows(now)
@@ -183,30 +211,32 @@ def red_lines(data: dict, now: datetime) -> list:
         if health.get("series_price") == "missing":
             lines.append("Field Work series cannot be bought: STRIPE_PRICE_SERIES is not set in Railway.")
 
+    purchases = data.get("purchases")
+    if purchases is None:
+        lines.append("Orders could not be read from Supabase. Check Supabase > Logs.")
+
     sessions = data.get("stripe_sessions")
     if sessions is None and data.get("stripe_error"):
         lines.append("Stripe did not answer with STRIPE_REPORT_KEY. Check the key in the GitHub repo secrets.")
     elif sessions is None:
-        lines.append("Checkout figures are off: add the STRIPE_REPORT_KEY secret to the GitHub repo.")
-    else:
-        recorded = {o["session"] for o in orders(data.get("purchases") or [])}
+        lines.append("Checkout figures are missing: add the STRIPE_REPORT_KEY secret in "
+                     "GitHub > Settings > Secrets and variables > Actions.")
+    elif purchases is not None:
+        recorded = {o["session"] for o in orders(purchases)}
         unrecorded = [s["id"] for s in sessions
                       if s.get("status") == "complete" and s.get("id") not in recorded
                       and inside(s.get("created"), (w["week"][0], now - RECORD_GRACE))]
         if unrecorded:
             lines.append(f"Stripe took {len(unrecorded)} order{'s' if len(unrecorded) != 1 else ''} "
-                         f"the app has not recorded: {_ids(unrecorded)}.")
-        open_yday = [s for s in sessions if inside(s.get("created"), w["yday"]) and s.get("status") != "complete"]
-        if open_yday:
-            amounts = ", ".join(_gbp(s.get("amount_total")) for s in open_yday[:MAX_LISTED])
-            more = f" and {len(open_yday) - MAX_LISTED} more" if len(open_yday) > MAX_LISTED else ""
-            lines.append(f"{len(open_yday)} checkout{'s' if len(open_yday) != 1 else ''} started yesterday "
-                         f"and not finished ({amounts}{more}).")
+                         f"the app has not recorded: {_ids(unrecorded)}. "
+                         "Resend them from Stripe > Developers > Webhooks.")
 
-    free_two = [o for o in orders(data.get("purchases") or [])
-                if o["product"] == "free" and o["at"] and w["two"][0] <= o["at"] < w["two"][1]]
-    if not free_two:
-        lines.append(f"No free-course orders for 2 days. Last one: {data.get('last_free_order') or 'none'}.")
+    if purchases is not None:
+        free_two = [o for o in orders(purchases)
+                    if o["product"] == "free" and o["at"] and w["two"][0] <= o["at"] < w["two"][1]]
+        if not free_two:
+            lines.append(f"No free-course orders for 2 days (last one {uk_date(data.get('last_free_order'))}). "
+                         "Try the free course checkout yourself on meridiancpd.co.uk with MERIDIAN10.")
     return lines
 
 
@@ -223,7 +253,7 @@ ROWS = [  # (label, key, money key or None)
     ("Paid in", "paid_gbp", "money"),
     ("New members", "members", None),
     ("My CPD sign-ins", "signins", None),
-    ("Courses opened", "opened", None),
+    ("Courses downloaded", "opened", None),
     ("Courses completed", "completions", None),
     ("Certificates issued", "certificates", None),
     ("Follow-up emails sent", "followups", None),
@@ -248,11 +278,16 @@ def build(data: dict, now: datetime) -> dict:
     w = windows(now)
     yday, week = figures(data, w["yday"]), figures(data, w["week"])
     red = red_lines(data, now)
-    p = pool(data.get("members"), data.get("purchases") or [])
+    p = pool(data.get("members"), data.get("purchases"))
     health = data.get("health") or {}
 
-    paid_n = yday["single"] + yday["series"] + yday["annual"]
-    subject = (f"Meridian {w['yday_label']}: {yday['free']} free, {paid_n} paid (£{yday['paid_gbp']:,.2f})")
+    if yday["paid_gbp"] is None:
+        subject = f"Meridian {w['yday_label']}: orders not read"
+    else:
+        paid_n = yday["single"] + yday["series"] + yday["annual"]
+        subject = (f"Meridian {w['yday_label']}: {yday['free']} free, {paid_n} paid (£{yday['paid_gbp']:,.2f})")
+    left = not_finished_yesterday(data, now)
+    left_line = f"Not finished yesterday: {left}." if left else ""
     if red:
         subject = f"{len(red)} need{'s' if len(red) == 1 else ''} you | " + subject
 
@@ -277,6 +312,7 @@ def build(data: dict, now: datetime) -> dict:
         *(["NEEDS YOU", *(f"- {r}" for r in red), ""] if red else ["Nothing needs you today.", ""]),
         f"{'':<{width}}  {'Yesterday':>12}  {'7 days':>14}",
         table,
+        *([left_line] if left_line else []),
         "",
         pool_line,
         app_line,
@@ -301,6 +337,7 @@ def build(data: dict, now: datetime) -> dict:
 <tr style="color:#6b7280;font-size:12px"><td></td><td style="text-align:right;padding:0 6px">Yesterday</td><td style="text-align:right">7 days</td></tr>
 {rows_html}
 </table>
+{f'<p style="font-size:13px;margin:6px 0 0">{escape(left_line)}</p>' if left_line else ''}
 <p style="font-size:13px;margin:10px 0 2px">{escape(pool_line)}</p>
 <p style="font-size:13px;margin:0 0 8px;color:#4b5563">{escape(app_line)}</p>
 <p style="font-size:13px;margin:0"><a style="color:#0D1F0E" href="https://app.meridiancpd.co.uk/admin">Admin</a></p>

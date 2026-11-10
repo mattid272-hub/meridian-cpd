@@ -56,7 +56,7 @@ def good_day():
         "stripe_sessions": sessions,
         "members": members,
         "purchases": purchases,
-        "last_free_order": "2026-11-09",
+        "last_free_order": "2026-11-09T12:00:00+00:00",
         "opened": [{"downloaded_at": iso(YDAY)}, {"downloaded_at": iso(DAYS_AGO(2))}],
         "completed": [{"completed_at": iso(YDAY)}],
         "certificates": [{"issued_at": "2026-11-09T12:00:00.12345+00:00"}],
@@ -92,7 +92,7 @@ def test_figures():
     assert y["annual"] == 1 and y["annual_gbp"] == 79 and y["single"] == 0
     assert y["paid_gbp"] == 118.99
     assert y["members"] == 3            # the test member does not count
-    assert y["signins"] == 2 and y["opened"] == 1 and y["completions"] == 1 and y["certificates"] == 1
+    assert y["signins"] == 2 and y["opened"] == 1 and "Courses downloaded" in funnel.build(d, NOW)["text"] and y["completions"] == 1 and y["certificates"] == 1
     assert y["followups"] == 1          # a failed send is not a send
     assert y["unsubscribes"] == 1       # a bounce is not an unsubscribe
     k = funnel.figures(d, w["week"])
@@ -129,35 +129,55 @@ def test_each_red_line():
     assert red(lambda d: d["health"].update(series_price="missing")) == [
         "Field Work series cannot be bought: STRIPE_PRICE_SERIES is not set in Railway."]
     assert red(lambda d: d.update(stripe_sessions=None)) == [
-        "Checkout figures are off: add the STRIPE_REPORT_KEY secret to the GitHub repo."]
+        "Checkout figures are missing: add the STRIPE_REPORT_KEY secret in GitHub > Settings > Secrets and variables > Actions."]
     assert red(lambda d: d.update(stripe_sessions=None, stripe_error=True)) == [
         "Stripe did not answer with STRIPE_REPORT_KEY. Check the key in the GitHub repo secrets."]
 
     # Stripe took a payment that has no purchase row
     def unrecorded(d):
         d["stripe_sessions"].append({"id": "cs_live_lost", "created": int(YDAY.timestamp()), "status": "complete", "amount_total": 7900})
-    assert red(unrecorded) == ["Stripe took 1 order the app has not recorded: cs_live_lost."]
+    assert red(unrecorded) == ["Stripe took 1 order the app has not recorded: cs_live_lost. "
+                               "Resend them from Stripe > Developers > Webhooks."]
+    def four_lost(d):
+        for i in range(4):
+            d["stripe_sessions"].append({"id": f"cs_live_l{i}", "created": int(YDAY.timestamp()), "status": "complete"})
+    assert red(four_lost) == ["Stripe took 4 orders the app has not recorded: cs_live_l0, cs_live_l1, cs_live_l2 "
+                              "and 1 more. Resend them from Stripe > Developers > Webhooks."]
     # ...but not one paid in the last half hour, which may still be recording
     def fresh(d):
         d["stripe_sessions"].append({"id": "cs_live_new", "created": int((NOW - timedelta(minutes=5)).timestamp()), "status": "complete"})
     assert red(fresh) == []
 
-    # a checkout started yesterday and not finished, open or expired
+    # a checkout started yesterday and not finished, open or expired: a plain line under
+    # the table, not a red line
     def abandoned(d):
         d["stripe_sessions"] += [{"id": "cs_live_a", "created": int(YDAY.timestamp()), "status": "expired", "amount_total": 7900},
                                  {"id": "cs_live_b", "created": int(YDAY.timestamp()), "status": "open", "amount_total": 3999}]
-    assert red(abandoned) == ["2 checkouts started yesterday and not finished (£79.00, £39.99)."]
-    # one abandoned last week is in the 7-day column but is not a red line today
+    assert red(abandoned) == []
+    d = good_day(); abandoned(d)
+    r = funnel.build(d, NOW)
+    assert "Not finished yesterday: £79.00, £39.99." in r["text"] and "Not finished yesterday: £79.00, £39.99." in r["html"]
+    for i in range(2):
+        d["stripe_sessions"].append({"id": f"cs_live_x{i}", "created": int(YDAY.timestamp()), "status": "expired", "amount_total": 1999})
+    assert "Not finished yesterday: £79.00, £39.99, £19.99 and 1 more." in funnel.build(d, NOW)["text"]
+    assert "Not finished yesterday" not in funnel.build(good_day(), NOW)["text"]
+    # one abandoned last week is in the 7-day column only
     def old_abandoned(d):
         d["stripe_sessions"].append({"id": "cs_live_c", "created": int(DAYS_AGO(4).timestamp()), "status": "expired", "amount_total": 1999})
     assert red(old_abandoned) == []
+    d = good_day(); old_abandoned(d)
+    assert "Not finished yesterday" not in funnel.build(d, NOW)["text"]
 
     # no free orders yesterday or the day before
     def no_free(d):
         d["purchases"] = [p for p in d["purchases"] if p["stripe_session_id"] not in ("cs_live_free1", "cs_live_free2")]
         d["stripe_sessions"] = [s for s in d["stripe_sessions"] if s["id"] not in ("cs_live_free1", "cs_live_free2")]
-        d["last_free_order"] = "2026-10-10"
-    assert red(no_free) == ["No free-course orders for 2 days. Last one: 2026-10-10."]
+        d["last_free_order"] = "2026-11-07T23:30:00+00:00"   # 23:30 UTC on 7 Nov is still Sat 07 Nov (GMT)
+    NO_FREE = ("No free-course orders for 2 days (last one Sat 07 Nov). "
+               "Try the free course checkout yourself on meridiancpd.co.uk with MERIDIAN10.")
+    assert red(no_free) == [NO_FREE]
+    assert funnel.uk_date("2026-06-30T23:30:00+00:00") == "Wed 01 Jul"     # BST: already the next day
+    assert funnel.uk_date(None) == "not read" and funnel.uk_date("none") == "none"
     # one free order the day before yesterday is enough
     def one_free(d):
         d["purchases"] = [p for p in d["purchases"] if p["stripe_session_id"] != "cs_live_free1"]
@@ -167,7 +187,21 @@ def test_each_red_line():
     def test_free_only(d):
         no_free(d)
         d["purchases"].append({"member_id": "t1", "course_id": "MER-ALL-001", "amount_gbp": 0, "stripe_session_id": "cs_test_free", "purchased_at": iso(YDAY)})
-    assert red(test_free_only) == ["No free-course orders for 2 days. Last one: 2026-10-10."]
+    assert red(test_free_only) == [NO_FREE]
+
+    # orders could not be read: n/a, not 0, and no red line that depends on them
+    def no_orders(d):
+        d["purchases"] = None; d["last_free_order"] = None
+        d["stripe_sessions"].append({"id": "cs_live_lost", "created": int(YDAY.timestamp()), "status": "complete"})
+    assert red(no_orders) == ["Orders could not be read from Supabase. Check Supabase > Logs."]
+    d = good_day(); no_orders(d)
+    w = funnel.windows(NOW)
+    for col in (funnel.figures(d, w["yday"]), funnel.figures(d, w["week"])):
+        for k, m in (("free", None), ("single", "single_gbp"), ("series", "series_gbp"), ("annual", "annual_gbp"), ("paid_gbp", "money")):
+            assert funnel.cell(col, k, m) == "n/a", (k, col)
+    r = funnel.build(d, NOW)
+    assert r["subject"] == "1 needs you | Meridian Mon 09 Nov: orders not read"
+    assert "Members: not read." in r["text"]
 
     r = funnel.build(good_day() | {"health": None}, NOW)
     assert r["subject"].startswith("1 needs you | ")

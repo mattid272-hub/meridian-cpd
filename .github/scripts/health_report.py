@@ -90,7 +90,7 @@ def last_free_order():
     res = (supabase.table("purchases").select("purchased_at").eq("amount_gbp", 0)
            .like("stripe_session_id", "cs_live%").order("purchased_at", desc=True).limit(1).execute())
     found = res.data or []
-    return found[0]["purchased_at"][:10] if found else "none"
+    return found[0]["purchased_at"] if found else "none"  # funnel.py shows it as a London date
 
 
 def health():
