@@ -26,7 +26,7 @@ def _pc(**k):
 def _with_codes(codes, fn, raises=False):
     real = main.stripe.PromotionCode.list
     def fake(**kw):
-        assert "data.coupon" in kw.get("expand", []) and "data.promotion.coupon" in kw.get("expand", [])
+        assert kw.get("expand") == ["data.promotion.coupon"]
         assert kw.get("max_network_retries") == 0
         if raises:
             raise RuntimeError("stripe down")

@@ -844,7 +844,7 @@ async def handle_checkout(session):
     if not course_keys:
         print(f"ACTION NEEDED: session {session_id} paid for a price this app does not know "
               f"(client_reference_id={client_ref!r}, amount {amount}). Check STRIPE_PRICE_* in "
-              f"Railway; nothing was recorded or sent.")
+              f"Railway; no course was recorded or sent.")
         if not _g(session, "subscription"):
             # Stop here: creating the member first left an account with nothing in it. A
             # subscription still gets its member, so the subscription events can find it.
@@ -2140,10 +2140,11 @@ def _promo_code_state(code: str, now: float | None = None) -> str:
     now = time.time() if now is None else now
     try:
         # No retries (free_code_state runs this in the background and waits at most a few
-        # seconds, because /health is Railway's healthcheck). The coupon is expanded:
-        # otherwise Stripe sends only its id and the coupon's own expiry or limit is unseen.
+        # seconds, because /health is Railway's healthcheck). The coupon (promotion.coupon
+        # on this API version) is expanded: otherwise Stripe sends only its id and the
+        # coupon's own expiry or limit is unseen.
         found = stripe.PromotionCode.list(
-            code=code, limit=10, expand=["data.coupon", "data.promotion.coupon"],
+            code=code, limit=10, expand=["data.promotion.coupon"],
             max_network_retries=0,
         ).data
     except Exception as e:
@@ -2188,9 +2189,14 @@ def free_code_state(wait: float = 3.0) -> str:
     """The cached state, refreshed in the background when older than ten minutes. Waits
     up to `wait` seconds for a refresh, so /health is never held up by a slow Stripe."""
     if time.time() - _free_code_cache["at"] >= FREE_CODE_CHECK_SECONDS and _free_code_lock.acquire(blocking=False):
-        t = threading.Thread(target=_refresh_free_code, daemon=True)
-        t.start()
-        t.join(wait)
+        try:
+            t = threading.Thread(target=_refresh_free_code, daemon=True)
+            t.start()
+        except Exception as e:
+            _free_code_lock.release()
+            print(f"Could not start the free-code check: {e}")
+        else:
+            t.join(wait)
     return _free_code_cache["state"]
 
 
