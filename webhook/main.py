@@ -3530,6 +3530,11 @@ async def member_cpd_record(request: Request):
     certs = supabase.table("certificates").select("*").eq("member_id", member["id"]).execute().data or []
     certs = [c for c in one_per_course(certs)
              if c.get("member_id") == member["id"] and str(c.get("issued_at") or "")[:4] == str(year)]
+    # The learner's own reflection goes into the record under the course it belongs to.
+    reflections = _reflections_by_course(member["id"]) if certs else {}
+    certs = [{**c, "reflection_learned": reflections[c.get("course_id")].get("reflection_learned"),
+              "reflection_change": reflections[c.get("course_id")].get("reflection_change")}
+             if c.get("course_id") in reflections else c for c in certs]
     latest = max(certs, key=lambda c: str(c.get("issued_at") or ""), default={})
     name = str(latest.get("member_name") or member.get("name") or email.split("@")[0].title())
     pdf = generate_cpd_record(name, year, certs)

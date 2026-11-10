@@ -37,7 +37,8 @@ def _hours(h) -> str:
 
 def generate_cpd_record(member_name: str, year: int, certificates: list[dict]) -> bytes:
     """certificates: the member's own rows for `year`, each with course_title, course_id,
-    issued_at, cpd_hours and cert_number. Returns the PDF bytes."""
+    issued_at, cpd_hours and cert_number, and reflection_learned / reflection_change where
+    the member wrote a reflection for that course. Returns the PDF bytes."""
     buf = io.BytesIO()
     doc = SimpleDocTemplate(buf, pagesize=A4, leftMargin=16 * mm, rightMargin=16 * mm, topMargin=34 * mm,
                             bottomMargin=20 * mm, title=f"CPD record {year}", author="Meridian CPD")
@@ -86,8 +87,23 @@ def generate_cpd_record(member_name: str, year: int, certificates: list[dict]) -
     if not rows:
         style.append(("SPAN", (0, 1), (-1, 1)))
     table.setStyle(TableStyle(style))
-    story += [table, Spacer(1, 14),
-              Paragraph("Anyone can check a certificate at its verify address.", body),
+    story += [table, Spacer(1, 14)]
+    reflected = [c for c in rows if c.get("reflection_learned") or c.get("reflection_change")]
+    if reflected:
+        h2 = ParagraphStyle("h2", parent=body, fontName="Helvetica-Bold", fontSize=12, leading=16)
+        label = ParagraphStyle("l", parent=body, fontName="Helvetica-Bold", textColor=DEEP_LIME, spaceBefore=3)
+        text = lambda s: esc(s).replace("\n", "<br/>")
+        story += [Paragraph("Reflections", h2), Spacer(1, 4)]
+        for c in reflected:
+            block = [Paragraph(f"<b>{esc(c.get('course_title'))}</b> "
+                               f"<font color='#5C6B5D' size='7.5'>{esc(c.get('course_id'))}</font>", body)]
+            if c.get("reflection_learned"):
+                block += [Paragraph("What I learned", label), Paragraph(text(c["reflection_learned"]), body)]
+            if c.get("reflection_change"):
+                block += [Paragraph("What I will do differently", label), Paragraph(text(c["reflection_change"]), body)]
+            story += block + [Spacer(1, 10)]
+        story.append(Spacer(1, 4))
+    story += [Paragraph("Anyone can check a certificate at its verify address.", body),
               Spacer(1, 6), Paragraph(f"<b>{SCHEME_LINE}</b>", body)]
 
     def frame(c, d):
