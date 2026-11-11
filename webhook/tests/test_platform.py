@@ -304,13 +304,14 @@ check("an unknown series is a 404", c.get("/my-cpd/series/FW-NOPE", cookies=BEA)
 # ── 6b. The CPD Group provider line: member app footer only ──
 CPDG = ('<a class="cpdg-link" href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" '
         'rel="noopener">Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)</a>')
-for path in ["/my-cpd/dashboard", "/my-cpd/series", "/my-cpd/certificates"]:
+for path in ["/my-cpd/dashboard"]:
     t = c.get(path, cookies=BEA).text
     check(f"{path}: the provider line, linked to the CPD Register, once, in the footer", t.count(CPDG) == 1
           and t.index(CPDG) > t.rindex("</main>"))
-for path in ["/my-cpd/course/MER-ALL-020", "/my-cpd/series/FW-INSULATION", "/my-cpd/course/MER-DEA-002"]:
+for path in ["/my-cpd/course/MER-ALL-020", "/my-cpd/series/FW-INSULATION", "/my-cpd/course/MER-DEA-002",
+             "/my-cpd/series", "/my-cpd/certificates"]:
     t = c.get(path, cookies=BEA).text
-    check(f"{path}: no CPD Group line on a course, course viewer or series page", "CPD Group" not in t and "791454" not in t)
+    check(f"{path}: no CPD Group line on a course, course viewer, series or certificates page", "CPD Group" not in t and "791454" not in t)
 site = (ROOT / "landing-page" / "index.html").read_text()
 check("the app line and link are the website's, word for word", member_ui.CPD_GROUP_LINE in site and member_ui.CPD_GROUP_URL in site
       and f'href="{member_ui.CPD_GROUP_URL}" target="_blank" rel="noopener">{member_ui.CPD_GROUP_LINE}</a>' in site)

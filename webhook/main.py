@@ -3178,7 +3178,7 @@ async def member_series_index(request: Request):
   <p class="muted" style="max-width:640px;margin-bottom:24px">Three courses on one subject. Each part has its own certificate of completion as you finish it.</p>
   <div class="rail" style="flex-wrap:wrap">{cards}</div>
 </main>"""
-    return HTMLResponse(member_ui.page("Series", body))
+    return HTMLResponse(member_ui.page("Series", body, provider_line=False))
 
 
 @app.get("/my-cpd/series/{series_id}", response_class=HTMLResponse)
@@ -3508,7 +3508,7 @@ async def member_certificates(request: Request):
   <table class="cert-table"><thead><tr><th>Course</th><th>Completed</th><th>CPD hours</th><th>Certificate number</th><th></th></tr></thead>
   <tbody>{rows}</tbody></table>
 </main>{_STEP_CSS if reflections else ""}"""
-    return HTMLResponse(member_ui.page("My certificates", body))
+    return HTMLResponse(member_ui.page("My certificates", body, provider_line=False))
 
 
 @app.get("/my-cpd/certificates/record.pdf")

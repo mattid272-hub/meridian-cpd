@@ -442,8 +442,8 @@ def topbar(name: str, on: str) -> str:
 
 # The CPD Group provider line (Matt, 6 and 10 Nov 2026): the only permitted wording,
 # linked to the CPD Register listing exactly as the website footer has it. It goes in
-# the member app footer only, never on a course page, the course viewer, a series page
-# or a certificate, so those pages call page(..., provider_line=False).
+# the member app footer of the dashboard only, never on a course page, the course viewer,
+# the series pages or the certificates page, so those call page(..., provider_line=False).
 CPD_GROUP_URL = "https://thecpdregister.com/providers/cpd-group-providers--791454"
 CPD_GROUP_LINE = "Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)"
 # The "Verify On The CPD Register" badge (white-text version), shown unaltered, goes here
