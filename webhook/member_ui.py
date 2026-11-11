@@ -151,6 +151,9 @@ h1, h2, h3 { font-weight: 700; }
 .select { background: var(--dark2); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; font-size: 14px; color: #cfd8cf; }
 .upsell { background: linear-gradient(135deg,#0D1F0E,#1a2f1b); border: 1px solid var(--line); border-radius: 12px; padding: 28px 32px; margin-bottom: 28px; }
 .foot { text-align: center; font-size: 12px; color: var(--muted); padding: 20px 16px 30px; }
+.foot.cpdg { padding-bottom: 0; }
+.foot .cpdg-link { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.cpdg-badge { height: auto; margin-bottom: 8px; }
 .empty { color: var(--muted); padding: 20px 0; font-size: 14px; }
 /* Phase 2: the streaming library. Search, topic chips, the one-line statement on every
    card, the Info / favourite / read-later buttons, and the flat grid the rows become
@@ -437,12 +440,32 @@ def topbar(name: str, on: str) -> str:
 </nav>"""
 
 
-def page(title: str, body: str) -> str:
+# The CPD Group provider line (Matt, 6 and 10 Nov 2026): the only permitted wording,
+# linked to the CPD Register listing exactly as the website footer has it. It goes in
+# the member app footer only, never on a course page, the course viewer, a series page
+# or a certificate, so those pages call page(..., provider_line=False).
+CPD_GROUP_URL = "https://thecpdregister.com/providers/cpd-group-providers--791454"
+CPD_GROUP_LINE = "Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)"
+# The "Verify On The CPD Register" badge (white-text version), shown unaltered, goes here
+# once the file is in the repo: set this to its path under /static. Empty means text only.
+CPD_GROUP_BADGE_SRC = ""
+
+
+def provider_footer() -> str:
+    badge = (f'<a href="{CPD_GROUP_URL}" target="_blank" rel="noopener"><img class="cpdg-badge" '
+             f'src="{CPD_GROUP_BADGE_SRC}" alt="Verify on The CPD Register" width="120"></a><br>'
+             if CPD_GROUP_BADGE_SRC else "")
+    return (f'<p class="foot cpdg">{badge}<a class="cpdg-link" href="{CPD_GROUP_URL}" target="_blank" '
+            f'rel="noopener">{CPD_GROUP_LINE}</a></p>')
+
+
+def page(title: str, body: str, provider_line: bool = True) -> str:
+    cpdg = provider_footer() if provider_line else ""
     return f"""<!DOCTYPE html>
 <html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 {FONTS}<title>{_esc(title)} | Meridian CPD</title><style>{CSS}</style></head>
 <body>{body}
-<p class="foot">Meridian CPD · meridiancpd.co.uk · hello@meridiancpd.co.uk · Check your own scheme's CPD rules.</p>
+{cpdg}<p class="foot">Meridian CPD · meridiancpd.co.uk · hello@meridiancpd.co.uk · Check your own scheme's CPD rules.</p>
 </body></html>"""
 
 

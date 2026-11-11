@@ -146,7 +146,8 @@ check("the Moisture introduction does not promise slides for every part (MER-ALL
       "where a part has them" in main.SERIES_INTRO["FW-MOISTURE"] and "Slides for the site visit, written notes" not in main.SERIES_INTRO["FW-MOISTURE"])
 banned = re.compile(r"accredit|approved(?! document)", re.I)  # "Approved Document F" is a regulation's name
 check("no 'accredited' or 'approved' in the series introductions or the member UI",
-      not any(banned.search(t) for t in main.SERIES_INTRO.values()) and not banned.search(Path(member_ui.__file__).read_text()))
+      not any(banned.search(t) for t in main.SERIES_INTRO.values()) and not banned.search(Path(member_ui.__file__).read_text().replace(member_ui.CPD_GROUP_LINE, "", 1)))
+# The one exemption is the permitted CPD Group sentence, word for word (Matt, 6 Nov 2026), checked in 6b.
 
 # ── 1. Poster template ──
 svg = member_ui.poster("Field Work series", "Insulation", "Three parts", "layers")
@@ -299,6 +300,21 @@ check("Moisture series page for a subscriber: the notes-only caveat, Open Part 1
 r = c.get("/my-cpd/series/FW-HEATING", cookies=BEA); t = flat(r.text)
 check("a series the member does not hold: every part marked, Buy the series", t.count("Not in your library") == 3 and "Buy the series, £39.99" in t)
 check("an unknown series is a 404", c.get("/my-cpd/series/FW-NOPE", cookies=BEA).status_code == 404)
+
+# ── 6b. The CPD Group provider line: member app footer only ──
+CPDG = ('<a class="cpdg-link" href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" '
+        'rel="noopener">Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)</a>')
+for path in ["/my-cpd/dashboard", "/my-cpd/series", "/my-cpd/certificates"]:
+    t = c.get(path, cookies=BEA).text
+    check(f"{path}: the provider line, linked to the CPD Register, once, in the footer", t.count(CPDG) == 1
+          and t.index(CPDG) > t.rindex("</main>"))
+for path in ["/my-cpd/course/MER-ALL-020", "/my-cpd/series/FW-INSULATION", "/my-cpd/course/MER-DEA-002"]:
+    t = c.get(path, cookies=BEA).text
+    check(f"{path}: no CPD Group line on a course, course viewer or series page", "CPD Group" not in t and "791454" not in t)
+site = (ROOT / "landing-page" / "index.html").read_text()
+check("the app line and link are the website's, word for word", member_ui.CPD_GROUP_LINE in site and member_ui.CPD_GROUP_URL in site
+      and f'href="{member_ui.CPD_GROUP_URL}" target="_blank" rel="noopener">{member_ui.CPD_GROUP_LINE}</a>' in site)
+check("no badge image until the CPD Register file is in the repo", member_ui.CPD_GROUP_BADGE_SRC == "" and "cpdg-badge\" src" not in c.get("/my-cpd/dashboard", cookies=BEA).text)
 r = c.get("/my-cpd/course/MER-ALL-028", cookies=SUE)  # the course page makes the completion record /download marks
 r = c.get("/download/MER-ALL-028", cookies=SUE)
 r = c.get("/my-cpd/series/FW-MOISTURE", cookies=SUE); t = flat(r.text)

@@ -3254,7 +3254,7 @@ async def member_series_page(series_id: str, request: Request):
     <a class="btn btn-s btn-sm" href="/my-cpd/certificates">Open My certificates</a>
   </div>
 </main>"""
-    return HTMLResponse(member_ui.page(s["title"], body))
+    return HTMLResponse(member_ui.page(s["title"], body, provider_line=False))
 
 
 def _not_in_library_page(course_id: str, name: str) -> HTMLResponse:
@@ -3264,7 +3264,7 @@ def _not_in_library_page(course_id: str, name: str) -> HTMLResponse:
   <p class="muted" style="max-width:560px">Buy it on the courses page and it appears here, ready to open.</p>
   <div style="display:flex;gap:12px;margin-top:18px"><a class="btn btn-p" href="{SITE_URL}/courses.html?open={quote(course_id)}">See the course</a>
   <a class="btn btn-s" href="/my-cpd/dashboard">Back to My CPD</a></div></main>"""
-    return HTMLResponse(member_ui.page("Not in your library", body), status_code=404)
+    return HTMLResponse(member_ui.page("Not in your library", body, provider_line=False), status_code=404)
 
 
 def _course_page(st: dict, course_id: str, notice: str = "", email_failed: bool = False, status_code: int = 200) -> HTMLResponse:
@@ -3376,7 +3376,7 @@ def _course_page(st: dict, course_id: str, notice: str = "", email_failed: bool 
   </div>
   {panel}
 </div>{step_html}</main>"""
-    return HTMLResponse(member_ui.page(str(c["title"]), body), status_code=status_code)
+    return HTMLResponse(member_ui.page(str(c["title"]), body, provider_line=False), status_code=status_code)
 
 
 @app.get("/my-cpd/course/{course_id}", response_class=HTMLResponse)
