@@ -880,6 +880,11 @@
       .search-input { width: 100%; }
       .sub-strip { flex-direction: column; }
       .modal { padding: 1.6rem; }
+      /* Card buttons on a phone: the label wraps inside its button, tap targets 44px. */
+      .card-acts, .series-acts { flex-wrap: wrap; }
+      .card-btn-buy, .card-btn-detail { display: inline-flex; align-items: center; justify-content: center;
+        min-height: 44px; white-space: normal; text-align: center; line-height: 1.25; }
+      .card-acts .card-btn-detail, .series-acts .card-btn-detail { flex: 1 1 auto; }
     }
   </style>
 </head>
