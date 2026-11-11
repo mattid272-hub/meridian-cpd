@@ -347,7 +347,25 @@ del followup.SUBSCRIBE_URLS[99]
 check("prices are exactly as approved",
       "£39.99" in v["next (annual £79)"] and "£79 a year" in v["next (annual £79)"] and "£99" not in v["next (annual £79)"]
       and "£99 a year" in v["next (annual £99)"] and "£79" not in v["next (annual £99)"]
-      and "from £79 to £99 a year on 1 January 2027" in v["price"] and "£99 a year" in v["price"] and "£39.99" in v["price"])
+      and "The annual membership is £79 a year: " in v["price"] and "It goes up to £99 a year on 1 January 2027." in v["price"]
+      and "£39.99" in v["price"])
+_sub = followup.SUBSCRIBE_URLS[79]
+def _rule10(text, html, url, price):
+    paras = text.split("\n\n")
+    body = text.split("Kind regards,")[0]
+    return (paras[1].endswith(url) and url in paras[1] and f"Annual membership, £{price} a year: {url}" in body
+            and body.rstrip().split("\n\n")[-2] == f"Annual membership, £{price} a year: {url}"
+            and html.count(f'href="{url}"') >= 2)
+os.environ["FREE_FOLLOWUP_PRICE_RISE"] = "on"
+_n_on = followup.render_next("Jo", "x", "u", 79)
+os.environ.pop("FREE_FOLLOWUP_PRICE_RISE")
+_n_off = followup.render_next("Jo", "x", "u", 79)
+_pr = followup.render_price("Jo", "u")
+check("rule 10: the full subscribe link is on line 2 and again at the close, in text and as a link in HTML (what's next, notice on and off; price rise)",
+      _rule10(_n_on[1], _n_on[2], _sub, 79) and _rule10(_n_off[1], _n_off[2], _sub, 79) and _rule10(_pr[1], _pr[2], _sub, 79))
+check("line 2 of what's next names the annual membership with its link; line 2 of the price email gives the price with its link",
+      _n_off[1].split("\n\n")[1] == f"Two ways to carry on from x. The first is the annual membership: {_sub}"
+      and _pr[1].split("\n\n")[1] == f"The annual membership is £79 a year: {_sub}")
 check("the nudge no longer claims a re-download from the completion page or 'straight to your inbox'",
       "download the course again" not in v["nudge"] and "straight to your inbox" not in v["nudge"])
 check("the sales emails say the Field Work series are written for England and Wales and to check scheme rules",

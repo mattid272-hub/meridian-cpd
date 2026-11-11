@@ -245,8 +245,8 @@ def _footer_text(unsub: str) -> str:
 
 
 def _compose(subject: str, paragraphs: list[str], unsub: str) -> tuple[str, str, str]:
-    """Plain text and HTML from the same paragraphs. A paragraph that is only a URL
-    becomes a link in the HTML; a (label, url) pair is 'label: url' in the text and a link
+    """Plain text and HTML from the same paragraphs. A paragraph that is only a URL, or a
+    URL inside a paragraph, becomes a link in the HTML; a (label, url) pair is 'label: url' in the text and a link
     named label in the HTML. The body ends at 'Kind regards,' and the hello@
     signature follows, as in the outreach email."""
     plain = [f"{p[0]}: {p[1]}" if isinstance(p, tuple) else p for p in paragraphs]
@@ -262,7 +262,11 @@ def _compose(subject: str, paragraphs: list[str], unsub: str) -> tuple[str, str,
             label = p.split("://", 1)[1]
             parts.append(f'<p style="margin:0 0 16px"><a href="{escape(p)}" {link}>{escape(label)}</a></p>')
         else:
-            parts.append(f'<p style="margin:0 0 16px">{escape(p)}</p>')
+            # A URL inside a sentence ("...membership: https://...") is a link in the HTML too.
+            body = re.sub(r"https?://[^\s<]+",
+                          lambda m: f'<a href="{m.group(0)}" {link}>{m.group(0).split("://", 1)[1]}</a>',
+                          escape(p))
+            parts.append(f'<p style="margin:0 0 16px">{body}</p>')
     html = f"""<!DOCTYPE html><html><body style="margin:0;padding:0;background:#ffffff">
 <div style="font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:{ink};max-width:600px;margin:0 auto;padding:24px">
 {"".join(parts)}
@@ -304,19 +308,20 @@ def render_next(name: str, course_title: str, unsub: str, annual: int, rise_noti
         raise ValueError(f"no subscribe link for an annual price of {annual!r}")
     if rise_notice is None:
         rise_notice = price_rise_notice_on()
+    url = SUBSCRIBE_URLS[annual]
+    # Rule 10 (easy to buy): the buying link on line 2 and again at the close, in full.
     paragraphs = [
         _greeting(name),
-        f"Two ways to carry on from {course_title}.",
-        f"The annual membership is every course in the library, plus every new course added during your year, "
-        f"for £{annual} a year.",
+        f"Two ways to carry on from {course_title}. The first is the annual membership: {url}",
+        f"It is every course in the library, plus every new course added during your year, for £{annual} a year.",
     ]
     if annual == 79 and rise_notice:
         paragraphs.append(RISE_HEADS_UP)
     paragraphs += [
-        SUBSCRIBE_URLS[annual],
-        "A Field Work series is three linked courses on one subject for £39.99, written for England and Wales. "
-        "Each part has its own certificate of completion.",
+        "The second is a Field Work series: three linked courses on one subject for £39.99, written for England "
+        "and Wales. Each part has its own certificate of completion.",
         *SERIES_LINKS,
+        f"Annual membership, £{annual} a year: {url}",
         "Check your own scheme's CPD rules for what counts towards your hours.",
         "Kind regards,",
     ]
@@ -324,15 +329,18 @@ def render_next(name: str, course_title: str, unsub: str, annual: int, rise_noti
 
 
 def render_price(name: str, unsub: str):
+    url = SUBSCRIBE_URLS[79]
+    # Rule 10 (easy to buy): the buying link on line 2 and again at the close, in full.
     paragraphs = [
         _greeting(name),
-        "The annual membership goes up from £79 to £99 a year on 1 January 2027. " + FOUNDER_RATE,
+        f"The annual membership is £79 a year: {url}",
+        RISE_HEADS_UP,
         "It is every course in the library, plus every new course added during your year, with a certificate of "
         "completion for each course you finish.",
-        SUBSCRIBE_URLS[79],
         "If a whole year is more than you need, a Field Work series is three courses on one subject for £39.99, "
         "written for England and Wales.",
         *SERIES_LINKS,
+        f"Annual membership, £79 a year: {url}",
         "Check your own scheme's CPD rules for what counts towards your hours.",
         "Kind regards,",
     ]
