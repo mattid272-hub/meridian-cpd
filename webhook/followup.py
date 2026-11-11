@@ -5,7 +5,8 @@ The sequence Matt approved on 6 November 2026:
   2. next     what's next (a Field Work series at £39.99, or the year at the annual price
               checkout charges): 7 days after completing the free course, or after the nudge
               if it was never completed; while FREE_FOLLOWUP_PRICE_RISE is on, the £79
-              version carries a heads-up (£99 from 1 January; subscribe before and keep £79)
+              version carries a heads-up (£99 from 1 January 2027; the site's founder line,
+              subscribe before then and you keep £79 for as long as you stay)
   3. price    the annual price rises to £99 on 1 January 2027: once, between 1 and 23
               December 2026, and only while checkout still charges £79 and
               FREE_FOLLOWUP_PRICE_RISE is on (Matt sets it once the £99 line is live on the
@@ -287,7 +288,9 @@ def render_nudge(name: str, course_title: str, cpd_hours, unsub: str):
     return _compose("Your free course is still open", paragraphs, unsub)
 
 
-FOUNDER_RATE = "Join before 1 January and you keep £79 at every renewal."
+# Word for word the site's line (landing-page/index.html price card and CTA, courses.html
+# subscription card); it follows a sentence that names 1 January 2027, so "then" is that date.
+FOUNDER_RATE = "Subscribe before then and you keep £79 for as long as you stay."
 RISE_HEADS_UP = "It goes up to £99 a year on 1 January 2027. " + FOUNDER_RATE
 
 

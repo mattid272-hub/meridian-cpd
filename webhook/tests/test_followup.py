@@ -360,8 +360,8 @@ try:
 except ValueError:
     unknown_ok = True
 check("there is no text for an annual price other than £79 or £99", unknown_ok)
-check("the price-rise email gives the founder rate (keep £79 at every renewal), not 'your first year is £79'",
-      "keep £79 at every renewal" in v["price"] and "first year" not in v["price"])
+check("the price-rise email gives the founder rate in the site's words, not 'your first year is £79'",
+      "Subscribe before then and you keep £79 for as long as you stay." in v["price"] and "first year" not in v["price"])
 os.environ["FREE_FOLLOWUP_PRICE_RISE"] = "on"
 on79 = followup.render_next("Jo", "x", "u", 79)[1]
 followup.SUBSCRIBE_URLS[99] = "https://buy.stripe.com/test-99"
@@ -373,7 +373,13 @@ check("and the preview of what's next at £79 shows the heads-up then",
       "keep £79" in {s: t for s, _, t in followup.previews()}["next (annual £79)"])
 check("the founder-rate line is word for word where the January price appears",
       followup.FOUNDER_RATE in on79 and followup.FOUNDER_RATE in v["price"]
-      and "for as long as you" not in on79 + v["price"] and "One thing to know" not in on79)
+      and "at every renewal" not in on79 + v["price"] and "One thing to know" not in on79)
+check("the founder-rate line is the site's wording, word for word",
+      followup.FOUNDER_RATE == "Subscribe before then and you keep £79 for as long as you stay.")
+_site = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "landing-page", "courses.html"), encoding="utf-8").read()
+check("and that wording is on the site's subscription card", followup.FOUNDER_RATE in _site)
+check("'then' follows a sentence that names 1 January 2027, in both emails that carry it",
+      "1 January 2027. " + followup.FOUNDER_RATE in on79 and "1 January 2027. " + followup.FOUNDER_RATE in v["price"])
 os.environ.pop("FREE_FOLLOWUP_PRICE_RISE")
 off79 = followup.render_next("Jo", "x", "u", 79)[1]
 check("with the switch off, what's next at £79 says nothing about £99", "£99" not in off79 and "keep £79" not in off79)
