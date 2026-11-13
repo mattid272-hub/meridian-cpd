@@ -198,6 +198,7 @@ check("a subscriber's cards all open the material", "See the course" not in t an
 own = re.sub(r'data-q="[^"]*"|<svg.*?</svg>', "", r.text, flags=re.S)
 for k, v in main.COURSE_TEXT.items():  # the catalogue's own descriptions name regulations and schemes; Phase 1 exempts them too
     own = own.replace(member_ui._esc(member_ui.statement(v["desc"])), "")
+own = own.replace(member_ui.CPD_GROUP_LINE, "", 1)  # the permitted CPD Group sentence, word for word, once, in the footer
 check("no 'accredited' or 'approved' in the dashboard's own words", not re.search(r"accredit|approved(?! document)", own, re.I))
 
 # ── 3. Tags and the one-line statement ──
