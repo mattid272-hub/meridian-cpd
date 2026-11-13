@@ -135,7 +135,8 @@ check("pricing card: See the Series goes to the series block", '<a href="courses
       and 'id="seriesGrid"' in crs)
 check("the free-course links open the free course", idx.count('href="courses.html?open=MER-DEA-001">Claim your first course free</a>') == 1
       and '<a href="courses.html?open=MER-DEA-001" class="btn-s">First course free with MERIDIAN10</a>' in idx
-      and '<a href="courses.html?open=MER-DEA-001">use code MERIDIAN10 at checkout &#8594;</a>' in idx)
+      and 'Not ready yet? <a href="courses.html?open=MER-DEA-001">Claim your first course free with code MERIDIAN10 at checkout &#8594;</a>' in idx
+      and '>Claim your first course free</a> with code <strong style="color:var(--accent)">MERIDIAN10</strong> at checkout.' in idx)
 bare = [h for h in re.findall(r'href="(https://buy\.stripe\.com/[^"]*)"', idx + crs) if "client_reference_id" not in h]
 check("every Stripe link left without a reference is the annual subscription", bare and all("fZufZgbse3BpcXE7TY73G01" in h for h in bare))
 check("the annual buttons stay direct to Stripe", idx.count('href="https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01" class="btn-p">Get Full Access') == 3)
