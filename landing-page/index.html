@@ -1274,9 +1274,14 @@
       padding: 1rem 6vw;
       text-align: center;
     }
-    #trust-strip a { font-size: .9rem; font-weight: 600; color: var(--accent); text-decoration: none; }
-    #trust-strip a:hover { text-decoration: underline; }
-    .about-provider { margin-top: 2.5rem; font-size: .95rem; }
+    #trust-strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .6rem 1.4rem; }
+    #trust-strip a.cpdg-line { font-size: .9rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+    #trust-strip a.cpdg-line:hover { text-decoration: underline; }
+    /* The CPD Register "Verify On" badge: their file, unaltered, resized only. */
+    .cpdg-badge-link { display: inline-block; line-height: 0; }
+    .cpdg-badge { width: 96px; height: auto; display: block; }
+    .about-provider { margin-top: 2.5rem; font-size: .95rem; display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.4rem; }
+    .ft-cpdg { line-height: 0; }
     .about-provider a { color: var(--accent); text-decoration: none; }
     .about-provider a:hover { text-decoration: underline; }
     .ft-copy a.cpdg-link { color: var(--muted-d); text-decoration: underline; }
@@ -1400,7 +1405,8 @@
 
 <!-- ─── 1.5. TRUST STRIP ─── -->
 <div id="trust-strip">
-  <a href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" rel="noopener">Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)</a>
+  <a class="cpdg-badge-link" href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" rel="noopener"><img class="cpdg-badge" src="images/cpd-register/verify-on-white.webp" alt="Verify on The CPD Register" width="96" height="74" loading="lazy"></a>
+  <a class="cpdg-line" href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" rel="noopener">Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)</a>
 </div>
 
 <!-- ─── 2. STAKES ─── -->
@@ -1553,7 +1559,7 @@
     </div>
   </div>
 
-  <p class="about-provider"><a href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" rel="noopener">Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)</a></p>
+  <p class="about-provider"><a class="cpdg-badge-link" href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" rel="noopener"><img class="cpdg-badge" src="images/cpd-register/verify-on-white.webp" alt="Verify on The CPD Register" width="96" height="74" loading="lazy"></a><a class="cpdg-line" href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" rel="noopener">Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)</a></p>
 </section>
 
 <!-- ─── 5. VALUE STACK ─── -->
@@ -1962,6 +1968,7 @@
     <li><a href="quality.html">How our courses are made</a></li>
     <li><a href="equality.html">Equal opportunities</a></li>
   </ul>
+  <div class="ft-cpdg"><a class="cpdg-badge-link" href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" rel="noopener"><img class="cpdg-badge" src="images/cpd-register/verify-on-white.webp" alt="Verify on The CPD Register" width="96" height="74" loading="lazy"></a></div>
   <p class="ft-copy">
     <a class="cpdg-link" href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" rel="noopener">Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)</a><br>
     &copy; Meridian CPD 2026. All rights reserved.<br>

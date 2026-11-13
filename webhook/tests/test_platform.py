@@ -315,7 +315,21 @@ for path in ["/my-cpd/course/MER-ALL-020", "/my-cpd/series/FW-INSULATION", "/my-
 site = (ROOT / "landing-page" / "index.html").read_text()
 check("the app line and link are the website's, word for word", member_ui.CPD_GROUP_LINE in site and member_ui.CPD_GROUP_URL in site
       and f'href="{member_ui.CPD_GROUP_URL}" target="_blank" rel="noopener">{member_ui.CPD_GROUP_LINE}</a>' in site)
-check("no badge image until the CPD Register file is in the repo", member_ui.CPD_GROUP_BADGE_SRC == "" and "cpdg-badge\" src" not in c.get("/my-cpd/dashboard", cookies=BEA).text)
+BADGE = "Verify on The CPD Register"
+t = c.get("/my-cpd/dashboard", cookies=BEA).text
+check("dashboard: the Verify On badge once, white version from the website, linked to the CPD Register, in the footer",
+      t.count(BADGE) == 1 and member_ui.CPD_GROUP_BADGE_SRC == "https://meridiancpd.co.uk/images/cpd-register/verify-on-white.webp"
+      and f'<a href="{member_ui.CPD_GROUP_URL}" target="_blank" rel="noopener"><img class="cpdg-badge" src="{member_ui.CPD_GROUP_BADGE_SRC}"' in t
+      and t.index(BADGE) > t.rindex("</main>"))
+for name in ["verify-on-white.webp", "verify-on-dark-text.webp"]:
+    check(f"the badge file {name} is in the site", (ROOT / "landing-page" / "images" / "cpd-register" / name).is_file())
+for f, n in [("index.html", 3), ("complaints.html", 1), ("quality.html", 1), ("privacy.html", 1), ("terms.html", 1),
+             ("refunds.html", 1), ("equality.html", 1)]:
+    s = (ROOT / "landing-page" / f).read_text()
+    check(f"{f}: the badge sits only with the provider line ({n})", s.count(BADGE) == n and s.count("images/cpd-register/") == n
+          and s.count(member_ui.CPD_GROUP_LINE) == n)
+for f in ["courses.html", "404.html", "unsubscribe.html"]:
+    check(f"{f}: no CPD Register badge", "cpd-register/" not in (ROOT / "landing-page" / f).read_text())
 r = c.get("/my-cpd/course/MER-ALL-028", cookies=SUE)  # the course page makes the completion record /download marks
 r = c.get("/download/MER-ALL-028", cookies=SUE)
 r = c.get("/my-cpd/series/FW-MOISTURE", cookies=SUE); t = flat(r.text)
