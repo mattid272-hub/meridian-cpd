@@ -1,4 +1,4 @@
-name: Meridian CPD — Daily Health Report
+name: Meridian CPD, daily funnel report
 
 on:
   schedule:
@@ -28,5 +28,8 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          # Restricted Stripe key, Checkout Sessions: Read only. Optional: without it the
+          # report shows no checkout figures and says so at the top.
+          STRIPE_REPORT_KEY: ${{ secrets.STRIPE_REPORT_KEY }}
           REPORT_TO_EMAIL: mattid272@gmail.com
         run: python3 .github/scripts/health_report.py
