@@ -32,6 +32,15 @@ pub = page.split("/* ── RESPONSIVE ── */", 1)[1].split("</style>", 1)[0]
 check("public courses page: card buttons wrap their label and are 44px on a phone",
       ".card-acts, .series-acts { flex-wrap: wrap; }" in pub and re.search(r"\.card-btn-buy, \.card-btn-detail \{[^}]*min-height: 44px;[^}]*white-space: normal", pub))
 
+# Every other tap target on a phone (13 Nov 2026 check after PR #78 and #80 went live): the
+# topic chips, the bottom bar's links and the brand link in the member area; the topic and
+# nation chips, the code's Apply button and the course window's close button on courses.html.
+check("on a phone the member area's topic chips are 44px", re.search(r"\.chip \{[^}]*min-height: 44px;[^}]*min-width: 44px", phone))
+check("on a phone the bottom bar's links are 44px", re.search(r"\.tabbar a \{[^}]*min-width: 44px; min-height: 44px", phone))
+check("on a phone the brand link is 44px high", re.search(r"\.brand \{[^}]*min-height: 44px", phone))
+check("public courses page: chips and Apply are 44px on a phone", ".filter-tab, .nation-chip, .promo-apply-btn { min-height: 44px; }" in pub)
+check("public courses page: the window's close button is 44px square on a phone", re.search(r"\.modal-close \{ min-width: 44px; min-height: 44px", pub))
+
 if fails:
     raise SystemExit(f"{fails} check(s) failed")
 print("all passed")
