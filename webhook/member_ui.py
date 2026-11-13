@@ -456,14 +456,15 @@ def topbar(name: str, on: str) -> str:
 # the series pages or the certificates page, so those call page(..., provider_line=False).
 CPD_GROUP_URL = "https://thecpdregister.com/providers/cpd-group-providers--791454"
 CPD_GROUP_LINE = "Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)"
-# The "Verify On The CPD Register" badge (white-text version), shown unaltered, goes here
-# once the file is in the repo: set this to its path under /static. Empty means text only.
-CPD_GROUP_BADGE_SRC = ""
+# The "Verify On The CPD Register" badge (white-text version, for the dark footer): The
+# CPD Group's file, unaltered, resized only, served by the website from
+# landing-page/images/cpd-register/. Empty means text only.
+CPD_GROUP_BADGE_SRC = "https://meridiancpd.co.uk/images/cpd-register/verify-on-white.webp"
 
 
 def provider_footer() -> str:
     badge = (f'<a href="{CPD_GROUP_URL}" target="_blank" rel="noopener"><img class="cpdg-badge" '
-             f'src="{CPD_GROUP_BADGE_SRC}" alt="Verify on The CPD Register" width="120"></a><br>'
+             f'src="{CPD_GROUP_BADGE_SRC}" alt="Verify on The CPD Register" width="96" height="75"></a><br>'
              if CPD_GROUP_BADGE_SRC else "")
     return (f'<p class="foot cpdg">{badge}<a class="cpdg-link" href="{CPD_GROUP_URL}" target="_blank" '
             f'rel="noopener">{CPD_GROUP_LINE}</a></p>')
