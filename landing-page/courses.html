@@ -823,6 +823,7 @@
     }
     .series-card:hover { border-color: rgba(212,255,0,.35); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
     .series-card { scroll-margin-top: 84px; }
+    #seriesGrid, #single-courses { scroll-margin-top: 84px; }
     .series-card.series-target { border-color: var(--accent); }
     .card-cover { aspect-ratio: 16/9; }
     .card-cover svg { display: block; width: 100%; height: 100%; }
@@ -885,6 +886,9 @@
       .card-btn-buy, .card-btn-detail { display: inline-flex; align-items: center; justify-content: center;
         min-height: 44px; white-space: normal; text-align: center; line-height: 1.25; }
       .card-acts .card-btn-detail, .series-acts .card-btn-detail { flex: 1 1 auto; }
+      /* The course window's buy buttons: one a line, full width, the label wraps inside. */
+      .modal-actions .btn-p, .modal-actions .btn-s { flex: 1 1 100%; white-space: normal; text-align: center;
+        padding-left: 1rem; padding-right: 1rem; line-height: 1.3; }
     }
   </style>
 </head>
@@ -915,7 +919,7 @@
 <section class="series-grid" id="seriesGrid" aria-label="Field Work series"></section>
 
 <!-- ─── SINGLE COURSES ─── -->
-<section class="lib-head">
+<section class="lib-head" id="single-courses">
   <h2 class="lib-title">Single courses, £19.99 each</h2>
   <p class="lib-sub">Start with RdSAP 10: What's Changed and Why, free with the code MERIDIAN10.</p>
 </section>
@@ -1028,6 +1032,7 @@
   <p class="footer-copy">&copy; Meridian CPD 2026. All rights reserved. Meridian CPD is an independent CPD provider. Check your own scheme&apos;s CPD rules.<br>FistralAI Ltd (company no. 17091704) trading as Meridian CPD, registered in England and Wales.</p>
 </footer>
 
+<script src="/checkout.js"></script>
 <script>
 // ── Course data ──────────────────────────────────────────────────────────────
 const STRIPE_SINGLE = 'https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00';
@@ -1760,7 +1765,10 @@ function applyPromo() {
   renderRows();
 }
 
+// The course and series links go through checkout.js, the one switch that sends them to the
+// app's /buy/<id> (Stripe's page then names the course) instead of the Payment Link.
 function getStripeLink(courseId) {
+  if (window.MeridianCheckout) return window.MeridianCheckout.buyLink(STRIPE_SINGLE, courseId, promoCode);
   const base = STRIPE_SINGLE;
   const params = new URLSearchParams({ client_reference_id: courseId });
   if (promoCode) params.set('prefilled_promo_code', promoCode);
@@ -1773,6 +1781,7 @@ function getStripeLink(courseId) {
 // (MERIDIAN10 is for a single course; it is also restricted to the £19.99 product in
 // Stripe, so typing it at checkout does nothing here either).
 function getSeriesLink(seriesId) {
+  if (window.MeridianCheckout) return window.MeridianCheckout.buyLink(STRIPE_SERIES, seriesId, '');
   return STRIPE_SERIES + '?' + new URLSearchParams({ client_reference_id: seriesId }).toString();
 }
 function seriesOnSale(seriesId) {
@@ -2054,7 +2063,7 @@ function openModal(courseId) {
     seriesBox.innerHTML = `<p class="modal-section-lbl">${s.title}: the three parts</p><ol class="series-parts">${parts}</ol>`;
     seriesBox.style.display = '';
     if (seriesOnSale(c.series)) {
-      seriesBtn = `<a href="${getSeriesLink(c.series)}" target="_blank" rel="noopener" class="btn-s">All three — ${SERIES_PRICE}</a>`;
+      seriesBtn = `<a href="${getSeriesLink(c.series)}" target="_blank" rel="noopener" class="btn-s">Buy the ${escHtml(s.title.replace('Field Work: ', ''))} series, ${SERIES_PRICE}</a>`;
     }
     seriesNote = ` Each part is its own course with its own certificate. Annual subscribers already have every part in their library, so there is no need to buy the series.`;
     // (the annual price line, ANNUAL_NOTE, is appended to every modal's note below)
@@ -2064,6 +2073,8 @@ function openModal(courseId) {
   }
 
   const link = getStripeLink(c.id);
+  // The button says what it buys: this one part of a series, or this course.
+  const buyLabel = s ? `Buy Part ${c.part} only, £19.99` : `Buy this course, £19.99`;
   const ANNUAL_NOTE = ` £79 a year until 31 December. £99 from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.`;
   const promoNote = (promoCode
     ? `<strong>Code "${promoCode}" will be applied at checkout.</strong>`
@@ -2072,7 +2083,7 @@ function openModal(courseId) {
       : `Have a code? Enter it above or at Stripe checkout. Annual subscribers get every course free.`) + seriesNote + ANNUAL_NOTE;
 
   document.getElementById('modalActions').innerHTML = `
-    <a href="${link}" target="_blank" rel="noopener" class="btn-p">Enrol — £19.99 →</a>
+    <a href="${link}" target="_blank" rel="noopener" class="btn-p">${buyLabel}</a>
     ${seriesBtn}
     <a href="${STRIPE_SUB}" target="_blank" rel="noopener" class="btn-s">Annual Access — £79/yr</a>`;
   document.getElementById('modalPromoNote').innerHTML = promoNote;
@@ -2131,6 +2142,13 @@ renderGrid();
 // layout settle and move the card) and on a hash change.
 function scrollToSeriesCard() {
   const id = decodeURIComponent(window.location.hash.slice(1)).toLowerCase();
+  // The home page pricing cards link to courses.html#seriesGrid and #single-courses. The
+  // series cards are drawn above both after the browser's own jump, so jump again here.
+  if (id === 'seriesgrid' || id === 'single-courses') {
+    const block = document.getElementById(id === 'seriesgrid' ? 'seriesGrid' : id);
+    if (block) block.scrollIntoView({ block: 'start', behavior: 'instant' });
+    return;
+  }
   if (!/^fw-[a-z]+$/.test(id)) return;
   const card = document.getElementById(id);
   if (!card || !card.classList.contains('series-card')) return;

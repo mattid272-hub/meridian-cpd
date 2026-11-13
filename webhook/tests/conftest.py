@@ -26,6 +26,8 @@ _SHARED = {
     (stripe.billing_portal.Session, "create"): stripe.billing_portal.Session.__dict__["create"],
     (stripe.checkout.Session, "retrieve"): stripe.checkout.Session.__dict__["retrieve"],
     (stripe.checkout.Session, "list_line_items"): stripe.checkout.Session.__dict__["list_line_items"],
+    (stripe.checkout.Session, "create"): stripe.checkout.Session.__dict__["create"],
+    (stripe.PromotionCode, "list"): stripe.PromotionCode.__dict__["list"],
 }
 
 
