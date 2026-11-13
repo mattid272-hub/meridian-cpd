@@ -176,7 +176,8 @@ h1, h2, h3 { font-weight: 700; }
 .icon-btn.on { color: var(--accent); border-color: var(--accent); background: rgba(212,255,0,.1); }
 .icon-btn[disabled] { opacity: .35; cursor: not-allowed; }
 .card .acts form { display: contents; }
-.card .acts .btn-p, .card .acts .btn-s.main { flex: 1; min-width: 0; }
+/* No min-width: 0 here: a button never shrinks below its label (it ran out of both sides on a phone). */
+.card .acts .btn-p, .card .acts .btn-s.main { flex: 1 1 auto; }
 .rows.filtering .row { display: none; }
 .rows.filtering .results { display: block; }
 .results { display: none; }
@@ -220,6 +221,15 @@ h1, h2, h3 { font-weight: 700; }
   .cert-table td { border: 0; padding: 4px 14px; }
   .cert-table td.acts { display: flex; gap: 16px; padding-bottom: 12px; }
   .foot { padding-bottom: 90px; }
+  /* Buttons on a phone: the label wraps inside the button rather than spilling out of it,
+     every tap target is at least 44px, the card's main action takes its own full-width
+     line with Info and the icons on the line below, and Sign out sits in the bottom bar
+     only. */
+  .btn { white-space: normal; line-height: 1.25; min-height: 44px; }
+  .card .acts > .btn { flex: 1 1 auto; }
+  .card .acts .btn-p, .card .acts .btn-s.main { flex: 1 1 100%; }
+  .icon-btn { width: 44px; height: 44px; flex: 0 0 44px; }
+  .topbar .signout { display: none; }
 }
 .tabbar { display: none; position: fixed; left: 0; right: 0; bottom: 0; height: 64px; background: #0A180B; border-top: 1px solid var(--line);
           justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); z-index: 6; }
