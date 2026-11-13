@@ -124,9 +124,11 @@
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("a[href]"); if (!a) return;
     var href = a.getAttribute("href");
-    if (href.indexOf("buy.stripe.com") >= 0) {
-      var annual = href.indexOf(ANNUAL_LINK) >= 0, series = href.indexOf(SERIES_LINK) >= 0;
-      var m = href.match(/client_reference_id=([\w-]+)/);
+    // A Payment Link, or the app's /buy/<id> link that checkout.js uses when it is switched on
+    var buy = href.match(/app\.meridiancpd\.co\.uk\/buy\/([\w-]+)/);
+    if (href.indexOf("buy.stripe.com") >= 0 || buy) {
+      var annual = href.indexOf(ANNUAL_LINK) >= 0, series = href.indexOf(SERIES_LINK) >= 0 || !!(buy && /^FW-/i.test(buy[1]));
+      var m = href.match(/client_reference_id=([\w-]+)/) || buy;
       var p = { currency: "GBP", value: annual ? ANNUAL_PRICE : series ? SERIES_PRICE : COURSE_PRICE,
                 content_name: annual ? "subscription" : series ? "series" : "course" };
       if (m) { p.content_ids = [m[1]]; p.content_type = "product"; }

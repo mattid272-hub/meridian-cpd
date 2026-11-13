@@ -22,7 +22,7 @@ import threading
 import time
 from datetime import datetime, timezone, timedelta
 from html import escape as _esc
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 
 import stripe
 from fastapi import FastAPI, HTTPException, Request, Response, Depends, Cookie
@@ -1367,6 +1367,111 @@ async def order_thanks(request: Request):
         ev = meta_capi.order_event(s, purchases, member.get("email") or _session_email(s), request, _g)
         page.background = BackgroundTask(meta_capi.send, [ev])
     return page
+
+
+# ── Buy links that name the course (/buy/<course or series id>) ────────────────
+# A Payment Link shows the same product name ("£19.99 course") whichever course the buy
+# button was for, so a buyer cannot see on Stripe's page what they are paying for. With
+# CHECKOUT_SESSIONS=on, /buy/MER-ALL-022 makes a Checkout Session on the same £19.99
+# price (STRIPE_PRICE_SINGLE; /buy/FW-HEATING on STRIPE_PRICE_SERIES) with the course or
+# series named above the Pay button, and the same client_reference_id the Payment Link
+# carries, so the webhook records the sale exactly as before. Off (the default), or if
+# Stripe refuses the session, /buy sends the buyer to the Payment Link they get today.
+# No price, product or Payment Link is created or changed. The annual subscription is not
+# sold here: its buttons stay on its own Payment Link.
+PAYMENT_LINK_SINGLE = "https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00"
+PAYMENT_LINK_SERIES = "https://buy.stripe.com/7sYaEWfIu8VJ7Dkdei73G02"
+
+
+def checkout_sessions_on() -> bool:
+    return os.environ.get("CHECKOUT_SESSIONS", "off").strip().lower() == "on"
+
+
+def _buy_item(key: str) -> tuple[str, str]:
+    """('course' | 'series' | '', the catalogue key) for a /buy id that is on sale."""
+    key = (key or "").strip().upper()
+    if key in SERIES and series_courses(key) and not any(k in UNDER_REVIEW for k in series_courses(key)):
+        return "series", key
+    if key in COURSES and key != "SUBSCRIPTION" and key not in UNDER_REVIEW:
+        return "course", key
+    return "", key
+
+
+def buy_message(kind: str, key: str) -> str:
+    """The line Stripe shows above the Pay button."""
+    if kind == "series":
+        s = SERIES[key]
+        parts = "; ".join(f"Part {i}: {_short_course_title(COURSES[k]['title'])}"
+                          for i, k in enumerate(s["courses"], 1))
+        return f"You are buying {s['title']}, all three parts. {parts}."
+    return f"You are buying one course: {COURSES[key]['title']} ({key})."
+
+
+def _short_course_title(title: str) -> str:
+    """'Heating Series, Part 1: How Heat Pumps Work' -> 'How Heat Pumps Work'."""
+    return re.sub(r"^.*Series, Part \d+:\s*", "", str(title))
+
+
+def _payment_link_url(kind: str, key: str, code: str = "") -> str:
+    params = {"client_reference_id": key}
+    if kind == "course" and code:
+        params["prefilled_promo_code"] = code
+    base = PAYMENT_LINK_SERIES if kind == "series" else PAYMENT_LINK_SINGLE
+    return base + "?" + urlencode(params)
+
+
+def _promotion_code_id(code: str) -> str:
+    """The id of an active Stripe promotion code (read only), or '' if there is none."""
+    try:
+        found = stripe.PromotionCode.list(code=code, active=True, limit=1)
+        data = _g(found, "data", []) or []
+        return str(_g(data[0], "id", "") or "") if data else ""
+    except Exception as e:
+        print(f"Could not look up promotion code {code!r}: {e}")
+        return ""
+
+
+def checkout_session_params(kind: str, key: str, code: str = "") -> dict:
+    """The Checkout Session for one course or one series, on the existing price."""
+    price = os.environ.get("STRIPE_PRICE_SERIES" if kind == "series" else "STRIPE_PRICE_SINGLE", "")
+    cancel = (f"{SITE_URL}/courses.html#{key.lower()}" if kind == "series"
+              else f"{SITE_URL}/courses.html?open={key}")
+    params = {
+        "mode": "payment",
+        "line_items": [{"price": price, "quantity": 1}],
+        "client_reference_id": key,
+        "metadata": {"series": key} if kind == "series" else {"course_id": key},
+        "custom_text": {"submit": {"message": buy_message(kind, key)}},
+        "success_url": f"{APP_URL}/thanks?session_id={{CHECKOUT_SESSION_ID}}",
+        "cancel_url": cancel,
+        "customer_creation": "always",
+        "name_collection": {"individual": {"enabled": True}},
+    }
+    promo = _promotion_code_id(code) if (kind == "course" and code) else ""
+    if promo:
+        params["discounts"] = [{"promotion_code": promo}]
+    else:
+        params["allow_promotion_codes"] = True
+    return params
+
+
+@app.get("/buy/{key}")
+async def buy(key: str, code: str = ""):
+    kind, key = _buy_item(key)
+    if not kind:
+        return RedirectResponse(f"{SITE_URL}/courses.html", status_code=302)
+    code = re.sub(r"[^A-Za-z0-9_-]", "", code or "")[:40].upper()
+    price_var = "STRIPE_PRICE_SERIES" if kind == "series" else "STRIPE_PRICE_SINGLE"
+    if checkout_sessions_on() and os.environ.get(price_var, ""):
+        try:
+            s = stripe.checkout.Session.create(**checkout_session_params(kind, key, code))
+            url = str(_g(s, "url", "") or "")
+            if url:
+                return RedirectResponse(url, status_code=303)
+        except Exception as e:
+            print(f"ACTION NEEDED: could not start a checkout for {key} ({type(e).__name__}: {e}); "
+                  f"sent the buyer to the Payment Link instead.")
+    return RedirectResponse(_payment_link_url(kind, key, code), status_code=302)
 
 
 @app.post("/thanks/email", response_class=HTMLResponse)
@@ -4857,6 +4962,10 @@ async def admin_system(credentials=Depends(_check_admin)):
         ("UNSUBSCRIBE_SECRET", "Unsubscribe links", True,
          "If not set, unsubscribe links in emails cannot be verified."),
         ("APP_URL", "This app's public address", False, "Defaults to app.meridiancpd.co.uk."),
+        ("CHECKOUT_SESSIONS", "Buy links that name the course on Stripe's page", False,
+         "Optional. off (default) or on. On: /buy/<course or series id> opens a Stripe checkout on the existing "
+         "£19.99 or £39.99 price with the course or series named above the Pay button. Off, or if Stripe refuses, "
+         "/buy sends the buyer to the Payment Link. The site uses /buy only once viaApp is true in landing-page/checkout.js."),
         ("ADMIN_TEST_EMAILS", "Addresses treated as test accounts", False,
          "Optional, comma-separated. Our own domain and example.com are always treated as tests."),
         ("OUTREACH_DAILY_LIMIT", "Outreach emails a day", False,
