@@ -191,12 +191,12 @@ h1, h2, h3 { font-weight: 700; }
 @media (max-width: 700px) {
   .search { min-width: 0; max-width: none; width: 100%; }
   .chips { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; scrollbar-width: none; }
-  .chip { white-space: nowrap; }
+  .chip { white-space: nowrap; min-height: 44px; min-width: 44px; justify-content: center; display: inline-flex; align-items: center; flex: 0 0 auto; }
   .results .card { flex-basis: 100%; }
   .topbar { padding: 0 16px; gap: 12px; height: 56px; }
   .topbar .nav { display: none; }
   .who { display: none; }
-  .brand { font-size: 24px; }
+  .brand { font-size: 24px; display: inline-flex; align-items: center; min-height: 44px; }
   .tabbar { display: flex !important; }
   .wrap { padding: 18px 16px 90px; }
   .hero { grid-template-columns: 1fr; gap: 18px; padding: 18px 16px 22px; }
@@ -230,6 +230,8 @@ h1, h2, h3 { font-weight: 700; }
   .card .acts .btn-p, .card .acts .btn-s.main { flex: 1 1 100%; }
   .icon-btn { width: 44px; height: 44px; flex: 0 0 44px; }
   .topbar .signout { display: none; }
+  /* The bottom bar's links: a 44px tap target each (the bar is 64px high). */
+  .tabbar a { min-width: 44px; min-height: 44px; justify-content: center; }
 }
 .tabbar { display: none; position: fixed; left: 0; right: 0; bottom: 0; height: 64px; background: #0A180B; border-top: 1px solid var(--line);
           justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); z-index: 6; }
