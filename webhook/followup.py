@@ -5,7 +5,8 @@ The sequence Matt approved on 6 November 2026:
   2. next     what's next (a Field Work series at £39.99, or the year at the annual price
               checkout charges): 7 days after completing the free course, or after the nudge
               if it was never completed; while FREE_FOLLOWUP_PRICE_RISE is on, the £79
-              version carries a heads-up (£99 from 1 January; subscribe before and keep £79)
+              version carries a heads-up (£99 from 1 January 2027; the site's founder line,
+              subscribe before then and you keep £79 for as long as you stay)
   3. price    the annual price rises to £99 on 1 January 2027: once, between 1 and 23
               December 2026, and only while checkout still charges £79 and
               FREE_FOLLOWUP_PRICE_RISE is on (Matt sets it once the £99 line is live on the
@@ -84,6 +85,21 @@ STEPS = ("nudge", "next", "price")
 MARKETING_STEPS = {"next", "price"}   # and every monthly edition
 
 COURSES_URL = f"{SITE_URL}/courses.html"
+# The subscribe link for each annual price, so the link charges what the email says. £79 is
+# the site's own Subscribe button (STRIPE_SUB in landing-page/courses.html); Matt agreed on
+# 10 Nov 2026 that Stripe direct is fine in emails to people who already took the free course.
+# A price with no link here is treated like an unreadable price: no email that names the
+# annual price goes. Add £99 only once a £99 Payment Link exists and has been opened and
+# checked; the £99 email then needs a fresh Matt check.
+SUBSCRIBE_URLS = {79: "https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"}
+
+
+def sellable(annual) -> bool:
+    """An annual price the approved texts are written for and that has a subscribe link."""
+    return annual in ANNUAL_PRICES and annual in SUBSCRIBE_URLS
+# Each Field Work series card on courses.html, at £39.99 (anchors fw-<name>).
+SERIES_LINKS = [(name, f"{COURSES_URL}#fw-{name.lower()}")
+                for name in ("Insulation", "Heating", "Ventilation", "Moisture")]
 PRIVACY_URL = f"{SITE_URL}/privacy.html"
 TEST_DOMAINS = outreach.TEST_DOMAINS
 
@@ -211,7 +227,16 @@ def _hours(h) -> str:
 
 
 def first_name(full_name: str | None) -> str:
-    return outreach.greeting_name((full_name or "").strip().split(" ")[0] if full_name else "")
+    """The first name with a capital first letter ('jo' -> 'Jo'), or '' when there is no
+    usable name; the greeting is then plain 'Hello,'."""
+    n = outreach.greeting_name((full_name or "").strip().split(" ")[0] if full_name else "")
+    if n == "there":
+        return ""
+    return n[:1].upper() + n[1:]
+
+
+def _greeting(name: str) -> str:
+    return f"Hello {name}," if name else "Hello,"
 
 
 def _footer_text(unsub: str) -> str:
@@ -220,19 +245,28 @@ def _footer_text(unsub: str) -> str:
 
 
 def _compose(subject: str, paragraphs: list[str], unsub: str) -> tuple[str, str, str]:
-    """Plain text and HTML from the same paragraphs. A paragraph that is only a URL
-    becomes a link in the HTML. The body ends at 'Kind regards,' and the hello@
+    """Plain text and HTML from the same paragraphs. A paragraph that is only a URL, or a
+    URL inside a paragraph, becomes a link in the HTML; a (label, url) pair is 'label: url' in the text and a link
+    named label in the HTML. The body ends at 'Kind regards,' and the hello@
     signature follows, as in the outreach email."""
-    text = "\n\n".join(paragraphs) + "\n\n" + outreach.SIGNATURE_TEXT + "\n\n" + _footer_text(unsub) + "\n"
+    plain = [f"{p[0]}: {p[1]}" if isinstance(p, tuple) else p for p in paragraphs]
+    text = "\n\n".join(plain) + "\n\n" + outreach.SIGNATURE_TEXT + "\n\n" + _footer_text(unsub) + "\n"
     ink, small = outreach.INK, outreach.SMALL
     link = f'style="color:{ink};text-decoration:underline"'
     parts = []
     for p in paragraphs:
-        if re.fullmatch(r"https?://\S+", p):
+        if isinstance(p, tuple):
+            label, url = p
+            parts.append(f'<p style="margin:0 0 16px"><a href="{escape(url)}" {link}>{escape(label)}</a></p>')
+        elif re.fullmatch(r"https?://\S+", p):
             label = p.split("://", 1)[1]
             parts.append(f'<p style="margin:0 0 16px"><a href="{escape(p)}" {link}>{escape(label)}</a></p>')
         else:
-            parts.append(f'<p style="margin:0 0 16px">{escape(p)}</p>')
+            # A URL inside a sentence ("...membership: https://...") is a link in the HTML too.
+            body = re.sub(r"https?://[^\s<]+",
+                          lambda m: f'<a href="{m.group(0)}" {link}>{m.group(0).split("://", 1)[1]}</a>',
+                          escape(p))
+            parts.append(f'<p style="margin:0 0 16px">{body}</p>')
     html = f"""<!DOCTYPE html><html><body style="margin:0;padding:0;background:#ffffff">
 <div style="font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:{ink};max-width:600px;margin:0 auto;padding:24px">
 {"".join(parts)}
@@ -247,10 +281,9 @@ def render_nudge(name: str, course_title: str, cpd_hours, unsub: str):
     page in the member area, and the certificate appears in My certificates at once."""
     hours = _hours(cpd_hours)
     paragraphs = [
-        f"Hello {name},",
-        f"You took {course_title} with us and it isn't marked as complete yet. "
-        + (f"It is {hours}, and it is there whenever you have the time." if hours else "It is there whenever you have the time."),
-        "Sign in at the link below with this email address, open the course and read it.",
+        _greeting(name),
+        f"{course_title} is still in your library, not finished." + (f" It is {hours}." if hours else ""),
+        "Open My CPD below, enter this email address and we'll email you a login link.",
         f"{APP_URL}/my-cpd",
         "When you have read it, tick the declaration on the course page. Your certificate of completion appears "
         "in My certificates at once, and a copy comes by email.",
@@ -259,8 +292,10 @@ def render_nudge(name: str, course_title: str, cpd_hours, unsub: str):
     return _compose("Your free course is still open", paragraphs, unsub)
 
 
-RISE_HEADS_UP = ("One thing to know before you decide: it is £79 a year until 31 December and £99 a year "
-                 "from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.")
+# Word for word the site's line (landing-page/index.html price card and CTA, courses.html
+# subscription card); it follows a sentence that names 1 January 2027, so "then" is that date.
+FOUNDER_RATE = "Subscribe before then and you keep £79 for as long as you stay."
+RISE_HEADS_UP = "It goes up to £99 a year on 1 January 2027. " + FOUNDER_RATE
 
 
 def render_next(name: str, course_title: str, unsub: str, annual: int, rise_notice: bool | None = None):
@@ -269,38 +304,43 @@ def render_next(name: str, course_title: str, unsub: str, annual: int, rise_noti
     so the email never says something the site does not."""
     if annual not in ANNUAL_PRICES:
         raise ValueError(f"no approved text for an annual price of {annual!r}")
+    if annual not in SUBSCRIBE_URLS:
+        raise ValueError(f"no subscribe link for an annual price of {annual!r}")
     if rise_notice is None:
         rise_notice = price_rise_notice_on()
+    url = SUBSCRIBE_URLS[annual]
+    # Rule 10 (easy to buy): the buying link on line 2 and again at the close, in full.
     paragraphs = [
-        f"Hello {name},",
-        f"Thanks for taking {course_title}. If it was useful, there are two ways to carry on.",
-        "A Field Work series is three linked courses on one subject for £39.99, written for England and Wales. "
-        "There are series on insulation, heating, ventilation and moisture. "
-        "Each part has its own certificate of completion as you finish it.",
-        f"The annual membership is every course in the library, plus every new one we add, for £{annual} a year.",
+        _greeting(name),
+        f"Two ways to carry on from {course_title}. The first is the annual membership: {url}",
+        f"It is every course in the library, plus every new course added during your year, for £{annual} a year.",
     ]
     if annual == 79 and rise_notice:
         paragraphs.append(RISE_HEADS_UP)
     paragraphs += [
-        "Both are here:",
-        COURSES_URL,
-        "Whichever you choose, check your own scheme's CPD rules for what counts towards your hours.",
+        "The second is a Field Work series: three linked courses on one subject for £39.99, written for England "
+        "and Wales. Each part has its own certificate of completion.",
+        *SERIES_LINKS,
+        f"Annual membership, £{annual} a year: {url}",
+        "Check your own scheme's CPD rules for what counts towards your hours.",
         "Kind regards,",
     ]
-    return _compose("What comes after the free course", paragraphs, unsub)
+    return _compose(f"The whole library for £{annual} a year", paragraphs, unsub)
 
 
 def render_price(name: str, unsub: str):
+    url = SUBSCRIBE_URLS[79]
+    # Rule 10 (easy to buy): the buying link on line 2 and again at the close, in full.
     paragraphs = [
-        f"Hello {name},",
-        "A short note on price. Annual membership at Meridian CPD is £79 a year until 31 December 2026. "
-        "From 1 January 2027 it will be £99 a year.",
-        "Membership is every course in the library, plus every new one we add, with a certificate of completion "
-        "for each course you finish. Join before 1 January and you keep £79 at every renewal for as long as you "
-        "stay subscribed.",
-        COURSES_URL,
+        _greeting(name),
+        f"The annual membership is £79 a year: {url}",
+        RISE_HEADS_UP,
+        "It is every course in the library, plus every new course added during your year, with a certificate of "
+        "completion for each course you finish.",
         "If a whole year is more than you need, a Field Work series is three courses on one subject for £39.99, "
         "written for England and Wales.",
+        *SERIES_LINKS,
+        f"Annual membership, £79 a year: {url}",
         "Check your own scheme's CPD rules for what counts towards your hours.",
         "Kind regards,",
     ]
@@ -330,16 +370,14 @@ SAMPLE_COURSE = ("RdSAP 10: What's Changed and Why", 2.0)
 
 
 def versions(name: str, unsub: str) -> list[tuple[str, str, str, str]]:
-    """(label, subject, text, html) for every email, including both annual-price versions
-    of 'next' and every monthly edition, with the sample course. For Admin's previews and
+    """(label, subject, text, html) for every email, including 'next' at each annual price
+    that has a subscribe link (SUBSCRIBE_URLS), and every monthly edition, with the sample course. For Admin's previews and
     test copies, and for review."""
     title, hours = SAMPLE_COURSE
-    out = [
-        ("nudge", *render_nudge(name, title, hours, unsub)),
-        ("next (annual £79)", *render_next(name, title, unsub, 79)),
-        ("next (annual £99)", *render_next(name, title, unsub, 99)),
-        ("price", *render_price(name, unsub)),
-    ]
+    out = [("nudge", *render_nudge(name, title, hours, unsub))]
+    out += [(f"next (annual £{a})", *render_next(name, title, unsub, a)) for a in ANNUAL_PRICES if sellable(a)]
+    if sellable(79):
+        out.append(("price", *render_price(name, unsub)))
     for e in MONTHLY_EDITIONS:
         out.append((f"monthly:{e['key']}", *render_monthly(e, name, unsub)))
     return out
@@ -412,14 +450,15 @@ def due_step(member: dict, free: dict, completion: dict | None, sends: list, now
     completed = _parse((completion or {}).get("completed_at"))
     candidates = []
     priced_out = False   # an email that names the annual price is due, but the price is not known
+    # (or has no subscribe link in SUBSCRIBE_URLS)
     if PRICE_NOTICE_FROM <= now < PRICE_NOTICE_UNTIL and "price" not in done and price_rise_notice_on():
-        if annual == 79:
+        if annual == 79 and sellable(79):
             candidates.append("price")
-        elif annual is None:
+        elif annual is None or annual == 79:   # £79 but no £79 subscribe link
             priced_out = True
     if "next" not in done and "price" not in done:
         if (completed and now >= completed + timedelta(days=NEXT_AFTER_COMPLETION_DAYS)) or (not completed and "nudge" in done):
-            if annual in ANNUAL_PRICES:
+            if sellable(annual):
                 candidates.append("next")
             else:
                 priced_out = True
