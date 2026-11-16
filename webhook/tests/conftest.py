@@ -12,7 +12,7 @@ import httpx
 import pytest
 import stripe
 
-_APP_MODULES = ("main", "email_sender", "outreach", "news", "settings", "certificate_generator")
+_APP_MODULES = ("main", "email_sender", "outreach", "news", "settings", "certificate_generator", "member_news")
 _ENV = dict(os.environ)
 # Attributes the scripts replace on shared third-party modules, with their originals.
 _SHARED = {

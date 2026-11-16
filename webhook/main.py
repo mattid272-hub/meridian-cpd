@@ -41,6 +41,7 @@ from settings import APP_URL, SITE_URL
 import outreach
 import news
 import followup
+import member_news
 import meta_capi
 
 
@@ -58,6 +59,10 @@ async def _lifespan(app):
     # dry_run works out who would get what and sends nothing; on sends.
     if followup.mode() != "off":
         tasks.append(asyncio.create_task(followup.scheduler_loop(lambda: supabase, lambda: COURSES)))
+    # Member news to paying members (member_news.py). MEMBER_NEWS defaults to off; dry_run
+    # works out who would get which version and sends nothing; on sends.
+    if member_news.mode() != "off":
+        tasks.append(asyncio.create_task(member_news.scheduler_loop(lambda: supabase, lambda: COURSES, lambda: SERIES)))
     yield
     for task in tasks:
         task.cancel()
@@ -3889,6 +3894,7 @@ def _nav(active: str) -> str:
         ("contacts", "Contacts"),
         ("outreach", "Outreach"),
         ("followup", "Follow-up"),
+        ("member-news", "Member news"),
         ("news", "News"),
         ("courses", "Courses"),
         ("certificates", "Certificates"),
@@ -4856,6 +4862,127 @@ async def admin_followup_test(request: Request, credentials=Depends(_check_admin
     return _followup_page(f"{len(steps)} test emails sent to {_esc(email)}. Their unsubscribe links are live.")
 
 
+# ── Admin → Member news (paying members) ──────────────────────────────────────
+
+def _member_news_page(notice: str = "") -> HTMLResponse:
+    now = datetime.now(member_news.UK)
+    m = member_news.mode()
+    notice_html = f'<div class="card" style="border-left:4px solid #8db600">{notice}</div>' if notice else ""
+    badge = {"off": '<span class="badge badge-off">Off</span>',
+             "dry_run": '<span class="badge badge-warn">Dry run: sends nothing</span>',
+             "on": '<span class="badge badge-ok">Sending</span>'}[m]
+    try:
+        p = member_news.plan(supabase, now, COURSES, SERIES)
+        s = member_news.summary(supabase)
+        problem = ""
+    except Exception as e:  # most likely the migration has not been run yet
+        p, s = {"edition": None, "due": [], "skipped": {}, "paying": 0}, {}
+        problem = (f'<p class="note" style="color:#b45309">Could not read the member news figures ({_esc(type(e).__name__)}). '
+                   f'Has <code>webhook/migrations/2026-11-16_member_news.sql</code> been run?</p>')
+    due_by: dict = {}
+    for d in p["due"]:
+        due_by[d["version"]] = due_by.get(d["version"], 0) + 1
+    due_rows = "".join(f"<tr><td>{_esc(k)}</td><td>{v}</td></tr>" for k, v in sorted(due_by.items())) \
+        or '<tr><td colspan="2" class="empty">Nobody is due an email right now</td></tr>'
+    skip_rows = "".join(f"<tr><td>{_esc(k)}</td><td>{v}</td></tr>" for k, v in sorted(p["skipped"].items())) \
+        or '<tr><td colspan="2" class="empty">None</td></tr>'
+    sent_rows = "".join(
+        f"<tr><td>{_esc(k)}</td><td>{v['sent']}</td><td>{v['delivered']}</td><td>{v['bounced']}</td>"
+        f"<td>{v['complained']}</td><td>{v['failed']}</td><td>{v['held']}</td></tr>" for k, v in sorted(s.items())) \
+        or '<tr><td colspan="7" class="empty">Nothing sent yet</td></tr>'
+    previews = "".join(
+        f"<h3 style='margin:18px 0 6px'>{_esc(label)}: {_esc(subject)}</h3>"
+        f"<pre style=\"white-space:pre-wrap;font-family: 'DM Sans', Arial, sans-serif;font-size:14px;line-height:1.5;"
+        f"background:#F5F5F0;padding:16px;border-radius:8px\">{_esc(text)}</pre>"
+        for label, subject, text, _html in member_news.previews())
+    body = f"""
+    {notice_html}
+    <div class="card">
+      <h2>Member news {badge}</h2>
+      <p class="note">Thank-you and what's-new emails to paying members: version A to active subscribers, version B
+      to course and series buyers with no subscription. Never to free-course-only members, lapsed subscribers, test
+      accounts, anyone who said no to marketing or anyone on the do-not-email list. Each edition once per member; at
+      least {member_news.min_gap_days()} days since any email from us; up to {member_news.daily_limit()} a day,
+      weekdays {member_news.SEND_FROM[0]:02d}:00 to {member_news.SEND_UNTIL[0]:02d}:00 UK. Goes only while checkout
+      charges £79 a year (and £39.99 a series, for version B).
+      Edition open now: <strong>{_esc(p["edition"] or "none")}</strong>.
+      The switch is <code>MEMBER_NEWS</code> on the hosting service (off, dry_run, on).</p>
+      {problem}
+      <form method="post" action="/admin/member-news/test" style="display:inline-flex;gap:6px;align-items:center">
+        <input name="email" type="email" required placeholder="your address"
+               style="padding:8px 12px;border:1px solid #e3e5dc;border-radius:6px;font-size:13px;width:220px">
+        <button style="background:#5C6B5D">Send me a test copy of each version</button></form>
+      <p class="note" style="margin-top:12px"><a href="/admin/member-news/list.csv">Download who is due (CSV)</a>
+      for the HQ send guard. Any address it blocks goes in the box below and never gets this edition.</p>
+      <form method="post" action="/admin/member-news/hold">
+        <textarea name="emails" rows="3" placeholder="one address per line"
+                  style="width:100%;max-width:420px;padding:8px;border:1px solid #e3e5dc;border-radius:6px;font-size:13px"></textarea><br>
+        <button style="background:#5C6B5D;margin-top:6px">Hold these for this edition</button></form>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="lbl">Paying members</div><div class="val">{p['paying']:,}</div></div>
+      <div class="stat"><div class="lbl">Due now</div><div class="val">{len(p['due']):,}</div></div>
+    </div>
+    <div class="card"><h2>Due now (dry run: what the next pass would send)</h2>
+      <table><tr><th>Version</th><th>People</th></tr>{due_rows}</table>
+      <h3 style="margin-top:16px">Not due, and why</h3>
+      <table><tr><th>Reason</th><th>People</th></tr>{skip_rows}</table></div>
+    <div class="card"><h2>Sent</h2>
+      <table><tr><th>Edition and version</th><th>Sent</th><th>Delivered</th><th>Bounced</th><th>Complaints</th><th>Failed</th><th>Held</th></tr>{sent_rows}</table></div>
+    <div class="card"><h2>The emails</h2>
+      <p class="note">Wording lives in <code>webhook/member_news.py</code>, word for word as Matt approved it. A changed
+      word needs a fresh check and Matt's yes. Version B leaves out the line for any series the member already holds.</p>
+      {previews}</div>"""
+    return _page("Member news", "member-news", body)
+
+
+@app.get("/admin/member-news", response_class=HTMLResponse)
+async def admin_member_news(credentials=Depends(_check_admin)):
+    return _member_news_page()
+
+
+@app.get("/admin/member-news/list.csv")
+async def admin_member_news_list(credentials=Depends(_check_admin)):
+    """Who the next pass would send to, for the HQ send guard (may-email check)."""
+    p = member_news.plan(supabase, datetime.now(member_news.UK), COURSES, SERIES)
+    purpose = next((e["hq_purpose"] for e in member_news.EDITIONS if e["key"] == p["edition"]), "")
+    lines = ["email,edition,version,hq_purpose"]
+    for d in p["due"]:
+        lines.append(f"{d['member']['email'].strip().lower()},{d['edition']},{d['version']},{purpose}")
+    return Response("\n".join(lines) + "\n", media_type="text/csv",
+                    headers={"Content-Disposition": 'attachment; filename="member-news-due.csv"'})
+
+
+@app.post("/admin/member-news/hold", response_class=HTMLResponse)
+async def admin_member_news_hold(request: Request, credentials=Depends(_check_admin)):
+    form = await request.form()
+    emails = [e for e in re.split(r"[\s,;]+", str(form.get("emails", ""))) if e]
+    if not emails:
+        return _member_news_page("No addresses given.")
+    held, missing = member_news.hold(supabase, emails)
+    return _member_news_page(f"{held} held for this edition." + (f" {missing} not found among members." if missing else ""))
+
+
+@app.post("/admin/member-news/test", response_class=HTMLResponse)
+async def admin_member_news_test(request: Request, credentials=Depends(_check_admin)):
+    """Sends each version once to the address given, marked as a test. Records nothing."""
+    form = await request.form()
+    email = str(form.get("email", "")).strip()
+    if not outreach._EMAIL_RE.match(email):
+        return _member_news_page("That address does not look right.")
+    unsub = outreach.unsubscribe_url(email)
+    try:
+        sent = 0
+        for e in member_news.EDITIONS:
+            for subject, text, html in (e["subscriber"]("Matt", unsub),
+                                        e["buyer"]("Matt", "Field Work: Insulation", {"FW-INSULATION"}, unsub)):
+                await member_news.send_one(email, f"Test: {subject}", text, html, unsub)
+                sent += 1
+    except Exception as ex:
+        return _member_news_page(f"Could not send: {_esc(str(ex)[:200])}")
+    return _member_news_page(f"{sent} test emails sent to {_esc(email)}. Their unsubscribe links are live.")
+
+
 @app.get("/admin/courses", response_class=HTMLResponse)
 async def admin_courses(credentials=Depends(_check_admin)):
     from datetime import date, timedelta
@@ -5010,6 +5137,13 @@ async def admin_system(credentials=Depends(_check_admin)):
          f"Optional. Default {followup.DEFAULT_GAP_DAYS}."),
         ("FREE_FOLLOWUP_MAX_EMAILS", "Follow-up: most emails to one person, ever", False,
          f"Optional. Default {followup.DEFAULT_MAX_EMAILS}."),
+        ("MEMBER_NEWS", "Member news emails to paying members", False,
+         "Optional. off (default), dry_run (works out who would get which version, sends nothing) or on. "
+         "Run webhook/migrations/2026-11-16_member_news.sql first. See Admin → Member news."),
+        ("MEMBER_NEWS_DAILY_LIMIT", "Member news emails a day", False,
+         f"Optional. Default {member_news.DEFAULT_LIMIT}, ceiling {member_news.HARD_CEILING}."),
+        ("MEMBER_NEWS_MIN_GAP_DAYS", "Member news: days since any email from us", False,
+         f"Optional. Default and floor {member_news.MIN_GAP_FLOOR}."),
     ]
     vars_rows = "".join(
         f"<tr><td>{label}</td><td><code>{key}</code></td><td>{var_status(key, req)}</td>"
