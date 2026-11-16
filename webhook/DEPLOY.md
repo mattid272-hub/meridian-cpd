@@ -243,6 +243,17 @@ The price-rise email (1 to 23 December, only while checkout still charges £79) 
 
 Optional: `FREE_FOLLOWUP_CONSENT` (yes_only default, or not_no), `FREE_FOLLOWUP_DAILY_LIMIT` (10), `FREE_FOLLOWUP_MIN_GAP_DAYS` (30), `FREE_FOLLOWUP_MAX_EMAILS` (4). To stop it at any time set `FREE_FOLLOWUP=off`.
 
+## Member news emails (member_news.py)
+
+Thank-you and what's-new emails to paying members: version A to active subscribers, version B to course and series buyers with no subscription. Off by default (`MEMBER_NEWS` unset).
+
+1. Run `webhook/migrations/2026-11-16_member_news.sql` in Supabase → SQL Editor. It creates the send log `member_news_sends`. It sends nothing.
+2. Set `MEMBER_NEWS=dry_run` in Railway Variables. Admin → Member news then shows how many would get each version and why the others would not; nothing is sent or written.
+3. Admin → Member news → Download who is due (CSV). Check each address with the HQ send guard (`HQ/bin/may-email check <address> --purpose <hq_purpose from the CSV>`, plus `--paying-member` for member-news). Paste any BLOCKed address into "Hold these for this edition".
+4. Only then: `MEMBER_NEWS=on`. It sends up to `MEMBER_NEWS_DAILY_LIMIT` (10) a day, weekdays 09:00 to 17:00 UK. Record each send in HQ afterwards (`may-email record ... --channel resend`); the sends are in `member_news_sends`.
+
+It goes only while checkout charges £79 a year (`STRIPE_PRICE_SUBSCRIPTION`) and, for version B, £39.99 a series (`STRIPE_PRICE_SERIES`); the first edition stops at the end of 2026, because it names the 1 January price change. `MEMBER_NEWS_MIN_GAP_DAYS` (30) cannot be set lower than 30. To stop it at any time set `MEMBER_NEWS=off`.
+
 ## Meta Pixel and Conversions API (retargeting)
 
 The site's cookie banner and pixel live in `landing-page/consent.js`; the app's My CPD pages load the same file, and this server sends the same events through Meta's Conversions API. Nothing loads or is sent until the visitor presses Accept (cookie `mcpd_consent=yes` on `.meridiancpd.co.uk`, shared by the site and the app). `webhook/meta_capi.py` explains the events and how they are deduplicated.
