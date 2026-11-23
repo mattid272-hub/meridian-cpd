@@ -1,5 +1,6 @@
 """Withdrawn courses: no download, no completion, no certificate, marked on the dashboard.
 Run: python3 tests/test_withdrawal.py"""
+import re
 import os, sys, types
 os.environ.update(STRIPE_SECRET_KEY="sk_test_x", STRIPE_WEBHOOK_SECRET="whsec_x", SUPABASE_URL="https://example.supabase.co",
                   SUPABASE_SERVICE_ROLE_KEY="eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIn0.x", SESSION_SECRET="s")
@@ -52,12 +53,13 @@ r = c.post("/complete/tok-ra", data={"confirm": "on", "cert_name": "X"}); assert
 assert next(x for x in db["completions"] if x["completion_token"] == "tok-ra")["completed_at"] is None
 r = c.get("/complete/tok-dea"); assert r.status_code == 200 and "being updated" not in r.text
 r = c.get("/my-cpd/dashboard", cookies=cookie); assert r.status_code == 200, r.status_code
-t = r.text
+t = r.text.split('<section class="results"', 1)[1]  # Phase 2: the flat list holds each course once
 assert t.count("Being updated") == W, t.count("Being updated")
 # One download link per available course, plus a notes link for each deck course
 n_notes = sum(1 for k in main.COURSES if main.is_available(k) and main._is_deck(k))
-assert t.count('href="/download/') == N + n_notes, (t.count('href="/download/'), N, n_notes)
-assert t.count('/notes"') == n_notes
+links = set(re.findall(r'href="(/download/[^"]+)"', t))  # Phase 2: the primary action and the Download link share a target
+assert len(links) == N + n_notes, (len(links), N, n_notes)
+assert sum(1 for l in links if l.endswith("/notes")) == n_notes
 assert "/download/MER-ALL-016" not in t and "/complete/tok-ra" not in t
 new_tokens = [x["course_id"] for x in db["completions"] if x["completion_token"] not in ("tok-ra", "tok-done", "tok-dea")]
 had = {"MER-ALL-016", "MER-ALL-004", "MER-DEA-002"}

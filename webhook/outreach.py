@@ -68,7 +68,7 @@ INK = "#0d1f0e"        # text
 MUTED = "#5b6660"      # tagline
 SMALL = "#8a918c"      # legal line and footer
 RULE = "#d9d5c9"       # hairline
-LOGO_URL = "https://serensurveying.co.uk/assets/img/email/meridian-cpd-lockup.png"
+LOGO_URL = "https://meridiancpd.co.uk/images/email/meridian-cpd-lockup.png"
 TAGLINE = "Practitioner-written CPD for domestic energy assessors, retrofit assessors and retrofit coordinators. Stay sharp. Stay certified."
 TRADING_LINE = "Meridian CPD is a trading name of FistralAI Ltd, registered in England and Wales, company number 17091704."
 

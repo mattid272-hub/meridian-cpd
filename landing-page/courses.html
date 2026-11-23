@@ -822,6 +822,9 @@
       transition: border-color .2s, transform .15s, box-shadow .2s;
     }
     .series-card:hover { border-color: rgba(212,255,0,.35); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
+    .series-card { scroll-margin-top: 84px; }
+    #seriesGrid, #single-courses { scroll-margin-top: 84px; }
+    .series-card.series-target { border-color: var(--accent); }
     .card-cover { aspect-ratio: 16/9; }
     .card-cover svg { display: block; width: 100%; height: 100%; }
     .course-card .card-cover { margin: -1.5rem -1.5rem 0; border-radius: 10px 10px 0 0; overflow: hidden; }
@@ -847,6 +850,27 @@
     .lib-sub { font-size: .95rem; color: var(--muted-d); }
     @media (max-width: 1100px) { .series-grid { grid-template-columns: repeat(2, 1fr); } }
 
+    /* ── TOPIC ROWS (Phase 2) ── Rows built from each course's tags (series, strand, where,
+       published date) by courseTags(); the flat grid replaces them while a search, chip or
+       nation is chosen. Same tag rules as webhook/member_ui.py course_tags(). */
+    .topic-rows { padding: 0 6vw 3rem; }
+    .topic-row { margin-bottom: 2.2rem; }
+    .topic-row h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .8rem; }
+    .topic-rail { display: flex; gap: 1.1rem; overflow-x: auto; padding-bottom: .6rem; scroll-snap-type: x proximity; scrollbar-width: thin; }
+    .topic-rail .course-card { flex: 0 0 290px; scroll-snap-align: start; }
+    .course-card { padding: 0 0 1.2rem; gap: .7rem; overflow: hidden; }
+    .course-card > *:not(.card-cover) { margin-left: 1.2rem; margin-right: 1.2rem; }
+    .course-card .card-cover { margin: 0; border-radius: 0; }
+    .card-stmt { font-size: .84rem; color: rgba(255,255,255,.62); line-height: 1.5; }
+    .card-acts { display: flex; gap: .5rem; margin-top: auto; padding-top: .4rem; }
+    .card-acts .card-btn-buy { flex: 1; text-align: center; }
+    .topic-chip { white-space: nowrap; }
+    .course-grid.hidden, .topic-rows.hidden { display: none; }
+    @media (max-width: 700px) {
+      .filter-tabs { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; }
+      .topic-rail .course-card { flex-basis: 78vw; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       .nav-links { display: none; }
@@ -857,6 +881,19 @@
       .search-input { width: 100%; }
       .sub-strip { flex-direction: column; }
       .modal { padding: 1.6rem; }
+      /* Card buttons on a phone: the label wraps inside its button, tap targets 44px. */
+      .card-acts, .series-acts { flex-wrap: wrap; }
+      .card-btn-buy, .card-btn-detail { display: inline-flex; align-items: center; justify-content: center;
+        min-height: 44px; white-space: normal; text-align: center; line-height: 1.25; }
+      .card-acts .card-btn-detail, .series-acts .card-btn-detail { flex: 1 1 auto; }
+      /* The course window's buy buttons: one a line, full width, the label wraps inside. */
+      .modal-actions .btn-p, .modal-actions .btn-s { flex: 1 1 100%; white-space: normal; text-align: center;
+        padding-left: 1rem; padding-right: 1rem; line-height: 1.3; }
+      /* The chips, the code's Apply button and the window's close button: 44px tap targets. */
+      .filter-tab, .nation-chip, .promo-apply-btn { min-height: 44px; }
+      .filter-tab { flex: 0 0 auto; }
+      .modal-close { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center;
+        top: .6rem; right: .6rem; }
     }
   </style>
 </head>
@@ -887,7 +924,7 @@
 <section class="series-grid" id="seriesGrid" aria-label="Field Work series"></section>
 
 <!-- ─── SINGLE COURSES ─── -->
-<section class="lib-head">
+<section class="lib-head" id="single-courses">
   <h2 class="lib-title">Single courses, £19.99 each</h2>
   <p class="lib-sub">Start with RdSAP 10: What's Changed and Why, free with the code MERIDIAN10.</p>
 </section>
@@ -907,10 +944,13 @@
 <!-- ─── CONTROLS ─── -->
 <div class="controls-bar">
   <div class="filter-tabs" id="filterTabs">
-    <button class="filter-tab active" data-filter="all">All</button>
-    <button class="filter-tab" data-filter="DEA">DEA Track</button>
-    <button class="filter-tab" data-filter="RA">Retrofit Assessor</button>
-    <button class="filter-tab" data-filter="ALL">All Strands</button>
+    <button class="filter-tab topic-chip active" data-filter="all">All</button>
+    <button class="filter-tab topic-chip" data-filter="new">New</button>
+    <button class="filter-tab topic-chip" data-filter="field-work">Field Work</button>
+    <button class="filter-tab topic-chip" data-filter="dea">For DEAs</button>
+    <button class="filter-tab topic-chip" data-filter="retrofit">Retrofit</button>
+    <button class="filter-tab topic-chip" data-filter="all-assessors">All assessors</button>
+    <button class="filter-tab topic-chip" data-filter="scotland">Scotland</button>
   </div>
   <div class="search-wrap">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A9E8B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -928,8 +968,11 @@
 <p class="where-note" id="whereNote" style="display:none"></p>
 
 
-<!-- ─── COURSE GRID ─── -->
-<div class="course-grid" id="courseGrid">
+<!-- ─── TOPIC ROWS (rendered by renderRows) ─── -->
+<div class="topic-rows" id="topicRows"></div>
+
+<!-- ─── COURSE GRID (search and chip results) ─── -->
+<div class="course-grid hidden" id="courseGrid">
   <div class="no-results" id="noResults">
     No courses match your search. <a href="#" onclick="clearFilters(); return false;" style="color:var(--accent)">Clear filters</a>
   </div>
@@ -994,6 +1037,7 @@
   <p class="footer-copy">&copy; Meridian CPD 2026. All rights reserved. Meridian CPD is an independent CPD provider. Check your own scheme&apos;s CPD rules.<br>FistralAI Ltd (company no. 17091704) trading as Meridian CPD, registered in England and Wales.</p>
 </footer>
 
+<script src="/checkout.js"></script>
 <script>
 // ── Course data ──────────────────────────────────────────────────────────────
 const STRIPE_SINGLE = 'https://buy.stripe.com/9B6bJ0bsefk72j02zE73G00';
@@ -1602,7 +1646,86 @@ const ALL_COURSES = [
 ];
 
 const COURSES = ALL_COURSES.filter(c => !UNDER_REVIEW.has(c.id));
-const HIDDEN_COUNT = ALL_COURSES.length - COURSES.length;
+
+// Published dates, mirroring COURSES in webhook/main.py (tests check the two agree).
+const PUBLISHED = {
+  'MER-DEA-001': '2026-03-01',
+  'MER-DEA-002': '2026-03-01',
+  'MER-DEA-003': '2026-03-01',
+  'MER-DEA-004': '2026-03-01',
+  'MER-DEA-005': '2026-03-01',
+  'MER-DEA-006': '2026-03-01',
+  'MER-DEA-007': '2026-03-01',
+  'MER-DEA-008': '2026-03-01',
+  'MER-DEA-010': '2026-03-01',
+  'MER-DEA-011': '2026-03-01',
+  'MER-DEA-014': '2026-03-01',
+  'MER-DEA-021': '2026-03-01',
+  'MER-RA-001': '2026-03-01',
+  'MER-RA-002': '2026-03-01',
+  'MER-RA-003': '2026-03-01',
+  'MER-RA-004': '2026-03-01',
+  'MER-RA-005': '2026-03-01',
+  'MER-RA-006': '2026-03-01',
+  'MER-RA-007': '2026-03-01',
+  'MER-RA-008': '2026-03-01',
+  'MER-RA-009': '2026-03-01',
+  'MER-RA-010': '2026-03-01',
+  'MER-RA-011': '2026-03-01',
+  'MER-RA-012': '2026-03-01',
+  'MER-ALL-001': '2026-03-01',
+  'MER-ALL-004': '2026-03-01',
+  'MER-ALL-005': '2026-04-15',
+  'MER-ALL-008': '2026-07-01',
+  'MER-ALL-009': '2026-07-15',
+  'MER-ALL-010': '2026-08-01',
+  'MER-ALL-011': '2026-08-01',
+  'MER-ALL-012': '2026-08-15',
+  'MER-ALL-013': '2026-08-01',
+  'MER-ALL-014': '2026-08-15',
+  'MER-ALL-015': '2026-09-01',
+  'MER-ALL-016': '2026-09-15',
+  'MER-ALL-017': '2026-10-01',
+  'MER-ALL-018': '2026-10-25',
+  'MER-ALL-019': '2026-10-29',
+  'MER-ALL-020': '2026-10-29',
+  'MER-ALL-021': '2026-10-29',
+  'MER-ALL-022': '2026-10-30',
+  'MER-ALL-023': '2026-10-30',
+  'MER-ALL-024': '2026-10-30',
+  'MER-ALL-025': '2026-10-30',
+  'MER-ALL-026': '2026-10-30',
+  'MER-ALL-027': '2026-10-30',
+  'MER-ALL-028': '2026-10-30',
+  'MER-ALL-029': '2026-10-30',
+  'MER-SCO-001': '2026-10-28',
+  'MER-SCO-002': '2026-10-28',
+};
+
+// ── Tags and rows ────────────────────────────────────────────────────────────
+// Every row is built from these tags, never from a hand-kept list. The same rules as
+// course_tags() in webhook/member_ui.py.
+const NEW_DAYS = 31;
+const TOPICS = [
+  ['new', 'New'], ['field-work', 'Field Work'], ['dea', 'For DEAs'],
+  ['retrofit', 'Retrofit'], ['all-assessors', 'All assessors'], ['scotland', 'Scotland'],
+];
+function courseTags(c) {
+  const tags = [];
+  if (c.series) tags.push('field-work');
+  else if (c.where === 'S') tags.push('scotland');
+  else tags.push({ DEA: 'dea', RA: 'retrofit' }[c.strand] || 'all-assessors');
+  if (c.where === 'S' && !tags.includes('scotland')) tags.push('scotland');
+  const pub = PUBLISHED[c.id];
+  if (pub && (Date.now() - new Date(pub + 'T00:00:00Z').getTime()) / 86400000 <= NEW_DAYS) tags.push('new');
+  return tags;
+}
+// One line from the description: up to the first colon, semicolon or full stop.
+function statement(desc) {
+  let s = String(desc || '').split(/(?<=[a-z0-9)])[.:;](?:\s|$)/)[0].trim();
+  if (s.length > 120) s = s.slice(0, 120).replace(/\s+\S*$/, '').replace(/,$/, '') + '…';
+  return s;
+}
 
 // ── State ────────────────────────────────────────────────────────────────────
 let activeFilter = 'all';
@@ -1644,9 +1767,13 @@ function applyPromo() {
   msg.textContent = '✓ Code "' + code + '" will be applied at checkout';
   msg.classList.add('show');
   renderGrid();
+  renderRows();
 }
 
+// The course and series links go through checkout.js, the one switch that sends them to the
+// app's /buy/<id> (Stripe's page then names the course) instead of the Payment Link.
 function getStripeLink(courseId) {
+  if (window.MeridianCheckout) return window.MeridianCheckout.buyLink(STRIPE_SINGLE, courseId, promoCode);
   const base = STRIPE_SINGLE;
   const params = new URLSearchParams({ client_reference_id: courseId });
   if (promoCode) params.set('prefilled_promo_code', promoCode);
@@ -1659,6 +1786,7 @@ function getStripeLink(courseId) {
 // (MERIDIAN10 is for a single course; it is also restricted to the £19.99 product in
 // Stripe, so typing it at checkout does nothing here either).
 function getSeriesLink(seriesId) {
+  if (window.MeridianCheckout) return window.MeridianCheckout.buyLink(STRIPE_SERIES, seriesId, '');
   return STRIPE_SERIES + '?' + new URLSearchParams({ client_reference_id: seriesId }).toString();
 }
 function seriesOnSale(seriesId) {
@@ -1750,6 +1878,11 @@ function seriesPoster(sid) {
 }
 
 // ── Series cards ─────────────────────────────────────────────────────────────
+// Each card carries an anchor, FW-MOISTURE -> fw-moisture, so a post that sells a series
+// can link straight to it: courses.html#fw-moisture (scrolled into view on load below).
+function seriesAnchor(sid) {
+  return sid.toLowerCase();
+}
 // The four Field Work series lead the page: poster, title, the three parts, hours,
 // where they apply, and a Buy button on the existing series Payment Link.
 function seriesCard(sid) {
@@ -1763,7 +1896,7 @@ function seriesCard(sid) {
     ? `<a class="card-btn-buy" href="${getSeriesLink(sid)}" target="_blank" rel="noopener">Buy, ${SERIES_PRICE}</a>` +
       (first ? `<button class="card-btn-detail" onclick="openModal('${first.id}')">See the parts</button>` : '')
     : `<span class="card-btn-detail" style="cursor:default">Not on sale yet</span>`;
-  return `<article class="series-card" aria-label="${escHtml(s.title)}">
+  return `<article class="series-card" id="${seriesAnchor(sid)}" aria-label="${escHtml(s.title)}">
     <div class="card-cover">${seriesPoster(sid)}</div>
     <div class="series-body">
       <h2 class="series-title">${escHtml(s.title)}</h2>
@@ -1782,7 +1915,7 @@ function renderSeries() {
 // ── Filtering ────────────────────────────────────────────────────────────────
 function filteredCourses() {
   return COURSES.filter(c => {
-    const strandMatch = activeFilter === 'all' || c.strand === activeFilter;
+    const strandMatch = activeFilter === 'all' || courseTags(c).includes(activeFilter);
     const nationMatch = appliesIn(c, activeNation);
     const q = searchQuery.toLowerCase();
     const textMatch = !q || c.title.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q) || c.id.toLowerCase().includes(q) || whereLabel(c).toLowerCase().includes(q) || seriesTitle(c).toLowerCase().includes(q);
@@ -1820,14 +1953,15 @@ function renderGrid() {
   const grid = document.getElementById('courseGrid');
   const noRes = document.getElementById('noResults');
 
-  // No course counts anywhere on the page: the tabs carry plain labels.
-  const counts = { DEA: 0, RA: 0, ALL: 0 };
-  COURSES.forEach(c => counts[c.strand]++);
-  // A strand with nothing on sale (its courses are being revised) gets no tab.
-  ['DEA', 'RA', 'ALL'].forEach(k => {
+  // No course counts anywhere on the page. A topic with nothing on sale gets no chip.
+  TOPICS.forEach(([k]) => {
     const tab = document.querySelector('.filter-tab[data-filter="' + k + '"]');
-    if (tab) tab.style.display = counts[k] ? '' : 'none';
+    if (tab) tab.style.display = COURSES.some(c => courseTags(c).includes(k)) ? '' : 'none';
   });
+  // With nothing chosen the page shows the topic rows; any search, chip or nation shows the flat grid.
+  const browsing = activeFilter === 'all' && activeNation === 'any' && !searchQuery.trim();
+  grid.classList.toggle('hidden', browsing);
+  document.getElementById('topicRows').classList.toggle('hidden', !browsing);
 
   // Where note: what the chosen nation can use as it stands
   const note = document.getElementById('whereNote');
@@ -1854,41 +1988,53 @@ function renderGrid() {
   // Remove old cards
   Array.from(grid.querySelectorAll('.course-card')).forEach(el => el.remove());
 
-  courses.forEach(c => {
-    const card = document.createElement('div');
-    card.className = 'course-card';
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'article');
-    card.setAttribute('aria-label', c.title);
-
-    const freeTag = c.free ? '<span class="free-badge">Free with MERIDIAN10</span>' : '';
-
-    card.innerHTML = `
-      <div class="card-cover">${coursePoster(c)}</div>
-      <div class="card-top">
-        <span class="strand-badge ${strandClass(c.strand)}">${strandLabel(c.strand)}</span>
-        <span class="card-hours">${hrsLabel(c.hours)}</span>
-      </div>
-      <p class="card-title">${c.title}${freeTag}</p>
-      <span class="where-tag">${whereLabel(c)}</span>
-      ${seriesTag(c)}
-      <p class="card-desc">${c.desc.substring(0, 110)}…</p>
-      <div class="card-footer">
-        <div class="card-price">
-          £19.99
-          <span class="card-price-small">/course</span>
-        </div>
-        <div class="card-actions">
-          <button class="card-btn-detail" onclick="openModal('${c.id}')">Details</button>
-          <a class="card-btn-buy" href="${getStripeLink(c.id)}" target="_blank" rel="noopener">Enrol →</a>
-        </div>
-      </div>`;
-
-    card.addEventListener('keydown', e => { if (e.key === 'Enter') openModal(c.id); });
-    fragment.appendChild(card);
-  });
+  courses.forEach(c => fragment.appendChild(courseCard(c)));
 
   grid.appendChild(fragment);
+}
+
+// One poster card: cover, title, one-line statement, hours, where, Info and Buy.
+function courseCard(c) {
+  const card = document.createElement('div');
+  card.className = 'course-card';
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('role', 'article');
+  card.setAttribute('aria-label', c.title);
+  const freeTag = c.free ? '<span class="free-badge">Free with MERIDIAN10</span>' : '';
+  card.innerHTML = `
+    <div class="card-cover">${coursePoster(c)}</div>
+    <div class="card-top">
+      <span class="strand-badge ${strandClass(c.strand)}">${strandLabel(c.strand)}</span>
+      <span class="card-hours">${hrsLabel(c.hours)}</span>
+    </div>
+    <p class="card-title">${c.title}${freeTag}</p>
+    <p class="card-stmt">${escHtml(statement(c.desc))}</p>
+    <span class="where-tag">${whereLabel(c)}</span>
+    ${seriesTag(c)}
+    <div class="card-acts">
+      <button class="card-btn-detail" onclick="event.stopPropagation(); openModal('${c.id}')">Info</button>
+      <a class="card-btn-buy" href="${getStripeLink(c.id)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Buy, £19.99</a>
+    </div>`;
+  card.addEventListener('keydown', e => { if (e.key === 'Enter') openModal(c.id); });
+  return card;
+}
+
+function renderRows() {
+  const box = document.getElementById('topicRows');
+  if (!box) return;
+  const byNewest = (a, b) => String(PUBLISHED[b.id] || '').localeCompare(String(PUBLISHED[a.id] || ''));
+  box.innerHTML = '';
+  TOPICS.forEach(([tag, label]) => {
+    let list = COURSES.filter(c => courseTags(c).includes(tag));
+    if (!list.length) return;
+    if (tag === 'new') list = list.slice().sort(byNewest);
+    const row = document.createElement('section');
+    row.className = 'topic-row';
+    row.innerHTML = `<h3>${escHtml(label)}</h3><div class="topic-rail"></div>`;
+    const rail = row.querySelector('.topic-rail');
+    list.forEach(c => rail.appendChild(courseCard(c)));
+    box.appendChild(row);
+  });
 }
 
 // ── Modal ────────────────────────────────────────────────────────────────────
@@ -1922,7 +2068,7 @@ function openModal(courseId) {
     seriesBox.innerHTML = `<p class="modal-section-lbl">${s.title}: the three parts</p><ol class="series-parts">${parts}</ol>`;
     seriesBox.style.display = '';
     if (seriesOnSale(c.series)) {
-      seriesBtn = `<a href="${getSeriesLink(c.series)}" target="_blank" rel="noopener" class="btn-s">All three — ${SERIES_PRICE}</a>`;
+      seriesBtn = `<a href="${getSeriesLink(c.series)}" target="_blank" rel="noopener" class="btn-s">Buy the ${escHtml(s.title.replace('Field Work: ', ''))} series, ${SERIES_PRICE}</a>`;
     }
     seriesNote = ` Each part is its own course with its own certificate. Annual subscribers already have every part in their library, so there is no need to buy the series.`;
     // (the annual price line, ANNUAL_NOTE, is appended to every modal's note below)
@@ -1932,6 +2078,8 @@ function openModal(courseId) {
   }
 
   const link = getStripeLink(c.id);
+  // The button says what it buys: this one part of a series, or this course.
+  const buyLabel = s ? `Buy Part ${c.part} only, £19.99` : `Buy this course, £19.99`;
   const ANNUAL_NOTE = ` £79 a year until 31 December. £99 from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.`;
   const promoNote = (promoCode
     ? `<strong>Code "${promoCode}" will be applied at checkout.</strong>`
@@ -1940,7 +2088,7 @@ function openModal(courseId) {
       : `Have a code? Enter it above or at Stripe checkout. Annual subscribers get every course free.`) + seriesNote + ANNUAL_NOTE;
 
   document.getElementById('modalActions').innerHTML = `
-    <a href="${link}" target="_blank" rel="noopener" class="btn-p">Enrol — £19.99 →</a>
+    <a href="${link}" target="_blank" rel="noopener" class="btn-p">${buyLabel}</a>
     ${seriesBtn}
     <a href="${STRIPE_SUB}" target="_blank" rel="noopener" class="btn-s">Annual Access — £79/yr</a>`;
   document.getElementById('modalPromoNote').innerHTML = promoNote;
@@ -1990,7 +2138,32 @@ document.addEventListener('keydown', e => {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 renderSeries();
+renderRows();
 renderGrid();
+
+// Deep-link: courses.html#fw-insulation (fw-heating, fw-ventilation, fw-moisture) scrolls
+// that series card into view. The cards are built by renderSeries, after the browser's own
+// fragment jump, so the scroll is done here, again once the page has loaded (fonts and
+// layout settle and move the card) and on a hash change.
+function scrollToSeriesCard() {
+  const id = decodeURIComponent(window.location.hash.slice(1)).toLowerCase();
+  // The home page pricing cards link to courses.html#seriesGrid and #single-courses. The
+  // series cards are drawn above both after the browser's own jump, so jump again here.
+  if (id === 'seriesgrid' || id === 'single-courses') {
+    const block = document.getElementById(id === 'seriesgrid' ? 'seriesGrid' : id);
+    if (block) block.scrollIntoView({ block: 'start', behavior: 'instant' });
+    return;
+  }
+  if (!/^fw-[a-z]+$/.test(id)) return;
+  const card = document.getElementById(id);
+  if (!card || !card.classList.contains('series-card')) return;
+  document.querySelectorAll('.series-card.series-target').forEach(el => el.classList.remove('series-target'));
+  card.scrollIntoView({ block: 'center', behavior: 'instant' });
+  card.classList.add('series-target');
+}
+scrollToSeriesCard();
+window.addEventListener('load', scrollToSeriesCard);
+window.addEventListener('hashchange', scrollToSeriesCard);
 
 // Structured data for Google: one Course entry per course on sale, built from the
 // same COURSES list the grid uses, so withdrawn courses never appear in it. Names and

@@ -263,7 +263,9 @@ main.UNDER_REVIEW.add("MER-ALL-021")
 r = c.get("/download/MER-ALL-021/notes", cookies=cookie); assert r.status_code == 200 and "being updated" in r.text
 main.UNDER_REVIEW.discard("MER-ALL-021")
 r = c.get("/my-cpd/dashboard", cookies=cookie); assert r.status_code == 200
-assert r.text.count("Part 1 of 3 · Field Work: Insulation") == 1 and "Part 3 of 3" in r.text
+# Phase 2: a course can sit in several rows; the flat results list holds each course once
+results = r.text.split('<section class="results"', 1)[1]
+assert results.count("Part 1 of 3 · Field Work: Insulation") == 1 and "Part 3 of 3" in results
 assert "/download/MER-ALL-020/notes" in r.text and "Download slides" in r.text
 assert "Field Work: Insulation" in main._course_label("MER-ALL-021") and "Part 3 of 3" in main._course_label("MER-ALL-021")
 print("9 deck and notes download routes; dashboard shows the part and both files")

@@ -31,6 +31,8 @@ _SHARED = {
     (stripe.PromotionCode, "create"): stripe.PromotionCode.__dict__["create"],
     (stripe.PromotionCode, "retrieve"): stripe.PromotionCode.__dict__["retrieve"],
     (stripe.Price, "retrieve"): stripe.Price.__dict__["retrieve"],
+    (stripe.checkout.Session, "create"): stripe.checkout.Session.__dict__["create"],
+    (stripe.PromotionCode, "list"): stripe.PromotionCode.__dict__["list"],
 }
 
 

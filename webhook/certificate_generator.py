@@ -6,7 +6,6 @@ Generates polished, tamper-resistant PDF certificates with:
 - Unique certificate number + QR verification
 - Subtle diagonal watermark
 - Shadow effects for depth
-- Seren Surveying / RetroTrack imprint
 - © Meridian CPD branding
 """
 import io
@@ -126,7 +125,11 @@ def _draw_watermark(c, width, height):
     c.setFillColorRGB(0.92, 0.93, 0.90)
     c.rotate(45)
     text = "MERIDIAN CPD  •  STAY SHARP. STAY CERTIFIED.  •  "
-    for x in range(-int(height), int(width + height), 130):
+    # Step along each row by the text's own width so the copies sit end to end. A fixed
+    # step shorter than the text (it was 130 pt for 204 pt of text) printed each copy over
+    # the next and the words ran into each other when zoomed in.
+    step = int(c.stringWidth(text, "Helvetica", 8)) + 1
+    for x in range(-int(height), int(width + height), step):
         for y in range(-int(width), int(height + width), 28):
             c.drawString(x, y, text)
     c.restoreState()
@@ -375,15 +378,6 @@ def generate_certificate(
         lines.append(current)
     for i, line in enumerate(lines):
         c.drawCentredString(width/2, disclaimer_y - i * 8.5, line)
-
-    # ── Imprint bar (Seren Surveying + RetroTrack only) ───────────────────────
-    imprint_y = 14*mm
-    c.setFillColorRGB(0.92, 0.945, 0.965)
-    c.roundRect(18*mm, imprint_y, width - 36*mm, 7.5*mm, 1.5*mm, fill=1, stroke=0)
-    c.setFillColorRGB(*SOFT_GREY)
-    c.setFont("Helvetica", 6.5)
-    c.drawString(22*mm, imprint_y + 2.5*mm, "Curriculum by Seren Surveying Limited")
-    c.drawRightString(width - 22*mm, imprint_y + 2.5*mm, "Managed by RetroTrack")
 
     # ── Navy footer ────────────────────────────────────────────────────────────
     c.setFillColorRGB(*NAVY)

@@ -146,7 +146,8 @@ check("the Moisture introduction does not promise slides for every part (MER-ALL
       "where a part has them" in main.SERIES_INTRO["FW-MOISTURE"] and "Slides for the site visit, written notes" not in main.SERIES_INTRO["FW-MOISTURE"])
 banned = re.compile(r"accredit|approved(?! document)", re.I)  # "Approved Document F" is a regulation's name
 check("no 'accredited' or 'approved' in the series introductions or the member UI",
-      not any(banned.search(t) for t in main.SERIES_INTRO.values()) and not banned.search(Path(member_ui.__file__).read_text()))
+      not any(banned.search(t) for t in main.SERIES_INTRO.values()) and not banned.search(Path(member_ui.__file__).read_text().replace(member_ui.CPD_GROUP_LINE, "", 1)))
+# The one exemption is the permitted CPD Group sentence, word for word (Matt, 6 Nov 2026), checked in 6b.
 
 # ── 1. Poster template ──
 svg = member_ui.poster("Field Work series", "Insulation", "Three parts", "layers")
@@ -299,6 +300,36 @@ check("Moisture series page for a subscriber: the notes-only caveat, Open Part 1
 r = c.get("/my-cpd/series/FW-HEATING", cookies=BEA); t = flat(r.text)
 check("a series the member does not hold: every part marked, Buy the series", t.count("Not in your library") == 3 and "Buy the series, £39.99" in t)
 check("an unknown series is a 404", c.get("/my-cpd/series/FW-NOPE", cookies=BEA).status_code == 404)
+
+# ── 6b. The CPD Group provider line: member app footer only ──
+CPDG = ('<a class="cpdg-link" href="https://thecpdregister.com/providers/cpd-group-providers--791454" target="_blank" '
+        'rel="noopener">Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)</a>')
+for path in ["/my-cpd/dashboard"]:
+    t = c.get(path, cookies=BEA).text
+    check(f"{path}: the provider line, linked to the CPD Register, once, in the footer", t.count(CPDG) == 1
+          and t.index(CPDG) > t.rindex("</main>"))
+for path in ["/my-cpd/course/MER-ALL-020", "/my-cpd/series/FW-INSULATION", "/my-cpd/course/MER-DEA-002",
+             "/my-cpd/series", "/my-cpd/certificates"]:
+    t = c.get(path, cookies=BEA).text
+    check(f"{path}: no CPD Group line on a course, course viewer, series or certificates page", "CPD Group" not in t and "791454" not in t)
+site = (ROOT / "landing-page" / "index.html").read_text()
+check("the app line and link are the website's, word for word", member_ui.CPD_GROUP_LINE in site and member_ui.CPD_GROUP_URL in site
+      and f'href="{member_ui.CPD_GROUP_URL}" target="_blank" rel="noopener">{member_ui.CPD_GROUP_LINE}</a>' in site)
+BADGE = "Verify on The CPD Register"
+t = c.get("/my-cpd/dashboard", cookies=BEA).text
+check("dashboard: the Verify On badge once, white version from the website, linked to the CPD Register, in the footer",
+      t.count(BADGE) == 1 and member_ui.CPD_GROUP_BADGE_SRC == "https://meridiancpd.co.uk/images/cpd-register/verify-on-white.webp"
+      and f'<a href="{member_ui.CPD_GROUP_URL}" target="_blank" rel="noopener"><img class="cpdg-badge" src="{member_ui.CPD_GROUP_BADGE_SRC}"' in t
+      and t.index(BADGE) > t.rindex("</main>"))
+for name in ["verify-on-white.webp", "verify-on-dark-text.webp"]:
+    check(f"the badge file {name} is in the site", (ROOT / "landing-page" / "images" / "cpd-register" / name).is_file())
+for f, n in [("index.html", 3), ("complaints.html", 1), ("quality.html", 1), ("privacy.html", 1), ("terms.html", 1),
+             ("refunds.html", 1), ("equality.html", 1)]:
+    s = (ROOT / "landing-page" / f).read_text()
+    check(f"{f}: the badge sits only with the provider line ({n})", s.count(BADGE) == n and s.count("images/cpd-register/") == n
+          and s.count(member_ui.CPD_GROUP_LINE) == n)
+for f in ["courses.html", "404.html", "unsubscribe.html"]:
+    check(f"{f}: no CPD Register badge", "cpd-register/" not in (ROOT / "landing-page" / f).read_text())
 r = c.get("/my-cpd/course/MER-ALL-028", cookies=SUE)  # the course page makes the completion record /download marks
 r = c.get("/download/MER-ALL-028", cookies=SUE)
 r = c.get("/my-cpd/series/FW-MOISTURE", cookies=SUE); t = flat(r.text)
@@ -306,16 +337,20 @@ check("an opened part shows In progress and Continue", "In progress" in t and "C
 
 # ── 7. Dashboard ──
 r = c.get("/my-cpd/dashboard", cookies=SUE); t = flat(r.text)
-check("dashboard: Your series row with all four series for a subscriber, the hours tally, the continue hero",
+hero_sid = main._newest_series()
+check("dashboard: Your series row with all four series for a subscriber, the hours tally, the newest-series hero, the continue row",
       r.status_code == 200 and "Your series" in t and all(s["title"] in t for s in main.SERIES.values())
-      and f"CPD hours with Meridian in {YEAR}" in t and "Continue where you left off" in t and "Continue Part 2" in t
+      and f"CPD hours with Meridian in {YEAR}" in t and "Continue where you left off" in t
+      and f'<div class="kicker">New series</div> <h1>{main.SERIES[hero_sid]["title"]}</h1>' in t and "Series info" in t
       and "Field Work: Moisture" in t and "/my-cpd/series/FW-MOISTURE" in t and "Annual Subscription" in t and "/my-cpd/billing" in t)
 r = c.get("/my-cpd/dashboard", cookies=BEA); t = flat(r.text)
-check("a single buyer's dashboard: only the series held, the completed row, the upsell, course cards link to the course page",
-      "Your series" in t and "Field Work: Insulation" in t and "Field Work: Heating" not in t and "Completed" in t
+your_series = t.split("<h2>Your series</h2>", 1)[1].split("</section>", 1)[0] if "<h2>Your series</h2>" in t else ""
+check("a single buyer's dashboard: only the series held in Your series, the completed row, the upsell, course cards link to the course page",
+      "Field Work: Insulation" in your_series and "Field Work: Heating" not in your_series and "<h2>Completed</h2>" in t
       and 'href="/my-cpd/course/MER-ALL-020"' in t and "Upgrade to Annual — £79/year" in t and "Pay Per Course" in t)
 r = c.get("/my-cpd/dashboard", cookies=NIA); t = flat(r.text)
-check("a new buyer: Start here, the course, no series row", "Start here" in t and 'href="/my-cpd/course/MER-DEA-001"' in t and "Your series" not in t)
+check("a new buyer: their course with Read now, no series row", 'href="/download/MER-DEA-001" target="_blank" rel="noopener">Read now' in t
+      and 'href="/my-cpd/course/MER-DEA-001"' in t and "Your series" not in t)
 
 # ── 8. The emailed completion link still works without a sign-in ──
 r = c.get("/complete/tok-otto")
@@ -387,8 +422,14 @@ check("courses.html: single courses heading with the free course", "Single cours
 check("courses.html: no course counts (tab labels, results line, nation note)",
       "countAll" not in html and "resultsMeta" not in html and "Showing <span>" not in html
       and "' of ' + COURSES.length" not in html and "Courses that apply in ' + name" in html)
-check("courses.html: the annual strip lines PR #56 edits are untouched",
-      '<p class="sub-price-per">per year for the whole library</p>' in html and "seriesNote = ` Each part is its own course" in html)
+check("courses.html: the annual strip carries the £99 line PR #56 merged",
+      '<p class="sub-price-per">per year for the whole library<br>£79 a year until 31 December. £99 from 1 January 2027. Subscribe before then and you keep £79 for as long as you stay.</p>' in html and "seriesNote = ` Each part is its own course" in html)
+check("courses.html: each series card carries its anchor (courses.html#fw-moisture) and is scrolled into view on load and on a hash change",
+      'id="${seriesAnchor(sid)}"' in html and "return sid.toLowerCase();" in html
+      and all(sid in html for sid in ("'FW-INSULATION'", "'FW-HEATING'", "'FW-VENTILATION'", "'FW-MOISTURE'"))
+      and "scrollToSeriesCard();" in html and "addEventListener('load', scrollToSeriesCard)" in html and "addEventListener('hashchange', scrollToSeriesCard)" in html
+      and "card.scrollIntoView(" in html and "scroll-margin-top" in html
+      and html.index("scrollToSeriesCard();") > html.index("renderSeries();\nrenderRows();\nrenderGrid();"))
 # (one Scotland course objective in the catalogue describes an assessor "accredited in England and Wales"; the page text itself must not)
 page_text = html.split("const ALL_COURSES = [", 1)[0] + html.split("\n];", 1)[1]
 check("courses.html: no accreditation words outside the catalogue array", not re.search(r"accredited|cpd accredit", page_text, re.I))

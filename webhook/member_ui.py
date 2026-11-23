@@ -152,12 +152,52 @@ h1, h2, h3 { font-weight: 700; }
 .select { background: var(--dark2); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; font-size: 14px; color: #cfd8cf; }
 .upsell { background: linear-gradient(135deg,#0D1F0E,#1a2f1b); border: 1px solid var(--line); border-radius: 12px; padding: 28px 32px; margin-bottom: 28px; }
 .foot { text-align: center; font-size: 12px; color: var(--muted); padding: 20px 16px 30px; }
+.foot.cpdg { padding-bottom: 0; }
+.foot .cpdg-link { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.cpdg-badge { height: auto; margin-bottom: 8px; }
 .empty { color: var(--muted); padding: 20px 0; font-size: 14px; }
+/* Phase 2: the streaming library. Search, topic chips, the one-line statement on every
+   card, the Info / favourite / read-later buttons, and the flat grid the rows become
+   while a search or chip is active. */
+.finder { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 18px; }
+.search { display: flex; align-items: center; gap: 8px; background: var(--dark2); border: 1px solid var(--line); border-radius: 6px;
+          padding: 0 12px; color: var(--muted); min-width: 260px; flex: 1; max-width: 420px; }
+.search svg { width: 16px; height: 16px; flex: 0 0 16px; }
+.search input { background: transparent; border: 0; color: var(--white); font-size: 14px; padding: 9px 0; width: 100%; outline: none; }
+.search input::placeholder { color: var(--muted); }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { font-size: 13px; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--line); color: #cfd8cf; background: transparent; cursor: pointer; }
+.chip.on { background: var(--accent); color: var(--dark); border-color: var(--accent); font-weight: 700; }
+.card .stmt { font-size: 13px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card .cover .mini-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(255,255,255,.18); }
+.card .cover .mini-bar i { display: block; height: 100%; background: var(--accent); }
+.icon-btn { width: 34px; height: 34px; flex: 0 0 34px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px;
+            border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); color: #cfd8cf; cursor: pointer; padding: 0; }
+.icon-btn svg { width: 16px; height: 16px; }
+.icon-btn.on { color: var(--accent); border-color: var(--accent); background: rgba(212,255,0,.1); }
+.icon-btn[disabled] { opacity: .35; cursor: not-allowed; }
+.card .acts form { display: contents; }
+/* No min-width: 0 here: a button never shrinks below its label (it ran out of both sides on a phone). */
+.card .acts .btn-p, .card .acts .btn-s.main { flex: 1 1 auto; }
+.rows.filtering .row { display: none; }
+.rows.filtering .results { display: block; }
+.results { display: none; }
+.results .rail { flex-wrap: wrap; }
+.results .card { flex: 0 0 290px; }
+.card.hide { display: none !important; }
+.hero.series-hero .parts { list-style: none; display: grid; gap: 4px; margin-top: 14px; font-size: 14px; color: #cfd8cf; }
+.hero.series-hero .parts li::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--accent); margin-right: 10px; }
+.record-btn { display: inline-flex; gap: 8px; align-items: center; }
+.mark-note { font-size: 12px; color: #fca5a5; }
 @media (max-width: 700px) {
+  .search { min-width: 0; max-width: none; width: 100%; }
+  .chips { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; scrollbar-width: none; }
+  .chip { white-space: nowrap; min-height: 44px; min-width: 44px; justify-content: center; display: inline-flex; align-items: center; flex: 0 0 auto; }
+  .results .card { flex-basis: 100%; }
   .topbar { padding: 0 16px; gap: 12px; height: 56px; }
   .topbar .nav { display: none; }
   .who { display: none; }
-  .brand { font-size: 24px; }
+  .brand { font-size: 24px; display: inline-flex; align-items: center; min-height: 44px; }
   .tabbar { display: flex !important; }
   .wrap { padding: 18px 16px 90px; }
   .hero { grid-template-columns: 1fr; gap: 18px; padding: 18px 16px 22px; }
@@ -182,6 +222,17 @@ h1, h2, h3 { font-weight: 700; }
   .cert-table td { border: 0; padding: 4px 14px; }
   .cert-table td.acts { display: flex; gap: 16px; padding-bottom: 12px; }
   .foot { padding-bottom: 90px; }
+  /* Buttons on a phone: the label wraps inside the button rather than spilling out of it,
+     every tap target is at least 44px, the card's main action takes its own full-width
+     line with Info and the icons on the line below, and Sign out sits in the bottom bar
+     only. */
+  .btn { white-space: normal; line-height: 1.25; min-height: 44px; }
+  .card .acts > .btn { flex: 1 1 auto; }
+  .card .acts .btn-p, .card .acts .btn-s.main { flex: 1 1 100%; }
+  .icon-btn { width: 44px; height: 44px; flex: 0 0 44px; }
+  .topbar .signout { display: none; }
+  /* The bottom bar's links: a 44px tap target each (the bar is 64px high). */
+  .tabbar a { min-width: 44px; min-height: 44px; justify-content: center; }
 }
 .tabbar { display: none; position: fixed; left: 0; right: 0; bottom: 0; height: 64px; background: #0A180B; border-top: 1px solid var(--line);
           justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); z-index: 6; }
@@ -197,7 +248,59 @@ ICON = {
     "deck": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="13" rx="1.5"/><path d="M8 21h8M12 17v4M6 8h7M6 11h10"/></svg>',
     "notes": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5M9 12h8M9 16h8M9 8h3"/></svg>',
     "out": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 4H5v16h5M14 8l5 4-5 4M19 12H9"/></svg>',
+    "search": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+    "heart": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',
+    "later": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
+    "info": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>',
+    "download": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
 }
+
+
+# ── Tags, rows and the one-line statement ────────────────────────────────────
+# Every row on the dashboard and on the public courses page is built from these tags,
+# which come from the catalogue itself (series, strand, where, published date), never
+# from a hand-kept list. courses.html carries the same rules in courseTags().
+
+NEW_DAYS = 31  # the "New" row: published in the last 31 days
+
+TOPICS = [  # (tag, label) in chip and row order
+    ("field-work", "Field Work"),
+    ("dea", "For DEAs"),
+    ("retrofit", "Retrofit"),
+    ("all", "All assessors"),
+    ("scotland", "Scotland"),
+]
+TOPIC_LABEL = dict(TOPICS)
+
+
+def course_tags(course: dict, text: dict, today=None) -> list[str]:
+    """The topic tags of one course, plus 'new' when it was published in the last month."""
+    from datetime import date
+    tags = []
+    if course.get("series"):
+        tags.append("field-work")
+    elif text.get("where") == "S":
+        tags.append("scotland")
+    else:
+        tags.append({"DEA": "dea", "RA": "retrofit"}.get(text.get("strand", ""), "all"))
+    if text.get("where") == "S" and "scotland" not in tags:
+        tags.append("scotland")
+    try:
+        pub = date.fromisoformat(str(course.get("published") or "")[:10])
+        if ((today or date.today()) - pub).days <= NEW_DAYS:
+            tags.append("new")
+    except ValueError:
+        pass
+    return tags
+
+
+def statement(desc: str, limit: int = 120) -> str:
+    """One line from the catalogue description: up to the first colon, semicolon or full
+    stop, trimmed at a word boundary if it is still long."""
+    s = re.split(r"(?<=[a-z0-9)])[.:;](\s|$)", str(desc or "").strip(), maxsplit=1)[0].strip()
+    if len(s) > limit:
+        s = s[:limit].rsplit(" ", 1)[0].rstrip(",") + "…"
+    return s
 
 
 # ── The poster template ─────────────────────────────────────────────────────
@@ -354,10 +457,84 @@ def topbar(name: str, on: str) -> str:
 </nav>"""
 
 
-def page(title: str, body: str) -> str:
+# The CPD Group provider line (Matt, 6 and 10 Nov 2026): the only permitted wording,
+# linked to the CPD Register listing exactly as the website footer has it. It goes in
+# the member app footer of the dashboard only, never on a course page, the course viewer,
+# the series pages or the certificates page, so those call page(..., provider_line=False).
+CPD_GROUP_URL = "https://thecpdregister.com/providers/cpd-group-providers--791454"
+CPD_GROUP_LINE = "Meridian CPD is an Approved CPD Provider with The CPD Group (provider no. 791454)"
+# The "Verify On The CPD Register" badge (white-text version, for the dark footer): The
+# CPD Group's file, unaltered, resized only, served by the website from
+# landing-page/images/cpd-register/. Empty means text only.
+CPD_GROUP_BADGE_SRC = "https://meridiancpd.co.uk/images/cpd-register/verify-on-white.webp"
+
+
+def provider_footer() -> str:
+    badge = (f'<a href="{CPD_GROUP_URL}" target="_blank" rel="noopener"><img class="cpdg-badge" '
+             f'src="{CPD_GROUP_BADGE_SRC}" alt="Verify on The CPD Register" width="96" height="75"></a><br>'
+             if CPD_GROUP_BADGE_SRC else "")
+    return (f'<p class="foot cpdg">{badge}<a class="cpdg-link" href="{CPD_GROUP_URL}" target="_blank" '
+            f'rel="noopener">{CPD_GROUP_LINE}</a></p>')
+
+
+def page(title: str, body: str, provider_line: bool = True) -> str:
+    cpdg = provider_footer() if provider_line else ""
     return f"""<!DOCTYPE html>
 <html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 {FONTS}<title>{_esc(title)} | Meridian CPD</title><style>{CSS}</style></head>
 <body>{body}
-<p class="foot">Meridian CPD · meridiancpd.co.uk · hello@meridiancpd.co.uk · Check your own scheme's CPD rules.</p>
+{cpdg}<p class="foot">Meridian CPD · meridiancpd.co.uk · hello@meridiancpd.co.uk · Check your own scheme's CPD rules.</p>
 </body></html>"""
+
+
+# The dashboard's script: search and topic chips over the flat results list, and the
+# favourite / read-later buttons sent with fetch. If the save fails the card says so and
+# nothing else happens; a plain form post is used only where fetch does not exist.
+LIBRARY_JS = """<script>
+(function () {
+  var rows = document.getElementById('rows'), q = document.getElementById('q');
+  if (!rows || !q) return;
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip')), tag = '';
+  function run() {
+    var s = q.value.trim().toLowerCase(), on = !!(s || tag), n = 0;
+    rows.classList.toggle('filtering', on);
+    rows.querySelectorAll('.results .card').forEach(function (c) {
+      var ok = (!tag || (' ' + c.dataset.tags + ' ').indexOf(' ' + tag + ' ') > -1) && (!s || c.dataset.q.indexOf(s) > -1);
+      c.classList.toggle('hide', !ok); if (ok) n++;
+    });
+    document.getElementById('noMatch').hidden = !on || n > 0;
+  }
+  q.addEventListener('input', run);
+  chips.forEach(function (ch) {
+    ch.addEventListener('click', function () {
+      tag = ch.dataset.tag;
+      chips.forEach(function (x) { x.classList.toggle('on', x === ch); });
+      run();
+    });
+  });
+  document.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (!f.classList || !f.classList.contains('mark') || !window.fetch) return;
+    e.preventDefault();
+    var add = /\\/add$/.test(f.getAttribute('action'));
+    fetch(f.getAttribute('action'), { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' }, credentials: 'same-origin' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function () {
+        document.querySelectorAll('form.mark[data-course="' + f.dataset.course + '"][data-kind="' + f.dataset.kind + '"]').forEach(function (g) {
+          var b = g.querySelector('button');
+          g.setAttribute('action', add ? '/my-cpd/marks/remove' : '/my-cpd/marks/add');
+          b.classList.toggle('on', add);
+          b.setAttribute('aria-pressed', add ? 'true' : 'false');
+          b.title = add ? b.dataset.on : b.dataset.off;
+          b.setAttribute('aria-label', b.title);
+        });
+      })
+      .catch(function () {
+        var body = f.closest('.body') || f.parentNode, note = body.querySelector('.mark-note');
+        if (!note) { note = document.createElement('p'); note.className = 'mark-note'; note.setAttribute('role', 'status'); body.appendChild(note); }
+        note.textContent = 'Could not save that. Try again.';
+        clearTimeout(note._t); note._t = setTimeout(function () { note.remove(); }, 4000);
+      });
+  });
+})();
+</script>"""
