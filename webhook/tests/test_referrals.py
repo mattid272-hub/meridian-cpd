@@ -131,7 +131,7 @@ check(p.get("promotion") == {"type": "coupon", "coupon": "coupon_ref"} and p.get
 link = f"{main.APP_URL}/r/{code}"
 check(code in r.text and link in r.text, "the page shows the code and the link")
 check(f"I do my CPD with Meridian CPD. My code {code} takes £10 off your first year: {link}" in r.text, "the page shows the message to send")
-check("None yet." in r.text and "Credit for your next renewal: £0" in r.text, "nobody referred yet, no credit yet")
+check("None yet." in r.text and "Credit for your next renewal: £0" in r.text and "Colleagues credited: 0 of 5" in r.text, "nobody referred yet, no credit yet")
 check("/my-cpd/refer" in c.get("/my-cpd/dashboard", cookies=signed("matt@example.com")).text, "on: the Refer tab is in the member area")
 c.get("/my-cpd/refer", cookies=signed("matt@example.com"))
 check(len(promos) == 1 and m("m1")["referral_code"] == code, "a second visit keeps the same code")
@@ -170,7 +170,8 @@ send(session("cs_live_jo", "jo@example.com", promo=promo_id))
 check(len(txns) == 1 and len([x for x in db["referrals"] if x["stripe_session_id"] == "cs_live_jo"]) == 1, "a repeat delivery credits nothing more")
 r = c.get("/my-cpd/refer", cookies=signed("matt@example.com"))
 check("Jo: £10 credit" in r.text and "Bloggs" not in r.text and "jo@example.com" not in r.text, "the referrer sees the first name only")
-check("Credit for your next renewal: £10" in r.text, "the referrer sees the credit waiting")
+check("Credit for your next renewal: £10" in r.text and "Colleagues credited: 1 of 5" in r.text, "the referrer sees the credit waiting")
+check("You get £10 off your next renewal for each colleague who subscribes, for up to five colleagues (£50)." in r.text, "the page states the cap")
 
 # 6. Refusals: own code, someone who subscribed before, not a subscription, someone already referred
 send(session("cs_live_self", "matt@example.com", promo=promo_id, customer="cus_1"))
@@ -193,17 +194,7 @@ expanded["cs_live_ann"] = {"id": "cs_live_ann", "total_details": {"breakdown": {
 send(session("cs_live_ann", "ann@example.com", name="Ann Other"))
 check(ref("cs_live_ann") and ref("cs_live_ann")["status"] == "credited", "the promotion code is found in the expanded totals")
 
-# 9. Credits stack up to a free year (the referrer's renewal price), then stop
-balances["cus_1"] = -7500
-send(session("cs_live_p1", "p1@example.com", name="Pat One", promo=promo_id))
-check(ref("cs_live_p1")["credit_pence"] == 400 and balances["cus_1"] == -7900, "the credit tops up to a free year and no further")
-send(session("cs_live_p2", "p2@example.com", name="Pip Two", promo=promo_id))
-check(ref("cs_live_p2")["status"] == "capped" and balances["cus_1"] == -7900, "past a free year the referral counts with no credit")
-r = c.get("/my-cpd/refer", cookies=signed("matt@example.com"))
-check("Pip: no credit, your credit had already reached a free year" in r.text and "Credit for your next renewal: £79" in r.text, "the page shows the capped referral and the free year")
-
-# 10. Stripe refuses the credit: the webhook asks Stripe to retry, the retry credits once
-balances["cus_1"] = 0
+# 9. Stripe refuses the credit: the webhook asks Stripe to retry, the retry credits once
 fail_credit["on"] = True
 r = send(session("cs_live_q", "q@example.com", name="Quinn Q", promo=promo_id))
 check(r.status_code == 500 and ref("cs_live_q")["status"] == "credit_failed", "a refused credit is recorded and Stripe is asked to retry")
@@ -211,6 +202,27 @@ fail_credit["on"] = False
 r = send(session("cs_live_q", "q@example.com", name="Quinn Q", promo=promo_id))
 check(r.status_code == 200 and ref("cs_live_q")["status"] == "credited"
       and [t["idempotency_key"] for t in txns].count("referral-credit-cs_live_q") == 1, "the retry credits once")
+
+# 10. Credit for up to five colleagues (£50 in all), then none; the sixth colleague still has £10 off
+check(referrals.MAX_CREDITS == 5 and referrals.CREDIT_PENCE * referrals.MAX_CREDITS == 5000, "the cap is five credits of £10, £50 in all")
+check(len([x for x in db["referrals"] if x["status"] == "credited"]) == 3, "three colleagues credited so far (Jo, Ann, Quinn)")
+balances["cus_1"] = -7500   # other credit on the account does not count towards the cap
+send(session("cs_live_p1", "p1@example.com", name="Pat One", promo=promo_id))
+send(session("cs_live_p2", "p2@example.com", name="Pam Two", promo=promo_id))
+check(ref("cs_live_p1")["credit_pence"] == 1000 and ref("cs_live_p2")["credit_pence"] == 1000 and balances["cus_1"] == -9500,
+      "the fourth and fifth colleagues are credited £10 each")
+emails_before = len(sent_emails)
+r = send(session("cs_live_p3", "p3@example.com", name="Pip Three", promo=promo_id))
+check(r.status_code == 200 and ref("cs_live_p3")["status"] == "capped" and ref("cs_live_p3")["credit_pence"] == 0
+      and balances["cus_1"] == -9500, "the sixth colleague counts with no credit for the referrer")
+check(len(sent_emails) > emails_before and ref("cs_live_p3")["amount_paid_pence"] == 6900,
+      "the sixth colleague's order goes through at the discounted price")
+check(sum(t["amount"] for t in txns if t["customer"] == "cus_1") == -5000, "the referrer's credit from referrals is £50 in all")
+send(session("cs_live_p4", "p4@example.com", name="Pia Four", promo=promo_id))
+check(ref("cs_live_p4")["status"] == "capped" and balances["cus_1"] == -9500, "a seventh colleague: still no credit")
+r = c.get("/my-cpd/refer", cookies=signed("matt@example.com"))
+check("Pip: no credit, you had already been credited for five colleagues" in r.text and "Colleagues credited: 5 of 5" in r.text
+      and "Credit for your next renewal: £95" in r.text, "the page shows the capped referral and five of five")
 
 # 11. Copy rules on the two pages and the terms page
 terms_path = os.path.join(HERE, "..", "..", "landing-page", "referral-terms.html")
@@ -224,8 +236,10 @@ for label, t in pages.items():
     hits = [w for w in banned if w in low and not (w == "free course" and label == "terms page")]
     check(not hits, f"{label}: none of the banned words or marks ({hits})")
 terms = pages["terms page"]
-check("£10 off" in terms and "first year" in terms and "next renewal" in terms and "free year" in terms
-      and "single course" in terms and "own code" in terms, "terms page: the scheme in plain words")
+check("£10 off" in terms and "first year" in terms and "next renewal" in terms and "up to five colleagues" in terms and "£50 in all" in terms
+      and "single course" in terms and "own code" in terms and "free year" not in terms, "terms page: the scheme in plain words")
+check("If more than five colleagues subscribe with your code, they still get £10 off their first year. You get no further credit." in terms,
+      "terms page: what happens after the fifth colleague")
 
 print("\nALL PASS" if not failures else f"\n{failures} FAILED")
 if failures:

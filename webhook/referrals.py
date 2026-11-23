@@ -12,9 +12,9 @@ How it works
   - When a checkout that used a referral code completes and is paid, on_checkout()
     records it in the referrals table (one row per checkout, so a repeat delivery of the
     event does nothing) and puts £10 of credit on the referrer's Stripe customer balance,
-    which Stripe takes off their next invoice, i.e. their renewal. Credit held is capped
-    at the referrer's renewal price (a free year); a referral past the cap is recorded as
-    "capped" with no credit.
+    which Stripe takes off their next invoice, i.e. their renewal. A referrer is credited
+    for at most MAX_CREDITS colleagues (5, so £50 in all, Matt 21 Nov 2026); a referral past
+    that is recorded as "capped" with no credit. The colleague still has their £10 off.
   - No credit for: the referrer's own checkout, someone who has subscribed before, a
     person already referred, or a checkout that is not an annual subscription.
 
@@ -31,14 +31,14 @@ import secrets
 import stripe
 
 CREDIT_PENCE = 1000                     # £10, for the referrer and (via the coupon) the newcomer
-FALLBACK_RENEWAL_PENCE = 7900           # cap if the referrer's renewal price cannot be read
+MAX_CREDITS = 5                         # credited introductions per referrer, ever: £50 in all
 DEFAULT_SUBSCRIPTION_LINK = "https://buy.stripe.com/fZufZgbse3BpcXE7TY73G01"
 _SUFFIX_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"   # no 0/O, 1/I/L
 _CODE_RE = re.compile(r"^[A-Z0-9-]{4,24}$")
 
 # Referral statuses (referrals.status)
 CREDITED = "credited"                   # £ credit added to the referrer's balance
-CAPPED = "capped"                       # referrer already holds a free year of credit
+CAPPED = "capped"                       # referrer already credited for MAX_CREDITS colleagues
 SELF = "refused_self"                   # the referrer used their own code
 EXISTING = "refused_existing"           # the newcomer had subscribed before
 DUPLICATE = "refused_duplicate"         # this person was already referred
@@ -168,21 +168,6 @@ def _referrer_for_promo(db, promo_id: str) -> dict | None:
     return rows[0] if rows else None
 
 
-def renewal_pence(customer_id: str) -> int:
-    """What the referrer's next renewal costs: the cap on the credit they can hold."""
-    try:
-        subs = stripe.Subscription.list(customer=customer_id, status="all", limit=5)
-        for sub in _g(subs, "data", []) or []:
-            if _g(sub, "status") in ("active", "trialing", "past_due"):
-                amounts = [_g(_g(i, "price", {}), "unit_amount") for i in _g(_g(sub, "items", {}), "data", []) or []]
-                total = sum(a for a in amounts if a)
-                if total:
-                    return int(total)
-    except stripe.error.StripeError as e:
-        print(f"Referral: could not read the renewal price for {customer_id}: {e}")
-    return FALLBACK_RENEWAL_PENCE
-
-
 def credit_held_pence(customer_id: str) -> int | None:
     """Credit on the customer's Stripe balance (a negative balance is credit). None if unreadable."""
     if not customer_id:
@@ -195,6 +180,13 @@ def credit_held_pence(customer_id: str) -> int | None:
     return max(0, -int(bal))
 
 
+def credits_given(db, referrer_id, exclude_id=None) -> int:
+    """How many of the referrer's referrals have been credited (the cap counts these)."""
+    rows = db.table("referrals").select("id").eq("referrer_member_id", referrer_id).eq(
+        "status", CREDITED).execute().data or []
+    return len([r for r in rows if r.get("id") != exclude_id])
+
+
 def _credit(db, row: dict, referrer: dict, session_id: str) -> None:
     customer_id = referrer.get("stripe_customer_id") or ""
     if not customer_id:
@@ -202,15 +194,12 @@ def _credit(db, row: dict, referrer: dict, session_id: str) -> None:
         print(f"ACTION NEEDED: referral {session_id}: referrer {referrer['id']} has no Stripe customer "
               f"on file, so no credit was added. Add £10 to their balance in Stripe by hand.")
         return
-    held = credit_held_pence(customer_id)
-    if held is None:
-        db.table("referrals").update({"status": FAILED}).eq("id", row["id"]).execute()
-        raise RetryLater(f"referral {session_id}: balance unreadable")
-    amount = min(CREDIT_PENCE, renewal_pence(customer_id) - held)
-    if amount <= 0:
+    if credits_given(db, referrer["id"], exclude_id=row["id"]) >= MAX_CREDITS:
         db.table("referrals").update({"status": CAPPED, "credit_pence": 0}).eq("id", row["id"]).execute()
-        print(f"Referral {session_id}: referrer {referrer['id']} already holds a free year of credit; recorded, no credit.")
+        print(f"Referral {session_id}: referrer {referrer['id']} already credited for {MAX_CREDITS} "
+              f"colleagues; recorded, no credit.")
         return
+    amount = CREDIT_PENCE
     try:
         txn = stripe.Customer.create_balance_transaction(
             customer_id, amount=-amount, currency="gbp",
