@@ -33,26 +33,26 @@ PAGE_ITEM_GAP = timedelta(days=7)      # at most one "page updated" item per pag
 SUMMARY_CHARS = 280
 
 # kind: "feed" or "page". filter: keep only entries that match a topic (broad feeds).
-# members: False keeps a source out of My CPD whatever an admin switches on (schemes and
-# lodging-software companies; see member_block_reason).
+# members: True lets a source's items reach My CPD once an admin switches them on. Every
+# other source (schemes, lodging-software companies, watched pages) never reaches members.
 SOURCES = [
-    {"id": "desnz", "name": "DESNZ (GOV.UK)", "kind": "feed", "filter": True,
+    {"id": "desnz", "members": True, "name": "DESNZ (GOV.UK)", "kind": "feed", "filter": True,
      "url": "https://www.gov.uk/government/organisations/department-for-energy-security-and-net-zero.atom"},
-    {"id": "mhclg", "name": "MHCLG (GOV.UK)", "kind": "feed", "filter": True,
+    {"id": "mhclg", "members": True, "name": "MHCLG (GOV.UK)", "kind": "feed", "filter": True,
      "url": "https://www.gov.uk/government/organisations/ministry-of-housing-communities-local-government.atom"},
-    {"id": "ofgem", "name": "Ofgem (GOV.UK)", "kind": "feed", "filter": True,
+    {"id": "ofgem", "members": True, "name": "Ofgem (GOV.UK)", "kind": "feed", "filter": True,
      "url": "https://www.gov.uk/government/organisations/ofgem.atom"},
-    {"id": "elmhurst", "members": False, "name": "Elmhurst Energy", "kind": "feed", "filter": False,
+    {"id": "elmhurst", "name": "Elmhurst Energy", "kind": "feed", "filter": False,
      "url": "https://www.elmhurstenergy.co.uk/feed/"},
-    {"id": "ecmk", "members": False, "name": "ECMK", "kind": "feed", "filter": False,
+    {"id": "ecmk", "name": "ECMK", "kind": "feed", "filter": False,
      "url": "https://www.ecmk.co.uk/feed/"},
-    {"id": "quidos", "members": False, "name": "Quidos", "kind": "feed", "filter": False,
+    {"id": "quidos", "name": "Quidos", "kind": "feed", "filter": False,
      "url": "https://www.quidos.co.uk/feed/"},
     {"id": "gov-sap-hem", "name": "GOV.UK: SAP and the Home Energy Model", "kind": "page",
      "url": "https://www.gov.uk/guidance/standard-assessment-procedure"},
     {"id": "bre-sap10", "name": "BRE: SAP 10 and RdSAP 10 documents", "kind": "page",
      "url": "https://bregroup.com/expertise/energy/sap/sap-10"},
-    {"id": "trustmark-news", "members": False, "name": "TrustMark news", "kind": "page",
+    {"id": "trustmark-news", "name": "TrustMark news", "kind": "page",
      "url": "https://www.trustmark.org.uk/news"},
     {"id": "scot-epc-reform", "name": "gov.scot: EPC reform updates", "kind": "page",
      "url": "https://www.gov.scot/publications/energy-performance-certificate-reform-updates/"},
@@ -480,36 +480,49 @@ def mark(db, item_id: str, field: str) -> None:
 # Nothing reaches a member on its own. An admin switches an item on (Admin → News, "Show to
 # members"), and every item, switched on or not, must also pass member_block_reason() each
 # time My CPD is drawn. The rule (proposed in the PR for Matt to agree):
-#   1. never an item from a scheme, an accreditation body or a lodging-software company
-#      (the sources marked "members": False in SOURCES);
+#   1. only items from a source marked "members": True in SOURCES (the three GOV.UK feeds);
+#      every other source, including schemes and lodging-software companies, is kept out;
 #   2. never an item whose title or summary names one, or talks about accreditation or
 #      lodging software (MEMBER_BLOCKED_NAMES);
 #   3. never anything dated in the future: a published date after today, a GOV.UK
-#      statistics release notice, or a title that names a month or day still to come;
+#      statistics release notice, or a title or summary that names a month, day or
+#      quarter still to come (e.g. "May 2027", "3 Dec 2026", "01/12/2026", "Q4 2026");
 #   4. never a watched page's "Page updated" notice (it tells a member nothing);
 #   5. only a plain https link.
 # Until the member_visible column exists (webhook/migrations/2026-11-24_news_for_members.sql)
 # the query fails and members see nothing.
 
 MEMBER_LIMIT = 5
-MEMBER_BLOCKED_SOURCES = {s["name"] for s in SOURCES if s.get("members") is False}
+MEMBER_SOURCES = {s["name"] for s in SOURCES if s.get("members") is True}
 MEMBER_BLOCKED_NAMES = re.compile(
     r"\belmhurst\b|\becmk\b|\bquidos\b|\bstroma\b|\bsterling\b|\bNHER\b|\bfocus ?360\b|\bkestrel\b"
     r"|\btrust ?mark\b|\bapproved organisations?\b|\baccredit|\bcertification bod(?:y|ies)\b"
+    r"|\bMCS\b|\bUKAS\b|\bPAS ?Hub\b|\bretrofit academy\b|\bscheme operat"
+    r"|\b(?:energy assessor|assessor|EPC|accreditation) schemes?\b|\bscheme operating requirements\b"
     r"|\b(?:lodg(?:e)?ment|rd ?sap|sap|epc|assessor|software) software\b|\bsoftware (?:launch|release|update|version)\b",
     re.I)
-_MONTH_NAMES = ["january", "february", "march", "april", "may", "june", "july", "august",
-                "september", "october", "november", "december"]
-_TITLE_DATE = re.compile(r"\b(?:(\d{1,2})(?:st|nd|rd|th)?\s+)?(" + "|".join(_MONTH_NAMES) + r")\s+(20\d\d)\b", re.I)
+_MONTH_RX = (r"(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?"
+             r"|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?")
+_MONTHS3 = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+_DATE_WORDS = re.compile(r"\b(?:(\d{1,2})(?:st|nd|rd|th)?\s+)?" + _MONTH_RX + r",?\s+(20\d\d)\b", re.I)
+_DATE_NUM = re.compile(r"\b(\d{1,2})/(\d{1,2})/(20\d\d)\b")
+_QUARTER = re.compile(r"\bQ([1-4])\s+(20\d\d)\b", re.I)
 
 
 def _names_future_date(text: str, now: datetime) -> bool:
-    """True if the text names a month (or a day) that has not arrived yet."""
-    for day, month, year in _TITLE_DATE.findall(text or ""):
-        y, m = int(year), _MONTH_NAMES.index(month.lower()) + 1
-        if (y, m) > (now.year, now.month):
+    """True if the text names a month, a day or a quarter that has not arrived yet (or, for a
+    quarter, has not ended)."""
+    text = text or ""
+    today, this_month = (now.year, now.month, now.day), (now.year, now.month)
+    for day, month, year in _DATE_WORDS.findall(text):
+        y, m = int(year), _MONTHS3.index(month.lower()[:3]) + 1
+        if (y, m) > this_month or (day and (y, m, int(day)) > today):
             return True
-        if day and (y, m) == (now.year, now.month) and int(day) > now.day:
+    for day, month, year in _DATE_NUM.findall(text):           # UK order: dd/mm/yyyy
+        if 1 <= int(month) <= 12 and (int(year), int(month), int(day)) > today:
+            return True
+    for q, year in _QUARTER.findall(text):
+        if (int(year), int(q) * 3) > this_month:
             return True
     return False
 
@@ -521,8 +534,8 @@ def member_block_reason(item: dict, now: datetime | None = None) -> str:
     title, summary = str(item.get("title") or ""), str(item.get("summary") or "")
     if not url.startswith("https://"):
         return "no https link"
-    if item.get("source") in MEMBER_BLOCKED_SOURCES:
-        return "from a scheme or software company"
+    if item.get("source") not in MEMBER_SOURCES:
+        return "not from a source cleared for members"
     if MEMBER_BLOCKED_NAMES.search(f"{title} {summary} {item.get('source') or ''}"):
         return "names a scheme, accreditation or lodging software"
     if item.get("kind") == "page" or title.startswith("Page updated"):
@@ -532,7 +545,7 @@ def member_block_reason(item: dict, now: datetime | None = None) -> str:
         published = published.replace(tzinfo=timezone.utc)
     if published and published > now:
         return "dated in the future"
-    if "/statistics/announcements/" in url or _names_future_date(title, now):
+    if "/statistics/announcements/" in url or _names_future_date(f"{title} {summary}", now):
         return "a notice of something still to come"
     return ""
 

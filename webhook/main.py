@@ -3286,18 +3286,17 @@ async def subscriber_dashboard(request: Request):
 
 
 def _member_news_panel() -> str:
-    """News and insights on My CPD: only items an admin has switched on that also pass
-    news.member_block_reason. Title, source, date and the source link; none of the admin
+    """The News panel on My CPD: only items an admin has switched on that also pass
+    news.member_block_reason. Title (linked to the source), source and date; none of the admin
     actions. Nothing to show (or the column not added yet): no panel at all."""
     items = news.member_items(supabase)
     if not items:
         return ""
     lis = "".join(
         f'<li class="news-m"><a class="news-m-title" href="{_esc(i["url"])}" target="_blank" rel="noopener">{_esc(i.get("title") or "")}</a>'
-        f'<div class="news-m-meta">{_esc(i.get("source") or "")} · {_esc(member_ui.fmt_date(i.get("published_at")))} · '
-        f'<a href="{_esc(i["url"])}" target="_blank" rel="noopener">Source ↗</a></div></li>'
+        f'<div class="news-m-meta">{_esc(i.get("source") or "")} · {_esc(member_ui.fmt_date(i.get("published_at")))}</div></li>'
         for i in items)
-    return (f'<section class="row news-panel" aria-labelledby="newsHead"><div class="row-head"><h2 id="newsHead">News and insights</h2></div>'
+    return (f'<section class="row news-panel" aria-labelledby="newsHead"><div class="row-head"><h2 id="newsHead">News</h2></div>'
             f'<ul class="news-list">{lis}</ul></section>')
 
 
@@ -4691,8 +4690,8 @@ async def admin_news(tag: str = "", hidden: int = 0, notice: str = "", credentia
         Government feeds keep only items on assessment, retrofit, EPC, building regulations and related topics.
         Watched pages produce one "Page updated" item when their content changes.</p>
       <p class="note" style="margin-bottom:12px">Show to members puts an item on My CPD (five at most, newest first). Nothing goes
-        there unless it is switched on here. Items from schemes or lodging-software companies, items naming them, watched-page
-        notices and anything dated ahead are kept from members even if switched on.</p>
+        there unless it is switched on here. Only the GOV.UK feeds can reach members; items naming a scheme, accreditation or
+        lodging software, watched-page notices and anything dated ahead are kept from members even if switched on.</p>
       {briefs_html}
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
         <a href="/admin/news" class="news-tag" style="text-decoration:none{';background:#0D1F0E;color:#D4FF00' if not tag else ''}">All</a> {chips}
