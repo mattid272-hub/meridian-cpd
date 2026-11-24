@@ -33,12 +33,14 @@ PAGE_ITEM_GAP = timedelta(days=7)      # at most one "page updated" item per pag
 SUMMARY_CHARS = 280
 
 # kind: "feed" or "page". filter: keep only entries that match a topic (broad feeds).
+# members: True lets a source's items reach My CPD once an admin switches them on. Every
+# other source (schemes, lodging-software companies, watched pages) never reaches members.
 SOURCES = [
-    {"id": "desnz", "name": "DESNZ (GOV.UK)", "kind": "feed", "filter": True,
+    {"id": "desnz", "members": True, "name": "DESNZ (GOV.UK)", "kind": "feed", "filter": True,
      "url": "https://www.gov.uk/government/organisations/department-for-energy-security-and-net-zero.atom"},
-    {"id": "mhclg", "name": "MHCLG (GOV.UK)", "kind": "feed", "filter": True,
+    {"id": "mhclg", "members": True, "name": "MHCLG (GOV.UK)", "kind": "feed", "filter": True,
      "url": "https://www.gov.uk/government/organisations/ministry-of-housing-communities-local-government.atom"},
-    {"id": "ofgem", "name": "Ofgem (GOV.UK)", "kind": "feed", "filter": True,
+    {"id": "ofgem", "members": True, "name": "Ofgem (GOV.UK)", "kind": "feed", "filter": True,
      "url": "https://www.gov.uk/government/organisations/ofgem.atom"},
     {"id": "elmhurst", "name": "Elmhurst Energy", "kind": "feed", "filter": False,
      "url": "https://www.elmhurstenergy.co.uk/feed/"},
@@ -472,3 +474,107 @@ def mark(db, item_id: str, field: str) -> None:
         db.table("news_items").update({"read_at": _iso(utcnow())}).eq("id", item_id).execute()
     elif field == "dismiss":
         db.table("news_items").update({"dismissed": True}).eq("id", item_id).execute()
+
+
+# ── For members: News and insights on My CPD ──────────────────────────────────
+# Nothing reaches a member on its own. An admin switches an item on (Admin → News, "Show to
+# members"), and every item, switched on or not, must also pass member_block_reason() each
+# time My CPD is drawn. The rule (proposed in the PR for Matt to agree):
+#   1. only items from a source marked "members": True in SOURCES (the three GOV.UK feeds);
+#      every other source, including schemes and lodging-software companies, is kept out;
+#   2. never an item whose title or summary names one, or talks about accreditation or
+#      lodging software (MEMBER_BLOCKED_NAMES);
+#   3. never anything dated in the future: a published date after today, a GOV.UK
+#      statistics release notice, or a title or summary that names a month, day or
+#      quarter still to come (e.g. "May 2027", "3 Dec 2026", "01/12/2026", "Q4 2026");
+#   4. never a watched page's "Page updated" notice (it tells a member nothing);
+#   5. only a plain https link.
+# Until the member_visible column exists (webhook/migrations/2026-11-24_news_for_members.sql)
+# the query fails and members see nothing.
+
+MEMBER_LIMIT = 5
+MEMBER_SOURCES = {s["name"] for s in SOURCES if s.get("members") is True}
+MEMBER_BLOCKED_NAMES = re.compile(
+    r"\belmhurst\b|\becmk\b|\bquidos\b|\bstroma\b|\bsterling\b|\bNHER\b|\bfocus ?360\b|\bkestrel\b"
+    r"|\btrust ?mark\b|\bapproved organisations?\b|\baccredit|\bcertification bod(?:y|ies)\b"
+    r"|\bMCS\b|\bUKAS\b|\bPAS ?Hub\b|\bretrofit academy\b|\bscheme operat"
+    r"|\b(?:energy assessor|assessor|EPC|accreditation) schemes?\b|\bscheme operating requirements\b"
+    r"|\b(?:lodg(?:e)?ment|rd ?sap|sap|epc|assessor|software) software\b|\bsoftware (?:launch|release|update|version)\b",
+    re.I)
+_MONTH_RX = (r"(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?"
+             r"|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?")
+_MONTHS3 = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+_DATE_WORDS = re.compile(r"\b(?:(\d{1,2})(?:st|nd|rd|th)?\s+)?" + _MONTH_RX + r",?\s+(20\d\d)\b", re.I)
+_DATE_NUM = re.compile(r"\b(\d{1,2})/(\d{1,2})/(20\d\d)\b")
+_QUARTER = re.compile(r"\bQ([1-4])\s+(20\d\d)\b", re.I)
+
+
+def _names_future_date(text: str, now: datetime) -> bool:
+    """True if the text names a month, a day or a quarter that has not arrived yet (or, for a
+    quarter, has not ended)."""
+    text = text or ""
+    today, this_month = (now.year, now.month, now.day), (now.year, now.month)
+    for day, month, year in _DATE_WORDS.findall(text):
+        y, m = int(year), _MONTHS3.index(month.lower()[:3]) + 1
+        if (y, m) > this_month or (day and (y, m, int(day)) > today):
+            return True
+    for day, month, year in _DATE_NUM.findall(text):           # UK order: dd/mm/yyyy
+        if 1 <= int(month) <= 12 and (int(year), int(month), int(day)) > today:
+            return True
+    for q, year in _QUARTER.findall(text):
+        if (int(year), int(q) * 3) > this_month:
+            return True
+    return False
+
+
+def member_block_reason(item: dict, now: datetime | None = None) -> str:
+    """Why an item must not be shown to members, or "" if it may be."""
+    now = now or utcnow()
+    url = str(item.get("url") or "")
+    title, summary = str(item.get("title") or ""), str(item.get("summary") or "")
+    if not url.startswith("https://"):
+        return "no https link"
+    if item.get("source") not in MEMBER_SOURCES:
+        return "not from a source cleared for members"
+    if MEMBER_BLOCKED_NAMES.search(f"{title} {summary} {item.get('source') or ''}"):
+        return "names a scheme, accreditation or lodging software"
+    if item.get("kind") == "page" or title.startswith("Page updated"):
+        return "a watched-page change notice"
+    published = _parse_date(str(item.get("published_at") or ""))
+    if published and published.tzinfo is None:
+        published = published.replace(tzinfo=timezone.utc)
+    if published and published > now:
+        return "dated in the future"
+    if "/statistics/announcements/" in url or _names_future_date(f"{title} {summary}", now):
+        return "a notice of something still to come"
+    return ""
+
+
+def member_items(db, limit: int = MEMBER_LIMIT, now: datetime | None = None) -> list:
+    """The items My CPD shows: switched on by an admin, not hidden, and passing the rule.
+    Any failure (the column not added yet, the table unreadable) gives an empty list."""
+    try:
+        rows = (db.table("news_items").select("*").eq("member_visible", True).eq("dismissed", False)
+                .order("published_at", desc=True).limit(50).execute().data or [])
+    except Exception as e:
+        print(f"News for members: {e}")
+        return []
+    now = now or utcnow()
+    keep = [r for r in rows if r.get("member_visible") is True and not r.get("dismissed")
+            and not member_block_reason(r, now)]
+    return keep[:limit]
+
+
+def set_member_visible(db, item_id: str, on: bool) -> str:
+    """Switch an item on or off for members. Returns "" or the reason it cannot be switched on.
+    Raises if the column is not there yet."""
+    if on:
+        rows = db.table("news_items").select("*").eq("id", item_id).limit(1).execute().data or []
+        if not rows:
+            return "not found"
+        reason = member_block_reason(rows[0])
+        if reason:
+            return reason
+    fields = {"member_visible": on, "member_approved_at": _iso(utcnow()) if on else None}
+    db.table("news_items").update(fields).eq("id", item_id).execute()
+    return ""

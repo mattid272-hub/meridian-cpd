@@ -3280,8 +3280,24 @@ async def subscriber_dashboard(request: Request):
   {upsell_html}
   {finder}
   <div class="rows" id="rows">{"".join(rows)}{results}</div>
+  {_member_news_panel()}
 </main>""" + member_ui.LIBRARY_JS
     return HTMLResponse(member_ui.page("My CPD", body))
+
+
+def _member_news_panel() -> str:
+    """The News panel on My CPD: only items an admin has switched on that also pass
+    news.member_block_reason. Title (linked to the source), source and date; none of the admin
+    actions. Nothing to show (or the column not added yet): no panel at all."""
+    items = news.member_items(supabase)
+    if not items:
+        return ""
+    lis = "".join(
+        f'<li class="news-m"><a class="news-m-title" href="{_esc(i["url"])}" target="_blank" rel="noopener">{_esc(i.get("title") or "")}</a>'
+        f'<div class="news-m-meta">{_esc(i.get("source") or "")} · {_esc(member_ui.fmt_date(i.get("published_at")))}</div></li>'
+        for i in items)
+    return (f'<section class="row news-panel" aria-labelledby="newsHead"><div class="row-head"><h2 id="newsHead">News</h2></div>'
+            f'<ul class="news-list">{lis}</ul></section>')
 
 
 @app.get("/my-cpd/series", response_class=HTMLResponse)
@@ -3767,6 +3783,10 @@ button:hover { background: #D4FF00; color: #0D1F0E; }
 .news-brief li { font-size: 12.5px; color: #1f2a20; line-height: 1.45; margin-bottom: 5px; }
 .news-brief .why { font-size: 12px; color: #0D1F0E; font-weight: 600; margin-top: 6px; }
 .news-brief .how { font-size: 10.5px; color: #8A9E8B; margin-top: 6px; }
+.news-share { margin-top: 6px; font-size: 11px; color: #8A9E8B; }
+.news-share a { color: #4d7c0f; font-weight: 600; cursor: pointer; margin-left: 6px; }
+.news-share.on { color: #15803d; font-weight: 600; }
+.news-share.off { color: #a16207; }
 .news-summary { font-size: 12px; color: #4a574b; margin-top: 4px; line-height: 1.4; }
 @media (max-width: 1100px) { .layout { flex-direction: column; } .newsbar { width: auto; padding: 0 28px 28px; position: static; max-height: none; } }
 .course-card .cid { font-size: 11px; color: #4d7c0f; font-weight: 700;
@@ -3943,6 +3963,16 @@ function newsOpen(id, el) {
   }).catch(function () { box.innerHTML = '<div class="news-meta">Could not prepare a brief. Use the source link.</div>'; });
   return false;
 }
+function newsShare(id, on, el) {
+  fetch('/admin/news/' + id + '/' + (on ? 'members' : 'withdraw'), {method: 'POST'})
+    .then(function (r) { return r.json().then(function (d) { return [r.ok, d]; }); })
+    .then(function (x) {
+      if (!x[0]) { alert(x[1].error || 'Could not change this item.'); return; }
+      var box = el.closest('.news-share');
+      box.outerHTML = x[1].html;
+    });
+  return false;
+}
 function newsCopy(btn) {
   var t = btn.getAttribute('data-post');
   if (navigator.clipboard) { navigator.clipboard.writeText(t); }
@@ -3977,7 +4007,22 @@ def _news_card(item: dict, with_summary: bool = False) -> str:
         <a onclick="return newsAct('{iid}', 'dismiss', this)">Hide</a>
         <a data-post="{_esc(post)}" onclick="return newsCopy(this)">Copy as post</a>
       </div>
+      {_news_share(item)}
     </div>"""
+
+
+def _news_share(item: dict) -> str:
+    """Admin only: the per-item switch for My CPD. Off by default; an item the member rule
+    keeps out says why and has no switch."""
+    iid = _esc(str(item.get("id") or ""))
+    reason = news.member_block_reason(item)
+    if reason:
+        return f'<div class="news-share off">Kept from members: {_esc(reason)}</div>'
+    if item.get("member_visible") is True:
+        return (f'<div class="news-share on">Shown to members '
+                f'<a onclick="return newsShare(\'{iid}\', false, this)">Withdraw</a></div>')
+    return (f'<div class="news-share">Not shown to members '
+            f'<a onclick="return newsShare(\'{iid}\', true, this)">Show to members</a></div>')
 
 
 def _news_sidebar() -> str:
@@ -4644,6 +4689,9 @@ async def admin_news(tag: str = "", hidden: int = 0, notice: str = "", credentia
       <p class="note" style="margin-bottom:12px">New items from the feeds and watched pages below, checked every few hours.
         Government feeds keep only items on assessment, retrofit, EPC, building regulations and related topics.
         Watched pages produce one "Page updated" item when their content changes.</p>
+      <p class="note" style="margin-bottom:12px">Show to members puts an item on My CPD (five at most, newest first). Nothing goes
+        there unless it is switched on here. Only the GOV.UK feeds can reach members; items naming a scheme, accreditation or
+        lodging software, watched-page notices and anything dated ahead are kept from members even if switched on.</p>
       {briefs_html}
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
         <a href="/admin/news" class="news-tag" style="text-decoration:none{';background:#0D1F0E;color:#D4FF00' if not tag else ''}">All</a> {chips}
@@ -4710,6 +4758,31 @@ async def admin_news_brief(item_id: str, credentials=Depends(_check_admin)):
     except Exception:
         pass
     return {"html": _brief_html(item)}
+
+
+@app.post("/admin/news/{item_id}/members")
+async def admin_news_members(item_id: str, credentials=Depends(_check_admin)):
+    return _news_share_change(item_id, True)
+
+
+@app.post("/admin/news/{item_id}/withdraw")
+async def admin_news_withdraw(item_id: str, credentials=Depends(_check_admin)):
+    return _news_share_change(item_id, False)
+
+
+def _news_share_change(item_id: str, on: bool):
+    try:
+        reason = news.set_member_visible(supabase, item_id, on)
+    except Exception as e:
+        print(f"News for members: {e}")
+        return JSONResponse({"error": "The switch is not ready yet: run webhook/migrations/2026-11-24_news_for_members.sql "
+                                      "in Supabase first."}, status_code=409)
+    if reason == "not found":
+        raise HTTPException(status_code=404)
+    if reason:
+        return JSONResponse({"error": f"This item cannot be shown to members: {reason}."}, status_code=409)
+    rows = supabase.table("news_items").select("*").eq("id", item_id).limit(1).execute().data or []
+    return {"ok": True, "html": _news_share(rows[0] if rows else {"id": item_id, "member_visible": on})}
 
 
 @app.post("/admin/news/{item_id}/{action}")
