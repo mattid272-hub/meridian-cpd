@@ -188,6 +188,14 @@ h1, h2, h3 { font-weight: 700; }
 .hero.series-hero .parts li::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--accent); margin-right: 10px; }
 .record-btn { display: inline-flex; gap: 8px; align-items: center; }
 .mark-note { font-size: 12px; color: #fca5a5; }
+.news-panel { max-width: 860px; }
+.news-list { list-style: none; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+.news-m { padding: 14px 18px; border-top: 1px solid var(--line); }
+.news-m:first-child { border-top: 0; }
+.news-m-title { display: block; font-weight: 700; font-size: 15px; line-height: 1.35; }
+.news-m-title:hover { color: var(--accent); }
+.news-m-meta { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.news-m-meta a { color: var(--accent); display: inline-block; padding: 6px 0; }
 @media (max-width: 700px) {
   .search { min-width: 0; max-width: none; width: 100%; }
   .chips { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; scrollbar-width: none; }
