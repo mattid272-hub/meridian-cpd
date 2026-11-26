@@ -34,7 +34,7 @@ def fake_create(**params):
     return main.stripe.StripeObject.construct_from({"id": "cs_test_1", "url": "https://checkout.stripe.com/c/pay/cs_test_1"}, "sk_test_x")
 def fake_promo_list(**kw):
     promo_lookups.append(kw)
-    data = [{"id": "promo_m10"}] if kw.get("code") == "MERIDIAN10" else []
+    data = [{"id": "promo_m10"}] if kw.get("code") in ("MERIDIAN10", "SPRING5") else []
     return main.stripe.StripeObject.construct_from({"data": data}, "sk_test_x")
 main.stripe.checkout.Session.create = staticmethod(fake_create)
 main.stripe.PromotionCode.list = staticmethod(fake_promo_list)
@@ -46,8 +46,11 @@ SINGLE, SERIES = main.PAYMENT_LINK_SINGLE, main.PAYMENT_LINK_SERIES
 r = c.get("/buy/MER-ALL-022")
 check("off: a course goes to the £19.99 Payment Link with its id", r.status_code == 302
       and r.headers["location"] == SINGLE + "?client_reference_id=MER-ALL-022")
+r = c.get("/buy/MER-DEA-001?code=spring5")
+check("off: a code goes through as prefilled_promo_code", r.headers["location"] == SINGLE + "?client_reference_id=MER-DEA-001&prefilled_promo_code=SPRING5")
 r = c.get("/buy/MER-DEA-001?code=meridian10")
-check("off: a code goes through as prefilled_promo_code", r.headers["location"] == SINGLE + "?client_reference_id=MER-DEA-001&prefilled_promo_code=MERIDIAN10")
+check("off: the free-course code goes to the email-first free route", r.status_code == 302
+      and r.headers["location"] == main.APP_URL + "/free/MER-DEA-001")
 r = c.get("/buy/FW-HEATING?code=MERIDIAN10")
 check("off: a series goes to the £39.99 Payment Link, with no code", r.headers["location"] == SERIES + "?client_reference_id=FW-HEATING")
 r = c.get("/buy/fw-heating")
@@ -77,9 +80,12 @@ check("on: name collected, customer made, codes can be typed", p["name_collectio
       and p["customer_creation"] == "always" and p.get("allow_promotion_codes") is True and "discounts" not in p)
 check("on: no price, product or link is made inline", "price_data" not in str(p) and "product_data" not in str(p))
 
-c.get("/buy/MER-DEA-001?code=MERIDIAN10"); p = created[-1]
+c.get("/buy/MER-DEA-001?code=SPRING5"); p = created[-1]
 check("on: a code from the site is applied (looked up read-only)", p.get("discounts") == [{"promotion_code": "promo_m10"}]
-      and "allow_promotion_codes" not in p and promo_lookups[-1] == {"code": "MERIDIAN10", "active": True, "limit": 1})
+      and "allow_promotion_codes" not in p and promo_lookups[-1] == {"code": "SPRING5", "active": True, "limit": 1})
+n = len(created); r = c.get("/buy/MER-DEA-001?code=MERIDIAN10")
+check("on: the free-course code is not applied on /buy; it goes to /free", len(created) == n
+      and r.headers["location"] == main.APP_URL + "/free/MER-DEA-001")
 c.get("/buy/MER-DEA-001?code=NOTACODE"); p = created[-1]
 check("on: an unknown code is dropped; the buyer can still type one", "discounts" not in p and p.get("allow_promotion_codes") is True)
 

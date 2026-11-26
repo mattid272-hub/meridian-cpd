@@ -850,6 +850,14 @@ async def handle_checkout(session):
             # subscription still gets its member, so the subscription events can find it.
             return
 
+    if not recorded and _is_free_single_order(amount, plan, course_keys, series_id) \
+            and had_free_course(email, except_session=session_id):
+        # A second free course for the same address: not recorded, not sent. /thanks tells
+        # the buyer. Nothing was charged, so there is nothing to refund.
+        print(f"FREE COURSE REFUSED: session {session_id} is a second free course "
+              f"({course_keys[0]}) for an address that has already had one. Nothing recorded or sent.")
+        return
+
     todo = [k for k in course_keys if k not in emailed]
     if recorded and not todo:
         print(f"Checkout {session_id} is already recorded; ignoring the repeat delivery")
@@ -1344,6 +1352,9 @@ async def order_thanks(request: Request):
   bought, and we will sort it out.</p>""", status_code=404)
 
     purchases = _order_purchases(sid)
+    if not purchases and _refused_free_order(s):
+        ref = str(_g(s, "client_reference_id", "") or "").upper()
+        return _free_course_used_page(_session_email(s), ref, ordered=True)
     if not purchases:
         # Stripe sends the buyer here and tells this app about the order separately, usually
         # within seconds. Wait for it rather than show an empty page.
@@ -1461,6 +1472,9 @@ async def buy(key: str, code: str = ""):
     if not kind:
         return RedirectResponse(f"{SITE_URL}/courses.html", status_code=302)
     code = re.sub(r"[^A-Za-z0-9_-]", "", code or "")[:40].upper()
+    if kind == "course" and code and code == FREE_CODE.upper():
+        # The free course is claimed with the email first (/free), once per person.
+        return RedirectResponse(f"{APP_URL}/free/{key}", status_code=302)
     price_var = "STRIPE_PRICE_SERIES" if kind == "series" else "STRIPE_PRICE_SINGLE"
     if checkout_sessions_on() and os.environ.get(price_var, ""):
         try:
@@ -1472,6 +1486,138 @@ async def buy(key: str, code: str = ""):
             print(f"ACTION NEEDED: could not start a checkout for {key} ({type(e).__name__}: {e}); "
                   f"sent the buyer to the Payment Link instead.")
     return RedirectResponse(_payment_link_url(kind, key, code), status_code=302)
+
+
+# ── The free course, once per person (board row mer-free-code-reuse) ─────────────
+# MERIDIAN10 is a Stripe promotion code for one £19.99 course. Every checkout makes a new
+# Stripe customer, so Stripe's own "once per customer" limit never sees a returning buyer,
+# and the same address could take free course after free course. Two checks close that:
+#   1. /free/<course id> asks for the email first, turns away an address that has already
+#      had a free course, and opens the checkout with that address fixed and the discount
+#      applied here (no code typed at Stripe on this route).
+#   2. The webhook backstop: a £0 single-course order from an address that already has a
+#      £0 course from an earlier order is not recorded or sent, and /thanks says why. This
+#      also covers the Payment Links, where a code can still be typed at Stripe.
+# A different address each time gets past both; that is a limit of any email check.
+
+def _is_free_course_row(p: dict) -> bool:
+    """A real (not admin test) £0 purchase of one single course."""
+    cid = str(p.get("course_id") or "")
+    if not cid or cid in ("SUBSCRIPTION", "SERIES") or p.get("series_id"):
+        return False
+    if _is_test_purchase(p):
+        return False
+    try:
+        return float(p.get("amount_gbp") or 0) == 0
+    except (TypeError, ValueError):
+        return False
+
+
+def had_free_course(email: str, except_session: str = "") -> bool:
+    """True if this address already holds a free course from an order other than
+    except_session. If the database cannot be read, False: a genuine first-timer is
+    never turned away because of an outage (the order is logged for checking)."""
+    email = _clean_email(email)
+    if not email:
+        return False
+    try:
+        member = _member_by_email(email)
+        if not member:
+            return False
+        return any(_is_free_course_row(p) and p.get("stripe_session_id") != except_session
+                   for p in _member_purchases(member["id"]))
+    except Exception as e:
+        print(f"ACTION NEEDED: could not check for an earlier free course for {email}: {e}")
+        return False
+
+
+def _is_free_single_order(amount: int, plan: str, course_keys: list, series_id: str) -> bool:
+    return (amount or 0) == 0 and plan == "single" and not series_id and len(course_keys) == 1 \
+        and course_keys[0] not in ("SUBSCRIPTION", "SERIES")
+
+
+def _refused_free_order(s) -> bool:
+    """A completed £0 one-course order the webhook turns away (see handle_checkout)."""
+    ref = str(_g(s, "client_reference_id", "") or "").upper()
+    return (_g(s, "mode") == "payment" and (_g(s, "amount_total", 0) or 0) == 0
+            and (not ref or (ref in COURSES and ref != "SUBSCRIPTION"))
+            and had_free_course(_session_email(s), except_session=str(_g(s, "id", "") or "")))
+
+
+def _free_course_used_page(email: str, key: str, ordered: bool = False, status_code: int = 200) -> HTMLResponse:
+    course_link = f"{SITE_URL}/courses.html?open={key}" if key in COURSES else f"{SITE_URL}/courses.html"
+    extra = ("<p>Nothing was charged for this order, and it has not been sent.</p>" if ordered else "")
+    return _customer_page("Free course already used", f"""
+  <h1>You have already had your free course</h1>
+  <p>The free course is one per person, and <strong>{_esc(email)}</strong> has already had one.</p>
+  {extra}
+  <p>Annual membership gives you every course in the library.</p>
+  <p><a href="{SITE_URL}/#offer" style="display:block;text-align:center;margin-top:16px;padding:13px;background:#0D1F0E;color:white;font-size:15px;font-weight:700;border-radius:8px;text-decoration:none">See annual membership</a></p>
+  <p class="small">Or <a href="{course_link}">buy this course on its own</a>.</p>""", status_code=status_code)
+
+
+def _free_form(key: str, email: str = "", problem: str = "", status_code: int = 200) -> HTMLResponse:
+    title = str(COURSES[key]["title"])
+    note = f'<div class="err">{_esc(problem)}</div>' if problem else ""
+    return _customer_page("Your free course", f"""
+  <h1>Your free course</h1>
+  <p><strong>{_esc(title)}</strong></p>
+  {note}
+  <p>Enter your email and we will send the course there. There is nothing to pay. The free course is one per person.</p>
+  <form method="post" action="/free/{_esc(key)}">
+    <label for="email">Email address</label>
+    <input type="email" id="email" name="email" required autocomplete="email" value="{_esc(email)}">
+    <button type="submit">Continue</button>
+  </form>""", status_code=status_code)
+
+
+def free_session_params(key: str, email: str, promo_id: str) -> dict:
+    """The free Checkout Session: the course on the existing price, the address fixed, the
+    free-course discount applied here, no codes typed at Stripe."""
+    params = checkout_session_params("course", key)
+    params.pop("allow_promotion_codes", None)
+    params["discounts"] = [{"promotion_code": promo_id}]
+    params["customer_email"] = email
+    params["metadata"] = {"course_id": key, "free_course": "yes"}
+    return params
+
+
+@app.get("/free/{key}", response_class=HTMLResponse)
+async def free_course_form(key: str):
+    kind, key = _buy_item(key)
+    if kind != "course":
+        return RedirectResponse(f"{SITE_URL}/courses.html", status_code=302)
+    return _free_form(key)
+
+
+@app.post("/free/{key}", response_class=HTMLResponse)
+async def free_course_claim(key: str, request: Request):
+    kind, key = _buy_item(key)
+    if kind != "course":
+        return RedirectResponse(f"{SITE_URL}/courses.html", status_code=303)
+    form = await request.form()
+    email = _clean_email(form.get("email"))
+    if not _valid_email(email):
+        return _free_form(key, email, "That does not look like an email address. Please check it and try again.",
+                          status_code=400)
+    if had_free_course(email):
+        print(f"Free course: turned away a second claim for {key}")
+        return _free_course_used_page(email, key)
+    if checkout_sessions_on() and os.environ.get("STRIPE_PRICE_SINGLE", ""):
+        promo = _promotion_code_id(FREE_CODE)
+        if promo:
+            try:
+                s = stripe.checkout.Session.create(**free_session_params(key, email, promo))
+                url = str(_g(s, "url", "") or "")
+                if url:
+                    return RedirectResponse(url, status_code=303)
+            except Exception as e:
+                print(f"ACTION NEEDED: could not start a free checkout for {key} ({type(e).__name__}: {e}); "
+                      f"sent the buyer to the Payment Link instead.")
+    # Checkout Sessions off or unavailable: the Payment Link with the address and code filled
+    # in. The address can still be changed there; the webhook backstop covers that.
+    url = _payment_link_url("course", key, FREE_CODE) + "&" + urlencode({"prefilled_email": email})
+    return RedirectResponse(url, status_code=303)
 
 
 @app.post("/thanks/email", response_class=HTMLResponse)
